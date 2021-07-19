@@ -1,0 +1,77 @@
+{
+  "rows": [
+    {
+      "title": "Invite friends",
+      "code": "invite",
+      "imageUrl": "assets/appimages/create-invitation.png",
+      "tag": "",
+      "description": "Invite & earn Tricycle coins & cash",
+      "isTagVisivle": false
+    },
+    {
+      "title": "Verify Friends",
+      "code": "buddy",
+      "imageUrl": "assets/appimages/buddy.png",
+      "tag": "",
+      "description": "Be the buddy of your circle & help others",
+      "isTagVisivle": false
+    },
+    {
+      "title": "Your networks",
+      "code": "network",
+      "imageUrl": "assets/appimages/create-network.png",
+      "tag": "",
+      "description": "Classmates, teachers & experts",
+      "isTagVisivle": false
+    },
+    {
+      "title": "Clubs",
+      "code": "room",
+      "imageUrl": "assets/appimages/create-rooms.png",
+      "tag": "",
+      "description": "Class, staff, parents, community rooms",
+      "isTagVisivle": false
+    },
+    {
+      "title": "Edufluencers",
+      "code": "edufluencer",
+      "imageUrl": "assets/appimages/create-network.png",
+      "tag": "",
+      "description": "Classmates, teachers & experts",
+      "isTagVisivle": false
+    },
+    {
+      "title": "Tutors",
+      "code": "tutor",
+      "imageUrl": "assets/appimages/create-rooms.png",
+      "tag": "",
+      "description": "Class, staff, parents, community rooms",
+      "isTagVisivle": false
+    },
+
+    {
+      "title": "Settings",
+      "code": "settings",
+      "imageUrl": "assets/appimages/create-settings.png",
+      "tag": "",
+      "description": "Account, privacy & Password",
+      "isTagVisivle": false
+    },
+    {
+      "title": "Logout",
+      "code": "logout",
+      "imageUrl": "assets/appimages/create-logout.png",
+      "tag": "",
+      "description": "You will never want to Logout",
+      "isTagVisivle": false
+    },
+    {
+      "title": "Test List Tiles",
+      "code": "listTile",
+      "imageUrl": "assets/appimages/create-logout.png",
+      "tag": "",
+      "description": "You will never want to Logout",
+      "isTagVisivle": false
+    }
+  ]
+}

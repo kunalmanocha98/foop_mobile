@@ -1,6 +1,7 @@
 name: oho_works_app
 description: A new Flutter application.
 
+
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -15,34 +16,186 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.0+1
+version: 2.0.4
 
 environment:
-  sdk: ">=2.12.0 <3.0.0"
+  sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  # flutter_svg: ^0.18.0
   flutter:
     sdk: flutter
-
-
+  flutter_localizations:
+    sdk: flutter
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
+  cupertino_icons: ^1.0.3
+  http: ^0.13.3
+  html: ^0.15.0
+  sqflite: ^2.0.0
+  path_provider: ^2.0.2
+  shared_preferences: ^2.0.6
+  flutter_contact: ^0.8.1
+  intl: ^0.17.0
+  flutter_screenutil: ^5.0.0
+  flutter_rating_bar: ^4.0.0
+  camera: ^0.8.1
+  image_picker: ^0.7.5+3
+  image_cropper: ^1.4.1
+  flutter_staggered_grid_view: ^0.4.0
+  shimmer: ^2.0.0
+  percent_indicator: ^3.0.1
+  random_color: ^1.0.6-nullsafety
+  flutter_webview_plugin: ^0.4.0
+  flutter_launcher_icons: ^0.9.0
+  fluttertoast: ^8.0.7
+  firebase_messaging: ^10.0.4
+  get_it: ^7.1.3
+  mime: ^1.0.0
+  file_picker: ^3.0.3
+  device_info: ^2.0.2
+  lottie: ^1.1.0
+  provider: ^5.0.0
+  cached_network_image: ^3.0.0
+  barcode_widget: ^2.0.1
+  flutter_typeahead: ^3.0.2
+  firebase_crashlytics: ^2.0.7
+  firebase_core: ^1.3.0
+  responsive_framework: ^0.1.4
+
+  url_launcher: ^6.0.9
+
+  scratcher: ^2.1.0
+  video_player: ^2.1.10
+  flutter_html: ^2.1.0
+  share_plus: ^2.1.4
+  pinch_zoom: ^0.1.0
+  firebase_dynamic_links: ^2.0.6
+  google_maps_flutter: ^2.0.6
+  permission_handler: ^8.1.2
+  timeago: ^3.1.0
+  inview_notifier_list: ^2.0.0
+  flutter_chat_bubble: ^1.0.2
+  event_bus: ^2.0.0
+  build_resolvers: ^2.0.4
+  carousel_slider: ^4.0.0
+  path: ^1.8.0
+  socket_io_client: ^1.0.1
+  flutter_quill: ^1.1.0
+  markdown: ^4.0.0
+  google_ml_kit: ^0.6.0
+  flutter_linkify: ^5.0.2
+  flutter_calendar_carousel: ^2.0.1
+  flutter_local_notifications: ^6.0.0
+  agora_rtc_engine: ^4.0.2
+  background_fetch: ^1.0.1
+  flutter_background: ^1.0.1
+  simple_gesture_detector: ^0.2.0
+  translator: ^0.1.7
+  sliding_up_panel: ^2.0.0+1
+  delta_markdown: ^0.2.0
+
+  #  flutter_downloader: ^1.5.2
+  ext_storage: ^1.0.3
+  package_info: ^2.0.2
+  quill_delta: ^3.0.0-nullsafety.0
+  flutter_tts: ^3.2.1
+  grouped_list: ^4.0.0
+  gbk2utf8: ^1.0.1
+  rich_editor: ^0.0.4
+
+
+  GlobalUploadFilePkg:
+    path: packages/GlobalUploadFilePkg
+
+#  GlobalUploadFilePkg:
+#  path: packages/GlobalUploadFilePkg
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  build_runner: ^2.0.6
+  pedantic: ^1.11.1
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter.
 flutter:
+  assets:
+    - assets/voice.json
+    - assets/swipe.json
+    - assets/swipe1.json
+    - assets/drop.json
+    - assets/swipe12.json
+    - assets/drop_down.json
+    - assets/swipe_left.json
+    - assets/en.json
+    - assets/hi.json
+    - assets/invite.json
+    - assets/menulist.json
+    - assets/reportabuselist.json
+    - assets/menulist_new.json
+    - assets/appimages/
+    - assets/appimages/otp.jpg
+    - assets/appimages/lessonbanner.png
+    - assets/appimages/classron.jpg
+    - assets/appimages/mates.jpg
+    - assets/appimages/logout.png
+    - assets/appimages/bb.jpg
+    - assets/appimages/handshake.png
+    - assets/appimages/bod.png
+    - assets/appimages/dummyschool.png
+    - assets/appimages/classroom.png
+    - assets/appimages/subjects.png
+    - assets/appimages/roles.png
+    - assets/appimages/award.png
+    - assets/appimages/empty.png
+    - assets/appimages/blog.png
+    - assets/appimages/institution.png
+    - assets/appimages/network.png
+    - assets/appimages/news.png
+    - assets/appimages/parents.png
+    - assets/appimages/question-mark.png
+    - assets/appimages/rewards.png
+    - assets/appimages/rooms.png
+    - assets/appimages/polls.png
+    - assets/appimages/cancel.png
+    - assets/appimages/report_content_icon.png
+    - assets/appimages/room_placeholder.png
+    - assets/appimages/whatsapp.png
+    - assets/appimages/student_home.png
+    - assets/appimages/Teacher-pana.png
+    - assets/appimages/giftbox.png
+    - assets/appimages/buddy.png
+    - assets/appimages/moderator.png
+    - assets/appimages/create-bookmark.png
+    - assets/appimages/topics-default.png
+    - assets/appimages/grey_bg.png
+    - assets/appimages/read-post.png
+    - assets/appimages/general-post.png
+    - assets/appimages/event.png
+    - assets/appimages/live.png
+    - assets/appimages/audio-icon.png
+    - assets/appimages/live_event.png
+    - assets/appimages/wait_event.png
+    - assets/appimages/audience.png
+    - assets/appimages/blockuser.png
+    - assets/appimages/onetoonetalk.png
+    - assets/appimages/report_disturbance.png
+    - assets/appimages/speaker.png
+    - assets/appimages/viewprofile.png
+    - assets/appimages/avatar-default.png
+    - assets/appimages/assignment.png
+    - assets/sample.epub
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+
 
   # To add assets to your application, add an assets section, like this:
   # assets:
@@ -60,7 +213,15 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
+  fonts:
+    - family: Source Sans Pro
+      fonts:
+        - asset: fonts/SourceSansPro-Regular.ttf
+        - asset: fonts/SourceSansPro-Italic.ttf
+          style: italic
+      # - asset: fonts/SourceSansPro-Light.ttf
+      #   style: Light
+
   #   - family: Schyler
   #     fonts:
   #       - asset: fonts/Schyler-Regular.ttf
@@ -74,3 +235,9 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/appimages/logo.png"
+  image_path_android: "assets/appimages/logo.png"

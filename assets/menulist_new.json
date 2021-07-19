@@ -1,0 +1,122 @@
+{
+  "rows": [
+
+    {
+      "title": "position_0"
+
+    },
+
+    {
+      "title": "position_1"
+
+    },
+    {
+      "title": "position_2"
+
+    },
+    {
+      "title": "Buddy Services",
+      "data": [
+        {
+          "title": "Invite friends",
+          "code": "invite",
+          "imageUrl": "assets/appimages/create-invitation.png",
+          "tag": "",
+          "description": "Invite & earn Tricycle coins & cash",
+          "isTagVisivle": false
+        },
+        {
+          "title": "Verify Friends",
+          "code": "buddy",
+          "imageUrl": "assets/appimages/buddy.png",
+          "tag": "",
+          "description": "Be the buddy of your circle & help others",
+          "isTagVisivle": false
+        }
+      ]
+    },
+    {
+      "title": "Announcements",
+      "data": [
+        {
+          "title": "Notice board",
+          "code": "notice",
+          "imageUrl": "assets/appimages/create-notice.png",
+          "tag": "",
+          "description": "Announcement & circulars in one place",
+          "isTagVisivle": false
+        },
+        {
+          "title": "Birthdays & Events",
+          "code": "events",
+          "imageUrl": "assets/appimages/event.png",
+          "tag": "",
+          "description": "Birthdays and events in one place",
+          "isTagVisivle": false
+        }
+
+      ]
+    },
+    {
+      "title": "Write, Read & Ask",
+      "data": [
+        {
+          "title":"Articles-Blog",
+          "code": "blog",
+          "imageUrl": "assets/appimages/create-articles.png",
+          "tag": "",
+          "description": "You learn a lot & get more idea, by reading",
+          "isTagVisivle": false
+        },
+
+        {
+          "title":"Campus news",
+          "code": "news",
+          "imageUrl": "assets/appimages/news.png",
+          "tag": "",
+          "description": "Your friends are the journalists..",
+          "isTagVisivle": false
+        },
+        {
+          "title":"Ask the expert",
+          "code": "expert",
+          "imageUrl": "assets/appimages/create-ask.png",
+          "tag": "",
+          "description": "Learn more by asking & answering",
+          "isTagVisivle": false
+        },
+        {
+          "title": "Polls",
+          "code": "poll",
+          "imageUrl": "assets/appimages/polls.png",
+          "tag": "",
+          "description": "Run polls to see validate your views & ideas",
+          "isTagVisivle": false
+        }
+      ]
+    },
+
+    {
+      "title": "Others",
+      "data": [
+
+        {
+          "title": "Settings",
+          "code": "settings",
+          "imageUrl": "assets/appimages/create-settings.png",
+          "tag": "",
+          "description": "Account, privacy & Password",
+          "isTagVisivle": false
+        },
+        {
+          "title": "Logout",
+          "code": "logout",
+          "imageUrl": "assets/appimages/create-logout.png",
+          "tag": "",
+          "description": "You will never want to Logout",
+          "isTagVisivle": false
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "rows": [
+    {
+      "name": "mill",
+      "isSpeakerOn": 1,
+      "profile_image": "assets/appimages/create-invitation.png",
+      "role": "teacher",
+      "participantType": "floor",
+      "participantId": 556
+    },
+    {
+      "name": "kill",
+      "isSpeakerOn": 1,
+      "profile_image": "assets/appimages/create-invitation.png",
+      "role": "teacher",
+      "participantType": "stage",
+      "participantId": 54894
+    },
+    {
+      "name": "help",
+      "isSpeakerOn": 1,
+      "profile_image": "assets/appimages/create-invitation.png",
+      "role": "teacher",
+      "participantType": "stage",
+      "participantId": 984894
+    },
+    {
+      "name": "Iop",
+      "isSpeakerOn": 1,
+      "profile_image": "assets/appimages/create-invitation.png",
+      "role": "teacher",
+      "participantType": "floor",
+      "participantId": 89498
+    },
+    {
+      "name": "shop",
+      "isSpeakerOn": 1,
+      "profile_image": "assets/appimages/create-invitation.png",
+      "role": "teacher",
+      "participantType": "stage",
+      "participantId": 89489
+    },
+    {
+      "name": "top",
+      "isSpeakerOn": 1,
+      "profile_image": "assets/appimages/create-invitation.png",
+      "role": "teacher",
+      "participantType": "stage",
+      "participantId": 65
+    },
+    {
+      "name": "gop",
+      "isSpeakerOn": 1,
+      "profile_image": "assets/appimages/create-invitation.png",
+      "role": "teacher",
+      "participantType": "stage",
+      "participantId": 55656
+    }
+  ]
+}

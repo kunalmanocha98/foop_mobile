@@ -1,0 +1,63 @@
+{
+  "rows": [
+
+    {
+      "title":"Invite Classmates/Teachers",
+      "code": "inviteTeachers",
+      "imageUrl":"" ,
+      "tag": "",
+      "isTagVisivle": false
+    },
+    {
+      "title":"Invite Parent",
+      "code": "inviteParent",
+      "imageUrl": "",
+      "tag": "",
+      "isTagVisivle": false
+    },
+    {
+      "title":"Invite friends via Whatsapp",
+      "code": "Whatsapp",
+      "imageUrl": "assets/appimages/whatsapp.png",
+      "tag": "",
+      "isTagVisivle": false
+    },
+    {
+      "title":"Invite friends from phonebook",
+      "code": "phonebook",
+      "imageUrl": "phone",
+      "tag": "icon",
+      "isTagVisivle": false
+    },
+    {
+      "title":"Share an invite link",
+      "code": "link",
+      "imageUrl": "share",
+      "tag": "icon",
+      "isTagVisivle": false
+    },
+    {
+      "title":"",
+      "code": "copylink",
+      "imageUrl": "share",
+      "tag": "icon",
+      "isTagVisivle": false
+    },
+
+    {
+      "title":"Parents, teachers, and classmates invite through a specific link so they do not require approval from institute",
+      "code": "copy_link",
+      "imageUrl": "share",
+      "tag": "text",
+      "isTagVisivle": false
+    },
+    {
+      "title":"User invited through 'Links' will be able to join your institute after approval only. ",
+      "code": "copy_link",
+      "imageUrl": "share",
+      "tag": "text",
+      "isTagVisivle": false
+    }
+
+  ]
+}
