@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class AppColors {
   static const String appMainColor = "#FF2A4B";
-  static const String appMainColor85 = "#D9F66666";
-  static const String appMainColor65 = "#A6F66666";
-  static const String appMainColor35 = "#59F66666";
-  static const String appMainColor10 = "#1AF66666";
+  static const String appMainColor85 = "#D9FF2A4B";
+  static const String appMainColor65 = "#A6FF2A4B";
+  static const String appMainColor35 = "#59FF2A4B";
+  static const String appMainColor10 = "#1AFF2A4B";
   static const String appTextPrimaryColor = "#D9000000";
   static const String appTextSecondaryColor = "#A6000000";
   static const String appColorBlack = "#000000"; //replaced HexColor(AppColors.appColorBlack) with this color
@@ -55,10 +55,10 @@ class AppColors {
   static const String failure = "#f8d7da";
   static const String listBg="#ffffff";
 
-  static const String chatBubble_sender = "#F666661A";
+  static const String chatBubble_sender = "#FF2A4B1A";
 
   static const String orangeBackground = "#F8D7DA";
-  static const String orangeText = "#F66666";
+  static const String orangeText = "#FF2A4B";
 
   static const String PostsColor = "#1B9CFC";
   static const String ArticlesColor = "#FD7272";

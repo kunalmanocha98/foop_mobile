@@ -268,8 +268,7 @@ class _SelectSubject extends State<AddSelectSubject>
                                                               .centerRight,
                                                           child: Checkbox(
                                                             activeColor:
-                                                                HexColor(
-                                                                    "#F66666"),
+                                                                HexColor(AppColors.appMainColor),
                                                             value:
                                                                 listOfSubjects![
                                                                         index]

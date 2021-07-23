@@ -389,7 +389,7 @@ class _SelectInstitute extends State<SelectInstitute>
                                             children: [
                                               Checkbox(
                                                 activeColor:
-                                                    HexColor("#F66666"),
+                                                    HexColor(AppColors.appMainColor),
                                                 value: listInstitute![index]
                                                     .isSelected,
                                                 onChanged: (val) {
