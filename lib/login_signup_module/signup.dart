@@ -347,15 +347,9 @@ class StateSignUp extends State<SignUpPage> with SingleTickerProviderStateMixin 
                             child: Column(
                               children: <Widget>[
                                 Container(
-                                  child: Container(
-                                    // margin:  EdgeInsets.only(top: 16.h),
-                                      child: Image(
-                                        image: AssetImage('assets/appimages/logo.png'),
-                                        fit: BoxFit.contain,
-                                        width: 72.w,
-                                        height: 72.h,
-                                      )),
-                                ),
+                                    alignment: Alignment(0, -0.6),
+                                    child: Image.asset("assets/appimages/logo.png",
+                                        height: 150.w, width: 200.w)),
                                 Container(
                                   margin:  EdgeInsets.only(bottom: 30.h),
                                   alignment: Alignment.center,

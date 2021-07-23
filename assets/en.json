@@ -966,5 +966,9 @@
   "you_are_added_as": "You are added as ",
   "you_cant_select": "You cant select this choice",
   "you_won": "You won",
-  "your_currency": "Your currency"
+  "your_currency": "Your currency",
+  "register_or_join_business": "Register or join a business",
+  "register_desc": "You can either join an existing company or create a new business. If you create a new company, you shall be the admin for your company",
+  "register_ur_comp": "Register your company",
+  "join_company": "Join your company"
 }

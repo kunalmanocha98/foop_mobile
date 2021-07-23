@@ -5,6 +5,7 @@ import 'dart:convert' show json;
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/api_calls/sign_up_api.dart';
 import 'package:oho_works_app/components/button_filled.dart';
+import 'package:oho_works_app/components/white_button_large.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
 import 'package:oho_works_app/models/common_response.dart';
@@ -567,9 +568,20 @@ class _UpdateProfilePage extends State<UpdateProfilePage>
               });
               if (resposne.statusCode == Strings.success_code) {
                 prefs!.setBool("isProfileUpdated", true);
-                Navigator.of(context).pushAndRemoveUntil(
+                showModalBottomSheet<void>(
+                  context: context,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(15.0),
+                        topRight: Radius.circular(15.0)),
+                  ),
+                  builder: (context) {
+                    return noInstituteFound( context);
+                  },
+                );
+             /*   Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(builder: (ctx) => WelComeScreen()),
-                        (Route<dynamic> route) => false);
+                        (Route<dynamic> route) => false);*/
               } else {
                 ToastBuilder().showToast(
                     resposne.message!, context, HexColor(AppColors.information));
@@ -679,5 +691,109 @@ class _UpdateProfilePage extends State<UpdateProfilePage>
           stx!,
           HexColor(AppColors.information));
     }
+  }
+
+  Widget noInstituteFound(BuildContext ctx) {
+    return Container(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              //Center Row contents horizontally,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              //Center Row contents vertically,
+
+              children: [
+                Align(
+                    alignment: Alignment.bottomLeft,
+                    child: GestureDetector(
+                      behavior: HitTestBehavior.translucent,
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        child: Row(
+                          children: [
+                            Text(
+                                AppLocalizations.of(context)!
+                                    .translate("register_or_join_business"),
+                                style: styleElements
+                                    .bodyText2ThemeScalable(context)
+                                    .copyWith(
+                                    color:
+                                    HexColor((AppColors.appMainColor))))
+                          ],
+                        ),
+                      ),
+                    )),
+                Align(
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left:60.0),
+                      child: Container(
+                        child: Text(
+                          AppLocalizations.of(context)!.translate(""),
+                          style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    )),
+                Container()
+              ],
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.all(16),
+            child: Text(
+              AppLocalizations.of(context)!.translate("register_desc"),
+              textAlign: TextAlign.center,
+              style: styleElements
+                  .captionThemeScalable(context)
+                  .copyWith(color: HexColor(AppColors.appColorBlack85)),
+            ),
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Container(
+              margin: const EdgeInsets.only(left: 16, right: 16, bottom: 16,top: 20),
+              child: WhiteLargeButton(
+                name: AppLocalizations.of(context)!
+                    .translate("register_ur_comp"),
+                offsetX: 70.66,
+                offsetY: 12.93,
+                textColor: AppColors.appColorWhite,
+                color: AppColors.appMainColor,
+                callback: () {
+
+                },
+              ),
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(bottom: 16),
+            child: Text(AppLocalizations.of(context)!.translate('or'),
+                textAlign: TextAlign.center,
+                style: styleElements.captionThemeScalable(context)),
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Container(
+              margin: const EdgeInsets.only(left: 16, right: 16, bottom: 60),
+              child: WhiteLargeButton(
+                name: AppLocalizations.of(context)!
+                    .translate("join_company"),
+                offsetX: 70.66,
+                offsetY: 12.93,
+                callback: () {
+
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
