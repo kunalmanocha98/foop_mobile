@@ -1,11 +1,11 @@
 class UpdateModeratorPayload {
-  int personId;
-  int eventId;
-  String participantType;
-  String role;
-  int participantId;
-  int isModerator;
-  bool isAccepted;
+  int? personId;
+  int? eventId;
+  String? participantType;
+  String? role;
+  int? participantId;
+  int? isModerator;
+  bool? isAccepted;
 
   UpdateModeratorPayload(
       {this.personId,

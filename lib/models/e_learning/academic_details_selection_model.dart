@@ -1,10 +1,10 @@
 
 class AcademicDetailsSelectionListRequest {
-  String searchVal;
-  int pageNumber;
-  int pageSize;
-  String categoryType;
-  List<String> excludeType;
+  String? searchVal;
+  int? pageNumber;
+  int? pageSize;
+  String? categoryType;
+  List<String>? excludeType;
 
   AcademicDetailsSelectionListRequest(
       {this.searchVal, this.pageNumber, this.pageSize,this.categoryType,this.excludeType});
@@ -31,10 +31,10 @@ class AcademicDetailsSelectionListRequest {
 
 
 class AcademicDetailsSelectionListResponse {
-  String statusCode;
-  String message;
-  List<AcademicDetailSelectionItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<AcademicDetailSelectionItem>? rows;
+  int? total;
 
   AcademicDetailsSelectionListResponse(
       {this.statusCode, this.message, this.rows, this.total});
@@ -45,7 +45,7 @@ class AcademicDetailsSelectionListResponse {
     if (json['rows'] != null) {
       rows = [];//AcademicDetailSelectionItem>();
       json['rows'].forEach((v) {
-        rows.add(new AcademicDetailSelectionItem.fromJson(v));
+        rows!.add(new AcademicDetailSelectionItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -56,7 +56,7 @@ class AcademicDetailsSelectionListResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -64,27 +64,27 @@ class AcademicDetailsSelectionListResponse {
 }
 
 class AcademicDetailSelectionItem {
-  String subjectName;
-  String subjectCode;
-  String subjectDescription;
-  int subjectId;
-  String className;
-  String classCode;
-  String classDescription;
-  int classId;
-  int departmentId;
-  String departmentName;
-  String departmentCode;
-  String departmentDescription;
-  String programName;
-  String programCode;
-  String programDescription;
-  int programId;
-  String organizationName;
-  String organizationCode;
-  String organizationDescription;
-  int organizationId;
-  bool isSelected;
+  String? subjectName;
+  String? subjectCode;
+  String? subjectDescription;
+  int? subjectId;
+  String? className;
+  String? classCode;
+  String? classDescription;
+  int? classId;
+  int? departmentId;
+  String? departmentName;
+  String? departmentCode;
+  String? departmentDescription;
+  String? programName;
+  String? programCode;
+  String? programDescription;
+  int? programId;
+  String? organizationName;
+  String? organizationCode;
+  String? organizationDescription;
+  int? organizationId;
+  bool? isSelected;
 
   AcademicDetailSelectionItem(
       {this.subjectName,

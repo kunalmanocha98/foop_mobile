@@ -20,12 +20,12 @@ class CurrencyFormatSelection extends StatefulWidget {
 }
 
 class _CurrencyFormatSelection extends State<CurrencyFormatSelection> {
-  List<CurrencyFormatItem> currencyList = [];
+  List<CurrencyFormatItem>? currencyList = [];
 
   @override
   initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => getDateFormats());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => getDateFormats());
   }
 
   getDateFormats() async {
@@ -47,8 +47,8 @@ class _CurrencyFormatSelection extends State<CurrencyFormatSelection> {
 
     });
   }
-  TextStyleElements styleElements;
-  SharedPreferences prefs;
+  late TextStyleElements styleElements;
+  late SharedPreferences prefs;
   @override
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
@@ -56,7 +56,7 @@ class _CurrencyFormatSelection extends State<CurrencyFormatSelection> {
       child: Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: TricycleAppBar().getCustomAppBar(context,
-              appBarTitle: AppLocalizations.of(context).translate("choose_currency"),
+              appBarTitle: AppLocalizations.of(context)!.translate("choose_currency"),
               onBackButtonPress:(){
                 Navigator.pop(context);
               }),
@@ -64,23 +64,23 @@ class _CurrencyFormatSelection extends State<CurrencyFormatSelection> {
             children: [
               ListView.builder(
                   padding: EdgeInsets.only(left: 8, right: 8, bottom: 8, top: 8),
-                  itemCount: currencyList.length,
+                  itemCount: currencyList!.length,
                   itemBuilder: (BuildContext context, int index) {
                     return Card(
                       child: InkWell(
                         onTap: () {
-                          updateCurrencyFormat(currencyList[index]);
+                          updateCurrencyFormat(currencyList![index]);
                         },
                         child: ListTile(
                           title: Text(
-                            currencyList.length > 0
-                                ? currencyList[index].code
+                            currencyList!.length > 0
+                                ? currencyList![index].code!
                                 : "",
                             style: styleElements.subtitle1ThemeScalable(context),
                           ),
                           subtitle: Text(
-                            currencyList.length > 0
-                                ? currencyList[index].name
+                            currencyList!.length > 0
+                                ? currencyList![index].name!
                                 : "",
                             style: styleElements.captionThemeScalable(context),
                           ),

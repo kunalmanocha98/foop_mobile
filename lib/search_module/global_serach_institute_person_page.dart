@@ -50,13 +50,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class GlobalSearchPersonInstitutePage extends StatefulWidget {
-  String searchVal;
-  String type;
-  Function(int) seeMoreCallBack;
-  String entitySubType;
+  String? searchVal;
+  String? type;
+  Function(int)? seeMoreCallBack;
+  String? entitySubType;
 
   GlobalSearchPersonInstitutePage(
-      {Key key, this.searchVal, this.type, this.seeMoreCallBack, this.entitySubType})
+      {Key? key, this.searchVal, this.type, this.seeMoreCallBack, this.entitySubType})
       : super(key: key);
 
   @override
@@ -65,10 +65,10 @@ class GlobalSearchPersonInstitutePage extends StatefulWidget {
 }
 
 class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
-  String searchVal;
-  String type;
-  SharedPreferences prefs;
-  TextStyleElements styleElements;
+  String? searchVal;
+  String? type;
+  SharedPreferences? prefs;
+  late TextStyleElements styleElements;
 
   GlobalSeachState({this.searchVal, this.type});
 
@@ -78,7 +78,7 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
   List<EventListItem> eventList = [];
   List<SearchTypeItem> institutionList = [];
   List<RoomListItem> roomsList = [];
-  GlobalSearchResponseModel globalSearchResponseModel;
+  GlobalSearchResponseModel? globalSearchResponseModel;
   int pageCount = 1;
   bool isSearching = false;
 
@@ -101,17 +101,9 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
         child: Paginator.listView(
           key: paginatorKey,
           pageLoadFuture: fetchlist,
-          pageItemsGetter: type == "all"
-              ? listItemsAll
-              : type == "person" || type == "institution"
-              ? listItemsGetter
-              : type == "post"
-              ? listItemsGetterPost
-              : type == "room"
-              ? listItemsGetterRoom
-              : listItemsGetterEvent,
+          pageItemsGetter: getterItem,
           listItemBuilder: type == "all"
-              ? Container()
+              ? Container() as Widget Function(dynamic, int)
               : type == "person" || type == "institution"
               ? listItemGetter
               : type == "post"
@@ -144,17 +136,11 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
         : Paginator.listView(
       key: paginatorKey,
       pageLoadFuture: fetchlist,
-      pageItemsGetter: type == "all"
-          ? listItemsAll
-          : type == "person" || type == "institution"
-          ? listItemsGetter
-          : type == "post"
-          ? listItemsGetterPost
-          : type == "room"
-          ? listItemsGetterRoom
-          : listItemsGetterEvent,
+      pageItemsGetter:
+
+      getterItem,
       listItemBuilder: type == "all"
-          ? Container()
+          ? Container() as Widget Function(dynamic, int)
           : type == "person" || type == "institution"
           ? listItemGetter
           : type == "post"
@@ -176,17 +162,11 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
     return Paginator.listView(
       key: paginatorKey,
       pageLoadFuture: fetchlist,
-      pageItemsGetter: type == "all"
-          ? listItemsAll
-          : type == "person" || type == "institution"
-          ? listItemsGetter
-          : type == "post"
-          ? listItemsGetterPost
-          : type == "room"
-          ? listItemsGetterRoom
-          : listItemsGetterEvent,
+      pageItemsGetter:getterItem,
+
+
       listItemBuilder: type == "all"
-          ? Container()
+          ? Container() as Widget Function(dynamic, int)
           : type == "person" || type == "institution"
           ? listItemGetter
           : type == "post"
@@ -202,13 +182,27 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
     );
   }
 
+  List<EventListItem>? getterItem(dynamic response) {
+        type == "all"
+        ?  listItemsAll as List<EventListItem>
+        : type == "person" || type == "institution"
+        ? listItemsGetter
+        : type == "post"
+        ? listItemsGetterPost
+        : type == "room"
+        ? listItemsGetterRoom
+        : listItemsGetterEvent;
+  }
+
+
+
   Future<GlobalSearchResponse> fetchlist(int page) async {
     prefs ??= await SharedPreferences.getInstance();
     GlobalSearchRequest payload = GlobalSearchRequest();
-    payload.institutionId = prefs.getInt(Strings.instituteId);
+    payload.institutionId = prefs!.getInt(Strings.instituteId);
     payload.entitySubType = widget.entitySubType;
     payload.searchType = 'person';
-    payload.personId = prefs.getInt(Strings.userId);
+    payload.personId = prefs!.getInt(Strings.userId);
     payload.searchPage = 'common';
     payload.searchVal = searchVal;
     payload.entityType = type;
@@ -225,33 +219,33 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
     return GlobalSearchResponse.fromJson(res);
   }
 
-  List<SearchTypeItem> listItemsGetter(GlobalSearchResponse pageData) {
+  List<SearchTypeItem>? listItemsGetter(GlobalSearchResponse pageData) {
     if (type == 'person') {
-      personList.addAll(pageData.rows.person);
-      return pageData.rows.person;
+      personList.addAll(pageData.rows!.person!);
+      return pageData.rows!.person;
     } else {
-      institutionList.addAll(pageData.rows.institution);
-      return pageData.rows.institution;
+      institutionList.addAll(pageData.rows!.institution!);
+      return pageData.rows!.institution;
     }
   }
 
-  GlobalSearchResponseModel listItemsAll(GlobalSearchResponse pageData) {
+  GlobalSearchResponseModel? listItemsAll(GlobalSearchResponse pageData) {
     return pageData.rows;
   }
 
-  List<RoomListItem> listItemsGetterRoom(GlobalSearchResponse pageData) {
-    roomsList.addAll(pageData.rows.rooms);
-    return pageData.rows.rooms;
+  List<RoomListItem>? listItemsGetterRoom(GlobalSearchResponse pageData) {
+    roomsList.addAll(pageData.rows!.rooms!);
+    return pageData.rows!.rooms;
   }
 
-  List<EventListItem> listItemsGetterEvent(GlobalSearchResponse pageData) {
-    eventList.addAll(pageData.rows.events);
-    return pageData.rows.events;
+  List<EventListItem>? listItemsGetterEvent(GlobalSearchResponse pageData) {
+    eventList.addAll(pageData.rows!.events!);
+    return pageData.rows!.events;
   }
 
-  List<PostListItem> listItemsGetterPost(GlobalSearchResponse pageData) {
-    postList.addAll(pageData.rows.post);
-    return pageData.rows.post;
+  List<PostListItem>? listItemsGetterPost(GlobalSearchResponse pageData) {
+    postList.addAll(pageData.rows!.post!);
+    return pageData.rows!.post;
   }
 
   Widget listItemGetter(itemData, int index) {
@@ -265,12 +259,12 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
                 builder: (context) =>
                     UserProfileCards(
                       userType: type == 'person'
-                          ? (item.id == prefs.getInt("userId")
+                          ? (item.id == prefs!.getInt("userId")
                           ? "person"
                           : "thirdPerson")
                           : "institution",
                       userId:
-                      item.id == prefs.getInt("userId") ? null : item.id,
+                      item.id == prefs!.getInt("userId") ? null : item.id,
                       callback: () {},
                       currentPosition: 1,
                       type: null,
@@ -280,18 +274,18 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
       title: itemData.title,
       subtitle1: itemData.subtitle1,
       trailingWidget: Visibility(
-        visible: !item.isFollowing && prefs.getInt("userId") != item.id,
+        visible: !item.isFollowing! && prefs!.getInt("userId") != item.id,
         child: GenericFollowUnfollowButton(
-          actionByObjectType: prefs.getString("ownerType"),
-          actionByObjectId: prefs.getInt("userId"),
+          actionByObjectType: prefs!.getString("ownerType"),
+          actionByObjectId: prefs!.getInt("userId"),
           actionOnObjectType: type,
           actionOnObjectId: item.id,
-          engageFlag: AppLocalizations.of(context).translate('follow'),
+          engageFlag: AppLocalizations.of(context)!.translate('follow'),
           actionFlag: "F",
           actionDetails: [],
           personName: item.title ?? "",
           callback: (isCallSuccess) {
-            print(type +
+            print(type! +
                 "-------------------------------------------------------------++++++++++++++++++++++++++++++++++++++");
             if (type == 'person') {
               personList[index].isFollowing = true;
@@ -317,37 +311,37 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
               MaterialPageRoute(builder: (BuildContext context) {
                 return RoomDetailPage(
                   value,
-                  prefs.getInt(Strings.userId),
-                  prefs.getString(Strings.ownerType),
-                  prefs.getString(Strings.ownerType),
-                  prefs.getInt(Strings.instituteId),
-                  prefs.getInt(Strings.userId),
+                  prefs!.getInt(Strings.userId),
+                  prefs!.getString(Strings.ownerType),
+                  prefs!.getString(Strings.ownerType),
+                  prefs!.getInt(Strings.instituteId),
+                  prefs!.getInt(Strings.userId),
                   null,
                 );
               }));
         },
         byTitle: RoomButtons(context: context)
-            .getByTitle(value.header.title, value.header.subtitle1),
-        byImage: value.header.avatar,
+            .getByTitle(value.header!.title, value.header!.subtitle1),
+        byImage: value.header!.avatar,
         cardImage: value.roomProfileImageUrl,
         serviceType: SERVICE_TYPE.ROOM,
         title: value.roomName,
         isPrivate: value.isPrivate ?? false,
         cardRating:
-        value.otherDetails.rating != null ? value.otherDetails.rating : 0.0,
+        value.otherDetails!.rating != null ? value.otherDetails!.rating : 0.0,
         isModerator: value.memberRoleType == 'A',
         description: value.roomDescription,
-        listofImages: List<String>.generate(value.membersCount, (index) {
-          if (index < value.membersList.length) {
-            return value.membersList[index].profileImage;
+        listofImages: List<String?>.generate(value.membersCount!, (index) {
+          if (index < value.membersList!.length) {
+            return value.membersList![index].profileImage;
           } else {
             return "";
           }
         }),
-        isRated: value.otherDetails.isRated,
+        isRated: value.otherDetails!.isRated,
         ownerType: value.roomOwnerType,
         ownerId: value.roomOwnerTypeId,
-        totalRatedUsers: value.otherDetails.totalRatedUsers,
+        totalRatedUsers: value.otherDetails!.totalRatedUsers,
         showRateCount: false,
         subjectId: value.id,
         subjectType: 'room',
@@ -367,10 +361,10 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
         averageRatingCallback: (value) {
           if (this.mounted)
             setState(() {
-              roomsList[index].otherDetails.rating = value;
-              roomsList[index].otherDetails.totalRatedUsers =
-                  roomsList[index].otherDetails.totalRatedUsers + 1;
-              roomsList[index].otherDetails.isRated = true;
+              roomsList[index].otherDetails!.rating = value;
+              roomsList[index].otherDetails!.totalRatedUsers =
+                  roomsList[index].otherDetails!.totalRatedUsers! + 1;
+              roomsList[index].otherDetails!.isRated = true;
             });
         },
         actionButton: value.membershipStatus == 'A'
@@ -413,10 +407,10 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
     if (item.postType == 'banner') {
       print("banner");
       return TricycleCaughtUpComponent(
-        title: item.postContent.header.title,
-        actionTitle: item.postContent.header.subtitle1,
+        title: item.postContent!.header!.title,
+        actionTitle: item.postContent!.header!.subtitle1,
         onClick: () {
-          if (item.postContent.header.layout == 'old') {
+          if (item.postContent!.header!.layout == 'old') {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) =>
                     SelectedFeedListPage(
@@ -439,7 +433,7 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
       return Padding(
         padding: EdgeInsets.only(top: 8, bottom: 16, left: 8),
         child: Text(
-          item.postContent.header.title,
+          item.postContent!.header!.title!,
           style: styleElements.headline6ThemeScalable(context),
         ),
       );
@@ -472,7 +466,7 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
           _onRatingCallback(index);
         },
         bookmarkCallback: (isBookmarked) {
-          _onBookmarkCallback(item.postId, index, isBookmarked);
+          _onBookmarkCallback(item.postId, index, isBookmarked!);
         },
         commentCallback: () {
           _onCommentCallback(index);
@@ -490,9 +484,9 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
           onTap: () {
             saveHistory(jsonDecode(jsonEncode(item)), 'post');
             if (item.postType == 'lesson' ) {
-              return NewNewsAndArticleDetailPage(postData: item);
+               NewNewsAndArticleDetailPage(postData: item);
             } else {
-              return PostCardDetailPage(postData: item,);
+               PostCardDetailPage(postData: item);
             }
           },
           child: TricyclePostCard(
@@ -512,7 +506,7 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
                 _onRatingCallback(index);
               },
               bookmarkCallback: (isBookmarked) {
-                _onBookmarkCallback(item.postId, index, isBookmarked);
+                _onBookmarkCallback(item.postId, index, isBookmarked!);
               },
               commentCallback: () {
                 _onCommentCallback(index);
@@ -531,10 +525,10 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
               },
               onAnswerClickCallback: () {
                 openAnswerPage(
-                    item.postContent.content.contentMeta.title, item.postId);
+                    item.postContent!.content!.contentMeta!.title, item.postId);
               },
               onSubmitAnswer: () {
-                openSubmitAssignPage(item.postContent.content.contentMeta.title,
+                openSubmitAssignPage(item.postContent!.content!.contentMeta!.title,
                     item.postId, index);
               },
               onVoteCallback: () {
@@ -550,19 +544,19 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
         saveHistory(jsonDecode(jsonEncode(item)), 'event');
       },
       title: item.title,
-      listofImages: List<String>.generate(
-          item.participantList != null && item.participantList.isNotEmpty
-              ? item.participantList.length
+      listofImages: List<String?>.generate(
+          item.participantList != null && item.participantList!.isNotEmpty
+              ? item.participantList!.length
               : 0, (index) {
-        return item.participantList != null && item.participantList.isNotEmpty
-            ? item.participantList[index].profileImage
+        return item.participantList != null && item.participantList!.isNotEmpty
+            ? item.participantList![index].profileImage
             : "";
       }),
       description: item.subtitle,
       dateVisible: true,
-      date: DateTime.fromMillisecondsSinceEpoch(item.startTime),
-      byTitle: ' by ' + item.header.title + ', ' + item.header.subtitle1,
-      byImage: item.header.avatar,
+      date: DateTime.fromMillisecondsSinceEpoch(item.startTime!),
+      byTitle: ' by ' + item.header!.title! + ', ' + item.header!.subtitle1!,
+      byImage: item.header!.avatar,
       onlyHeader: false,
       isShareVisible: true,
       isModerator: item.eventRoleType == 'admin',
@@ -574,41 +568,41 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          if (item.person.isNotEmpty)
+          if (item.person!.isNotEmpty)
             SearchTypeCard(
               prefs: prefs,
-              typeList: item.person.length > 4
-                  ? item.person.sublist(0, 3)
+              typeList: item.person!.length > 4
+                  ? item.person!.sublist(0, 3)
                   : item.person,
               type: "person",
               title: "Person",
               seeMoreCallback: (type) {
-                widget.seeMoreCallBack(1);
+                widget.seeMoreCallBack!(1);
               },
             ),
-          if (item.institution.isNotEmpty)
+          if (item.institution!.isNotEmpty)
             SearchTypeCard(
               prefs: prefs,
-              typeList: item.institution.length > 4
-                  ? item.institution.sublist(0, 3)
+              typeList: item.institution!.length > 4
+                  ? item.institution!.sublist(0, 3)
                   : item.institution,
               type: "institution",
               title: "Institution",
               seeMoreCallback: (type) {
-                widget.seeMoreCallBack(2);
+                widget.seeMoreCallBack!(2);
               },
             ),
-          if (item.rooms.isNotEmpty)
+          if (item.rooms!.isNotEmpty)
             getRoomsList(
-              item.rooms.length > 4 ? item.rooms.sublist(0, 3) : item.rooms,
+              item.rooms!.length > 4 ? item.rooms!.sublist(0, 3) : item.rooms!,
             ),
-          if (item.events.isNotEmpty)
+          if (item.events!.isNotEmpty)
             getEventList(
-              item.events.length > 4 ? item.events.sublist(0, 3) : item.events,
+              item.events!.length > 4 ? item.events!.sublist(0, 3) : item.events!,
             ),
-          if (item.post.isNotEmpty)
+          if (item.post!.isNotEmpty)
             getPostList(
-              item.post.length > 4 ? item.post.sublist(0, 3) : item.post,
+              item.post!.length > 4 ? item.post!.sublist(0, 3) : item.post!,
             )
         ],
       ),
@@ -655,7 +649,7 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
                 padding:
                 EdgeInsets.only(left: 16.0, right: 16, top: 12, bottom: 12),
                 child: Text(
-                  AppLocalizations.of(context).translate("post") ?? "",
+                  AppLocalizations.of(context)!.translate("post"),
                   style: styleElements.headline6ThemeScalable(context).copyWith(
                       fontWeight: FontWeight.bold,
                       color: HexColor(AppColors.appColorBlack85)),
@@ -677,14 +671,14 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
             child: GestureDetector(
                 behavior: HitTestBehavior.translucent,
                 onTap: () {
-                  widget.seeMoreCallBack(4);
+                  widget.seeMoreCallBack!(4);
                 },
                 child: Container(
                   margin: EdgeInsets.only(right: 20, top: 20, bottom: 20),
                   child: Align(
                     alignment: Alignment.bottomRight,
                     child: Text(
-                      AppLocalizations.of(context).translate('see_more'),
+                      AppLocalizations.of(context)!.translate('see_more'),
                       style: styleElements.subtitle2ThemeScalable(context),
                       textAlign: TextAlign.center,
                     ),
@@ -709,7 +703,7 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
                 padding:
                 EdgeInsets.only(left: 16.0, right: 16, top: 12, bottom: 12),
                 child: Text(
-                  AppLocalizations.of(context).translate("event") ?? "",
+                  AppLocalizations.of(context)!.translate("event"),
                   style: styleElements.headline6ThemeScalable(context).copyWith(
                       fontWeight: FontWeight.bold,
                       color: HexColor(AppColors.appColorBlack85)),
@@ -731,14 +725,14 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
             child: GestureDetector(
                 behavior: HitTestBehavior.translucent,
                 onTap: () {
-                  widget.seeMoreCallBack(5);
+                  widget.seeMoreCallBack!(5);
                 },
                 child: Container(
                   margin: EdgeInsets.only(right: 20, top: 20, bottom: 20),
                   child: Align(
                     alignment: Alignment.bottomRight,
                     child: Text(
-                      AppLocalizations.of(context).translate('see_more'),
+                      AppLocalizations.of(context)!.translate('see_more'),
                       style: styleElements.subtitle2ThemeScalable(context),
                       textAlign: TextAlign.center,
                     ),
@@ -763,7 +757,7 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
                 padding:
                 EdgeInsets.only(left: 16.0, right: 16, top: 12, bottom: 12),
                 child: Text(
-                  AppLocalizations.of(context).translate("room") ?? "",
+                  AppLocalizations.of(context)!.translate("room"),
                   style: styleElements.headline6ThemeScalable(context).copyWith(
                       fontWeight: FontWeight.bold,
                       color: HexColor(AppColors.appColorBlack85)),
@@ -785,14 +779,14 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
             child: GestureDetector(
                 behavior: HitTestBehavior.translucent,
                 onTap: () {
-                  widget.seeMoreCallBack(3);
+                  widget.seeMoreCallBack!(3);
                 },
                 child: Container(
                   margin: EdgeInsets.only(right: 20, top: 20, bottom: 20),
                   child: Align(
                     alignment: Alignment.bottomRight,
                     child: Text(
-                      AppLocalizations.of(context).translate('see_more'),
+                      AppLocalizations.of(context)!.translate('see_more'),
                       style: styleElements.subtitle2ThemeScalable(context),
                       textAlign: TextAlign.center,
                     ),
@@ -804,7 +798,7 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
     );
   }
 
-  void openAnswerPage(String question, int postId) {
+  void openAnswerPage(String? question, int? postId) {
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) =>
             PostCreatePage(
@@ -815,7 +809,7 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
             )));
   }
 
-  void openSubmitAssignPage(String question, int postId, int index) {
+  void openSubmitAssignPage(String? question, int? postId, int index) {
     Navigator.of(context)
         .push(MaterialPageRoute(
         builder: (context) =>
@@ -842,7 +836,7 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
         context: context,
         builder: (BuildContext context) {
           return AudioPostDialog(
-              title: postList[index].postContent.content.contentMeta.title,
+              title: postList[index].postContent!.content!.contentMeta!.title,
               okCallback: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (BuildContext context) {
@@ -850,7 +844,7 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
                         type: 'talk',
                         standardEventId: 5,
                         title:
-                        postList[index].postContent.content.contentMeta.title,
+                        postList[index].postContent!.content!.contentMeta!.title,
                       );
                     }));
               },
@@ -873,13 +867,13 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
       });
   }
 
-  void _onShareCallback(int id) {
+  void _onShareCallback(int? id) {
     _onShare(id);
   }
 
   void _onRatingCallback(int index) {
     // setState(() {
-    for (var i in postList[index].postContent.header.action) {
+    for (var i in postList[index].postContent!.header!.action!) {
       if (i.type == 'is_rated') {
         i.value = true;
       }
@@ -887,7 +881,7 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
     // });
   }
 
-  void _onBookmarkCallback(int postId, int index, bool isBookmarked) {
+  void _onBookmarkCallback(int? postId, int index, bool isBookmarked) {
     bookmarkPost(postId, index, isBookmarked);
   }
 
@@ -907,7 +901,7 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
           return element.postOwnerTypeId == postList[index].postOwnerTypeId;
         });
         for (var i in desiredList) {
-          for (var j in i.postContent.header.action) {
+          for (var j in i.postContent!.header!.action!) {
             if (j.type == 'is_followed') {
               j.value = isFollow;
             }
@@ -916,24 +910,24 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
       });
   }
 
-  void bookmarkPost(int postId, int index, bool isBookMarked) {
+  void bookmarkPost(int? postId, int index, bool isBookMarked) {
     // setState(() {
     postList[index].isBookmarked = isBookMarked;
     // });
   }
 
-  final CreateDeeplink createDeeplink = locator<CreateDeeplink>();
+  final CreateDeeplink? createDeeplink = locator<CreateDeeplink>();
 
-  void _onShare(int id) async {
+  void _onShare(int? id) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    createDeeplink.getDeeplink(SHAREITEMTYPE.DETAIL.type,
+    createDeeplink!.getDeeplink(SHAREITEMTYPE.DETAIL.type,
         prefs.getInt("userId").toString(), id, DEEPLINKTYPE.POST.type, context);
   }
 
   void exitRoom(RoomListItem value) {
     MembershipRoleStatusPayload payload = MembershipRoleStatusPayload();
     payload.roomId = value.id;
-    payload.memberId = prefs.getInt(Strings.userId);
+    payload.memberId = prefs!.getInt(Strings.userId);
     payload.memberType = "person";
     payload.action = MEMBERSHIP_ROLE.remove.type;
     var body = jsonEncode(payload);
@@ -945,7 +939,7 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
         refresh();
       } else {
         ToastBuilder()
-            .showToast(res.message, context, HexColor(AppColors.information));
+            .showToast(res.message!, context, HexColor(AppColors.information));
       }
     }).catchError((onError) {
       print(onError);
@@ -955,12 +949,12 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
   void joingroup(RoomListItem value) {
     MemberAddPayload payload = MemberAddPayload();
     payload.roomId = value.id;
-    payload.roomInstitutionId = prefs.getInt(Strings.instituteId);
+    payload.roomInstitutionId = prefs!.getInt(Strings.instituteId);
     payload.isAddAllMembers = false;
     List<MembersItem> list = [];
     MembersItem item = MembersItem();
     item.memberType = 'person';
-    item.memberId = prefs.getInt(Strings.userId);
+    item.memberId = prefs!.getInt(Strings.userId);
     item.addMethod = MEMBER_ADD_METHOD.JOIN.type;
     list.add(item);
     payload.members = list;
@@ -973,7 +967,7 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
         refresh();
       } else {
         ToastBuilder()
-            .showToast(res.message, context, HexColor(AppColors.information));
+            .showToast(res.message!, context, HexColor(AppColors.information));
       }
     }).catchError((onError) {
       print(onError);
@@ -987,16 +981,16 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
   }
 
   void refresh() {
-    paginatorKey.currentState.changeState(resetState: true);
+    paginatorKey.currentState!.changeState(resetState: true);
   }
 
-  void saveHistory(dynamic entity, String type) {
+  void saveHistory(dynamic entity, String? type) {
     SaveHistoryRequest payload = SaveHistoryRequest(
         entityType: type,
         pageNumber: 1,
         pageSize: 10,
-        institutionId: prefs.getInt(Strings.instituteId),
-        personId: prefs.getInt(Strings.userId),
+        institutionId: prefs!.getInt(Strings.instituteId),
+        personId: prefs!.getInt(Strings.userId),
         searchPage: 'common',
         searchType: 'person',
         entityDetails: entity);

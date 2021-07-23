@@ -23,10 +23,10 @@ import 'package:intl/intl.dart';
 
 
 class EdufluencerTutorDialog extends StatefulWidget {
-  final EdufluencerListItem edufluncerItem;
-  final String userName;
-  final String userId;
-  EdufluencerTutorDialog({Key key,
+  late EdufluencerListItem? edufluncerItem;
+  final String? userName;
+  final String? userId;
+  EdufluencerTutorDialog({Key? key,
      this.edufluncerItem,
      this.userName,
      this.userId,
@@ -38,18 +38,18 @@ class EdufluencerTutorDialog extends StatefulWidget {
 }
 // ignore: must_be_immutable
 class _EdufluencerTutorDialog extends State<EdufluencerTutorDialog> {
-  final EdufluencerListItem edufluncerItem;
-  final String userId;
-  BuildContext context;
-  String conversationId;
-  String mcId;
-  String myConversationId;
+  final EdufluencerListItem? edufluncerItem;
+  final String? userId;
+ late BuildContext context;
+  String? conversationId;
+  String? mcId;
+  String? myConversationId;
   bool isLoading=false;
-  SocketService socketService = locator<SocketService>();
-  String conversationWithId;
-  String todayDate;
-  String conversationWithType = "person";
-  String userName;
+  SocketService? socketService = locator<SocketService>();
+  String? conversationWithId;
+  String? todayDate;
+  String? conversationWithType = "person";
+  String? userName;
   final messageController = TextEditingController();
 
   _EdufluencerTutorDialog(this.edufluncerItem, this.userId, this.userName);
@@ -66,7 +66,7 @@ class _EdufluencerTutorDialog extends State<EdufluencerTutorDialog> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              AppLocalizations.of(context).translate('send_message'),
+              AppLocalizations.of(context)!.translate('send_message'),
               style: styleElements
                   .headline6ThemeScalable(context)
                   .copyWith(fontWeight: FontWeight.bold),
@@ -82,7 +82,7 @@ class _EdufluencerTutorDialog extends State<EdufluencerTutorDialog> {
                 decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText:
-                        AppLocalizations.of(context).translate('enter_text'),
+                        AppLocalizations.of(context)!.translate('enter_text'),
                     hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
                     contentPadding: EdgeInsets.all(8)),
               ),
@@ -96,7 +96,7 @@ class _EdufluencerTutorDialog extends State<EdufluencerTutorDialog> {
                       createConversation(messageController.text);
                   },
                   child: Text(
-                    AppLocalizations.of(context).translate('send'),
+                    AppLocalizations.of(context)!.translate('send'),
                     style: styleElements
                         .captionThemeScalable(context)
                         .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -129,8 +129,8 @@ class _EdufluencerTutorDialog extends State<EdufluencerTutorDialog> {
     setState(() {
       isLoading=true;
     });
-    if (socketService.getSocket() != null) {
-      socketService.getSocket().on('message_error', onError);
+    if (socketService!.getSocket() != null) {
+      socketService!.getSocket()!.on('message_error', onError);
     }
     ConnectionItem connectionItem = ConnectionItem();
     connectionItem.isGroupConversation = false;
@@ -138,11 +138,11 @@ class _EdufluencerTutorDialog extends State<EdufluencerTutorDialog> {
     connectionItem.connectionOwnerType = "person";
     connectionItem.connectionCategory = "contact";
     connectionItem.connectionType = "person";
-    connectionItem.connectionName = edufluncerItem.name ?? "";
+    connectionItem.connectionName = edufluncerItem!.name ?? "";
     connectionItem.connectionMobile = "";
     connectionItem.connectionEmail = "";
     connectionItem.connectionProfileThumbnailUrl = "";
-    connectionItem.connectionId = edufluncerItem.personId.toString(); // edufluncerItem.id.toString();
+    connectionItem.connectionId = edufluncerItem!.personId.toString(); // edufluncerItem.id.toString();
 
     Calls()
         .call(jsonEncode(connectionItem), context, Config.CREATE_CONVERSATION)
@@ -151,14 +151,14 @@ class _EdufluencerTutorDialog extends State<EdufluencerTutorDialog> {
         try {
           var data = CreateConversationResponse.fromJson(value);
           if (data.statusCode == Strings.success_code) {
-            if (data != null && data.rows != null && data.rows.length > 0) {
-              conversationId = data.rows[0].conversationId;
-              conversationWithId = data.rows[0].conversationWithTypeId;
-              conversationWithType = data.rows[0].conversationWithType;
-              mcId = data.rows[0].mcId;
-              myConversationId = data.rows[0].sId;
+            if (data != null && data.rows != null && data.rows!.length > 0) {
+              conversationId = data.rows![0].conversationId;
+              conversationWithId = data.rows![0].conversationWithTypeId;
+              conversationWithType = data.rows![0].conversationWithType;
+              mcId = data.rows![0].mcId;
+              myConversationId = data.rows![0].sId;
 
-              addConversation(data.rows[1], message);
+              addConversation(data.rows![1], message);
               print(
                   "success=======================================================================");
             }
@@ -168,8 +168,7 @@ class _EdufluencerTutorDialog extends State<EdufluencerTutorDialog> {
             });
           }
         } catch (e) {
-          log(e +
-              "error in create conversation==========================================================");
+
         }
       }
     }).catchError((onError) {});
@@ -177,12 +176,12 @@ class _EdufluencerTutorDialog extends State<EdufluencerTutorDialog> {
 
   addConversation(dynamic payload, String message) async {
     log("add_conversation--" + jsonEncode(payload));
-    if (socketService.socket.connected) {
-      socketService.getSocket().emit('add_conversation', payload);
-      socketService.getSocket().emit('join', conversationId);
+    if (socketService!.socket!.connected) {
+      socketService!.getSocket()!.emit('add_conversation', payload);
+      socketService!.getSocket()!.emit('join', conversationId);
       todayDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
       final body =
-          jsonEncode({"message": message, "edufluencer_id": edufluncerItem.id});
+          jsonEncode({"message": message, "edufluencer_id": edufluncerItem!.id});
       MessagePayloadDatabase messageData =
            createMessage(body, null, null);
       emitMessage(getMessagePayload(messageData));
@@ -196,15 +195,15 @@ class _EdufluencerTutorDialog extends State<EdufluencerTutorDialog> {
 
   emitMessage(dynamic payload) {
     try {
-      if (socketService.getSocket() != null &&
-          socketService.getSocket().connected) {
+      if (socketService!.getSocket() != null &&
+          socketService!.getSocket()!.connected) {
         log("chat_message+++" + jsonEncode(payload));
-        socketService.getSocket().emit('chat_message', payload);
+        socketService!.getSocket()!.emit('chat_message', payload);
 
         create();
       }
     } catch (e) {
-      log(e);
+
       setState(() {
         isLoading=true;
       });
@@ -212,7 +211,7 @@ class _EdufluencerTutorDialog extends State<EdufluencerTutorDialog> {
   }
 
   MessagePayloadDatabase createMessage(
-      String value, String path, String mimeType) {
+      String value, String? path, String? mimeType) {
     return new MessagePayloadDatabase(
       myConversationId: myConversationId,
       message: value,
@@ -338,10 +337,10 @@ class _EdufluencerTutorDialog extends State<EdufluencerTutorDialog> {
 
   void create() {
     final body = jsonEncode({
-      "edufluencer_id": edufluncerItem.id,
-      "person_id": edufluncerItem.personId,
+      "edufluencer_id": edufluncerItem!.id,
+      "person_id": edufluncerItem!.personId,
       "booking_by_type": "person",
-      "booking_by_id": int.parse(userId),
+      "booking_by_id": int.parse(userId!),
       "conversation_id": conversationId
     });
     Calls().call(body, context, Config.EDUFLUENCER_REQUEST).then((value) {
@@ -352,7 +351,7 @@ class _EdufluencerTutorDialog extends State<EdufluencerTutorDialog> {
         Navigator.pop(context, true);
 
         ToastBuilder().showToast(
-            response.message, context, HexColor(AppColors.information));
+            response.message!, context, HexColor(AppColors.information));
       }
     }).catchError((onError) {
       print(onError.toString());

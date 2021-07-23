@@ -2,13 +2,13 @@ import 'package:flutter/cupertino.dart';
 
 class BaseModel extends ChangeNotifier {
   bool _busy = false;
-  String _errorMessage;
+  String? _errorMessage;
 
   bool get busy => _busy;
 
-  String get errorMessage => _errorMessage;
+  String? get errorMessage => _errorMessage;
 
-  bool get hasErrorMessage => _errorMessage != null && _errorMessage.isNotEmpty;
+  bool get hasErrorMessage => _errorMessage != null && _errorMessage!.isNotEmpty;
 
   void setErrorMessage(String message) {
     _errorMessage = message;

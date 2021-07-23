@@ -1,8 +1,8 @@
 class FollowersListItemEntity {
-  String statusCode;
-  String message;
-  Rows rows;
-  int total;
+  String? statusCode;
+  String? message;
+  Rows? rows;
+  int? total;
   FollowersListItemEntity({this.statusCode, this.message, this.rows,  this.total,});
 
   FollowersListItemEntity.fromJson(Map<String, dynamic> json) {
@@ -18,17 +18,17 @@ class FollowersListItemEntity {
     data['message'] = this.message;
     data['total']=this.total;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     return data;
   }
 }
 
 class Rows {
-  List<Persons> persons;
-  List<Null> institutions;
-  List<Null> classes;
-  List<Null> sections;
+  List<Persons>? persons;
+  List<Null>? institutions;
+  List<Null>? classes;
+  List<Null>? sections;
 
   Rows({this.persons, this.institutions, this.classes, this.sections});
 
@@ -36,7 +36,7 @@ class Rows {
     if (json['persons'] != null) {
       persons = [];//Persons>();
       json['persons'].forEach((v) {
-        persons.add(new Persons.fromJson(v));
+        persons!.add(new Persons.fromJson(v));
       });
     }
   }
@@ -44,7 +44,7 @@ class Rows {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.persons != null) {
-      data['persons'] = this.persons.map((v) => v.toJson()).toList();
+      data['persons'] = this.persons!.map((v) => v.toJson()).toList();
     }
 
     return data;
@@ -52,14 +52,14 @@ class Rows {
 }
 
 class Persons {
-  int id;
-  String name;
-  String email;
-  String imageUrl;
-  String mobile;
-  String slug;
+  int? id;
+  String? name;
+  String? email;
+  String? imageUrl;
+  String? mobile;
+  String? slug;
 
-  bool isObjectFollowing;
+  bool? isObjectFollowing;
 
   Persons(
       {this.name,

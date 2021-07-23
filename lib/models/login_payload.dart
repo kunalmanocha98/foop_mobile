@@ -1,6 +1,6 @@
 class LoginPayLoad {
-  String username;
-  String password;
+  String? username;
+  String? password;
 
   LoginPayLoad({this.username, this.password});
 

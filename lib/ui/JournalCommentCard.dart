@@ -11,9 +11,9 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class JournalCard extends StatelessWidget {
   final CommonCardData data;
-  BuildContext context;
-  List<SubRow> listSubItems = [];
-  TextStyleElements styleElements;
+  BuildContext? context;
+  List<SubRow>? listSubItems = [];
+  TextStyleElements? styleElements;
   // Widget _simplePopup() => PopupMenuButton<int>(
   //       itemBuilder: (context) => [
   //         PopupMenuItem(
@@ -59,7 +59,7 @@ class JournalCard extends StatelessWidget {
     return displaySize(context).width;
   }
 
-  JournalCard({Key key, @required this.data,this.styleElements}) : super(key: key);
+  JournalCard({Key? key, required this.data,this.styleElements}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -79,7 +79,7 @@ class JournalCard extends StatelessWidget {
                         padding: const EdgeInsets.only(left: 16, right: 16,top:12,bottom:12),
                         child: Text(
                           data.title ?? "",
-                          style: styleElements.headline5ThemeScalable(context),
+                          style: styleElements!.headline5ThemeScalable(context),
                           textAlign: TextAlign.left,
                         ),
                       )),
@@ -100,7 +100,7 @@ class JournalCard extends StatelessWidget {
               child: ListView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
-                  itemCount: listSubItems.length,
+                  itemCount: listSubItems!.length,
                   itemBuilder: (context, index) {
                     return GestureDetector(
                         onTap: () {},
@@ -143,8 +143,8 @@ class JournalCard extends StatelessWidget {
                           Positioned.fill(
                               child: Align(
                             alignment: Alignment.center,
-                            child: Text(AppLocalizations.of(context).translate('see_more'),
-                              style: styleElements.subtitle1ThemeScalable(context),
+                            child: Text(AppLocalizations.of(context)!.translate('see_more'),
+                              style: styleElements!.subtitle1ThemeScalable(context),
                               textAlign: TextAlign.center,
                             ),
                           ))

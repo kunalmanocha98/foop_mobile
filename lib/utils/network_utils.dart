@@ -17,8 +17,8 @@ import 'colors.dart';
 class NetworkUtil {
   // next three lines makes this class a Singleton
   static NetworkUtil _instance = new NetworkUtil.internal();
-  BuildContext context;
-  SharedPreferences prefs;
+  BuildContext? context;
+  late SharedPreferences prefs;
 
   NetworkUtil.internal();
 
@@ -54,31 +54,33 @@ class NetworkUtil {
         });
   }
 
-  Future<dynamic> post(BuildContext context, String url,
-      {Map headers, body, encoding}) async {
+  Future<dynamic> post(BuildContext? context, String url,
+      {Map? headers, body, encoding}) async {
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         this.context = context;
         log('###########################net post...body....$body');
         return http
-            .post(Uri.parse(url), body: body, headers: headers, encoding: encoding)
+            .post(Uri.parse(url), body: body, headers: headers as Map<String, String>?, encoding: encoding)
             .then((http.Response response) async {
+
+
           final String res = response.body;
 
           log('res#######################################$res');
           final int statusCode = response.statusCode;
           final body = jsonDecode(response.body);
-          String stCode=  body["statusCode"];
+          String? stCode=  body["statusCode"];
           if (body["detail"] != null && body["detail"] == "Invalid token.") {
             prefs = await SharedPreferences.getInstance();
             ToastBuilder().showToast(
-                AppLocalizations.of(context).translate("session_expire"),
+                AppLocalizations.of(context!)!.translate("session_expire"),
                 context,
                 HexColor(AppColors.information));
             prefs.clear();
 
-            SchedulerBinding.instance.addPostFrameCallback((_) {
+            SchedulerBinding.instance!.addPostFrameCallback((_) {
               Navigator.pushNamedAndRemoveUntil(
                   context, "/login", (r) => false);
             });
@@ -94,7 +96,7 @@ class NetworkUtil {
           return res;
         }).catchError((onError) {
 
-          print("errooorrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr"+onError.toString());
+          print(onError.toString());
           if (onError.toString().toLowerCase().contains("timeout"))
             throw new Exception("Server timeout");
           else
@@ -103,11 +105,11 @@ class NetworkUtil {
       }
     } on SocketException catch (_) {
       ToastBuilder().showToast(
-          AppLocalizations.of(context).translate("no_internet"),
+          AppLocalizations.of(context!)!.translate("no_internet"),
           context,
           HexColor(AppColors.information));
       throw new Exception(
-          AppLocalizations.of(context).translate("no_internet"));
+          AppLocalizations.of(context)!.translate("no_internet"));
     }
   }
 }

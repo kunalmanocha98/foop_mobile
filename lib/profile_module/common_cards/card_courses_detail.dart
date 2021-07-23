@@ -15,14 +15,14 @@ import 'overlaped_circular_images.dart';
 class CoursesDetailCard extends StatelessWidget {
   final CommonCardData data;
 
-  String instituteName;
-  String instituteAddress;
-  BuildContext context;
-  Null Function() callbackPicker;
-  List<SubRow> list = [];
-  TextStyleElements styleElements;
-  int id;
-  String personType;
+  String? instituteName;
+  String? instituteAddress;
+  BuildContext? context;
+  Null Function()? callbackPicker;
+  List<SubRow>? list = [];
+  TextStyleElements? styleElements;
+  int? id;
+  String? personType;
 
   VoidCallback onSeeMoreClicked;
 
@@ -42,15 +42,15 @@ class CoursesDetailCard extends StatelessWidget {
   }
 
   CoursesDetailCard(
-      {Key key,
-        @required this.data,
-        @required this.onSeeMoreClicked,
+      {Key? key,
+        required this.data,
+        required this.onSeeMoreClicked,
         this.styleElements,
         this.id,
         this.personType,
         this.callbackPicker})
       : super(key: key);
-  String type;
+  String? type;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +64,7 @@ class CoursesDetailCard extends StatelessWidget {
     return Container(
       child: ListView.builder(
         physics: BouncingScrollPhysics(),
-        itemCount: list.length,
+        itemCount: list!.length,
         padding: const EdgeInsets.all(0.0),
         shrinkWrap: true,
         itemBuilder: (context, position) {
@@ -92,9 +92,8 @@ class CoursesDetailCard extends StatelessWidget {
                                   child: Container(
 
                                     child: Text(
-                                      Utility().toCamelCase(list[position].course??"")??
-                                          "",
-                                      style: styleElements
+                                      Utility().toCamelCase(list![position].course??""),
+                                      style: styleElements!
                                           .bodyText1ThemeScalable(context)
                                           .copyWith(fontWeight: FontWeight.w600),
                                       textAlign: TextAlign.left,
@@ -114,8 +113,8 @@ class CoursesDetailCard extends StatelessWidget {
                                           children: <Widget>[
                                             Container(
                                               child: Text(
-                                                list[position].avgRating !=null? list[position].avgRating.toStringAsFixed(2).toString() : "",
-                                                style: styleElements
+                                                list![position].avgRating !=null? list![position].avgRating!.toStringAsFixed(2).toString() : "",
+                                                style: styleElements!
                                                     .captionThemeScalable(context)
                                                     .copyWith(color: HexColor(AppColors.appColorBlack35)),
                                                 textAlign: TextAlign.center,
@@ -124,9 +123,9 @@ class CoursesDetailCard extends StatelessWidget {
                                             Align(
                                               alignment: Alignment.center,
                                               child: RatingBar(
-                                                initialRating: list[position].avgRating !=null? double.parse(list[position].avgRating.toStringAsFixed(2)):0,
-                                                minRating: list[position].avgRating !=null? double.parse(list[position].avgRating.toStringAsFixed(2)):0,
-                                                maxRating: list[position].avgRating !=null? double.parse(list[position].avgRating.toStringAsFixed(2)):0,
+                                                initialRating: list![position].avgRating !=null? double.parse(list![position].avgRating!.toStringAsFixed(2)):0,
+                                                minRating: list![position].avgRating !=null? double.parse(list![position].avgRating!.toStringAsFixed(2)):0,
+                                                maxRating: list![position].avgRating !=null? double.parse(list![position].avgRating!.toStringAsFixed(2)):0,
                                                 direction: Axis.horizontal,
                                                 ignoreGestures: true,
                                                 allowHalfRating: false,
@@ -161,8 +160,8 @@ class CoursesDetailCard extends StatelessWidget {
                                 ),
 
                                 Visibility(
-                                  visible: list[position].totalCount != null &&
-                                      list[position].totalCount != "",
+                                  visible: list![position].totalCount != null &&
+                                      list![position].totalCount != "",
                                   child: Container(
                                     padding: EdgeInsets.only(
 
@@ -170,15 +169,15 @@ class CoursesDetailCard extends StatelessWidget {
                                     ),
                                     child: Row(
                                       children: <Widget>[
-                                        OverlappedImages(list[position].images),
+                                        OverlappedImages(list![position].images),
                                         Flexible(
                                           child:
                                           Padding(
                                             padding: const EdgeInsets.only(left: 4),
                                             child: Text(
-                                              list[position].totalCount ?? "",
+                                              list![position].totalCount ?? "",
                                               overflow: TextOverflow.ellipsis,
-                                              style: styleElements
+                                              style: styleElements!
                                                   .captionThemeScalable(context)
                                                   .copyWith(color: HexColor(AppColors.appColorBlack35)),
                                               textAlign: TextAlign.left,

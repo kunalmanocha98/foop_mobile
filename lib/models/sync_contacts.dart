@@ -1,5 +1,5 @@
 class SyncContactsMain {
-  List<SyncContactsEntity> syncContactsEntity;
+  List<SyncContactsEntity>? syncContactsEntity;
 
   SyncContactsMain({this.syncContactsEntity});
 
@@ -7,7 +7,7 @@ class SyncContactsMain {
     if (json['syncContactsEntity'] != null) {
       syncContactsEntity = [];//SyncContactsEntity>();
       json['syncContactsEntity'].forEach((v) {
-        syncContactsEntity.add(new SyncContactsEntity.fromJson(v));
+        syncContactsEntity!.add(new SyncContactsEntity.fromJson(v));
       });
     }
   }
@@ -16,31 +16,31 @@ class SyncContactsMain {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.syncContactsEntity != null) {
       data['syncContactsEntity'] =
-          this.syncContactsEntity.map((v) => v.toJson()).toList();
+          this.syncContactsEntity!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class SyncContactsEntity {
-  String addressBookOwnerType;
-  String addressBookOwnerId;
-  String contactFirstName;
-  String contactMiddleName;
-  String contactLastName;
-  String contactReferenceId;
-  String contactAddMethod;
-  String contactNickName;
-  String contactAddressLine01;
-  String contactAddressLine02;
-  String contactAddressLine03;
-  String contactCountry;
-  String contactState;
-  String contactCity;
-  String contactTitle;
-  String contactGender;
-  String contactOrganization;
-  List<CommunicationDetails> communicationDetails;
+  String? addressBookOwnerType;
+  String? addressBookOwnerId;
+  String? contactFirstName;
+  String? contactMiddleName;
+  String? contactLastName;
+  String? contactReferenceId;
+  String? contactAddMethod;
+  String? contactNickName;
+  String? contactAddressLine01;
+  String? contactAddressLine02;
+  String? contactAddressLine03;
+  String? contactCountry;
+  String? contactState;
+  String? contactCity;
+  String? contactTitle;
+  String? contactGender;
+  String? contactOrganization;
+  List<CommunicationDetails>? communicationDetails;
 
   SyncContactsEntity(
       {this.addressBookOwnerType,
@@ -83,7 +83,7 @@ class SyncContactsEntity {
     if (json['communication_details'] != null) {
       communicationDetails = [];//CommunicationDetails>();
       json['communication_details'].forEach((v) {
-        communicationDetails.add(new CommunicationDetails.fromJson(v));
+        communicationDetails!.add(new CommunicationDetails.fromJson(v));
       });
     }
   }
@@ -109,17 +109,17 @@ class SyncContactsEntity {
     data['contact_organization'] = this.contactOrganization;
     if (this.communicationDetails != null) {
       data['communication_details'] =
-          this.communicationDetails.map((v) => v.toJson()).toList();
+          this.communicationDetails!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class CommunicationDetails {
-  String communicationMedium;
-  String communicationType;
-  String communicationDetail;
-  String isPrimary;
+  String? communicationMedium;
+  String? communicationType;
+  String? communicationDetail;
+  String? isPrimary;
 
   CommunicationDetails(
       {this.communicationMedium,

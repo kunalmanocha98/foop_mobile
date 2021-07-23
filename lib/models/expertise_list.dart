@@ -1,8 +1,8 @@
 class ExpertiseList {
-  String statusCode;
-  String message;
-  List<LanguageItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<LanguageItem>? rows;
+  int? total;
 
   ExpertiseList({this.statusCode, this.message, this.rows, this.total});
 
@@ -12,7 +12,7 @@ class ExpertiseList {
     if (json['rows'] != null) {
       rows = [];//LanguageItem>();
       json['rows'].forEach((v) {
-        rows.add(new LanguageItem.fromJson(v));
+        rows!.add(new LanguageItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -23,7 +23,7 @@ class ExpertiseList {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -31,12 +31,12 @@ class ExpertiseList {
 }
 
 class LanguageItem {
-  int id;
-  bool isSelected = false;
-  int standardExpertiseCategoryId;
-  String expertiseTypeCode;
-  String expertiseTypeDescription;
-String standardExpertiseCategoryTypeId;
+  int? id;
+  bool? isSelected = false;
+  int? standardExpertiseCategoryId;
+  String? expertiseTypeCode;
+  String? expertiseTypeDescription;
+String? standardExpertiseCategoryTypeId;
 
   LanguageItem(
       {this.id,

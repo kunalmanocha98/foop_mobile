@@ -4,11 +4,11 @@ import 'package:flutter/cupertino.dart';
 class ShakeWidget extends StatelessWidget {
   final Duration duration;
   final double deltaX;
-  final Widget child;
+  final Widget? child;
   final Curve curve;
 
   const ShakeWidget({
-    Key key,
+    Key? key,
     this.duration = const Duration(milliseconds: 500),
     this.deltaX = 20,
     this.curve = Curves.bounceOut,

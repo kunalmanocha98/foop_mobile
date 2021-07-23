@@ -27,7 +27,7 @@ import '../main.dart';
 // ignore: must_be_immutable
 class UpdateLanguagePage extends StatefulWidget {
   bool isSingleSelection = false;
-int rowId;
+int? rowId;
 bool isTranslation=false;
   _UpdateLanguagePage createState() => _UpdateLanguagePage(isSingleSelection,rowId);
 
@@ -38,14 +38,14 @@ class _UpdateLanguagePage extends State<UpdateLanguagePage> {
 
   bool isCalled = false;
   bool isLoading=false;
-  String code;
-  String name;
-  int id;
-  SharedPreferences prefs;
-  List<LanguageItem> listRules = [];
+  String? code;
+  String? name;
+  int? id;
+  late SharedPreferences prefs;
+  List<LanguageItem>? listRules = [];
   bool isSingleSelection;
-  SettingsView settingsView;
-  int rowId;
+  late SettingsView settingsView;
+  int? rowId;
   GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
   _UpdateLanguagePage(this.isSingleSelection,this.rowId);
 
@@ -53,7 +53,7 @@ class _UpdateLanguagePage extends State<UpdateLanguagePage> {
   initState() {
     super.initState();
     application.onLocaleChanged = onLocaleChange;
-    WidgetsBinding.instance.addPostFrameCallback((_) => fetchSettings());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => fetchSettings());
   }
 
   void onLocaleChange(Locale locale) {
@@ -96,7 +96,7 @@ class _UpdateLanguagePage extends State<UpdateLanguagePage> {
   void setSharedPreferences() async {
     prefs = await SharedPreferences.getInstance();
   }
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
   Widget build(BuildContext context) {
     setSharedPreferences();
 
@@ -108,59 +108,59 @@ class _UpdateLanguagePage extends State<UpdateLanguagePage> {
         backgroundColor: HexColor(AppColors.appColorBackground),
         appBar: TricycleAppBar().getCustomAppBar(
             context,
-            appBarTitle:  AppLocalizations.of(context).translate("language"),
+            appBarTitle:  AppLocalizations.of(context)!.translate("language"),
             onBackButtonPress: (){ Navigator.pop(context);}),
         body: isLoading?    PreloadingView(
             url: "assets/appimages/settings.png"):Stack(
           children: <Widget>[
             ListView.builder(
                 padding: EdgeInsets.only(left: 8, right: 8, bottom: 8, top: 8),
-                itemCount: listRules.length,
+                itemCount: listRules!.length,
                 itemBuilder: (BuildContext context, int index) {
                   return CheckboxListTile(
                     contentPadding: EdgeInsets.all(8),
                     // activeColor: HexColor(AppColors.appMainColor),
                     title: Text(
-                      listRules[index].languageNameLocal +
+                      listRules![index].languageNameLocal! +
                           " (" +
-                          listRules[index].languageName +
+                          listRules![index].languageName! +
                           ")",
                       style: styleElements.subtitle1ThemeScalable(context),
                     ),
-                    value: listRules[index].isSelected,
+                    value: listRules![index].isSelected,
                     onChanged: (val) {
                       if (this.mounted) {
                         setState(() {
-                          code=listRules[index].languageCode;
-                          name=listRules[index].languageName;
-                          id = listRules[index].id;
+                          code=listRules![index].languageCode;
+                          name=listRules![index].languageName;
+                          id = listRules![index].id;
                           if (isSingleSelection) {
                             prefs.setString(
-                                'language_code', listRules[index].languageCode);
+                                'language_code', listRules![index].languageCode!);
                             prefs.setString('country_code', "IN");
-                            if (listRules[index].languageName == "Hindi") {
+                            if (listRules![index].languageName == "Hindi") {
                               prefs.setString(
-                                  'language_code', listRules[index].languageCode);
+                                  'language_code', listRules![index].languageCode!);
                               prefs.setString('country_code', "IN");
                               // changeLanguage("hi", "IN");
-                            } else if (listRules[index].languageName ==
+                            } else if (listRules![index].languageName ==
                                 "English") {
                               prefs.setString('language_code', "en");
                               prefs.setString('country_code', "US");
                               // changeLanguage("en", "US");
                             }
-                            for (int i = 0; i < listRules.length; i++) {
+                            for (int i = 0; i < listRules!.length; i++) {
                               if (index == i) {
-                                listRules[index].isSelected = val;
+                                listRules![index].isSelected = val;
                               } else {
-                                listRules[i].isSelected = false;
+                                listRules![i].isSelected = false;
                               }
                             }
                           } else {
-                            if (listRules[index].isSelected) {
-                              listRules[index].isSelected = false;
+                            if (listRules![index].isSelected!) {
+                              listRules![index].isSelected = false;
                             } else {
-                              listRules[index].isSelected = true;
+                              listRules![index].isSelected = true;
                             }
                           }
                         });
@@ -188,7 +188,7 @@ class _UpdateLanguagePage extends State<UpdateLanguagePage> {
                           },
                           color: HexColor(AppColors.appColorWhite),
                           child: Text(
-                              AppLocalizations.of(context).translate("save_exit"),
+                              AppLocalizations.of(context)!.translate("save_exit"),
                               style: styleElements.buttonThemeScalable(context).copyWith(
                                   color: HexColor(AppColors.appMainColor))),
                         ),
@@ -220,9 +220,9 @@ class _UpdateLanguagePage extends State<UpdateLanguagePage> {
         if (this.mounted) {
           setState(() {
             listRules = checkdata(data.rows);
-            for (int i = 0; i < listRules.length; i++) {
-              if (listRules[i].isSelected == null) {
-                listRules[i].isSelected = false;
+            for (int i = 0; i < listRules!.length; i++) {
+              if (listRules![i].isSelected == null) {
+                listRules![i].isSelected = false;
               }
             }
           });
@@ -236,18 +236,18 @@ class _UpdateLanguagePage extends State<UpdateLanguagePage> {
     });
   }
 
-  List<LanguageItem> checkdata(List<LanguageItem> rows) {
+  List<LanguageItem>? checkdata(List<LanguageItem>? rows) {
     if (isSingleSelection) {
-      for (LanguageItem item in rows) {
+      for (LanguageItem item in rows!) {
         if(widget.isTranslation) {
-          if (settingsView.rows.transLateLanguage!=null &&settingsView.rows.transLateLanguage.id!=null && settingsView.rows.transLateLanguage.id == item.id) {
+          if (settingsView.rows!.transLateLanguage!=null &&settingsView.rows!.transLateLanguage!.id!=null && settingsView.rows!.transLateLanguage!.id == item.id) {
             code= item.languageCode;
             name = item.languageName;
             id= id;
             item.isSelected = true;
           }
         }else{
-          if (settingsView.rows.language.id == item.id) {
+          if (settingsView.rows!.language!.id == item.id) {
             item.isSelected = true;
           }
         }
@@ -255,8 +255,8 @@ class _UpdateLanguagePage extends State<UpdateLanguagePage> {
       return rows;
     }
     else {
-      for (LanguageItem item in rows) {
-        for (LanguageItem item1 in settingsView.rows.contentLanguage)
+      for (LanguageItem item in rows!) {
+        for (LanguageItem item1 in settingsView.rows!.contentLanguage!)
           if (item1.id == item.id) {
             item.isSelected = true;
           }
@@ -266,15 +266,15 @@ class _UpdateLanguagePage extends State<UpdateLanguagePage> {
   }
 
   void changeLanguage() {
-    String code = prefs.get("language_code");
-    String countryCode = prefs.get("country_code");
+    String code = prefs.get("language_code") as String;
+    String? countryCode = prefs.get("country_code") as String?;
     var local = Locale(code, countryCode);
     MainApp.setLocale(context, local);
     Navigator.pop(context);
   }
 
   void updateLanguage() async {
-    progressButtonKey.currentState.show();
+    progressButtonKey.currentState!.show();
     LanguageItemNew languageItem=LanguageItemNew();
     AccountSettingUpdateRequest model = AccountSettingUpdateRequest();
     model.personId = prefs.getInt("userId");
@@ -282,7 +282,7 @@ class _UpdateLanguagePage extends State<UpdateLanguagePage> {
     model.id = rowId;
     if(widget.isTranslation)
     {
-      model.id = settingsView.rows.id;
+      model.id = settingsView.rows!.id;
       languageItem.languageCode=code;
       languageItem.languageName=name;
       languageItem.id= id;
@@ -295,9 +295,9 @@ class _UpdateLanguagePage extends State<UpdateLanguagePage> {
     }
     var body = jsonEncode(model);
     Calls().call(body, context, Config.UPDATEACCOUNTSETTING).then((value) async {
-      progressButtonKey.currentState.hide();
+      progressButtonKey.currentState!.hide();
       if (value != null) {
-        progressButtonKey.currentState.hide();
+        progressButtonKey.currentState!.hide();
         var data = DynamicResponse.fromJson(value);
         if (data != null && data.rows != null && data.statusCode == 'S10001') {
           ToastBuilder().showToast("Successfully Updated", context,HexColor(AppColors.information));
@@ -305,7 +305,7 @@ class _UpdateLanguagePage extends State<UpdateLanguagePage> {
           if(widget.isTranslation)
             {
               prefs.setString(
-                  Strings.translation_code, code);
+                  Strings.translation_code, code!);
 
               prefs.setBool(
                   Strings.isTranslationLanguageSet, true);
@@ -323,25 +323,25 @@ class _UpdateLanguagePage extends State<UpdateLanguagePage> {
     }).catchError((onError) async {
       ToastBuilder().showToast(onError.toString(), context,HexColor(AppColors.information));
       print(onError.toString());
-      progressButtonKey.currentState.hide();
+      progressButtonKey.currentState!.hide();
     });
   }
 
-  List<int> getLanguageId(bool isSingleSelection) {
+  List<int?> getLanguageId(bool isSingleSelection) {
     if (isSingleSelection) {
-      List<int> listint = [];
-      for (int j = 0; j < listRules.length; j++) {
-        if (listRules[j].isSelected) {
-          listint.add(listRules[j].id);
+      List<int?> listint = [];
+      for (int j = 0; j < listRules!.length; j++) {
+        if (listRules![j].isSelected!) {
+          listint.add(listRules![j].id);
           break;
         }
       }
       return listint;
     } else {
-      List<int> listint = [];
-      for (int j = 0; j < listRules.length; j++) {
-        if (listRules[j].isSelected) {
-          listint.add(listRules[j].id);
+      List<int?> listint = [];
+      for (int j = 0; j < listRules!.length; j++) {
+        if (listRules![j].isSelected!) {
+          listint.add(listRules![j].id);
         }
       }
       return listint;

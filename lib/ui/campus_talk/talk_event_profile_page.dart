@@ -12,19 +12,19 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TalkParticipantProfilePage extends StatefulWidget {
-  final String userType;
-  final int userId;
-  final TALKFOOTERENUM firstPerson;
-  final TALKFOOTERENUM secondPerson;
-  final Null Function(int userId, int isModerator, String type)
+  final String? userType;
+  final int? userId;
+  final TALKFOOTERENUM? firstPerson;
+  final TALKFOOTERENUM? secondPerson;
+  final Null Function(int ?userId, int? isModerator, String? type)?
       moderatorCallback;
-  final Null Function(int userId, String role, String userType) updateRole;
-  final Null Function(int userId, String userType) removeUser;
-  final Null Function(int userId, String userType) inviteUser;
-  final Null Function(int userId, String userType) reportUser;
-  final Null Function(int userId, String userType) mute;
-  final int isModerator;
-  final int isSpeakerOn;
+  final Null Function(int? userId, String ?role, String? userType)? updateRole;
+  final Null Function(int ? userId, String ?userType)? removeUser;
+  final Null Function(int? userId, String? userType)? inviteUser;
+  final Null Function(int ?userId, String? userType)? reportUser;
+  final Null Function(int? userId, String ?userType)? mute;
+  final int? isModerator;
+  final int? isSpeakerOn;
 
   TalkParticipantProfilePage(
       {this.userType,
@@ -57,25 +57,25 @@ class TalkParticipantProfilePage extends StatefulWidget {
 enum ROLESENUM { listner }
 
 class _TalkParticipantListPage extends State<TalkParticipantProfilePage> {
-  String userType;
-  Null Function(int userId, String userType) inviteUser;
-  int userId;
-  final int isModerator;
+  String? userType;
+  Null Function(int? userId, String? userType)? inviteUser;
+  int? userId;
+  final int? isModerator;
   var followers = 0;
   var following = 0;
   var roomsCount = 0;
   var postCount = 0;
-  Null Function(int userId, String userType) mute;
-  Null Function(int userId, String role, String userType) updateRole;
-  Null Function(int userId, int isModerator, String type) moderatorCallback;
-  final Null Function(int userId, String userType) reportUser;
-  CommonCardData profileData;
-  CommonCardData ratingData;
-  Persondata rows;
+  Null Function(int? userId, String? userType)? mute;
+  Null Function(int? userId, String role, String? userType)? updateRole;
+  Null Function(int? userId, int isModerator, String? type)? moderatorCallback;
+  final Null Function(int? userId, String? userType)? reportUser;
+  CommonCardData? profileData;
+  CommonCardData? ratingData;
+  Persondata? rows;
   bool hasData = false;
-  int isSpeakerOn;
-  TextStyleElements styleElements;
-  Null Function(int userId, String userType) removeUser;
+  int? isSpeakerOn;
+  late TextStyleElements styleElements;
+  Null Function(int? userId, String? userType)? removeUser;
 
   _TalkParticipantListPage(
       {this.userId,
@@ -89,7 +89,7 @@ class _TalkParticipantListPage extends State<TalkParticipantProfilePage> {
       this.isSpeakerOn,
       this.mute});
 
-  SharedPreferences prefs = locator<SharedPreferences>();
+  SharedPreferences? prefs = locator<SharedPreferences>();
   bool viewFullProfile = false;
   GlobalKey<UserProfileCardsState> profilepageKey = GlobalKey();
   GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey();
@@ -97,7 +97,7 @@ class _TalkParticipantListPage extends State<TalkParticipantProfilePage> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => showSheet());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => showSheet());
   }
 
   @override
@@ -135,7 +135,7 @@ class _TalkParticipantListPage extends State<TalkParticipantProfilePage> {
   }
 
   showSheet() {
-    _scaffoldKey.currentState.showBottomSheet((BuildContext context) {
+    _scaffoldKey.currentState!.showBottomSheet((BuildContext context) {
       return Container(
         child: ListView(
           shrinkWrap: true,
@@ -213,7 +213,7 @@ class _TalkParticipantListPage extends State<TalkParticipantProfilePage> {
   Widget get _fullProfile => ListTile(
       onTap: () {
         setState(() {
-          profilepageKey.currentState.refreshForAudioPage();
+          profilepageKey.currentState!.refreshForAudioPage();
         });
       },
       leading: Image.asset(
@@ -222,7 +222,7 @@ class _TalkParticipantListPage extends State<TalkParticipantProfilePage> {
         height: 24,
       ),
       title: Text(
-        AppLocalizations.of(context).translate('view_full_profile'),
+        AppLocalizations.of(context)!.translate('view_full_profile'),
         style: styleElements
             .bodyText2ThemeScalable(context)
             .copyWith(color: HexColor(AppColors.appColorBlack85)),
@@ -232,7 +232,7 @@ class _TalkParticipantListPage extends State<TalkParticipantProfilePage> {
         onTap: () {
           Navigator.pop(context);
           Navigator.pop(context);
-          inviteUser(userId, userType == 'thirdPerson' ? "person" : userType);
+          inviteUser!(userId, userType == 'thirdPerson' ? "person" : userType);
         },
         child: ListTile(
             leading: Image.asset(
@@ -241,7 +241,7 @@ class _TalkParticipantListPage extends State<TalkParticipantProfilePage> {
               height: 24,
             ),
             title: Text(
-              AppLocalizations.of(context).translate('invite_speaker'),
+              AppLocalizations.of(context)!.translate('invite_speaker'),
               style: styleElements
                   .bodyText2ThemeScalable(context)
                   .copyWith(color: HexColor(AppColors.appColorBlack85)),
@@ -252,7 +252,7 @@ class _TalkParticipantListPage extends State<TalkParticipantProfilePage> {
         onTap: () {
           Navigator.pop(context);
           Navigator.pop(context);
-          updateRole(userId, "listener",
+          updateRole!(userId, "listener",
               userType == 'thirdPerson' ? "person" : userType);
         },
         child: ListTile(
@@ -262,7 +262,7 @@ class _TalkParticipantListPage extends State<TalkParticipantProfilePage> {
               height: 24,
             ),
             title: Text(
-              AppLocalizations.of(context).translate('move_to_audience'),
+              AppLocalizations.of(context)!.translate('move_to_audience'),
               style: styleElements
                   .bodyText2ThemeScalable(context)
                   .copyWith(color: HexColor(AppColors.appColorBlack85)),
@@ -273,7 +273,7 @@ class _TalkParticipantListPage extends State<TalkParticipantProfilePage> {
         onTap: () {
           Navigator.pop(context);
           Navigator.pop(context);
-          moderatorCallback(userId, isModerator == 1 ? 0 : 1,
+          moderatorCallback!(userId, isModerator == 1 ? 0 : 1,
               userType == 'thirdPerson' ? "person" : userType);
         },
         child: ListTile(
@@ -283,7 +283,7 @@ class _TalkParticipantListPage extends State<TalkParticipantProfilePage> {
               height: 24,
             ),
             title: Text(
-              AppLocalizations.of(context).translate('make_as_moderator'),
+              AppLocalizations.of(context)!.translate('make_as_moderator'),
               style: styleElements
                   .bodyText2ThemeScalable(context)
                   .copyWith(color: HexColor(AppColors.appColorBlack85)),
@@ -295,7 +295,7 @@ class _TalkParticipantListPage extends State<TalkParticipantProfilePage> {
           Navigator.pop(context);
           Navigator.pop(context);
 
-          moderatorCallback(userId, isModerator == 1 ? 0 : 1,
+          moderatorCallback!(userId, isModerator == 1 ? 0 : 1,
               userType == 'thirdPerson' ? "person" : userType);
         },
         child: ListTile(
@@ -305,7 +305,7 @@ class _TalkParticipantListPage extends State<TalkParticipantProfilePage> {
               height: 24,
             ),
             title: Text(
-              AppLocalizations.of(context).translate('remove_as_moderator'),
+              AppLocalizations.of(context)!.translate('remove_as_moderator'),
               style: styleElements
                   .bodyText2ThemeScalable(context)
                   .copyWith(color: HexColor(AppColors.appColorBlack85)),
@@ -316,7 +316,7 @@ class _TalkParticipantListPage extends State<TalkParticipantProfilePage> {
         onTap: () {
           Navigator.pop(context);
           Navigator.pop(context);
-          mute(userId, userType == 'thirdPerson' ? "person" : userType);
+          mute!(userId, userType == 'thirdPerson' ? "person" : userType);
         },
         child: ListTile(
             leading: Image.asset(
@@ -325,7 +325,7 @@ class _TalkParticipantListPage extends State<TalkParticipantProfilePage> {
               height: 24,
             ),
             title: Text(
-              AppLocalizations.of(context).translate('mute'),
+              AppLocalizations.of(context)!.translate('mute'),
               style: styleElements
                   .bodyText2ThemeScalable(context)
                   .copyWith(color: HexColor(AppColors.appColorBlack85)),
@@ -336,7 +336,7 @@ class _TalkParticipantListPage extends State<TalkParticipantProfilePage> {
         onTap: () {
           Navigator.pop(context);
           Navigator.pop(context);
-          removeUser(userId, userType == 'thirdPerson' ? "person" : userType);
+          removeUser!(userId, userType == 'thirdPerson' ? "person" : userType);
         },
         child: ListTile(
             leading: Image.asset(
@@ -345,7 +345,7 @@ class _TalkParticipantListPage extends State<TalkParticipantProfilePage> {
               height: 24,
             ),
             title: Text(
-              AppLocalizations.of(context).translate('remove_for_now'),
+              AppLocalizations.of(context)!.translate('remove_for_now'),
               style: styleElements
                   .bodyText2ThemeScalable(context)
                   .copyWith(color: HexColor(AppColors.appColorBlack85)),
@@ -361,7 +361,7 @@ class _TalkParticipantListPage extends State<TalkParticipantProfilePage> {
           height: 24,
         ),
         title: Text(
-          AppLocalizations.of(context).translate('block_user'),
+          AppLocalizations.of(context)!.translate('block_user'),
           style: styleElements
               .bodyText2ThemeScalable(context)
               .copyWith(color: HexColor(AppColors.appColorBlack85)),
@@ -375,7 +375,7 @@ class _TalkParticipantListPage extends State<TalkParticipantProfilePage> {
         height: 24,
       ),
       title: Text(
-        AppLocalizations.of(context).translate('start_oto'),
+        AppLocalizations.of(context)!.translate('start_oto'),
         style: styleElements
             .bodyText2ThemeScalable(context)
             .copyWith(color: HexColor(AppColors.appColorBlack85)),
@@ -385,7 +385,7 @@ class _TalkParticipantListPage extends State<TalkParticipantProfilePage> {
         onTap: () {
           Navigator.pop(context);
           Navigator.pop(context);
-          reportUser(userId, userType == 'thirdPerson' ? "person" : userType);
+          reportUser!(userId, userType == 'thirdPerson' ? "person" : userType);
         },
         child: ListTile(
             leading: Image.asset(
@@ -394,7 +394,7 @@ class _TalkParticipantListPage extends State<TalkParticipantProfilePage> {
               height: 24,
             ),
             title: Text(
-              AppLocalizations.of(context).translate('report_disturbing'),
+              AppLocalizations.of(context)!.translate('report_disturbing'),
               style: styleElements
                   .bodyText2ThemeScalable(context)
                   .copyWith(color: HexColor(AppColors.appColorBlack85)),

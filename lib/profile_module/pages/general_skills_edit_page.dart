@@ -15,8 +15,8 @@ class GeneralSkillsEditPage extends StatefulWidget {
 
 class _GeneralSkillsEditPage extends State<GeneralSkillsEditPage> {
 
-  SharedPreferences prefs;
-  TextStyleElements styleElements;
+  SharedPreferences? prefs;
+  late TextStyleElements styleElements;
   Widget build(BuildContext context) {
 
     ScreenUtil.init;
@@ -32,7 +32,7 @@ class _GeneralSkillsEditPage extends State<GeneralSkillsEditPage> {
                   padding: EdgeInsets.only(right: 20.0, top: 20),
                   child: GestureDetector(
                     onTap: () {},
-                    child: Text(AppLocalizations.of(context).translate('see_all'),
+                    child: Text(AppLocalizations.of(context)!.translate('see_all'),
                       style: styleElements.subtitle1ThemeScalable(context).copyWith(color: HexColor(AppColors.appMainColor)),
                     ),
                   )),

@@ -1,8 +1,8 @@
 class BlankResponse {
-  String statusCode;
-  String message;
-  Rows rows;
-  int total;
+  String? statusCode;
+  String? message;
+  Rows? rows;
+  int? total;
 
   BlankResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -18,7 +18,7 @@ class BlankResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     data['total'] = this.total;
     return data;
@@ -26,12 +26,12 @@ class BlankResponse {
 }
 
 class Rows {
-  String facilityName;
-  String facilityCode;
-  String facilityDescription;
-  String imageUrl;
-  int facilityTypeId;
-  int id;
+  String? facilityName;
+  String? facilityCode;
+  String? facilityDescription;
+  String? imageUrl;
+  int? facilityTypeId;
+  int? id;
 
   Rows(
       {this.facilityName,

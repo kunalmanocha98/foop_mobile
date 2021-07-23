@@ -25,11 +25,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class FollowersSuggestionsPage extends StatefulWidget {
-  String personName;
-  String type;
-  int id;
-  String ownerType;
-  int ownerId;
+  String? personName;
+  String? type;
+  int? id;
+  String? ownerType;
+  int? ownerId;
   Null Function() callback;
 
   FollowersSuggestionsPage(this.personName, this.type, this.id, this.ownerId,
@@ -44,36 +44,36 @@ class _FollowersSuggestionPage extends State<FollowersSuggestionsPage> {
   _FollowersSuggestionPage(
       this.type, this.id, this.ownerId, this.ownerType, this.callback);
 
-  String searchVal;
-  String personName;
-  String type;
-  int id;
-  String ownerType;
-  int ownerId;
+  String? searchVal;
+  String? personName;
+  String? type;
+  int? id;
+  String? ownerType;
+  int? ownerId;
   Null Function() callback;
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
-  SharedPreferences prefs;
-  TextStyleElements styleElements;
+  late SharedPreferences prefs;
+  late TextStyleElements styleElements;
   bool isSuggestionShowed = false;
   bool isFirst = false;
   int j = 0;
 
   bool get wantKeepAlive => true;
 
-  PostListItem postData;
+  PostListItem? postData;
 
-  int postId;
+  int? postId;
 
   GlobalKey<TricycleChatFooterState> chatFooterKey = GlobalKey();
-  PAGINATOR_ENUMS pageEnum_suggestion;
-  PAGINATOR_ENUMS pageEnum_follower;
+  PAGINATOR_ENUMS? pageEnum_suggestion;
+  PAGINATOR_ENUMS? pageEnum_follower;
   bool isPostDataAvailable = true;
-  String errorMessage;
+  String? errorMessage;
   List<FollowersItem> followersList = [];
   List<Rows> suggestionList = [];
-  int totalfollower = 0;
+  int? totalfollower = 0;
   int pagefollower = 1;
-  int totalsuggestions = 0;
+  int? totalsuggestions = 0;
   int pagesuggestion = 1;
 
   var followerSliverKey = GlobalKey();
@@ -83,7 +83,7 @@ class _FollowersSuggestionPage extends State<FollowersSuggestionsPage> {
   void initState() {
     super.initState();
     if (postId != null) {
-      WidgetsBinding.instance.addPostFrameCallback((_) => getPost(postId));
+      WidgetsBinding.instance!.addPostFrameCallback((_) => getPost(postId));
     }
     pageEnum_suggestion = PAGINATOR_ENUMS.LOADING;
     pageEnum_follower = PAGINATOR_ENUMS.LOADING;
@@ -119,7 +119,7 @@ class _FollowersSuggestionPage extends State<FollowersSuggestionsPage> {
                         padding: const EdgeInsets.only(
                             left: 20.0, top: 8, bottom: 8),
                         child: Text(
-                          AppLocalizations.of(context)
+                          AppLocalizations.of(context)!
                               .translate('suggestions'),
                           style: styleElements
                               .headline6ThemeScalable(context)
@@ -208,7 +208,7 @@ class _FollowersSuggestionPage extends State<FollowersSuggestionsPage> {
                           actionOnObjectType: "person",
                           actionOnObjectId: suggestionList[index].id,
                           engageFlag:
-                          AppLocalizations.of(context).translate('follow'),
+                          AppLocalizations.of(context)!.translate('follow'),
                           actionFlag: "F",
                           actionDetails: [],
                           personName: suggestionList[index].title ?? "",
@@ -229,7 +229,7 @@ class _FollowersSuggestionPage extends State<FollowersSuggestionsPage> {
                       return CustomPaginator(context).loadingWidgetMaker();
                     case ConnectionState.done:
                       pagesuggestion++;
-                      suggestionList.addAll(snapshot.data.rows);
+                      suggestionList.addAll(snapshot.data!.rows!);
                       Future.microtask(() {
                         setState(() {});
                       });
@@ -280,7 +280,7 @@ class _FollowersSuggestionPage extends State<FollowersSuggestionsPage> {
                     child: Padding(
                       padding: EdgeInsets.all(10),
                       child: Text(
-                          AppLocalizations.of(context).translate("suggestions"),
+                          AppLocalizations.of(context)!.translate("suggestions"),
                           style: styleElements
                               .headline6ThemeScalable(context)
                               .copyWith(
@@ -328,15 +328,15 @@ class _FollowersSuggestionPage extends State<FollowersSuggestionsPage> {
                               followersList[index].institutionRole !=
                                   null &&
                                   followersList[index]
-                                      .institutionRole
+                                      .institutionRole!
                                       .isNotEmpty,
                               child: Text(
                                 (followersList[index].institutionRole !=
                                     null &&
                                     followersList[index]
-                                        .institutionRole
+                                        .institutionRole!
                                         .isNotEmpty)
-                                    ? followersList[index].institutionRole
+                                    ? followersList[index].institutionRole!
                                     : "",
                                 style: styleElements
                                     .captionThemeScalable(context),
@@ -359,9 +359,9 @@ class _FollowersSuggestionPage extends State<FollowersSuggestionsPage> {
                                 engageFlag: followersList[index]
                                     .isObjectFollowing ??
                                     false
-                                    ? AppLocalizations.of(context)
+                                    ? AppLocalizations.of(context)!
                                     .translate('following')
-                                    : AppLocalizations.of(context)
+                                    : AppLocalizations.of(context)!
                                     .translate('follow'),
                                 actionFlag: followersList[index]
                                     .isObjectFollowing ??
@@ -398,15 +398,15 @@ class _FollowersSuggestionPage extends State<FollowersSuggestionsPage> {
                             null &&
                             followersList[index].suggestedType ==
                                 "suggestion"
-                            ? AppLocalizations.of(context).translate('follow')
+                            ? AppLocalizations.of(context)!.translate('follow')
                             : id == ownerId
-                            ? AppLocalizations.of(context)
+                            ? AppLocalizations.of(context)!
                             .translate('remove')
                             : followersList[index].isObjectFollowing ??
                             false
-                            ? AppLocalizations.of(context)
+                            ? AppLocalizations.of(context)!
                             .translate('following')
-                            : AppLocalizations.of(context)
+                            : AppLocalizations.of(context)!
                             .translate('follow'),
                         actionFlag:
                         followersList[index].suggestedType != null &&
@@ -442,7 +442,7 @@ class _FollowersSuggestionPage extends State<FollowersSuggestionsPage> {
                       return CustomPaginator(context).loadingWidgetMaker();
                     case ConnectionState.done:
                       pagefollower++;
-                      followersList.addAll(snapshot.data.rows);
+                      followersList.addAll(snapshot.data!.rows!);
                       Future.microtask(() {
                         setState(() {});
                       });
@@ -459,7 +459,7 @@ class _FollowersSuggestionPage extends State<FollowersSuggestionsPage> {
     }
   }
 
-  void getPost(int postId) async {
+  void getPost(int? postId) async {
     final body = jsonEncode({"post_id": postId});
 
     Calls().call(body, context, Config.POST_VIEW).then((value) {
@@ -499,8 +499,8 @@ class _FollowersSuggestionPage extends State<FollowersSuggestionsPage> {
     var response = FollowersData.fromJson(res);
     totalfollower = response.total;
     if (response.statusCode == Strings.success_code) {
-      if (response.total > 0) {
-        followersList.addAll(response.rows);
+      if (response.total! > 0) {
+        followersList.addAll(response.rows!);
         setState(() {
           pageEnum_follower = PAGINATOR_ENUMS.SUCCESS;
           pagefollower = pagefollower + 1;
@@ -525,8 +525,8 @@ class _FollowersSuggestionPage extends State<FollowersSuggestionsPage> {
     }
   }
 
-  int getItemsCountfollower() {
-    if (totalfollower > followersList.length) {
+  int? getItemsCountfollower() {
+    if (totalfollower! > followersList.length) {
       return followersList.length + 1;
     } else {
       if (j == 0) {
@@ -544,8 +544,8 @@ class _FollowersSuggestionPage extends State<FollowersSuggestionsPage> {
     var response = SuggestionData.fromJson(res);
     totalsuggestions = response.total;
     if (response.statusCode == Strings.success_code) {
-      if (response.total > 0) {
-        suggestionList.addAll(response.rows);
+      if (response.total! > 0) {
+        suggestionList.addAll(response.rows!);
         pagesuggestion = 2;
         setState(() {
           pageEnum_suggestion = PAGINATOR_ENUMS.SUCCESS;
@@ -562,8 +562,8 @@ class _FollowersSuggestionPage extends State<FollowersSuggestionsPage> {
     }
   }
 
-  int getItemsCountsuggestion() {
-    if (totalsuggestions > suggestionList.length) {
+  int? getItemsCountsuggestion() {
+    if (totalsuggestions! > suggestionList.length) {
       return suggestionList.length + 1;
     } else {
       return totalsuggestions;

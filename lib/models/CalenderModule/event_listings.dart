@@ -1,8 +1,8 @@
 class EventListResponse {
-  String statusCode;
-  String message;
-  List<EventListItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<EventListItem>? rows;
+  int? total;
 
   EventListResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -12,7 +12,7 @@ class EventListResponse {
     if (json['rows'] != null) {
       rows = [];//EventListItem>();
       json['rows'].forEach((v) {
-        rows.add(new EventListItem.fromJson(v));
+        rows!.add(new EventListItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -23,17 +23,17 @@ class EventListResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
   }
 }
 class EventViewResponse {
-  String statusCode;
-  String message;
-  EventListItem rows;
-  int total;
+  String? statusCode;
+  String? message;
+  EventListItem? rows;
+  int? total;
 
   EventViewResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -49,7 +49,7 @@ class EventViewResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     data['total'] = this.total;
     return data;
@@ -57,41 +57,41 @@ class EventViewResponse {
 }
 
 class EventListItem {
-  int id;
-  int calEventsId;
-  int standardEventsId;
-  String eventOwnerType;
-  int eventOwnerId;
-  String calendarOwnerType;
-  int calendarOwnerId;
-  String eventRoleType;
-  List<String> recipientType;
-  String title;
-  int userReminderTime;
-  String subtitle;
-  String eventImportanceType;
-  String eventCategory;
-  String eventImage;
-  String eventDate;
+  int? id;
+  int? calEventsId;
+  int? standardEventsId;
+  String? eventOwnerType;
+  int? eventOwnerId;
+  String? calendarOwnerType;
+  int? calendarOwnerId;
+  String? eventRoleType;
+  List<String>? recipientType;
+  String? title;
+  int? userReminderTime;
+  String? subtitle;
+  String? eventImportanceType;
+  String? eventCategory;
+  String? eventImage;
+  String? eventDate;
   Null eventTimeZone;
   Null eventColorCode;
   Null eventIcon;
-  int startTime;
-  int endTime;
+  int? startTime;
+  int? endTime;
   Null reminderTime;
   Null reminderUnit;
   Null isFullDay;
-  String eventStatus;
+  String? eventStatus;
   Null eventAccessUrl;
-  String calContextType;
-  int calContextTypeId;
-  Header header;
-  String eventPrivacyType;
-  List<String> eventTopics;
-  List<String> eventLanguages;
-  List<ParticipantList> participantList;
-  int isModerator;
-  bool isMute;
+  String? calContextType;
+  int? calContextTypeId;
+  Header? header;
+  String? eventPrivacyType;
+  List<String>? eventTopics;
+  List<String>? eventLanguages;
+  List<ParticipantList>? participantList;
+  int? isModerator;
+  bool? isMute;
 
   EventListItem(
       {this.id,
@@ -168,7 +168,7 @@ class EventListItem {
     if (json['participant_list'] != null) {
       participantList = [];//ParticipantList>();
       json['participant_list'].forEach((v) {
-        participantList.add(new ParticipantList.fromJson(v));
+        participantList!.add(new ParticipantList.fromJson(v));
       });
     }
   }
@@ -205,26 +205,26 @@ class EventListItem {
     data['event_owner_id'] = this.eventOwnerId;
     data['is_moderator'] = this.isModerator;
     if (this.header != null) {
-      data['header'] = this.header.toJson();
+      data['header'] = this.header!.toJson();
     }
     data['event_privacy_type'] = this.eventPrivacyType;
     data['event_topics'] = this.eventTopics;
     data['event_languages'] = this.eventLanguages;
     if (this.participantList != null) {
       data['participant_list'] =
-          this.participantList.map((v) => v.toJson()).toList();
+          this.participantList!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Header {
-  String title;
-  List<Action> action;
-  String avatar;
-  double rating;
-  String subtitle1;
-  bool isVerified;
+  String? title;
+  List<Action>? action;
+  String? avatar;
+  double? rating;
+  String? subtitle1;
+  bool? isVerified;
 
   Header(
       {this.title,
@@ -239,7 +239,7 @@ class Header {
     if (json['action'] != null) {
       action = [];//Action>();
       json['action'].forEach((v) {
-        action.add(new Action.fromJson(v));
+        action!.add(new Action.fromJson(v));
       });
     }
     avatar = json['avatar'];
@@ -252,7 +252,7 @@ class Header {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['title'] = this.title;
     if (this.action != null) {
-      data['action'] = this.action.map((v) => v.toJson()).toList();
+      data['action'] = this.action!.map((v) => v.toJson()).toList();
     }
     data['avatar'] = this.avatar;
     data['rating'] = this.rating;
@@ -263,8 +263,8 @@ class Header {
 }
 
 class Action {
-  String type;
-  bool value;
+  String? type;
+  bool? value;
 
   Action({this.type, this.value});
 
@@ -282,10 +282,10 @@ class Action {
 }
 
 class ParticipantList {
-  String name;
-  String profileImage;
-  String role;
-  bool isOnline;
+  String? name;
+  String? profileImage;
+  String? role;
+  bool? isOnline;
 
   ParticipantList({this.name, this.profileImage, this.role, this.isOnline});
 

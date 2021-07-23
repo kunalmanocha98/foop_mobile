@@ -23,7 +23,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class InviteParent extends StatefulWidget {
-  SharedPreferences prefs;
+  SharedPreferences? prefs;
 
   InviteParent({this.prefs});
 
@@ -32,24 +32,24 @@ class InviteParent extends StatefulWidget {
 }
 
 class _InviteParent extends State<InviteParent> with CommonMixins{
-  TextStyleElements styleElements;
-  ProgressDialog pr;
-  Persondata rows;
+  late TextStyleElements styleElements;
+  ProgressDialog? pr;
+  Persondata? rows;
   var followers = 0;
   var following = 0;
   var roomsCount = 0;
   var postCount = 0;
   bool cb1 = false, cb2 = false;
   List<MenuListItem> menuList = [];
-  int selectedRadio;
-  SharedPreferences prefs;
+  int? selectedRadio;
+  SharedPreferences? prefs;
   GlobalKey<TricycleProgressButtonState> progressButtonKey= GlobalKey();
 
 
-  String fatherFirstName,motherFirstName;
-  String fatherLastName,motherLastName;
-  String fatherEmail, motherEmail;
-  String fatherMobile, motherMobile;
+  String? fatherFirstName,motherFirstName;
+  String? fatherLastName,motherLastName;
+  String? fatherEmail, motherEmail;
+  String? fatherMobile, motherMobile;
   GlobalKey<FormState> formKey = GlobalKey();
 
 
@@ -85,7 +85,7 @@ class _InviteParent extends State<InviteParent> with CommonMixins{
         ],
         decoration: InputDecoration(
             contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-            hintText: AppLocalizations.of(context).translate('email'),
+            hintText: AppLocalizations.of(context)!.translate('email'),
             hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
             prefixIcon: Padding(
                 padding: EdgeInsets.all(0.0.h),
@@ -100,7 +100,7 @@ class _InviteParent extends State<InviteParent> with CommonMixins{
               ),
             )),
         validator: validateEmail,
-        onSaved: (String value) {
+        onSaved: (String? value) {
           fatherEmail = value;
         },
       );
@@ -117,7 +117,7 @@ class _InviteParent extends State<InviteParent> with CommonMixins{
       scrollPadding: EdgeInsets.all(20.0.w),
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-          hintText: AppLocalizations.of(context).translate('mobile_number'),
+          hintText: AppLocalizations.of(context)!.translate('mobile_number'),
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
           prefixIcon: Padding(
               padding: EdgeInsets.all(0.0.h),
@@ -154,7 +154,7 @@ class _InviteParent extends State<InviteParent> with CommonMixins{
       },
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-          hintText: AppLocalizations.of(context).translate('first_name'),
+          hintText: AppLocalizations.of(context)!.translate('first_name'),
           hintStyle: styleElements
               .bodyText2ThemeScalable(context),
           prefixIcon: Padding(
@@ -197,7 +197,7 @@ class _InviteParent extends State<InviteParent> with CommonMixins{
         },
         decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-          hintText: AppLocalizations.of(context).translate('last_name'),
+          hintText: AppLocalizations.of(context)!.translate('last_name'),
           hintStyle: styleElements
               .bodyText2ThemeScalable(context)
               .copyWith(fontSize: 14.sp),
@@ -215,7 +215,7 @@ class _InviteParent extends State<InviteParent> with CommonMixins{
         ],
         decoration: InputDecoration(
             contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-            hintText: AppLocalizations.of(context).translate('email'),
+            hintText: AppLocalizations.of(context)!.translate('email'),
             hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
             prefixIcon: Padding(
                 padding: EdgeInsets.all(0.0.h),
@@ -230,7 +230,7 @@ class _InviteParent extends State<InviteParent> with CommonMixins{
               ),
             )),
         validator: validateEmail,
-        onSaved: (String value) {
+        onSaved: (String? value) {
           motherEmail = value;
         },
       );
@@ -247,7 +247,7 @@ class _InviteParent extends State<InviteParent> with CommonMixins{
       scrollPadding: EdgeInsets.all(20.0.w),
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-          hintText: AppLocalizations.of(context).translate('mobile_number'),
+          hintText: AppLocalizations.of(context)!.translate('mobile_number'),
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
           prefixIcon: Padding(
               padding: EdgeInsets.all(0.0.h),
@@ -285,7 +285,7 @@ class _InviteParent extends State<InviteParent> with CommonMixins{
       },
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-          hintText: AppLocalizations.of(context).translate('first_name'),
+          hintText: AppLocalizations.of(context)!.translate('first_name'),
           hintStyle: styleElements
               .bodyText2ThemeScalable(context)
               .copyWith(fontSize: 14.sp),
@@ -329,7 +329,7 @@ class _InviteParent extends State<InviteParent> with CommonMixins{
         },
         decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-          hintText: AppLocalizations.of(context).translate('last_name'),
+          hintText: AppLocalizations.of(context)!.translate('last_name'),
           hintStyle: styleElements
               .bodyText2ThemeScalable(context)
               .copyWith(fontSize: 14.sp),
@@ -366,12 +366,12 @@ class _InviteParent extends State<InviteParent> with CommonMixins{
                           ),
                           Container(
                               child: Text(
-                                AppLocalizations.of(context).translate("invite_parent"),
+                                AppLocalizations.of(context)!.translate("invite_parent"),
                                 style: styleElements.headline6ThemeScalable(context),
                               )),
                           Container(
                               child: Text(
-                                AppLocalizations.of(context).translate("earn_coins"),
+                                AppLocalizations.of(context)!.translate("earn_coins"),
                                 style: styleElements
                                     .headline6ThemeScalable(context)
                                     .copyWith(fontWeight: FontWeight.bold),
@@ -400,7 +400,7 @@ class _InviteParent extends State<InviteParent> with CommonMixins{
 
                                 Padding(
                                     padding: const EdgeInsets.all(16),
-                                    child:Text(AppLocalizations.of(context).translate("father_detail"),   style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.w700),)),
+                                    child:Text(AppLocalizations.of(context)!.translate("father_detail"),   style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.w700),)),
                                 Container(
                                   child: Row(
                                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -445,7 +445,7 @@ class _InviteParent extends State<InviteParent> with CommonMixins{
                               children: <Widget>[
                                 Padding(
                                     padding: const EdgeInsets.all(16),
-                                    child:Text(AppLocalizations.of(context).translate("mother_detail"),style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.w700))),
+                                    child:Text(AppLocalizations.of(context)!.translate("mother_detail"),style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.w700))),
                                 Container(
                                   child: Row(
                                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -503,7 +503,7 @@ class _InviteParent extends State<InviteParent> with CommonMixins{
                           },
                           color: HexColor(AppColors.appColorWhite),
                           child: Text(
-                              AppLocalizations.of(context).translate("invite"),
+                              AppLocalizations.of(context)!.translate("invite"),
                               style: styleElements.buttonThemeScalable(context).copyWith(color: HexColor(AppColors.appMainColor))),
                         ),
                       )),
@@ -514,35 +514,35 @@ class _InviteParent extends State<InviteParent> with CommonMixins{
   }
 
   void sendInvites() async{
-   progressButtonKey.currentState.show();
+   progressButtonKey.currentState!.show();
     prefs??=await SharedPreferences.getInstance();
-    formKey.currentState.save();
-    if((mobileControllerFather.text!=null && mobileControllerFather.text.isNotEmpty&& fatherEmail!=null && fatherEmail.isNotEmpty)||(mobileControllerMother.text!=null && mobileControllerMother.text.isNotEmpty&& motherEmail!=null && motherEmail.isNotEmpty)){
+    formKey.currentState!.save();
+    if((mobileControllerFather.text!=null && mobileControllerFather.text.isNotEmpty&& fatherEmail!=null && fatherEmail!.isNotEmpty)||(mobileControllerMother.text!=null && mobileControllerMother.text.isNotEmpty&& motherEmail!=null && motherEmail!.isNotEmpty)){
 
       InviteCreatePayload payload = InviteCreatePayload();
       payload.inviteContextType = 'TR';
-      payload.inviteContextTypeId = prefs.getInt(Strings.userId);
+      payload.inviteContextTypeId = prefs!.getInt(Strings.userId);
       payload.invitedByType = 'person';
-      payload.invitedById = prefs.getInt(Strings.userId);
+      payload.invitedById = prefs!.getInt(Strings.userId);
       payload.invitationRecipientList = getInvitationRecipientList();
       Calls().call(jsonEncode(payload), context, Config.INVITATION_CREATE).then((value) async {
         var response  = InviteCreateResponse.fromJson(value);
-        progressButtonKey.currentState.hide();
+        progressButtonKey.currentState!.hide();
         if(response.statusCode == Strings.success_code){
-          ToastBuilder().showToast(response.message, context, HexColor(AppColors.success));
+          ToastBuilder().showToast(response.message!, context, HexColor(AppColors.success));
           Navigator.pop(context);
         }else{
-          ToastBuilder().showToast(response.message, context, HexColor(AppColors.warning));
+          ToastBuilder().showToast(response.message!, context, HexColor(AppColors.warning));
         }
       }).catchError((onError) async {
-        progressButtonKey.currentState.hide();
+        progressButtonKey.currentState!.hide();
         ToastBuilder().showToast('Some Failure', context, HexColor(AppColors.warning));
       });
     }
     else
       {
-        progressButtonKey.currentState.hide();
-        ToastBuilder().showToast(AppLocalizations.of(context).translate("email_mobile_required"), context, HexColor(AppColors.information));
+        progressButtonKey.currentState!.hide();
+        ToastBuilder().showToast(AppLocalizations.of(context)!.translate("email_mobile_required"), context, HexColor(AppColors.information));
       }
   }
 
@@ -552,13 +552,13 @@ class _InviteParent extends State<InviteParent> with CommonMixins{
     list.add(InvitationRecipientList(
       category: "Parent",
       emailId: fatherEmail,
-      name: fatherFirstName+" "+fatherLastName,
+      name: fatherFirstName!+" "+fatherLastName!,
       mobileNumber: mobileControllerFather.text
     ));
     list.add(InvitationRecipientList(
         category: "Parent",
         emailId: motherEmail,
-        name: motherFirstName+" "+motherLastName,
+        name: motherFirstName!+" "+motherLastName!,
         mobileNumber: mobileControllerMother.text
     ));
     return list;

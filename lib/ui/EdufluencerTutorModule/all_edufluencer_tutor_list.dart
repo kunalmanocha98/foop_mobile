@@ -21,9 +21,9 @@ import 'package:oho_works_app/components/paginator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AllEdufluencerAndTutors extends StatefulWidget {
-  final edufluencer_type type;
-  final String listType;
-  final bool isEdufluencer;
+  final edufluencer_type? type;
+  final String? listType;
+  final bool? isEdufluencer;
 
   AllEdufluencerAndTutors({this.type,this.listType,this.isEdufluencer});
 
@@ -32,9 +32,9 @@ class AllEdufluencerAndTutors extends StatefulWidget {
 }
 
 class AllEdufluencerAndTutorsState extends State<AllEdufluencerAndTutors> {
-  BuildContext sctx;
-  TextStyleElements styleElements;
-  SharedPreferences prefs = locator<SharedPreferences>();
+  BuildContext? sctx;
+  late TextStyleElements styleElements;
+  SharedPreferences? prefs = locator<SharedPreferences>();
 
   @override
   Widget build(BuildContext context) {
@@ -60,9 +60,9 @@ class AllEdufluencerAndTutorsState extends State<AllEdufluencerAndTutors> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Text(widget.type == edufluencer_type.E ?
-                            AppLocalizations.of(context).translate(
+                            AppLocalizations.of(context)!.translate(
                                 'edufluencer_note')
-                                : AppLocalizations.of(context).translate(
+                                : AppLocalizations.of(context)!.translate(
                                 'tutor_note')
                               , style: styleElements.subtitle1ThemeScalable(
                                   context),
@@ -96,7 +96,7 @@ class AllEdufluencerAndTutorsState extends State<AllEdufluencerAndTutors> {
                             },
                             color: HexColor(AppColors.appMainColor),
                             child: Text(
-                              AppLocalizations.of(context).translate(
+                              AppLocalizations.of(context)!.translate(
                                   widget.type == edufluencer_type.E
                                       ? 'become_edufluencer'
                                       : "become_tutor"),
@@ -163,7 +163,7 @@ class AllEdufluencerAndTutorsState extends State<AllEdufluencerAndTutors> {
       followButtonCallback: () {
         GenericFollowUnfollowButtonState().followUnfollowBlock(
             "person",
-            prefs.getInt(Strings.userId),
+            prefs!.getInt(Strings.userId),
             'person',
             item.personId,
             "F",
@@ -178,8 +178,8 @@ class AllEdufluencerAndTutorsState extends State<AllEdufluencerAndTutors> {
         showDialog(
           context: context,
           builder: (BuildContext context) {
-            return EdufluencerTutorDialog(userId: prefs.getInt(Strings.userId).toString(),
-            userName: prefs.getString(Strings.userName),
+            return EdufluencerTutorDialog(userId: prefs!.getInt(Strings.userId).toString(),
+            userName: prefs!.getString(Strings.userName),
               edufluncerItem:item,
             );
           },

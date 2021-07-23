@@ -11,17 +11,17 @@ import 'package:flutter/material.dart';
 class SearchBox extends StatefulWidget {
 
   Function(String value) onvalueChanged;
-  String hintText;
-  bool progressIndicator;
-  bool isFilterVisible;
-  Function onFilterClick;
+  String? hintText;
+  bool? progressIndicator;
+  bool? isFilterVisible;
+  Function? onFilterClick;
   bool isDemoBox;
-  Function onBoxClick;
-  TextEditingController controller;
+  Function? onBoxClick;
+  TextEditingController? controller;
 
   SearchBox(
-      {Key key,
-      @required this.onvalueChanged,
+      {Key? key,
+      required this.onvalueChanged,
       this.progressIndicator,
       this.hintText,
       this.isFilterVisible,
@@ -41,13 +41,13 @@ class SearchBox extends StatefulWidget {
 }
 
 class SearchBoxState extends State<SearchBox> {
-  Function(String value) onvalueChanged;
-  String hintText;
-  Timer searchOnStoppedTyping;
-  bool progressIndicator;
-  TextStyleElements styleElements ;
-  bool isFilterVisible;
-  Function onFilterClick;
+  Function(String value)? onvalueChanged;
+  String? hintText;
+  Timer? searchOnStoppedTyping;
+  bool? progressIndicator;
+  late TextStyleElements styleElements ;
+  bool? isFilterVisible;
+  Function? onFilterClick;
   TextEditingController controller = TextEditingController();
 
   SearchBoxState({this.onvalueChanged, this.hintText, this.progressIndicator, this.isFilterVisible, this.onFilterClick});
@@ -60,7 +60,7 @@ class SearchBoxState extends State<SearchBox> {
       children: <Widget>[
         Expanded(
           child: GestureDetector(
-            onTap: widget.isDemoBox?widget.onBoxClick:null,
+            onTap: widget.isDemoBox?widget.onBoxClick as void Function()?:null,
             child: Container(
               height: 48,
               margin:  EdgeInsets.only(left: 16, right: 16, top: 2,bottom: 12),
@@ -99,17 +99,17 @@ class SearchBoxState extends State<SearchBox> {
                               milliseconds:
                                   700); // set the duration that you want call search() after that.
                           if (searchOnStoppedTyping != null) {
-                            searchOnStoppedTyping.cancel(); // clear timer
+                            searchOnStoppedTyping!.cancel(); // clear timer
                           }
                           searchOnStoppedTyping =
-                              new Timer(duration, () => onvalueChanged(value));
+                              new Timer(duration, () => onvalueChanged!(value));
                         },
 
                         style: styleElements.subtitle1ThemeScalable(context).copyWith(
                             color: HexColor(AppColors.appColorBlack65)
                         ),
                         decoration: InputDecoration(
-                          hintText: (hintText != null || hintText.isNotEmpty)
+                          hintText: (hintText != null || hintText!.isNotEmpty)
                               ? hintText
                               : "Search",
                           border: InputBorder.none,
@@ -146,7 +146,7 @@ class SearchBoxState extends State<SearchBox> {
             margin:
             const EdgeInsets.only(right: 16),
             child: GestureDetector(
-              onTap: onFilterClick,
+              onTap: onFilterClick as void Function()?,
               child: Icon(
                 Icons.filter_list,
                 size: 24,

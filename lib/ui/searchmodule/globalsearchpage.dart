@@ -23,7 +23,7 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class GlobalSearchPage extends StatefulWidget {
-  final bool withAppBar;
+  final bool? withAppBar;
   // final SharedPreferences prefs;
 
   GlobalSearchPage({this.withAppBar});
@@ -33,9 +33,9 @@ class GlobalSearchPage extends StatefulWidget {
 
 class _GlobalSearchPage extends State<GlobalSearchPage>
     with SingleTickerProviderStateMixin {
-  TextStyleElements styleElements;
-  final SharedPreferences prefs = locator<SharedPreferences>();
-  String searchVal;
+  late TextStyleElements styleElements;
+  final SharedPreferences? prefs = locator<SharedPreferences>();
+  String? searchVal;
 
   // _GlobalSearchPage({this.prefs});
 
@@ -48,7 +48,7 @@ class _GlobalSearchPage extends State<GlobalSearchPage>
 
   PAGINATOR_ENUMS pageEnums = PAGINATOR_ENUMS.SUCCESS;
   int _currentPosition = 3;
-  TabController _tabController;
+  TabController? _tabController;
 
   bool isSearching = false;
   bool isTabSelected = false;
@@ -64,7 +64,7 @@ class _GlobalSearchPage extends State<GlobalSearchPage>
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => loadPages());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => loadPages());
     // focusNode = FocusNode();
     // animationController = AnimationController(
     //   vsync: this,
@@ -97,7 +97,7 @@ class _GlobalSearchPage extends State<GlobalSearchPage>
         searchVal: searchVal,
         type: 'person',
       ),
-      tabName: AppLocalizations.of(context).translate('people'),
+      tabName: AppLocalizations.of(context)!.translate('people'),
     ));
     list.add(CustomTabBarMaker(
       statelessWidget: SearchTypeListPage(
@@ -105,16 +105,16 @@ class _GlobalSearchPage extends State<GlobalSearchPage>
         searchVal: searchVal,
         type: 'institution',
       ),
-      tabName: AppLocalizations.of(context).translate('institution'),
+      tabName: AppLocalizations.of(context)!.translate('institution'),
     ));
     _tabController = TabController(vsync: this, length: list.length);
-    _tabController.addListener(onPositionChange);
+    _tabController!.addListener(onPositionChange);
   }
   onPositionChange() {
-    if (!_tabController.indexIsChanging && this.mounted) {
+    if (!_tabController!.indexIsChanging && this.mounted) {
       setState(() {
         isTabSelected = true;
-        _currentPosition = _tabController.index;
+        _currentPosition = _tabController!.index;
       });
     }
   }
@@ -123,7 +123,7 @@ class _GlobalSearchPage extends State<GlobalSearchPage>
       physics: NeverScrollableScrollPhysics(),
       controller: _tabController,
       children: List<Widget>.generate(list.length, (int index) {
-        list[index].statelessWidget.searchVal = searchVal;
+        list[index].statelessWidget!.searchVal = searchVal;
         return Center(
             child: list[index].statelessWidget);
       }),
@@ -136,7 +136,7 @@ class _GlobalSearchPage extends State<GlobalSearchPage>
     return
       SafeArea(
         child: Scaffold(
-          appBar: (widget.withAppBar!=null && widget.withAppBar)?TricycleAppBar().getCustomAppBar(context, appBarTitle:AppLocalizations.of(context).translate('global_search_title') , onBackButtonPress: (){Navigator.pop(context);}):null,
+          appBar: (widget.withAppBar!=null && widget.withAppBar!)?TricycleAppBar().getCustomAppBar(context, appBarTitle:AppLocalizations.of(context)!.translate('global_search_title') , onBackButtonPress: (){Navigator.pop(context);}):null,
           body: DefaultTabController(
             length: list.length,
             child: NestedScrollView(
@@ -181,7 +181,7 @@ class _GlobalSearchPage extends State<GlobalSearchPage>
                                             decoration: InputDecoration(
                                               contentPadding: EdgeInsets.only(top:12,left: 16),
                                               border: InputBorder.none,
-                                              hintText: AppLocalizations.of(context).translate('search'),
+                                              hintText: AppLocalizations.of(context)!.translate('search'),
                                               hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
                                               prefixIcon: Padding(
                                                   padding: EdgeInsets.all(0.0),
@@ -201,18 +201,18 @@ class _GlobalSearchPage extends State<GlobalSearchPage>
                                             String pattern) async {
                                           if (pattern.isEmpty) {
                                             GlobalSearchRequest payload = GlobalSearchRequest();
-                                            payload.institutionId = prefs.getInt(Strings.instituteId);
-                                            payload.personId = prefs.getInt(Strings.userId);
+                                            payload.institutionId = prefs!.getInt(Strings.instituteId);
+                                            payload.personId = prefs!.getInt(Strings.userId);
                                             payload.pageNumber=1;
                                             payload.pageSize=5;
                                             payload.searchType = 'person';
                                             var res =  await Calls().call( jsonEncode(payload), context, Config.GLOBAL_SEARCH_HISTORY);
-                                            return GlobalSearchHistoryResponse.fromJson(res).rows;
+                                            return GlobalSearchHistoryResponse.fromJson(res).rows!;
                                           }else {
-                                            return null;
+                                            return [];
                                           }
                                         },
-                                        itemBuilder:(context,suggestion){
+                                        itemBuilder:(context,dynamic suggestion){
                                           GlobalSearchHistoryItem item = suggestion;
                                           return ListTile(
                                             leading: Container(
@@ -221,10 +221,10 @@ class _GlobalSearchPage extends State<GlobalSearchPage>
                                               ),
                                               child: Icon(Icons.access_time_rounded),
                                             ),
-                                            title: Text(item.searchVal),
+                                            title: Text(item.searchVal!),
                                           );
                                         },
-                                        onSuggestionSelected:(suggestion){
+                                        onSuggestionSelected:(dynamic suggestion){
                                           isSearching = true;
                                           searchVal = suggestion.searchVal;
                                           doSearch(suggestion.searchVal);
@@ -254,7 +254,7 @@ class _GlobalSearchPage extends State<GlobalSearchPage>
                                   child: Container(
                                     margin: const EdgeInsets.all(16),
                                     child: Text(
-                                      AppLocalizations.of(context)
+                                      AppLocalizations.of(context)!
                                           .translate("verified_person"),
                                       textAlign: TextAlign.center,
                                       style: styleElements
@@ -286,7 +286,7 @@ class _GlobalSearchPage extends State<GlobalSearchPage>
                                   tabName: list[index].tabName,
                                   isActive: index == _currentPosition,
                                   onPressed: () {
-                                    _tabController.animateTo(index);
+                                    _tabController!.animateTo(index);
                                     // if (this.mounted) {
                                     //   setState(() {
                                     //     isTabSelected = true;
@@ -322,11 +322,11 @@ class _GlobalSearchPage extends State<GlobalSearchPage>
                       seeMoreCallback: (type) {
                         setState(() {
                           if (type == 'person') {
-                            _tabController.animateTo(0);
+                            _tabController!.animateTo(0);
                             isTabSelected = true;
                             _currentPosition = 0;
                           } else {
-                            _tabController.animateTo(1);
+                            _tabController!.animateTo(1);
                             isTabSelected = true;
                             _currentPosition = 1;
                           }
@@ -334,7 +334,7 @@ class _GlobalSearchPage extends State<GlobalSearchPage>
                       },
                     );
                   },): TricycleEmptyWidget(
-                  message: AppLocalizations.of(context)
+                  message: AppLocalizations.of(context)!
                       .translate('no_data'),
                 )
             ),
@@ -343,14 +343,14 @@ class _GlobalSearchPage extends State<GlobalSearchPage>
       );
   }
 
-  void doSearch(String value) async {
+  void doSearch(String? value) async {
     setState(() {
       pageEnums = PAGINATOR_ENUMS.LOADING;
     });
     GlobalSearchRequest payload = GlobalSearchRequest();
-    payload.institutionId = prefs.getInt(Strings.instituteId);
+    payload.institutionId = prefs!.getInt(Strings.instituteId);
     payload.searchType = 'person';
-    payload.personId = prefs.getInt(Strings.userId);
+    payload.personId = prefs!.getInt(Strings.userId);
     payload.searchPage = 'common';
     payload.searchVal = value;
     payload.entityType = 'all';
@@ -363,20 +363,20 @@ class _GlobalSearchPage extends State<GlobalSearchPage>
     if (response.statusCode == Strings.success_code) {
       setState(() {
         masterList.clear();
-        if(response.rows!=null && response.rows.person!=null && response.rows.person.isNotEmpty)
+        if(response.rows!=null && response.rows!.person!=null && response.rows!.person!.isNotEmpty)
           {
             masterList.add(SearchTypeMasterModel(
                 type: 'person',
                 title: 'People',
-                list: response.rows.person
+                list: response.rows!.person
             ));
           }
-        if(response.rows!=null && response.rows.institution!=null && response.rows.institution.isNotEmpty)
+        if(response.rows!=null && response.rows!.institution!=null && response.rows!.institution!.isNotEmpty)
         {
           masterList.add(SearchTypeMasterModel(
               type: 'institution',
               title: 'Institutions',
-              list: response.rows.institution
+              list: response.rows!.institution
           ));
         }
 

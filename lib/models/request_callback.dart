@@ -1,19 +1,19 @@
 class RequestCallBack {
-  String enquiryType;
-  String firstName;
-  String lastName;
-  String mobileNumber;
-  String emailId;
-  String enquiryDetails;
-  String enquirySource;
-  String institutionName;
-  InstitutionLocation institutionLocation;
-  String enquiryReference;
-  String numberOfStudent;
-  String numberOfTeacher;
-  String institutionType;
-  String relationShipType;
-  String description;
+  String? enquiryType;
+  String? firstName;
+  String? lastName;
+  String? mobileNumber;
+  String? emailId;
+  String? enquiryDetails;
+  String? enquirySource;
+  String? institutionName;
+  InstitutionLocation? institutionLocation;
+  String? enquiryReference;
+  String? numberOfStudent;
+  String? numberOfTeacher;
+  String? institutionType;
+  String? relationShipType;
+  String? description;
 
   RequestCallBack(
       {this.enquiryType,
@@ -63,7 +63,7 @@ class RequestCallBack {
     data['enquiry_source'] = this.enquirySource;
     data['institution_name'] = this.institutionName;
     if (this.institutionLocation != null) {
-      data['institution_location'] = this.institutionLocation.toJson();
+      data['institution_location'] = this.institutionLocation!.toJson();
     }
     data['enquiry_reference'] = this.enquiryReference;
     data['number_of_student'] = this.numberOfStudent;
@@ -76,13 +76,13 @@ class RequestCallBack {
 }
 
 class InstitutionLocation {
-  String address1;
-  String address2;
-  String city;
-  String district;
-  String pincode;
-  String lat;
-  String long;
+  String? address1;
+  String? address2;
+  String? city;
+  String? district;
+  String? pincode;
+  String? lat;
+  String? long;
 
   InstitutionLocation(
       {this.address1,

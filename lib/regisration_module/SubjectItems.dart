@@ -2,9 +2,9 @@ import 'package:oho_works_app/models/SubjectList.dart';
 
 
 class SubjectItems {
-  String tittle;
+  String? tittle;
 
-  List<Subjects> rows;
+  List<Subjects>? rows;
 
 
   SubjectItems({this.tittle, this.rows,});
@@ -15,7 +15,7 @@ class SubjectItems {
     if (json['rows'] != null) {
       rows = [];//Subjects>();
       json['rows'].forEach((v) {
-        rows.add(new Subjects.fromJson(v));
+        rows!.add(new Subjects.fromJson(v));
       });
     }
 
@@ -25,7 +25,7 @@ class SubjectItems {
     final Map<String, dynamic> data = new Map<String, dynamic>();
 
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['tittle'] = this.tittle;
     return data;

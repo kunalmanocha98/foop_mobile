@@ -11,11 +11,11 @@ class ExtOauth extends StatelessWidget {
   ExtOauth({
     this.icon,
     this.text,
-    Key key,
+    Key? key,
   }) : super(key: key);
-  final IconData icon;
-  final String text;
-  TextStyleElements styleElements;
+  final IconData? icon;
+  final String? text;
+  late TextStyleElements styleElements;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class ExtOauth extends StatelessWidget {
         Transform.translate(
           offset: Offset(58.26, 11.84),
           child: Text(
-            this.text,
+            this.text!,
             style:styleElements.bodyText2ThemeScalable(context),
             textAlign: TextAlign.left,
           ),

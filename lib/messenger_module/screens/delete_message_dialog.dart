@@ -9,10 +9,10 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class DeleteMessageDialog extends StatefulWidget {
 
-  Null Function(bool isSubmit) callbackPicker;
+  Null Function(bool isSubmit)? callbackPicker;
 
 
-  DeleteMessageDialog({Key key,
+  DeleteMessageDialog({Key? key,
    
     this.callbackPicker,
   })
@@ -29,7 +29,7 @@ class DeleteMessageDialog extends StatefulWidget {
 class _DeleteMessageDialog
     extends State<DeleteMessageDialog> {
 
-  Null Function(bool isSubmit) callbackPicker;
+  Null Function(bool isSubmit)? callbackPicker;
  
 
   @override
@@ -43,7 +43,7 @@ class _DeleteMessageDialog
     this.callbackPicker,
   });
 
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +60,7 @@ class _DeleteMessageDialog
                 child: Container(
                   margin: const EdgeInsets.only(left:16,bottom: 16, top: 20,right: 16),
                   child: Text(
-                    AppLocalizations.of(context).translate("delete"),
+                    AppLocalizations.of(context)!.translate("delete"),
                     style: styleElements.subtitle1ThemeScalable(context),
                     textAlign: TextAlign.center,
                   ),
@@ -70,7 +70,7 @@ class _DeleteMessageDialog
                 child: Container(
                   margin: const EdgeInsets.only(left:16,bottom: 16, top: 20,right: 16),
                   child: Text(
-                    AppLocalizations.of(context).translate("confirm_delete"),
+                    AppLocalizations.of(context)!.translate("confirm_delete"),
                     style: styleElements.subtitle1ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorBlack35)),
                     textAlign: TextAlign.center,
                   ),
@@ -84,14 +84,14 @@ class _DeleteMessageDialog
               children: <Widget>[
                 GestureDetector(
                   onTap: () {
-                    callbackPicker(false);
+                    callbackPicker!(false);
                     Navigator.pop(context, null);
                   },
                   child: Container(
                     margin:
                     const EdgeInsets.only(right: 30, top: 16, bottom: 16),
                     child: Text(
-                      AppLocalizations.of(context).translate('cancel'),
+                      AppLocalizations.of(context)!.translate('cancel'),
                       style: styleElements
                           .bodyText1ThemeScalable(context)
                           .copyWith(fontWeight: FontWeight.w600),
@@ -106,7 +106,7 @@ class _DeleteMessageDialog
                     )),
                 GestureDetector(
                     onTap: () {
-                      callbackPicker(true);
+                      callbackPicker!(true);
                       Navigator.pop(context, null);
 
                     },
@@ -114,7 +114,7 @@ class _DeleteMessageDialog
                       margin: const EdgeInsets.only(
                           left: 30, top: 16, bottom: 16),
                       child: Text(
-                        AppLocalizations.of(context).translate('submit'),
+                        AppLocalizations.of(context)!.translate('submit'),
                         style: styleElements
                             .bodyText1ThemeScalable(context)
                             .copyWith(fontWeight: FontWeight.w600,color: HexColor(AppColors.appMainColor)),

@@ -2,9 +2,9 @@ import 'package:oho_works_app/models/disctionarylist.dart';
 import 'package:oho_works_app/models/language_list.dart';
 
 class SettingsView {
-  String statusCode;
-  String message;
-  Rows rows;
+  String? statusCode;
+  String? message;
+  Rows? rows;
 
   SettingsView({this.statusCode, this.message, this.rows});
 
@@ -19,26 +19,26 @@ class SettingsView {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     return data;
   }
 }
 
 class Rows {
-  int id;
-  int institutionsId;
-  int personsId;
-  String academicDateStart;
-  String academicDateEnd;
-  String dateFormat;
-  String timeFormat;
-  LanguageItem language;
-  TranslateLanguage transLateLanguage;
-  List<LanguageItem> contentLanguage;
-  Currency currency;
-  List<EmailContactList> emailContactList;
-  List<EmailContactList> mobileContactList;
+  int? id;
+  int? institutionsId;
+  int? personsId;
+  String? academicDateStart;
+  String? academicDateEnd;
+  String? dateFormat;
+  String? timeFormat;
+  LanguageItem? language;
+  TranslateLanguage? transLateLanguage;
+  List<LanguageItem>? contentLanguage;
+  Currency? currency;
+  List<EmailContactList>? emailContactList;
+  List<EmailContactList>? mobileContactList;
 
   Rows(
       {this.id,
@@ -74,7 +74,7 @@ class Rows {
     if (json['content_language'] != null) {
       contentLanguage = [];//LanguageItem>();
       json['content_language'].forEach((v) {
-        contentLanguage.add(new LanguageItem.fromJson(v));
+        contentLanguage!.add(new LanguageItem.fromJson(v));
       });
     }
     currency = json['currency'] != null
@@ -83,13 +83,13 @@ class Rows {
     if (json['email_contact_list'] != null) {
       emailContactList = [];//EmailContactList>();
       json['email_contact_list'].forEach((v) {
-        emailContactList.add(new EmailContactList.fromJson(v));
+        emailContactList!.add(new EmailContactList.fromJson(v));
       });
     }
     if (json['mobile_contact_list'] != null) {
       mobileContactList = [];//EmailContactList>();
       json['mobile_contact_list'].forEach((v) {
-        mobileContactList.add(new EmailContactList.fromJson(v));
+        mobileContactList!.add(new EmailContactList.fromJson(v));
       });
     }
   }
@@ -109,36 +109,36 @@ class Rows {
     data['date_format'] = this.dateFormat;
     data['time_format'] = this.timeFormat;
     if (this.language != null) {
-      data['language'] = this.language.toJson();
+      data['language'] = this.language!.toJson();
     }
     if (this.transLateLanguage != null) {
-      data['translate_language'] = this.transLateLanguage.toJson();
+      data['translate_language'] = this.transLateLanguage!.toJson();
     }
 
     if (this.contentLanguage != null) {
       data['content_language'] =
-          this.contentLanguage.map((v) => v.toJson()).toList();
+          this.contentLanguage!.map((v) => v.toJson()).toList();
     }
     if (this.currency != null) {
-      data['currency'] = this.currency.toJson();
+      data['currency'] = this.currency!.toJson();
     }
     if (this.emailContactList != null) {
       data['email_contact_list'] =
-          this.emailContactList.map((v) => v.toJson()).toList();
+          this.emailContactList!.map((v) => v.toJson()).toList();
     }
     if (this.mobileContactList != null) {
       data['mobile_contact_list'] =
-          this.mobileContactList.map((v) => v.toJson()).toList();
+          this.mobileContactList!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 class TranslateLanguage {
-  int id;
-  String code;
-  String name;
-  int isoCode;
-  String languageNameLocal;
+  int? id;
+  String? code;
+  String? name;
+  int? isoCode;
+  String? languageNameLocal;
 
   TranslateLanguage(
       {this.id, this.code, this.name, this.isoCode, this.languageNameLocal});
@@ -162,10 +162,10 @@ class TranslateLanguage {
   }
 }
 class Currency {
-  int id;
-  String code;
-  String name;
-  String symbol;
+  int? id;
+  String? code;
+  String? name;
+  String? symbol;
 
   Currency({this.id, this.code, this.name, this.symbol});
 
@@ -187,9 +187,9 @@ class Currency {
 }
 
 class PrivacySettingsView {
-  String statusCode;
-  String message;
-  PrivacySettingsResposne rows;
+  String? statusCode;
+  String? message;
+  PrivacySettingsResposne? rows;
 
   PrivacySettingsView({this.statusCode, this.message, this.rows});
 
@@ -206,23 +206,23 @@ class PrivacySettingsView {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     return data;
   }
 }
 
 class PrivacySettingsResposne {
-  int id;
-  int institutionsId;
-  int personsId;
-  List<DictionaryListItem> goalsObjectiviesVisibleTo;
-  List<DictionaryListItem> ratingVisibleTo;
-  List<DictionaryListItem> ratingBy;
-  DictionaryListItem networkType;
-  List<DictionaryListItem> postVisibleTo;
-  List<DictionaryListItem> postBy;
-  List<DictionaryListItem> profileVisibleTo;
+  int? id;
+  int? institutionsId;
+  int? personsId;
+  List<DictionaryListItem>? goalsObjectiviesVisibleTo;
+  List<DictionaryListItem>? ratingVisibleTo;
+  List<DictionaryListItem>? ratingBy;
+  DictionaryListItem? networkType;
+  List<DictionaryListItem>? postVisibleTo;
+  List<DictionaryListItem>? postBy;
+  List<DictionaryListItem>? profileVisibleTo;
 
   PrivacySettingsResposne(
       {this.id,
@@ -243,26 +243,26 @@ class PrivacySettingsResposne {
     if (json['goals_objectivies_visible_to'] != null) {
       goalsObjectiviesVisibleTo = [];//DictionaryListItem>();
       json['goals_objectivies_visible_to'].forEach((v) {
-        goalsObjectiviesVisibleTo.add(new DictionaryListItem.fromJson(v));
+        goalsObjectiviesVisibleTo!.add(new DictionaryListItem.fromJson(v));
       });
     }
     if (json['rating_visible_to'] != null) {
       ratingVisibleTo = [];//DictionaryListItem>();
       json['rating_visible_to'].forEach((v) {
-        ratingVisibleTo.add(new DictionaryListItem.fromJson(v));
+        ratingVisibleTo!.add(new DictionaryListItem.fromJson(v));
       });
     }
     if (json['rating_by'] != null) {
       ratingBy = [];//DictionaryListItem>();
       json['rating_by'].forEach((v) {
-        ratingBy.add(new DictionaryListItem.fromJson(v));
+        ratingBy!.add(new DictionaryListItem.fromJson(v));
       });
     }
 
     if (json['profile_visible_to'] != null) {
       profileVisibleTo = [];//DictionaryListItem>();
       json['profile_visible_to'].forEach((v) {
-        profileVisibleTo.add(new DictionaryListItem.fromJson(v));
+        profileVisibleTo!.add(new DictionaryListItem.fromJson(v));
       });
     }
 
@@ -272,13 +272,13 @@ class PrivacySettingsResposne {
     if (json['post_visible_to'] != null) {
       postVisibleTo = [];//DictionaryListItem>();
       json['post_visible_to'].forEach((v) {
-        postVisibleTo.add(new DictionaryListItem.fromJson(v));
+        postVisibleTo!.add(new DictionaryListItem.fromJson(v));
       });
     }
     if (json['post_by'] != null) {
       postBy = [];//DictionaryListItem>();
       json['post_by'].forEach((v) {
-        postBy.add(new DictionaryListItem.fromJson(v));
+        postBy!.add(new DictionaryListItem.fromJson(v));
       });
     }
   }
@@ -290,28 +290,28 @@ class PrivacySettingsResposne {
     data['persons_id'] = this.personsId;
     if (this.goalsObjectiviesVisibleTo != null) {
       data['goals_objectivies_visible_to'] =
-          this.goalsObjectiviesVisibleTo.map((v) => v.toJson()).toList();
+          this.goalsObjectiviesVisibleTo!.map((v) => v.toJson()).toList();
     }
     if (this.ratingVisibleTo != null) {
       data['rating_visible_to'] =
-          this.ratingVisibleTo.map((v) => v.toJson()).toList();
+          this.ratingVisibleTo!.map((v) => v.toJson()).toList();
     }
     if (this.ratingBy != null) {
-      data['rating_by'] = this.ratingBy.map((v) => v.toJson()).toList();
+      data['rating_by'] = this.ratingBy!.map((v) => v.toJson()).toList();
     }
     if (this.profileVisibleTo != null) {
       data['profile_visible_to'] =
-          this.ratingBy.map((v) => v.toJson()).toList();
+          this.ratingBy!.map((v) => v.toJson()).toList();
     }
     if (this.networkType != null) {
-      data['network_type'] = this.networkType.toJson();
+      data['network_type'] = this.networkType!.toJson();
     }
     if (this.postVisibleTo != null) {
       data['post_visible_to'] =
-          this.postVisibleTo.map((v) => v.toJson()).toList();
+          this.postVisibleTo!.map((v) => v.toJson()).toList();
     }
     if (this.postBy != null) {
-      data['post_by'] = this.postBy.map((v) => v.toJson()).toList();
+      data['post_by'] = this.postBy!.map((v) => v.toJson()).toList();
     }
     return data;
   }

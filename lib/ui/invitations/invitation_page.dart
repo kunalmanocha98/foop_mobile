@@ -29,7 +29,7 @@ import 'invite_classmates_teacher.dart';
 
 // ignore: must_be_immutable
 class InvitationPage extends StatefulWidget {
-  SharedPreferences prefs;
+  SharedPreferences? prefs;
 
   InvitationPage({this.prefs});
 
@@ -38,19 +38,19 @@ class InvitationPage extends StatefulWidget {
 }
 
 class _InvitationPage extends State<InvitationPage> {
-  TextStyleElements styleElements;
-  ProgressDialog pr;
-  Persondata rows;
+  late TextStyleElements styleElements;
+  ProgressDialog? pr;
+  Persondata? rows;
   var followers = 0;
   var following = 0;
   var roomsCount = 0;
   var postCount = 0;
-  String deepLink ;
-  String invitationText ;
+  String? deepLink ;
+  String? invitationText ;
   bool cb1 = false, cb2 = false;
-  List<MenuListItem> menuList = [];
-  int selectedRadio;
-  SharedPreferences prefs;
+  List<MenuListItem>? menuList = [];
+  int? selectedRadio;
+  SharedPreferences? prefs;
   final dbHelper = DatabaseHelper.instance;
   _InvitationPage({this.prefs});
 
@@ -60,7 +60,7 @@ class _InvitationPage extends State<InvitationPage> {
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarColor: HexColor(AppColors.appColorTransparent),
         statusBarIconBrightness: Brightness.dark));
-    WidgetsBinding.instance.addPostFrameCallback((_) => fetchMenuListData());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => fetchMenuListData());
     getDeepLink();
   }
 
@@ -95,12 +95,12 @@ class _InvitationPage extends State<InvitationPage> {
                         ),
                         Container(
                             child: Text(
-                          AppLocalizations.of(context).translate("invite_friend"),
+                          AppLocalizations.of(context)!.translate("invite_friend"),
                           style: styleElements.headline6ThemeScalable(context),
                         )),
                         Container(
                             child: Text(
-                          AppLocalizations.of(context).translate("earn_coins"),
+                          AppLocalizations.of(context)!.translate("earn_coins"),
                           style: styleElements
                               .headline6ThemeScalable(context)
                               .copyWith(fontWeight: FontWeight.bold),
@@ -112,19 +112,19 @@ class _InvitationPage extends State<InvitationPage> {
               ];
             },
             body: ListView.builder(
-              itemCount: menuList.length,
+              itemCount: menuList!.length,
               itemBuilder: (BuildContext context, int index) {
-                return menuList[index].tag == "text"
+                return menuList![index].tag == "text"
                     ? Padding(
                   padding: const EdgeInsets.only(
                       left: 16.0, right: 16.0, top: 16),
                   child: Text(
-                    menuList[index].title,
+                    menuList![index].title!,
                     style: styleElements.captionThemeScalable(context),
                   ),
                 )
                     :
-                menuList[index].code == "copylink"?
+                menuList![index].code == "copylink"?
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Container(
@@ -136,19 +136,19 @@ class _InvitationPage extends State<InvitationPage> {
                       ),
                       child: InkWell(
                           onTap: () {
-                            menuitemClick(menuList[index].code);
+                            menuitemClick(menuList![index].code);
                           },
                           child:  (Padding(
                             padding: const EdgeInsets.all(4.0),
                             child: deepLink!=null? ListTile(
                               title: Text(
-                                deepLink,
+                                deepLink!,
                                 style: styleElements
                                     .subtitle1ThemeScalable(context),
                               ),
                               trailing: Visibility(
                                 child: Text(
-                                  AppLocalizations.of(context)
+                                  AppLocalizations.of(context)!
                                       .translate("copy"),
                                   style: styleElements
                                       .subtitle1ThemeScalable(context)
@@ -168,28 +168,28 @@ class _InvitationPage extends State<InvitationPage> {
                 ):
                 TricycleCard(
                   padding: EdgeInsets.all(0),
-                  margin: menuList[index].code == "copylink"
+                  margin: menuList![index].code == "copylink"
                       ? const EdgeInsets.only(
                       left: 8, right: 8, top: 16)
                       : const EdgeInsets.only(
                       left: 8, right: 8, top: 0.5),
                   child: InkWell(
                     onTap: () {
-                      if(menuList[index].code!=null)
-                      menuitemClick(menuList[index].code);
+                      if(menuList![index].code!=null)
+                      menuitemClick(menuList![index].code);
                     },
-                    child: menuList[index].code == "copylink"
+                    child: menuList![index].code == "copylink"
                         ? (Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: ListTile(
                         title: Text(
-                          deepLink,
+                          deepLink!,
                           style: styleElements
                               .subtitle1ThemeScalable(context),
                         ),
                         trailing: Visibility(
                           child: Text(
-                            AppLocalizations.of(context)
+                            AppLocalizations.of(context)!
                                 .translate("copy"),
                             style: styleElements
                                 .subtitle1ThemeScalable(context)
@@ -199,8 +199,8 @@ class _InvitationPage extends State<InvitationPage> {
                       ),
                     ))
                         : ListTile(
-                      leading: menuList[index].tag == "icon"
-                          ? (menuList[index].imageUrl == "phone"
+                      leading: menuList![index].tag == "icon"
+                          ? (menuList![index].imageUrl == "phone"
                           ? Icon(Icons.import_contacts)
                           : Icon(Icons.share))
                           : Container(
@@ -208,10 +208,10 @@ class _InvitationPage extends State<InvitationPage> {
                           width: 24,
                           child: Image(
                             image: AssetImage(
-                                menuList[index].imageUrl),
+                                menuList![index].imageUrl!),
                           )),
                       title: Text(
-                        menuList[index].title,
+                        menuList![index].title!,
                         style: styleElements
                             .subtitle1ThemeScalable(context),
                       ),
@@ -238,9 +238,9 @@ class _InvitationPage extends State<InvitationPage> {
         prefs = await SharedPreferences.getInstance();
         var data = CommonBasicResponse.fromJson(value);
         ToastBuilder()
-            .showToast(data.message, context, HexColor(AppColors.success));
-        prefs.clear();
-        prefs.setBool("isLogout", true);
+            .showToast(data.message!, context, HexColor(AppColors.success));
+        prefs!.clear();
+        prefs!.setBool("isLogout", true);
        
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (context) => Home()),
@@ -258,7 +258,7 @@ class _InvitationPage extends State<InvitationPage> {
         ));*/
   }
 
-  Future<void> menuitemClick(String code) async {
+  Future<void> menuitemClick(String? code) async {
     switch (code) {
       case 'Whatsapp':
         {
@@ -324,8 +324,8 @@ class _InvitationPage extends State<InvitationPage> {
     Calls()
         .call(
             jsonEncode({
-              "invitation_link_type": prefs.getString("ownerType"),
-              "invitation_link_type_id": prefs.getInt("userId")
+              "invitation_link_type": prefs!.getString("ownerType"),
+              "invitation_link_type_id": prefs!.getInt("userId")
 
             }),
             context,
@@ -334,11 +334,11 @@ class _InvitationPage extends State<InvitationPage> {
 
       var res = InvitationResponse.fromJson(value);
       if (res.statusCode == Strings.success_code) {
-        if (res.rows != null && res.rows.invitationLink != null)
+        if (res.rows != null && res.rows!.invitationLink != null)
           {
             setState(() {
-              deepLink = res.rows.invitationLink;
-              invitationText=res.rows.invitationText;
+              deepLink = res.rows!.invitationLink;
+              invitationText=res.rows!.invitationText;
             });
           }
 
@@ -351,9 +351,9 @@ class _InvitationPage extends State<InvitationPage> {
 
   void fetchMenuListData() async {
     var res = await rootBundle.loadString('assets/invite.json');
-    final Map parsed = json.decode(res);
+    final Map? parsed = json.decode(res);
     setState(() {
-      menuList = MenuListResponse.fromJson(parsed).rows;
+      menuList = MenuListResponse.fromJson(parsed as Map<String, dynamic>).rows;
     });
   }
 }

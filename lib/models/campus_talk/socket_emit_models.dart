@@ -1,8 +1,8 @@
 
 
 class JoinEventPayload {
-  int personId;
-  int eventId;
+  int? personId;
+  int? eventId;
 
   JoinEventPayload({this.personId, this.eventId});
 
@@ -20,11 +20,11 @@ class JoinEventPayload {
 }
 
 class GetMemberEventPayload {
-  int personId;
-  int eventId;
-  String listType;
-  List<int> participantIds;
-  String searchValue;
+  int? personId;
+  int? eventId;
+  String? listType;
+  List<int>? participantIds;
+  String? searchValue;
 
   GetMemberEventPayload({this.personId, this.eventId, this.listType,this.participantIds,this.searchValue});
 
@@ -48,11 +48,11 @@ class GetMemberEventPayload {
 }
 
 class JoinEventResponse {
-  String statusCode;
-  String message;
-  JoinEventModel rows;
-  int total;
-  int startTime;
+  String? statusCode;
+  String? message;
+  JoinEventModel? rows;
+  int? total;
+  int? startTime;
 
   JoinEventResponse({this.statusCode, this.message, this.rows, this.total,this.startTime});
 
@@ -69,7 +69,7 @@ class JoinEventResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     data['total'] = this.total;
     data['startTime'] = this.total;
@@ -78,17 +78,18 @@ class JoinEventResponse {
 }
 
 class JoinEventModel {
-  String name;
-  String profileImage;
-  String personType;
-  String role;
-  String participantType;
-  int participantId;
-  int isModerator;
-  int startTime;
-  String channelName;
-  String token;
-  String conversationId;
+  String? name;
+  String? profileImage;
+  String? personType;
+  String? role;
+  String? participantType;
+  int? participantId;
+  int? isModerator;
+  int? startTime;
+  String? channelName;
+  String? token;
+  String? nexToken;
+  String? conversationId;
   JoinEventModel(
       {this.name,
         this.profileImage,
@@ -99,6 +100,7 @@ class JoinEventModel {
         this.isModerator,
         this.channelName,
         this.token,
+        this.nexToken,
         this.conversationId,
         this.startTime});
 
@@ -106,6 +108,7 @@ class JoinEventModel {
     channelName = json['channelName'];
     token = json['token'];
     name = json['name'];
+    nexToken=json['nexToken'];
     conversationId = json['conversationId'];
     profileImage = json['profile_image'];
     personType = json['person_type'];
@@ -121,6 +124,7 @@ class JoinEventModel {
     data['name'] = this.name;
     data['conversationId'] = this.conversationId;
     data['channelName'] = this.channelName;
+    data['nexToken'] = this.nexToken;
     data['token'] = this.token;
     data['profile_image'] = this.profileImage;
     data['person_type'] = this.personType;
@@ -135,9 +139,9 @@ class JoinEventModel {
 
 
 class BaseEventResponse {
-  String statusCode;
-  String message;
-  int total;
+  String? statusCode;
+  String? message;
+  int? total;
 
   BaseEventResponse({this.statusCode, this.message, this.total});
 
@@ -157,8 +161,8 @@ class BaseEventResponse {
 }
 
 class TalkNotificationResponse {
-  String notification;
-  String colorCode;
+  String? notification;
+  String? colorCode;
 
   TalkNotificationResponse({this.notification, this.colorCode});
 

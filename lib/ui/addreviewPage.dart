@@ -26,27 +26,27 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class AddReviewPage extends StatefulWidget {
-  String imageUrl;
-  String name;
-  int id;
-  String ratingType;
-  double previousRating;
-  int ratingId;
-  CommonCardData data;
+  String? imageUrl;
+  String? name;
+  int? id;
+  String? ratingType;
+  double? previousRating;
+  int? ratingId;
+  CommonCardData? data;
   bool isAssignment;
-  final Null Function() callback;
-  final int postId;
-  final AnswerOtherDetails answerOtherDetails;
-  final String answerStatus;
-  final String answerDetails;
-  final int answerId;
-  final String assignmentTitle;
-  final DateTime assignmentDate;
-  final String maxmarks;
+  final Null Function()? callback;
+  final int? postId;
+  final AnswerOtherDetails? answerOtherDetails;
+  final String? answerStatus;
+  final String? answerDetails;
+  final int? answerId;
+  final String? assignmentTitle;
+  final DateTime? assignmentDate;
+  final String? maxmarks;
 
   AddReviewPage(
-      {Key key,
-        @required this.ratingType,
+      {Key? key,
+        required this.ratingType,
         this.id,
         this.imageUrl,
         this.name,
@@ -72,26 +72,26 @@ class AddReviewPage extends StatefulWidget {
 
 class _AddReviewPage extends State<AddReviewPage> {
   bool isChanged = false;
-  TextStyleElements styleElements;
-  String imageUrl;
-  String name;
-  int id;
-  final Null Function() callback;
-  SharedPreferences prefs = locator<SharedPreferences>();
-  String ratingType;
-  double previousRating;
-  int ratingId;
+  late TextStyleElements styleElements;
+  String? imageUrl;
+  String? name;
+  int? id;
+  final Null Function()? callback;
+  SharedPreferences? prefs = locator<SharedPreferences>();
+  String? ratingType;
+  double? previousRating;
+  int? ratingId;
   final controller = TextEditingController();
   final marksController = TextEditingController();
-  CommonCardData data;
+  CommonCardData? data;
   bool isLoading = false;
 
   @override
   void initState() {
-    controller.text = data.givenReview != "none" && data.givenReview != "None"
-        ? data.givenReview ?? ""
+    controller.text = data!.givenReview != "none" && data!.givenReview != "None"
+        ? data!.givenReview ?? ""
         : "";
-    previousRating = data.givenRating!=null?data.givenRating.toDouble():0.0;
+    previousRating = data!.givenRating!=null?data!.givenRating!.toDouble():0.0;
     super.initState();
   }
 
@@ -103,7 +103,7 @@ class _AddReviewPage extends State<AddReviewPage> {
       child: Scaffold(
           resizeToAvoidBottomInset: true,
           appBar: TricycleAppBar().getCustomAppBar(context,
-              appBarTitle: "Rate " + name ?? "",
+              appBarTitle: "Rate " + name!,
               actions: [
                 Padding(
                   padding: const EdgeInsets.all(16.0),
@@ -112,44 +112,44 @@ class _AddReviewPage extends State<AddReviewPage> {
                     onTap: () {
                       if (widget.isAssignment) {
                         if (marksController.text.isNotEmpty) {
-                          if(int.parse(marksController.text.toString())<=int.parse(widget.maxmarks)) {
-                            if (data.givenratingid == null) {
+                          if(int.parse(marksController.text.toString())<=int.parse(widget.maxmarks!)) {
+                            if (data!.givenratingid == null) {
                               apiCreateRatings(context);
                             } else {
                               apiUpdateRatings(context);
                             }
                             if (controller.text != null &&
                                 controller.text.isNotEmpty) {
-                              submitComment(controller.text ?? "");
+                              submitComment(controller.text);
                             }
                             submitMarks();
                           }else{
                             ToastBuilder().showToast(
-                                AppLocalizations.of(context).translate('please_give_marks_less_than',arguments: {"marks":widget.maxmarks}),
+                                AppLocalizations.of(context)!.translate('please_give_marks_less_than',arguments: {"marks":widget.maxmarks}),
                                 context,
                                 HexColor(AppColors.information));
                           }
                         } else {
                           ToastBuilder().showToast(
-                              AppLocalizations.of(context).translate('please_give_marks'),
+                              AppLocalizations.of(context)!.translate('please_give_marks'),
                               context,
                               HexColor(AppColors.information));
                         }
                       } else {
-                        if (data.givenratingid == null)
+                        if (data!.givenratingid == null)
                           apiCreateRatings(context);
                         else
                           apiUpdateRatings(context);
 
                         if (controller.text != null &&
                             controller.text.isNotEmpty)
-                          submitComment(controller.text ?? "");
+                          submitComment(controller.text);
                       }
                     },
                     child: Row(
                       children: [
                         Text(
-                          AppLocalizations.of(context).translate('submit'),
+                          AppLocalizations.of(context)!.translate('submit'),
                           style: styleElements
                               .subtitle2ThemeScalable(context)
                               .copyWith(
@@ -192,7 +192,7 @@ class _AddReviewPage extends State<AddReviewPage> {
                               margin: EdgeInsets.only(top: 16),
                               child: Center(
                                 child: Text(
-                                  name,
+                                  name!,
                                   style:
                                   styleElements.headline6ThemeScalable(context),
                                 ),
@@ -222,7 +222,7 @@ class _AddReviewPage extends State<AddReviewPage> {
                               child: Container(
                                 margin: EdgeInsets.only(top: 6),
                                 child: Center(
-                                  child: Text("Submission date- "+Utility().getDateFormat('dd MMM yyyy HH:mm', widget.assignmentDate!=null?widget.assignmentDate:DateTime.now())
+                                  child: Text("Submission date- "+Utility().getDateFormat('dd MMM yyyy HH:mm', widget.assignmentDate!=null?widget.assignmentDate!:DateTime.now())
                                     ,textAlign: TextAlign.center,
                                     style:
                                     styleElements.captionThemeScalable(context),
@@ -287,7 +287,7 @@ class _AddReviewPage extends State<AddReviewPage> {
                                     Container(
                                       margin: EdgeInsets.all(16.w),
                                       child: Text(
-                                        AppLocalizations.of(context)
+                                        AppLocalizations.of(context)!
                                             .translate('leave_your_review'),
                                         style: styleElements
                                             .subtitle2ThemeScalable(context)
@@ -304,7 +304,7 @@ class _AddReviewPage extends State<AddReviewPage> {
                                           right: 16.w),
                                       child: RatingBar(
                                         initialRating:
-                                        previousRating,
+                                        previousRating!,
                                         minRating: 1,
                                         direction: Axis.horizontal,
                                         allowHalfRating: false,
@@ -353,7 +353,7 @@ class _AddReviewPage extends State<AddReviewPage> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
-                              AppLocalizations.of(context).translate('marks'),
+                              AppLocalizations.of(context)!.translate('marks'),
                               style: styleElements.headline6ThemeScalable(context),
                             ),
                             Row(
@@ -361,7 +361,7 @@ class _AddReviewPage extends State<AddReviewPage> {
                               children: [
                                 Flexible(
                                   child: Text(
-                                    AppLocalizations.of(context).translate('marks'),
+                                    AppLocalizations.of(context)!.translate('marks'),
                                     style: styleElements
                                         .bodyText2ThemeScalable(context),
                                   ),
@@ -391,7 +391,7 @@ class _AddReviewPage extends State<AddReviewPage> {
                                       // disabledBorder: InputBorder.none,
                                       contentPadding:
                                       EdgeInsets.fromLTRB(4, 4, 4, 4),
-                                      hintText: AppLocalizations.of(context)
+                                      hintText: AppLocalizations.of(context)!
                                           .translate('marks'),
                                       hintStyle: styleElements
                                           .bodyText2ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorBlack35)),
@@ -419,7 +419,7 @@ class _AddReviewPage extends State<AddReviewPage> {
                           Container(
                             alignment: Alignment.topLeft,
                             child: Text(
-                              AppLocalizations.of(context).translate('review'),
+                              AppLocalizations.of(context)!.translate('review'),
                               style: styleElements.headline6ThemeScalable(context),
                             ),
                           ),
@@ -451,7 +451,7 @@ class _AddReviewPage extends State<AddReviewPage> {
                                   disabledBorder: InputBorder.none,
                                   contentPadding:
                                   EdgeInsets.fromLTRB(0.0, 15.0, 20.0, 15.0),
-                                  hintText: AppLocalizations.of(context)
+                                  hintText: AppLocalizations.of(context)!
                                       .translate('write_review'),
                                   hintStyle:
                                   styleElements.bodyText2ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorBlack35)),
@@ -557,11 +557,11 @@ class _AddReviewPage extends State<AddReviewPage> {
   void submitComment(String value) async {
     prefs = await SharedPreferences.getInstance();
 
-    if (data.givenreviewid == null) {
+    if (data!.givenreviewid == null) {
       var body = jsonEncode({
         "note_type": "review",
-        "note_created_by_type": prefs.getString(Strings.ownerType),
-        "note_created_by_id": prefs.getInt(Strings.userId),
+        "note_created_by_type": prefs!.getString(Strings.ownerType),
+        "note_created_by_id": prefs!.getInt(Strings.userId),
         "note_subject_type": widget.isAssignment
             ? 'postanswer'
             : (ratingType == "thirdPerson" ? "person" : ratingType),
@@ -580,10 +580,10 @@ class _AddReviewPage extends State<AddReviewPage> {
           .then((isSuccess) async {});
     } else {
       var body = jsonEncode({
-        "id": data.givenreviewid,
+        "id": data!.givenreviewid,
         "note_type": "review",
-        "note_created_by_type": prefs.getString(Strings.ownerType),
-        "note_created_by_id": prefs.getInt(Strings.userId),
+        "note_created_by_type": prefs!.getString(Strings.ownerType),
+        "note_created_by_id": prefs!.getInt(Strings.userId),
         "note_subject_type":
         ratingType == "thirdPerson" ? "person" : ratingType,
         "note_subject_id": id,
@@ -612,7 +612,7 @@ class _AddReviewPage extends State<AddReviewPage> {
       "rating_context_type":
       ratingType == "thirdPerson" ? "person" : ratingType,
       "rating_context_id": id,
-      "rating_given_by_id": prefs.getInt("userId"),
+      "rating_given_by_id": prefs!.getInt("userId"),
       "rating_given": previousRating
     });
     setState(() {
@@ -625,7 +625,7 @@ class _AddReviewPage extends State<AddReviewPage> {
         });
         var data = DynamicResponse.fromJson(value);
         if (data != null && data.statusCode == 'S10001') {
-          callback();
+          callback!();
           Navigator.of(ctx).pop(true);
         } else {
           ToastBuilder().showToast(data.message ?? "Please Try Again", ctx,
@@ -648,14 +648,14 @@ class _AddReviewPage extends State<AddReviewPage> {
   void apiUpdateRatings(BuildContext ctx) async {
     prefs = await SharedPreferences.getInstance();
     var body = jsonEncode({
-      "id": data.givenratingid,
+      "id": data!.givenratingid,
       "rating_note_id": null,
       "rating_subject_type":
       ratingType == "thirdPerson" ? "person" : ratingType,
       "rating_subject_id": id,
-      "rating_context_type": prefs.getString(Strings.ownerType),
-      "rating_context_id": ratingType == "person" ? prefs.getInt("userId") : id,
-      "rating_given_by_id": prefs.getInt("userId"),
+      "rating_context_type": prefs!.getString(Strings.ownerType),
+      "rating_context_id": ratingType == "person" ? prefs!.getInt("userId") : id,
+      "rating_given_by_id": prefs!.getInt("userId"),
       "rating_given": previousRating
     });
     setState(() {
@@ -668,7 +668,7 @@ class _AddReviewPage extends State<AddReviewPage> {
         });
         var data = DynamicResponse.fromJson(value);
         if (data != null && data.statusCode == 'S10001') {
-          callback();
+          callback!();
           Navigator.of(ctx).pop(true);
         } else {
           setState(() {
@@ -700,7 +700,7 @@ class _AddReviewPage extends State<AddReviewPage> {
     payload.answerStatus =widget.answerStatus;
     payload.answerDetails = widget.answerDetails;
     payload.answerOtherDetails = AnswerOtherDetails(
-      mediaDetails: widget.answerOtherDetails!=null?widget.answerOtherDetails.mediaDetails:null,
+      mediaDetails: widget.answerOtherDetails!=null?widget.answerOtherDetails!.mediaDetails:null,
       marks: marksController.text.toString()
     );
     Calls().call(jsonEncode(payload), context, Config.ANSWER_UPDATE);

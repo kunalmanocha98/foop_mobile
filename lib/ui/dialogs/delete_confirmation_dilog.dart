@@ -9,10 +9,10 @@ import 'package:oho_works_app/utils/hexColors.dart';
 import 'package:flutter/material.dart';
 
 class DeleteConfirmationDilog extends StatelessWidget{
-  final Function cancelButton;
-  final Function updateButton;
+  final Function? cancelButton;
+  final Function? updateButton;
   final bool showCancelButton;
-  final String note;
+  final String? note;
   DeleteConfirmationDilog({this.cancelButton,this.updateButton,this.showCancelButton= true,this.note});
   @override
   Widget build(BuildContext context) {
@@ -24,16 +24,16 @@ class DeleteConfirmationDilog extends StatelessWidget{
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(AppLocalizations.of(context).translate("delete"),style: styleElements.subtitle1ThemeScalable(context).copyWith(
+            Text(AppLocalizations.of(context)!.translate("delete"),style: styleElements.subtitle1ThemeScalable(context).copyWith(
                 fontWeight: FontWeight.bold
             ),),
             SizedBox(height: 16,),
-            (note != null && note.isNotEmpty)?
+            (note != null && note!.isNotEmpty)?
             TricycleHtmlViewer(
               sourceString:note,
               isDetailPage: true,
             )
-                :Text(AppLocalizations.of(context).translate("delete_confirmation"),
+                :Text(AppLocalizations.of(context)!.translate("delete_confirmation"),
               textAlign: TextAlign.center,
               style: styleElements.subtitle2ThemeScalable(context),),
             SizedBox(height: 8,),
@@ -43,19 +43,19 @@ class DeleteConfirmationDilog extends StatelessWidget{
                 visible: showCancelButton,
                 child: TricycleTextButton(onPressed: (){
                   Navigator.pop(context);
-                  cancelButton();
+                  cancelButton!();
                 },
                     shape: StadiumBorder(),
-                    child: Text(AppLocalizations.of(context).translate('cancel'),style:
+                    child: Text(AppLocalizations.of(context)!.translate('cancel'),style:
                     styleElements.captionThemeScalable(context)
                         .copyWith(color:HexColor(AppColors.appMainColor)),)),
               ),
               TricycleTextButton(onPressed: (){
                 Navigator.pop(context);
-                updateButton();
+                updateButton!();
               },
                   shape: StadiumBorder(),
-                  child: Text(AppLocalizations.of(context).translate('delete'),style:
+                  child: Text(AppLocalizations.of(context)!.translate('delete'),style:
                   styleElements.captionThemeScalable(context)
                       .copyWith(color:HexColor(AppColors.appMainColor))))
             ],

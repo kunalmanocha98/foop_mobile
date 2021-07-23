@@ -9,7 +9,7 @@ class EdufluencerSpecialistSubjectCard extends StatefulWidget{
 }
 
 class EdufluencerSpecialistSubjectCardState extends State<EdufluencerSpecialistSubjectCard>{
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
   @override
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
@@ -19,7 +19,7 @@ class EdufluencerSpecialistSubjectCardState extends State<EdufluencerSpecialistS
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(AppLocalizations.of(context).translate('specialist_in'),
+          Text(AppLocalizations.of(context)!.translate('specialist_in'),
           style: styleElements.headline6ThemeScalable(context).copyWith(
             fontWeight: FontWeight.bold
           ),),

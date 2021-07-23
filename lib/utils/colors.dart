@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const String appMainColor = "#FF2A4B";
-  static const String appMainColor85 = "#D9FF2A4B";
-  static const String appMainColor65 = "#A6FF2A4B";
-  static const String appMainColor35 = "#59FF2A4B";
-  static const String appMainColor10 = "#1AFF2A4B";
+  static const String appMainColor = "#004D40";
+  static const String appMainColor85 = "#D9F66666";
+  static const String appMainColor65 = "#A6F66666";
+  static const String appMainColor35 = "#59F66666";
+  static const String appMainColor10 = "#1AF66666";
   static const String appTextPrimaryColor = "#D9000000";
   static const String appTextSecondaryColor = "#A6000000";
   static const String appColorBlack = "#000000"; //replaced HexColor(AppColors.appColorBlack) with this color

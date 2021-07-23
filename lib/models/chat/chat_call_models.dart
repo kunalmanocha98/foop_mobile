@@ -1,8 +1,8 @@
 class ChatCallallowedRequest {
-  String actionByObjectType;
-  int actionByObjectId;
-  String actionOnObjectType;
-  int actionOnObjectId;
+  String? actionByObjectType;
+  int? actionByObjectId;
+  String? actionOnObjectType;
+  int? actionOnObjectId;
 
   ChatCallallowedRequest(
       {this.actionByObjectType,
@@ -28,10 +28,10 @@ class ChatCallallowedRequest {
 }
 
 class ChatCallallowedResponse {
-  String statusCode;
-  String message;
-  int total;
-  ChatCallAllowedModel rows;
+  String? statusCode;
+  String? message;
+  int? total;
+  ChatCallAllowedModel? rows;
 
   ChatCallallowedResponse(
       {this.statusCode, this.message, this.total, this.rows});
@@ -49,15 +49,15 @@ class ChatCallallowedResponse {
     data['message'] = this.message;
     data['total'] = this.total;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     return data;
   }
 }
 
 class ChatCallAllowedModel {
-  bool audioCallIsAllowed;
-  bool videoCallIsAllowed;
+  bool? audioCallIsAllowed;
+  bool? videoCallIsAllowed;
 
   ChatCallAllowedModel({this.audioCallIsAllowed, this.videoCallIsAllowed});
 

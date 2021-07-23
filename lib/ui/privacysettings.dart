@@ -24,7 +24,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 // ignore: must_be_immutable
 class PrivacySettingsPage extends StatefulWidget {
   String type;
-int rowId;
+int? rowId;
   _PrivacySettingsPage createState() => _PrivacySettingsPage(type,rowId);
 
   PrivacySettingsPage(this.type,this.rowId);
@@ -32,10 +32,10 @@ int rowId;
 
 class _PrivacySettingsPage extends State<PrivacySettingsPage> {
   bool isLoading=false;
-  SharedPreferences prefs;
-  List<DictionaryListItem> listRules = [];
+  late SharedPreferences prefs;
+  List<DictionaryListItem>? listRules = [];
   String type;
-  int rowId;
+  int? rowId;
   _PrivacySettingsPage(this.type,this.rowId);
   PrivacySettingsView settingsView = PrivacySettingsView();
   ButtonTapManager buttonTapManager = ButtonTapManager();
@@ -45,7 +45,7 @@ class _PrivacySettingsPage extends State<PrivacySettingsPage> {
   initState() {
     super.initState();
     // application.onLocaleChanged = onLocaleChange;
-    WidgetsBinding.instance.addPostFrameCallback((_) => fetchSettings());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => fetchSettings());
   }
 
   void fetchSettings() async {
@@ -81,7 +81,7 @@ class _PrivacySettingsPage extends State<PrivacySettingsPage> {
   void setSharedPreferences() async {
     prefs = await SharedPreferences.getInstance();
   }
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   Widget build(BuildContext context) {
     setSharedPreferences();
@@ -99,22 +99,22 @@ class _PrivacySettingsPage extends State<PrivacySettingsPage> {
           children: <Widget>[
             ListView.builder(
                 padding: EdgeInsets.only(left: 8, right: 8, bottom: 8, top: 8),
-                itemCount: listRules.length,
+                itemCount: listRules!.length,
                 itemBuilder: (BuildContext context, int index) {
                   return CheckboxListTile(
                     contentPadding: EdgeInsets.all(8),
                     title: Text(
-                      listRules[index].description,
+                      listRules![index].description!,
                       style: styleElements.subtitle1ThemeScalable(context),
                     ),
-                    value: listRules[index].isSelected,
+                    value: listRules![index].isSelected,
                     onChanged: (val) {
                       if (this.mounted) {
                         setState(() {
-                          if (listRules[index].isSelected) {
-                            listRules[index].isSelected = false;
+                          if (listRules![index].isSelected!) {
+                            listRules![index].isSelected = false;
                           } else {
-                            listRules[index].isSelected = true;
+                            listRules![index].isSelected = true;
                           }
                         });
                       }
@@ -141,7 +141,7 @@ class _PrivacySettingsPage extends State<PrivacySettingsPage> {
                           },
                           color: HexColor(AppColors.appColorWhite),
                           child: Text(
-                              AppLocalizations.of(context).translate("save_exit"),
+                              AppLocalizations.of(context)!.translate("save_exit"),
                               style: styleElements.buttonThemeScalable(context).copyWith(color: HexColor(AppColors.appMainColor))),
                         ),
                       )),
@@ -169,9 +169,9 @@ class _PrivacySettingsPage extends State<PrivacySettingsPage> {
         if (this.mounted) {
           setState(() {
             listRules = checkData(data.rows);
-            for (int i = 0; i < listRules.length; i++) {
-              if (listRules[i].isSelected == null) {
-                listRules[i].isSelected = false;
+            for (int i = 0; i < listRules!.length; i++) {
+              if (listRules![i].isSelected == null) {
+                listRules![i].isSelected = false;
               }
             }
           });
@@ -185,27 +185,27 @@ class _PrivacySettingsPage extends State<PrivacySettingsPage> {
     });
   }
 
-  List<DictionaryListItem> checkData(List<DictionaryListItem> rows) {
+  List<DictionaryListItem>? checkData(List<DictionaryListItem>? rows) {
     if (type == DictionaryType.goals_objectivies_visible_to.name) {
-      for (DictionaryListItem item in rows) {
+      for (DictionaryListItem item in rows!) {
         for (DictionaryListItem item1
-            in settingsView.rows.goalsObjectiviesVisibleTo)
+            in settingsView.rows!.goalsObjectiviesVisibleTo!)
           if (item1.code == item.code) {
             item.isSelected = true;
           }
       }
       return rows;
     } else if (type == DictionaryType.rating_by.name) {
-      for (DictionaryListItem item in rows) {
-        for (DictionaryListItem item1 in settingsView.rows.ratingBy)
+      for (DictionaryListItem item in rows!) {
+        for (DictionaryListItem item1 in settingsView.rows!.ratingBy!)
           if (item1.code == item.code) {
             item.isSelected = true;
           }
       }
       return rows;
     } else {
-      for (DictionaryListItem item in rows) {
-        for (DictionaryListItem item1 in settingsView.rows.ratingVisibleTo)
+      for (DictionaryListItem item in rows!) {
+        for (DictionaryListItem item1 in settingsView.rows!.ratingVisibleTo!)
           if (item1.code == item.code) {
             item.isSelected = true;
           }
@@ -215,7 +215,7 @@ class _PrivacySettingsPage extends State<PrivacySettingsPage> {
   }
 
   void update() async {
-    progressButtonKey.currentState.show();
+    progressButtonKey.currentState!.show();
     PrivacySettingUpdateRequest model = PrivacySettingUpdateRequest();
     model.personId = prefs.getInt("userId");
     model.id = rowId;
@@ -239,7 +239,7 @@ class _PrivacySettingsPage extends State<PrivacySettingsPage> {
     }
     var body = jsonEncode(model);
     Calls().call(body, context, Config.UPDATEPRIVACYSETTINGS).then((value) async {
-      progressButtonKey.currentState.hide();
+      progressButtonKey.currentState!.hide();
       if (value != null) {
         var data = DynamicResponse.fromJson(value);
         if (data != null && data.rows != null && data.statusCode == 'S10001') {
@@ -248,16 +248,16 @@ class _PrivacySettingsPage extends State<PrivacySettingsPage> {
         }
       }
     }).catchError((onError) async {
-      progressButtonKey.currentState.hide();
+      progressButtonKey.currentState!.hide();
       ToastBuilder().showToast(onError.toString(), context,HexColor(AppColors.failure));
     });
   }
 
-  List<String> getData() {
-    List<String> list = [];
-    for (int i = 0; i < listRules.length; i++) {
-      if (listRules[i].isSelected) {
-        list.add(listRules[i].code);
+  List<String?> getData() {
+    List<String?> list = [];
+    for (int i = 0; i < listRules!.length; i++) {
+      if (listRules![i].isSelected!) {
+        list.add(listRules![i].code);
       }
     }
     return list;
@@ -265,14 +265,14 @@ class _PrivacySettingsPage extends State<PrivacySettingsPage> {
 
   String getAppBarTitle() {
     if (type == DictionaryType.rating_by.name) {
-      return AppLocalizations.of(context).translate("who_can_rate");
+      return AppLocalizations.of(context)!.translate("who_can_rate");
     } else if (type == DictionaryType.goals_objectivies_visible_to.name) {
-      return AppLocalizations.of(context).translate("who_can_see_goals");
+      return AppLocalizations.of(context)!.translate("who_can_see_goals");
     } else if (type == DictionaryType.rating_visible_to.name) {
-      return AppLocalizations.of(context).translate("who_can_see_rating");
+      return AppLocalizations.of(context)!.translate("who_can_see_rating");
     }
     else if (type == DictionaryType.profile_visible_to.name) {
-      return AppLocalizations.of(context).translate("who_can_view_profile");
+      return AppLocalizations.of(context)!.translate("who_can_view_profile");
     }
 
 

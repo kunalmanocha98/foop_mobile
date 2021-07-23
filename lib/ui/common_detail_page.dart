@@ -20,7 +20,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class CommonDetailPage extends StatefulWidget {
   String id;
 
-  CommonDetailPage({Key key, @required this.id}) : super(key: key);
+  CommonDetailPage({Key? key, required this.id}) : super(key: key);
 
   _CommonDetailPage createState() => _CommonDetailPage();
 }
@@ -28,7 +28,7 @@ class CommonDetailPage extends StatefulWidget {
 class _CommonDetailPage extends State<CommonDetailPage>
     with SingleTickerProviderStateMixin {
 
-  SharedPreferences prefs;
+  SharedPreferences? prefs;
   var pageTitle = "";
   var color1 = HexColor(AppColors.appMainColor);
   var selectedTextColor1 = HexColor(AppColors.appColorWhite);
@@ -42,17 +42,17 @@ class _CommonDetailPage extends State<CommonDetailPage>
   CommonCardData content = CommonCardData();
   List<StatelessWidget> listCards = [];
   var isCheckedColor = HexColor(AppColors.appColorWhite);
-  TabController _tabController;
+  TabController? _tabController;
   var _tabIndex = 0;
   Map<String, bool> mapRules = Map();
   List<Roles> listRules = [];
-  String type;
+  String? type;
   var isClassesSelected = HexColor(AppColors.appColorWhite);
   var isSubjectSelected = HexColor(AppColors.appColorWhite);
   var isRoleSelected = false;
   List<Subjects> listOfSubjects = [];
   List<Classes> listOfClasses = [];
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
   @override
   void initState() {
     super.initState();
@@ -62,7 +62,7 @@ class _CommonDetailPage extends State<CommonDetailPage>
 
   void _toggleTab(index) {
     _tabIndex = index;
-    _tabController.animateTo(_tabIndex);
+    _tabController!.animateTo(_tabIndex);
   }
 
   List<Color> _colors = [HexColor(AppColors.appColorBlueAccent), HexColor(AppColors.appColorPurpleAccent)];
@@ -70,7 +70,7 @@ class _CommonDetailPage extends State<CommonDetailPage>
 
   @override
   void dispose() {
-    _tabController.dispose();
+    _tabController!.dispose();
     super.dispose();
   }
 
@@ -208,7 +208,7 @@ class _CommonDetailPage extends State<CommonDetailPage>
                                             },
                                             elevation: 2.0,
                                             child: Text(
-                                                AppLocalizations.of(context)
+                                                AppLocalizations.of(context)!
                                                     .translate('timeline'),
                                                 style: styleElements.subtitle1ThemeScalable(context)),
                                             fillColor: color1,
@@ -242,7 +242,7 @@ class _CommonDetailPage extends State<CommonDetailPage>
                                             },
                                             elevation: 2.0,
                                             child: Text(
-                                                AppLocalizations.of(context)
+                                                AppLocalizations.of(context)!
                                                     .translate('about'),
                                                 style:  styleElements.subtitle1ThemeScalable(context)),
                                             fillColor: color2,
@@ -279,7 +279,7 @@ class _CommonDetailPage extends State<CommonDetailPage>
                                             },
                                             elevation: 2.0,
                                             child: Text(
-                                                AppLocalizations.of(context)
+                                                AppLocalizations.of(context)!
                                                     .translate('members'),
                                                 style: styleElements.subtitle1ThemeScalable(context)),
                                             fillColor: color3,
@@ -318,7 +318,7 @@ class _CommonDetailPage extends State<CommonDetailPage>
                                             },
                                             elevation: 2.0,
                                             child: Text(
-                                                AppLocalizations.of(context)
+                                                AppLocalizations.of(context)!
                                                     .translate('more'),
                                                 style:  styleElements.subtitle1ThemeScalable(context)),
                                             fillColor: color4,
@@ -386,7 +386,7 @@ class _CommonDetailPage extends State<CommonDetailPage>
                                                 color: HexColor(AppColors.appColorWhite),
 
                                                 child: Text(
-                                                    AppLocalizations.of(context)
+                                                    AppLocalizations.of(context)!
                                                         .translate('next'),
                                                     style:
                                                     styleElements.bodyText2ThemeScalable(context).copyWith(

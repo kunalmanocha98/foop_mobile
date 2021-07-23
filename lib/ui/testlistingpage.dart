@@ -22,12 +22,12 @@ class _TestListingPage extends State<TestListingPage> {
   List<DropdownMenuItem> requestedByTypes = [];
   List<DropdownMenuItem> listTypes = [];
   final formKey = GlobalKey<FormState>();
-  TextStyleElements styleElements ;
+  late TextStyleElements styleElements ;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => setLists());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => setLists());
   }
 
 
@@ -38,7 +38,7 @@ class _TestListingPage extends State<TestListingPage> {
     return SafeArea(
       child: Scaffold(
         appBar: TricycleAppBar().getCustomAppBar(context,
-          appBarTitle: AppLocalizations.of(context).translate('test_user_list'),
+          appBarTitle: AppLocalizations.of(context)!.translate('test_user_list'),
           onBackButtonPress: (){},
         ),
         body: TricycleListCard(

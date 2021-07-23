@@ -10,11 +10,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class DpEnlargePage extends StatefulWidget{
-  final String imageUrl;
-  final SERVICE_TYPE service_type;
-  final bool isFullUrl;
+  final String? imageUrl;
+  final SERVICE_TYPE? service_type;
+  final bool? isFullUrl;
   final bool isFromAsset;
-  final String name;
+  final String? name;
   DpEnlargePage({this.imageUrl,this.service_type,this.isFullUrl,this.isFromAsset = false,this.name});
   @override
   DpEnlargePageState createState()=> DpEnlargePageState();
@@ -33,7 +33,7 @@ class DpEnlargePageState extends State<DpEnlargePage>{
               decoration: BoxDecoration(
                 image: DecorationImage(
                     fit: BoxFit.cover,
-                    image:  widget.isFromAsset?AssetImage(widget.imageUrl):CachedNetworkImageProvider(widget.isFullUrl?widget.imageUrl:Utility().getUrlForImage(widget.imageUrl,RESOLUTION_TYPE.R64,widget.service_type))
+                    image:  (widget.isFromAsset?AssetImage(widget.imageUrl!):CachedNetworkImageProvider(widget.isFullUrl!?widget.imageUrl!:Utility().getUrlForImage(widget.imageUrl,RESOLUTION_TYPE.R64,widget.service_type))) as ImageProvider<Object>
                 ),
               ),
               child: BackdropFilter(

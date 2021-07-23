@@ -30,7 +30,7 @@ class CommonOkCancelDialog extends StatelessWidget{
                     Navigator.pop(context);
                   },
                   shape: StadiumBorder(),
-                  child: Text(AppLocalizations.of(context).translate('cancel'),style: styleElements.bodyText2ThemeScalable(context).copyWith(
+                  child: Text(AppLocalizations.of(context)!.translate('cancel'),style: styleElements.bodyText2ThemeScalable(context).copyWith(
                       color: HexColor(AppColors.appMainColor)
                   ),),
                 ),
@@ -40,7 +40,7 @@ class CommonOkCancelDialog extends StatelessWidget{
                     okCallback();
                   },
                   shape: StadiumBorder(),
-                  child: Text(AppLocalizations.of(context).translate('ok'),style: styleElements.bodyText2ThemeScalable(context).copyWith(
+                  child: Text(AppLocalizations.of(context)!.translate('ok'),style: styleElements.bodyText2ThemeScalable(context).copyWith(
                       color: HexColor(AppColors.appMainColor)
                   ),),
                 )

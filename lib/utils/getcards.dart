@@ -57,19 +57,19 @@ import 'TextStyles/TextStyleElements.dart';
 
 class GetAllCards {
   GetAllCards();
-  Widget getCard(
-      String userName,
-      String institutionId,
+  Widget? getCard(
+      String? userName,
+      String? institutionId,
       bool isProfile,
-      TextStyleElements styleElements,
+      TextStyleElements? styleElements,
       CommonCardData commonCardData,
-      Persondata rows,
-      String type,
-      int id,
-      String ownerType,
-      int ownerId,
-      String imageUrl,
-      {Null Function() callBck}) {
+      Persondata? rows,
+      String? type,
+      int? id,
+      String? ownerType,
+      int? ownerId,
+      String? imageUrl,
+      {Null Function()? callBck}) {
     switch (commonCardData.cardName) {
       case "Biocard":
         {
@@ -534,18 +534,18 @@ class GetAllCards {
   }
 
 
-  Widget getCardHome(
-      String userName,
-      String institutionId,
+  Widget? getCardHome(
+      String? userName,
+      String? institutionId,
       bool isProfile,
-      TextStyleElements styleElements,
+      TextStyleElements? styleElements,
       CommonCardData commonCardData,
-      Persondata rows,
-      String type,
-      int id,
-      String ownerType,
-      int ownerId,
-      {Null Function() callBck}) {
+      Persondata? rows,
+      String? type,
+      int? id,
+      String? ownerType,
+      int? ownerId,
+      {Null Function()? callBck}) {
     switch (commonCardData.cardNames) {
       case "Biocard":
         {
@@ -933,7 +933,7 @@ class GetAllCards {
         break;
       case "SuggestionCard":
         {
-          if(commonCardData.data!=null && commonCardData.data.isNotEmpty)
+          if(commonCardData.data!=null && commonCardData.data!.isNotEmpty)
           return SuggestionCard(
             data: commonCardData,
              ownerType:ownerType,
@@ -946,7 +946,7 @@ class GetAllCards {
         break;
       case "Post":
         {
-          if(commonCardData.data!=null && commonCardData.data.isNotEmpty)
+          if(commonCardData.data!=null && commonCardData.data!.isNotEmpty)
             return PostHomeCard(
               data: commonCardData,
               callbackPicker: callBck,
@@ -957,7 +957,7 @@ class GetAllCards {
         break;
       case "NoticeCard":
         {
-          if(commonCardData.data!=null && commonCardData.data.isNotEmpty)
+          if(commonCardData.data!=null && commonCardData.data!.isNotEmpty)
           return NoticeCards(
             data: commonCardData,
             type:"NoticeCard"
@@ -968,7 +968,7 @@ class GetAllCards {
         break;
       case "QuestionCard":
         {
-          if(commonCardData.data!=null && commonCardData.data.isNotEmpty)
+          if(commonCardData.data!=null && commonCardData.data!.isNotEmpty)
           return NoticeCards(
             data: commonCardData,
               type:"QuestionCard"
@@ -979,7 +979,7 @@ class GetAllCards {
         break;
       case "NewsCard":
         {
-          if(commonCardData.data!=null && commonCardData.data.isNotEmpty)
+          if(commonCardData.data!=null && commonCardData.data!.isNotEmpty)
           return NewsCard(
             data: commonCardData,
             type: 'blog',
@@ -990,7 +990,7 @@ class GetAllCards {
         break;
       case "NewsCard2":
         {
-          if(commonCardData.data!=null && commonCardData.data.isNotEmpty)
+          if(commonCardData.data!=null && commonCardData.data!.isNotEmpty)
             return NewsCard(
               data: commonCardData,
               type: 'news',
@@ -1001,7 +1001,7 @@ class GetAllCards {
         break;
       case "CommunityCard":
         {
-          if(commonCardData.data!=null && commonCardData.data.isNotEmpty)
+          if(commonCardData.data!=null && commonCardData.data!.isNotEmpty)
             // return CommunityRoomCard(
             //   data: commonCardData,
             // );

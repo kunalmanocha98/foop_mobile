@@ -1,7 +1,7 @@
 class RegisterUserAsResponse {
-  String statusCode;
-  String message;
-  RegisterUserData rows;
+  String? statusCode;
+  String? message;
+  RegisterUserData? rows;
 
   RegisterUserAsResponse({this.statusCode, this.message, this.rows});
 
@@ -18,16 +18,16 @@ class RegisterUserAsResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     return data;
   }
 }
 
 class RegisterUserData {
-  String studentName;
-  String institutionName;
-  bool isVerified;
+  String? studentName;
+  String? institutionName;
+  bool? isVerified;
 
   RegisterUserData({this.studentName, this.institutionName});
 

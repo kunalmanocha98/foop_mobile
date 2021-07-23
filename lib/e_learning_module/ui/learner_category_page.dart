@@ -21,14 +21,14 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class LearnerCategoryPage extends StatefulWidget {
-  final TopicListItem topicListItem;
+  final TopicListItem? topicListItem;
 
-  final PostReceiverListItem selectedReceiverData;
-  final Function callBack;
-  final List<PostCreatePayload> list;
+  final PostReceiverListItem? selectedReceiverData;
+  final Function? callBack;
+  final List<PostCreatePayload?>? list;
 
   const LearnerCategoryPage(
-      {Key key,
+      {Key? key,
       this.topicListItem,
       this.list,
       this.selectedReceiverData,
@@ -40,16 +40,16 @@ class LearnerCategoryPage extends StatefulWidget {
 }
 
 class _LearnerCategoryListResponse extends State<LearnerCategoryPage> {
-  BuildContext context;
-  TextStyleElements styleElements;
-  String searchVal;
+  late BuildContext context;
+  late TextStyleElements styleElements;
+  String? searchVal;
   GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
   GlobalKey<TricycleProgressButtonState> progressButtonKeyNext = GlobalKey();
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
   List<LearnerListItem> recList = [];
   List<LearnerListItem> selectedItems = [];
-   List<PostCreatePayload> list;
-  PostReceiverListItem selectedReceiverData;
+   List<PostCreatePayload?>? list;
+  PostReceiverListItem? selectedReceiverData;
 
   _LearnerCategoryListResponse({this.list, this.selectedReceiverData});
 
@@ -59,7 +59,7 @@ class _LearnerCategoryListResponse extends State<LearnerCategoryPage> {
   }
 
   refresh() {
-    paginatorKey.currentState.changeState(resetState: true);
+    paginatorKey.currentState!.changeState(resetState: true);
   }
 
   @override
@@ -72,7 +72,7 @@ class _LearnerCategoryListResponse extends State<LearnerCategoryPage> {
           resizeToAvoidBottomInset: false,
           appBar: TricycleAppBar().getCustomAppBar(
             context,
-            appBarTitle: AppLocalizations.of(context).translate('select_type'),
+            appBarTitle: AppLocalizations.of(context)!.translate('select_type'),
             actions: [
               Padding(
                 padding:
@@ -81,9 +81,9 @@ class _LearnerCategoryListResponse extends State<LearnerCategoryPage> {
                   onTap: () async {
 
 
-                    for(int i=0;i<widget.list.length;i++)
+                    for(int i=0;i<widget.list!.length;i++)
                     {
-                      widget.list[i].learnerItem =  getSelectedLearnerItem();
+                      widget.list![i]!.learnerItem =  getSelectedLearnerItem();
                     }
                     Navigator.push(context,
                         MaterialPageRoute(builder: (BuildContext context) {
@@ -91,14 +91,14 @@ class _LearnerCategoryListResponse extends State<LearnerCategoryPage> {
                         list: widget.list,
                         callBack:(){Navigator.of(context).pop();
                         if(widget.callBack!=null)
-                          widget.callBack();
+                          widget.callBack!();
                         },
                         selectedReceiverData: selectedReceiverData,
                       );
                     }));
                   },
                   child: Text(
-                    AppLocalizations.of(context).translate('next'),
+                    AppLocalizations.of(context)!.translate('next'),
                     style: styleElements
                         .subtitle2ThemeScalable(context)
                         .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -118,7 +118,7 @@ class _LearnerCategoryListResponse extends State<LearnerCategoryPage> {
                   Padding(
                     padding: const EdgeInsets.only(left :16.0,bottom: 8.0),
                     child: Text(
-                      widget.list[0]!=null &&widget.list[0].lessonTopic!=null&& widget.list[0].lessonTopic.title!=null ?widget.list[0].lessonTopic.title:  AppLocalizations.of(context).translate('Topic_type'),
+                      widget.list![0]!=null &&widget.list![0]!.lessonTopic!=null&& widget.list![0]!.lessonTopic!.title!=null ?widget.list![0]!.lessonTopic!.title!:  AppLocalizations.of(context)!.translate('Topic_type'),
                       style: styleElements
                           .headline6ThemeScalable(context)
                           .copyWith(fontWeight: FontWeight.bold),
@@ -152,8 +152,8 @@ class _LearnerCategoryListResponse extends State<LearnerCategoryPage> {
     );
   }
 
-  List<LearnerListItem> listItemsGetter(LearnerCategoryListResponse response) {
-    recList.addAll(response.rows);
+  List<LearnerListItem>? listItemsGetter(LearnerCategoryListResponse? response) {
+    recList.addAll(response!.rows!);
 
     return response.rows;
   }
@@ -184,7 +184,7 @@ class _LearnerCategoryListResponse extends State<LearnerCategoryPage> {
     );
   }
 
-  void changeSelection(bool value, LearnerListItem item, int index) {
+  void changeSelection(bool? value, LearnerListItem item, int index) {
     setState(() {
       recList[index].isSelected = value;
     });
@@ -192,7 +192,7 @@ class _LearnerCategoryListResponse extends State<LearnerCategoryPage> {
 
   List<LearnerListItem> getSelectedLearnerItem() {
     for (var item in recList) {
-      if (item.isSelected) selectedItems.add(item);
+      if (item.isSelected!) selectedItems.add(item);
     }
     return selectedItems;
   }
@@ -202,7 +202,7 @@ class _LearnerCategoryListResponse extends State<LearnerCategoryPage> {
       "searchVal": searchVal,
       "page_number": page,
       "page_size": 10,
-      "learner_category_type": widget.topicListItem.topicCode.toLowerCase()
+      "learner_category_type": widget.topicListItem!.topicCode!.toLowerCase()
     });
     var res = await Calls().call(body, context, Config.LEARNER_TYPE_LIST);
     var model = LearnerCategoryListResponse.fromJson(res);

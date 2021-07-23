@@ -6,14 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class WhiteLargeButton extends StatefulWidget {
-  WhiteLargeButton({Key key, this.name, this.offsetX, this.offsetY,@required this.callback,this.color,this.textColor})
+  WhiteLargeButton({Key? key, this.name, this.offsetX, this.offsetY,required this.callback,this.color,this.textColor})
       : super(key: key);
   final name;
-  final double offsetX;
-  final double offsetY;
+  final double? offsetX;
+  final double? offsetY;
   final Function callback;
-  final  String color;
-  final  String textColor;
+  final  String? color;
+  final  String? textColor;
 
   @override
   _WhiteLargeButtonState createState() => _WhiteLargeButtonState(callback:callback,color:color,textColor:textColor);
@@ -21,10 +21,10 @@ class WhiteLargeButton extends StatefulWidget {
 
 class _WhiteLargeButtonState extends State<WhiteLargeButton> {
   Function callback;
-    String color;
-  String textColor;
-  _WhiteLargeButtonState({@required this.callback,this.color,this.textColor});
-  TextStyleElements styleElements;
+    String? color;
+  String? textColor;
+  _WhiteLargeButtonState({required this.callback,this.color,this.textColor});
+  late TextStyleElements styleElements;
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(BoxConstraints(

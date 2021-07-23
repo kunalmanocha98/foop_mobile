@@ -1,8 +1,8 @@
 class ClassesExpertises {
-  String statusCode;
-  String message;
-  List<ClassesItemsExpert> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<ClassesItemsExpert>? rows;
+  int? total;
 
   ClassesExpertises({this.statusCode, this.message, this.rows, this.total});
 
@@ -12,7 +12,7 @@ class ClassesExpertises {
     if (json['rows'] != null) {
       rows = [];//ClassesItemsExpert>();
       json['rows'].forEach((v) {
-        rows.add(new ClassesItemsExpert.fromJson(v));
+        rows!.add(new ClassesItemsExpert.fromJson(v));
       });
     }
     total = json['total'];
@@ -23,7 +23,7 @@ class ClassesExpertises {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -31,13 +31,13 @@ class ClassesExpertises {
 }
 
 class ClassesItemsExpert {
-  int id;
-  int classId;
-  String className;
-  String classCode;
-  bool isSelected;
-  String section;
-  String isSelectedString;
+  int? id;
+  int? classId;
+  String? className;
+  String? classCode;
+  bool? isSelected;
+  String? section;
+  String? isSelectedString;
 
   ClassesItemsExpert(
       {this.id, this.classId, this.className, this.classCode, this.isSelectedString, this.section,});

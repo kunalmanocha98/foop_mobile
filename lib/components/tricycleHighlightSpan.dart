@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class TricycleHighlightText extends StatelessWidget {
-  final String text;
-  final String highlight;
-  final TextStyle style;
-  final TextStyle highlightStyle;
+  final String? text;
+  final String? highlight;
+  final TextStyle? style;
+  final TextStyle? highlightStyle;
 
   const TricycleHighlightText({
-    Key key,
+    Key? key,
     this.text,
     this.highlight,
     this.style,
@@ -25,7 +25,7 @@ class TricycleHighlightText extends StatelessWidget {
     int start = 0;
     int indexOfHighlight;
     do {
-      indexOfHighlight = text.indexOf(highlight, start);
+      indexOfHighlight = text.indexOf(highlight!, start);
       if (indexOfHighlight < 0) {
         // no highlight
         spans.add(_normalSpan(text.substring(start, text.length)));
@@ -34,19 +34,19 @@ class TricycleHighlightText extends StatelessWidget {
       if (indexOfHighlight == start) {
         // start with highlight.
         spans.add(_highlightSpan(highlight));
-        start += highlight.length;
+        start += highlight!.length;
       } else {
         // normal + highlight
         spans.add(_normalSpan(text.substring(start, indexOfHighlight)));
         spans.add(_highlightSpan(highlight));
-        start = indexOfHighlight + highlight.length;
+        start = indexOfHighlight + highlight!.length;
       }
     } while (true);
 
     return Text.rich(TextSpan(children: spans));
   }
 
-  TextSpan _highlightSpan(String content) {
+  TextSpan _highlightSpan(String? content) {
     return TextSpan(text: content, style: highlightStyle);
   }
 

@@ -1,8 +1,8 @@
 class AppUpdateResponse {
-  String statusCode;
-  String message;
-  AppUpdateModel rows;
-  int total;
+  String? statusCode;
+  String? message;
+  AppUpdateModel? rows;
+  int? total;
 
   AppUpdateResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -18,7 +18,7 @@ class AppUpdateResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     data['total'] = this.total;
     return data;
@@ -26,14 +26,14 @@ class AppUpdateResponse {
 }
 
 class AppUpdateModel {
-  String androidVersion;
-  String androidBuildNumber;
-  bool isAndroidForceUpdate;
-  String iosVersion;
-  String iosBuildNumber;
-  bool isIosForceUpdate;
-  String androidNotes;
-  String iosNotes;
+  String? androidVersion;
+  String? androidBuildNumber;
+  bool? isAndroidForceUpdate;
+  String? iosVersion;
+  String? iosBuildNumber;
+  bool? isIosForceUpdate;
+  String? androidNotes;
+  String? iosNotes;
 
   AppUpdateModel(
       {this.androidVersion,

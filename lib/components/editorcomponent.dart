@@ -25,7 +25,7 @@ class _TricycleEditorState extends State<TricycleEditor> {
     return SafeArea(
       child: Scaffold(
         appBar: TricycleAppBar().getCustomAppBar(context,
-            appBarTitle: AppLocalizations.of(context).translate('post_create'),
+            appBarTitle: AppLocalizations.of(context)!.translate('post_create'),
             onBackButtonPress: () {
               Navigator.pop(context);
             }),

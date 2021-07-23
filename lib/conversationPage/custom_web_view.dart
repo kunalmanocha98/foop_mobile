@@ -5,7 +5,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 class CustomWebView extends StatefulWidget {
-  final String selectedUrl;
+  final String? selectedUrl;
 
   CustomWebView({this.selectedUrl});
 
@@ -38,7 +38,7 @@ class _CustomWebViewState extends State<CustomWebView> {
 
     return SafeArea(
       child: WebviewScaffold(
-          url: widget.selectedUrl,
+          url: widget.selectedUrl!,
           ignoreSSLErrors: true,
           withZoom: true,
           withLocalStorage: true,
@@ -60,6 +60,6 @@ class _CustomWebViewState extends State<CustomWebView> {
   }
 
   String getTitle() {
-    return  Uri.parse(widget.selectedUrl).host;
+    return  Uri.parse(widget.selectedUrl!).host;
   }
 }

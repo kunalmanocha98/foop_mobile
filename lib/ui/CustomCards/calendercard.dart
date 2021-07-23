@@ -14,10 +14,10 @@ import '../ListCardsUI/calenderItem.dart';
 // ignore: must_be_immutable
 class TodaysCalenderCard extends StatelessWidget {
   final CommonCardData data;
-  BuildContext context;
-  List<SubRow> listSubItems = [];
-  TextStyleElements styleElements;
-  TodaysCalenderCard({Key key, @required this.data,this.styleElements}) : super(key: key);
+  BuildContext? context;
+  List<SubRow>? listSubItems = [];
+  TextStyleElements? styleElements;
+  TodaysCalenderCard({Key? key, required this.data,this.styleElements}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class TodaysCalenderCard extends StatelessWidget {
                           margin:  EdgeInsets.only(left: 20.w, top: 20.h),
                           child: Text(
                             data.title ?? "",
-                            style: styleElements.headline6ThemeScalable(context),
+                            style: styleElements!.headline6ThemeScalable(context),
                             textAlign: TextAlign.left,
                           ),
                         )),
@@ -79,8 +79,8 @@ class TodaysCalenderCard extends StatelessWidget {
                                   Positioned.fill(
                                       child: Align(
                                     alignment: Alignment.center,
-                                    child: Text(AppLocalizations.of(context).translate('see_more'),
-                                      style: styleElements.bodyText2ThemeScalable(context),
+                                    child: Text(AppLocalizations.of(context)!.translate('see_more'),
+                                      style: styleElements!.bodyText2ThemeScalable(context),
                                       textAlign: TextAlign.center,
                                     ),
                                   ))
@@ -100,10 +100,10 @@ class TodaysCalenderCard extends StatelessWidget {
                   child: ListView.builder(
                     padding: EdgeInsets.all(2.h),
                     physics: NeverScrollableScrollPhysics(),
-                    itemCount: listSubItems.length,
+                    itemCount: listSubItems!.length,
                     itemBuilder: (context, index) {
                       return CalenderItem(
-                        data: listSubItems[index],
+                        data: listSubItems![index],
                       );
                     },
                   ),

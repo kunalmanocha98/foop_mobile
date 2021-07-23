@@ -8,20 +8,20 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class TricycleTalkFooter extends StatefulWidget {
-  final Function exitCallback;
-  final Function chatCallback;
-  final Function postCallback;
-  final Function talkCallback;
-  final Function handRaiseCallback;
-  final Function(bool) muteCallBack;
-  final Function(bool) handRaisebyOthersCallback;
-  final Function postCreateCallback;
+  final Function? exitCallback;
+  final Function? chatCallback;
+  final Function? postCallback;
+  final Function? talkCallback;
+  final Function? handRaiseCallback;
+  final Function(bool)? muteCallBack;
+  final Function(bool)? handRaisebyOthersCallback;
+  final Function? postCreateCallback;
   final bool isMute;
-  final int chatCount;
-  final Function(bool) videoCallBack;
-  final TALKFOOTERENUM role;
+  final int? chatCount;
+  final Function(bool)? videoCallBack;
+  final TALKFOOTERENUM? role;
   TricycleTalkFooter(
-      { Key key,
+      { Key? key,
         this.chatCallback,
         this.postCallback,
         this.talkCallback,
@@ -39,13 +39,13 @@ class TricycleTalkFooter extends StatefulWidget {
 
 }
 class TricycleTalkFooterState extends State<TricycleTalkFooter>{
-  TextStyleElements styleElements;
-  BuildContext context;
+  late TextStyleElements styleElements;
+  late BuildContext context;
   GlobalKey<TricycleTalkFooterButtonState> buttonState = GlobalKey();
-  TALKFOOTERENUM type;
-  bool isMute;
-  int chatCount;
-  TricycleTalkFooterState({this.isMute,TALKFOOTERENUM role,this.chatCount =0}){
+  TALKFOOTERENUM? type;
+  bool? isMute;
+  int? chatCount;
+  TricycleTalkFooterState({this.isMute,TALKFOOTERENUM? role,this.chatCount =0}){
     this.type = role ?? TALKFOOTERENUM.audience;
   }
   @override
@@ -80,7 +80,7 @@ class TricycleTalkFooterState extends State<TricycleTalkFooter>{
                   ,postCreateCallback:widget.postCreateCallback,muteCallBack:(b){
                 isMute = !b;
 
-                widget.muteCallBack(b);
+                widget.muteCallBack!(b);
               },handRaiseCallback: widget.handRaiseCallback,
                 videoCallBack:widget.videoCallBack,
               handRaisedByOthersCallback: widget.handRaisebyOthersCallback,)),
@@ -92,7 +92,7 @@ class TricycleTalkFooterState extends State<TricycleTalkFooter>{
 
   Widget get _talkButton =>
       InkWell(
-        onTap: widget.talkCallback,
+        onTap: widget.talkCallback as void Function()?,
         borderRadius: BorderRadius.circular(45),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -100,10 +100,10 @@ class TricycleTalkFooterState extends State<TricycleTalkFooter>{
             AbsorbPointer(
               child: IconButton(icon: Icon(Icons.mic_none),
                   onPressed
-                  :widget.talkCallback,
+                  :widget.talkCallback as void Function()?,
                   color: HexColor(AppColors.appColorBlack65)),
             ),
-            Text(AppLocalizations.of(context).translate('talk'),
+            Text(AppLocalizations.of(context)!.translate('talk'),
               style: styleElements.subtitle1ThemeScalable(context),),
           ],
         ),
@@ -112,17 +112,17 @@ class TricycleTalkFooterState extends State<TricycleTalkFooter>{
   Widget get _exitButton =>
       InkWell(
         borderRadius: BorderRadius.circular(45),
-        onTap: widget.exitCallback,
+        onTap: widget.exitCallback as void Function()?,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
             RotatedBox(quarterTurns: 2,
                 child: AbsorbPointer(
                   child: IconButton(icon: Icon(Icons.logout),
-                      onPressed: widget.exitCallback,
+                      onPressed: widget.exitCallback as void Function()?,
                       color: HexColor(AppColors.appColorBlack65)),
                 )),
-            Text(AppLocalizations.of(context).translate('leave'),
+            Text(AppLocalizations.of(context)!.translate('leave'),
               style: styleElements.subtitle1ThemeScalable(context),)
           ],
         ),
@@ -130,22 +130,22 @@ class TricycleTalkFooterState extends State<TricycleTalkFooter>{
 
   Widget get _chatButton =>
       InkWell(
-        onTap: widget.chatCallback,
+        onTap: widget.chatCallback as void Function()?,
         borderRadius: BorderRadius.circular(45),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(AppLocalizations.of(context).translate('chat'),
+            Text(AppLocalizations.of(context)!.translate('chat'),
               style: styleElements.subtitle1ThemeScalable(context),),
             Stack(
               children: [
                 AbsorbPointer(
                   child: IconButton(icon: Icon(Icons.message_outlined),
-                      onPressed: widget.chatCallback,
+                      onPressed: widget.chatCallback as void Function()?,
                       color: HexColor(AppColors.appColorBlack65)),
                 ),
                 Visibility(
-                  visible: chatCount>0,
+                  visible: chatCount!>0,
                   child: new Positioned(
                     right: 4,
                     top: 4,
@@ -160,7 +160,7 @@ class TricycleTalkFooterState extends State<TricycleTalkFooter>{
                         minHeight: 18,
                       ),
                       child: Center(
-                        child: Text(chatCount.toString()??"",
+                        child: Text(chatCount.toString(),
                           style: TextStyle(
                               color: HexColor(AppColors.appColorWhite),
                               fontSize: 12,
@@ -179,16 +179,16 @@ class TricycleTalkFooterState extends State<TricycleTalkFooter>{
 
   Widget get _postButton =>
       InkWell(
-        onTap: widget.postCallback,
+        onTap: widget.postCallback as void Function()?,
         borderRadius: BorderRadius.circular(45),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(AppLocalizations.of(context).translate('post'),
+            Text(AppLocalizations.of(context)!.translate('post'),
               style: styleElements.subtitle1ThemeScalable(context),),
             AbsorbPointer(
               child: IconButton(icon: Icon(Icons.article_outlined),
-                  onPressed: widget.postCallback,
+                  onPressed: widget.postCallback as void Function()?,
                   color: HexColor(AppColors.appColorBlack65)),
             ),
           ],
@@ -196,10 +196,10 @@ class TricycleTalkFooterState extends State<TricycleTalkFooter>{
       );
 
   void countUpdate(int count) {
-    buttonState.currentState.updateCount(count);
+    buttonState.currentState!.updateCount(count);
   }
 
-  void updateType(TALKFOOTERENUM role) {
+  void updateType(TALKFOOTERENUM? role) {
     setState(() {
     if(role!=null) {
       type = role;
@@ -222,14 +222,14 @@ class TricycleTalkFooterState extends State<TricycleTalkFooter>{
   }
 
   void updateHandRaise(bool handRaise) {
-    buttonState.currentState.updateHandRaise(handRaise);
+    buttonState.currentState!.updateHandRaise(handRaise);
   }
 
   void updateMuteStatus(bool b) {
-    buttonState.currentState.updateMuteStatus(b);
+    buttonState.currentState!.updateMuteStatus(b);
   }
 
-  void chatcountUpdate(int count) {
+  void chatcountUpdate(int? count) {
     Future.microtask((){
       setState(() {
         chatCount = count;
@@ -241,7 +241,7 @@ class TricycleTalkFooterState extends State<TricycleTalkFooter>{
     print("event_message-----------------------------------------------step5"+chatCount.toString());
     Future.microtask((){
       setState(() {
-        chatCount = chatCount +1;
+        chatCount = chatCount! +1;
       });
     });
   }

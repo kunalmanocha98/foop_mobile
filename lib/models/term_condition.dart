@@ -1,8 +1,8 @@
 class TermAndConditons {
-  String statusCode;
-  String message;
-  List<DataTerms> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<DataTerms>? rows;
+  int? total;
 
   TermAndConditons({this.statusCode, this.message, this.rows, this.total});
 
@@ -12,7 +12,7 @@ class TermAndConditons {
     if (json['rows'] != null) {
       rows = [];//DataTerms>();
       json['rows'].forEach((v) {
-        rows.add(new DataTerms.fromJson(v));
+        rows!.add(new DataTerms.fromJson(v));
       });
     }
     total = json['total'];
@@ -23,7 +23,7 @@ class TermAndConditons {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -31,13 +31,13 @@ class TermAndConditons {
 }
 
 class DataTerms {
-  int id;
-  String heading;
-  String content;
-  String pubDate;
-  String version;
-  String topicsName;
-  String subtopicName;
+  int? id;
+  String? heading;
+  String? content;
+  String? pubDate;
+  String? version;
+  String? topicsName;
+  String? subtopicName;
 
   DataTerms(
       {this.id,

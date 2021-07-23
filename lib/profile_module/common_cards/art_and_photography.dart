@@ -12,8 +12,8 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class ArtAndPhotography extends StatelessWidget {
   final CommonCardData data;
-  List<SubRow> listSubItems = [];
-  TextStyleElements styleElements;
+  List<SubRow>? listSubItems = [];
+  TextStyleElements? styleElements;
   Size displaySize(BuildContext context) {
     debugPrint('Size = ' + MediaQuery.of(context).size.toString());
     return MediaQuery.of(context).size;
@@ -29,7 +29,7 @@ class ArtAndPhotography extends StatelessWidget {
     return displaySize(context).width;
   }
 
-  ArtAndPhotography({Key key, @required this.data,this.styleElements}) : super(key: key);
+  ArtAndPhotography({Key? key, required this.data,this.styleElements}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +52,7 @@ class ArtAndPhotography extends StatelessWidget {
                     child: Container(
                       child: Text(
                         data.title ?? "",
-                        style: styleElements.headline6ThemeScalable(context),
+                        style: styleElements!.headline6ThemeScalable(context),
                         textAlign: TextAlign.left,
                       ),
                     )),
@@ -79,7 +79,7 @@ class ArtAndPhotography extends StatelessWidget {
               physics: NeverScrollableScrollPhysics(),
               crossAxisCount: 2,
               childAspectRatio: (itemWidth / itemHeight),
-              children: listSubItems.map((SubRow data) {
+              children: listSubItems!.map((SubRow data) {
                 return Stack(children: <Widget>[
                   Container(
                     margin: const EdgeInsets.only(
@@ -89,7 +89,7 @@ class ArtAndPhotography extends StatelessWidget {
                       color: HexColor(AppColors.appColorBlueAccent),
                       borderRadius: BorderRadius.all(Radius.circular(4)),
                       image: DecorationImage(
-                        image: CachedNetworkImageProvider(data.urlOne),
+                        image: CachedNetworkImageProvider(data.urlOne!),
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -117,10 +117,10 @@ class ArtAndPhotography extends StatelessWidget {
                         onPressed: () {},
                         color: HexColor(AppColors.appMainColor),
                         child: Text(
-                            AppLocalizations.of(context)
+                            AppLocalizations.of(context)!
                                 .translate('shop')
                                 .toUpperCase(),
-                            style: styleElements.bodyText2ThemeScalable(context)),
+                            style: styleElements!.bodyText2ThemeScalable(context)),
                       ),
                     ),
                   )
@@ -136,8 +136,8 @@ class ArtAndPhotography extends StatelessWidget {
               child: Align
                 (
                 alignment:  Alignment.bottomRight,
-                child: Text(AppLocalizations.of(context).translate('see_more'),
-                  style: styleElements.subtitle2ThemeScalable(context),
+                child: Text(AppLocalizations.of(context)!.translate('see_more'),
+                  style: styleElements!.subtitle2ThemeScalable(context),
                   textAlign: TextAlign.center,
                 ),
               ),

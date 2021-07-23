@@ -12,20 +12,20 @@ import 'package:intl/intl.dart';
 
 class CalenderViewPage extends StatefulWidget{
   final DateTime selectedDate;
-  CalenderViewPage({@required this.selectedDate});
+  CalenderViewPage({required this.selectedDate});
   @override
   CalenderViewPageState createState() => CalenderViewPageState(currentDate: selectedDate);
 }
 class CalenderViewPageState extends State<CalenderViewPage>{
-  DateTime currentDate;
-  String _currentMonth;
-  DateTime _targetDateTime;
+  DateTime? currentDate;
+  late String _currentMonth;
+  DateTime? _targetDateTime;
   CalenderViewPageState({this.currentDate}){
-    _currentMonth= DateFormat.yMMM().format(currentDate);
+    _currentMonth= DateFormat.yMMM().format(currentDate!);
     _targetDateTime = currentDate;
   }
-  TextStyleElements styleElements;
-  CalendarCarousel _calendarCarouselNoHeader;
+  late TextStyleElements styleElements;
+  CalendarCarousel? _calendarCarouselNoHeader;
 
   @override
   void initState() {
@@ -41,8 +41,8 @@ class CalenderViewPageState extends State<CalenderViewPage>{
 
       selectedDateTime: currentDate,
       targetDateTime: _targetDateTime,
-      minSelectedDate: currentDate.subtract(Duration(days: 365)),
-      maxSelectedDate: currentDate.add(Duration(days: 365)),
+      minSelectedDate: currentDate!.subtract(Duration(days: 365)),
+      maxSelectedDate: currentDate!.add(Duration(days: 365)),
 
       markedDateCustomShapeBorder: CircleBorder(side: BorderSide(color: HexColor(AppColors.appMainColor))),
 
@@ -76,7 +76,7 @@ class CalenderViewPageState extends State<CalenderViewPage>{
       onCalendarChanged: (DateTime date) {
         this.setState(() {
           _targetDateTime = date;
-          _currentMonth = DateFormat.yMMM().format(_targetDateTime);
+          _currentMonth = DateFormat.yMMM().format(_targetDateTime!);
         });
       },
       onDayLongPressed: (DateTime date) {
@@ -85,7 +85,7 @@ class CalenderViewPageState extends State<CalenderViewPage>{
     );
 
     return new Scaffold(
-        appBar:TricycleAppBar().getCustomAppBar(context, appBarTitle: AppLocalizations.of(context).translate('select_date_heading'),
+        appBar:TricycleAppBar().getCustomAppBar(context, appBarTitle: AppLocalizations.of(context)!.translate('select_date_heading'),
             onBackButtonPress: (){Navigator.pop(context);},
         actions: [
           TricycleTextButton(
@@ -96,7 +96,7 @@ class CalenderViewPageState extends State<CalenderViewPage>{
               direction: Axis.horizontal,
               crossAxisAlignment: WrapCrossAlignment.center,
               children: [
-                Text(AppLocalizations.of(context).translate('next'),
+                Text(AppLocalizations.of(context)!.translate('next'),
                   style: styleElements
                       .subtitle2ThemeScalable(context)
                       .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -135,22 +135,22 @@ class CalenderViewPageState extends State<CalenderViewPage>{
                           ),
                         )),
                     TricycleTextButton(
-                      child: Text(AppLocalizations.of(context).translate('prev').toUpperCase(),style: TextStyle(color: HexColor(AppColors.appMainColor)),),
+                      child: Text(AppLocalizations.of(context)!.translate('prev').toUpperCase(),style: TextStyle(color: HexColor(AppColors.appMainColor)),),
                       shape: StadiumBorder(),
                       onPressed: () {
                         setState(() {
-                          _targetDateTime = DateTime(_targetDateTime.year, _targetDateTime.month -1);
-                          _currentMonth = DateFormat.yMMM().format(_targetDateTime);
+                          _targetDateTime = DateTime(_targetDateTime!.year, _targetDateTime!.month -1);
+                          _currentMonth = DateFormat.yMMM().format(_targetDateTime!);
                         });
                       },
                     ),
                     TricycleTextButton(
-                      child: Text(AppLocalizations.of(context).translate('next').toUpperCase(),style: TextStyle(color: HexColor(AppColors.appMainColor)),),
+                      child: Text(AppLocalizations.of(context)!.translate('next').toUpperCase(),style: TextStyle(color: HexColor(AppColors.appMainColor)),),
                       shape: StadiumBorder(),
                       onPressed: () {
                         setState(() {
-                          _targetDateTime = DateTime(_targetDateTime.year, _targetDateTime.month +1);
-                          _currentMonth = DateFormat.yMMM().format(_targetDateTime);
+                          _targetDateTime = DateTime(_targetDateTime!.year, _targetDateTime!.month +1);
+                          _currentMonth = DateFormat.yMMM().format(_targetDateTime!);
                         });
                       },
                     )

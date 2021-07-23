@@ -13,23 +13,23 @@ class AcceptRejectRequestWidget extends StatefulWidget {
 }
 
 class AcceptRejectRequestWidgetState extends State<AcceptRejectRequestWidget> {
-  int id;
-  String message;
-  HexColor actionButtonColor;
-  bool isButtonView;
-  String okButtonText;
-  String cancelButtonText;
-  Function okButtonCallback;
-  Function cancelButtonCallback;
+  int? id;
+  late String message;
+  HexColor? actionButtonColor;
+  bool? isButtonView;
+  late String okButtonText;
+  late String cancelButtonText;
+  Function? okButtonCallback;
+  Function? cancelButtonCallback;
   Color textColor = Colors.white;
-  Color backgroundColor;
-  bool showCard = false;
+  Color? backgroundColor;
+  bool? showCard = false;
 
   AcceptRejectRequestWidgetState();
 
   @override
   Widget build(BuildContext context) {
-    return showCard
+    return showCard!
         ? Container(
       padding: EdgeInsets.all(8),
       color: backgroundColor,
@@ -45,7 +45,7 @@ class AcceptRejectRequestWidgetState extends State<AcceptRejectRequestWidget> {
           SizedBox(
             height: 4,
           ),
-          isButtonView
+          isButtonView!
               ? Row(
             children: [
               SizedBox(
@@ -97,21 +97,21 @@ class AcceptRejectRequestWidgetState extends State<AcceptRejectRequestWidget> {
   }
 
   void update({
-    @required String message,
-    String okButtonText,
-    String cancelButtonText,
-    Function okButtonCallback,
-    HexColor actionButtonColor,
-    Function cancelButtonCallback,
-    HexColor backgroundColor,
-    bool isButtonView,
-    bool showCard,
-    int id
+    required String message,
+    String? okButtonText,
+    String? cancelButtonText,
+    Function? okButtonCallback,
+    HexColor? actionButtonColor,
+    Function? cancelButtonCallback,
+    HexColor? backgroundColor,
+    bool? isButtonView,
+    bool? showCard,
+    int? id
   }) {
     Future((){
       setState(() {
         this.actionButtonColor=actionButtonColor;
-        this.message = message ?? "";
+        this.message = message;
         this.okButtonText = okButtonText ?? "ok";
         this.cancelButtonText = cancelButtonText ?? "cancel";
         this.showCard = showCard;
@@ -133,7 +133,7 @@ class AcceptRejectRequestWidgetState extends State<AcceptRejectRequestWidget> {
     });
   }
 
-  void checkandHide(int participantId) {
+  void checkandHide(int? participantId) {
     if(id!=null && id == participantId) {
       Future(() {
         setState(() {

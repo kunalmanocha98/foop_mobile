@@ -14,46 +14,46 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class MicroLearningSideButtons extends StatefulWidget {
-  Statistics stats;
-  Function sharecallBack;
-  Function(bool) bookmarkCallback;
-  Function commentCallback;
-  Function ratingCallback;
-  SharedPreferences prefs;
-  bool isBookMarked;
-  int postId;
-  bool isRated;
-  bool isDocument;
-  bool isDarkTheme;
-  int ownerId;
-  String ownerType;
-  String mediaUrl;
+  Statistics? stats;
+  Function? sharecallBack;
+  Function(bool)? bookmarkCallback;
+  Function? commentCallback;
+  Function? ratingCallback;
+  SharedPreferences? prefs;
+  bool? isBookMarked;
+  int? postId;
+  bool? isRated;
+  bool? isDocument;
+  bool? isDarkTheme;
+  int? ownerId;
+  String? ownerType;
+  String? mediaUrl;
   bool isCommentVisible;
   bool isBookMarkVisible;
   bool isShareVisible;
-  int subjectId;
-  String subjectType;
-  Color backgroundColor;
+  int? subjectId;
+  String? subjectType;
+  Color? backgroundColor;
   bool isInviteUserVisible;
-  Function inviteuserCallback;
+  Function? inviteuserCallback;
   bool rateCountShow;
-  Function ratingFunction;
+  Function? ratingFunction;
   bool applyTimeCheck;
-  DateTime startTime;
-  int minimumMinutes;
-  int totalMinutes;
-  Widget actionButton;
+  DateTime? startTime;
+  int? minimumMinutes;
+  int? totalMinutes;
+  Widget? actionButton;
   bool isRatingVisible;
   bool isTalkIconVisible;
-  Function filterCallBack;
-  Function translateCallback;
+  Function? filterCallBack;
+  Function? translateCallback;
   bool isTranslateVisible;
-  Function textToSpeechCallback;
-  bool isTextToSpeechVisible;
+  Function? textToSpeechCallback;
+  bool? isTextToSpeechVisible;
   // GlobalKey<TricycleDownloadButtonState> downloadButtonKey;
-  List<Media> media;
-Function homeCallBack;
-Function searchCallBAck;
+  List<Media>? media;
+Function? homeCallBack;
+Function? searchCallBAck;
 bool isPlaying;
 bool isLoading;
 
@@ -125,24 +125,24 @@ bool isLoading;
 }
 
 class MicroLearningSideButtonsState extends State<MicroLearningSideButtons> {
-  TextStyleElements styleElements;
-  Statistics stats;
-  Function sharecallBack;
-  String mediaUrl;
-  Function(bool) bookmarkCallback;
-  Function commentCallback;
-  Function ratingCallback;
-  bool isRated;
-  bool isDocument;
-  bool isDarkTheme;
-  SharedPreferences prefs;
-  bool isBookMarked;
-  int postId;
+  TextStyleElements? styleElements;
+  Statistics? stats;
+  Function? sharecallBack;
+  String? mediaUrl;
+  Function(bool)? bookmarkCallback;
+  Function? commentCallback;
+  Function? ratingCallback;
+  bool? isRated;
+  bool? isDocument;
+  bool? isDarkTheme;
+  SharedPreferences? prefs;
+  bool? isBookMarked;
+  int? postId;
   int counter = 0;
-  String ownerType;
-  int ownerId;
+  String? ownerType;
+  int? ownerId;
   // GlobalKey<TricycleDownloadButtonState> downloadButtonKey;
-  List<Media> media;
+  List<Media>? media;
   ButtonTapManager buttonTapManager = ButtonTapManager();
 
 
@@ -192,11 +192,11 @@ class MicroLearningSideButtonsState extends State<MicroLearningSideButtons> {
               child: IconButton(
                 icon: Icon(
                   Icons.school_outlined,
-                  color: isDarkTheme
+                  color: isDarkTheme!
                       ? HexColor(AppColors.appColorWhite)
                       : HexColor(AppColors.appColorBlack35),
                 ),
-                onPressed: widget.homeCallBack,
+                onPressed: widget.homeCallBack as void Function()?,
               ),
             ),
           ),
@@ -207,11 +207,11 @@ class MicroLearningSideButtonsState extends State<MicroLearningSideButtons> {
               child: IconButton(
                 icon: Icon(
                   Icons.format_list_bulleted,
-                  color: isDarkTheme
+                  color: isDarkTheme!
                       ? HexColor(AppColors.appColorWhite)
                       : HexColor(AppColors.appColorBlack35),
                 ),
-                onPressed: widget.filterCallBack,
+                onPressed: widget.filterCallBack as void Function()?,
               ),
             ),
           ),
@@ -223,41 +223,41 @@ class MicroLearningSideButtonsState extends State<MicroLearningSideButtons> {
               :Icon(widget.isPlaying
                 ?Icons.pause_circle_outline_rounded
                 :Icons.play_circle_outline,
-                color: isDarkTheme
+                color: isDarkTheme!
                     ? HexColor(AppColors.appColorWhite)
                     : HexColor(AppColors.appColorBlack35),
               ),
               onPressed:widget.isLoading?null: (){
                 setState(() {
                   widget.isLoading = true;
-                  widget.textToSpeechCallback();
+                  widget.textToSpeechCallback!();
                 });
               }
             ),
           ),
           Visibility(
-            visible: widget.isTranslateVisible ?? false,
+            visible: widget.isTranslateVisible,
             child: IconButton(
               icon: Icon(
                 Icons.translate,
-                color: isDarkTheme
+                color: isDarkTheme!
                     ? HexColor(AppColors.appColorWhite)
                     : HexColor(AppColors.appColorBlack35),
               ),
-              onPressed: widget.translateCallback,
+              onPressed: widget.translateCallback as void Function()?,
             ),
           ),
 
           Visibility(
-            visible: widget.isTranslateVisible ?? false,
+            visible: widget.isTranslateVisible,
             child: IconButton(
               icon: Icon(
                 Icons.search,
-                color: isDarkTheme
+                color: isDarkTheme!
                     ? HexColor(AppColors.appColorWhite)
                     : HexColor(AppColors.appColorBlack35),
               ),
-              onPressed: widget.searchCallBAck,
+              onPressed: widget.searchCallBAck as void Function()?,
             ),
           ),
         ],
@@ -269,7 +269,7 @@ class MicroLearningSideButtonsState extends State<MicroLearningSideButtons> {
     PostRecipientUpdatePayload payload = PostRecipientUpdatePayload();
     payload.postId = postId;
     payload.postRecipientStatus = null;
-    payload.isBookmarked = isBookMarked != null ? !isBookMarked : false;
+    payload.isBookmarked = isBookMarked != null ? !isBookMarked! : false;
     var body = jsonEncode(payload);
     Calls().call(body, context, Config.UPDATE_RECIPIENT_LIST).then((value) {
       // PostCreateResponse res = PostCreateResponse.fromJson(value);
@@ -287,11 +287,11 @@ class MicroLearningSideButtonsState extends State<MicroLearningSideButtons> {
 
     setState(() {
       if (isBookMarked != null) {
-        isBookMarked = !isBookMarked;
+        isBookMarked = !isBookMarked!;
       } else {
         isBookMarked = true;
       }
     });
-    bookmarkCallback(isBookMarked);
+    bookmarkCallback!(isBookMarked!);
   }
 }

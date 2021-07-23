@@ -1,16 +1,16 @@
 class EditSubject {
-  String id;
-  String personType;
+  String? id;
+  String? personType;
   Null institutionCourse;
-  String institutionSubject;
-  String institutionAcademicYearId;
-  String standardExpertiseCategoryId;
+  String? institutionSubject;
+  String? institutionAcademicYearId;
+  String? standardExpertiseCategoryId;
   Null institutionClassId;
-  List<String> abilities;
-  List<String> goals;
-  int givenById;
-  String institutionId;
-  String personId;
+  List<String?>? abilities;
+  List<String>? goals;
+  int? givenById;
+  String? institutionId;
+  String? personId;
   EditSubject(
       {this.id,
         this.personId,

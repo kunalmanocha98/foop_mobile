@@ -42,16 +42,16 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  SharedPreferences prefs;
-  BuildContext ctx;
-  TextStyleElements styleElements;
+  late SharedPreferences prefs;
+  BuildContext? ctx;
+  late TextStyleElements styleElements;
 
   Future<void> navigationPage(BuildContext context) async {
     prefs = await SharedPreferences.getInstance();
     prefs.remove(Strings.current_event);
     if (prefs.getString("token") != null) {
       if (prefs.getBool("isProfileCreated") != null &&
-          prefs.getBool("isProfileCreated")) {
+          prefs.getBool("isProfileCreated")!) {
         if (prefs.getString("create_institute") == "ConfirmDetails") {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
@@ -82,7 +82,7 @@ class _SplashScreenState extends State<SplashScreen> {
               MaterialPageRoute(builder: (ctx) => WelComeScreen()),
                   (Route<dynamic> route) => false);
         } else if (prefs.getBool("isProfileUpdated") != null &&
-            !prefs.getBool("isProfileUpdated")) {
+            !prefs.getBool("isProfileUpdated")!) {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: (context) => UpdateProfilePage()),
                   (Route<dynamic> route) => false);
@@ -124,7 +124,7 @@ class _SplashScreenState extends State<SplashScreen> {
               MaterialPageRoute(builder: (ctx) => WelComeScreen()),
                   (Route<dynamic> route) => false);
         } else if (prefs.getBool("isProfileUpdated") != null &&
-            !prefs.getBool("isProfileUpdated")) {
+            !prefs.getBool("isProfileUpdated")!) {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: (context) => UpdateProfilePage()),
                   (Route<dynamic> route) => false);
@@ -137,7 +137,7 @@ class _SplashScreenState extends State<SplashScreen> {
         }
       }
     } else {
-      if (prefs.getBool("isLogout") != null && prefs.getBool("isLogout")) {
+      if (prefs.getBool("isLogout") != null && prefs.getBool("isLogout")!) {
         Navigator.of(context).pushAndRemoveUntil(
             MaterialPageRoute(builder: (ctx) => Home()),
                 (Route<dynamic> route) => false);
@@ -162,7 +162,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Calls().call(jsonEncode({}), context, Config.APP_UPDATE).then((value) {
       var response = AppUpdateResponse.fromJson(value);
       if (response.statusCode == Strings.success_code) {
-        log(response.rows.toJson().toString());
+        log(response.rows!.toJson().toString());
         checkVersion(packageInfo, response.rows);
       } else {
         navigationPage(context);
@@ -173,7 +173,7 @@ class _SplashScreenState extends State<SplashScreen> {
     });
   }
 
-  void checkVersion(PackageInfo packageInfo, AppUpdateModel model) {
+  void checkVersion(PackageInfo packageInfo, AppUpdateModel? model) {
     try {
       log("**** AppName ****");
       log("**** PackageName ****" + packageInfo.packageName);
@@ -181,7 +181,7 @@ class _SplashScreenState extends State<SplashScreen> {
       log("**** Version ****" + packageInfo.version);
       var currentVersion = Version(packageInfo.version);
       var versionFromServer = Version(
-          Platform.isAndroid ? model.androidBuildNumber : model.iosBuildNumber);
+          Platform.isAndroid ? model!.androidBuildNumber! : model!.iosBuildNumber!);
       if (Platform.isAndroid) {
         if (needsUpdate(currentVersion, versionFromServer)) {
           showDialog(
@@ -189,7 +189,7 @@ class _SplashScreenState extends State<SplashScreen> {
               barrierDismissible: false,
               builder: (BuildContext context) {
                 return AppUpdateDialog(
-                  showCancelButton: !model.isAndroidForceUpdate,
+                  showCancelButton: !model.isAndroidForceUpdate!,
                   // note: model.androidNotes,
                   note: model.androidNotes,
                   cancelButton: () {
@@ -219,7 +219,7 @@ class _SplashScreenState extends State<SplashScreen> {
               barrierDismissible: false,
               builder: (BuildContext context) {
                 return AppUpdateDialog(
-                  showCancelButton: !model.isIosForceUpdate,
+                  showCancelButton: !model.isIosForceUpdate!,
                   note: model.iosNotes,
                   cancelButton: () {
                     navigationPage(context);
@@ -251,7 +251,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) => setSharedPreferences());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => setSharedPreferences());
     super.initState();
   }
 
@@ -281,7 +281,7 @@ class _SplashScreenState extends State<SplashScreen> {
                         image: AssetImage('assets/appimages/india.png'),
                       )),
                   Text(
-                    AppLocalizations.of(context)
+                    AppLocalizations.of(context)!
                         .translate('handcrafted_in_india'),
                     style: styleElements.captionThemeScalable(context).copyWith(
                       color: HexColor(AppColors.appColorWhite),
@@ -325,7 +325,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     margin: EdgeInsets.only(bottom: 12.h),
                     alignment: Alignment(0, -0.76),
                     child: Text(
-                      AppLocalizations.of(context).translate("logo_main"),
+                      AppLocalizations.of(context)!.translate("logo_main"),
                       style: styleElements
                           .headline5ThemeScalable(context)
                           .copyWith(color: HexColor(AppColors.appColorWhite)),
@@ -335,7 +335,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     margin: EdgeInsets.only(bottom: 12.h),
                     alignment: Alignment(0, -0.76),
                     child: Text(
-                      AppLocalizations.of(context).translate("logo_slogan"),
+                      AppLocalizations.of(context)!.translate("logo_slogan"),
                       style: styleElements
                           .bodyText1ThemeScalable(context)
                           .copyWith(color: HexColor(AppColors.appColorWhite)),
@@ -349,11 +349,11 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   bool needsUpdate(Version currentVersion, Version versionFromServer) {
-    if (currentVersion.major < versionFromServer.major) {
+    if (currentVersion.major! < versionFromServer.major!) {
       print('here--dgdsgsg--');
       return true;
     } else if (currentVersion.major == versionFromServer.major) {
-      if (currentVersion.minor < versionFromServer.minor) {
+      if (currentVersion.minor! < versionFromServer.minor!) {
         print('here--dgfdg--');
         return true;
       } else if (currentVersion.minor == versionFromServer.minor) {

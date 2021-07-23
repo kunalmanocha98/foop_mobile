@@ -12,10 +12,10 @@ import 'hexColors.dart';
 
 // ignore: must_be_immutable
 class DialogFinishGoal extends StatelessWidget {
-  String title;
-  String subtitle;
-  BuildContext context;
-  TextStyleElements styleElements;
+  String? title;
+  String? subtitle;
+  BuildContext? context;
+  late TextStyleElements styleElements;
 
   getbio(BuildContext context) {
     return TextField(
@@ -32,11 +32,11 @@ class DialogFinishGoal extends StatelessWidget {
           disabledBorder: InputBorder.none,
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
-          hintText: AppLocalizations.of(context).translate('write_remark')),
+          hintText: AppLocalizations.of(context)!.translate('write_remark')),
     );
   }
 
-  String type;
+  String? type;
 
   Size displaySize(BuildContext context) {
     debugPrint('Size = ' + MediaQuery.of(context).size.toString());
@@ -70,7 +70,7 @@ class DialogFinishGoal extends StatelessWidget {
                     child: Container(
                       margin:
                           const EdgeInsets.only(left: 16, bottom: 16, top: 16),
-                      child: Text(AppLocalizations.of(context).translate('goal_completion'),
+                      child: Text(AppLocalizations.of(context)!.translate('goal_completion'),
                         style: styleElements.subtitle1ThemeScalable(context),
                       ),
                     )),
@@ -78,7 +78,7 @@ class DialogFinishGoal extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     child: Container(
                       margin: const EdgeInsets.only(left: 16, right: 16),
-                      child: Text(AppLocalizations.of(context).translate('want_to_finish_hindi'),
+                      child: Text(AppLocalizations.of(context)!.translate('want_to_finish_hindi'),
                         style: styleElements.headline6ThemeScalable(context),
                       ),
                     )),
@@ -99,7 +99,7 @@ class DialogFinishGoal extends StatelessWidget {
                       child: Row(
                         children: <Widget>[
                           Container(
-                            child: Text(AppLocalizations.of(context).translate('start'),
+                            child: Text(AppLocalizations.of(context)!.translate('start'),
                               style:  styleElements.headline6ThemeScalable(context),
                               textAlign: TextAlign.left,
                             ),
@@ -122,7 +122,7 @@ class DialogFinishGoal extends StatelessWidget {
                       child: Row(
                         children: <Widget>[
                           Container(
-                            child: Text(AppLocalizations.of(context).translate('achieved'),
+                            child: Text(AppLocalizations.of(context)!.translate('achieved'),
                               style:  styleElements.headline6ThemeScalable(context),
                               textAlign: TextAlign.left,
                             ),
@@ -143,7 +143,7 @@ class DialogFinishGoal extends StatelessWidget {
                     child: Container(
                       margin: const EdgeInsets.only(
                           left: 16, right: 16, bottom: 16, top: 16),
-                      child: Text(AppLocalizations.of(context).translate('sure_goal'),
+                      child: Text(AppLocalizations.of(context)!.translate('sure_goal'),
                         style:  styleElements.captionThemeScalable(context),
                       ),
                     )),
@@ -154,7 +154,7 @@ class DialogFinishGoal extends StatelessWidget {
                       child: Row(
                         children: <Widget>[
                           Container(
-                            child: Text(AppLocalizations.of(context).translate('remarks'),
+                            child: Text(AppLocalizations.of(context)!.translate('remarks'),
                               style:  styleElements.headline5ThemeScalable(context),
                               textAlign: TextAlign.left,
                             ),
@@ -194,7 +194,7 @@ class DialogFinishGoal extends StatelessWidget {
                               },
                               color: HexColor(AppColors.appColorWhite),
                               child: Text(
-                                  AppLocalizations.of(context)
+                                  AppLocalizations.of(context)!
                                       .translate('cancel')
                                       .toUpperCase(),
                                   style: styleElements.bodyText2ThemeScalable(context).copyWith(
@@ -224,7 +224,7 @@ class DialogFinishGoal extends StatelessWidget {
                               },
                               color: HexColor(AppColors.appMainColor),
                               child: Text(
-                                  AppLocalizations.of(context)
+                                  AppLocalizations.of(context)!
                                       .translate('confirm')
                                       .toUpperCase(),
                                   style: styleElements.bodyText2ThemeScalable(context).copyWith(

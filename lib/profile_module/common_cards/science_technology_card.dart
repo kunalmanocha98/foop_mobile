@@ -12,7 +12,7 @@ import 'overlaped_circular_images.dart';
 // ignore: must_be_immutable
 class ScienceAndTechnology extends StatelessWidget {
   final CommonCardData data;
-  TextStyleElements styleElements;
+  TextStyleElements? styleElements;
   Size displaySize(BuildContext context) {
     debugPrint('Size = ' + MediaQuery.of(context).size.toString());
     return MediaQuery.of(context).size;
@@ -28,7 +28,7 @@ class ScienceAndTechnology extends StatelessWidget {
     return displaySize(context).width;
   }
 
-  ScienceAndTechnology({Key key, @required this.data,this.styleElements}) : super(key: key);
+  ScienceAndTechnology({Key? key, required this.data,this.styleElements}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class ScienceAndTechnology extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 16, right: 16,top:12,bottom:12),
                     child: Text(
                       data.title ?? "",
-                      style: styleElements.headline6ThemeScalable(context),
+                      style: styleElements!.headline6ThemeScalable(context),
                       textAlign: TextAlign.left,
                     ),
                   )),
@@ -106,7 +106,7 @@ class ScienceAndTechnology extends StatelessWidget {
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                     softWrap: false,
-                                    style: styleElements.headline5ThemeScalable(context),
+                                    style: styleElements!.headline5ThemeScalable(context),
                                     textAlign: TextAlign.left,
                                   ),
                                 ),
@@ -121,7 +121,7 @@ class ScienceAndTechnology extends StatelessWidget {
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                     softWrap: false,
-                                    style: styleElements.bodyText2ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite)),
+                                    style: styleElements!.bodyText2ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite)),
                                     textAlign: TextAlign.left,
                                   ),
                                 ),
@@ -143,7 +143,7 @@ class ScienceAndTechnology extends StatelessWidget {
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                         softWrap: false,
-                                        style: styleElements.bodyText2ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite)),
+                                        style: styleElements!.bodyText2ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite)),
                                         textAlign: TextAlign.left,
                                       )),
                                     ],
@@ -193,7 +193,7 @@ class ScienceAndTechnology extends StatelessWidget {
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                     softWrap: false,
-                                    style: styleElements.headline6ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite)),
+                                    style: styleElements!.headline6ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite)),
                                     textAlign: TextAlign.left,
                                   ),
                                 ),
@@ -208,7 +208,7 @@ class ScienceAndTechnology extends StatelessWidget {
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                     softWrap: false,
-                                    style: styleElements.bodyText2ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite)),
+                                    style: styleElements!.bodyText2ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite)),
                                     textAlign: TextAlign.left,
                                   ),
                                 ),
@@ -230,7 +230,7 @@ class ScienceAndTechnology extends StatelessWidget {
                                         overflow: TextOverflow.ellipsis,
                                         softWrap: false,
                                         maxLines: 2,
-                                        style: styleElements.bodyText2ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite)),
+                                        style: styleElements!.bodyText2ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite)),
                                         textAlign: TextAlign.left,
                                       )),
                                     ],
@@ -256,8 +256,8 @@ class ScienceAndTechnology extends StatelessWidget {
               child: Align
                 (
                 alignment:  Alignment.bottomRight,
-                child:Text(AppLocalizations.of(context).translate('see_more'),
-                  style: styleElements.subtitle2ThemeScalable(context),
+                child:Text(AppLocalizations.of(context)!.translate('see_more'),
+                  style: styleElements!.subtitle2ThemeScalable(context),
                   textAlign: TextAlign.center,
                 ),
               ),

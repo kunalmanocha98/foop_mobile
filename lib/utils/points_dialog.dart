@@ -15,10 +15,10 @@ class PointsDialog extends StatefulWidget {
   String type;
 
   PointsDialog({
-    Key key,
-    @required this.type,
-    @required this.title,
-    @required this.subtitle,
+    Key? key,
+    required this.type,
+    required this.title,
+    required this.subtitle,
   }) : super(key: key);
 
   _RateDialog createState() =>
@@ -27,7 +27,7 @@ class PointsDialog extends StatefulWidget {
 
 class _RateDialog extends State<PointsDialog> {
   String title;
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
   String subtitle;
   Map<String, bool> language = {
     'Read': false,
@@ -38,9 +38,9 @@ class _RateDialog extends State<PointsDialog> {
   String type;
 
   _RateDialog({
-    @required this.type,
-    @required this.title,
-    @required this.subtitle,
+    required this.type,
+    required this.title,
+    required this.subtitle,
   });
 
   @override
@@ -130,13 +130,13 @@ class _RateDialog extends State<PointsDialog> {
                       children: <Widget>[
                         Container(
                           margin: const EdgeInsets.only(left: 30),
-                          child: Text(AppLocalizations.of(context).translate('very_bad'),
+                          child: Text(AppLocalizations.of(context)!.translate('very_bad'),
                             style:  styleElements.overlineThemeScalable(context),
                           ),
                         ),
                         Container(
                           margin: const EdgeInsets.only(right: 30),
-                          child: Text(AppLocalizations.of(context).translate('very_good'),
+                          child: Text(AppLocalizations.of(context)!.translate('very_good'),
                             style: styleElements.overlineThemeScalable(context),
                           ),
                         )

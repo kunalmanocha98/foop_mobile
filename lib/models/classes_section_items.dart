@@ -3,9 +3,9 @@
 import 'classes_sections_data.dart';
 
 class ClassesAndSectionsItem {
-  String tittle;
+  String? tittle;
 
-  List<ClassesAndSections> rows;
+  List<ClassesAndSections>? rows;
 
 
   ClassesAndSectionsItem({this.tittle, this.rows,});
@@ -16,7 +16,7 @@ class ClassesAndSectionsItem {
     if (json['rows'] != null) {
       rows = [];//ClassesAndSections>();
       json['rows'].forEach((v) {
-        rows.add(new ClassesAndSections.fromJson(v));
+        rows!.add(new ClassesAndSections.fromJson(v));
       });
     }
 
@@ -26,7 +26,7 @@ class ClassesAndSectionsItem {
     final Map<String, dynamic> data = new Map<String, dynamic>();
 
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['tittle'] = this.tittle;
     return data;

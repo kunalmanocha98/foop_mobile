@@ -1,9 +1,9 @@
 import 'add_conversation_payload.dart';
 
 class CreateConversationResponse {
-  String statusCode;
-  String message;
-  List<AddConversationPayload> rows;
+  String? statusCode;
+  String? message;
+  List<AddConversationPayload>? rows;
 
   CreateConversationResponse({this.statusCode, this.message, this.rows});
 
@@ -13,7 +13,7 @@ class CreateConversationResponse {
     if (json['rows'] != null) {
       rows = [];//AddConversationPayload>();
       json['rows'].forEach((v) {
-        rows.add(new AddConversationPayload.fromJson(v));
+        rows!.add(new AddConversationPayload.fromJson(v));
       });
     }
   }
@@ -23,7 +23,7 @@ class CreateConversationResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     return data;
   }

@@ -22,7 +22,7 @@ import 'email_phone_number_verification.dart';
 
 // ignore: must_be_immutable
 class AddEditEmailPhonesPage extends StatefulWidget {
-  List<EmailContactList> list;
+  List<EmailContactList>? list;
   bool isEmail;
 
   @override
@@ -33,10 +33,10 @@ class AddEditEmailPhonesPage extends StatefulWidget {
 }
 
 class _AddEditEmailPhonesPage extends State<AddEditEmailPhonesPage> {
-  List<EmailContactList> list;
+  List<EmailContactList>? list;
   bool isLoading = false;
   bool isEmail;
-  SharedPreferences prefs;
+  late SharedPreferences prefs;
   GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
 
   @override
@@ -45,7 +45,7 @@ class _AddEditEmailPhonesPage extends State<AddEditEmailPhonesPage> {
     setPrefs();
   }
 
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   @override
   Widget build(BuildContext context) {
@@ -57,8 +57,8 @@ class _AddEditEmailPhonesPage extends State<AddEditEmailPhonesPage> {
         appBar: TricycleAppBar().getCustomAppBar(
           context,
           appBarTitle: isEmail
-              ? AppLocalizations.of(context).translate("email_addresses_title")
-              : AppLocalizations.of(context).translate("mobile_number_title"),
+              ? AppLocalizations.of(context)!.translate("email_addresses_title")
+              : AppLocalizations.of(context)!.translate("mobile_number_title"),
           onBackButtonPress: () {
             Navigator.pop(context);
           },
@@ -101,8 +101,8 @@ class _AddEditEmailPhonesPage extends State<AddEditEmailPhonesPage> {
                           margin: const EdgeInsets.all(16),
                           child: Text(
                             isEmail
-                                ? AppLocalizations.of(context).translate("email_add_des")
-                                : AppLocalizations.of(context).translate("mobile_add_des"),
+                                ? AppLocalizations.of(context)!.translate("email_add_des")
+                                : AppLocalizations.of(context)!.translate("mobile_add_des"),
                             textAlign: TextAlign.start,
                             style: styleElements
                                 .captionThemeScalable(context)
@@ -114,21 +114,21 @@ class _AddEditEmailPhonesPage extends State<AddEditEmailPhonesPage> {
                 Expanded(
                   child: ListView.builder(
                       padding: EdgeInsets.only(left: 8, right: 8, bottom: 8, top: 8),
-                      itemCount: list.length,
+                      itemCount: list!.length,
                       itemBuilder: (BuildContext context, int index) {
                         return InkWell(
                           child: ListTile(
                             tileColor: HexColor(AppColors.listBg),
-                            title: Text(list[index].contactDetail ?? "",
+                            title: Text(list![index].contactDetail ?? "",
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 style: styleElements.subtitle1ThemeScalable(context)),
                             subtitle: InkWell(
                               onTap: () {
-                                if (!list[index].isPrimary)
+                                if (!list![index].isPrimary!)
                                 {
-                                  if(list[index].isVerified)
-                                  makeContactPrimary(list[index].id);
+                                  if(list![index].isVerified!)
+                                  makeContactPrimary(list![index].id);
                                 else
                                 {
                                   Navigator.push(
@@ -136,12 +136,12 @@ class _AddEditEmailPhonesPage extends State<AddEditEmailPhonesPage> {
                                       MaterialPageRoute(
                                         builder: (context) =>
                                             EmailPhoneVerification(
-                                              id: list[index].id,
+                                              id: list![index].id,
                                               isEmail: isEmail,
                                               contactDetail:
-                                              list[index].contactDetail,
+                                              list![index].contactDetail,
                                               callBack: () {
-                                                makeContactPrimary(list[index].id);
+                                                makeContactPrimary(list![index].id);
                                               },
                                             ),
                                       ));
@@ -152,21 +152,18 @@ class _AddEditEmailPhonesPage extends State<AddEditEmailPhonesPage> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
                                   Text(
-                                      list[index].isPrimary
+                                      list![index].isPrimary!
                                           ? isEmail
-                                              ? AppLocalizations.of(context)
-                                                      .translate("primary_email") ??
-                                                  ""
-                                              : AppLocalizations.of(context)
+                                              ? AppLocalizations.of(context)!
+                                                      .translate("primary_email")
+                                              : AppLocalizations.of(context)!
                                                   .translate("primary_mobile")
                                           : isEmail
-                                              ? AppLocalizations.of(context)
-                                                      .translate("make_primary") ??
-                                                  ""
-                                              : AppLocalizations.of(context)
+                                              ? AppLocalizations.of(context)!
+                                                      .translate("make_primary")
+                                              : AppLocalizations.of(context)!
                                                       .translate(
-                                                          "make_primary_mobile") ??
-                                                  "",
+                                                          "make_primary_mobile"),
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                       style: styleElements
@@ -185,19 +182,17 @@ class _AddEditEmailPhonesPage extends State<AddEditEmailPhonesPage> {
                                     ),
                                   ),
                                   Text(
-                                      list[index].isVerified
-                                          ? AppLocalizations.of(context)
-                                                  .translate("verified") ??
-                                              ""
-                                          : AppLocalizations.of(context)
-                                                  .translate("un_verified") ??
-                                              "",
+                                      list![index].isVerified!
+                                          ? AppLocalizations.of(context)!
+                                                  .translate("verified")
+                                          : AppLocalizations.of(context)!
+                                                  .translate("un_verified"),
                                       maxLines: 2,
                                       overflow: TextOverflow.ellipsis,
                                       style: styleElements
                                           .captionThemeScalable(context)
                                           .copyWith(
-                                              color: HexColor(list[index].isVerified
+                                              color: HexColor(list![index].isVerified!
                                                   ? AppColors.appColorGreen
                                                   : AppColors.appMainColor)))
                                 ],
@@ -209,7 +204,7 @@ class _AddEditEmailPhonesPage extends State<AddEditEmailPhonesPage> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 Visibility(
-                                  visible: !list[index].isPrimary,
+                                  visible: !list![index].isPrimary!,
                                   child: InkWell(
                                     onTap: () {
                                       showDialog(
@@ -221,9 +216,9 @@ class _AddEditEmailPhonesPage extends State<AddEditEmailPhonesPage> {
                                                 },
                                                 callBackCancel: () {},
                                                 isEmail: isEmail,
-                                                id: list[index].id,
+                                                id: list![index].id,
                                                 contactDetail:
-                                                    list[index].contactDetail,
+                                                    list![index].contactDetail,
                                               ));
                                     },
                                     child: Padding(
@@ -239,7 +234,7 @@ class _AddEditEmailPhonesPage extends State<AddEditEmailPhonesPage> {
                                   ),
                                 ),
                                 Visibility(
-                                  visible: !list[index].isVerified,
+                                  visible: !list![index].isVerified!,
                                   child: InkWell(
                                     onTap: () {
                                       Navigator.push(
@@ -247,10 +242,10 @@ class _AddEditEmailPhonesPage extends State<AddEditEmailPhonesPage> {
                                           MaterialPageRoute(
                                             builder: (context) =>
                                                 EmailPhoneVerification(
-                                              id: list[index].id,
+                                              id: list![index].id,
                                               isEmail: isEmail,
                                               contactDetail:
-                                                  list[index].contactDetail,
+                                                  list![index].contactDetail,
                                               callBack: () {
                                                 fetchSettings();
                                               },
@@ -268,7 +263,7 @@ class _AddEditEmailPhonesPage extends State<AddEditEmailPhonesPage> {
                                         padding: const EdgeInsets.only(
                                             left: 8.0, right: 8.0),
                                         child: Text(
-                                            AppLocalizations.of(context)
+                                            AppLocalizations.of(context)!
                                                 .translate("verify"),
                                             maxLines: 2,
                                             overflow: TextOverflow.ellipsis,
@@ -299,7 +294,7 @@ class _AddEditEmailPhonesPage extends State<AddEditEmailPhonesPage> {
     prefs = await SharedPreferences.getInstance();
   }
 
-  void makeContactPrimary(int id) async {
+  void makeContactPrimary(int? id) async {
     setState(() {
       isLoading = true;
     });
@@ -343,8 +338,8 @@ class _AddEditEmailPhonesPage extends State<AddEditEmailPhonesPage> {
         if (this.mounted && data.statusCode == Strings.success_code) {
           setState(() {
             list = isEmail
-                ? data.rows.emailContactList
-                : data.rows.mobileContactList;
+                ? data.rows!.emailContactList
+                : data.rows!.mobileContactList;
           });
         }
       }

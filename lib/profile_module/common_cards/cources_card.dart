@@ -13,14 +13,14 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class CoursesCard extends StatelessWidget {
   final CommonCardData data;
-  BuildContext context;
-  TextStyleElements styleElements;
-  List<SubRow> listSubItems = [];
-  Null Function() callbackPicker;
-  String type;
-  String instituteId;
-  int id;
-  String personType;
+  late BuildContext context;
+  TextStyleElements? styleElements;
+  List<SubRow>? listSubItems = [];
+  Null Function()? callbackPicker;
+  String? type;
+  String? instituteId;
+  int? id;
+  String? personType;
   Widget _simplePopup(String type) =>
       PopupMenuButton<int>(
         itemBuilder: (context) =>
@@ -51,7 +51,7 @@ class CoursesCard extends StatelessWidget {
                   ));
               if(result!=null && result['result']=="update")
               {
-                callbackPicker();
+                callbackPicker!();
               }
             }
           } else if (type == "Language") {
@@ -74,7 +74,7 @@ class CoursesCard extends StatelessWidget {
                   ));
               if(result!=null && result['result']=="update")
               {
-                callbackPicker();
+                callbackPicker!();
               }
             }
           }
@@ -107,7 +107,7 @@ class CoursesCard extends StatelessWidget {
   }
 
   CoursesCard(
-      {Key key, @required this.data, this.styleElements, this.callbackPicker,this.instituteId,this.id,this.personType})
+      {Key? key, required this.data, this.styleElements, this.callbackPicker,this.instituteId,this.id,this.personType})
       : super(key: key);
 
   @override
@@ -130,7 +130,7 @@ class CoursesCard extends StatelessWidget {
                             left: 16, right: 16, top: 12, bottom: 8),
                         child: Text(
                           data.title ?? "",
-                          style: styleElements
+                          style: styleElements!
                               .headline6ThemeScalable(context)
                               .copyWith(
                               fontWeight: FontWeight.bold,
@@ -154,7 +154,7 @@ class CoursesCard extends StatelessWidget {
             ),
             Container(
                 margin: const EdgeInsets.only(left: 12, right: 12),
-                child: listSubItems.isNotEmpty
+                child: listSubItems!.isNotEmpty
                     ?
                 Align(
                     alignment: Alignment.centerLeft,
@@ -164,7 +164,7 @@ class CoursesCard extends StatelessWidget {
                             scrollDirection: Axis.horizontal,
                             shrinkWrap: true,
                             physics: const ClampingScrollPhysics(),
-                            itemCount: listSubItems.length,
+                            itemCount: listSubItems!.length,
                             // itemExtent: 10.0,
                             // reverse: true, //makes the list appear in descending order
                             itemBuilder: (BuildContext context, int index) {
@@ -176,9 +176,9 @@ class CoursesCard extends StatelessWidget {
                                       padding: const EdgeInsets.only(
                                           left: 4, right: 4),
                                       child: Text(
-                                        listSubItems[index].course ?? "",
+                                        listSubItems![index].course ?? "",
                                         overflow: TextOverflow.ellipsis,
-                                        style: styleElements
+                                        style: styleElements!
                                             .subtitle2ThemeScalable(context),
                                         textAlign: TextAlign.center,
                                       ),
@@ -214,7 +214,7 @@ class CoursesCard extends StatelessWidget {
                         ));
                     if (result != null && result['result'] == "update") {
 
-                      callbackPicker();
+                      callbackPicker!();
                     }
                   },
                   child: Container(
@@ -223,8 +223,8 @@ class CoursesCard extends StatelessWidget {
                       /*visible: data.isShowMore ??= false,*/
                       child: Align(
                         alignment: Alignment.bottomRight,
-                        child: Text(AppLocalizations.of(context).translate('see_more'),
-                          style: styleElements.subtitle2ThemeScalable(context),
+                        child: Text(AppLocalizations.of(context)!.translate('see_more'),
+                          style: styleElements!.subtitle2ThemeScalable(context),
                           textAlign: TextAlign.center,
                         ),
                       ),

@@ -30,9 +30,9 @@ import 'expertise_classes.dart';
 
 // ignore: must_be_immutable
 class SelectInstituteSingle extends StatefulWidget {
-  String type;
-  int id;
-  String studentType;
+  String? type;
+  int? id;
+  String? studentType;
   bool fromBasicProfileFLow;
   Null Function() callbackPicker;
   SelectInstituteSingle(
@@ -44,32 +44,32 @@ class SelectInstituteSingle extends StatefulWidget {
 class _SelectInstitute extends State<SelectInstituteSingle>
     with SingleTickerProviderStateMixin {
 
-  String studentType;
+  String? studentType;
   bool isUploadImageActive = false;
-  SharedPreferences prefs;
-  int userId;
-  int personType;
-  ScrollController _scrollController;
-  String selectedSchool;
-  String selectedSchoolDec;
+  late SharedPreferences prefs;
+  int? userId;
+  int? personType;
+  ScrollController? _scrollController;
+  String? selectedSchool;
+  String? selectedSchoolDec;
   String pageTitle = "";
-  String imageUrl;
+  String? imageUrl;
   int instPageNumber = 1;
   final _debouncer = Debouncer(500);
-  CupertinoDatePicker cupertinoDatePicker;
+  CupertinoDatePicker? cupertinoDatePicker;
   var color1 = HexColor(AppColors.appMainColor);
   bool _enabledInstitute = true;
   bool ifNoInstituteFound = false;
   bool empty=false;
   var color2 = HexColor(AppColors.appColorWhite);
-  int id;
+  int? id;
   var color3 = HexColor(AppColors.appColorWhite);
   var isCheckedColor = HexColor(AppColors.appColorWhite);
-  TabController _tabController;
+  TabController? _tabController;
   Map<String, bool> mapRules = Map();
   List<PersonItem> listRoles = [];
-  List<InstituteItem> listInstitute = [];
-  String type;
+  List<InstituteItem>? listInstitute = [];
+  String? type;
   var isClassesSelected = HexColor(AppColors.appColorWhite);
   var isSubjectSelected = HexColor(AppColors.appColorWhite);
   var isRoleSelected = false;
@@ -83,17 +83,17 @@ class _SelectInstitute extends State<SelectInstituteSingle>
   List<int> institutionRolesList = [];
   List<int> teachingClasses = [];
   List<int> teachingSubjects = [];
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
   bool fromBasicProfileFLow;
   Null Function() callbackPicker;
-  _SelectInstitute(String type, int id, String studentType,this.fromBasicProfileFLow,this.callbackPicker) {
+  _SelectInstitute(String? type, int? id, String? studentType,this.fromBasicProfileFLow,this.callbackPicker) {
     this.type = type;
     this.id = id;
     this.studentType = studentType;
   }
 
   List<TabMaker> list = [];
-  int instituteId;
+  int? instituteId;
 
   int _currentPosition = 0;
 
@@ -125,7 +125,7 @@ class _SelectInstitute extends State<SelectInstituteSingle>
 
   @override
   void dispose() {
-    _tabController.dispose();
+    _tabController!.dispose();
     super.dispose();
   }
 
@@ -143,6 +143,7 @@ class _SelectInstitute extends State<SelectInstituteSingle>
         Navigator.of(context).pop(true);
       }
     });
+    return new Future(() => false);
   }
 
   Widget build(BuildContext context) {
@@ -151,7 +152,7 @@ class _SelectInstitute extends State<SelectInstituteSingle>
 
     list = [];
     list.add(TabMaker(
-      tabName: AppLocalizations.of(context).translate('select_institute'),
+      tabName: AppLocalizations.of(context)!.translate('select_institute'),
       statelessWidget: Container(
         margin: const EdgeInsets.only(bottom: 65),
         child: NotificationListener<ScrollNotification>(
@@ -168,12 +169,12 @@ class _SelectInstitute extends State<SelectInstituteSingle>
                     load.name = "";
                     load.description = "";
                     load.isSelected = false;
-                    listInstitute.add(load);
+                    listInstitute!.add(load);
                   }
                 });
                 if (!isSearching) getListOfInstitutes(" ");
               }
-            },
+            } as bool Function(ScrollNotification)?,
             child: Stack(
               children: <Widget>[
                 Visibility(
@@ -187,7 +188,7 @@ class _SelectInstitute extends State<SelectInstituteSingle>
                   child: Visibility(
                     visible: empty,
                     child:   TricycleEmptyWidget(
-                      message: AppLocalizations.of(context)
+                      message: AppLocalizations.of(context)!
                           .translate('no_data'),
                     ),
                   ),
@@ -198,7 +199,7 @@ class _SelectInstitute extends State<SelectInstituteSingle>
                         controller: _scrollController,
                         padding: EdgeInsets.only(
                             left: 8, right: 8, bottom: 80, top: 8),
-                        itemCount: listInstitute.length,
+                        itemCount: listInstitute!.length,
                         itemBuilder: (BuildContext context, int index) {
                           return GestureDetector(
                             child: Card(
@@ -217,7 +218,7 @@ class _SelectInstitute extends State<SelectInstituteSingle>
                                           child: Container(
                                             margin: const EdgeInsets.all(16),
                                             child: Text(
-                                              AppLocalizations.of(context)
+                                              AppLocalizations.of(context)!
                                                   .translate(
                                                   "select_right_institute"),
                                               textAlign: TextAlign.center,
@@ -227,7 +228,7 @@ class _SelectInstitute extends State<SelectInstituteSingle>
                                           ),
                                         )),
                                     Visibility(
-                                        visible: listInstitute[index].isLoading,
+                                        visible: listInstitute![index].isLoading,
                                         child: Container(
                                           width: double.infinity,
                                           child: Align(
@@ -243,7 +244,7 @@ class _SelectInstitute extends State<SelectInstituteSingle>
                                               )),
                                         )),
                                     Visibility(
-                                        visible: !listInstitute[index].isLoading,
+                                        visible: !listInstitute![index].isLoading,
                                         child: Container(
                                           margin: const EdgeInsets.only(
 
@@ -255,7 +256,7 @@ class _SelectInstitute extends State<SelectInstituteSingle>
                                                 child: ClipOval(
                                                   child: CachedNetworkImage(
                                                     imageUrl:  Config.BASE_URL+
-                                                        (listInstitute[index]
+                                                        (listInstitute![index]
                                                             .profileImage ??=
                                                         ""),
                                                     placeholder: (context, url) => Center(
@@ -270,7 +271,7 @@ class _SelectInstitute extends State<SelectInstituteSingle>
                                                 alignment:
                                                 Alignment.centerLeft,
                                                 child: Text(
-                                                  listInstitute[index].name ??
+                                                  listInstitute![index].name ??
                                                       "",
                                                   style: styleElements
                                                       .subtitle1ThemeScalable(
@@ -282,11 +283,11 @@ class _SelectInstitute extends State<SelectInstituteSingle>
                                                 alignment:
                                                 Alignment.centerLeft,
                                                 child: Text(
-                                                  listInstitute[index]
+                                                  listInstitute![index]
                                                       .institutionAddress !=
                                                       null
-                                                      ? listInstitute[index]
-                                                      .institutionAddress
+                                                      ? listInstitute![index]
+                                                      .institutionAddress!
                                                       .streetAddress ??
                                                       ""
                                                       : "",
@@ -299,7 +300,7 @@ class _SelectInstitute extends State<SelectInstituteSingle>
                                               trailing: Checkbox(
                                                 activeColor:
                                                 HexColor(AppColors.appMainColor),
-                                                value: listInstitute[index]
+                                                value: listInstitute![index]
                                                     .isSelected,
                                                 onChanged: (val) {
                                                   if (this.mounted) {
@@ -307,34 +308,34 @@ class _SelectInstitute extends State<SelectInstituteSingle>
                                                       if (val == true) {
                                                         for (int i = 0;
                                                         i <
-                                                            listInstitute
+                                                            listInstitute!
                                                                 .length;
                                                         i++) {
                                                           if (i == index) {
                                                             instituteId =
-                                                                listInstitute[
+                                                                listInstitute![
                                                                 i]
                                                                     .id;
                                                             isInstituteSelected = true;
-                                                            listInstitute[i].isSelected = true;
+                                                            listInstitute![i].isSelected = true;
 
                                                             selectedSchool =
-                                                                listInstitute[
+                                                                listInstitute![
                                                                 i]
                                                                     .name ??
                                                                     "";
-                                                            selectedSchoolDec = listInstitute[
+                                                            selectedSchoolDec = listInstitute![
                                                             i]
                                                                 .institutionAddress !=
                                                                 null
-                                                                ? listInstitute[
+                                                                ? listInstitute![
                                                             i]
-                                                                .institutionAddress
+                                                                .institutionAddress!
                                                                 .streetAddress ??
                                                                 ""
                                                                 : "";
                                                           } else
-                                                            listInstitute[i]
+                                                            listInstitute![i]
                                                                 .isSelected =
                                                             false;
                                                         }
@@ -342,7 +343,7 @@ class _SelectInstitute extends State<SelectInstituteSingle>
                                                         instituteId = null;
                                                         isInstituteSelected =
                                                         false;
-                                                        listInstitute[index]
+                                                        listInstitute![index]
                                                             .isSelected =
                                                         false;
                                                         selectedSchool = null;
@@ -446,7 +447,7 @@ class _SelectInstitute extends State<SelectInstituteSingle>
                                                               color: HexColor(AppColors.appColorBlack65)
                                                           ),
                                                           decoration: InputDecoration(
-                                                            hintText: AppLocalizations.of(context).translate('search'),
+                                                            hintText: AppLocalizations.of(context)!.translate('search'),
                                                             border: InputBorder.none,
                                                             hintStyle: styleElements
                                                                 .bodyText2ThemeScalable(
@@ -607,7 +608,7 @@ class _SelectInstitute extends State<SelectInstituteSingle>
                                                               margin: const EdgeInsets
                                                                   .all(16),
                                                               child: Text(
-                                                                AppLocalizations.of(context)
+                                                                AppLocalizations.of(context)!
                                                                     .translate('save_exit')
                                                                     .toUpperCase(),
                                                                 style: styleElements
@@ -694,7 +695,7 @@ class _SelectInstitute extends State<SelectInstituteSingle>
                                                               {
                                                                 ToastBuilder().showToast(
                                                                     AppLocalizations.of(
-                                                                        context)
+                                                                        context)!
                                                                         .translate(
                                                                         "select_Institute"),
                                                                     context,HexColor(AppColors.information));}
@@ -704,7 +705,7 @@ class _SelectInstitute extends State<SelectInstituteSingle>
 
                                                           child: Text(
                                                               AppLocalizations.of(
-                                                                  context)
+                                                                  context)!
                                                                   .translate(
                                                                   "next"),
                                                               style: styleElements
@@ -746,28 +747,28 @@ class _SelectInstitute extends State<SelectInstituteSingle>
         if (data != null) {
           isLoading = false;
           _enabledInstitute = false;
-          if (data.rows != null && data.rows.isNotEmpty) {
+          if (data.rows != null && data.rows!.isNotEmpty) {
 
 
-            for (int i = 0; i < data.rows.length; i++) {
+            for (int i = 0; i < data.rows!.length; i++) {
               // already selected institute mark red
               if (instituteId != null) {
-                if (data.rows[i].id == instituteId)
-                  data.rows[i].isSelected = true;
+                if (data.rows![i].id == instituteId)
+                  data.rows![i].isSelected = true;
                 else
-                  data.rows[i].isSelected = false;
+                  data.rows![i].isSelected = false;
               } else {
-                data.rows[i].isSelected = false;
+                data.rows![i].isSelected = false;
               }
             }
             if (isSearching) {
               listInstitute = data.rows;
               isSearching = false;
             } else {
-              if (listInstitute.length > 0)
-                listInstitute.removeAt(listInstitute.length - 1);
+              if (listInstitute!.length > 0)
+                listInstitute!.removeAt(listInstitute!.length - 1);
               instPageNumber = instPageNumber + 1;
-              listInstitute = listInstitute + data.rows;
+              listInstitute = listInstitute! + data.rows!;
             }
 
           }
@@ -791,7 +792,7 @@ class _SelectInstitute extends State<SelectInstituteSingle>
 
 // ignore: must_be_immutable
 class NoInstitutePage extends StatelessWidget {
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   @override
   Widget build(BuildContext context) {
@@ -814,7 +815,7 @@ class NoInstitutePage extends StatelessWidget {
                         child: Container(
                           padding: const EdgeInsets.all(16),
                           child: Text(
-                              AppLocalizations.of(context)
+                              AppLocalizations.of(context)!
                                   .translate("if_no_inst_found"),
                               textAlign: TextAlign.center,
                               style: styleElements.captionThemeScalable(context)),
@@ -827,7 +828,7 @@ class NoInstitutePage extends StatelessWidget {
                         margin: const EdgeInsets.only(
                             top: 100, left: 16, right: 16, bottom: 55),
                         child: LargeButton(
-                          name: AppLocalizations.of(context)
+                          name: AppLocalizations.of(context)!
                               .translate("request_callback"),
                           offsetX: 70.66,
                           offsetY: 12.93,
@@ -845,8 +846,8 @@ class NoInstitutePage extends StatelessWidget {
 }
 
 class TabMaker {
-  String tabName;
-  Widget statelessWidget;
+  String? tabName;
+  Widget? statelessWidget;
 
   TabMaker({this.tabName, this.statelessWidget});
 }

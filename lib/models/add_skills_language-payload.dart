@@ -1,17 +1,17 @@
 class AddLanguageSkills {
-  int personId;
-  int id;
-  int institutionId;
-  int standardExpertiseCategory;
-  int standardExpertiseCategoryTypes;
-  String isSelected;
-  String selfRating;
-  String averageRating;
-  String numberOfRatings;
-  List<String> abilities;
-  List<String> goals;
-  int givenById;
-  String personType;
+  int? personId;
+  int? id;
+  int? institutionId;
+  int? standardExpertiseCategory;
+  int? standardExpertiseCategoryTypes;
+  String? isSelected;
+  String? selfRating;
+  String? averageRating;
+  String? numberOfRatings;
+  List<String?>? abilities;
+  List<String?>? goals;
+  int? givenById;
+  String? personType;
   AddLanguageSkills(
       {this.personId,
         this.institutionId,

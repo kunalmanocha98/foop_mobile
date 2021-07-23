@@ -1,8 +1,8 @@
 class CodeVerification {
-  String statusCode;
-  String message;
-  Rows rows;
-  int total;
+  String? statusCode;
+  String? message;
+  Rows? rows;
+  int? total;
 
   CodeVerification({this.statusCode, this.message, this.rows, this.total});
 
@@ -18,7 +18,7 @@ class CodeVerification {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     data['total'] = this.total;
     return data;
@@ -26,7 +26,7 @@ class CodeVerification {
 }
 
 class Rows {
-  bool isValid;
+  bool? isValid;
 
   Rows({this.isValid});
 

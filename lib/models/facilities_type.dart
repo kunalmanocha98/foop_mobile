@@ -1,7 +1,7 @@
 class Facilitiestype {
-  String statusCode;
-  String message;
-  List<Rows> rows;
+  String? statusCode;
+  String? message;
+  List<Rows>? rows;
 
   Facilitiestype({this.statusCode, this.message, this.rows});
 
@@ -11,7 +11,7 @@ class Facilitiestype {
     if (json['rows'] != null) {
       rows = <Rows>[];
       json['rows'].forEach((v) {
-        rows.add(new Rows.fromJson(v));
+        rows!.add(new Rows.fromJson(v));
       });
     }
   }
@@ -21,17 +21,17 @@ class Facilitiestype {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Rows {
-  String name;
-  String code;
-  String description;
-  int facilityTypeId;
+  String? name;
+  String? code;
+  String? description;
+  int? facilityTypeId;
 
   Rows({this.name, this.code, this.description, this.facilityTypeId});
 

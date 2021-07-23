@@ -29,56 +29,56 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TricycleQuestionnaireCard extends StatefulWidget{
-  final RequestListItem data;
-  final Function(bool) callback;
+  final RequestListItem? data;
+  final Function(bool?)? callback;
   TricycleQuestionnaireCard({this.data,this.callback});
   @override
   TricycleQuestionnaireCardState createState()=> TricycleQuestionnaireCardState(data: data,callback: callback);
 }
 class TricycleQuestionnaireCardState extends State<TricycleQuestionnaireCard>{
-  TextStyleElements styleElements;
-  RequestListItem data;
-  Function(bool) callback;
+  late TextStyleElements styleElements;
+  RequestListItem? data;
+  Function(bool?)? callback;
   TricycleQuestionnaireCardState({this.data,this.callback});
-  SharedPreferences prefs;
-  QuestionnaireListResponse questionsData;
-  QuestionsItem currentQuestion;
+  SharedPreferences? prefs;
+  late QuestionnaireListResponse questionsData;
+  QuestionsItem? currentQuestion;
   int currentQuestionIndex = 0;
   int selectedIndex =0;
-  String selectedValue;
+  String? selectedValue;
   bool questionnaireCompleted = false;
-  bool isChecked= false;
+  bool? isChecked= false;
   bool isVerifying = false;
   bool isAnyWrongAnswerSubmitted=false;
-  String username="";
-  String role="";
-  String className="";
-  String institutionName="";
-  VerifyResponseRow verifyResponse;
+  String? username="";
+  String? role="";
+  String? className="";
+  String? institutionName="";
+  VerifyResponseRow? verifyResponse;
   GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
 
   PAGINATOR_ENUMS paginatorEnum = PAGINATOR_ENUMS.LOADING;
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => getQuestions());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => getQuestions());
   }
 
   void getQuestions() async {
     prefs ??=await SharedPreferences.getInstance();
     QuestionnaireListRequest payload = QuestionnaireListRequest();
-    payload.approvedPersonId = data.personId;
-    payload.approvedPersonInstitutionId =data.institutionId;
+    payload.approvedPersonId = data!.personId;
+    payload.approvedPersonInstitutionId =data!.institutionId;
     Calls().call(jsonEncode(payload), context, Config.QUESTIONNAIRE_LIST).then((value){
       var res = QuestionnaireListResponse.fromJson(value);
       if(res.statusCode == Strings.success_code){
         setState(() {
           questionsData = res;
           paginatorEnum = PAGINATOR_ENUMS.SUCCESS;
-          currentQuestion = res.rows[0];
+          currentQuestion = res.rows![0];
         });
       }else if(res.statusCode == "E100002"){
-        ToastBuilder().showToast(res.message, context, HexColor(AppColors.information));
+        ToastBuilder().showToast(res.message!, context, HexColor(AppColors.information));
         setState(() {
           paginatorEnum = PAGINATOR_ENUMS.EMPTY;
         });
@@ -109,7 +109,7 @@ class TricycleQuestionnaireCardState extends State<TricycleQuestionnaireCard>{
           ListTile(
             contentPadding: EdgeInsets.only(left:0,right:8),
             leading: Checkbox(
-              onChanged: (bool value) {
+              onChanged: (bool? value) {
                 setState(() {
                   isChecked = value;
                 });
@@ -137,11 +137,11 @@ class TricycleQuestionnaireCardState extends State<TricycleQuestionnaireCard>{
                     text: role,
                     style: styleElements.subtitle2ThemeScalable(context).copyWith(fontWeight: FontWeight.bold)
                 ),
-                institutionName.isNotEmpty?TextSpan(
+                institutionName!.isNotEmpty?TextSpan(
                     text: ' in ',
                     style: styleElements.subtitle2ThemeScalable(context)
                 ):WidgetSpan(child: Container()),
-                institutionName.isNotEmpty?TextSpan(
+                institutionName!.isNotEmpty?TextSpan(
                     text: institutionName,
                     style: styleElements.subtitle2ThemeScalable(context).copyWith(fontWeight: FontWeight.bold)
                 ):WidgetSpan(child: Container()),
@@ -156,37 +156,37 @@ class TricycleQuestionnaireCardState extends State<TricycleQuestionnaireCard>{
                 TricycleTextButton(
                   onPressed: (){
                     RequestUpdateRequestModel payload = RequestUpdateRequestModel();
-                    payload.institutionUserId = data.institutionUserId;
-                    payload.institutionId = data.institutionId;
+                    payload.institutionUserId = data!.institutionUserId;
+                    payload.institutionId = data!.institutionId;
                     payload.assignmentStatus = "A";
                     Calls().call(jsonEncode(payload), context, Config.REQUEST_UPDATE).then((value) {
-                      callback(false);
+                      callback!(false);
                     });
                   },
-                  child: Text(AppLocalizations.of(context).translate('i_dont_know'),style: styleElements.captionThemeScalable(context).copyWith(color: HexColor(AppColors.appMainColor)),),
+                  child: Text(AppLocalizations.of(context)!.translate('i_dont_know'),style: styleElements.captionThemeScalable(context).copyWith(color: HexColor(AppColors.appMainColor)),),
                 ),
                 SizedBox(width: 8,),
                 TricycleProgressButton(
                   key: progressButtonKey,
-                  onPressed: isChecked?(){
-                    progressButtonKey.currentState.show();
+                  onPressed: isChecked!?(){
+                    progressButtonKey.currentState!.show();
                     RequestUpdateRequestModel payload = RequestUpdateRequestModel();
-                    payload.institutionUserId = data.institutionUserId;
-                    payload.institutionId = data.institutionId;
+                    payload.institutionUserId = data!.institutionUserId;
+                    payload.institutionId = data!.institutionId;
                     payload.assignmentStatus = "P";
                     Calls().call(jsonEncode(payload), context, Config.REQUEST_UPDATE).then((value) {
                       var res = RequestUpdateResponseModel.fromJson(value);
                       if(res.statusCode == Strings.success_code){
                         checkReferralDetails();
                       }else{
-                        ToastBuilder().showToast(res.message, context, HexColor(AppColors.failure));
-                        callback(false);
+                        ToastBuilder().showToast(res.message!, context, HexColor(AppColors.failure));
+                        callback!(false);
                       }
                     }).catchError((onError){
-                      progressButtonKey.currentState.hide();
+                      progressButtonKey.currentState!.hide();
                     });
                   }:null,
-                  child: Text(AppLocalizations.of(context).translate('submit'),style: styleElements.captionThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite)),),
+                  child: Text(AppLocalizations.of(context)!.translate('submit'),style: styleElements.captionThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite)),),
                 )
               ],
             ),
@@ -212,21 +212,21 @@ class TricycleQuestionnaireCardState extends State<TricycleQuestionnaireCard>{
               ),
             ),
             ListView.builder(
-              itemCount: (currentQuestion!=null && currentQuestion.questionnaireOptions!=null && currentQuestion.questionnaireOptions.length>0)?currentQuestion.questionnaireOptions.length:0,
+              itemCount: (currentQuestion!=null && currentQuestion!.questionnaireOptions!=null && currentQuestion!.questionnaireOptions!.length>0)?currentQuestion!.questionnaireOptions!.length:0,
               shrinkWrap: true,
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(title: Text(
-                  currentQuestion.questionnaireOptions[index],style: styleElements.bodyText2ThemeScalable(context),
+                  currentQuestion!.questionnaireOptions![index],style: styleElements.bodyText2ThemeScalable(context),
                 ),
                   trailing: Radio(
-                    onChanged: (value) {
+                    onChanged: (dynamic value) {
                       setState(() {
                         selectedValue = value;
                       });
                     },
                     groupValue: selectedValue,
-                    value: currentQuestion.questionnaireOptions[index],
+                    value: currentQuestion!.questionnaireOptions![index],
                   ),
                 );
               },
@@ -245,7 +245,7 @@ class TricycleQuestionnaireCardState extends State<TricycleQuestionnaireCard>{
                     });
                     verify();
                   },
-                    child: Text(AppLocalizations.of(context).translate('submit'),style: styleElements.buttonThemeScalable(context).copyWith(
+                    child: Text(AppLocalizations.of(context)!.translate('submit'),style: styleElements.buttonThemeScalable(context).copyWith(
                         color: HexColor(AppColors.appColorWhite)
                     ),),),
                 )
@@ -257,39 +257,39 @@ class TricycleQuestionnaireCardState extends State<TricycleQuestionnaireCard>{
   }
 
   void checkReferralDetails() async{
-      var data = jsonEncode({"person_id": prefs.getInt("userId")});
+      var data = jsonEncode({"person_id": prefs!.getInt("userId")});
       Calls()
           .call(data, context, Config.GET_REFERRAL_DETAILS)
           .then((value) async {
-        progressButtonKey.currentState.hide();
+        progressButtonKey.currentState!.hide();
         BasicDataForRefral basicDataForRefral =
         BasicDataForRefral.fromJson(value);
         if (basicDataForRefral.statusCode == Strings.success_code) {
           // setState(() {
-          if (basicDataForRefral.rows != null && basicDataForRefral.rows.referredByUpiId != null){
+          if (basicDataForRefral.rows != null && basicDataForRefral.rows!.referredByUpiId != null){
             // Navigator.pop(context);
             getScratchCardData();
           }else{
-            progressButtonKey.currentState.hide();
+            progressButtonKey.currentState!.hide();
             // Navigator.pop(context);
             Navigator.push(context,MaterialPageRoute(builder: (BuildContext context) => ConfirmDetails(
-               instId: prefs.getInt(Strings.instituteId),
+               instId: prefs!.getInt(Strings.instituteId),
                fromPage: 'buddy',
-            callbackPicker:(){callback(true);}
+            callbackPicker:(){callback!(true);}
             ))).then((value){
               if(value){
-               callback(value);
+               callback!(value);
               }
             });
           }
           // });
         } else {
-          progressButtonKey.currentState.hide();
-          ToastBuilder().showToast(basicDataForRefral.message, context,
+          progressButtonKey.currentState!.hide();
+          ToastBuilder().showToast(basicDataForRefral.message!, context,
               HexColor(AppColors.information));
         }
       }).catchError((onError) {
-        progressButtonKey.currentState.hide();
+        progressButtonKey.currentState!.hide();
         ToastBuilder().showToast(
             onError.toString(), context, HexColor(AppColors.information));
       });
@@ -297,15 +297,15 @@ class TricycleQuestionnaireCardState extends State<TricycleQuestionnaireCard>{
 
   void getScratchCardData() async {
     ScratchCardEntity scratchCardEntity = ScratchCardEntity();
-    scratchCardEntity.allPersonsId = prefs.getInt("userId");
-    scratchCardEntity.scratchCardContextId = data.personId;
+    scratchCardEntity.allPersonsId = prefs!.getInt("userId");
+    scratchCardEntity.scratchCardContextId = data!.personId;
     scratchCardEntity.scratchCardContext = "Buddy_Approval";
     scratchCardEntity.scratchCardSubContext = "";
-    scratchCardEntity.scratchCardSubContextId = data.personId;
+    scratchCardEntity.scratchCardSubContextId = data!.personId;
     Calls()
         .call(jsonEncode(scratchCardEntity), context, Config.CARD_ALLOCATE)
         .then((value) async {
-      progressButtonKey.currentState.hide();
+      progressButtonKey.currentState!.hide();
       if (value != null) {
         var data = ScratchCardResult.fromJson(value);
         if (data.statusCode == Strings.success_code) {
@@ -315,21 +315,21 @@ class TricycleQuestionnaireCardState extends State<TricycleQuestionnaireCard>{
                 context: context,
                 builder: (BuildContext context) =>
                     ScratchCardDialogue(
-                      prefs.getInt("userId"),
-                      data.rows.id,
-                      data.rows.scratchCardValue,
-                      data.rows.scratchCardRewardType,
+                      prefs!.getInt("userId"),
+                      data.rows!.id,
+                      data.rows!.scratchCardValue,
+                      data.rows!.scratchCardRewardType,
                       fromPage: 'buddy',
                       callBack: () {
-                        callback(true);
+                        callback!(true);
                       },));
           }else{
-            callback(true);
+            callback!(true);
           }
         }
       }
     }).catchError((onError) {
-      progressButtonKey.currentState.hide();
+      progressButtonKey.currentState!.hide();
       ToastBuilder().showToast(onError.toString(), context, HexColor(AppColors.information));
     });
   }
@@ -345,18 +345,18 @@ class TricycleQuestionnaireCardState extends State<TricycleQuestionnaireCard>{
   }
 
   void verify() async{
-    if(currentQuestion.questionType==BUDDY_QUESTION_TYPE.NAME.typeName){
+    if(currentQuestion!.questionType==BUDDY_QUESTION_TYPE.NAME.typeName){
       username = selectedValue;
-    }else if(currentQuestion.questionType==BUDDY_QUESTION_TYPE.USER_ROLE.typeName){
+    }else if(currentQuestion!.questionType==BUDDY_QUESTION_TYPE.USER_ROLE.typeName){
       role = selectedValue;
-    }else if(currentQuestion.questionType ==BUDDY_QUESTION_TYPE.INSTITUTION_NAME.typeName){
+    }else if(currentQuestion!.questionType ==BUDDY_QUESTION_TYPE.INSTITUTION_NAME.typeName){
       institutionName = selectedValue;
     }else{
       className = selectedValue;
     }
     VerifyRequestModel payload = VerifyRequestModel();
-    payload.buddyApprovalId = currentQuestion.buddyApprovalId;
-    payload.id = currentQuestion.id;
+    payload.buddyApprovalId = currentQuestion!.buddyApprovalId;
+    payload.id = currentQuestion!.id;
     payload.questionResponse = selectedValue;
     Calls().call(jsonEncode(payload), context, Config.VERIFY_RESPONSE).then((value){
       var res= VerifyResponseModel.fromJson(value);
@@ -372,10 +372,10 @@ class TricycleQuestionnaireCardState extends State<TricycleQuestionnaireCard>{
   }
 
   void openNextPage() {
-    if(currentQuestionIndex+1<questionsData.rows.length) {
+    if(currentQuestionIndex+1<questionsData.rows!.length) {
       setState(() {
         currentQuestionIndex++;
-        currentQuestion = questionsData.rows[currentQuestionIndex];
+        currentQuestion = questionsData.rows![currentQuestionIndex];
         selectedIndex =0;
         selectedValue ='';
       });
@@ -384,7 +384,7 @@ class TricycleQuestionnaireCardState extends State<TricycleQuestionnaireCard>{
         showDialog(context: context,builder: (BuildContext context){
           return ApprovalWarningDialog(
             onButtonCallback: (){
-              callback(true);
+              callback!(true);
             },
           );
         });
@@ -398,11 +398,11 @@ class TricycleQuestionnaireCardState extends State<TricycleQuestionnaireCard>{
   }
 
   String getQuestion() {
-   String s =  (currentQuestion!=null)?currentQuestion.question:'Question';
-   s = s.replaceAll("_name", username);
-   s = s.replaceAll("_role",role);
-   s = s.replaceAll("_institution",className);
-   s = s.replaceAll("_institution",institutionName);
+   String s =  (currentQuestion!=null)?currentQuestion!.question!:'Question';
+   s = s.replaceAll("_name", username!);
+   s = s.replaceAll("_role",role!);
+   s = s.replaceAll("_institution",className!);
+   s = s.replaceAll("_institution",institutionName!);
    return s;
   }
 }

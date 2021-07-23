@@ -1,8 +1,8 @@
 class MessagesResponse {
-  String statusCode;
-  String message;
-  List<MessagePayload> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<MessagePayload>? rows;
+  int? total;
 
   MessagesResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -12,7 +12,7 @@ class MessagesResponse {
     if (json['rows'] != null) {
       rows = [];//MessagePayload>();
       json['rows'].forEach((v) {
-        rows.add(new MessagePayload.fromJson(v));
+        rows!.add(new MessagePayload.fromJson(v));
       });
     }
     total = json['total'];
@@ -23,7 +23,7 @@ class MessagesResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -31,61 +31,61 @@ class MessagesResponse {
 }
 
 class MessagePayload {
-  String messageToId;
-  String date;
-  int allRoomsId;
-  int eventId;
-  String forwardMessageId;
-  String messageToType;
-  int updatedDateTime;
-  String updatedDateByType;
-  String updatedDateById;
-  bool isGroupConversation;
-  String sId;
-  String conversationId;
-  String myConversationId;
-  String mcId;
-  String messageId;
-  String message;
-  String messageAttachment;
-  String messageAttachmentThumbnail;
-  String messageAttachmentType;
-  String messageAttachmentMIMEType;
-  String messageAttachmentName;
-  String messageSentByName;
-  String messageAction;
-  String messageByType;
-  String messageById;
-  int messageSentTime;
-  int messageDeliveredTime;
-  int messageReadTime;
-  String messageSentUTCTime;
-  String messageDeliveredUTCTime;
-  String messageReadUTCTime;
-  String messageStatus;
-  bool isReply;
-  String replyToMessageId;
-  String originalMessage;
-  String originalMessageSenderType;
-  String originalMessageSenderName;
-  String originalMessageSenderId;
-  String originalMessageAttachment;
-  String originalMessageAttachmentType;
-  String originalMessageAttachmentMIMEType;
-  String originalMessageAttachmentName;
-  String originalMessageAttachmentThumbnail;
-  String originalConversationId;
-  bool isForwarded;
-  String forwardedFromMessageId;
-  String flagCode;
-  String flagName;
-  String flagColorCode;
-  String flagIcon;
-  String messageDataType;
-  String messageType;
-  String messageSubType;
-  String createdOn;
-  bool isBroadcastType;
+  String? messageToId;
+  String? date;
+  int? allRoomsId;
+  int? eventId;
+  String? forwardMessageId;
+  String? messageToType;
+  int? updatedDateTime;
+  String? updatedDateByType;
+  String? updatedDateById;
+  bool? isGroupConversation;
+  String? sId;
+  String? conversationId;
+  String? myConversationId;
+  String? mcId;
+  String? messageId;
+  String? message;
+  String? messageAttachment;
+  String? messageAttachmentThumbnail;
+  String? messageAttachmentType;
+  String? messageAttachmentMIMEType;
+  String? messageAttachmentName;
+  String? messageSentByName;
+  String? messageAction;
+  String? messageByType;
+  String? messageById;
+  int? messageSentTime;
+  int? messageDeliveredTime;
+  int? messageReadTime;
+  String? messageSentUTCTime;
+  String? messageDeliveredUTCTime;
+  String? messageReadUTCTime;
+  String? messageStatus;
+  bool? isReply;
+  String? replyToMessageId;
+  String? originalMessage;
+  String? originalMessageSenderType;
+  String? originalMessageSenderName;
+  String? originalMessageSenderId;
+  String? originalMessageAttachment;
+  String? originalMessageAttachmentType;
+  String? originalMessageAttachmentMIMEType;
+  String? originalMessageAttachmentName;
+  String? originalMessageAttachmentThumbnail;
+  String? originalConversationId;
+  bool? isForwarded;
+  String? forwardedFromMessageId;
+  String? flagCode;
+  String? flagName;
+  String? flagColorCode;
+  String? flagIcon;
+  String? messageDataType;
+  String? messageType;
+  String? messageSubType;
+  String? createdOn;
+  bool? isBroadcastType;
 
   MessagePayload(
       {this.forwardMessageId,

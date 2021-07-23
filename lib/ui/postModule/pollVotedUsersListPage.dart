@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class PollsVotedUserListPage extends StatefulWidget{
-  int postId;
-  List<Options> optionsList;
+  int? postId;
+  List<Options>? optionsList;
   PollsVotedUserListPage({this.postId,this.optionsList});
   @override
   PollsVotedUserListPageState createState() => PollsVotedUserListPageState(
@@ -21,24 +21,24 @@ class PollsVotedUserListPageState extends State<PollsVotedUserListPage> with Sin
 
   List<CustomTabMaker> list = [];
   int _currentPosition = 0;
-  TabController _tabController;
+  late TabController _tabController;
 
-  int postId;
-  List<Options> optionsList;
+  int? postId;
+  List<Options>? optionsList;
   PollsVotedUserListPageState({this.postId,this.optionsList});
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => loadPages());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => loadPages());
   }
   loadPages() {
-    for(int i=0; i<optionsList.length; i++) {
+    for(int i=0; i<optionsList!.length; i++) {
       list.add(CustomTabMaker(
-          tabName:optionsList[i].option,
+          tabName:optionsList![i].option,
         statelessWidget: PollsUserList(
-          option: optionsList[i].option,
-          sequence: optionsList[i].optionSequence,
+          option: optionsList![i].option,
+          sequence: optionsList![i].optionSequence,
           postId: postId,
         )
       ));
@@ -86,7 +86,7 @@ class PollsVotedUserListPageState extends State<PollsVotedUserListPage> with Sin
                 Center(child: list[index].statelessWidget),
             onPositionChange: (index) {
               setState(() {
-                _currentPosition = index;
+                _currentPosition = index!;
               });
             },
             onScroll: (position) => print('$position'),

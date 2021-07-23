@@ -27,7 +27,7 @@ class TestUserList extends StatefulWidget {
 class _TestUserList extends State<TestUserList> {
   List<UserListResponseItem> list = [];
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
-  TextStyleElements styleElements;
+  TextStyleElements? styleElements;
   @override
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
@@ -35,7 +35,7 @@ class _TestUserList extends State<TestUserList> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: TricycleAppBar().getCustomAppBar(context,
-            appBarTitle:AppLocalizations.of(context).translate('users_list'),
+            appBarTitle:AppLocalizations.of(context)!.translate('users_list'),
             onBackButtonPress: (){
           Navigator.pop(context);
             }),
@@ -67,9 +67,9 @@ class _TestUserList extends State<TestUserList> {
     // return BaseResponses.fromJson(parsed);
   }
 
-  List<UserListResponseItem> listItemsGetter(
+  List<UserListResponseItem>? listItemsGetter(
       UserListResponse userListResponse) {
-    list.addAll(userListResponse.rows);
+    list.addAll(userListResponse.rows!);
     return userListResponse.rows;
   }
 
@@ -128,11 +128,11 @@ class _TestUserList extends State<TestUserList> {
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Text(userListResponse.message),
+          child: Text(userListResponse.message!),
         ),
         TricycleTextButton(
           onPressed: retryListener,
-          child: Text(AppLocalizations.of(context).translate('retry')),
+          child: Text(AppLocalizations.of(context)!.translate('retry')),
         )
       ],
     );
@@ -140,7 +140,7 @@ class _TestUserList extends State<TestUserList> {
 
   Widget emptyListWidgetMaker(UserListResponse userListResponse) {
     return Center(
-      child: Text(AppLocalizations.of(context).translate('no_user')),
+      child: Text(AppLocalizations.of(context)!.translate('no_user')),
     );
   }
 

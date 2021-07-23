@@ -23,8 +23,8 @@ import 'overlaped_circular_images.dart';
 // ignore: must_be_immutable
 class SubjectsProfilePage extends StatefulWidget {
   String id;
-  TextStyleElements styleElements;
-  SubjectsProfilePage({Key key, @required this.id}) : super(key: key);
+  TextStyleElements? styleElements;
+  SubjectsProfilePage({Key? key, required this.id}) : super(key: key);
 
   _SubjectsProfilePage createState() => _SubjectsProfilePage();
 }
@@ -32,9 +32,9 @@ class SubjectsProfilePage extends StatefulWidget {
 class _SubjectsProfilePage extends State<SubjectsProfilePage>
     with SingleTickerProviderStateMixin {
 
-  TextStyleElements styleElements;
-  SharedPreferences prefs;
-  List<SubjectsItem> listSubjects = [];
+  late TextStyleElements styleElements;
+  SharedPreferences? prefs;
+  List<SubjectsItem>? listSubjects = [];
   var isSearching = false;
   RandomColor _randomColor = RandomColor();
 bool isLoading=false;
@@ -114,8 +114,8 @@ bool isLoading=false;
                         children: <Widget>[
                           InstituteCard(
                             title: "",
-                            subtitle: AppLocalizations.of(context).translate('academics'),
-                            subtitle1: AppLocalizations.of(context).translate('subject'),
+                            subtitle: AppLocalizations.of(context)!.translate('academics'),
+                            subtitle1: AppLocalizations.of(context)!.translate('subject'),
                             isShowMore: true,
                             isIntroCard: true,
                             subtitle2: "Himachal Pradesh",
@@ -147,7 +147,7 @@ bool isLoading=false;
                           physics: BouncingScrollPhysics(),
                           crossAxisCount: 2,
                           childAspectRatio: 0.9,
-                          children: listSubjects.map((SubjectsItem data) {
+                          children: listSubjects!.map((SubjectsItem data) {
                             return GestureDetector(
                                 onTap: () {
                                   Navigator.push(
@@ -280,7 +280,7 @@ bool isLoading=false;
     );
   }
 
-  void getSubjectCategories(String searchValue) async {
+  void getSubjectCategories(String? searchValue) async {
 setState(() {
   isLoading=true;
 });

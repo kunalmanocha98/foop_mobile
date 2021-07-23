@@ -1,11 +1,11 @@
 class UpdateHandRaiseRequest {
-  int personId;
-  int eventId;
-  String participantType;
-  int participantId;
-  bool isAccepted;
-  String role;
-  String personType;
+  int? personId;
+  int? eventId;
+  String? participantType;
+  int? participantId;
+  bool? isAccepted;
+  String? role;
+  String? personType;
 
   UpdateHandRaiseRequest(
       {this.personId,
@@ -40,13 +40,13 @@ class UpdateHandRaiseRequest {
 }
 
 class UpdateHandRaiseResponse {
-  String name;
-  String profileImage;
-  String personType;
-  String role;
-  String participantType;
-  int participantId;
-  bool isAccepted;
+  String? name;
+  String? profileImage;
+  String? personType;
+  String? role;
+  String? participantType;
+  int? participantId;
+  bool? isAccepted;
 
   UpdateHandRaiseResponse(
       {this.name,

@@ -1,8 +1,8 @@
 class AccedemicList {
-  String statusCode;
-  String message;
-  List<AccedemicItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<AccedemicItem>? rows;
+  int? total;
 
   AccedemicList({this.statusCode, this.message, this.rows, this.total});
 
@@ -12,7 +12,7 @@ class AccedemicList {
     if (json['rows'] != null) {
       rows = [];//AccedemicItem>();
       json['rows'].forEach((v) {
-        rows.add(new AccedemicItem.fromJson(v));
+        rows!.add(new AccedemicItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -23,7 +23,7 @@ class AccedemicList {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -31,12 +31,12 @@ class AccedemicList {
 }
 
 class AccedemicItem {
-  int id;
-  int type;
-  String yearName;
-  String dateStart;
-  String dateEnd;
-  bool isSelected;
+  int? id;
+  int? type;
+  String? yearName;
+  String? dateStart;
+  String? dateEnd;
+  bool? isSelected;
 
   AccedemicItem(
       {this.id,

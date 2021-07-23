@@ -1,7 +1,7 @@
 import 'package:agora_rtc_engine/rtc_engine.dart';
 
 class AgoraService {
-  RtcEngine engine;
+  RtcEngine? engine;
   static const APP_ID = 'e19fd95630d243ee869ae0d2072deebe';
 
   // AGORA_APP_ID:"e19fd95630d243ee869ae0d2072deebe",
@@ -12,11 +12,11 @@ class AgoraService {
   }
   Future<void> initPlatformState() async {
     engine = await RtcEngine.create(APP_ID);
-    engine.setEnableSpeakerphone(true);
+    engine!.setEnableSpeakerphone(true);
 
   }
 
-  RtcEngine instance() {
+  RtcEngine? instance() {
     return engine;
   }
 }

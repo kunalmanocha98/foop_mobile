@@ -9,14 +9,14 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class ToastBuilder {
-  ProgressDialog pr;
+  ProgressDialog? pr;
 
   void showSnackBar(String message, BuildContext context, Color color,
-      {Color textColor}) {
+      {Color? textColor}) {
     final snackBar = new SnackBar(
         content: new Text(
           message,
-          style: Theme.of(context).textTheme.bodyText1.copyWith(
+          style: Theme.of(context).textTheme.bodyText1!.copyWith(
               fontSize: 16, fontWeight: FontWeight.bold, color: textColor),
           textAlign: TextAlign.center,
         ),
@@ -33,7 +33,7 @@ class ToastBuilder {
         fontSize: 16.0);*/
   }
 
-  void showToast(String message, BuildContext context, Color color) {
+  void showToast(String message, BuildContext? context, Color color) {
     Fluttertoast.showToast(
         msg: message,
         backgroundColor: color,
@@ -43,11 +43,11 @@ class ToastBuilder {
         toastLength: Toast.LENGTH_SHORT);
   }
 
-  ProgressDialog setProgressDialog(BuildContext context) {
+  ProgressDialog? setProgressDialog(BuildContext context) {
     TextStyleElements styleElements = TextStyleElements(context);
     pr = ProgressDialog(context,
         type: ProgressDialogType.Normal, isDismissible: false, showLogs: false);
-    pr.style(
+    pr!.style(
         message: "Please Wait......",
         borderRadius: 8.0,
         backgroundColor: HexColor(AppColors.appColorWhite),
@@ -66,7 +66,7 @@ class ToastBuilder {
 
   UploadDownloadDialog setProgressDialogWithPercent(
       BuildContext context, String message,
-      {bool barrierDismissable}) {
+      {bool? barrierDismissable}) {
     // TextStyleElements styleElements = TextStyleElements(context);
     var pr = UploadDownloadDialog(
         progress: 0.0,
@@ -92,15 +92,15 @@ class ToastBuilder {
   }
 
   void showCustomSnackBar({
-    @required String message,
+    required String message,
     bool isButtonView = false,
     String okButtonText = "ok",
     String cancelButtonText = "cancel",
-    Function okButtonCallback,
-    Function cancelButtonCallback,
-    BuildContext context,
+    Function? okButtonCallback,
+    Function? cancelButtonCallback,
+    required BuildContext context,
     Color textColor = Colors.white,
-    Color backGroundColor,
+    Color? backGroundColor,
     Duration duration = const Duration(milliseconds: 4000),
   }) {
     backGroundColor ??= HexColor(AppColors.appMainColor);

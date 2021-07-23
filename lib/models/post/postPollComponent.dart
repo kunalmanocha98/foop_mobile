@@ -17,12 +17,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class PostPollComponent extends StatefulWidget {
-  ContentMeta contentMeta;
-  int postId;
-  Function onVoteCallback;
-  bool isVoted;
-  int postOwnerTypeId;
-  SharedPreferences prefs;
+  ContentMeta? contentMeta;
+  int? postId;
+  Function? onVoteCallback;
+  bool? isVoted;
+  int? postOwnerTypeId;
+  SharedPreferences? prefs;
 
   PostPollComponent(
       {this.contentMeta,
@@ -45,14 +45,14 @@ class PostPollComponent extends StatefulWidget {
 enum PollLoadingStatus { pollView, loadingView, resultView }
 
 class PostPollComponentState extends State<PostPollComponent> {
-  TextStyleElements styleElements;
-  ContentMeta contentMeta;
-  int postId;
-  Function onVoteCallback;
-  bool isVoted;
-  PollLoadingStatus status;
-  int postOwnerTypeId;
-  SharedPreferences prefs;
+  late TextStyleElements styleElements;
+  ContentMeta? contentMeta;
+  int? postId;
+  Function? onVoteCallback;
+  bool? isVoted;
+  PollLoadingStatus? status;
+  int? postOwnerTypeId;
+  SharedPreferences? prefs;
 
   PostPollComponentState(
       {this.contentMeta,
@@ -61,7 +61,7 @@ class PostPollComponentState extends State<PostPollComponent> {
         this.isVoted,
         this.postOwnerTypeId,
         this.prefs}) {
-    if ((isVoted!=null &&isVoted) || postOwnerTypeId == prefs.getInt(Strings.userId)) {
+    if ((isVoted!=null &&isVoted!) || postOwnerTypeId == prefs!.getInt(Strings.userId)) {
       status = PollLoadingStatus.resultView;
     } else {
       status = PollLoadingStatus.pollView;
@@ -88,7 +88,7 @@ class PostPollComponentState extends State<PostPollComponent> {
                   MaterialPageRoute(
                       builder: (BuildContext context) => PollsVotedUserListPage(
                         postId: postId,
-                        optionsList: contentMeta.others.options,
+                        optionsList: contentMeta!.others!.options,
                       )));
             },
             child: Padding(
@@ -97,7 +97,7 @@ class PostPollComponentState extends State<PostPollComponent> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    "${contentMeta.others.totalResponses} voted",
+                    "${contentMeta!.others!.totalResponses} voted",
                     style: styleElements.captionThemeScalable(context).copyWith(
                         fontWeight: FontWeight.bold,
                         color: HexColor(AppColors.appMainColor)),
@@ -121,8 +121,8 @@ class PostPollComponentState extends State<PostPollComponent> {
         physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemCount:
-        (contentMeta.others != null && contentMeta.others.options != null)
-            ? contentMeta.others.options.length
+        (contentMeta!.others != null && contentMeta!.others!.options != null)
+            ? contentMeta!.others!.options!.length
             : 0,
         itemBuilder: (BuildContext context, int index) {
           return GestureDetector(
@@ -130,7 +130,7 @@ class PostPollComponentState extends State<PostPollComponent> {
               setState(() {
                 status = PollLoadingStatus.loadingView;
               });
-              createPollRequest(contentMeta.others.options[index], index);
+              createPollRequest(contentMeta!.others!.options![index], index);
             },
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -143,7 +143,7 @@ class PostPollComponentState extends State<PostPollComponent> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      contentMeta.others.options[index].option,
+                      contentMeta!.others!.options![index].option!,
                       style: styleElements.subtitle2ThemeScalable(context),
                     ),
                   ),
@@ -157,7 +157,7 @@ class PostPollComponentState extends State<PostPollComponent> {
       return ListView.builder(
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
-        itemCount: contentMeta.others.options.length,
+        itemCount: contentMeta!.others!.options!.length,
         itemBuilder: (BuildContext context, int index) {
           return Padding(
               padding: const EdgeInsets.all(8.0),
@@ -171,18 +171,18 @@ class PostPollComponentState extends State<PostPollComponent> {
                       animation: true,
                       animationDuration: 900,
                       lineHeight: 36,
-                      percent: (contentMeta.others.options[index].percentage / 100),
+                      percent: (contentMeta!.others!.options![index].percentage! / 100),
                       backgroundColor: HexColor(AppColors.pollBackground),
                       progressColor: HexColor(AppColors.appMainColor).withOpacity(0.75),
                       center: Text(
-                        contentMeta.others.options[index].option,
+                        contentMeta!.others!.options![index].option!,
                         style: styleElements
                             .subtitle2ThemeScalable(context)
                             .copyWith(color: HexColor(AppColors.appColorWhite)),
                       ),
                     ),
                     Text(
-                      '${contentMeta.others.options[index].percentage}%',
+                      '${contentMeta!.others!.options![index].percentage}%',
                       style: styleElements
                           .bodyText2ThemeScalable(context)
                           .copyWith(color: HexColor(AppColors.appColorWhite)),
@@ -196,7 +196,7 @@ class PostPollComponentState extends State<PostPollComponent> {
       return ListView.builder(
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
-        itemCount: contentMeta.others.options.length,
+        itemCount: contentMeta!.others!.options!.length,
         itemBuilder: (BuildContext context, int index) {
           return Padding(
             padding: const EdgeInsets.only(
@@ -221,15 +221,15 @@ class PostPollComponentState extends State<PostPollComponent> {
       setState(() {
         var response = PollVoteResponse.fromJson(value);
         if (response.statusCode == Strings.success_code) {
-          contentMeta.others.options = response.rows.options;
-          contentMeta.others.totalResponses =
-              contentMeta.others.totalResponses + 1;
+          contentMeta!.others!.options = response.rows!.options;
+          contentMeta!.others!.totalResponses =
+              contentMeta!.others!.totalResponses! + 1;
           status = PollLoadingStatus.resultView;
           isVoted = true;
-          onVoteCallback();
+          onVoteCallback!();
         } else {
           ToastBuilder().showToast(
-              response.message, context, HexColor(AppColors.information));
+              response.message!, context, HexColor(AppColors.information));
           status = PollLoadingStatus.pollView;
         }
       });

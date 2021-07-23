@@ -23,21 +23,21 @@ sending action_type
 {"SUBJECT":"subject","CLASS":"class", "CLUB":"club", "SPORTS":"sports", "CAMPUS":"campus", "REWARDS":"rewards","LANGUAGE":"language","SKILL":"skill"}*/
 // ignore: must_be_immutable
 class DeleteClass extends StatefulWidget {
-  String title;
-  String subtitle;
-  String type;
+  String? title;
+  String? subtitle;
+  String? type;
   String categoryType;
-  String id;
-  String id2;
-  String instId;
-  int personType;
-  Null Function() callbackPicker;
+  String? id;
+  String? id2;
+  String? instId;
+  int? personType;
+  Null Function()? callbackPicker;
 
-  DeleteClass({Key key,
-    @required this.type,
-    @required this.title,
-    @required this.subtitle,
-    @required this.categoryType,
+  DeleteClass({Key? key,
+    required this.type,
+    required this.title,
+    required this.subtitle,
+    required this.categoryType,
     this.instId,
     this.personType,
     this.callbackPicker,
@@ -59,18 +59,18 @@ class DeleteClass extends StatefulWidget {
 }
 
 class _SelectLanguageProficiency extends State<DeleteClass> {
-  String title;
-  String subtitle;
+  String? title;
+  String? subtitle;
   String categoryType;
-  String id;
-  String id2;
-  Null Function() callbackPicker;
-  int personType;
-  String instId;
-  SharedPreferences prefs;
+  String? id;
+  String? id2;
+  Null Function()? callbackPicker;
+  int? personType;
+  String? instId;
+  late SharedPreferences prefs;
   Map<String, bool> catList = Map();
-  BuildContext context;
-  String type;
+  late BuildContext context;
+  String? type;
 bool isLoading=false;
 
   @override
@@ -85,17 +85,17 @@ bool isLoading=false;
     //  getCategories(context);
   }
 
-  _SelectLanguageProficiency({@required this.type,
-    @required this.title,
-    @required this.subtitle,
+  _SelectLanguageProficiency({required this.type,
+    required this.title,
+    required this.subtitle,
     this.id,
     this.id2,
     this.instId,
     this.callbackPicker,
     this.personType,
-    @required this.categoryType});
+    required this.categoryType});
 
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   @override
   Widget build(BuildContext context) {
@@ -144,7 +144,7 @@ bool isLoading=false;
         if (data != null && data.statusCode == 'S10001') {
           ToastBuilder().showToast(data.message ?? "", context,HexColor(AppColors.information));
           Navigator.of(context).pop(true);
-          callbackPicker();
+          callbackPicker!();
         }
       }
     }).catchError((onError) {

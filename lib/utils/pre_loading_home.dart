@@ -27,8 +27,8 @@ class PreloadingViewHome extends StatelessWidget {
   }
 
   PreloadingViewHome({
-    Key key,
-    @required this.url,
+    Key? key,
+    required this.url,
   }) : super(key: key);
 
   Widget build(BuildContext context) {

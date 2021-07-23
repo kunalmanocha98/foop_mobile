@@ -1,7 +1,7 @@
 class RoomTopicRequest {
-  int pageNumber;
-  int pageSize;
-  String searchVal;
+  int? pageNumber;
+  int? pageSize;
+  String? searchVal;
 
   RoomTopicRequest({this.pageNumber, this.pageSize, this.searchVal});
 
@@ -21,10 +21,10 @@ class RoomTopicRequest {
 }
 
 class RoomTopicListResponse {
-  String statusCode;
-  String message;
-  List<RoomTopicItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<RoomTopicItem>? rows;
+  int? total;
 
   RoomTopicListResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -34,7 +34,7 @@ class RoomTopicListResponse {
     if (json['rows'] != null) {
       rows = [];//RoomTopicItem>();
       json['rows'].forEach((v) {
-        rows.add(new RoomTopicItem.fromJson(v));
+        rows!.add(new RoomTopicItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -45,7 +45,7 @@ class RoomTopicListResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -53,12 +53,12 @@ class RoomTopicListResponse {
 }
 
 class RoomTopicItem {
-  String topicName;
-  String topicCode;
-  String topicDescription;
-  String imageUrl;
-  int roomTopicsId;
-  bool isSelected;
+  String? topicName;
+  String? topicCode;
+  String? topicDescription;
+  String? imageUrl;
+  int? roomTopicsId;
+  bool? isSelected;
 
   RoomTopicItem(
       {this.topicName,

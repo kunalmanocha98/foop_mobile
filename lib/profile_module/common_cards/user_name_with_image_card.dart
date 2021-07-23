@@ -21,39 +21,39 @@ import 'package:shared_preferences/shared_preferences.dart';
 class UserNameWithImageCard extends StatelessWidget {
   final userNameTextController = TextEditingController();
   final passwordTextController = TextEditingController();
-  BuildContext context;
-  ProgressDialog pr;
-  SharedPreferences prefs;
-  String title;
-  String subtitle;
+  BuildContext? context;
+  ProgressDialog? pr;
+  SharedPreferences? prefs;
+  String? title;
+  String? subtitle;
   bool isFollow;
   String imageUrl;
-  bool isPersonProfile;
-  Function onClickProfile;
-  int thirdPersonId;
-  int userId;
-  Persondata personData;
+  bool? isPersonProfile;
+  Function? onClickProfile;
+  int? thirdPersonId;
+  int? userId;
+  Persondata? personData;
   Null Function() callbackPicker;
-  Null Function() clicked;
-  TextStyleElements styleElements;
-  String instId;
-  String userType;
-  String ownerTye;
-  String imagePath;
-  bool isUserVerified;
+  Null Function()? clicked;
+  late TextStyleElements styleElements;
+  String? instId;
+  String? userType;
+  String? ownerTye;
+  String? imagePath;
+  bool? isUserVerified;
   bool isFromProfile;
   bool showQr;
-  bool showProgress;
-  int progress;
+  bool? showProgress;
+  int? progress;
 
   UserNameWithImageCard(
-      {Key key,
+      {Key? key,
         this.personData,
-        @required this.title,
-        @required this.subtitle,
-        @required this.isFollow,
-        @required this.imageUrl,
-        @required this.callbackPicker,
+        required this.title,
+        required this.subtitle,
+        required this.isFollow,
+        required this.imageUrl,
+        required this.callbackPicker,
         this.onClickProfile,
         this.thirdPersonId,
         this.userId,
@@ -88,7 +88,7 @@ class UserNameWithImageCard extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         GestureDetector(
-          onTap: onClickProfile,
+          onTap: onClickProfile as void Function()?,
           child: Container(
             margin: EdgeInsets.all(16.h),
             height: 60.w,
@@ -104,7 +104,7 @@ class UserNameWithImageCard extends StatelessWidget {
                     child: ClipOval(
                       child: imagePath != null
                           ? new Image.file(
-                        File(imagePath),
+                        File(imagePath!),
                         fit: BoxFit.fill,
                       )
                           : imageUrl != null && imageUrl != ""
@@ -148,7 +148,7 @@ class UserNameWithImageCard extends StatelessWidget {
         ),
         Expanded(
           child: GestureDetector(
-            onTap: isFromProfile?null:onClickProfile,
+            onTap: isFromProfile?null:onClickProfile as void Function()?,
             child: Container(
               margin: EdgeInsets.only(right: 10.h),
               child: Column(
@@ -163,7 +163,7 @@ class UserNameWithImageCard extends StatelessWidget {
                           children: [
                             Flexible(
                               child: Text(
-                                title,
+                                title!,
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
                                 style: styleElements
@@ -174,7 +174,7 @@ class UserNameWithImageCard extends StatelessWidget {
                               ),
                             ),
                             Visibility(
-                              visible: isUserVerified,
+                              visible: isUserVerified!,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: SizedBox(
@@ -225,7 +225,7 @@ class UserNameWithImageCard extends StatelessWidget {
                               animation: true,
                               animationDuration: 900,
                               lineHeight: 12,
-                              percent: progress!=null?(progress.toDouble()/100):0.0,
+                              percent: progress!=null?(progress!.toDouble()/100):0.0,
                               backgroundColor: HexColor(AppColors.pollBackground),
                               progressColor: HexColor(AppColors.appMainColor).withOpacity(0.75),
                             ),
@@ -236,7 +236,7 @@ class UserNameWithImageCard extends StatelessWidget {
                   ),
                   Visibility(
                     visible: !isFromProfile,
-                    child: Text(AppLocalizations.of(context).translate('view_profile'),
+                    child: Text(AppLocalizations.of(context)!.translate('view_profile'),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         style: styleElements.captionThemeScalable(context).
@@ -269,14 +269,14 @@ class UserNameWithImageCard extends StatelessWidget {
 
                 },
                 color:  HexColor(AppColors.appMainColor),
-                child: isPersonProfile
+                child: isPersonProfile!
                     ? Text(
-                  AppLocalizations.of(context).translate('edit'),
+                  AppLocalizations.of(context)!.translate('edit'),
                   style: styleElements
                       .subtitle2ThemeScalable(context)
                       .copyWith(color: HexColor(AppColors.appColorWhite)),
                 )
-                    : "")
+                    : "" as Widget?)
                 : Align(
               alignment: Alignment.centerRight,
               child: GenericFollowUnfollowButton(
@@ -288,13 +288,13 @@ class UserNameWithImageCard extends StatelessWidget {
                 userType == "institution" ? "institution" : "person",
                 actionOnObjectId: thirdPersonId,
                 engageFlag: isFollow
-                    ? AppLocalizations.of(context).translate('unfollow')
-                    : AppLocalizations.of(context).translate('follow'),
+                    ? AppLocalizations.of(context)!.translate('unfollow')
+                    : AppLocalizations.of(context)!.translate('follow'),
                 actionFlag: isFollow ? "U" : "F",
                 actionDetails: [],
                 personName: "",
                 clicked: () {
-                  if (clicked != null) clicked();
+                  if (clicked != null) clicked!();
                 },
                 callback: (isCallSuccess) {
                   if(callbackPicker!=null)
@@ -318,7 +318,7 @@ class UserNameWithImageCard extends StatelessWidget {
                 barcode: Barcode.qrCode(
                   errorCorrectLevel: BarcodeQRCorrectionLevel.high,
                 ),
-                data: subtitle,
+                data: subtitle!,
                 width: 36,
                 height: 36,
               ),

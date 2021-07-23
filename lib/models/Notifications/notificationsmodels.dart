@@ -1,7 +1,7 @@
 class NotificationListRequest {
-  String personId;
-  int pageNumber;
-  int pageSize;
+  String? personId;
+  int? pageNumber;
+  int? pageSize;
 
   NotificationListRequest({this.personId, this.pageNumber, this.pageSize});
 
@@ -21,10 +21,10 @@ class NotificationListRequest {
 }
 
 class NotificationListResponse {
-  String statusCode;
-  String message;
-  int total;
-  List<NotificationItem> rows;
+  String? statusCode;
+  String? message;
+  int? total;
+  List<NotificationItem>? rows;
 
   NotificationListResponse(
       {this.statusCode, this.message, this.total, this.rows});
@@ -36,7 +36,7 @@ class NotificationListResponse {
     if (json['rows'] != null) {
       rows = [];//NotificationItem>();
       json['rows'].forEach((v) {
-        rows.add(new NotificationItem.fromJson(v));
+        rows!.add(new NotificationItem.fromJson(v));
       });
     }
   }
@@ -47,27 +47,27 @@ class NotificationListResponse {
     data['message'] = this.message;
     data['total'] = this.total;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class NotificationItem {
-  String pid;
-  String personId;
-  String notificationTitle;
-  String notificationText;
-  String notificationActorImage;
-  String notificationImage;
-  String notificationWebDeepLink;
-  String notificationMobileDeepLink;
-  String isRead;
-  String isOnline;
-  String notificationActorName;
-  String notificationActorPid;
-  String notificationDate;
-  String notificationReadDate;
+  String? pid;
+  String? personId;
+  String? notificationTitle;
+  String? notificationText;
+  String? notificationActorImage;
+  String? notificationImage;
+  String? notificationWebDeepLink;
+  String? notificationMobileDeepLink;
+  String? isRead;
+  String? isOnline;
+  String? notificationActorName;
+  String? notificationActorPid;
+  String? notificationDate;
+  String? notificationReadDate;
 
   NotificationItem(
       {this.pid,

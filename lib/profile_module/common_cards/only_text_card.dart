@@ -9,13 +9,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 // ignore: must_be_immutable
 class OnlyTextCard extends StatelessWidget {
   final CommonCardData data;
-  final String type;
-  Persondata rows;
-  Null Function() callback;
-  TextStyleElements styleElements;
-  int userId;
-  int ownerId;
-  OnlyTextCard({Key key, @required this.data, this.rows, this.callback,this.styleElements,this.type,this.ownerId,this.userId})
+  final String? type;
+  Persondata? rows;
+  Null Function()? callback;
+  TextStyleElements? styleElements;
+  int? userId;
+  int? ownerId;
+  OnlyTextCard({Key? key, required this.data, this.rows, this.callback,this.styleElements,this.type,this.ownerId,this.userId})
       : super(key: key);
 
   @override
@@ -33,7 +33,7 @@ class OnlyTextCard extends StatelessWidget {
                 ));
 
             if(result!=null && result['result']=="success")
-            {callback();}
+            {callback!();}
 
           }
 
@@ -43,8 +43,8 @@ class OnlyTextCard extends StatelessWidget {
           child: Container(
             padding: EdgeInsets.only(left: 16.w,right: 16.w,top: 12.h,bottom: 12.h),
             child:  Text(
-               data.title!=null && data.title!="" ? data.title: userId==ownerId?   " Add a quote":" ",
-              style:styleElements.headline6ThemeScalable(context) ,
+               data.title!=null && data.title!="" ? data.title!: userId==ownerId?   " Add a quote":" ",
+              style:styleElements!.headline6ThemeScalable(context) ,
               textAlign: TextAlign.left,
             ),
           ),

@@ -11,12 +11,12 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class TricycleUserListTile extends StatelessWidget {
   final bool isOnline;
-  final String superScriptText;
-  final String title;
-  final String subtitle1;
-  final String subtitle2;
+  final String? superScriptText;
+  final String? title;
+  final String? subtitle1;
+  final String? subtitle2;
   final bool isVerified;
-  final String imageUrl;
+  final String? imageUrl;
   final bool isPerson;
   final bool isFullImageUrl;
   final bool showRating;
@@ -25,19 +25,19 @@ class TricycleUserListTile extends StatelessWidget {
   final bool showCount;
   final bool showAvatar;
   final int count;
-  final Widget trailingWidget;
-  final Function onPressed;
-  final SERVICE_TYPE service_type;
-  final Widget subtitleWidget;
-  final Widget titleWidget;
-  final Widget leadingWidget;
-  final Widget iconWidget;
-  final BoxDecoration  decoration;
-  final EdgeInsets padding;
-  final EdgeInsets margin;
-final Function(int ) callBack;
-final Widget trailWidget;
-final int userId;
+  final Widget? trailingWidget;
+  final Function? onPressed;
+  final SERVICE_TYPE? service_type;
+  final Widget? subtitleWidget;
+  final Widget? titleWidget;
+  final Widget? leadingWidget;
+  final Widget? iconWidget;
+  final BoxDecoration?  decoration;
+  final EdgeInsets? padding;
+  final EdgeInsets? margin;
+final Function(int? )? callBack;
+final Widget? trailWidget;
+final int? userId;
   TricycleUserListTile({
     this.superScriptText,
     this.iconWidget,
@@ -74,8 +74,8 @@ final int userId;
     var styleElements = TextStyleElements(context);
     return InkWell(
       onTap: (){
-        if(callBack!=null) {callBack(userId);}
-        if(onPressed!=null) {onPressed();}
+        if(callBack!=null) {callBack!(userId);}
+        if(onPressed!=null) {onPressed!();}
       },
       child: Container(
         decoration: decoration,
@@ -91,7 +91,7 @@ final int userId;
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                iconWidget!=null ?iconWidget: _getAvatar(context, styleElements),
+                iconWidget!=null ?iconWidget!: _getAvatar(context, styleElements),
 
 
                 Expanded(
@@ -111,9 +111,9 @@ final int userId;
                               visible: isModerator,
                                 child: RoomButtons(context: context).moderatorImage),
                             _dividerWidget,
-                            (subtitle2!=null && subtitle2.isNotEmpty)?Flexible(
+                            (subtitle2!=null && subtitle2!.isNotEmpty)?Flexible(
                               child: Text(
-                                subtitle2,
+                                subtitle2!,
                                 style: styleElements
                                     .bodyText2ThemeScalable(context)
                                     .copyWith(fontSize: 14),
@@ -126,7 +126,7 @@ final int userId;
                   ),
                 ),
                 showCount?_countWidget(context, styleElements):
-                (trailingWidget!=null)?trailingWidget:Container()
+                (trailingWidget!=null)?trailingWidget!:Container()
 
 
               ],
@@ -137,11 +137,11 @@ final int userId;
     );
   }
   Widget _getSuperScript(BuildContext context, TextStyleElements styleElements){
-    return  (superScriptText!=null && superScriptText.isNotEmpty)?Row(
+    return  (superScriptText!=null && superScriptText!.isNotEmpty)?Row(
       children: [
         Spacer(),
         Text(
-          superScriptText,
+          superScriptText!,
           style: styleElements.bodyText2ThemeScalable(context).copyWith(
               color: HexColor(AppColors.appColorBlack35), fontSize: 12),
         )
@@ -154,7 +154,7 @@ final int userId;
       children: [
         Flexible(
           child: Text(
-            title,
+            title!,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style: styleElements
@@ -175,8 +175,8 @@ final int userId;
     );
   }
   Widget _getSubtitle(BuildContext context, TextStyleElements styleElements){
-    return (subtitle1!=null && subtitle1.isNotEmpty)?Text(
-      subtitle1,
+    return (subtitle1!=null && subtitle1!.isNotEmpty)?Text(
+      subtitle1!,
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
       style: styleElements

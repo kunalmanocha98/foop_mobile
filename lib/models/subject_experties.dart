@@ -1,8 +1,8 @@
 class SubjectExperties {
-  String statusCode;
-  String message;
-  List<SubjectItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<SubjectItem>? rows;
+  int? total;
 
   SubjectExperties({this.statusCode, this.message, this.rows, this.total});
 
@@ -12,7 +12,7 @@ class SubjectExperties {
     if (json['rows'] != null) {
       rows = [];//SubjectItem>();
       json['rows'].forEach((v) {
-        rows.add(new SubjectItem.fromJson(v));
+        rows!.add(new SubjectItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -23,7 +23,7 @@ class SubjectExperties {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -31,11 +31,11 @@ class SubjectExperties {
 }
 
 class SubjectItem {
-  int id;
+  int? id;
   bool isSelected= false;
-  String standardExpertiseCategoryId;
-  String expertiseTypeCode;
-  String expertiseTypeDescription;
+  String? standardExpertiseCategoryId;
+  String? expertiseTypeCode;
+  String? expertiseTypeDescription;
 
   SubjectItem(
       {this.id,

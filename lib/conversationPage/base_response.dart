@@ -6,8 +6,8 @@
 
 
 class BaseResponse {
-  String statusCode;
-  String message;
+  String? statusCode;
+  String? message;
 
 
   BaseResponse({this.statusCode, this.message, });

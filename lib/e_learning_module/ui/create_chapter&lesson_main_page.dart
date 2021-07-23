@@ -21,11 +21,11 @@ class CreateChapterLessonMainPage extends StatefulWidget {
 }
 
 class _CreateChapterLessonMainPage extends State<CreateChapterLessonMainPage> {
-  BuildContext context;
-  TextStyleElements styleElements;
+  late BuildContext context;
+  late TextStyleElements styleElements;
   GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
   GlobalKey<TricycleProgressButtonState> progressButtonKeyNext = GlobalKey();
-  PostCreatePayload createLessonData = PostCreatePayload();
+  PostCreatePayload? createLessonData = PostCreatePayload();
   LessonTopic lessonTopic=LessonTopic();
   bool isTopicDone = false;
   bool isAcademicDone = false;
@@ -35,7 +35,7 @@ class _CreateChapterLessonMainPage extends State<CreateChapterLessonMainPage> {
   @override
   void initState() {
     super.initState();
-    createLessonData.lessonTopic=lessonTopic;
+    createLessonData!.lessonTopic=lessonTopic;
   }
 
   @override
@@ -49,7 +49,7 @@ class _CreateChapterLessonMainPage extends State<CreateChapterLessonMainPage> {
           appBar: TricycleAppBar().getCustomAppBar(
             context,
             appBarTitle:
-                AppLocalizations.of(context).translate('Create_lessons'),
+                AppLocalizations.of(context)!.translate('Create_lessons'),
             onBackButtonPress: () {
               Navigator.pop(context);
             },
@@ -71,7 +71,7 @@ class _CreateChapterLessonMainPage extends State<CreateChapterLessonMainPage> {
                                     title: Align(
                                       alignment: Alignment.centerLeft,
                                       child: Text(
-                                        AppLocalizations.of(context)
+                                        AppLocalizations.of(context)!
                                             .translate("Lesson_topic"),
                                         style: styleElements
                                             .subtitle1ThemeScalable(context),
@@ -81,7 +81,7 @@ class _CreateChapterLessonMainPage extends State<CreateChapterLessonMainPage> {
                                     subtitle: Align(
                                       alignment: Alignment.centerLeft,
                                       child: Text(
-                                        AppLocalizations.of(context)
+                                        AppLocalizations.of(context)!
                                             .translate("create_topic"),
                                         style: styleElements
                                             .bodyText2ThemeScalable(context),
@@ -106,10 +106,10 @@ class _CreateChapterLessonMainPage extends State<CreateChapterLessonMainPage> {
                                           createLessonData: createLessonData),
                                     )).then((value) {
                                   createLessonData = value;
-                                  isTopicDone = createLessonData.lessonTopic.title !=
+                                  isTopicDone = createLessonData!.lessonTopic!.title !=
                                           null &&
-                                      createLessonData.lessonTopic.topic != null &&
-                                      createLessonData.learnerItem != null;
+                                      createLessonData!.lessonTopic!.topic != null &&
+                                      createLessonData!.learnerItem != null;
                                   setState(() {});
                                 });
                               },
@@ -125,7 +125,7 @@ class _CreateChapterLessonMainPage extends State<CreateChapterLessonMainPage> {
                                       title: Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                          AppLocalizations.of(context)
+                                          AppLocalizations.of(context)!
                                               .translate("Academic_detail"),
                                           style: styleElements
                                               .subtitle1ThemeScalable(context),
@@ -135,7 +135,7 @@ class _CreateChapterLessonMainPage extends State<CreateChapterLessonMainPage> {
                                       subtitle: Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                          AppLocalizations.of(context)
+                                          AppLocalizations.of(context)!
                                               .translate("academic_subtitle"),
                                           style: styleElements
                                               .bodyText2ThemeScalable(context),
@@ -163,8 +163,8 @@ class _CreateChapterLessonMainPage extends State<CreateChapterLessonMainPage> {
                                             ),
                                       )).then((value) {
 
-                                        isAcademicDone=(createLessonData.affiliatedList!=null &&createLessonData.programmesList!=null&& createLessonData.disciplineList!=null&&
-                                            createLessonData.classesList!=null &&createLessonData.subjectsList!=null
+                                        isAcademicDone=(createLessonData!.affiliatedList!=null &&createLessonData!.programmesList!=null&& createLessonData!.disciplineList!=null&&
+                                            createLessonData!.classesList!=null &&createLessonData!.subjectsList!=null
 
                                         );
                                         setState(() {
@@ -188,7 +188,7 @@ class _CreateChapterLessonMainPage extends State<CreateChapterLessonMainPage> {
                                       title: Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                          AppLocalizations.of(context)
+                                          AppLocalizations.of(context)!
                                               .translate("Chapters_lessons"),
                                           style: styleElements
                                               .subtitle1ThemeScalable(context),
@@ -198,7 +198,7 @@ class _CreateChapterLessonMainPage extends State<CreateChapterLessonMainPage> {
                                       subtitle: Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                          AppLocalizations.of(context)
+                                          AppLocalizations.of(context)!
                                               .translate("chapter_subtitle"),
                                           style: styleElements
                                               .bodyText2ThemeScalable(context),
@@ -235,7 +235,7 @@ class _CreateChapterLessonMainPage extends State<CreateChapterLessonMainPage> {
                                     title: Align(
                                       alignment: Alignment.centerLeft,
                                       child: Text(
-                                        AppLocalizations.of(context)
+                                        AppLocalizations.of(context)!
                                             .translate("Tests"),
                                         style: styleElements
                                             .subtitle1ThemeScalable(context),
@@ -245,7 +245,7 @@ class _CreateChapterLessonMainPage extends State<CreateChapterLessonMainPage> {
                                     subtitle: Align(
                                       alignment: Alignment.centerLeft,
                                       child: Text(
-                                        AppLocalizations.of(context)
+                                        AppLocalizations.of(context)!
                                             .translate("test_subtitle"),
                                         style: styleElements
                                             .bodyText2ThemeScalable(context),
@@ -284,7 +284,7 @@ class _CreateChapterLessonMainPage extends State<CreateChapterLessonMainPage> {
                           Padding(
                             padding: const EdgeInsets.only(left: 16.0),
                             child: Text(
-                              AppLocalizations.of(context)
+                              AppLocalizations.of(context)!
                                   .translate('Save_draft')
                                   .toUpperCase(),
                               style: styleElements
@@ -304,7 +304,7 @@ class _CreateChapterLessonMainPage extends State<CreateChapterLessonMainPage> {
                               onPressed: () async {},
                               color: HexColor(AppColors.appColorWhite),
                               child: Text(
-                                AppLocalizations.of(context)
+                                AppLocalizations.of(context)!
                                     .translate('Publish')
                                     .toUpperCase(),
                                 style: styleElements

@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class FounderCard extends StatelessWidget {
   final CommonCardData data;
-  TextStyleElements styleElements;
+  TextStyleElements? styleElements;
   Size displaySize(BuildContext context) {
     debugPrint('Size = ' + MediaQuery.of(context).size.toString());
     return MediaQuery.of(context).size;
@@ -23,7 +23,7 @@ class FounderCard extends StatelessWidget {
     return displaySize(context).width;
   }
 
-  FounderCard({Key key, @required this.data,this.styleElements}) : super(key: key);
+  FounderCard({Key? key, required this.data,this.styleElements}) : super(key: key);
 
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
@@ -40,7 +40,7 @@ class FounderCard extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 16, right: 16,top:12,bottom:12),
                     child: Text(
                       data.title ?? "",
-                      style: styleElements.headline6ThemeScalable(context),
+                      style: styleElements!.headline6ThemeScalable(context),
                       textAlign: TextAlign.left,
                     ),
                   )),
@@ -66,7 +66,7 @@ class FounderCard extends StatelessWidget {
               margin: const EdgeInsets.only(left: 16, top: 20, right: 16),
               child: Text(
                 data.textOne ??= "",
-                style: styleElements.subtitle1ThemeScalable(context),
+                style: styleElements!.subtitle1ThemeScalable(context),
                 textAlign: TextAlign.left,
               ),
             )),
@@ -76,7 +76,7 @@ class FounderCard extends StatelessWidget {
               margin: const EdgeInsets.only(left: 16, top: 20, right: 16),
               child: Text(
                 data.textTwo ??= "",
-                style: styleElements.subtitle2ThemeScalable(context),
+                style: styleElements!.subtitle2ThemeScalable(context),
                 textAlign: TextAlign.left,
               ),
             )),
@@ -89,8 +89,8 @@ class FounderCard extends StatelessWidget {
               child: Align
                 (
                 alignment:  Alignment.bottomRight,
-                child: Text(AppLocalizations.of(context).translate('see_more'),
-                  style: styleElements.bodyText2ThemeScalable(context),
+                child: Text(AppLocalizations.of(context)!.translate('see_more'),
+                  style: styleElements!.bodyText2ThemeScalable(context),
                   textAlign: TextAlign.center,
                 ),
               ),

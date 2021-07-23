@@ -7,17 +7,17 @@ import 'package:oho_works_app/utils/hexColors.dart';
 import 'package:flutter/material.dart';
 
 class EarnCard extends StatelessWidget {
-  final String moneyVal;
-  final String imageUrl;
-  final bool isClickable;
-  final String quote;
+  final String? moneyVal;
+  final String? imageUrl;
+  final bool? isClickable;
+  final String? quote;
   EarnCard({this.moneyVal,this.imageUrl,this.quote,this.isClickable});
   @override
   Widget build(BuildContext context) {
     TextStyleElements styleElements = TextStyleElements(context);
     return TricycleCard(
         onTap: (){
-          if(isClickable)
+          if(isClickable!)
           Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>RegisInstruction()));
         },
         child: Column(
@@ -28,7 +28,7 @@ class EarnCard extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    child: Text(AppLocalizations.of(context).translate('if_no_inst_found'),
+                    child: Text(AppLocalizations.of(context)!.translate('if_no_inst_found'),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: styleElements
@@ -36,7 +36,7 @@ class EarnCard extends StatelessWidget {
                           .copyWith(color: HexColor(AppColors.appColorBlack85),fontWeight: FontWeight.bold),
                     ),
                   ),
-                  Text(AppLocalizations.of(context).translate('earn_upto'),
+                  Text(AppLocalizations.of(context)!.translate('earn_upto'),
                     style: styleElements
                         .subtitle1ThemeScalable(context)
                         .copyWith(color: HexColor(AppColors.appColorBlack85)),
@@ -61,7 +61,7 @@ class EarnCard extends StatelessWidget {
               ),
               Padding(
                 padding:  EdgeInsets.only(top:8.0),
-                child: Text(AppLocalizations.of(context).translate('get_institute_registered'),
+                child: Text(AppLocalizations.of(context)!.translate('get_institute_registered'),
                   style:  styleElements.subtitle1ThemeScalable(context),),
               ),
              

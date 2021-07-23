@@ -10,9 +10,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // ignore: must_be_immutable
 class UserPopularityCard extends StatelessWidget {
-  int userId;
-  String userName;
-  String userType;
+  int? userId;
+  String? userName;
+  String? userType;
   String textOne;
   String textTwo;
   String textThree;
@@ -21,32 +21,32 @@ class UserPopularityCard extends StatelessWidget {
   String textSix;
   String textSeven;
   String textEight;
-  int ownerId;
-  String ownerType;
-  Null Function() callback;
-  String instituteId;
-  String imageurl;
+  int? ownerId;
+  String? ownerType;
+  Null Function()? callback;
+  String? instituteId;
+  String? imageurl;
 
   UserPopularityCard(
-      {Key key,
-      @required this.textOne,
-      @required this.textTwo,
-      @required this.textThree,
-      @required this.textFour,
-      @required this.textFive,
-      @required this.textSix,
-      @required this.textSeven,
-      @required this.textEight,
+      {Key? key,
+      required this.textOne,
+      required this.textTwo,
+      required this.textThree,
+      required this.textFour,
+      required this.textFive,
+      required this.textSix,
+      required this.textSeven,
+      required this.textEight,
       this.userId,
         this.ownerId,
         this.ownerType,
       this.userName,
         this.imageurl,
       this.instituteId,
-      @required this.callback,
+      required this.callback,
       this.userType})
       : super(key: key);
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +76,7 @@ class UserPopularityCard extends StatelessWidget {
                       Container(
                         margin: EdgeInsets.all(2.h),
                         child: Text(
-                          textFive ??= "",
+                          textFive,
                           overflow: TextOverflow.ellipsis,
                           style: styleElements
                               .subtitle2ThemeScalable(context)
@@ -90,7 +90,7 @@ class UserPopularityCard extends StatelessWidget {
                         margin:
                             EdgeInsets.only(bottom: 2.h, left: 2.h, right: 2.h),
                         child: Text(
-                          textOne ??= "",
+                          textOne,
                           overflow: TextOverflow.ellipsis,
                           style: styleElements.subtitle2ThemeScalable(context),
                           textAlign: TextAlign.left,
@@ -109,7 +109,7 @@ class UserPopularityCard extends StatelessWidget {
                               pageTitle: userName,
                               imageUrl:imageurl,
                               callback: () {
-                                callback();
+                                callback!();
                               }),
                         ));
                     if (result != null) {
@@ -132,7 +132,7 @@ class UserPopularityCard extends StatelessWidget {
                             currentTab: 0,
                             pageTitle: userName,
                             callback: () {
-                              callback();
+                              callback!();
                             }
 
                             ),
@@ -146,7 +146,7 @@ class UserPopularityCard extends StatelessWidget {
                     Container(
                       margin: EdgeInsets.all(2.h),
                       child: Text(
-                        textSix ??= "",
+                        textSix,
                         overflow: TextOverflow.ellipsis,
                         style: styleElements
                             .subtitle2ThemeScalable(context)
@@ -160,7 +160,7 @@ class UserPopularityCard extends StatelessWidget {
                       margin:
                           EdgeInsets.only(bottom: 2.h, left: 2.h, right: 2.h),
                       child: Text(
-                        textTwo ??= "",
+                        textTwo,
                         overflow: TextOverflow.ellipsis,
                         style: styleElements.subtitle2ThemeScalable(context),
                         textAlign: TextAlign.left,
@@ -177,7 +177,7 @@ class UserPopularityCard extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) =>
-                          SelectedFeedListPage(appBarTitle: userName+"'s Activity",
+                          SelectedFeedListPage(appBarTitle: userName!+"'s Activity",
                           isOthersPostList: true,
                             isFromProfile:false,
                           postOwnerTypeId: userId,
@@ -196,7 +196,7 @@ class UserPopularityCard extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.all(2.h),
                     child: Text(
-                      textSeven ??= "",
+                      textSeven,
                       overflow: TextOverflow.ellipsis,
                       style: styleElements
                           .subtitle2ThemeScalable(context)
@@ -209,7 +209,7 @@ class UserPopularityCard extends StatelessWidget {
                   Container(
                     margin: EdgeInsets.only(bottom: 2.h, left: 2.h, right: 2.h),
                     child: Text(
-                      textThree ??= "",
+                      textThree,
                       overflow: TextOverflow.ellipsis,
                       style: styleElements.subtitle2ThemeScalable(context),
                       textAlign: TextAlign.left,
@@ -227,7 +227,7 @@ class UserPopularityCard extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                       builder: (context) => MyRooms(
-                            userId,int.parse(instituteId),ownerId,userType,ownerType, callback
+                            userId,int.parse(instituteId!),ownerId,userType,ownerType, callback
                           )));
             },
             child: Column(
@@ -235,7 +235,7 @@ class UserPopularityCard extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.all(2.h),
                   child: Text(
-                    textEight ??= "",
+                    textEight,
                     overflow: TextOverflow.ellipsis,
                     style: styleElements
                         .subtitle2ThemeScalable(context)
@@ -247,7 +247,7 @@ class UserPopularityCard extends StatelessWidget {
                 Container(
                   margin: EdgeInsets.only(bottom: 2.h, left: 2.h, right: 2.h),
                   child: Text(
-                    textFour ??= "",
+                    textFour,
                     overflow: TextOverflow.ellipsis,
                     style: styleElements.subtitle2ThemeScalable(context),
                     textAlign: TextAlign.left,
@@ -262,6 +262,6 @@ class UserPopularityCard extends StatelessWidget {
   }
 
   void update(updateFollowers) {
-    callback();
+    callback!();
   }
 }

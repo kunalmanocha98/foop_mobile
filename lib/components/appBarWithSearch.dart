@@ -3,7 +3,6 @@ import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/colors.dart';
 import 'package:oho_works_app/utils/hexColors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 // class AppBarWithSearch extends StatelessWidget implements PreferredSizeWidget {
 //   TextStyleElements styleElements;
@@ -81,18 +80,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TricycleAppBar {
   getCustomAppBarWithProfileImage(BuildContext context,
-      {@required String appBarTitle,
-        @required Function onBackButtonPress,
-        Color backgroundColor,
-        double elevation,
-        @required String imageUrl,
-        bool centerTitle,
-        List<Widget> actions,
-        Widget icon,
-        bool isIconVisible,
-        bool isNext,
-        Color appTitleColor,
-        Color iconColor}) {
+      {required String appBarTitle,
+        required Function onBackButtonPress,
+        Color? backgroundColor,
+        double? elevation,
+        required String imageUrl,
+        bool? centerTitle,
+        List<Widget>? actions,
+        Widget? icon,
+        bool? isIconVisible,
+        bool? isNext,
+        Color? appTitleColor,
+        Color? iconColor}) {
     TextStyleElements styleElements = TextStyleElements(context);
     return AppBar(
       iconTheme: IconThemeData(
@@ -111,10 +110,11 @@ class TricycleAppBar {
                   size: 20,
                   // add custom icons also
                 ),
-                onPressed: onBackButtonPress,
+                onPressed: onBackButtonPress as void Function()?,
               )),
           Text(
-            appBarTitle??"",
+            appBarTitle,
+            // ignore: unnecessary_null_comparison
             style: appBarTitle != null
                 ? styleElements
                 .headline6ThemeScalable(context)
@@ -126,14 +126,10 @@ class TricycleAppBar {
       backgroundColor: backgroundColor ??= HexColor(AppColors.appColorTransparent),
       elevation: elevation ??= 0.0,
       leading: Visibility(
-          visible: isIconVisible ??= true,
+          visible: isIconVisible,
           child: IconButton(
-            icon: icon ??= Icon(
-              Icons.keyboard_backspace_rounded,
-              size: 20.h,
-              // add custom icons also
-            ),
-            onPressed: onBackButtonPress,
+            icon: icon,
+            onPressed: onBackButtonPress as void Function()?,
           )),
       actions: actions,
       centerTitle: centerTitle ??= true,
@@ -143,18 +139,18 @@ class TricycleAppBar {
 
 
   getCustomAppBar(BuildContext context,
-      {@required String appBarTitle,
-      @required Function onBackButtonPress,
-      Color backgroundColor,
-      double elevation,
-      bool centerTitle,
-      List<Widget> actions,
-      Widget icon,
-      bool isIconVisible,
-      bool isNext,
-      Color appTitleColor,
-        Widget titleWidget,
-      Color iconColor}) {
+      {required String? appBarTitle,
+      required Function? onBackButtonPress,
+      Color? backgroundColor,
+      double? elevation,
+      bool? centerTitle,
+      List<Widget>? actions,
+      Widget? icon,
+      bool? isIconVisible,
+      bool? isNext,
+      Color? appTitleColor,
+        Widget? titleWidget,
+      Color? iconColor}) {
     TextStyleElements styleElements = TextStyleElements(context);
     return AppBar(
 
@@ -180,7 +176,7 @@ class TricycleAppBar {
               Icons.keyboard_backspace_rounded,
               // add custom icons also
             ),
-            onPressed: onBackButtonPress,
+            onPressed: onBackButtonPress as void Function()?,
           )),
       actions: actions,
 
@@ -189,18 +185,18 @@ class TricycleAppBar {
   }
 
   getCustomAppBarWithSearch(BuildContext context,
-      {@required String appBarTitle,
-      @required Function onBackButtonPress,
-      @required Function(String) onSearchValueChanged,
-        TextEditingController controller,
-      String hintText,
-      Color backgroundColor,
-      double elevation,
-      bool centerTitle,
-      List<Widget> actions,
-      Widget icon,
-        Widget titleWidget,
-      bool isIconVisible}) {
+      {required String appBarTitle,
+      required Function onBackButtonPress,
+      required Function(String) onSearchValueChanged,
+        TextEditingController? controller,
+      String? hintText,
+      Color? backgroundColor,
+      double? elevation,
+      bool? centerTitle,
+      List<Widget>? actions,
+      Widget? icon,
+        Widget? titleWidget,
+      bool? isIconVisible}) {
     TextStyleElements styleElements = TextStyleElements(context);
     return CustomPrefferedSizedWidget(
       height: 120,
@@ -226,7 +222,7 @@ class TricycleAppBar {
                     Icons.keyboard_backspace_rounded,
                     // add custom icons also
                   ),
-                  onPressed: onBackButtonPress,
+                  onPressed: onBackButtonPress as void Function()?,
                 )),
             actions: actions,
             centerTitle: centerTitle ??= true,
@@ -248,7 +244,7 @@ class CustomPrefferedSizedWidget extends StatelessWidget
   double height;
   Widget child;
 
-  CustomPrefferedSizedWidget({@required this.height, @required this.child});
+  CustomPrefferedSizedWidget({required this.height, required this.child});
 
   @override
   Widget build(BuildContext context) {

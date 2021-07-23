@@ -1,9 +1,9 @@
 class MembershipRoleStatusPayload {
-  int memberId;
-  String memberType;
-  int roomId;
-  String action;
-  bool isAdmin;
+  int? memberId;
+  String? memberType;
+  int? roomId;
+  String? action;
+  bool? isAdmin;
 
   MembershipRoleStatusPayload(
       {this.memberId, this.memberType, this.roomId, this.action, this.isAdmin});

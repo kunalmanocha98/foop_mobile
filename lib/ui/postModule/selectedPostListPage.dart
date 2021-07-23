@@ -31,25 +31,25 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'CampusNewsListPage.dart';
 
 class SelectedFeedListPage extends StatefulWidget {
-  final String postType;
-  final String postRecipientStatus;
+  final String? postType;
+  final String? postRecipientStatus;
   final String appBarTitle;
   final bool isOthersPostList;
-  final String postOwnerType;
-  final int postOwnerTypeId;
-  final bool isFromProfile;
-  final bool isOwnPost;
+  final String? postOwnerType;
+  final int? postOwnerTypeId;
+  final bool? isFromProfile;
+  final bool? isOwnPost;
   final bool isBookMarked;
   final bool isRoomPost;
-  final int roomId;
+  final int? roomId;
   final bool isEventPost;
-  final int eventId;
-  final Function callBack;
+  final int? eventId;
+  final Function? callBack;
   final bool isReceivedPost;
   SelectedFeedListPage(
-      {Key key, this.postType,
+      {Key? key, this.postType,
       this.postRecipientStatus,
-      @required this.appBarTitle,
+      required this.appBarTitle,
       this.isOthersPostList = false,
       this.postOwnerTypeId,
         this.isFromProfile,
@@ -79,22 +79,22 @@ class SelectedFeedListPage extends StatefulWidget {
 
 class SelectedFeedPageState extends State<SelectedFeedListPage> {
   List<PostListItem> feedList = [];
-  int totalItems = 0;
-  SharedPreferences prefs;
+  int? totalItems = 0;
+  SharedPreferences? prefs;
   int page = 0;
-  PAGINATOR_ENUMS pageEnum;
-  String appBarTitle;
-  String postType;
-  String postRecipientStatus;
-  TextStyleElements styleElements;
+  PAGINATOR_ENUMS? pageEnum;
+  String? appBarTitle;
+  String? postType;
+  String? postRecipientStatus;
+  late TextStyleElements styleElements;
   bool isOthersPostList;
-  final String postOwnerType;
-  final int postOwnerTypeId;
-  bool isFromProfile;
-  bool isOwnPost;
-  bool isBookMarked;
+  final String? postOwnerType;
+  final int? postOwnerTypeId;
+  bool? isFromProfile;
+  bool? isOwnPost;
+  bool? isBookMarked;
   bool loadSuggestions=  false;
-  bool isReceivedPost;
+  bool? isReceivedPost;
   int i=0;
   SelectedFeedPageState(
       {this.postType,
@@ -143,12 +143,12 @@ class SelectedFeedPageState extends State<SelectedFeedListPage> {
       ),
       color: HexColor(AppColors.appColorBackground),
       itemBuilder: (context) => PostListMenu(context: context).menuList,
-      onSelected: (value) {
+      onSelected: (dynamic value) {
         if(postType!=value) {
           switch (value) {
             case 'all':
               {
-                appBarTitle = AppLocalizations.of(context).translate('all');
+                appBarTitle = AppLocalizations.of(context)!.translate('all');
                 postType = POST_TYPE.ALL.status;
                 isBookMarked = false;
                 postRecipientStatus = POST_RECIPIENT_STATUS.UNREAD.status;
@@ -157,7 +157,7 @@ class SelectedFeedPageState extends State<SelectedFeedListPage> {
               }
             case 'general':
               {
-                appBarTitle = AppLocalizations.of(context).translate('general');
+                appBarTitle = AppLocalizations.of(context)!.translate('general');
                 postType = POST_TYPE.GENERAL.status;
                 isBookMarked = false;
                 postRecipientStatus = POST_RECIPIENT_STATUS.UNREAD.status;
@@ -166,7 +166,7 @@ class SelectedFeedPageState extends State<SelectedFeedListPage> {
               }
             case 'assignment':
               {
-                appBarTitle = AppLocalizations.of(context).translate('assignment');
+                appBarTitle = AppLocalizations.of(context)!.translate('assignment');
                 postType = POST_TYPE.ASSIGNMENT.status;
                 isBookMarked = false;
                 postRecipientStatus = POST_RECIPIENT_STATUS.UNREAD.status;
@@ -175,7 +175,7 @@ class SelectedFeedPageState extends State<SelectedFeedListPage> {
               }
             case 'notice':
               {
-                appBarTitle = AppLocalizations.of(context).translate('notice_board');
+                appBarTitle = AppLocalizations.of(context)!.translate('notice_board');
                 postType = POST_TYPE.NOTICE.status;
                 isBookMarked = false;
                 postRecipientStatus = POST_RECIPIENT_STATUS.UNREAD.status;
@@ -184,7 +184,7 @@ class SelectedFeedPageState extends State<SelectedFeedListPage> {
               }
             case 'blog':
               {
-                appBarTitle = AppLocalizations.of(context).translate('article');
+                appBarTitle = AppLocalizations.of(context)!.translate('article');
                 postType = POST_TYPE.BLOG.status;
                 isBookMarked = false;
                 postRecipientStatus = POST_RECIPIENT_STATUS.UNREAD.status;
@@ -193,7 +193,7 @@ class SelectedFeedPageState extends State<SelectedFeedListPage> {
               }
             case 'qa':
               {
-                appBarTitle = AppLocalizations.of(context).translate('ask_expert');
+                appBarTitle = AppLocalizations.of(context)!.translate('ask_expert');
                 postType = POST_TYPE.QNA.status;
                 isBookMarked = false;
                 postRecipientStatus = POST_RECIPIENT_STATUS.UNREAD.status;
@@ -219,7 +219,7 @@ class SelectedFeedPageState extends State<SelectedFeedListPage> {
               }
             case 'bookmark':
               {
-                appBarTitle = AppLocalizations.of(context).translate('bookmarked_posts');
+                appBarTitle = AppLocalizations.of(context)!.translate('bookmarked_posts');
                 postType = null;
                 isBookMarked = true;
                 postRecipientStatus = POST_RECIPIENT_STATUS.UNREAD.status;
@@ -236,7 +236,7 @@ class SelectedFeedPageState extends State<SelectedFeedListPage> {
               }
             default:
               {
-                appBarTitle = AppLocalizations.of(context).translate('notice');
+                appBarTitle = AppLocalizations.of(context)!.translate('notice');
                 postType = POST_TYPE.NOTICE.status;
                 isBookMarked = false;
                 postRecipientStatus = POST_RECIPIENT_STATUS.UNREAD.status;
@@ -256,7 +256,7 @@ class SelectedFeedPageState extends State<SelectedFeedListPage> {
   @override
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
-    return!isFromProfile? SafeArea(
+    return!isFromProfile!? SafeArea(
       child: Scaffold(
           appBar: TricycleAppBar().getCustomAppBar(context,
               appBarTitle: appBarTitle,
@@ -340,12 +340,12 @@ class SelectedFeedPageState extends State<SelectedFeedListPage> {
     }
   }
 
-  int _getItemCount() {
+  int? _getItemCount() {
     if(!loadSuggestions) {
-      if (totalItems > feedList.length) {
+      if (totalItems! > feedList.length) {
         return feedList.length + 1;
       } else {
-        if(!isBookMarked) {
+        if(!isBookMarked!) {
           loadSuggestions = true;
           page = 0;
           return feedList.length + 1;
@@ -354,7 +354,7 @@ class SelectedFeedPageState extends State<SelectedFeedListPage> {
         }
       }
     }else{
-      if (totalItems > feedList.length) {
+      if (totalItems! > feedList.length) {
         return feedList.length + 1;
       } else {
         return totalItems;
@@ -381,7 +381,7 @@ class SelectedFeedPageState extends State<SelectedFeedListPage> {
             case ConnectionState.active:
               return CustomPaginator(context).loadingWidgetMaker();
             case ConnectionState.done:
-                feedList.addAll(snapshot.data.rows);
+                feedList.addAll(snapshot.data!.rows!);
                 page++;
                 Future.microtask(() {
                   setState(() {});
@@ -399,7 +399,7 @@ class SelectedFeedPageState extends State<SelectedFeedListPage> {
     if(item.postType == 'title'){
       return Padding(
         padding: EdgeInsets.only(top: 8, bottom: 16,left: 8),
-        child: Text(item.postContent.header.title,
+        child: Text(item.postContent!.header!.title!,
           style: styleElements.headline6ThemeScalable(context),),
       );
     }else {
@@ -430,7 +430,7 @@ class SelectedFeedPageState extends State<SelectedFeedListPage> {
                 _onRatingCallback(index);
               },
               bookmarkCallback: (isBookmarked) {
-                _onBookmarkCallback(item.postId, index, isBookmarked);
+                _onBookmarkCallback(item.postId, index, isBookmarked!);
               },
               commentCallback: () {
                 _onCommentCallback(index);
@@ -452,14 +452,14 @@ class SelectedFeedPageState extends State<SelectedFeedListPage> {
               },
               onAnswerClickCallback: () {
                 openAnswerPage(
-                    item.postContent.content.contentMeta.title, item.postId);
+                    item.postContent!.content!.contentMeta!.title, item.postId);
                 // openSubmitAssignPage(
                 //     item.postContent.content.contentMeta.title, item.postId
                 // );
               },
             onSubmitAnswer:(){
               openSubmitAssignPage(
-                  item.postContent.content.contentMeta.title, item.postId,index
+                  item.postContent!.content!.contentMeta!.title, item.postId,index
               );
             },
               ));
@@ -471,14 +471,14 @@ class SelectedFeedPageState extends State<SelectedFeedListPage> {
         context: context,
         builder: (BuildContext context) {
           return AudioPostDialog(
-              title: feedList[index].postContent.content.contentMeta.title,
+              title: feedList[index].postContent!.content!.contentMeta!.title,
               okCallback:(){
                 Navigator.push(context,
                     MaterialPageRoute(builder: (BuildContext context) {
                       return CreateEventPage(
                         type: 'talk',
                         standardEventId: 5,
-                        title: feedList[index].postContent.content.contentMeta.title,
+                        title: feedList[index].postContent!.content!.contentMeta!.title,
                       );
                     }));
               },
@@ -491,7 +491,7 @@ class SelectedFeedPageState extends State<SelectedFeedListPage> {
     PostListRequest payload = PostListRequest();
     payload.pageNumber = page + 1;
     payload.pageSize = 25;
-    payload.personId = prefs.getInt(Strings.userId);
+    payload.personId = prefs!.getInt(Strings.userId);
     payload.isBookmarked = isBookMarked;
     payload.isOwnPost = isOwnPost??=false;
     payload.isReceived = isReceivedPost ??= false;
@@ -519,7 +519,7 @@ class SelectedFeedPageState extends State<SelectedFeedListPage> {
         } else {
           // isLoading = false;
           page++;
-          feedList.addAll(response.rows);
+          feedList.addAll(response.rows!);
           setState(() {
             pageEnum = PAGINATOR_ENUMS.SUCCESS;
           });
@@ -557,7 +557,7 @@ class SelectedFeedPageState extends State<SelectedFeedListPage> {
     } else {
       // isLoading = false;
       page++;
-      feedList.addAll(response.rows);
+      feedList.addAll(response.rows!);
       setState(() {
         pageEnum = PAGINATOR_ENUMS.SUCCESS;
       });
@@ -570,7 +570,7 @@ class SelectedFeedPageState extends State<SelectedFeedListPage> {
     payload.pageNumber = page;
     payload.pageSize = 25;
     payload.type = 'post';
-    payload.personId = prefs.getInt(Strings.userId);
+    payload.personId = prefs!.getInt(Strings.userId);
     payload.postType = postType;
     // payload.isOwnPost = false;
     // payload.postRecipientStatus = POST_RECIPIENT_STATUS.UNREAD.status;
@@ -580,8 +580,8 @@ class SelectedFeedPageState extends State<SelectedFeedListPage> {
     if(i==0) {
       i=1;
       if(response!=null) {
-        if (response.total > 0) {
-          response.rows.insert(0, PostListItem(
+        if (response.total! > 0) {
+          response.rows!.insert(0, PostListItem(
               postType: 'title',
               postContent: PostContent(
                   header: Header(
@@ -589,9 +589,9 @@ class SelectedFeedPageState extends State<SelectedFeedListPage> {
                   )
               )
           ));
-          totalItems = totalItems + response.total + 1;
+          totalItems = totalItems! + response.total! + 1;
         } else {
-          totalItems = totalItems + response.total;
+          totalItems = totalItems! + response.total!;
         }
       }
     }
@@ -603,7 +603,7 @@ class SelectedFeedPageState extends State<SelectedFeedListPage> {
     PostListRequest payload = PostListRequest();
     payload.pageNumber = page;
     payload.pageSize = 25;
-    payload.personId = prefs.getInt(Strings.userId);
+    payload.personId = prefs!.getInt(Strings.userId);
     payload.isOwnPost = isOwnPost??=false;
     payload.isReceived = isReceivedPost ??= false;
     payload.postType = postType;
@@ -640,11 +640,11 @@ class SelectedFeedPageState extends State<SelectedFeedListPage> {
   void removeFromList(int index) {
     setState(() {
       feedList.removeAt(index);
-      totalItems = totalItems - 1;
+      totalItems = totalItems! - 1;
     });
   }
 
-  void openAnswerPage(String question, int postId) {
+  void openAnswerPage(String? question, int? postId) {
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => PostCreatePage(
           type: 'answer',
@@ -653,7 +653,7 @@ class SelectedFeedPageState extends State<SelectedFeedListPage> {
           prefs: prefs,
         )));
   }
-  void openSubmitAssignPage(String question, int postId,int index) {
+  void openSubmitAssignPage(String? question, int? postId,int index) {
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => PostCreatePage(
           type: 'submit_assign',
@@ -671,16 +671,16 @@ class SelectedFeedPageState extends State<SelectedFeedListPage> {
     });
   }
 
-  final CreateDeeplink  createDeeplink =locator<CreateDeeplink>();
-  void _onShareCallback(int id) async {
+  final CreateDeeplink?  createDeeplink =locator<CreateDeeplink>();
+  void _onShareCallback(int? id) async {
     SharedPreferences prefs= await SharedPreferences.getInstance();
-    createDeeplink.getDeeplink(SHAREITEMTYPE.DETAIL.type,prefs.getInt("userId").toString(),id,DEEPLINKTYPE.POST.type, context);
+    createDeeplink!.getDeeplink(SHAREITEMTYPE.DETAIL.type,prefs.getInt("userId").toString(),id,DEEPLINKTYPE.POST.type, context);
     // _showModalBottomSheet(context,id);
   }
 
   void _onRatingCallback(int index) {
     // setState(() {
-      for (var i in feedList[index].postContent.header.action) {
+      for (var i in feedList[index].postContent!.header!.action!) {
         if (i.type == 'is_rated') {
           i.value = true;
         }
@@ -688,7 +688,7 @@ class SelectedFeedPageState extends State<SelectedFeedListPage> {
     // });
   }
 
-  void _onBookmarkCallback(int postId, int index, bool isBookmarked) {
+  void _onBookmarkCallback(int? postId, int index, bool isBookmarked) {
     bookmarkPost(postId, index, isBookmarked);
   }
 
@@ -705,14 +705,14 @@ class SelectedFeedPageState extends State<SelectedFeedListPage> {
 
   void _onFollowCallback(bool isFollow, int index) {
     setState(() {
-      for (var i in feedList[index].postContent.header.action) {
+      for (var i in feedList[index].postContent!.header!.action!) {
         if (i.type == 'is_followed') {
           i.value = isFollow;
         }
       }
     });
   }
-  void bookmarkPost(int postId, int index, bool isBookMarked) {
+  void bookmarkPost(int? postId, int index, bool isBookMarked) {
     // setState(() {
     feedList[index].isBookmarked = isBookMarked;
     // });
@@ -745,8 +745,8 @@ class BottomSheetContent extends StatefulWidget {
 }
 
 class _ShareBottomSheet extends State<BottomSheetContent> {
-  TextStyleElements styleElements;
-  int _selectedshareoption;
+  late TextStyleElements styleElements;
+  int? _selectedshareoption;
   int id;
 
   @override
@@ -766,7 +766,7 @@ class _ShareBottomSheet extends State<BottomSheetContent> {
                 alignment: Alignment.topCenter,
                 child: Padding(
                   padding: EdgeInsets.all(16),
-                  child: Text(AppLocalizations.of(context).translate('who_want_share'),
+                  child: Text(AppLocalizations.of(context)!.translate('who_want_share'),
                     style: styleElements.headline6ThemeScalable(context),
                   ),
                 ),
@@ -779,13 +779,13 @@ class _ShareBottomSheet extends State<BottomSheetContent> {
                       leading: Radio(
                         value: 1,
                         groupValue: _selectedshareoption,
-                        onChanged: (value) {
+                        onChanged: (dynamic value) {
                           setState(() {
                             _selectedshareoption = value;
                           });
                         },
                       ),
-                      title: Text(AppLocalizations.of(context).translate('share_within'),
+                      title: Text(AppLocalizations.of(context)!.translate('share_within'),
                         style: styleElements.bodyText2ThemeScalable(context),
                       ),
                     )),
@@ -818,14 +818,14 @@ class _ShareBottomSheet extends State<BottomSheetContent> {
                       leading: Radio(
                         value: 3,
                         groupValue: _selectedshareoption,
-                        onChanged: (value) {
+                        onChanged: (dynamic value) {
                           _onShare();
                           setState(() {
                             _selectedshareoption = value;
                           });
                         },
                       ),
-                      title: Text(AppLocalizations.of(context).translate('share_through_other'),
+                      title: Text(AppLocalizations.of(context)!.translate('share_through_other'),
                         style: styleElements.bodyText2ThemeScalable(context),
                       ),
                     )),
@@ -837,11 +837,11 @@ class _ShareBottomSheet extends State<BottomSheetContent> {
     );
   }
 
-  final CreateDeeplink createDeeplink = locator<CreateDeeplink>();
+  final CreateDeeplink? createDeeplink = locator<CreateDeeplink>();
 
   void _onShare() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    createDeeplink.getDeeplink(SHAREITEMTYPE.DETAIL.type,
+    createDeeplink!.getDeeplink(SHAREITEMTYPE.DETAIL.type,
         prefs.getInt("userId").toString(), id, DEEPLINKTYPE.POST.type, context);
   }
 

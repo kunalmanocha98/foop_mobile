@@ -18,17 +18,17 @@ import 'package:random_color/random_color.dart';
 class ClassesAndBranchesDetailed extends StatelessWidget {
   final CommonCardData data;
 
-  String type;
-  String instituteName;
-  String instituteAddress;
-  String userName;
-  BuildContext context;
-  List<SubRow> list = [];
-  TextStyleElements styleElements;
-  String institutionId;
-  Null Function() callbackPicker;
-  int id;
-  VoidCallback onSeeMoreClicked;
+  String? type;
+  String? instituteName;
+  String? instituteAddress;
+  String? userName;
+  BuildContext? context;
+  List<SubRow>? list = [];
+  TextStyleElements? styleElements;
+  String? institutionId;
+  Null Function()? callbackPicker;
+  int? id;
+  VoidCallback? onSeeMoreClicked;
 
   Size displaySize(BuildContext context) {
     debugPrint('Size = ' + MediaQuery.of(context).size.toString());
@@ -46,8 +46,8 @@ class ClassesAndBranchesDetailed extends StatelessWidget {
   }
 
   ClassesAndBranchesDetailed(
-      {Key key,
-      @required this.data,
+      {Key? key,
+      required this.data,
       this.callbackPicker,
       this.styleElements,
         this.type,
@@ -65,16 +65,16 @@ class ClassesAndBranchesDetailed extends StatelessWidget {
     return Container(
         margin: EdgeInsets.only(
             left: 8.0.h, right: 8.0.h, top: 4.0.h, bottom: 4.0.h),
-        child: list.isNotEmpty
+        child: list!.isNotEmpty
             ? GridView.count(
             padding: EdgeInsets.all(0.0),
                 physics: NeverScrollableScrollPhysics(),
                 crossAxisCount: 2,
                 shrinkWrap: true,
                 childAspectRatio: 2 / 2,
-                children: list.map((SubRow data) {
+                children: list!.map((SubRow data) {
                   return Visibility(
-                    visible: list.isNotEmpty && list.length > 0,
+                    visible: list!.isNotEmpty && list!.length > 0,
                     child: GestureDetector(
                         behavior: HitTestBehavior.translucent,
                         onLongPress: () {
@@ -88,7 +88,7 @@ class ClassesAndBranchesDetailed extends StatelessWidget {
                                   categoryType: "class",
                                   instId: data.allInstitutions.toString(),
                                   callbackPicker: () {
-                                    callbackPicker();
+                                    callbackPicker!();
                                   }, subtitle: null, title: null, type: null,
 
 
@@ -107,27 +107,27 @@ class ClassesAndBranchesDetailed extends StatelessWidget {
                                     SelectLanguageProficiencyDialogue(
                                         personId: id,
                                         type:type=="person"? "edit_class":"add_class",
-                                        title:type=="person"?"My Relation In this Class":("Endorse "+userName.split(' ')[0]+"'s " +"Proficiency In this Class"),
+                                        title:type=="person"?"My Relation In this Class":("Endorse "+userName!.split(' ')[0]+"'s " +"Proficiency In this Class"),
                                         subtitle: type=="person"?"Rate yourself in this class":"Rate this class",
                                         categoryType: "Class",
                                         id1: data.institutionClassId,
                                         id2: data.textThree,
                                         id3: data.institutionClassId,
                                         abilites: data.abilites,
-                                        itemId: int.parse(data.id),
+                                        itemId: int.parse(data.id!),
                                         starRatingsId: data.starRatingId,
                                         starRatings:
-                                        data.rattingStar.toDouble(),
+                                        data.rattingStar!.toDouble(),
                                         instId: data.allInstitutions.toString(),
                                         callbackPicker: () {
-                                          callbackPicker();
+                                          callbackPicker!();
                                         }));
                           }
                           else
                           {
                             ToastBuilder().showToast(
                                 AppLocalizations.of(
-                                    context)
+                                    context)!
                                     .translate(
                                     "not_authorized"),
                                 context,HexColor(AppColors.information));
@@ -153,7 +153,7 @@ class ClassesAndBranchesDetailed extends StatelessWidget {
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                         softWrap: false,
-                                        style: styleElements
+                                        style: styleElements!
                                             .subtitle2ThemeScalable(context)
                                             .copyWith(
                                             color: HexColor(AppColors.appColorWhite),
@@ -176,11 +176,11 @@ class ClassesAndBranchesDetailed extends StatelessWidget {
                                               Container(
                                                 child: Text(
                                                   data.avgRating != null
-                                                      ? data.avgRating
+                                                      ? data.avgRating!
                                                       .toStringAsFixed(2)
                                                       .toString()
                                                       : "",
-                                                  style: styleElements
+                                                  style: styleElements!
                                                       .subtitle2ThemeScalable(
                                                       context),
                                                   textAlign: TextAlign.center,
@@ -192,19 +192,19 @@ class ClassesAndBranchesDetailed extends StatelessWidget {
                                                   initialRating:
                                                   data.avgRating != null
                                                       ? double.parse(data
-                                                      .avgRating
+                                                      .avgRating!
                                                       .toStringAsFixed(2))
                                                       : 0,
                                                   minRating:
                                                   data.avgRating != null
                                                       ? double.parse(data
-                                                      .avgRating
+                                                      .avgRating!
                                                       .toStringAsFixed(2))
                                                       : 0,
                                                   maxRating:
                                                   data.avgRating != null
                                                       ? double.parse(data
-                                                      .avgRating
+                                                      .avgRating!
                                                       .toStringAsFixed(2))
                                                       : 0,
                                                   direction: Axis.horizontal,
@@ -247,7 +247,7 @@ class ClassesAndBranchesDetailed extends StatelessWidget {
                                       children: <Widget>[
                                         Container(
                                           child: Text("",
-                                            style: styleElements
+                                            style: styleElements!
                                                 .captionThemeScalable(context),
                                             textAlign: TextAlign.center,
                                           ),
@@ -260,7 +260,7 @@ class ClassesAndBranchesDetailed extends StatelessWidget {
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
                                               softWrap: true,
-                                              style: styleElements
+                                              style: styleElements!
                                                   .subtitle2ThemeScalable(context)
                                                   .copyWith(
                                                   color: HexColor(AppColors.appColorBlack85),
@@ -286,7 +286,7 @@ class ClassesAndBranchesDetailed extends StatelessWidget {
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                         softWrap: false,
-                                        style: styleElements
+                                        style: styleElements!
                                             .captionThemeScalable(context),
                                         textAlign: TextAlign.left,
                                       ),

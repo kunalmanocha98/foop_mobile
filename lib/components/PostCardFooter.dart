@@ -20,23 +20,23 @@ import 'package:timeago/timeago.dart' as timeago;
 
 // ignore: must_be_immutable
 class PostCardFooter extends StatefulWidget {
-  Content contentData;
-  Statistics stats;
-  Function commentCallback;
-  bool isDetailPage;
-  int dateTime;
-  String postType;
-  Function onAnswerClickCallback;
-  Function onVoteCallback;
-  int postId;
+  Content? contentData;
+  Statistics? stats;
+  Function? commentCallback;
+  bool? isDetailPage;
+  int? dateTime;
+  String? postType;
+  Function? onAnswerClickCallback;
+  Function? onVoteCallback;
+  int? postId;
   bool isVoted;
-  int postOwnerTypeId;
-  SharedPreferences prefs;
-  bool isNewsPage;
-  String webLink;
-  bool isFilterPage;
-  Function onSubmitAnswer;
-  String searchHighlightWord;
+  int? postOwnerTypeId;
+  SharedPreferences? prefs;
+  bool? isNewsPage;
+  String? webLink;
+  bool? isFilterPage;
+  Function? onSubmitAnswer;
+  String? searchHighlightWord;
 
   PostCardFooter(
       {this.contentData,
@@ -78,22 +78,22 @@ class PostCardFooter extends StatefulWidget {
 }
 
 class _PostCardFooter extends State<PostCardFooter> {
-  TextStyleElements styleElements;
-  Statistics stats;
-  Content contentData;
-  int comments;
-  Function commentCallback;
-  bool isDetailPage;
-  int dateTime;
-  String postType;
-  int postId;
-  Function onVoteCallback;
+  late TextStyleElements styleElements;
+  Statistics? stats;
+  Content? contentData;
+  int? comments;
+  Function? commentCallback;
+  bool? isDetailPage;
+  int? dateTime;
+  String? postType;
+  int? postId;
+  Function? onVoteCallback;
   bool isVoted;
-  Function onAnswerClickCallback;
-  int postOwnerTypeId;
-  SharedPreferences prefs;
-  String webLink;
-  Function onSubmitAnswer;
+  Function? onAnswerClickCallback;
+  int? postOwnerTypeId;
+  SharedPreferences? prefs;
+  String? webLink;
+  Function? onSubmitAnswer;
 
   _PostCardFooter(
       {this.contentData,
@@ -118,7 +118,7 @@ class _PostCardFooter extends State<PostCardFooter> {
     // DateTime time =
     // print(timeago.format(time));
     styleElements = TextStyleElements(context);
-    comments = stats!=null?stats.commentCount!=null?stats.commentCount:0:0;
+    comments = stats!=null?stats!.commentCount!=null?stats!.commentCount:0:0;
 
     return Container(
       child: Column(
@@ -131,16 +131,16 @@ class _PostCardFooter extends State<PostCardFooter> {
                   children: [
                     postType=='poll'?
                     DateTagPostComponent(
-                      date: (contentData.contentMeta.others!=null && contentData.contentMeta.others.pollEnd!=null)?DateTime.fromMillisecondsSinceEpoch(contentData.contentMeta.others.pollEnd):DateTime.now(),
+                      date: (contentData!.contentMeta!.others!=null && contentData!.contentMeta!.others!.pollEnd!=null)?DateTime.fromMillisecondsSinceEpoch(contentData!.contentMeta!.others!.pollEnd!):DateTime.now(),
                     ):postType=='assignment'?DateTagPostComponent(
                       showTime: true,
-                      date: (contentData.contentMeta.others!=null && contentData.contentMeta.others.submissionDateTime!=null)?DateTime.fromMillisecondsSinceEpoch(contentData.contentMeta.others.submissionDateTime):DateTime.now(),
+                      date: (contentData!.contentMeta!.others!=null && contentData!.contentMeta!.others!.submissionDateTime!=null)?DateTime.fromMillisecondsSinceEpoch(contentData!.contentMeta!.others!.submissionDateTime!):DateTime.now(),
                     ):Visibility(
                       visible: false,
                       child: Padding(
                         padding: EdgeInsets.only(left: 8.0, bottom: 0, top: 4),
                         child: Text(
-                          timeago.format(DateTime.fromMillisecondsSinceEpoch(dateTime)),
+                          timeago.format(DateTime.fromMillisecondsSinceEpoch(dateTime!)),
                           style: styleElements
                               .captionThemeScalable(context)
                               .copyWith(fontSize: 10.sp, color: HexColor(AppColors.appColorBlack35)),
@@ -148,22 +148,22 @@ class _PostCardFooter extends State<PostCardFooter> {
                       ),
                     ),
                     Spacer(),
-                    (postType!='general' && !widget.isFilterPage && widget.contentData.media!=null && widget.contentData.media.isEmpty)?PostTagComponent(
+                    (postType!='general' && !widget.isFilterPage! && widget.contentData!.media!=null && widget.contentData!.media!.isEmpty)?PostTagComponent(
                       type: postType,
                     ):Container()
                   ],
                 ),
               )
               ,
-          (isDetailPage || (widget.isNewsPage!=null && widget.isNewsPage))
+          (isDetailPage! || (widget.isNewsPage!=null && widget.isNewsPage!))
               ? Visibility(
-            visible: (contentData.contentMeta.title!=null && contentData.contentMeta.title.isNotEmpty),
+            visible: (contentData!.contentMeta!.title!=null && contentData!.contentMeta!.title!.isNotEmpty),
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Visibility(
-                  visible: (webLink!=null && widget.isNewsPage!=null && widget.isNewsPage) ,
+                  visible: (webLink!=null && widget.isNewsPage!=null && widget.isNewsPage!) ,
                     child: Padding(
                       padding:  EdgeInsets.only(left:8.0),
                       child: Text(getHost(webLink),style: styleElements.overlineThemeScalable(context),),
@@ -177,7 +177,7 @@ class _PostCardFooter extends State<PostCardFooter> {
                       child: Padding(
                         padding: const EdgeInsets.only(left:8.0),
                         child: Text(
-                          contentData.contentMeta.title ??= '',
+                          contentData!.contentMeta!.title ??= '',
                           style: styleElements
                               .subtitle1ThemeScalable(context)
                               .copyWith(fontWeight: FontWeight.bold),
@@ -185,7 +185,7 @@ class _PostCardFooter extends State<PostCardFooter> {
                       ),
                     ),
                     Visibility(
-                      visible: (webLink!=null && webLink.isNotEmpty),
+                      visible: (webLink!=null && webLink!.isNotEmpty),
                       child: InkWell(
                           child: Padding(
                             padding: const EdgeInsets.only(top:4.0,bottom: 4.0,left: 6,right: 8),
@@ -202,12 +202,12 @@ class _PostCardFooter extends State<PostCardFooter> {
             ),
           )
               : Visibility(
-            visible: (contentData.contentMeta.title != null &&
-                contentData.contentMeta.title.isNotEmpty),
+            visible: (contentData!.contentMeta!.title != null &&
+                contentData!.contentMeta!.title!.isNotEmpty),
             child: Padding(
               padding: const EdgeInsets.only(left:8.0),
               child: Text(
-                contentData.contentMeta.title ??= '',
+                contentData!.contentMeta!.title ??= '',
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: styleElements
@@ -232,7 +232,7 @@ class _PostCardFooter extends State<PostCardFooter> {
                   Padding(
                     padding: EdgeInsets.only(left: 8.0),
                     child: Text(
-                      contentData.contentMeta.subtitle1 ??= "",
+                      contentData!.contentMeta!.subtitle1 ??= "",
                       style: styleElements.captionThemeScalable(context),
                     ),
                   )
@@ -256,7 +256,7 @@ class _PostCardFooter extends State<PostCardFooter> {
                     child: Padding(
                       padding: EdgeInsets.only(left: 8.0),
                       child: Text(
-                        contentData.contentMeta.subtitle2 ??= "",
+                        contentData!.contentMeta!.subtitle2 ??= "",
                         style: styleElements.captionThemeScalable(context),
                       ),
                     ),
@@ -270,13 +270,13 @@ class _PostCardFooter extends State<PostCardFooter> {
                 postId:postId,
                 prefs:prefs,
                 postOwnerTypeId:postOwnerTypeId,
-                contentMeta: contentData.contentMeta,
+                contentMeta: contentData!.contentMeta,
                 onVoteCallback: onVoteCallback,
                 isVoted: isVoted,
               )
               :Visibility(
-            visible: (contentData.contentMeta.meta != null &&
-                contentData.contentMeta.meta.isNotEmpty),
+            visible: (contentData!.contentMeta!.meta != null &&
+                contentData!.contentMeta!.meta!.isNotEmpty),
             child: Container(
               child: Padding(
                 padding: EdgeInsets.only(top: 8.0),
@@ -284,7 +284,7 @@ class _PostCardFooter extends State<PostCardFooter> {
                 child: TricycleHtmlViewer(
                   isNewsPage: widget.isNewsPage,
                   isDetailPage: isDetailPage,
-                  sourceString: contentData.contentMeta.meta,
+                  sourceString: contentData!.contentMeta!.meta,
                   searchHighlightWord: widget.searchHighlightWord
                 )
               ),
@@ -292,7 +292,7 @@ class _PostCardFooter extends State<PostCardFooter> {
           ),
 
           Visibility(
-              visible: contentData.keywords != null,
+              visible: contentData!.keywords != null,
               child: SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
@@ -311,24 +311,24 @@ class _PostCardFooter extends State<PostCardFooter> {
           // ),
           // SizedBox(height: 8,),
           Visibility(
-            visible: !isVoted && (postType==POST_TYPE.QNA.status || (postType==POST_TYPE.ASSIGNMENT.status && postOwnerTypeId != prefs.getInt(Strings.userId))),
+            visible: !isVoted && (postType==POST_TYPE.QNA.status || (postType==POST_TYPE.ASSIGNMENT.status && postOwnerTypeId != prefs!.getInt(Strings.userId))),
             child: Container(
               alignment: Alignment.bottomRight ,
               margin: EdgeInsets.only(top: 8, left: 24, right: 24),
               child: TricycleElevatedButton(
                 onPressed:postType==POST_TYPE.QNA.status?onAnswerClickCallback:(){
-                  var b = DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch).isAfter(DateTime.fromMillisecondsSinceEpoch(contentData.contentMeta.others.submissionDateTime));
+                  var b = DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch).isAfter(DateTime.fromMillisecondsSinceEpoch(contentData!.contentMeta!.others!.submissionDateTime!));
                   if(b){
-                   ToastBuilder().showToast(AppLocalizations.of(context).translate('cannot_submit'),
+                   ToastBuilder().showToast(AppLocalizations.of(context)!.translate('cannot_submit'),
                    context, HexColor(AppColors.information));
                   }else {
-                    onSubmitAnswer();
+                    onSubmitAnswer!();
                   }
                 },
                 color: HexColor(AppColors.appMainColor),
                 child: Text(postType==POST_TYPE.QNA.status?
-                AppLocalizations.of(context).translate('answers'):
-                AppLocalizations.of(context).translate('submit_assignment'),
+                AppLocalizations.of(context)!.translate('give_answers'):
+                AppLocalizations.of(context)!.translate('submit_assignment'),
                   style: styleElements
                       .bodyText2ThemeScalable(context)
                       .copyWith(color: HexColor(AppColors.appColorWhite)),
@@ -350,14 +350,14 @@ class _PostCardFooter extends State<PostCardFooter> {
 
 
   getlistofkeywords() {
-    if (contentData.keywords != null && contentData.keywords.length > 0) {
+    if (contentData!.keywords != null && contentData!.keywords!.length > 0) {
       List<Widget> list = [];
-      for (int i = 0; i < contentData.keywords.length; i++) {
+      for (int i = 0; i < contentData!.keywords!.length; i++) {
         list.add(Padding(
           padding: const EdgeInsets.all(4.0),
           child: Chip(
             label: Text(
-              contentData.keywords[i].toString(),
+              contentData!.keywords![i].toString(),
               style: styleElements.captionThemeScalable(context),
             ),
             backgroundColor: HexColor(AppColors.appColorGrey300),
@@ -395,7 +395,7 @@ class _PostCardFooter extends State<PostCardFooter> {
   // }
 
 
-String getHost(String path)
+String getHost(String? path)
 {
   try {
     if(path!=null)

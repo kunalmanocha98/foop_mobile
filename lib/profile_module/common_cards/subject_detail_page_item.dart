@@ -18,17 +18,17 @@ import 'overlaped_circular_images.dart';
 // ignore: must_be_immutable
 class SubjectsDetailPageCard extends StatelessWidget {
   final CommonCardData data;
-  int id;
-  String instituteName;
-  String instituteAddress;
-  BuildContext ctx;
-  Null Function() callbackPicker;
-  List<SubRow> list = [];
-  TextStyleElements styleElements;
-  String instId;
-  String type;
+  int? id;
+  String? instituteName;
+  String? instituteAddress;
+  BuildContext? ctx;
+  Null Function()? callbackPicker;
+  List<SubRow>? list = [];
+  TextStyleElements? styleElements;
+  String? instId;
+  String? type;
   VoidCallback onSeeMoreClicked;
-  String userName;
+  String? userName;
   Size displaySize(BuildContext context) {
     debugPrint('Size = ' + MediaQuery.of(context).size.toString());
     return MediaQuery.of(context).size;
@@ -45,9 +45,9 @@ class SubjectsDetailPageCard extends StatelessWidget {
   }
 
   SubjectsDetailPageCard(
-      {Key key,
-      @required this.data,
-      @required this.onSeeMoreClicked,
+      {Key? key,
+      required this.data,
+      required this.onSeeMoreClicked,
       this.styleElements,
         this.type,
         this.id,
@@ -65,7 +65,7 @@ class SubjectsDetailPageCard extends StatelessWidget {
       child:ListView.builder(
         padding: EdgeInsets.all(0.0),
         physics: BouncingScrollPhysics(),
-        itemCount: list.length,
+        itemCount: list!.length,
         shrinkWrap: true,
         itemBuilder: (context, position) {
           return GestureDetector(
@@ -75,15 +75,15 @@ class SubjectsDetailPageCard extends StatelessWidget {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) => DeleteClass(
-                      id: list[position].id.toString(),
+                      id: list![position].id.toString(),
                       categoryType: "subject",
-                      instId: list[position].allInstitutionsId.toString(),
+                      instId: list![position].allInstitutionsId.toString(),
                       callbackPicker: () {
-                        callbackPicker();
+                        callbackPicker!();
                       }, subtitle: null, title: null, type: null,));}
             },
             onTap: () {
-              if (list[position].isUserAuthorized == "Yes" && (type == "person" || type == "thirdPerson"))
+              if (list![position].isUserAuthorized == "Yes" && (type == "person" || type == "thirdPerson"))
               {
                 showDialog(
                     context: context,
@@ -91,23 +91,23 @@ class SubjectsDetailPageCard extends StatelessWidget {
                         SelectLanguageProficiencyDialogue(
                             personId: id,
                             type: type=="person"?"edit_subject":"add_subject",
-                            title2: AppLocalizations.of(context)
+                            title2: AppLocalizations.of(context)!
                                 .translate("what_want_to_be"),
-                            title:type=="person"?AppLocalizations.of(context)
-                                .translate("my_proficiency"):("Endorse "+userName.split(' ')[0]+"'s " +AppLocalizations.of(context)
+                            title:type=="person"?AppLocalizations.of(context)!
+                                .translate("my_proficiency"):("Endorse "+userName!.split(' ')[0]+"'s " +AppLocalizations.of(context)!
                                 .translate("proficiency")) ,
-                            subtitle: type=="person"?AppLocalizations.of(context)
-                                .translate("rate_experties"):AppLocalizations.of(context)
+                            subtitle: type=="person"?AppLocalizations.of(context)!
+                                .translate("rate_experties"):AppLocalizations.of(context)!
                                 .translate("rate_expert"),
                             categoryType: "Subject",
-                            starRatingsId:list[position].starRatingId,
-                            starRatings: list[position].rattingStar.toDouble(),
-                            itemId: int.parse(list[position].id),
-                            id1: list[position].institutionSubject,
-                            instId: list[position].allInstitutionsId.toString(),
-                            id3: list[position].instSubjectId.toString(),
+                            starRatingsId:list![position].starRatingId,
+                            starRatings: list![position].rattingStar!.toDouble(),
+                            itemId: int.parse(list![position].id!),
+                            id1: list![position].institutionSubject,
+                            instId: list![position].allInstitutionsId.toString(),
+                            id3: list![position].instSubjectId.toString(),
                             callbackPicker: () {
-                              callbackPicker();
+                              callbackPicker!();
                             }
                           /* id1: subjectId,
                           instId: instituteId.toString(),*/
@@ -117,7 +117,7 @@ class SubjectsDetailPageCard extends StatelessWidget {
               {
                 ToastBuilder().showToast(
                     AppLocalizations.of(
-                        ctx)
+                        ctx!)!
                         .translate(
                         "not_authorized"),
                     ctx,HexColor(AppColors.information));
@@ -141,9 +141,8 @@ class SubjectsDetailPageCard extends StatelessWidget {
                                   child: Container(
 
                                     child: Text(
-                                      Utility().toCamelCase(list[position].textOne??"")??
-                                          "",
-                                      style: styleElements
+                                      Utility().toCamelCase(list![position].textOne??""),
+                                      style: styleElements!
                                           .bodyText1ThemeScalable(context)
                                           .copyWith(fontWeight: FontWeight.w600),
                                       textAlign: TextAlign.left,
@@ -163,8 +162,8 @@ class SubjectsDetailPageCard extends StatelessWidget {
                                           children: <Widget>[
                                             Container(
                                               child: Text(
-                                                list[position].avgRating !=null? list[position].avgRating.toStringAsFixed(2).toString() : "",
-                                                style: styleElements
+                                                list![position].avgRating !=null? list![position].avgRating!.toStringAsFixed(2).toString() : "",
+                                                style: styleElements!
                                                     .captionThemeScalable(context)
                                                     .copyWith(color: HexColor(AppColors.appColorBlack35)),
                                                 textAlign: TextAlign.center,
@@ -173,9 +172,9 @@ class SubjectsDetailPageCard extends StatelessWidget {
                                             Align(
                                               alignment: Alignment.center,
                                               child: RatingBar(
-                                                initialRating: list[position].avgRating !=null? double.parse(list[position].avgRating.toStringAsFixed(2)):0,
-                                                minRating: list[position].avgRating !=null? double.parse(list[position].avgRating.toStringAsFixed(2)):0,
-                                                maxRating: list[position].avgRating !=null? double.parse(list[position].avgRating.toStringAsFixed(2)):0,
+                                                initialRating: list![position].avgRating !=null? double.parse(list![position].avgRating!.toStringAsFixed(2)):0,
+                                                minRating: list![position].avgRating !=null? double.parse(list![position].avgRating!.toStringAsFixed(2)):0,
+                                                maxRating: list![position].avgRating !=null? double.parse(list![position].avgRating!.toStringAsFixed(2)):0,
                                                 direction: Axis.horizontal,
                                                 ignoreGestures: true,
                                                 allowHalfRating: false,
@@ -209,17 +208,17 @@ class SubjectsDetailPageCard extends StatelessWidget {
                                   ),
                                 ),
                                 Visibility(
-                                    visible: list[position].abilites != null &&
-                                        list[position].abilites.isNotEmpty,
+                                    visible: list![position].abilites != null &&
+                                        list![position].abilites!.isNotEmpty,
                                     child: Container(
                                       padding: EdgeInsets.only(
                                           top: 2.h),
                                       child: Text(
-                                        list[position].abilites != null &&
-                                            list[position].abilites.isNotEmpty
-                                            ? getExpertise(list[position].abilites)
+                                        list![position].abilites != null &&
+                                            list![position].abilites!.isNotEmpty
+                                            ? getExpertise(list![position].abilites!)
                                             : "",
-                                        style: styleElements
+                                        style: styleElements!
                                             .subtitle2ThemeScalable(context)
                                             .copyWith(color: HexColor(AppColors.appColorBlack65)),
                                         textAlign: TextAlign.left,
@@ -235,7 +234,7 @@ class SubjectsDetailPageCard extends StatelessWidget {
                                     children: <Widget>[
                                       SizedBox(
                                         width:75,
-                                        child: OverlappedImages(list[position].images),
+                                        child: OverlappedImages(list![position].images),
 
                                       ) ,
                                       Flexible(
@@ -243,9 +242,9 @@ class SubjectsDetailPageCard extends StatelessWidget {
                                         Padding(
                                           padding: const EdgeInsets.only(left: 4),
                                           child: Text(
-                                            list[position].textTwo ?? "",
+                                            list![position].textTwo ?? "",
                                             overflow: TextOverflow.ellipsis,
-                                            style: styleElements
+                                            style: styleElements!
                                                 .captionThemeScalable(context)
                                                 .copyWith(color: HexColor(AppColors.appColorBlack35)),
                                             textAlign: TextAlign.left,

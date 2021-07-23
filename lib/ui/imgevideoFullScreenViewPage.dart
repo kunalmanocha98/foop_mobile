@@ -13,29 +13,29 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class ImageVideoFullPage extends StatefulWidget {
-  List<Media> mediaList;
+  List<Media>? mediaList;
 
-  Statistics stats;
-  Function sharecallBack;
-  Function(bool) bookmarkCallback;
-  Function commentCallback;
-  Function ratingCallback;
-  SharedPreferences prefs;
-  bool isBookMarked;
-  int postId;
-  bool isRated;
-  PostListItem postListItem;
-  Function(bool) onFollowCallback;
-  int ownerId;
-  String ownerType;
-  bool isWithOutData;
-  bool isFollowing;
-  int position;
-  int pageNumber;
-  bool isMediaPage;
-  int totalItems;
-  bool isLocalFile;
-  Function talkcallback;
+  Statistics? stats;
+  Function? sharecallBack;
+  Function(bool?)? bookmarkCallback;
+  Function? commentCallback;
+  Function? ratingCallback;
+  SharedPreferences? prefs;
+  bool? isBookMarked;
+  int? postId;
+  bool? isRated;
+  PostListItem? postListItem;
+  Function(bool)? onFollowCallback;
+  int? ownerId;
+  String? ownerType;
+  bool? isWithOutData;
+  bool? isFollowing;
+  int? position;
+  int? pageNumber;
+  bool? isMediaPage;
+  int? totalItems;
+  bool? isLocalFile;
+  Function? talkcallback;
 
   ImageVideoFullPage(
       {this.mediaList,
@@ -88,30 +88,30 @@ class ImageVideoFullPage extends StatefulWidget {
 }
 
 class _ImageVideoFullPage extends State<ImageVideoFullPage> {
-  List<Media> mediaList;
-  bool isWithOutData;
+  List<Media>? mediaList;
+  bool? isWithOutData;
 
-  Statistics stats;
-  Function sharecallBack;
-  Function(bool) bookmarkCallback;
-  Function commentCallback;
-  Function ratingCallback;
-  SharedPreferences prefs;
-  bool isBookMarked;
-  int postId;
-  bool isRated;
-  PostListItem postListItem;
-  Function(bool) onFollowCallback;
-  TextStyleElements styleElements;
-  int ownerId;
-  String ownerType;
-  int position;
-  bool isFollowing;
-  int pageNumber;
-  bool isMediaPage;
-  bool isLocalFile;
-  int totalItems;
-  Function talkcallback;
+  Statistics? stats;
+  Function? sharecallBack;
+  Function(bool?)? bookmarkCallback;
+  Function? commentCallback;
+  Function? ratingCallback;
+  SharedPreferences? prefs;
+  bool? isBookMarked;
+  int? postId;
+  bool? isRated;
+  PostListItem? postListItem;
+  Function(bool)? onFollowCallback;
+  TextStyleElements? styleElements;
+  int? ownerId;
+  String? ownerType;
+  int? position;
+  bool? isFollowing;
+  int? pageNumber;
+  bool? isMediaPage;
+  bool? isLocalFile;
+  int? totalItems;
+  Function? talkcallback;
   GlobalKey<TricycleChatFooterState> chatFooterKey = GlobalKey();
 
   _ImageVideoFullPage(
@@ -157,9 +157,9 @@ class _ImageVideoFullPage extends State<ImageVideoFullPage> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: !isWithOutData
+                      child: !isWithOutData!
                           ? Visibility(
-                              visible: !isWithOutData,
+                              visible: !isWithOutData!,
                               child: PostCardHeader(
                                 key: UniqueKey(),
                                 prefs: prefs,
@@ -208,8 +208,8 @@ class _ImageVideoFullPage extends State<ImageVideoFullPage> {
                     pagePosition: position),
               ),
               Visibility(
-                visible: !isWithOutData,
-                child: !isWithOutData
+                visible: !isWithOutData!,
+                child: !isWithOutData!
                     ? PostCardActionButtons(
                         isDarkTheme: true,
                         stats: stats,
@@ -223,21 +223,21 @@ class _ImageVideoFullPage extends State<ImageVideoFullPage> {
                         commentCallback: commentCallback,
                         ratingCallback: ratingCallback,
                         talkCallback: talkcallback,
-                        isTalkIconVisible: !(postListItem.postType == 'poll' || postListItem.postType == 'general'),
+                        isTalkIconVisible: !(postListItem!.postType == 'poll' || postListItem!.postType == 'general'),
                         ownerType: ownerType,
                         ownerId: ownerId,
                         postId: postId)
                     : Container(),
               ),
               Visibility(
-                visible: isLocalFile != null && isLocalFile,
+                visible: isLocalFile != null && isLocalFile!,
                 child: TricycleChatFooter(
                   chatFooterKey,
                   data: null,
                   userName: null,
                   onCrossCLicked: () {},
                   isEmptyTextAccepted:true,
-                  hintText: AppLocalizations.of(context).translate("enter_text"),
+                  hintText: AppLocalizations.of(context)!.translate("enter_text"),
                   isShowAddIcon: false,
                   onTyping: (String v) {},
                   onValueRecieved: (value) async {

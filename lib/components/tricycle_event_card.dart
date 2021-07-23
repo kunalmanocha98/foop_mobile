@@ -20,49 +20,49 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class TricycleEventCard extends StatefulWidget {
-  final String cardImage;
-  final String byImage;
+  final String? cardImage;
+  final String? byImage;
   final String byTitle;
-  final String title;
+  final String? title;
   final bool isPrivate;
-  final double cardRating;
+  final double? cardRating;
   final bool isModerator;
-  final String description;
-  final List<String> listofImages;
-  final Widget actionButton;
-  final int ownerId;
-  final String ownerType;
-  final Function shareCallback;
-  final Function ratingCallback;
+  final String? description;
+  final List<String?>? listofImages;
+  final Widget? actionButton;
+  final int? ownerId;
+  final String? ownerType;
+  final Function? shareCallback;
+  final Function? ratingCallback;
   final bool isShareVisible;
-  final bool isRated;
-  final String subjectType;
-  final int subjectId;
-  final int totalRatedUsers;
-  final Function onClickEvent;
-  final Function bookMarkCallBack;
+  final bool? isRated;
+  final String? subjectType;
+  final int? subjectId;
+  final int? totalRatedUsers;
+  final Function? onClickEvent;
+  final Function? bookMarkCallBack;
   final bool onlyHeader;
   final bool withCard;
   final bool noActions;
   final bool showRateCount;
   final bool dateVisible;
-  final DateTime date;
+  final DateTime? date;
   final bool isLive;
-  final Function ratingFunction;
-  final SERVICE_TYPE serviceType;
-  final Function(double) averageRatingCallback;
+  final Function? ratingFunction;
+  final SERVICE_TYPE? serviceType;
+  final Function(double?)? averageRatingCallback;
   final bool isRoom;
   final bool isRatingVisible;
   final bool isBookMarkVisible;
   final bool isHorizontalCard;
-  final double cardHeight;
+  final double? cardHeight;
   final bool inviteUsersVisible;
-  final Function inviteUsersCallback;
-  final bool isBellAvailable;
-  final bool isBellPressed;
-final Function bellIconCallBack;
+  final Function? inviteUsersCallback;
+  final bool? isBellAvailable;
+  final bool? isBellPressed;
+final Function? bellIconCallBack;
   TricycleEventCard(
-      {Key key,
+      {Key? key,
         this.bellIconCallBack,
       this.isBellAvailable,
       this.isBellPressed,
@@ -111,7 +111,7 @@ final Function bellIconCallBack;
 }
 
 class TricycleEventCardState extends State<TricycleEventCard> {
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   @override
   Widget build(BuildContext context) {
@@ -124,7 +124,7 @@ class TricycleEventCardState extends State<TricycleEventCard> {
             child: _child,
           )
         : GestureDetector(
-            onTap: widget.onClickEvent,
+            onTap: widget.onClickEvent as void Function()?,
             child: _child,
           );
   }
@@ -211,7 +211,7 @@ class TricycleEventCardState extends State<TricycleEventCard> {
                                   children: [
                                     Flexible(
                                       child: Text(
-                                        widget.title,
+                                        widget.title!,
                                         maxLines: 2,
                                         overflow: TextOverflow.ellipsis,
                                         style: styleElements
@@ -254,7 +254,7 @@ class TricycleEventCardState extends State<TricycleEventCard> {
                                   Visibility(
                                     visible: true,
                                     child: RatingBar(
-                                      initialRating: widget.cardRating,
+                                      initialRating: widget.cardRating!,
                                       ignoreGestures: true,
                                       direction: Axis.horizontal,
                                       allowHalfRating: false,
@@ -320,9 +320,9 @@ class TricycleEventCardState extends State<TricycleEventCard> {
                                           CrossAxisAlignment.start,
                                       children: [
                                         widget.description != null &&
-                                                widget.description.isNotEmpty
+                                                widget.description!.isNotEmpty
                                             ? Text(
-                                                widget.description,
+                                                widget.description!,
                                                 softWrap: true,
                                                 maxLines:
                                                     widget.isHorizontalCard
@@ -338,7 +338,7 @@ class TricycleEventCardState extends State<TricycleEventCard> {
                                           height: 8,
                                         ),
                                         (widget.listofImages != null &&
-                                                widget.listofImages.length > 0)
+                                                widget.listofImages!.length > 0)
                                             ? TricycleUserImageList(
                                                 listOfImages:
                                                     widget.listofImages)
@@ -398,7 +398,7 @@ class TricycleEventCardState extends State<TricycleEventCard> {
                                       refreshCard();
                                     });
                                   } else {
-                                    widget.ratingCallback();
+                                    widget.ratingCallback!();
                                   }
                                 },
                               ),
@@ -416,8 +416,8 @@ class TricycleEventCardState extends State<TricycleEventCard> {
     Calls().call(jsonEncode(payload), context, Config.ROOM_VIEW).then((value) {
       var response = RoomViewResponse.fromJson(value);
       if (response.statusCode == Strings.success_code) {
-        widget.averageRatingCallback(response.rows.otherDetails.rating);
-        widget.ratingCallback();
+        widget.averageRatingCallback!(response.rows!.otherDetails!.rating);
+        widget.ratingCallback!();
         // roomData.otherDetails = response.rows.otherDetails;
       }
     });

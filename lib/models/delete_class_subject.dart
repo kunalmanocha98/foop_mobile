@@ -1,8 +1,8 @@
 class DeleteClassSubjectPayload {
-  String id;
-  String personId;
-  String institutionId;
-  String actionType;
+  String? id;
+  String? personId;
+  String? institutionId;
+  String? actionType;
 
   DeleteClassSubjectPayload(
       {this.id, this.personId, this.institutionId, this.actionType});

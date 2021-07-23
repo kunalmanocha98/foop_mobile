@@ -33,24 +33,24 @@ class Suggestions extends StatefulWidget {
 
 class _Suggestions extends State<Suggestions> with SingleTickerProviderStateMixin {
   List<CustomTabMaker> list = [];
-  TabController _tabController;
-  TextStyleElements styleElements;
-  String type;
-  int id;
-  SharedPreferences prefs;
-  String ownerType;
-  int ownerId;
-  String pageTitle;
-  Null Function() callback;
+  late TabController _tabController;
+  late TextStyleElements styleElements;
+  String? type;
+  int? id;
+  late SharedPreferences prefs;
+  String? ownerType;
+  int? ownerId;
+  String? pageTitle;
+  Null Function()? callback;
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
   _Suggestions();
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => setSharedPreferences());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => setSharedPreferences());
   }
   refresh() {
-    paginatorKey.currentState.changeState(resetState: true);
+    paginatorKey.currentState!.changeState(resetState: true);
   }
   onPositionChange() {
     if (!_tabController.indexIsChanging && this.mounted) {
@@ -65,7 +65,7 @@ class _Suggestions extends State<Suggestions> with SingleTickerProviderStateMixi
     ownerId=prefs.getInt("userId");
 
   }
-BuildContext sctx;
+BuildContext? sctx;
 
 
   @override
@@ -76,7 +76,7 @@ BuildContext sctx;
       child: Scaffold(
           resizeToAvoidBottomInset: true,
           appBar: TricycleAppBar().getCustomAppBar(context,
-              appBarTitle: AppLocalizations.of(context).translate('suggestions'),
+              appBarTitle: AppLocalizations.of(context)!.translate('suggestions'),
               onBackButtonPress: () {
                 Navigator.pop(context);
 
@@ -140,7 +140,7 @@ BuildContext sctx;
                   userId: item.id != ownerId ? item.id : null,
                   callback: () {
                     if( callback!=null)
-                      callback();
+                      callback!();
                   },
                   currentPosition: 1,
                   type: null,
@@ -170,7 +170,7 @@ BuildContext sctx;
           actionByObjectId: prefs.getInt("userId"),
           actionOnObjectType: "person",
           actionOnObjectId: item.id,
-          engageFlag: AppLocalizations.of(context)
+          engageFlag: AppLocalizations.of(context)!
               .translate('follow'),
           actionFlag:  "F",
           actionDetails: [],

@@ -33,28 +33,28 @@ import 'createRoomPage.dart';
 
 // ignore: must_be_immutable
 class AllRoomsListing extends StatefulWidget {
-  int id;
-  int instituteId;
-  int ownerId;
-  String userType;
-  String ownerType;
-  Null Function() callback;
+  int? id;
+  int? instituteId;
+  int? ownerId;
+  String? userType;
+  String? ownerType;
+  Null Function()? callback;
   @override
   AllRoomsListingState createState() => AllRoomsListingState(id,instituteId,ownerId,ownerType,userType,callback);
   AllRoomsListing(Key key ,this.id, this.instituteId,this.ownerId,this.ownerType,this.userType,this.callback):super(key: key);
 }
 
 class AllRoomsListingState extends State<AllRoomsListing> {
-  String searchVal;
-  int id;
-  Null Function() callback;
-  int instituteId;
-  int ownerId;
-  String ownerType;
-  String userType;
+  String? searchVal;
+  int? id;
+  Null Function()? callback;
+  int? instituteId;
+  int? ownerId;
+  String? ownerType;
+  String? userType;
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
-  SharedPreferences prefs;
-  TextStyleElements styleElements;
+  SharedPreferences? prefs;
+  late TextStyleElements styleElements;
   List<RoomListItem> allRoomsList=[];
   AllRoomsListingState(this.id, this.instituteId,this.ownerId,this.ownerType,this.userType,this.callback);
   void setSharedPreferences() async {
@@ -73,9 +73,9 @@ class AllRoomsListingState extends State<AllRoomsListing> {
     refresh();
   }
   refresh() {
-    paginatorKey.currentState.changeState(resetState: true);
+    paginatorKey.currentState!.changeState(resetState: true);
     if(callback!=null)
-    callback();
+    callback!();
   }
 
 
@@ -91,7 +91,7 @@ class AllRoomsListingState extends State<AllRoomsListing> {
             SliverToBoxAdapter(
               child: SearchBox(
                 onvalueChanged: onsearchValueChanged,
-                hintText: AppLocalizations.of(context).translate('search'),
+                hintText: AppLocalizations.of(context)!.translate('search'),
               ),
             ),
             SliverToBoxAdapter(
@@ -156,7 +156,7 @@ class AllRoomsListingState extends State<AllRoomsListing> {
     prefs ??= await SharedPreferences.getInstance();
     RoomListPayload payload = RoomListPayload();
     payload.isPrivate = null;
-    payload.roomInstitutionId = instituteId?? prefs.getInt(Strings.instituteId);
+    payload.roomInstitutionId = instituteId?? prefs!.getInt(Strings.instituteId);
     payload.memberId = id;
     payload.memberType = userType=="institution"?"institution":"person";
     payload.pageSize = 20;
@@ -165,15 +165,15 @@ class AllRoomsListingState extends State<AllRoomsListing> {
     payload.isOwn = id==ownerId;
     payload.pageNumber = page;
     payload.searchVal = searchVal;
-    payload.institutionId = prefs.getInt(Strings.instituteId);
+    payload.institutionId = prefs!.getInt(Strings.instituteId);
     var data = jsonEncode(payload);
     var value = await Calls().call(data, context, Config.ROOMS_LIST);
 
     return RoomListResponse.fromJson(value);
   }
 
-  List<RoomListItem> listItemsGetter(RoomListResponse pageData) {
-    allRoomsList.addAll(pageData.rows);
+  List<RoomListItem>? listItemsGetter(RoomListResponse pageData) {
+    allRoomsList.addAll(pageData.rows!);
     return pageData.rows;
   }
 
@@ -194,25 +194,25 @@ class AllRoomsListingState extends State<AllRoomsListing> {
         },
         child: TricycleEventCard(
           key: UniqueKey(),
-          byTitle: RoomButtons(context: context).getByTitle(value.header.title,value.header.subtitle1),
-          byImage: value.header.avatar,
+          byTitle: RoomButtons(context: context).getByTitle(value.header!.title,value.header!.subtitle1),
+          byImage: value.header!.avatar,
           cardImage: value.roomProfileImageUrl,
           serviceType: SERVICE_TYPE.ROOM,
           title: value.roomName,
           isPrivate: value.isPrivate ?? false,
-          cardRating: value.otherDetails.rating!=null?value.otherDetails.rating:0.0,
+          cardRating: value.otherDetails!.rating!=null?value.otherDetails!.rating:0.0,
           isModerator: value.memberRoleType == 'A',
-          listofImages: List<String>.generate(value.membersCount, (index) {
-            if(index<value.membersList.length){
-              return value.membersList[index].profileImage;
+          listofImages: List<String?>.generate(value.membersCount!, (index) {
+            if(index<value.membersList!.length){
+              return value.membersList![index].profileImage;
             }else{
               return "";
             }
           }),
-          isRated: value.otherDetails.isRated,
+          isRated: value.otherDetails!.isRated,
           ownerType: value.roomOwnerType,
           ownerId:  value.roomOwnerTypeId,
-          totalRatedUsers: value.otherDetails.totalRatedUsers,
+          totalRatedUsers: value.otherDetails!.totalRatedUsers,
           showRateCount: false,
           subjectId: value.id,
           subjectType: 'room',
@@ -231,10 +231,10 @@ class AllRoomsListingState extends State<AllRoomsListing> {
           },
           averageRatingCallback: (value){
             setState(() {
-              allRoomsList[index].otherDetails.rating = value ;
-              allRoomsList[index].otherDetails.totalRatedUsers =
-                  allRoomsList[index].otherDetails.totalRatedUsers+1;
-              allRoomsList[index].otherDetails.isRated = true;
+              allRoomsList[index].otherDetails!.rating = value ;
+              allRoomsList[index].otherDetails!.totalRatedUsers =
+                  allRoomsList[index].otherDetails!.totalRatedUsers!+1;
+              allRoomsList[index].otherDetails!.isRated = true;
             });
           },
             actionButton:
@@ -259,8 +259,8 @@ class AllRoomsListingState extends State<AllRoomsListing> {
                 }).exitButton: RoomButtons(context: context,onPressed: (){
                   joingroup(value);
                 }).joinButton:Visibility(
-                  visible: !value.isRequestedByMember ,
-                  child: RoomButtons(context: context,onPressed: (){ if (!value.isRequestedByMember ) {
+                  visible: !value.isRequestedByMember! ,
+                  child: RoomButtons(context: context,onPressed: (){ if (!value.isRequestedByMember! ) {
                     joingroup(value);
                   }}).joinButton
         )))
@@ -314,11 +314,11 @@ class AllRoomsListingState extends State<AllRoomsListing> {
 
 // ignore: must_be_immutable
 class PublicRoomsListing extends StatefulWidget {
-  int id;
-  int instituteId;
-  int ownerId;
-  String userType;
-  String ownerType;
+  int? id;
+  int? instituteId;
+  int? ownerId;
+  String? userType;
+  String? ownerType;
   @override
   PublicRoomsListingState createState() => PublicRoomsListingState(id,instituteId,ownerId,ownerType,userType);
   PublicRoomsListing(Key key,this.id, this.instituteId,this.ownerId,this.ownerType,this.userType):super(key: key);
@@ -326,13 +326,13 @@ class PublicRoomsListing extends StatefulWidget {
 
 class PublicRoomsListingState extends State<PublicRoomsListing> {
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
-  String searchVal;
-  SharedPreferences prefs;
-  int id;
-  int instituteId;
-  int ownerId;
-  String userType;
-  String ownerType;
+  String? searchVal;
+  SharedPreferences? prefs;
+  int? id;
+  int? instituteId;
+  int? ownerId;
+  String? userType;
+  String? ownerType;
   List<RoomListItem> publicRoomListing = [];
   PublicRoomsListingState(
       this.id, this.instituteId, this.ownerId, this.userType, this.ownerType);
@@ -342,7 +342,7 @@ class PublicRoomsListingState extends State<PublicRoomsListing> {
   }
 
   refresh() {
-    paginatorKey.currentState.changeState(resetState: true);
+    paginatorKey.currentState!.changeState(resetState: true);
   }
 
   @override
@@ -354,7 +354,7 @@ class PublicRoomsListingState extends State<PublicRoomsListing> {
     searchVal = text;
     refresh();
   }
-  TextStyleElements styleElements;
+  TextStyleElements? styleElements;
   @override
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
@@ -366,7 +366,7 @@ class PublicRoomsListingState extends State<PublicRoomsListing> {
           SliverToBoxAdapter(
             child: SearchBox(
               onvalueChanged: onsearchValueChanged,
-              hintText: AppLocalizations.of(context).translate('search'),
+              hintText: AppLocalizations.of(context)!.translate('search'),
             ),
           )
         ];
@@ -387,8 +387,8 @@ class PublicRoomsListingState extends State<PublicRoomsListing> {
           pageErrorChecker: CustomPaginator(context).pageErrorChecker),
     )));
   }
-  List<RoomListItem> listItemsGetter(RoomListResponse pageData){
-    publicRoomListing.addAll(pageData.rows);
+  List<RoomListItem>? listItemsGetter(RoomListResponse? pageData){
+    publicRoomListing.addAll(pageData!.rows!);
     return pageData.rows;
   }
   Future<Null> refreshList() async {
@@ -402,14 +402,14 @@ class PublicRoomsListingState extends State<PublicRoomsListing> {
     prefs ??= prefs = await SharedPreferences.getInstance();
     RoomListPayload payload = RoomListPayload();
     // payload.isPrivate = false;
-    payload.roomInstitutionId = prefs.getInt(Strings.instituteId);
-    payload.memberId = prefs.getInt(Strings.userId);
+    payload.roomInstitutionId = prefs!.getInt(Strings.instituteId);
+    payload.memberId = prefs!.getInt(Strings.userId);
     payload.memberType = "person";
     payload.pageSize = 20;
     payload.pageNumber = page;
     payload.searchVal = searchVal;
     payload.roomPrivacyType = 'public';
-    payload.institutionId = prefs.getInt(Strings.instituteId);
+    payload.institutionId = prefs!.getInt(Strings.instituteId);
     var data = jsonEncode(payload);
     var value = await Calls().call(data, context, Config.ROOMS_LIST);
 
@@ -432,25 +432,25 @@ class PublicRoomsListingState extends State<PublicRoomsListing> {
         child:
         TricycleEventCard(
           key: UniqueKey(),
-          byTitle: RoomButtons(context: context).getByTitle(value.header.title,value.header.subtitle1),
-          byImage: value.header.avatar,
+          byTitle: RoomButtons(context: context).getByTitle(value.header!.title,value.header!.subtitle1),
+          byImage: value.header!.avatar,
           cardImage: value.roomProfileImageUrl,
           serviceType: SERVICE_TYPE.ROOM,
           title: value.roomName,
           isPrivate: value.isPrivate ?? false,
-          cardRating: value.otherDetails.rating!=null?value.otherDetails.rating:0.0,
+          cardRating: value.otherDetails!.rating!=null?value.otherDetails!.rating:0.0,
           isModerator: value.memberRoleType == 'A',
-          listofImages: List<String>.generate(value.membersCount, (index) {
-            if(index<value.membersList.length){
-              return value.membersList[index].profileImage;
+          listofImages: List<String?>.generate(value.membersCount!, (index) {
+            if(index<value.membersList!.length){
+              return value.membersList![index].profileImage;
             }else{
               return "";
             }
           }),
-          isRated: value.otherDetails.isRated,
+          isRated: value.otherDetails!.isRated,
           ownerType: value.roomOwnerType,
           ownerId:  value.roomOwnerTypeId,
-          totalRatedUsers: value.otherDetails.totalRatedUsers,
+          totalRatedUsers: value.otherDetails!.totalRatedUsers,
           showRateCount: false,
           subjectId: value.id,
           subjectType: 'room',
@@ -469,10 +469,10 @@ class PublicRoomsListingState extends State<PublicRoomsListing> {
           },
           averageRatingCallback: (value){
             setState(() {
-              publicRoomListing[index].otherDetails.rating = value ;
-              publicRoomListing[index].otherDetails.totalRatedUsers =
-                  publicRoomListing[index].otherDetails.totalRatedUsers+1;
-              publicRoomListing[index].otherDetails.isRated = true;
+              publicRoomListing[index].otherDetails!.rating = value ;
+              publicRoomListing[index].otherDetails!.totalRatedUsers =
+                  publicRoomListing[index].otherDetails!.totalRatedUsers!+1;
+              publicRoomListing[index].otherDetails!.isRated = true;
             });
           },
               actionButton:
@@ -504,7 +504,7 @@ class PublicRoomsListingState extends State<PublicRoomsListing> {
   void exitRoom(RoomListItem value) {
     MembershipRoleStatusPayload payload = MembershipRoleStatusPayload();
     payload.roomId = value.id;
-    payload.memberId = prefs.getInt(Strings.userId);
+    payload.memberId = prefs!.getInt(Strings.userId);
     payload.memberType = "person";
     payload.action = MEMBERSHIP_ROLE.remove.type;
     var body = jsonEncode(payload);
@@ -514,7 +514,7 @@ class PublicRoomsListingState extends State<PublicRoomsListing> {
         ToastBuilder().showToast("success", context,HexColor(AppColors.information));
         refresh();
       } else {
-        ToastBuilder().showToast(res.message, context,HexColor(AppColors.information));
+        ToastBuilder().showToast(res.message!, context,HexColor(AppColors.information));
       }
     }).catchError((onError) {
       print(onError);
@@ -529,7 +529,7 @@ class PublicRoomsListingState extends State<PublicRoomsListing> {
     List<MembersItem> list = [];
     MembersItem item = MembersItem();
     item.memberType = 'person';
-    item.memberId = prefs.getInt(Strings.userId);
+    item.memberId = prefs!.getInt(Strings.userId);
     item.addMethod = MEMBER_ADD_METHOD.JOIN.type;
     list.add(item);
     payload.members = list;
@@ -540,7 +540,7 @@ class PublicRoomsListingState extends State<PublicRoomsListing> {
         ToastBuilder().showToast("successfully joined", context,HexColor(AppColors.information));
         refresh();
       } else {
-        ToastBuilder().showToast(res.message, context,HexColor(AppColors.information));
+        ToastBuilder().showToast(res.message!, context,HexColor(AppColors.information));
       }
     }).catchError((onError) {
       print(onError);
@@ -552,11 +552,11 @@ class PublicRoomsListingState extends State<PublicRoomsListing> {
 
 // ignore: must_be_immutable
 class PrivateRoomsListing extends StatefulWidget {
-  int id;
-  int instituteId;
-  int ownerId;
-  String userType;
-  String ownerType;
+  int? id;
+  int? instituteId;
+  int? ownerId;
+  String? userType;
+  String? ownerType;
   @override
   PrivateRoomsListingState createState() => PrivateRoomsListingState(id,instituteId,ownerId,ownerType,userType);
   PrivateRoomsListing(Key key,this.id, this.instituteId,this.ownerId,this.ownerType,this.userType):super(key:key);
@@ -564,13 +564,13 @@ class PrivateRoomsListing extends StatefulWidget {
 
 class PrivateRoomsListingState extends State<PrivateRoomsListing> {
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
-  String searchVal;
-  SharedPreferences prefs;
-  int id;
-  int instituteId;
-  int ownerId;
-  String userType;
-  String ownerType;
+  String? searchVal;
+  SharedPreferences? prefs;
+  int? id;
+  int? instituteId;
+  int? ownerId;
+  String? userType;
+  String? ownerType;
   List<RoomListItem> privateRoomListing = [];
   PrivateRoomsListingState(
       this.id, this.instituteId, this.ownerId, this.userType, this.ownerType);
@@ -580,7 +580,7 @@ class PrivateRoomsListingState extends State<PrivateRoomsListing> {
   }
 
   refresh() {
-    paginatorKey.currentState.changeState(resetState: true);
+    paginatorKey.currentState!.changeState(resetState: true);
   }
   Future<Null> refreshList() async {
     await refresh();
@@ -598,7 +598,7 @@ class PrivateRoomsListingState extends State<PrivateRoomsListing> {
     searchVal = text;
     refresh();
   }
-  TextStyleElements styleElements;
+  TextStyleElements? styleElements;
   @override
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
@@ -610,7 +610,7 @@ class PrivateRoomsListingState extends State<PrivateRoomsListing> {
           SliverToBoxAdapter(
             child: SearchBox(
               onvalueChanged: onsearchValueChanged,
-              hintText: AppLocalizations.of(context).translate('search'),
+              hintText: AppLocalizations.of(context)!.translate('search'),
             ),
           ),
         ];
@@ -632,8 +632,8 @@ class PrivateRoomsListingState extends State<PrivateRoomsListing> {
     )));
   }
 
-  List<RoomListItem> listItemsGetter(RoomListResponse pageData){
-    privateRoomListing.addAll(pageData.rows);
+  List<RoomListItem>? listItemsGetter(RoomListResponse ?pageData){
+    privateRoomListing.addAll(pageData!.rows!);
     return pageData.rows;
   }
 
@@ -648,7 +648,7 @@ class PrivateRoomsListingState extends State<PrivateRoomsListing> {
     payload.pageSize = 20;
     payload.pageNumber = page;
     payload.searchVal = searchVal;
-    payload.institutionId = prefs.getInt(Strings.instituteId);
+    payload.institutionId = prefs!.getInt(Strings.instituteId);
     var data = jsonEncode(payload);
     var value = await Calls().call(data, context, Config.ROOMS_LIST);
 
@@ -678,7 +678,7 @@ class PrivateRoomsListingState extends State<PrivateRoomsListing> {
           isPrivate: value.isPrivate ?? false,
           cardRating: value.otherDetails.rating!=null?value.otherDetails.rating:0.0,
           isModerator: value.memberRoleType == 'A',
-          listofImages: List<String>.generate(value.membersCount, (index) {
+          listofImages: List<String?>.generate(value.membersCount, (index) {
             if(index<value.membersList.length){
               return value.membersList[index].profileImage;
             }else{
@@ -707,10 +707,10 @@ class PrivateRoomsListingState extends State<PrivateRoomsListing> {
           },
           averageRatingCallback: (value){
             setState(() {
-              privateRoomListing[index].otherDetails.rating = value ;
-              privateRoomListing[index].otherDetails.totalRatedUsers =
-                  privateRoomListing[index].otherDetails.totalRatedUsers+1;
-              privateRoomListing[index].otherDetails.isRated = true;
+              privateRoomListing[index].otherDetails!.rating = value ;
+              privateRoomListing[index].otherDetails!.totalRatedUsers =
+                  privateRoomListing[index].otherDetails!.totalRatedUsers!+1;
+              privateRoomListing[index].otherDetails!.isRated = true;
             });
           },
               actionButton: value.memberRoleType=='A'?RoomButtons(
@@ -756,7 +756,7 @@ refresh();
         ToastBuilder().showToast("success", context,HexColor(AppColors.information));
         refresh();
       } else {
-        ToastBuilder().showToast(res.message, context,HexColor(AppColors.information));
+        ToastBuilder().showToast(res.message!, context,HexColor(AppColors.information));
       }
     }).catchError((onError) {
       print(onError);
@@ -766,28 +766,28 @@ refresh();
 
 // ignore: must_be_immutable
 class SocialRoomsListing extends StatefulWidget {
-  int id;
-  int instituteId;
-  int ownerId;
-  String userType;
-  String ownerType;
-  Null Function() callback;
+  int? id;
+  int? instituteId;
+  int? ownerId;
+  String? userType;
+  String? ownerType;
+  Null Function()? callback;
   SocialRoomsListing(Key key ,this.id, this.instituteId,this.ownerId,this.ownerType,this.userType,this.callback):super(key: key);
   @override
   SocialRoomsListingState createState() => SocialRoomsListingState(id,instituteId,ownerId,ownerType,userType,callback);
 }
 
 class SocialRoomsListingState extends State<SocialRoomsListing> {
-  String searchVal;
-  int id;
-  Null Function() callback;
-  int instituteId;
-  int ownerId;
-  String ownerType;
-  String userType;
+  String? searchVal;
+  int? id;
+  Null Function()? callback;
+  int? instituteId;
+  int? ownerId;
+  String? ownerType;
+  String? userType;
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
-  SharedPreferences prefs;
-  TextStyleElements styleElements;
+  SharedPreferences? prefs;
+  late TextStyleElements styleElements;
   List<RoomListItem> socialRoomListing = [];
   SocialRoomsListingState(this.id, this.instituteId,this.ownerId,this.ownerType,this.userType,this.callback);
   void setSharedPreferences() async {
@@ -811,9 +811,9 @@ class SocialRoomsListingState extends State<SocialRoomsListing> {
     refresh();
   }
   refresh() {
-    paginatorKey.currentState.changeState(resetState: true);
+    paginatorKey.currentState!.changeState(resetState: true);
     if(callback!=null)
-      callback();
+      callback!();
   }
 
   @override
@@ -827,7 +827,7 @@ class SocialRoomsListingState extends State<SocialRoomsListing> {
               SliverToBoxAdapter(
                 child: SearchBox(
                   onvalueChanged: onsearchValueChanged,
-                  hintText: AppLocalizations.of(context).translate('search'),
+                  hintText: AppLocalizations.of(context)!.translate('search'),
                 ),
               ),
               SliverToBoxAdapter(
@@ -883,7 +883,7 @@ class SocialRoomsListingState extends State<SocialRoomsListing> {
     prefs ??= await SharedPreferences.getInstance();
     RoomListPayload payload = RoomListPayload();
     // payload.isPrivate = null;
-    payload.roomInstitutionId = instituteId?? prefs.getInt(Strings.instituteId);
+    payload.roomInstitutionId = instituteId?? prefs!.getInt(Strings.instituteId);
     payload.memberId = id;
     payload.memberType = userType=="institution"?"institution":"person";
     payload.pageSize = 20;
@@ -894,14 +894,14 @@ class SocialRoomsListingState extends State<SocialRoomsListing> {
     payload.searchVal = searchVal;
     // payload.roomType = ROOM_TYPE.COMMUNITYROOM.type;
     payload.roomPrivacyType ='social';
-    payload.institutionId = prefs.getInt(Strings.instituteId);
+    payload.institutionId = prefs!.getInt(Strings.instituteId);
     var data = jsonEncode(payload);
     var value = await Calls().call(data, context, Config.ROOMS_LIST);
 
     return RoomListResponse.fromJson(value);
   }
-  List<RoomListItem> listItemsGetter(RoomListResponse pageData){
-    socialRoomListing.addAll(pageData.rows);
+  List<RoomListItem>? listItemsGetter(RoomListResponse? pageData){
+    socialRoomListing.addAll(pageData!.rows!);
     return pageData.rows;
   }
 
@@ -921,25 +921,25 @@ class SocialRoomsListingState extends State<SocialRoomsListing> {
           },
           child:TricycleEventCard(
             key: UniqueKey(),
-            byTitle: RoomButtons(context: context).getByTitle(value.header.title,value.header.subtitle1),
-            byImage: value.header.avatar,
+            byTitle: RoomButtons(context: context).getByTitle(value.header!.title,value.header!.subtitle1),
+            byImage: value.header!.avatar,
             cardImage: value.roomProfileImageUrl,
             serviceType: SERVICE_TYPE.ROOM,
             title: value.roomName,
             isPrivate: value.isPrivate ?? false,
-            cardRating: value.otherDetails.rating!=null?value.otherDetails.rating:0.0,
+            cardRating: value.otherDetails!.rating!=null?value.otherDetails!.rating:0.0,
             isModerator: value.memberRoleType == 'A',
-            listofImages: List<String>.generate(value.membersCount, (index) {
-              if(index<value.membersList.length){
-                return value.membersList[index].profileImage;
+            listofImages: List<String?>.generate(value.membersCount!, (index) {
+              if(index<value.membersList!.length){
+                return value.membersList![index].profileImage;
               }else{
                 return "";
               }
             }),
-            isRated: value.otherDetails.isRated,
+            isRated: value.otherDetails!.isRated,
             ownerType: value.roomOwnerType,
             ownerId:  value.roomOwnerTypeId,
-            totalRatedUsers: value.otherDetails.totalRatedUsers,
+            totalRatedUsers: value.otherDetails!.totalRatedUsers,
             showRateCount: false,
             subjectId: value.id,
             subjectType: 'room',
@@ -958,10 +958,10 @@ class SocialRoomsListingState extends State<SocialRoomsListing> {
             },
             averageRatingCallback: (value){
               setState(() {
-                socialRoomListing[index].otherDetails.rating = value ;
-                socialRoomListing[index].otherDetails.totalRatedUsers =
-                    socialRoomListing[index].otherDetails.totalRatedUsers+1;
-                socialRoomListing[index].otherDetails.isRated = true;
+                socialRoomListing[index].otherDetails!.rating = value ;
+                socialRoomListing[index].otherDetails!.totalRatedUsers =
+                    socialRoomListing[index].otherDetails!.totalRatedUsers!+1;
+                socialRoomListing[index].otherDetails!.isRated = true;
               });
             },
             actionButton:
@@ -988,8 +988,8 @@ refresh();
           }).exitButton: RoomButtons(context: context,onPressed: (){
             joingroup(value);
           }).joinButton:Visibility(
-              visible: !value.isRequestedByMember ,
-              child: RoomButtons(context: context,onPressed: (){ if (!value.isRequestedByMember ) {
+              visible: !value.isRequestedByMember! ,
+              child: RoomButtons(context: context,onPressed: (){ if (!value.isRequestedByMember! ) {
                 joingroup(value);
               }}).joinButton
           ),
@@ -1046,28 +1046,28 @@ refresh();
 
 // ignore: must_be_immutable
 class CampusRoomsListing extends StatefulWidget {
-  int id;
-  int instituteId;
-  int ownerId;
-  String userType;
-  String ownerType;
-  Null Function() callback;
+  int? id;
+  int? instituteId;
+  int? ownerId;
+  String? userType;
+  String? ownerType;
+  Null Function()? callback;
   CampusRoomsListing(Key key ,this.id, this.instituteId,this.ownerId,this.ownerType,this.userType,this.callback):super(key: key);
   @override
   CampusRoomsListingState createState() => CampusRoomsListingState(id,instituteId,ownerId,ownerType,userType,callback);
 }
 
 class CampusRoomsListingState extends State<CampusRoomsListing> {
-  String searchVal;
-  int id;
-  Null Function() callback;
-  int instituteId;
-  int ownerId;
-  String ownerType;
-  String userType;
+  String? searchVal;
+  int? id;
+  Null Function()? callback;
+  int? instituteId;
+  int? ownerId;
+  String? ownerType;
+  String? userType;
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
-  SharedPreferences prefs;
-  TextStyleElements styleElements;
+  SharedPreferences? prefs;
+  late TextStyleElements styleElements;
   List<RoomListItem> campusRoomListing = [];
   CampusRoomsListingState(this.id, this.instituteId,this.ownerId,this.ownerType,this.userType,this.callback);
   void setSharedPreferences() async {
@@ -1092,9 +1092,9 @@ class CampusRoomsListingState extends State<CampusRoomsListing> {
     refresh();
   }
   refresh() {
-    paginatorKey.currentState.changeState(resetState: true);
+    paginatorKey.currentState!.changeState(resetState: true);
     if(callback!=null)
-      callback();
+      callback!();
   }
 
   @override
@@ -1108,7 +1108,7 @@ class CampusRoomsListingState extends State<CampusRoomsListing> {
               SliverToBoxAdapter(
                 child: SearchBox(
                   onvalueChanged: onsearchValueChanged,
-                  hintText: AppLocalizations.of(context).translate('search'),
+                  hintText: AppLocalizations.of(context)!.translate('search'),
                 ),
               ),
               SliverToBoxAdapter(
@@ -1165,7 +1165,7 @@ class CampusRoomsListingState extends State<CampusRoomsListing> {
     prefs ??= await SharedPreferences.getInstance();
     RoomListPayload payload = RoomListPayload();
     // payload.isPrivate = null;
-    payload.roomInstitutionId = instituteId?? prefs.getInt(Strings.instituteId);
+    payload.roomInstitutionId = instituteId?? prefs!.getInt(Strings.instituteId);
     payload.memberId = id;
     payload.memberType = userType=="institution"?"institution":"person";
     payload.pageSize = 20;
@@ -1176,15 +1176,15 @@ class CampusRoomsListingState extends State<CampusRoomsListing> {
     payload.searchVal = searchVal;
     // payload.roomType = ROOM_TYPE.COMMUNITYROOM.type;
     payload.roomPrivacyType ='campus';
-    payload.institutionId = prefs.getInt(Strings.instituteId);
+    payload.institutionId = prefs!.getInt(Strings.instituteId);
     var data = jsonEncode(payload);
     var value = await Calls().call(data, context, Config.ROOMS_LIST);
 
     return RoomListResponse.fromJson(value);
   }
 
-  List<RoomListItem> listItemsGetter(RoomListResponse pageData) {
-    campusRoomListing.addAll(pageData.rows);
+  List<RoomListItem>? listItemsGetter(RoomListResponse? pageData) {
+    campusRoomListing.addAll(pageData!.rows!);
     return pageData.rows;
   }
 
@@ -1205,25 +1205,25 @@ class CampusRoomsListingState extends State<CampusRoomsListing> {
           },
           child:TricycleEventCard(
             key: UniqueKey(),
-            byTitle: RoomButtons(context: context).getByTitle(value.header.title,value.header.subtitle1),
-            byImage: value.header.avatar,
+            byTitle: RoomButtons(context: context).getByTitle(value.header!.title,value.header!.subtitle1),
+            byImage: value.header!.avatar,
             cardImage: value.roomProfileImageUrl,
             serviceType: SERVICE_TYPE.ROOM,
             title: value.roomName,
             isPrivate: value.isPrivate ?? false,
-            cardRating: value.otherDetails.rating!=null?value.otherDetails.rating:0.0,
+            cardRating: value.otherDetails!.rating!=null?value.otherDetails!.rating:0.0,
             isModerator: value.memberRoleType == 'A',
-            listofImages: List<String>.generate(value.membersCount, (index) {
-              if(index<value.membersList.length){
-                return value.membersList[index].profileImage;
+            listofImages: List<String?>.generate(value.membersCount!, (index) {
+              if(index<value.membersList!.length){
+                return value.membersList![index].profileImage;
               }else{
                 return "";
               }
             }),
-            isRated: value.otherDetails.isRated,
+            isRated: value.otherDetails!.isRated,
             ownerType: value.roomOwnerType,
             ownerId:  value.roomOwnerTypeId,
-            totalRatedUsers: value.otherDetails.totalRatedUsers,
+            totalRatedUsers: value.otherDetails!.totalRatedUsers,
             showRateCount: false,
             subjectId: value.id,
             subjectType: 'room',
@@ -1242,10 +1242,10 @@ class CampusRoomsListingState extends State<CampusRoomsListing> {
             },
             averageRatingCallback: (value){
               setState(() {
-                campusRoomListing[index].otherDetails.rating = value ;
-                campusRoomListing[index].otherDetails.totalRatedUsers =
-                    campusRoomListing[index].otherDetails.totalRatedUsers+1;
-                campusRoomListing[index].otherDetails.isRated = true;
+                campusRoomListing[index].otherDetails!.rating = value ;
+                campusRoomListing[index].otherDetails!.totalRatedUsers =
+                    campusRoomListing[index].otherDetails!.totalRatedUsers!+1;
+                campusRoomListing[index].otherDetails!.isRated = true;
               });
             },
             actionButton:
@@ -1272,8 +1272,8 @@ refresh();
           }).exitButton: RoomButtons(context: context,onPressed: (){
             joingroup(value);
           }).joinButton:Visibility(
-              visible: !value.isRequestedByMember ,
-              child: RoomButtons(context: context,onPressed: (){ if (!value.isRequestedByMember ) {
+              visible: !value.isRequestedByMember! ,
+              child: RoomButtons(context: context,onPressed: (){ if (!value.isRequestedByMember! ) {
                 joingroup(value);
               }}).joinButton
           ),
@@ -1328,14 +1328,14 @@ refresh();
 
 class
 RoomButtons{
-  Function onPressed;
-  BuildContext context;
-  TextStyleElements styleElements;
+  Function? onPressed;
+  BuildContext? context;
+  late TextStyleElements styleElements;
   RoomButtons({this.onPressed,this.context}){
     styleElements = TextStyleElements(context);
   }
 
-  String getByTitle(String title, subtitle) {
+  String getByTitle(String? title, subtitle) {
     StringBuffer buff= StringBuffer();
     buff.write(' by ');
     buff.write(title ?? '');
@@ -1359,7 +1359,7 @@ RoomButtons{
     return TricycleTextButton(
       onPressed: onPressed,
       padding: EdgeInsets.all(0),
-      child: Text(AppLocalizations.of(context).translate('exit'), style: styleElements.captionThemeScalable(context).copyWith(fontWeight: FontWeight.bold,color:HexColor(AppColors.appMainColor),)),
+      child: Text(AppLocalizations.of(context!)!.translate('exit'), style: styleElements.captionThemeScalable(context!).copyWith(fontWeight: FontWeight.bold,color:HexColor(AppColors.appMainColor),)),
      );
     // return GestureDetector(
     //    onTap: onPressed,
@@ -1377,8 +1377,8 @@ RoomButtons{
     return TricycleTextButton(
       onPressed: onPressed,
       color: HexColor(AppColors.appMainColor),
-      child: Text(AppLocalizations.of(context).translate('join'),
-          style: styleElements.captionThemeScalable(context).copyWith(fontWeight: FontWeight.bold,
+      child: Text(AppLocalizations.of(context!)!.translate('join'),
+          style: styleElements.captionThemeScalable(context!).copyWith(fontWeight: FontWeight.bold,
             color:HexColor(AppColors.appColorWhite),)),
     );
 
@@ -1401,7 +1401,7 @@ RoomButtons{
       onPressed: onPressed,
       padding: EdgeInsets.all(0),
       shape: StadiumBorder(),
-      child: Text(AppLocalizations.of(context).translate('edit'), style: styleElements.captionThemeScalable(context).copyWith(fontWeight: FontWeight.bold,color:HexColor(AppColors.appMainColor),)),
+      child: Text(AppLocalizations.of(context!)!.translate('edit'), style: styleElements.captionThemeScalable(context!).copyWith(fontWeight: FontWeight.bold,color:HexColor(AppColors.appMainColor),)),
     );
     //
     // return GestureDetector(

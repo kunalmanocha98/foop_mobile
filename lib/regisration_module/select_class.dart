@@ -43,41 +43,41 @@ class SelectClass extends StatefulWidget {
 class _SelectClasses extends State<SelectClass>
     with SingleTickerProviderStateMixin {
 
-  SharedPreferences prefs;
+  late SharedPreferences prefs;
   RegisterUserAs registerUserAs;
-  int personType;
-  String classId;
-  String accedamicId;
+  int? personType;
+  String? classId;
+  String? accedamicId;
   bool isVerified;
   bool isAddClass;
   var pageTitle = "";
   var color1 = HexColor(AppColors.appMainColor);
-  int userId;
+  int? userId;
   var color2 = HexColor(AppColors.appColorWhite);
-  int instituteId;
+  int? instituteId;
   var color3 = HexColor(AppColors.appColorWhite);
   var isCheckedColor = HexColor(AppColors.appColorWhite);
-  List<InstituteClass> listClasses = [];
+  List<InstituteClass>? listClasses = [];
   List<InstituteClass> selectedClasses = [];
   List<PersonClasses> teachingClasses = [];
   var isSearching = false;
   bool _enabled = true;
-  String nextYear;
-  String currentYear;
-  String acedemicYear;
+  String? nextYear;
+  String? currentYear;
+  String? acedemicYear;
   final _debouncer = Debouncer(500);
   String type = "";
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
-  void _onBackPressed() {
+  Future<bool> _onBackPressed() {
     if (isVerified) {
       showDialog(
         context: context,
         builder: (context) => new AlertDialog(
           title:
-              new Text(AppLocalizations.of(context).translate('are_you_sure')),
+              new Text(AppLocalizations.of(context)!.translate('are_you_sure')),
           content:
-              new Text(AppLocalizations.of(context).translate('exit_tricycle')),
+              new Text(AppLocalizations.of(context)!.translate('exit_tricycle')),
           actions: <Widget>[
             new GestureDetector(
               onTap: () => Navigator.of(context).pop(false),
@@ -85,7 +85,7 @@ class _SelectClasses extends State<SelectClass>
                 padding:
                     const EdgeInsets.only(right: 16.0, bottom: 16, top: 16),
                 child: Text(
-                    AppLocalizations.of(context).translate('no').toUpperCase()),
+                    AppLocalizations.of(context)!.translate('no').toUpperCase()),
               ),
             ),
             SizedBox(height: 16),
@@ -96,7 +96,7 @@ class _SelectClasses extends State<SelectClass>
               child: Padding(
                 padding:
                     const EdgeInsets.only(right: 16.0, bottom: 16, top: 16),
-                child: Text(AppLocalizations.of(context)
+                child: Text(AppLocalizations.of(context)!
                     .translate('yes')
                     .toUpperCase()),
               ),
@@ -106,6 +106,8 @@ class _SelectClasses extends State<SelectClass>
       );
     } else
       Navigator.of(context).pop(true);
+
+    return new Future(() => false);
   }
 
   void setSharedPreferences() async {
@@ -118,21 +120,21 @@ class _SelectClasses extends State<SelectClass>
     if (registerUserAs != null) {
       acedemicYear = registerUserAs.academicYear;
       instituteId = registerUserAs.institutionId;
-      personType = registerUserAs.personTypeList[0];
+      personType = registerUserAs.personTypeList![0];
     }
 
-    WidgetsBinding.instance.addPostFrameCallback((_) => getRoles(null));
+    WidgetsBinding.instance!.addPostFrameCallback((_) => getRoles(null));
     super.initState();
   }
 
-  bool contains(int id) {
+  bool contains(int? id) {
     for (var item in selectedClasses) {
       if (item.id == id) return true;
     }
     return false;
   }
 
-  void getRoles(String searchValue) async {
+  void getRoles(String? searchValue) async {
 
     final body = jsonEncode({
       "institution_id": instituteId,
@@ -146,19 +148,19 @@ class _SelectClasses extends State<SelectClass>
         var data = InstitutionClasses.fromJson(value);
         setState(() {
           _enabled = false;
-          if (data.rows.length > 0) {
-            if (listClasses.length > 0) {
+          if (data.rows!.length > 0) {
+            if (listClasses!.length > 0) {
               {
-                for (var i = 0; i < data.rows.length; i++) {
-                  if (contains(data.rows[i].id))
-                    data.rows[i].isSelected = true;
+                for (var i = 0; i < data.rows!.length; i++) {
+                  if (contains(data.rows![i].id))
+                    data.rows![i].isSelected = true;
                   else
-                    data.rows[i].isSelected = false;
+                    data.rows![i].isSelected = false;
                 }
               }
             } else {
-              for (var i = 0; i < data.rows.length; i++) {
-                data.rows[i].isSelected = false;
+              for (var i = 0; i < data.rows!.length; i++) {
+                data.rows![i].isSelected = false;
               }
             }
             listClasses = data.rows;
@@ -176,11 +178,11 @@ class _SelectClasses extends State<SelectClass>
       _enabled = false;
     });
   }
-BuildContext sctx;
+late BuildContext sctx;
   Widget build(BuildContext context) {
     ScreenUtil.init;
 
-    pageTitle = AppLocalizations.of(context).translate("classes");
+    pageTitle = AppLocalizations.of(context)!.translate("classes");
     styleElements = TextStyleElements(context);
     return SafeArea(
         child: Scaffold(
@@ -209,7 +211,7 @@ BuildContext sctx;
                         });
                       },
                       progressIndicator: isSearching,
-                      hintText: AppLocalizations.of(context).translate('search'),
+                      hintText: AppLocalizations.of(context)!.translate('search'),
                     ),
                   ),
                   SliverToBoxAdapter(
@@ -279,7 +281,7 @@ BuildContext sctx;
                                                           alignment:
                                                           Alignment
                                                               .center,
-                                                          child: Text(AppLocalizations.of(context).translate('selected_academic_year'),
+                                                          child: Text(AppLocalizations.of(context)!.translate('selected_academic_year'),
                                                             style: styleElements
                                                                 .subtitle2ThemeScalable(
                                                                 context),
@@ -329,7 +331,7 @@ BuildContext sctx;
                     child: ListView.builder(
                         padding: EdgeInsets.only(
                             left: 8, right: 8, bottom: 8, top: 8),
-                        itemCount: listClasses.length,
+                        itemCount: listClasses!.length,
                         itemBuilder:
                             (BuildContext context, int index) {
                           return GestureDetector(
@@ -357,21 +359,21 @@ BuildContext sctx;
                                         child: Text(
                                           personType == 3
                                               ? AppLocalizations.of(
-                                              context)
+                                              context)!
                                               .translate(
                                               "select_class_student")
                                               : personType == 4
                                               ? AppLocalizations
-                                              .of(context)
+                                              .of(context)!
                                               .translate(
                                               "parent_child_select_class")
                                               : personType == 5
                                               ? AppLocalizations.of(
-                                              context)
+                                              context)!
                                               .translate(
                                               "alumni_select_class")
                                               : AppLocalizations.of(
-                                              context)
+                                              context)!
                                               .translate(
                                               "teacher_classes_info"),
                                           textAlign: TextAlign.center,
@@ -389,7 +391,7 @@ BuildContext sctx;
                                     title: Align(
                                       alignment: Alignment.centerLeft,
                                       child: Text(
-                                        listClasses[index].className,
+                                        listClasses![index].className!,
                                         style: styleElements
                                             .subtitle1ThemeScalable(
                                             context),
@@ -399,14 +401,14 @@ BuildContext sctx;
                                     trailing: Checkbox(
                                       activeColor:
                                       HexColor(AppColors.appMainColor),
-                                      value: listClasses[index]
+                                      value: listClasses![index]
                                           .isSelected,
                                       onChanged: (val) {
                                         if (this.mounted) {
                                           setState(() {
                                             if (val == true) {
                                               classId =
-                                                  listClasses[index]
+                                                  listClasses![index]
                                                       .id
                                                       .toString();
 
@@ -415,11 +417,11 @@ BuildContext sctx;
                                                 // if role type is teacher
                                                 // let teachers select multiple classes
                                                 setState(() {
-                                                  listClasses[index]
+                                                  listClasses![index]
                                                       .isSelected =
                                                   true;
                                                   selectedClasses.add(
-                                                      listClasses[
+                                                      listClasses![
                                                       index]);
                                                 });
                                               } else {
@@ -427,22 +429,22 @@ BuildContext sctx;
                                                   // other roles can only select one class
                                                   for (int i = 0;
                                                   i <
-                                                      listClasses
+                                                      listClasses!
                                                           .length;
                                                   i++) {
                                                     if (i == index) {
-                                                      listClasses[i]
+                                                      listClasses![i]
                                                           .isSelected =
                                                       true;
                                                       selectedClasses.add(
-                                                          listClasses[
+                                                          listClasses![
                                                           index]);
                                                     } else {
-                                                      listClasses[i]
+                                                      listClasses![i]
                                                           .isSelected =
                                                       false;
                                                       removeSelected(
-                                                          listClasses[
+                                                          listClasses![
                                                           i]
                                                               .id);
                                                     }
@@ -452,10 +454,10 @@ BuildContext sctx;
                                             } else {
                                               classId = "";
 
-                                              listClasses[index]
+                                              listClasses![index]
                                                   .isSelected = false;
                                               removeSelected(
-                                                  listClasses[index]
+                                                  listClasses![index]
                                                       .id);
                                             }
                                           });
@@ -487,7 +489,7 @@ BuildContext sctx;
                                 onPressed: () {
                                   teachingClasses = [];
                                   for (var item in selectedClasses) {
-                                    if (item.isSelected) {
+                                    if (item.isSelected!) {
                                       PersonClasses proClass =
                                       PersonClasses();
                                       proClass.classId = item.id;
@@ -502,9 +504,9 @@ BuildContext sctx;
                                   if (teachingClasses.isNotEmpty) {
                                     if (isAddClass) {
                                       if (classId != null &&
-                                          classId.isNotEmpty) {
+                                          classId!.isNotEmpty) {
                                         if (accedamicId != null &&
-                                            accedamicId.isNotEmpty) {
+                                            accedamicId!.isNotEmpty) {
                                           showDialog(
                                               context: context,
                                               builder: (BuildContext
@@ -564,7 +566,7 @@ BuildContext sctx;
                                   }
                                 },
                                 color: HexColor(AppColors.appColorWhite),
-                                child: Text(AppLocalizations.of(context).translate('next'),
+                                child: Text(AppLocalizations.of(context)!.translate('next'),
                                   style: styleElements
                                       .subtitle2ThemeScalable(context)
                                       .copyWith(
@@ -584,7 +586,7 @@ BuildContext sctx;
     ));
   }
 
-  removeSelected(int id) {
+  removeSelected(int? id) {
     for (var i = 0; i < selectedClasses.length; i++) {
       if (id == selectedClasses[i].id) {
         selectedClasses.removeAt(i);
@@ -612,15 +614,15 @@ BuildContext sctx;
               MaterialPageRoute(
                   builder: (context) => DilaogPage(
                       type: type,
-                      isVerified: data.rows.isVerified,
-                      title: AppLocalizations.of(context).translate('you_are_added_as') + "Alumni ",
-                      subtitle: (data.rows.institutionName != null
-                          ? " of " + data.rows.institutionName
+                      isVerified: data.rows!.isVerified,
+                      title: AppLocalizations.of(context)!.translate('you_are_added_as') + "Alumni ",
+                      subtitle: (data.rows!.institutionName != null
+                          ? " of " + data.rows!.institutionName!
                           : ""))),
               (Route<dynamic> route) => false);
         } else
           ToastBuilder().showSnackBar(
-              data.message, sctx, HexColor(AppColors.information));
+              data.message!, sctx, HexColor(AppColors.information));
       }
     }).catchError((onError) async {
       ToastBuilder().showSnackBar(

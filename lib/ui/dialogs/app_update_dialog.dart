@@ -9,10 +9,10 @@ import 'package:oho_works_app/utils/hexColors.dart';
 import 'package:flutter/material.dart';
 
 class AppUpdateDialog extends StatelessWidget{
-  final Function cancelButton;
-  final Function updateButton;
+  final Function? cancelButton;
+  final Function? updateButton;
   final bool showCancelButton;
-  final String note;
+  final String? note;
   AppUpdateDialog({this.cancelButton,this.updateButton,this.showCancelButton= true,this.note});
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class AppUpdateDialog extends StatelessWidget{
               fontWeight: FontWeight.bold
             ),),
             SizedBox(height: 16,),
-            (note != null && note.isNotEmpty)?
+            (note != null && note!.isNotEmpty)?
             TricycleHtmlViewer(
               sourceString:note,
               isDetailPage: true,
@@ -43,18 +43,18 @@ class AppUpdateDialog extends StatelessWidget{
                 visible: showCancelButton,
                 child: TricycleTextButton(onPressed: (){
                   Navigator.pop(context);
-                  cancelButton();
+                  cancelButton!();
                   },
                     shape: StadiumBorder(),
-                    child: Text(AppLocalizations.of(context).translate('cancel'),style:
+                    child: Text(AppLocalizations.of(context)!.translate('cancel'),style:
                       styleElements.captionThemeScalable(context)
                           .copyWith(color:HexColor(AppColors.appMainColor)),)),
               ),
               TricycleTextButton(onPressed: (){
-                updateButton();
+                updateButton!();
               },
                   shape: StadiumBorder(),
-                  child: Text(AppLocalizations.of(context).translate('update'),style:
+                  child: Text(AppLocalizations.of(context)!.translate('update'),style:
                   styleElements.captionThemeScalable(context)
                       .copyWith(color:HexColor(AppColors.appMainColor))))
             ],

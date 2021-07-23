@@ -1,16 +1,16 @@
 class EditProfileMixins {
-  String validateEmail(String value) {
+  String? validateEmail(String? value) {
     Pattern pattern =
         r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
     RegExp regex = new RegExp(pattern.toString());
-    if (!regex.hasMatch(value))
+    if (!regex.hasMatch(value!))
       return 'Enter a valid Email Address';
     else
       return null;
   }
 
-  String validatePassword(String value) {
-    if (value.length < 8) {
+  String? validatePassword(String? value) {
+    if (value!.length < 8) {
       return "Minimum 8 character required for Password";
     } else {
       return null;
@@ -23,7 +23,7 @@ class EditProfileMixins {
       return true;
     }
   }
-  String validateFirstName(String value) {
+  String? validateFirstName(String value) {
     if (value.isEmpty) {
       return "Please Enter your first name";
     } else {
@@ -31,7 +31,7 @@ class EditProfileMixins {
     }
   }
 
-  String validateLastName(String value) {
+  String? validateLastName(String value) {
     if (value.isEmpty) {
       return "Please enter your last name";
     } else {
@@ -39,7 +39,7 @@ class EditProfileMixins {
     }
   }
 
-  String validateDob(String value) {
+  String? validateDob(String value) {
     if (value.isEmpty) {
       return "Please select DoB";
     } else {
@@ -56,21 +56,21 @@ class EditProfileMixins {
     }
   }
   // ignore: missing_return
-  String removeLastWord (String value) {
-    var res = value.split(" ");  //split by space
+  String? removeLastWord (String? value) {
+    var res = value!.split(" ");  //split by space
     res.removeAt(res.length);  //remove last element
     res.join(" ");
   }
 
-  String validateBioName(String value) {
-    if (value.isEmpty) {
+  String? validateBioName(String? value) {
+    if (value!.isEmpty) {
       return "Please Enter your Bio";
     } else {
       return null;
     }
   }
 
-  String validateQuote(String value) {
+  String? validateQuote(String value) {
     if (value.isEmpty) {
       return "Please Enter a Qoute";
     } else {

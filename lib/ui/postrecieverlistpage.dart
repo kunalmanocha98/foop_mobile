@@ -26,16 +26,16 @@ import 'RegisterInstitutions/models/scratch_card_response.dart';
 import 'RegisterInstitutions/models/scratch_data.dart';
 
 class PostReceiverListPage extends StatefulWidget {
-  final PostCreatePayload payload;
-  final PostReceiverListItem selectedReceiverData;
-  final PostCreatePayload createLessonData;
-  final Function callBack;
-  final List<PostCreatePayload> list;
+  final PostCreatePayload? payload;
+  final PostReceiverListItem? selectedReceiverData;
+  final PostCreatePayload? createLessonData;
+  final Function? callBack;
+  final List<PostCreatePayload?>? list;
 
   PostReceiverListPage(
       { this.payload,
         this.list,
-        @required this.selectedReceiverData,
+        required this.selectedReceiverData,
         this.createLessonData,
         this.callBack});
 
@@ -45,14 +45,14 @@ class PostReceiverListPage extends StatefulWidget {
 }
 
 class _PostReceiverListPage extends State<PostReceiverListPage> {
-  String searchVal;
-  SharedPreferences prefs;
-  PostCreatePayload payload;
-  PostReceiverListItem selectedReceiverData;
-  TextStyleElements styleElements;
+  String? searchVal;
+  SharedPreferences? prefs;
+  PostCreatePayload? payload;
+  PostReceiverListItem? selectedReceiverData;
+  late TextStyleElements styleElements;
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
-  List<PostReceiverListItem> recList = [];
-  List<PostReceiverListItem> _selectedList = [];
+  List<PostReceiverListItem?> recList = [];
+  List<PostReceiverListItem?> _selectedList = [];
   List<PostRecipientDetailItem> receiverDetailItem = [];
   PostCreatePayload postCreatePayload = PostCreatePayload();
   bool isPrivateSelected = false;
@@ -63,7 +63,7 @@ class _PostReceiverListPage extends State<PostReceiverListPage> {
 
   refresh() {
     recList.clear();
-    paginatorKey.currentState.changeState(resetState: true);
+    paginatorKey.currentState!.changeState(resetState: true);
   }
 
   @override
@@ -72,7 +72,7 @@ class _PostReceiverListPage extends State<PostReceiverListPage> {
     return SafeArea(
       child: Scaffold(
         appBar: TricycleAppBar().getCustomAppBarWithSearch(context,
-            appBarTitle: AppLocalizations.of(context).translate('receivers'),
+            appBarTitle: AppLocalizations.of(context)!.translate('receivers'),
             onBackButtonPress: () {
               Navigator.pop(context);
             }, onSearchValueChanged: (text) {
@@ -113,17 +113,17 @@ class _PostReceiverListPage extends State<PostReceiverListPage> {
                                 color: HexColor(AppColors.appMainColor))),
                         onPressed: () async {
                           if (_selectedList.length > 0) {
-                            if (widget.list != null && widget.list.isNotEmpty)
-                              for (int i = 0; i < widget.list.length; i++) {
-                                 createPost(getPayload(), widget.list[i],
-                                    i == widget.list.length - 1 ? true : false);
+                            if (widget.list != null && widget.list!.isNotEmpty)
+                              for (int i = 0; i < widget.list!.length; i++) {
+                                 createPost(getPayload(), widget.list![i]!,
+                                    i == widget.list!.length - 1 ? true : false);
                               }
                             else
-                              createPost(getPayload(), payload, true);
+                              createPost(getPayload(), payload!, true);
                             // Navigator.pop(context, getPayload());
                           } else {
                             ToastBuilder().showToast(
-                                AppLocalizations.of(context)
+                                AppLocalizations.of(context)!
                                     .translate('please_select_atleast'),
                                 context,
                                 HexColor(AppColors.information));
@@ -131,7 +131,7 @@ class _PostReceiverListPage extends State<PostReceiverListPage> {
                         },
                         color: HexColor(AppColors.appColorWhite),
                         child: Text(
-                            AppLocalizations.of(context).translate("post"),
+                            AppLocalizations.of(context)!.translate("post"),
                             style: styleElements
                                 .buttonThemeScalable(context)
                                 .copyWith(
@@ -150,18 +150,18 @@ class _PostReceiverListPage extends State<PostReceiverListPage> {
       PostReceiverRequest payload = PostReceiverRequest();
       payload.pageSize = 10;
       payload.pageNumber = page;
-      payload.institutionId = prefs.getInt(Strings.instituteId);
+      payload.institutionId = prefs!.getInt(Strings.instituteId);
       payload.type = "post";
       payload.searchVal = searchVal;
-      payload.postType = widget.list != null && widget.list.isNotEmpty
-          ? widget.list[0].postType
-          : this.payload.postType;
+      payload.postType = widget.list != null && widget.list!.isNotEmpty
+          ? widget.list![0]!.postType
+          : this.payload!.postType;
       var data = jsonEncode(payload);
       var value = await Calls().call(data, context, Config.POST_RECEIVER_LIST);
       return PostReceiverResponse.fromJson(value);
     } else {
       PostReceiverResponse response = PostReceiverResponse();
-      List<PostReceiverListItem> list = [];
+      List<PostReceiverListItem?> list = [];
       list.add(selectedReceiverData);
       _selectedList.add(selectedReceiverData);
       response.rows = list;
@@ -172,17 +172,17 @@ class _PostReceiverListPage extends State<PostReceiverListPage> {
     }
   }
 
-  List<PostReceiverListItem> listItemsGetter(PostReceiverResponse response) {
-    response.rows.forEach((element) {
+  List<PostReceiverListItem?>? listItemsGetter(PostReceiverResponse ?response) {
+    response!.rows!.forEach((element) {
       if (_selectedList.any((selectedItem) {
-        return selectedItem.recipientTypeReferenceId ==
-            element.recipientTypeReferenceId &&
+        return selectedItem!.recipientTypeReferenceId ==
+            element!.recipientTypeReferenceId &&
             selectedItem.recipientTypeCode == element.recipientTypeCode;
       })) {
-        element.isSelected = true;
+        element!.isSelected = true;
       }
     });
-    recList.addAll(response.rows);
+    recList.addAll(response.rows!);
     // for (int i = 0; i < recList.length; i++) {
     //   for (int j = 0; j < _selectedList.length; j++) {
     //     if (recList[i].recipientTypeCode == _selectedList[j].recipientTypeCode) {
@@ -202,7 +202,7 @@ class _PostReceiverListPage extends State<PostReceiverListPage> {
         margin: EdgeInsets.only(top: 1, bottom: 1, left: 8, right: 8),
         child: TricycleUserListTile(
           imageUrl: (item.recipientImage != null)
-              ? Config.BASE_URL + item.recipientImage
+              ? Config.BASE_URL + item.recipientImage!
               : 'assets/appimages/userplaceholder.jpg',
           isFullImageUrl: true,
           title: item.recipientType,
@@ -217,11 +217,11 @@ class _PostReceiverListPage extends State<PostReceiverListPage> {
     );
   }
 
-  void changeSelection(bool value, PostReceiverListItem item, int index) {
-    if (item.isAllowed != null && item.isAllowed) {
-      if (item.recipientTypeCode.toLowerCase() ==
+  void changeSelection(bool? value, PostReceiverListItem item, int index) {
+    if (item.isAllowed != null && item.isAllowed!) {
+      if (item.recipientTypeCode!.toLowerCase() ==
           POST_RECIPIENT_TYPE.PRIVATE.type) {
-        if (value) {
+        if (value!) {
           _selectedList.clear();
           _selectedList.add(item);
           isPrivateSelected = true;
@@ -230,13 +230,13 @@ class _PostReceiverListPage extends State<PostReceiverListPage> {
           isPrivateSelected = false;
         }
         for (int i = 0; i < recList.length; i++) {
-          recList[i].isSelected = false;
+          recList[i]!.isSelected = false;
         }
         setState(() {
-          recList[index].isSelected = value;
+          recList[index]!.isSelected = value;
         });
       } else {
-        if (value) {
+        if (value!) {
           if (isPrivateSelected) {
             _selectedList.clear();
             _selectedList.add(item);
@@ -248,12 +248,12 @@ class _PostReceiverListPage extends State<PostReceiverListPage> {
         }
         if (isPrivateSelected) {
           for (int i = 0; i < recList.length; i++) {
-            recList[i].isSelected = false;
+            recList[i]!.isSelected = false;
           }
           isPrivateSelected = false;
         }
         setState(() {
-          recList[index].isSelected = value;
+          recList[index]!.isSelected = value;
         });
       }
     } else {
@@ -267,10 +267,10 @@ class _PostReceiverListPage extends State<PostReceiverListPage> {
     }
   }
 
-  List<String> getTypeCode() {
-    List<String> typeCode = [];
+  List<String?> getTypeCode() {
+    List<String?> typeCode = [];
     for (int i = 0; i < _selectedList.length; i++) {
-      typeCode.add(_selectedList[i].recipientTypeCode);
+      typeCode.add(_selectedList[i]!.recipientTypeCode);
     }
     return typeCode;
   }
@@ -284,29 +284,29 @@ class _PostReceiverListPage extends State<PostReceiverListPage> {
   List<PostRecipientDetailItem> getDetails() {
     List<PostRecipientDetailItem> detail = [];
     for (int i = 0; i < _selectedList.length; i++) {
-      if (_selectedList[i].recipientTypeReferenceId != null) {
-        if (_selectedList[i].recipientTypeCode ==
+      if (_selectedList[i]!.recipientTypeReferenceId != null) {
+        if (_selectedList[i]!.recipientTypeCode ==
             POST_RECIPIENT_TYPE.CLASS.type ||
-            _selectedList[i].recipientTypeCode ==
+            _selectedList[i]!.recipientTypeCode ==
                 POST_RECIPIENT_TYPE.STAFF.type ||
-            _selectedList[i].recipientTypeCode ==
+            _selectedList[i]!.recipientTypeCode ==
                 POST_RECIPIENT_TYPE.COMMUNITY.type ||
-            _selectedList[i].recipientTypeCode ==
+            _selectedList[i]!.recipientTypeCode ==
                 POST_RECIPIENT_TYPE.PARENT.type) {
           detail.add(PostRecipientDetailItem(
               type: POST_RECIPIENT_TYPE.ROOM.type,
-              id: _selectedList[i].recipientTypeReferenceId));
-        } else if (_selectedList[i].recipientTypeCode ==
+              id: _selectedList[i]!.recipientTypeReferenceId));
+        } else if (_selectedList[i]!.recipientTypeCode ==
             POST_RECIPIENT_TYPE.INSTITUTION.type) {
           postCreatePayload.postInstitutionId =
-              _selectedList[i].recipientTypeReferenceId;
+              _selectedList[i]!.recipientTypeReferenceId;
           detail.add(PostRecipientDetailItem(
               type: POST_RECIPIENT_TYPE.INSTITUTION.type,
-              id: _selectedList[i].recipientTypeReferenceId));
+              id: _selectedList[i]!.recipientTypeReferenceId));
         } else {
           detail.add(PostRecipientDetailItem(
-              type: _selectedList[i].recipientTypeCode,
-              id: _selectedList[i].recipientTypeReferenceId));
+              type: _selectedList[i]!.recipientTypeCode,
+              id: _selectedList[i]!.recipientTypeReferenceId));
         }
       }
     }
@@ -315,32 +315,32 @@ class _PostReceiverListPage extends State<PostReceiverListPage> {
 
   void updatePost(PostCreatePayload postCreatePayload,
       PostCreatePayload payload, bool isFinalCall) async {
-    progressButtonKey.currentState.show();
+    progressButtonKey.currentState!.show();
     payload.postStatus="posted";
     payload.postRecipientType = postCreatePayload.postRecipientType;
     payload.postRecipientDetails = postCreatePayload.postRecipientDetails;
     var body = jsonEncode(payload);
     Calls().call(body, context, Config.UPDATE_POST).then((value) {
-      progressButtonKey.currentState.hide();
+      progressButtonKey.currentState!.hide();
       var res = PostCreateResponse.fromJson(value);
       if (res.statusCode == Strings.success_code) {
         if (isFinalCall) {
           Navigator.pop(context, true);
-          if (widget.callBack != null) widget.callBack();
+          if (widget.callBack != null) widget.callBack!();
         }
       } else {
         ToastBuilder()
-            .showToast(res.message, context, HexColor(AppColors.information));
+            .showToast(res.message!, context, HexColor(AppColors.information));
       }
     }).catchError((onError) {
-      progressButtonKey.currentState.hide();
+      progressButtonKey.currentState!.hide();
       print(onError);
     });
   }
 
   void createPost(PostCreatePayload postCreatePayload,
       PostCreatePayload payload, bool isFinalCall) async {
-    progressButtonKey.currentState.show();
+    progressButtonKey.currentState!.show();
 
     payload.postRecipientType = postCreatePayload.postRecipientType;
     payload.postRecipientDetails = postCreatePayload.postRecipientDetails;
@@ -348,7 +348,7 @@ class _PostReceiverListPage extends State<PostReceiverListPage> {
      payload.postStatus="posted";
     var body = jsonEncode(payload);
     Calls().call(body, context,payload.postType=="lesson"&& payload.id!=null?Config.UPDATE_POST: Config.CREATE_POST).then((value) {
-      progressButtonKey.currentState.hide();
+      progressButtonKey.currentState!.hide();
       var res = PostCreateResponse.fromJson(value);
       if (res.statusCode == Strings.success_code) {
         // ToastBuilder()
@@ -361,23 +361,23 @@ class _PostReceiverListPage extends State<PostReceiverListPage> {
 
           print("here--------------------");
           Navigator.pop(context, true);
-          if (widget.callBack != null) widget.callBack();
+          if (widget.callBack != null) widget.callBack!();
         }
         // }
       } else {
         ToastBuilder()
-            .showToast(res.message, context, HexColor(AppColors.information));
+            .showToast(res.message!, context, HexColor(AppColors.information));
       }
     }).catchError((onError) {
-      progressButtonKey.currentState.hide();
+      progressButtonKey.currentState!.hide();
       print(onError);
     });
   }
 
   void getScratchCardData(int id) async {
-    progressButtonKey.currentState.show();
+    progressButtonKey.currentState!.show();
     ScratchCardEntity scratchCardEntity = ScratchCardEntity();
-    scratchCardEntity.allPersonsId = prefs.getInt("userId");
+    scratchCardEntity.allPersonsId = prefs!.getInt("userId");
     scratchCardEntity.scratchCardContextId = id;
     scratchCardEntity.scratchCardContext = "post";
     scratchCardEntity.scratchCardSubContext = "post";
@@ -385,7 +385,7 @@ class _PostReceiverListPage extends State<PostReceiverListPage> {
     Calls()
         .call(jsonEncode(scratchCardEntity), context, Config.CARD_ALLOCATE)
         .then((value) async {
-      progressButtonKey.currentState.hide();
+      progressButtonKey.currentState!.hide();
       if (value != null) {
         var data = ScratchCardResult.fromJson(value);
         if (data.statusCode == Strings.success_code) {
@@ -393,10 +393,10 @@ class _PostReceiverListPage extends State<PostReceiverListPage> {
               barrierDismissible: false,
               context: context,
               builder: (BuildContext context) => ScratchCardDialogue(
-                prefs.getInt("userId"),
-                data.rows.id,
-                data.rows.scratchCardValue,
-                data.rows.scratchCardRewardType,
+                prefs!.getInt("userId"),
+                data.rows!.id,
+                data.rows!.scratchCardValue,
+                data.rows!.scratchCardRewardType,
                 fromPage: 'post',
                 callBack: () {
                   Navigator.pop(context, true);
@@ -405,7 +405,7 @@ class _PostReceiverListPage extends State<PostReceiverListPage> {
         }
       }
     }).catchError((onError) {
-      progressButtonKey.currentState.hide();
+      progressButtonKey.currentState!.hide();
       ToastBuilder().showToast(
           onError.toString(), context, HexColor(AppColors.information));
     });

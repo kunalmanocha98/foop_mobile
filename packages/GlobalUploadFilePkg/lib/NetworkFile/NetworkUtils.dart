@@ -11,7 +11,7 @@ import 'package:http_parser/http_parser.dart';
 
 class NetworkUtils {
   static NetworkUtils _instance = new NetworkUtils.internal();
-  BuildContext context;
+  BuildContext? context;
 
   NetworkUtils.internal();
 
@@ -22,17 +22,17 @@ class NetworkUtils {
   Future<dynamic> upload(
       BuildContext context,
       String url,
-      String token,
+      String? token,
       String filePath,
       String ownerType,
       String ownerId,
       String contextType,
-      String contextId,
+      String? contextId,
       String subContextType,
       String subContextId,
-      String contentType,
-      Function(int progress) onProgressCallback,
-      String mimeType) async {
+      String? contentType,
+      Function(int progress)? onProgressCallback,
+      String? mimeType) async {
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
@@ -45,7 +45,7 @@ class NetworkUtils {
         int byteCount = 0;
 
         var request = http.MultipartRequest('POST', Uri.parse(url));
-        request.files.add(await http.MultipartFile.fromPath('attachment', filePath, contentType: MediaType(contentType, mimeType)));
+        request.files.add(await http.MultipartFile.fromPath('attachment', filePath, contentType: MediaType(contentType!, mimeType!)));
 
         print("content Type -"+contentType+"  mimeType - "+mimeType);
         print(token);
@@ -54,7 +54,7 @@ class NetworkUtils {
         request.fields["owner_type"] = ownerType;
         request.fields["owner_id"] = ownerId;
         request.fields["context_type"] = contextType;
-        request.fields["context_id"] = contextId;
+        request.fields["context_id"] = contextId!;
         request.fields["sub_context_type"] = subContextType;
         request.fields["sub_context_id"] = subContextId;
 
@@ -71,8 +71,8 @@ class NetworkUtils {
         // request.headers.addAll(headers);
 
         req.headers.set(
-            HttpHeaders.contentTypeHeader, request.headers[HttpHeaders.contentTypeHeader]);
-        req.headers.add('Authorization', ('Token' + " " + token));
+            HttpHeaders.contentTypeHeader, request.headers[HttpHeaders.contentTypeHeader]!);
+        req.headers.add('Authorization', ('Token' + " " + token!));
 
 
         Stream<List<int>> streamUpload = msStream.transform(

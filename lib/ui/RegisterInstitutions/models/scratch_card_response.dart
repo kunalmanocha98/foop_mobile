@@ -1,8 +1,8 @@
 class ScratchCardResult {
-  String statusCode;
-  String message;
-  Rows rows;
-  int total;
+  String? statusCode;
+  String? message;
+  Rows? rows;
+  int? total;
 
   ScratchCardResult({this.statusCode, this.message, this.rows, this.total});
 
@@ -18,7 +18,7 @@ class ScratchCardResult {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     data['total'] = this.total;
     return data;
@@ -26,17 +26,17 @@ class ScratchCardResult {
 }
 
 class Rows {
-  int id;
-  int scratchCardDetailsId;
-  String scratchCardRewardType;
-  int allPersonsId;
-  String scratchCardContext;
-  String scratchCardSubContext;
-  int scratchCardContextId;
-  int scratchCardSubContextId;
-  String scratchCardReceivedDate;
-  String scratchCardStatus;
-  String scratchCardValue;
+  int? id;
+  int? scratchCardDetailsId;
+  String? scratchCardRewardType;
+  int? allPersonsId;
+  String? scratchCardContext;
+  String? scratchCardSubContext;
+  int? scratchCardContextId;
+  int? scratchCardSubContextId;
+  String? scratchCardReceivedDate;
+  String? scratchCardStatus;
+  String? scratchCardValue;
 
   Rows(
       {this.id,

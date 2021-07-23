@@ -19,7 +19,7 @@ class EmailHomePage extends StatefulWidget {
 }
 
 class _EmailHomePage extends State<EmailHomePage> {
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
   List<EmailListItem> emailList = [];
 
   @override
@@ -28,7 +28,7 @@ class _EmailHomePage extends State<EmailHomePage> {
     return SafeArea(
         child: Scaffold(
           appBar: TricycleAppBar().getCustomAppBarWithSearch(context,
-              appBarTitle: AppLocalizations.of(context).translate(''),
+              appBarTitle: AppLocalizations.of(context)!.translate(''),
               centerTitle: false,
               titleWidget: Row(
                 mainAxisSize: MainAxisSize.min,
@@ -144,8 +144,8 @@ class _EmailHomePage extends State<EmailHomePage> {
     return EmailListResponse.fromJson(value);
   }
 
-  List listItemsGetter(EmailListResponse pageData) {
-    emailList.addAll(pageData.rows);
+  List? listItemsGetter(EmailListResponse? pageData) {
+    emailList.addAll(pageData!.rows!);
     return pageData.rows;
   }
 

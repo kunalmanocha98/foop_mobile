@@ -1,17 +1,17 @@
 class CreateReferralEntity {
-  int id;
-  int institutionId;
-  int referredByPersonId;
-  String referredByPersonMobileNumber;
-  String referredByUpiId;
-  String referredDate;
-  int adminStaffPersonId;
-  String referralDate;
-  String firstName;
-  String lastName;
-  String gender;
-  String refferedByImageUrl;
-  String dateOfBirth;
+  int? id;
+  int? institutionId;
+  int? referredByPersonId;
+  String? referredByPersonMobileNumber;
+  String? referredByUpiId;
+  String? referredDate;
+  int? adminStaffPersonId;
+  String? referralDate;
+  String? firstName;
+  String? lastName;
+  String? gender;
+  String? refferedByImageUrl;
+  String? dateOfBirth;
 
   CreateReferralEntity(
       {this.id,

@@ -1,7 +1,7 @@
 class CommonBasicResponse {
-  String statusCode;
-  String message;
-  DataAfterOptVerification rows;
+  String? statusCode;
+  String? message;
+  DataAfterOptVerification? rows;
 
   CommonBasicResponse({this.statusCode, this.message, this.rows});
 
@@ -18,16 +18,16 @@ class CommonBasicResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     return data;
   }
 }
 
 class DataAfterOptVerification {
-  String expiry;
-  String token;
-  int userId;
+  String? expiry;
+  String? token;
+  int? userId;
   DataAfterOptVerification({this.expiry, this.token});
 
   DataAfterOptVerification.fromJson(Map<String, dynamic> json) {

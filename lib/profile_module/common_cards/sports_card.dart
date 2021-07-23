@@ -16,14 +16,14 @@ import 'overlaped_circular_images.dart';
 // ignore: must_be_immutable
 class SportsCard extends StatelessWidget {
   final CommonCardData data;
-  BuildContext context;
-  List<SubRow> listSubItems = [];
-  bool isProfile;
-  String instituteId;
-  int id;
-  String personType;
-  Null Function() callbackPicker;
-  TextStyleElements styleElements;
+  BuildContext? context;
+  List<SubRow>? listSubItems = [];
+  bool? isProfile;
+  String? instituteId;
+  int? id;
+  String? personType;
+  Null Function()? callbackPicker;
+  TextStyleElements? styleElements;
 
   Size displaySize(BuildContext context) {
     debugPrint('Size = ' + MediaQuery.of(context).size.toString());
@@ -40,7 +40,7 @@ class SportsCard extends StatelessWidget {
     return displaySize(context).width;
   }
 
-  SportsCard({Key key, @required this.data,this.styleElements,this.instituteId,
+  SportsCard({Key? key, required this.data,this.styleElements,this.instituteId,
     this.isProfile,
     this.id,
     this.personType,
@@ -65,7 +65,7 @@ class SportsCard extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 16, right: 16,top:12,bottom:12),
                     child: Text(
                       data.title ?? "",
-                      style: styleElements.headline6ThemeScalable(context).copyWith(fontWeight: FontWeight.bold,color: HexColor(AppColors.appColorBlack85)),
+                      style: styleElements!.headline6ThemeScalable(context).copyWith(fontWeight: FontWeight.bold,color: HexColor(AppColors.appColorBlack85)),
                       textAlign: TextAlign.left,
                     ),
                   )),
@@ -74,11 +74,11 @@ class SportsCard extends StatelessWidget {
 
           ],
         ),
-      listSubItems!=null && listSubItems.length>0?  ListView.builder(
+      listSubItems!=null && listSubItems!.length>0?  ListView.builder(
             shrinkWrap: true,
             padding: const EdgeInsets.all(0.0),
             physics: NeverScrollableScrollPhysics(),
-            itemCount: listSubItems.length,
+            itemCount: listSubItems!.length,
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () {
@@ -124,16 +124,16 @@ class SportsCard extends StatelessWidget {
                               Align(
                                 alignment: Alignment.topLeft,
                                 child:Text(
-                                  listSubItems[index].textOne ??= "",
-                                  style: styleElements.headline6ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite)),
+                                  listSubItems![index].textOne ??= "",
+                                  style: styleElements!.headline6ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite)),
                                   textAlign: TextAlign.left,
                                 ),
                               ),
                               Align(
                                 alignment: Alignment.topLeft,
                                 child:  Text(
-                                  listSubItems[index].textEight ??= "",
-                                  style: styleElements.overlineThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite)),
+                                  listSubItems![index].textEight ??= "",
+                                  style: styleElements!.overlineThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite)),
                                   textAlign: TextAlign.left,
                                 ),
                               ),
@@ -141,15 +141,15 @@ class SportsCard extends StatelessWidget {
                                 margin: const EdgeInsets.only(top: 12,),
                                 child:  Row(
                                   children: <Widget>[
-                                    OverlappedImages( listSubItems[index].images),
+                                    OverlappedImages( listSubItems![index].images),
 
                                     Container(
                                       margin: const EdgeInsets.only(left: 16),
                                       child: Flexible(
                                         child: Text(
-                                          listSubItems[index].totalCount ??=
+                                          listSubItems![index].totalCount ??=
                                           "",
-                                          style: styleElements.captionThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite)),
+                                          style: styleElements!.captionThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite)),
                                           textAlign: TextAlign.left,
                                         ),
                                       ),)
@@ -192,7 +192,7 @@ class SportsCard extends StatelessWidget {
                           ),
                         ));
                     if (result != null && result['result'] == "update") {
-                      callbackPicker();
+                      callbackPicker!();
                     }
                   },
                   child: Container(
@@ -201,9 +201,9 @@ class SportsCard extends StatelessWidget {
                       /*visible: data.isShowMore ??= false,*/
                       child: Align(
                         alignment: Alignment.bottomRight,
-                        child:Text(AppLocalizations.of(context).translate('see_more'),
+                        child:Text(AppLocalizations.of(context)!.translate('see_more'),
                           style:
-                          styleElements.subtitle2ThemeScalable(context),
+                          styleElements!.subtitle2ThemeScalable(context),
                           textAlign: TextAlign.center,
                         ),
                       ),

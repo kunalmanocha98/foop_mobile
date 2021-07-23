@@ -1,29 +1,29 @@
 class EventCreateRequest {
-  String eventOwnerType;
-  int eventOwnerId;
-  String eventName;
-  String eventDescription;
-  String eventDate;
-  int startTime;
-  int endTime;
-  int standardEventsId;
-  String eventCategory;
-  String eventOrganizerType;
-  int eventOrganizerId;
-  String calContextType;
-  String eventStatus;
-  int calContextTypeId;
-  List<String> recipientType;
-  List<RecipientDetails> recipientDetails;
-  bool isPaidEvent;
-  int paidAmount;
-  String paidCurrency;
-  List<InvolvedPeopleList> involvedPeopleList;
-  List<EventLocation> eventLocation;
-  String eventPrivacyType;
-  List<String> eventTopics;
-  List<String> eventLanguages;
-  int eventId;
+  String? eventOwnerType;
+  int? eventOwnerId;
+  String? eventName;
+  String? eventDescription;
+  String? eventDate;
+  int? startTime;
+  int? endTime;
+  int? standardEventsId;
+  String? eventCategory;
+  String? eventOrganizerType;
+  int? eventOrganizerId;
+  String? calContextType;
+  String? eventStatus;
+  int? calContextTypeId;
+  List<String?>? recipientType;
+  List<RecipientDetails>? recipientDetails;
+  bool? isPaidEvent;
+  int? paidAmount;
+  String? paidCurrency;
+  List<InvolvedPeopleList>? involvedPeopleList;
+  List<EventLocation>? eventLocation;
+  String? eventPrivacyType;
+  List<String?>? eventTopics;
+  List<String>? eventLanguages;
+  int? eventId;
 
   EventCreateRequest(
       {this.eventOwnerType,
@@ -75,7 +75,7 @@ class EventCreateRequest {
     if (json['recipient_details'] != null) {
       recipientDetails = [];//RecipientDetails>();
       json['recipient_details'].forEach((v) {
-        recipientDetails.add(new RecipientDetails.fromJson(v));
+        recipientDetails!.add(new RecipientDetails.fromJson(v));
       });
     }
     isPaidEvent = json['is_paid_event'];
@@ -84,13 +84,13 @@ class EventCreateRequest {
     if (json['involved_people_list'] != null) {
       involvedPeopleList = [];//InvolvedPeopleList>();
       json['involved_people_list'].forEach((v) {
-        involvedPeopleList.add(new InvolvedPeopleList.fromJson(v));
+        involvedPeopleList!.add(new InvolvedPeopleList.fromJson(v));
       });
     }
     if (json['event_location'] != null) {
       eventLocation = [];//EventLocation>();
       json['event_location'].forEach((v) {
-        eventLocation.add(new EventLocation.fromJson(v));
+        eventLocation!.add(new EventLocation.fromJson(v));
       });
     }
   }
@@ -118,26 +118,26 @@ class EventCreateRequest {
     data['event_id'] = this.eventId;
     if (this.recipientDetails != null) {
       data['recipient_details'] =
-          this.recipientDetails.map((v) => v.toJson()).toList();
+          this.recipientDetails!.map((v) => v.toJson()).toList();
     }
     data['is_paid_event'] = this.isPaidEvent;
     data['paid_amount'] = this.paidAmount;
     data['paid_currency'] = this.paidCurrency;
     if (this.involvedPeopleList != null) {
       data['involved_people_list'] =
-          this.involvedPeopleList.map((v) => v.toJson()).toList();
+          this.involvedPeopleList!.map((v) => v.toJson()).toList();
     }
     if (this.eventLocation != null) {
       data['event_location'] =
-          this.eventLocation.map((v) => v.toJson()).toList();
+          this.eventLocation!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class RecipientDetails {
-  String type;
-  int id;
+  String? type;
+  int? id;
 
   RecipientDetails({this.type, this.id});
 
@@ -155,9 +155,9 @@ class RecipientDetails {
 }
 
 class InvolvedPeopleList {
-  String memberType;
-  int memberId;
-  String roleType;
+  String? memberType;
+  int? memberId;
+  String? roleType;
 
   InvolvedPeopleList({this.memberType, this.memberId, this.roleType});
 
@@ -177,9 +177,9 @@ class InvolvedPeopleList {
 }
 
 class EventLocation {
-  String type;
-  Address address;
-  String other;
+  String? type;
+  Address? address;
+  String? other;
 
   EventLocation({this.type, this.address, this.other});
 
@@ -194,7 +194,7 @@ class EventLocation {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['type'] = this.type;
     if (this.address != null) {
-      data['address'] = this.address.toJson();
+      data['address'] = this.address!.toJson();
     }
     data['other'] = this.other;
     return data;
@@ -202,13 +202,13 @@ class EventLocation {
 }
 
 class Address {
-  String lat;
-  String long;
-  String address;
-  String city;
-  String state;
-  String country;
-  String pincode;
+  String? lat;
+  String? long;
+  String? address;
+  String? city;
+  String? state;
+  String? country;
+  String? pincode;
 
   Address(
       {this.lat,
@@ -243,10 +243,10 @@ class Address {
 }
 
 class CreateEventResponse {
-  String statusCode;
-  String message;
-  int total;
-  Rows rows;
+  String? statusCode;
+  String? message;
+  int? total;
+  Rows? rows;
 
   CreateEventResponse({this.statusCode, this.message,this.rows, this.total});
 
@@ -263,14 +263,14 @@ class CreateEventResponse {
     data['message'] = this.message;
     data['total'] = this.total;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     return data;
   }
 }
 
 class Rows {
-  int id;
+  int? id;
 
   Rows({this.id});
 

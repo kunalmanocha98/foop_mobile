@@ -1,8 +1,8 @@
 class RatersData {
-  String statusCode;
-  String message;
-  List<RatersItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<RatersItem>? rows;
+  int? total;
 
   RatersData({this.statusCode, this.message, this.rows, this.total});
 
@@ -12,7 +12,7 @@ class RatersData {
     if (json['rows'] != null) {
       rows = [];//RatersItem>();
       json['rows'].forEach((v) {
-        rows.add(new RatersItem.fromJson(v));
+        rows!.add(new RatersItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -23,7 +23,7 @@ class RatersData {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -31,12 +31,12 @@ class RatersData {
 }
 
 class RatersItem {
-  int id;
-  String type;
-  String name;
-  String profileImage;
-  String subtitle;
-  bool isObjectFollowing;
+  int? id;
+  String? type;
+  String? name;
+  String? profileImage;
+  String? subtitle;
+  bool? isObjectFollowing;
 
   RatersItem(
       {this.id,

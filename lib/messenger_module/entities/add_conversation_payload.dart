@@ -1,22 +1,22 @@
 class AddConversationPayload {
-  String sId;
-  String mcId;
-  String conversationOwnerType;
-  String conversationOwnerId;
-  String personId;
-  String conversationId;
-  String conversationWithType;
-  String conversationWithTypeId;
-  String conversationWithName;
-  String conversationImageThumbnail;
-  String conversationImage;
-  String conversationName;
-  String lastMessage;
-  String lastMessageByType;
-  String lastMessageById;
-  String lastMessageByName;
-  int lastMessageTime;
-  int eventId;
+  String? sId;
+  String? mcId;
+  String? conversationOwnerType;
+  String? conversationOwnerId;
+  String? personId;
+  String? conversationId;
+  String? conversationWithType;
+  String? conversationWithTypeId;
+  String? conversationWithName;
+  String? conversationImageThumbnail;
+  String? conversationImage;
+  String? conversationName;
+  String? lastMessage;
+  String? lastMessageByType;
+  String? lastMessageById;
+  String? lastMessageByName;
+  int? lastMessageTime;
+  int? eventId;
   AddConversationPayload(
       {this.sId,
         this.mcId,

@@ -1,7 +1,7 @@
 class UserListRequest {
-  String searchVal;
-  int pageSize;
-  int pageNumber;
+  String? searchVal;
+  int? pageSize;
+  int? pageNumber;
 
   UserListRequest({this.searchVal, this.pageSize, this.pageNumber});
 
@@ -21,10 +21,10 @@ class UserListRequest {
 }
 
 class UserListResponse {
-  String statusCode;
-  String message;
-  int total;
-  List<UserListResponseItem> rows;
+  String? statusCode;
+  String? message;
+  int? total;
+  List<UserListResponseItem>? rows;
 
   UserListResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -34,7 +34,7 @@ class UserListResponse {
     if (json['rows'] != null) {
       rows = [];//UserListResponseItem>();
       json['rows'].forEach((v) {
-        rows.add(new UserListResponseItem.fromJson(v));
+        rows!.add(new UserListResponseItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -45,7 +45,7 @@ class UserListResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -53,27 +53,27 @@ class UserListResponse {
 }
 
 class UserListResponseItem {
-  int id;
-  String title;
-  String email;
-  String firstName;
-  String middleName;
-  String lastName;
-  String shortBio;
-  String fullBio;
-  String message;
-  String nickName;
-  String dateOfBirth;
-  String bloodGroup;
-  String dateOfAnniversary;
-  int gender;
-  String mobile;
-  String mobileCountryCode;
-  String profileImage;
-  String coverImage;
-  String mobileVerificationStatus;
-  String emailVerificationStatus;
-  bool selected = false;
+  int? id;
+  String? title;
+  String? email;
+  String? firstName;
+  String? middleName;
+  String? lastName;
+  String? shortBio;
+  String? fullBio;
+  String? message;
+  String? nickName;
+  String? dateOfBirth;
+  String? bloodGroup;
+  String? dateOfAnniversary;
+  int? gender;
+  String? mobile;
+  String? mobileCountryCode;
+  String? profileImage;
+  String? coverImage;
+  String? mobileVerificationStatus;
+  String? emailVerificationStatus;
+  bool? selected = false;
 
   UserListResponseItem(
       {this.id,

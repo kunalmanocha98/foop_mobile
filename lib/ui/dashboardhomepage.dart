@@ -11,8 +11,6 @@ import 'package:oho_works_app/components/tricyclemenuitem.dart';
 import 'package:oho_works_app/enums/post_enums.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
-import 'package:oho_works_app/event_bus/make_count_zero.dart';
-import 'package:oho_works_app/event_bus/newMessageReceived.dart';
 import 'package:oho_works_app/home/home.dart';
 import 'package:oho_works_app/home/locator.dart';
 import 'package:oho_works_app/models/common_response.dart';
@@ -22,13 +20,11 @@ import 'package:oho_works_app/models/menu/menulistmodels.dart';
 import 'package:oho_works_app/models/menu/profile_models.dart';
 import 'package:oho_works_app/models/notification_count_response.dart';
 import 'package:oho_works_app/models/personal_profile.dart';
-import 'package:oho_works_app/models/unread_messages_count.dart';
 import 'package:oho_works_app/profile_module/common_cards/user_name_with_image_card.dart';
 import 'package:oho_works_app/profile_module/pages/network_page.dart';
 import 'package:oho_works_app/profile_module/pages/profile_page.dart';
 import 'package:oho_works_app/services/audio_socket_service.dart';
 import 'package:oho_works_app/services/deeplinking_service.dart';
-import 'package:oho_works_app/services/push_notification_service.dart';
 import 'package:oho_works_app/services/share_data_service.dart';
 import 'package:oho_works_app/services/socket_service.dart';
 import 'package:oho_works_app/tri_cycle_database/data_base_helper.dart';
@@ -54,7 +50,6 @@ import 'package:oho_works_app/utils/hexColors.dart';
 import 'package:oho_works_app/utils/strings.dart';
 import 'package:oho_works_app/utils/toast_builder.dart';
 import 'package:oho_works_app/utils/utility_class.dart';
-import 'package:event_bus/event_bus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -70,6 +65,7 @@ import 'EdufluencerTutorModule/edufluencer_tutor_list.dart';
 import 'LearningModule/lessons_list_page.dart';
 import 'RoomModule/createRoomPage.dart';
 import 'appmenupage.dart';
+import 'campus_talk/test_video/home_screen.dart';
 import 'community_page.dart';
 import 'dialogs/logout_dialog.dart';
 import 'email_module/emai_home_page.dart';
@@ -78,9 +74,9 @@ import 'invitations/invitation_page.dart';
 import 'menu_user_popularity_card.dart';
 
 class DashboardPage extends StatefulWidget {
-  final int index;
-  final int id;
-  final Null Function(String) newMessageCallBack;
+  final int? index;
+  final int? id;
+  final Null Function(String)? newMessageCallBack;
   DashboardPage({this.index, this.id,this.newMessageCallBack});
 
   @override
@@ -88,8 +84,8 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashBoardPage extends State<DashboardPage> {
-  final int index;
-  final int id;
+  final int? index;
+  final int? id;
   final db = DatabaseHelper.instance;
   _DashBoardPage({this.index, this.id});
   // final double _initFabHeight = 120.0;
@@ -97,29 +93,29 @@ class _DashBoardPage extends State<DashboardPage> {
   double _panelHeightOpen = 0;
   double _panelHeightClosed = 48.0;
   double _panelHeightClosedFirstTime = 350.0;
-  SharedPreferences prefs;
-  TextStyleElements styleElements;
+  SharedPreferences? prefs;
+  late TextStyleElements styleElements;
   GlobalKey<AppMenuPageState> appMenuKey = GlobalKey();
   GlobalKey<TricycleBottomSelectorState> bottomSelectorKey = GlobalKey();
-  final DynamicLinkService dynamicLinkService = locator<DynamicLinkService>();
+  final DynamicLinkService? dynamicLinkService = locator<DynamicLinkService>();
   var followers = 0;
   var following = 0;
   var roomsCount = 0;
   var postCount = 0;
-  int notificationCount;
-  AudioSocketService audioSocketService = locator<AudioSocketService>();
-  SocketService socketService = locator<SocketService>();
+  int? notificationCount;
+  AudioSocketService? audioSocketService = locator<AudioSocketService>();
+  SocketService? socketService = locator<SocketService>();
 
   int chatCount = 0;
   int nCount = 0;
-  int progress;
-  Persondata rows;
+  int? progress;
+  Persondata? rows;
   GlobalKey<CampusTalkPageState> talkPage = GlobalKey();
   GlobalKey<HomePageState> homePageState = GlobalKey();
   GlobalKey<PostListState> postListKey = GlobalKey();
 
-  final SharedDataService sharedDataService = locator<SharedDataService>();
-BuildContext dgsContext;
+  final SharedDataService? sharedDataService = locator<SharedDataService>();
+BuildContext? dgsContext;
   bool isLoading=false;
 
 
@@ -128,22 +124,22 @@ BuildContext dgsContext;
 
   bool isExpanded = true;
   double initialExtent =0.42;
-  BuildContext draggableSheetContext;
+  BuildContext? draggableSheetContext;
   PanelController drageScrollController=new PanelController();
   @override
   void initState() {
     super.initState();
     setPrefs();
     // _fabHeight = _initFabHeight;
-    sharedDataService.handleReceivedData(context);
+    sharedDataService!.handleReceivedData(context);
 
 
     DataSaveUtils().getUserData(context, prefs);
 
-    dynamicLinkService.handleDynamicLinks(context, prefs);
+    dynamicLinkService!.handleDynamicLinks(context, prefs);
 
 
-    WidgetsBinding.instance
+    WidgetsBinding.instance!
         .addPostFrameCallback((_) => getPersonProfile(context));
   }
 
@@ -152,7 +148,7 @@ BuildContext dgsContext;
     super.dispose();
   }
 
-  PackageInfo packageInfo;
+  PackageInfo? packageInfo;
   void setPrefs() async {
     prefs = await SharedPreferences.getInstance();
 
@@ -163,17 +159,17 @@ BuildContext dgsContext;
     });
 
     DeviceInfo deviceInfo = DeviceInfo();
-    if (prefs.getString("DeviceInfo") != null) {
+    if (prefs!.getString("DeviceInfo") != null) {
       Map<String, dynamic> map =
-      json.decode(prefs.getString("DeviceInfo") ?? "");
+      json.decode(prefs!.getString("DeviceInfo") ?? "");
       deviceInfo = DeviceInfo.fromJson(map);
     }
-    if (prefs.getDouble("lat") != null)
+    if (prefs!.getDouble("lat") != null)
       deviceInfo.gpsInfo = "Latitude :" +
-          prefs.getDouble("lat").toString() +
+          prefs!.getDouble("lat").toString() +
           ", Longitude : " +
-          prefs.getDouble("longi").toString();
-    deviceInfo.fcmId = prefs.getString("fcmId");
+          prefs!.getDouble("longi").toString();
+    deviceInfo.fcmId = prefs!.getString("fcmId");
 
     LogOutApi().logOut(context, jsonEncode(deviceInfo)).then((value) async {
       if (value != null) {
@@ -183,8 +179,8 @@ BuildContext dgsContext;
         prefs = await SharedPreferences.getInstance();
         var data = CommonBasicResponse.fromJson(value);
         if (data.statusCode == Strings.success_code) {
-          prefs.clear();
-          prefs.setBool("isLogout", true);
+          prefs!.clear();
+          prefs!.setBool("isLogout", true);
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: (context) => Home()),
                   (Route<dynamic> route) => false);
@@ -210,7 +206,7 @@ BuildContext dgsContext;
         ));*/
   }
 
-  void menuitemClick(String code) {
+  void menuitemClick(String? code) {
     switch (code) {
       case 'parentalcontrol':
         {
@@ -228,18 +224,18 @@ BuildContext dgsContext;
               context,
               MaterialPageRoute(
                   builder: (context) => NetworkPage(
-                      id: prefs.getInt("userId"),
+                      id: prefs!.getInt("userId"),
                       imageUrl: Utility().getUrlForImage(
-                          prefs.getString(Strings.profileImage),
+                          prefs!.getString(Strings.profileImage),
                           RESOLUTION_TYPE.R64,
-                          prefs.getString("ownerType") == "institution"
+                          prefs!.getString("ownerType") == "institution"
                               ? SERVICE_TYPE.INSTITUTION
                               : SERVICE_TYPE.PERSON),
-                      type: prefs.getString("ownerType") == "institution"
+                      type: prefs!.getString("ownerType") == "institution"
                           ? "institution"
                           : "person",
                       currentTab: 0,
-                      pageTitle: prefs.getString(Strings.firstName),
+                      pageTitle: prefs!.getString(Strings.firstName),
                       callback: () {})));
           break;
         }
@@ -261,7 +257,7 @@ BuildContext dgsContext;
               builder: (context) => SelectedFeedListPage(
                 isFromProfile: false,
                 appBarTitle:
-                AppLocalizations.of(context).translate('notice_board'),
+                AppLocalizations.of(context)!.translate('notice_board'),
                 postRecipientStatus: POST_RECIPIENT_STATUS.UNREAD.status,
                 postType: POST_TYPE.NOTICE.status,
               )));
@@ -273,7 +269,7 @@ BuildContext dgsContext;
               builder: (context) => SelectedFeedListPage(
                 isFromProfile: false,
                 appBarTitle:
-                AppLocalizations.of(context).translate('ask_expert'),
+                AppLocalizations.of(context)!.translate('ask_expert'),
                 postRecipientStatus: POST_RECIPIENT_STATUS.UNREAD.status,
                 postType: POST_TYPE.QNA.status,
               )));
@@ -285,7 +281,7 @@ BuildContext dgsContext;
               builder: (context) => SelectedFeedListPage(
                 isFromProfile: false,
                 appBarTitle:
-                AppLocalizations.of(context).translate('article'),
+                AppLocalizations.of(context)!.translate('article'),
                 postRecipientStatus: POST_RECIPIENT_STATUS.UNREAD.status,
                 postType: POST_TYPE.BLOG.status,
               )));
@@ -297,7 +293,7 @@ BuildContext dgsContext;
               builder: (context) => SelectedFeedListPage(
                 isFromProfile: false,
                 isBookMarked: true,
-                appBarTitle: AppLocalizations.of(context)
+                appBarTitle: AppLocalizations.of(context)!
                     .translate('bookmarked_posts'),
                 postRecipientStatus: POST_RECIPIENT_STATUS.UNREAD.status,
               )));
@@ -416,18 +412,18 @@ BuildContext dgsContext;
     }
   }
   int _selectedIndex = 0;
-  List<MenuListItemNew> menuList = [];
+  List<MenuListItemNew>? menuList = [];
   List<Widget> _widgetOptions() {
     return <Widget>[
 
 
       HomePage(
           key: homePageState,
-          newMessageCallBack: (String type) {
+          newMessageCallBack: (String ?type) {
 
             if (type == "eventmessenger") {
               print("event_message-----------------------------------------------step1");
-              talkPage.currentState.newMessage();
+              talkPage.currentState!.newMessage();
             }
           }),
       CampusTalkListPage(
@@ -439,6 +435,9 @@ BuildContext dgsContext;
         ),
       ),
       LessonsListPage(),
+
+
+
       CommunityPage(
       )
 
@@ -504,8 +503,8 @@ BuildContext dgsContext;
           onClickCallback: (value) {
             if (value == 'room') {
               Navigator.pop(context);
-              if (prefs.getBool(Strings.isVerified) != null &&
-                  prefs.getBool(Strings.isVerified)) {
+              if (prefs!.getBool(Strings.isVerified) != null &&
+                  prefs!.getBool(Strings.isVerified)!) {
                 Navigator.of(context)
                     .push(MaterialPageRoute(
                         builder: (context) => CreateRoomPage(
@@ -515,7 +514,7 @@ BuildContext dgsContext;
                   if (value2 != null && value2 == Strings.success_code) {
                     setState(() {
                       if (_selectedIndex == 4) {
-                        appMenuKey.currentState.menuitemClick('room');
+                        appMenuKey.currentState!.menuitemClick('room');
                       } else {
                         _selectedIndex = 4;
                         Navigator.of(context).push(MaterialPageRoute(
@@ -529,7 +528,7 @@ BuildContext dgsContext;
                 });
               } else {
                 ToastBuilder().showToast(
-                    AppLocalizations.of(context).translate("only_verirfied"),
+                    AppLocalizations.of(context)!.translate("only_verirfied"),
                     context,
                     HexColor(AppColors.information));
               }
@@ -541,7 +540,7 @@ BuildContext dgsContext;
                             type: value,
                             prefs: prefs,
                         callBack: (){
-                          homePageState.currentState.refresh();
+                          homePageState.currentState!.refresh();
                         },
                           )))
                   .then((value) {
@@ -550,7 +549,7 @@ BuildContext dgsContext;
                     setState(() {
                       _selectedIndex = 0;
                     });
-                    homePageState.currentState.refresh();
+                    homePageState.currentState!.refresh();
 
                   } else {
                     setState(() {
@@ -575,7 +574,7 @@ BuildContext dgsContext;
           setState(() {
             var data = PersonalProfile.fromJson(value);
             if (data != null && data.statusCode == 'S10001') {
-              Persondata row = data.rows;
+              Persondata? row = data.rows;
               rows = row;
               DataSaveUtils().saveUserData(prefs, row);
             }
@@ -600,9 +599,9 @@ BuildContext dgsContext;
   getPersonProfile(BuildContext context) async {
     fetchMenuListData();
     prefs ??= await SharedPreferences.getInstance();
-    if (prefs.getString("basicData") != null) {
+    if (prefs!.getString("basicData") != null) {
       Map<String, dynamic> map =
-      json.decode(prefs.getString("basicData") ?? "");
+      json.decode(prefs!.getString("basicData") ?? "");
       rows = Persondata.fromJson(map);
       followersCountApi(context);
     }
@@ -611,17 +610,17 @@ BuildContext dgsContext;
   void followersCountApi(BuildContext context) async {
     final body = jsonEncode({
       "object_type": "person",
-      "object_id": prefs.getInt(Strings.userId),
+      "object_id": prefs!.getInt(Strings.userId),
     });
     Calls().call(body, context, Config.FOLLOWERS_COUNT).then((value) async {
       if (value != null) {
         var data = FollowersFollowingCountEntity.fromJson(value);
         if (data != null && data.statusCode == 'S10001') {
           setState(() {
-            followers = data.rows.followersCount ?? 0;
-            following = data.rows.followingCount ?? 0;
-            roomsCount = data.rows.roomsCount ?? 0;
-            postCount = data.rows.postCount ?? 0;
+            followers = data.rows!.followersCount ?? 0;
+            following = data.rows!.followingCount ?? 0;
+            roomsCount = data.rows!.roomsCount ?? 0;
+            postCount = data.rows!.postCount ?? 0;
           });
         } else {}
       } else {}
@@ -630,7 +629,7 @@ BuildContext dgsContext;
 
   void getNotificationCount() async {
     final body = jsonEncode({
-      "personId": prefs.getInt(Strings.userId),
+      "personId": prefs!.getInt(Strings.userId),
     });
     Calls().call(body, context, Config.NOTIFICATION_COUNT).then((value) {
       var res = NotificationCountResponse.fromJson(value);
@@ -638,7 +637,7 @@ BuildContext dgsContext;
         if (res.rows != null) {
           if (this.mounted)
             setState(() {
-              notificationCount = int.parse(res.rows);
+              notificationCount = int.parse(res.rows!);
             });
         }
       } else {}
@@ -649,13 +648,13 @@ BuildContext dgsContext;
   void fetchMenuListData() async {
     packageInfo = await PackageInfo.fromPlatform();
     var res = await rootBundle.loadString('assets/menulist_new.json');
-    final Map parsed = json.decode(res);
+    final Map? parsed = json.decode(res);
     setState(() {
-      menuList = MenuListResponseNew.fromJson(parsed).rows;
+      menuList = MenuListResponseNew.fromJson(parsed as Map<String, dynamic>).rows;
     });
     var data = jsonEncode({
-      "owner_id": prefs.getInt(Strings.userId),
-      "owner_type": prefs.getString(Strings.ownerType)
+      "owner_id": prefs!.getInt(Strings.userId),
+      "owner_type": prefs!.getString(Strings.ownerType)
     });
     Calls().call(data, context, Config.GET_PROFILE_PROGRESS).then((value){
       var response  = ProfileCardResponse.fromJson(value);
@@ -674,6 +673,7 @@ BuildContext dgsContext;
       setState(() {
         _selectedIndex = 0;
       });
+    return new Future(() => false);
   }
 
   bool isFirstTime=true;
@@ -785,10 +785,10 @@ BuildContext dgsContext;
             child: ListView.builder(
               shrinkWrap: true,
               controller: sc,
-              itemCount: menuList.length >0 ?menuList.length+1:0,
+              itemCount: menuList!.length >0 ?menuList!.length+1:0,
 
               itemBuilder: (BuildContext context, int index){
-                if(index== menuList.length){
+                if(index== menuList!.length){
                   return packageInfo!=null?Container(
                     margin: EdgeInsets.only(top:16),
                     child: Center(
@@ -797,7 +797,7 @@ BuildContext dgsContext;
                         children: [
                           Image.asset('assets/appimages/logo.png',width: 30,height: 30,),
                           SizedBox(width: 8,),
-                          Text("Version -"+packageInfo.version+"(${packageInfo.buildNumber})")
+                          Text("Version -"+packageInfo!.version+"(${packageInfo!.buildNumber})")
                         ],
                       ),
                     ),
@@ -807,7 +807,7 @@ BuildContext dgsContext;
 
 
                   return
-                    menuList[index].title=="position_0"?
+                    menuList![index].title=="position_0"?
                     InkWell(
                       onTap: (){
                         _toggleDraggableScrollableSheet();
@@ -853,7 +853,7 @@ BuildContext dgsContext;
                         ),
                       ),
                     ):
-                    menuList[index].title=="position_1"?
+                    menuList![index].title=="position_1"?
                     SizedBox(
                       width:
                       MediaQuery.of(context)
@@ -901,7 +901,7 @@ BuildContext dgsContext;
                                       MainAxisAlignment.start,
                                       children: [
                                         Text(
-                                          AppLocalizations.of(context).translate("learn_together"),
+                                          AppLocalizations.of(context)!.translate("learn_together"),
                                           style: styleElements
                                               .headline5ThemeScalable(
                                               context)
@@ -914,7 +914,7 @@ BuildContext dgsContext;
                                                   .bold),
                                         ),
                                         Text(
-                                            AppLocalizations.of(context).translate("lesson_desc_main"),
+                                            AppLocalizations.of(context)!.translate("lesson_desc_main"),
                                             style: styleElements
                                                 .subtitle2ThemeScalable(
                                                 context)
@@ -924,7 +924,7 @@ BuildContext dgsContext;
                                                       .appColorWhite),
                                             )),
                                         Text(
-                                            AppLocalizations.of(context).translate("learnConnect"),
+                                            AppLocalizations.of(context)!.translate("learnConnect"),
                                             style: styleElements
                                                 .subtitle2ThemeScalable(
                                                 context)
@@ -944,7 +944,7 @@ BuildContext dgsContext;
                       ),
                     ):
 
-                    menuList[index].title=="position_2"?
+                    menuList![index].title=="position_2"?
 
                     TricycleCard(
                       padding: EdgeInsets.all(2),
@@ -958,18 +958,18 @@ BuildContext dgsContext;
                                 clicked: null,
                                 showQr: true,
                                 instId:
-                                prefs!=null? prefs.getInt(Strings.instituteId).toString():"",
-                                title: prefs!=null?prefs.getString(Strings.userName):"",
+                                prefs!=null? prefs!.getInt(Strings.instituteId).toString():"",
+                                title: prefs!=null?prefs!.getString(Strings.userName):"",
                                 isUserVerified:
-                                rows != null ? rows.isVerified : false,
+                                rows != null ? rows!.isVerified : false,
                                 ownerTye: prefs != null
-                                    ? prefs.getString("ownerType")
+                                    ? prefs!.getString("ownerType")
                                     : "",
                                 userType: 'person',
                                 userId:
-                                prefs != null ? prefs.getInt("userId") : null,
-                                thirdPersonId: prefs!=null?prefs.getInt(Strings.userId):0,
-                                subtitle: rows != null ? rows.userName ?? "" : "",
+                                prefs != null ? prefs!.getInt("userId") : null,
+                                thirdPersonId: prefs!=null?prefs!.getInt(Strings.userId):0,
+                                subtitle: rows != null ? rows!.userName ?? "" : "",
                                 isFollow: false,
                                 isPersonProfile: true,
                                 showProgress: true,
@@ -980,14 +980,14 @@ BuildContext dgsContext;
                                       MaterialPageRoute(
                                           builder: (context) => UserProfileCards(
                                             userType: 'person',
-                                            userId: rows.id,
+                                            userId: rows!.id,
                                             callback: () {},
                                             currentPosition: 1,
                                             type: null,
                                           )));
                                 },
                                 imageUrl: Utility().getUrlForImage(
-                                    prefs!=null?  prefs.getString(Strings.profileImage):"",
+                                    prefs!=null?  prefs!.getString(Strings.profileImage):"",
                                     RESOLUTION_TYPE.R64,
                                     SERVICE_TYPE.PERSON),
                                 imagePath: null,
@@ -1036,20 +1036,20 @@ BuildContext dgsContext;
                         Padding(
                           padding: EdgeInsets.only(
                               top: 8.0, bottom: 8.0, left: 12),
-                          child: Text(menuList[index].title,
+                          child: Text(menuList![index].title!,
                             style: styleElements.subtitle1ThemeScalable(
                                 context).copyWith(
                                 fontWeight: FontWeight.bold
                             ),),
                         ),
                         GridView.builder(
-                          itemCount: menuList[index].data.length,
+                          itemCount: menuList![index].data!.length,
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
                           itemBuilder: (BuildContext context, int indx) {
                             return TricycleMenuItem(
                               onMenuItemClick: menuitemClick,
-                              item: menuList[index].data[indx],
+                              item: menuList![index].data![indx],
                             );
                           },
                           gridDelegate:

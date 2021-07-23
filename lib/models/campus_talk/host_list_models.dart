@@ -1,7 +1,7 @@
 class HostListRequest {
-  int pageNumber;
-  int pageSize;
-  int personId;
+  int? pageNumber;
+  int? pageSize;
+  int? personId;
 
   HostListRequest({this.pageNumber, this.pageSize, this.personId});
 
@@ -21,10 +21,10 @@ class HostListRequest {
 }
 
 class HostListResponse {
-  String statusCode;
-  String message;
-  List<HostListItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<HostListItem>? rows;
+  int? total;
 
   HostListResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -34,7 +34,7 @@ class HostListResponse {
     if (json['rows'] != null) {
       rows = [];//HostListItem>();
       json['rows'].forEach((v) {
-        rows.add(new HostListItem.fromJson(v));
+        rows!.add(new HostListItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -45,7 +45,7 @@ class HostListResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -53,11 +53,11 @@ class HostListResponse {
 }
 
 class HostListItem {
-  String eventOwnerType;
-  int eventOwnerId;
-  String eventOwnerName;
-  String eventOwnerImageUrl;
-  String privacyType;
+  String? eventOwnerType;
+  int? eventOwnerId;
+  String? eventOwnerName;
+  String? eventOwnerImageUrl;
+  String? privacyType;
   // Null topics;
 
   HostListItem(

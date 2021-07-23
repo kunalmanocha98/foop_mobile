@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class TricycleColorSelector extends StatefulWidget{
-  Function(String selectedColor) onColorSelect;
+  Function(String ? selectedColor)? onColorSelect;
   bool isHeadingShown;
   TricycleColorSelector({this.onColorSelect,this.isHeadingShown=true});
   @override
@@ -19,10 +19,10 @@ class TricycleColorSelector extends StatefulWidget{
 }
 
 class _TricycleColorSelector extends State<TricycleColorSelector> {
-  Function(String selectedColor) onColorSelect;
+  Function(String? selectedColor)? onColorSelect;
   _TricycleColorSelector({this.onColorSelect});
-  TextStyleElements styleElements;
-  List<ColorListItem> colorList = [];
+  late TextStyleElements styleElements;
+  List<ColorListItem>? colorList = [];
 
 
   @override
@@ -44,17 +44,17 @@ class _TricycleColorSelector extends State<TricycleColorSelector> {
             visible: widget.isHeadingShown,
             child: Padding(
               padding: const EdgeInsets.only(left:16.0,right: 24),
-              child: Text(AppLocalizations.of(context).translate('select_priority'),style: styleElements.captionThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack85)),),
+              child: Text(AppLocalizations.of(context)!.translate('select_priority'),style: styleElements.captionThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack85)),),
             ),
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: colorList.length,
+              itemCount: colorList!.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (BuildContext context, int index) {
                 return GestureDetector(
                   onTap: (){
-                    onColorSelect(colorList[index].code);
+                    onColorSelect!(colorList![index].code);
                   },
                   child: Container(
                       padding: EdgeInsets.only(top:12,bottom: 12,left: 12,right: 12),
@@ -62,7 +62,7 @@ class _TricycleColorSelector extends State<TricycleColorSelector> {
                       width: 40,
                     child: Container(
                       decoration: BoxDecoration(
-                          color: HexColor(colorList[index].code ),
+                          color: HexColor(colorList![index].code! ),
                           shape: BoxShape.circle
                       ),
                     ),

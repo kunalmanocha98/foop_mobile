@@ -1,10 +1,10 @@
 class InviteCreatePayload {
-  String inviteContextType;
-  int inviteContextTypeId;
-  String invitedByType;
-  int invitedById;
+  String? inviteContextType;
+  int? inviteContextTypeId;
+  String? invitedByType;
+  int? invitedById;
   Null invitationRecipientListUrl;
-  List<InvitationRecipientList> invitationRecipientList;
+  List<InvitationRecipientList>? invitationRecipientList;
   Null inviteExtraMessage;
 
   InviteCreatePayload(
@@ -25,7 +25,7 @@ class InviteCreatePayload {
     if (json['invitation_recipient_list'] != null) {
       invitationRecipientList = [];
       json['invitation_recipient_list'].forEach((v) {
-        invitationRecipientList.add(new InvitationRecipientList.fromJson(v));
+        invitationRecipientList!.add(new InvitationRecipientList.fromJson(v));
       });
     }
     inviteExtraMessage = json['invite_extra_message'];
@@ -40,7 +40,7 @@ class InviteCreatePayload {
     data['invitation_recipient_list_url'] = this.invitationRecipientListUrl;
     if (this.invitationRecipientList != null) {
       data['invitation_recipient_list'] =
-          this.invitationRecipientList.map((v) => v.toJson()).toList();
+          this.invitationRecipientList!.map((v) => v.toJson()).toList();
     }
     data['invite_extra_message'] = this.inviteExtraMessage;
     return data;
@@ -48,11 +48,11 @@ class InviteCreatePayload {
 }
 
 class InvitationRecipientList {
-  String name;
-  String mobileNumber;
-  String emailId;
+  String? name;
+  String? mobileNumber;
+  String? emailId;
   Null personId;
-  String category;
+  String? category;
 
   InvitationRecipientList(
       {this.name,
@@ -82,10 +82,10 @@ class InvitationRecipientList {
 
 
 class InviteCreateResponse {
-  String statusCode;
-  String message;
+  String? statusCode;
+  String? message;
   Null rows;
-  int total;
+  int? total;
 
   InviteCreateResponse({this.statusCode, this.message, this.rows, this.total});
 

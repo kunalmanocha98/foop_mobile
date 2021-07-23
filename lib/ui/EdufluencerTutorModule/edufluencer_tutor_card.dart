@@ -14,21 +14,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class EdufluencerTutorCard extends StatelessWidget {
-  final String imageUrl;
-  final Color borderColorForImage;
-  final String name;
-  final String designation;
-  final Function followButtonCallback;
-  final Function messageButtonCallback;
-  final String description;
-  final String title;
-  final double rating;
-  final edufluencer_type type;
-  final List<SkillsList> skillsList;
-  final List<ClassesList> classList;
-  final List<SubjectsList> subjectList;
-  final bool isfollowing;
-final String bookingStatus;
+  final String? imageUrl;
+  final Color? borderColorForImage;
+  final String? name;
+  final String? designation;
+  final Function? followButtonCallback;
+  final Function? messageButtonCallback;
+  final String? description;
+  final String? title;
+  final double? rating;
+  final edufluencer_type? type;
+  final List<SkillsList>? skillsList;
+  final List<ClassesList>? classList;
+  final List<SubjectsList>? subjectList;
+  final bool? isfollowing;
+final String? bookingStatus;
   EdufluencerTutorCard({
     this.imageUrl,
     this.borderColorForImage,
@@ -64,15 +64,15 @@ final String bookingStatus;
             borderColor: borderColorForImage,
           ),
           Text(
-            name,
+            name!,
             style: styleElements.subtitle1ThemeScalable(context),
           ),
           Text(
-            title,
+            title!,
             style: styleElements.subtitle2ThemeScalable(context),
           ),
           Text(
-            designation,
+            designation!,
             style: styleElements.subtitle2ThemeScalable(context),
           ),
           Row(
@@ -80,7 +80,7 @@ final String bookingStatus;
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                rating != null ? rating.toStringAsFixed(2) : 0.0.toString(),
+                rating != null ? rating!.toStringAsFixed(2) : 0.0.toString(),
                 style: styleElements.subtitle1ThemeScalable(context).copyWith(
                   color: HexColor(AppColors.appMainColor),
                 ),
@@ -116,12 +116,12 @@ final String bookingStatus;
                 ),
               ),
               Visibility(
-                visible: isfollowing!=null? !isfollowing :true,
+                visible: isfollowing!=null? !isfollowing! :true,
                 child: TricycleTextButton(
                   onPressed: followButtonCallback,
                   padding: EdgeInsets.all(0),
                   child: Text(
-                    AppLocalizations.of(context).translate('follow'),
+                    AppLocalizations.of(context)!.translate('follow'),
                     style: styleElements
                         .captionThemeScalable(context)
                         .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -135,7 +135,7 @@ final String bookingStatus;
                   onPressed: messageButtonCallback,
                   padding: EdgeInsets.all(0),
                   child: Text(
-                    AppLocalizations.of(context).translate('message'),
+                    AppLocalizations.of(context)!.translate('message'),
                     style: styleElements
                         .captionThemeScalable(context)
                         .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -146,19 +146,19 @@ final String bookingStatus;
           ),
           Padding(
             padding: EdgeInsets.only(left: 24.0, right: 24),
-            child: Text(description,
+            child: Text(description!,
               textAlign: TextAlign.center,
               style: styleElements.bodyText2ThemeScalable(context),),
           ),
           Visibility(
-            visible: type == edufluencer_type.E && skillsList != null && skillsList.length > 0,
+            visible: type == edufluencer_type.E && skillsList != null && skillsList!.length > 0,
             child: Container(
               height: 30,
               margin: EdgeInsets.only(top:8),
               child: ListView.builder(
                 shrinkWrap: true,
-                itemCount: (skillsList != null && skillsList.length > 0)
-                    ? skillsList.length + 1
+                itemCount: (skillsList != null && skillsList!.length > 0)
+                    ? skillsList!.length + 1
                     : 0,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (BuildContext context, int index) {
@@ -172,7 +172,7 @@ final String bookingStatus;
                     child: Center(
                       child: Padding(
                         padding: const EdgeInsets.all(4.0),
-                        child: Text(skillsList[index-1].skillName),
+                        child: Text(skillsList![index-1].skillName!),
                       ),
                     ),
                   );
@@ -181,14 +181,14 @@ final String bookingStatus;
             ),
           ),
           Visibility(
-            visible: (type == edufluencer_type.T && (classList != null && classList.length > 0)),
+            visible: (type == edufluencer_type.T && (classList != null && classList!.length > 0)),
             child: Container(
               height: 30,
               margin: EdgeInsets.only(top:8),
               child: ListView.builder(
                 shrinkWrap: true,
-                itemCount: (classList != null && classList.length > 0)
-                    ? classList.length + 1
+                itemCount: (classList != null && classList!.length > 0)
+                    ? classList!.length + 1
                     : 0,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (BuildContext context, int index) {
@@ -202,7 +202,7 @@ final String bookingStatus;
                     child: Center(
                       child: Padding(
                         padding: const EdgeInsets.all(4.0),
-                        child: Text(classList[index-1].className),
+                        child: Text(classList![index-1].className!),
                       ),
                     ),
                   );

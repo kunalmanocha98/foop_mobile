@@ -15,14 +15,14 @@ import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class EventTaskFullDetailPage extends StatefulWidget {
-  final String type;
+  final String? type;
   EventTaskFullDetailPage({this.type});
   @override
   EventTaskFullDetailPageState createState() => EventTaskFullDetailPageState();
 }
 
 class EventTaskFullDetailPageState extends State<EventTaskFullDetailPage> {
-TextStyleElements styleElements;
+late TextStyleElements styleElements;
 
 
   @override
@@ -99,7 +99,7 @@ TextStyleElements styleElements;
                 return CheckboxListTile(
                   contentPadding: EdgeInsets.all(0),
                   controlAffinity: ListTileControlAffinity.leading,
-                  onChanged: (bool value) {  },
+                  onChanged: (bool? value) {  },
                   value: false,
                   tristate: true,
                   title: Text('hello hello hello'),

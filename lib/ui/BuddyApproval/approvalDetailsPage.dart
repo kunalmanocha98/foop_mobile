@@ -6,13 +6,13 @@ import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:flutter/material.dart';
 
 class ApprovalDetailsPage extends StatefulWidget {
-   final RequestListItem data;
-   final int index;
-   final Null Function() callbackPicker;
+   final RequestListItem? data;
+   final int? index;
+   final Null Function()? callbackPicker;
 
 
    ApprovalDetailsPage(
-       {Key key,
+       {Key? key,
          this.data,this.index,this.callbackPicker})
        : super(key: key);
   @override
@@ -20,8 +20,8 @@ class ApprovalDetailsPage extends StatefulWidget {
 }
 
 class ApprovalDetailsPageState extends State<ApprovalDetailsPage> {
-   RequestListItem data;
-    Null Function() callbackPicker;
+   RequestListItem? data;
+    Null Function()? callbackPicker;
    ApprovalDetailsPageState({this.data,this.callbackPicker});
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class ApprovalDetailsPageState extends State<ApprovalDetailsPage> {
       child: Scaffold(
         appBar: TricycleAppBar().getCustomAppBar(
           context,
-          appBarTitle: AppLocalizations.of(context).translate('buddy_approval'),
+          appBarTitle: AppLocalizations.of(context)!.translate('buddy_approval'),
           onBackButtonPress: (){
             Navigator.pop(context);
           },
@@ -38,7 +38,7 @@ class ApprovalDetailsPageState extends State<ApprovalDetailsPage> {
           child: SingleChildScrollView(
             child: Column(children: [
               TricycleRequestCard(
-                imageUrl: data.profileImage,
+                imageUrl: data!.profileImage,
                 onButtonClickCallback: null,
                 buttonTitle: '',
                 isContentVisible: false,
@@ -46,13 +46,13 @@ class ApprovalDetailsPageState extends State<ApprovalDetailsPage> {
               ),
               TricycleQuestionnaireCard(
                 data: data,
-                callback: (bool value){
-                  Map<String,int> map = {
-                    "value": value?1:0,
+                callback: (bool ?value){
+                  Map<String,int?> map = {
+                    "value": value!?1:0,
                     "index":widget.index
                   };
                   if(callbackPicker!=null)
-                  {callbackPicker();}
+                  {callbackPicker!();}
                   Navigator.pop(context,map);
                 }
               ),

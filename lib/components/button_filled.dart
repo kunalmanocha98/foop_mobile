@@ -7,11 +7,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'tricycle_buttons.dart';
 
 class LargeButton extends StatefulWidget {
-  LargeButton({Key key, this.name, this.offsetX, this.offsetY,@required this.callback})
+  LargeButton({Key? key, this.name, this.offsetX, this.offsetY,required this.callback})
       : super(key: key);
   final name;
-  final double offsetX;
-  final double offsetY;
+  final double? offsetX;
+  final double? offsetY;
   final Function callback;
 
   @override
@@ -20,8 +20,8 @@ class LargeButton extends StatefulWidget {
 
 class _LargeButtonState extends State<LargeButton> {
   Function callback;
-  _LargeButtonState({@required this.callback});
-  TextStyleElements styleElements;
+  _LargeButtonState({required this.callback});
+  late TextStyleElements styleElements;
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(BoxConstraints(

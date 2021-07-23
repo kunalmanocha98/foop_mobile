@@ -1,7 +1,7 @@
 class RequestUpdateRequestModel {
-  int institutionId;
-  int institutionUserId;
-  String assignmentStatus;
+  int? institutionId;
+  int? institutionUserId;
+  String? assignmentStatus;
 
   RequestUpdateRequestModel(
       {this.institutionId, this.institutionUserId, this.assignmentStatus});
@@ -22,10 +22,10 @@ class RequestUpdateRequestModel {
 }
 
 class RequestUpdateResponseModel {
-  String statusCode;
-  String message;
+  String? statusCode;
+  String? message;
   Null rows;
-  int total;
+  int? total;
 
   RequestUpdateResponseModel(
       {this.statusCode, this.message, this.rows, this.total});

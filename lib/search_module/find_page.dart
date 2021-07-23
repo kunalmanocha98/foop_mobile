@@ -18,11 +18,11 @@ class FindPage extends StatefulWidget{
   FindPageState createState() => FindPageState();
 }
 class FindPageState extends State<FindPage>{
-  SharedPreferences prefs = locator<SharedPreferences>();
-  TextStyleElements styleElements;
+  SharedPreferences? prefs = locator<SharedPreferences>();
+  late TextStyleElements styleElements;
   bool isSearching = false;
   GlobalKey<SearchTypeListState> searchKey = GlobalKey();
-  String searchVal;
+  String? searchVal;
   @override
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
@@ -31,13 +31,13 @@ class FindPageState extends State<FindPage>{
 
         appBar: TricycleAppBar().getCustomAppBarWithSearch(
             context,
-            appBarTitle: AppLocalizations.of(context).translate('find'),
+            appBarTitle: AppLocalizations.of(context)!.translate('find'),
             onBackButtonPress: (){Navigator.pop(context);},
             onSearchValueChanged: (value){
               searchVal = value;
               if(isSearching){
-                searchKey.currentState.searchVal = searchVal;
-                searchKey.currentState.refresh();
+                searchKey.currentState!.searchVal = searchVal;
+                searchKey.currentState!.refresh();
               }
               isSearching = value.isNotEmpty;
             },
@@ -71,7 +71,7 @@ class FindPageState extends State<FindPage>{
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(AppLocalizations.of(context).translate('recently_searhced'),
+                child: Text(AppLocalizations.of(context)!.translate('recently_searhced'),
                 style: styleElements.subtitle1ThemeScalable(context).copyWith(
                   fontWeight: FontWeight.bold
                 ),),
@@ -81,7 +81,7 @@ class FindPageState extends State<FindPage>{
               delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index){
                     return TricycleUserListTile(
-                      imageUrl: Config.BASE_URL + prefs.getString(Strings.profileImage),
+                      imageUrl: Config.BASE_URL + prefs!.getString(Strings.profileImage)!,
                       isFullImageUrl: true,
                       title: 'Kunal Manocha',
                       subtitle1: 'Okay ji title',
@@ -104,7 +104,7 @@ class FindPageState extends State<FindPage>{
             SliverToBoxAdapter(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Text(AppLocalizations.of(context).translate('suggested_connections'),
+                child: Text(AppLocalizations.of(context)!.translate('suggested_connections'),
                 style: styleElements.subtitle1ThemeScalable(context).copyWith(
                   fontWeight: FontWeight.bold
                 ),),
@@ -114,7 +114,7 @@ class FindPageState extends State<FindPage>{
               delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index){
                     return TricycleUserListTile(
-                      imageUrl: Config.BASE_URL + prefs.getString(Strings.profileImage),
+                      imageUrl: Config.BASE_URL + prefs!.getString(Strings.profileImage)!,
                       isFullImageUrl: true,
                       title: 'Kunal Manocha',
                       subtitle1: 'Okay ji title',

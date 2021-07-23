@@ -22,28 +22,28 @@ _EventList createState() => _EventList();
 class _EventList extends State<EventList> with SingleTickerProviderStateMixin{
   List<CustomTabMaker> list = [];
   int _currentPosition = 0;
-  TabController _tabController;
-  TextStyleElements styleElements;
-  SharedPreferences prefs;
+  late TabController _tabController;
+  TextStyleElements? styleElements;
+  SharedPreferences? prefs;
   DateTime selectedDate = DateTime.now();
-  BuildContext sctx;
+  BuildContext? sctx;
   GlobalKey<EventListState> _allCalenderListKey = GlobalKey();
   GlobalKey<EventListState> _myCalenderListKey = GlobalKey();
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => loadPages());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => loadPages());
   }
 
   void loadPages() async {
     prefs ??= await SharedPreferences.getInstance();
     list.add(CustomTabMaker(
-        tabName: AppLocalizations.of(context).translate('all'),
+        tabName: AppLocalizations.of(context)!.translate('all'),
         statelessWidget: EventListPage(key: _allCalenderListKey,date: selectedDate,)
     ));
     list.add(CustomTabMaker(
-        tabName: AppLocalizations.of(context).translate('my_events'),
+        tabName: AppLocalizations.of(context)!.translate('my_events'),
         statelessWidget: EventListPage(key: _myCalenderListKey,date: selectedDate)
     ));
     setState(() {
@@ -79,7 +79,7 @@ class _EventList extends State<EventList> with SingleTickerProviderStateMixin{
     styleElements = TextStyleElements(context);
     return SafeArea(child: Scaffold(
       appBar: TricycleAppBar().getCustomAppBar(context,
-        appBarTitle: AppLocalizations.of(context).translate('events'),
+        appBarTitle: AppLocalizations.of(context)!.translate('events'),
         onBackButtonPress: (){Navigator.pop(context);},
         actions: [
           IconButton(icon: Icon(Icons.add),color: HexColor(AppColors.appColorBlack65), onPressed: (){
@@ -109,7 +109,7 @@ class _EventList extends State<EventList> with SingleTickerProviderStateMixin{
                     Center(child: list[index].statelessWidget),
                 onPositionChange: (index) {
                   setState(() {
-                    _currentPosition = index;
+                    _currentPosition = index!;
                   });
                 },
                 onScroll: (position) => print('$position'),
@@ -122,19 +122,19 @@ class _EventList extends State<EventList> with SingleTickerProviderStateMixin{
 
   void updateList() {
     if(_tabController.index==0){
-      _allCalenderListKey.currentState.update(date: selectedDate);
+      _allCalenderListKey.currentState!.update(date: selectedDate);
     }else{
-      _myCalenderListKey.currentState.update(date: selectedDate);
+      _myCalenderListKey.currentState!.update(date: selectedDate);
     }
   }
 
 
-  onBottomSheetCallBack(String value,int stamdardEventId) {
+  onBottomSheetCallBack(String? value,int? stamdardEventId) {
     Navigator.pop(context);
     if(value == CALENDERTYPECODE.EVENT.type) {
       Navigator.push(
           context, MaterialPageRoute(builder: (BuildContext context) {
-        return CreateEventPage(type: value,standardEventId: stamdardEventId);
+        return CreateEventPage(type: value!,standardEventId: stamdardEventId!);
       }));
     }
   }

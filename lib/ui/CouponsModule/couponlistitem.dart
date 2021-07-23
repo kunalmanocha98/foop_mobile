@@ -13,18 +13,18 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class CouponListItemCard extends StatelessWidget {
-  String imageUrl;
-  String title;
-  int discount;
-  int rewardPoints;
-  String validTill;
-  String discountType;
-  bool isActive = false;
-  bool isDividerHide = false;
-  bool isCoinsHide;
-  TextStyleElements styleElements;
-  double imageWidth;
-  double imageHeight;
+  String? imageUrl;
+  String? title;
+  int? discount;
+  int? rewardPoints;
+  String? validTill;
+  String? discountType;
+  bool? isActive = false;
+  bool? isDividerHide = false;
+  bool? isCoinsHide;
+  late TextStyleElements styleElements;
+  double? imageWidth;
+  double? imageHeight;
 
   CouponListItemCard(
       {this.imageUrl,
@@ -70,7 +70,7 @@ class CouponListItemCard extends StatelessWidget {
                 ),
               ),
               Visibility(
-                visible: isDividerHide != null ? !isDividerHide : true,
+                visible: isDividerHide != null ? !isDividerHide! : true,
                 child:VerticalDivider(
                   thickness: 2,
                   color: HexColor(AppColors.appColorBlack35),
@@ -91,17 +91,17 @@ class CouponListItemCard extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 1.0, bottom: 1.0),
                       child: Text(
-                        title,
+                        title!,
                         style: styleElements.headline6ThemeScalable(context),
                       ),
                     ),
                     getPriceWidget(context),
                     Container(
-                      width: (imageHeight > 72) ? 240 : 260,
+                      width: (imageHeight! > 72) ? 240 : 260,
                       alignment: Alignment.bottomRight,
                       child:Padding(
                         padding: const EdgeInsets.only(top: 4,bottom: 4,right: 8),
-                        child: Text(AppLocalizations.of(context).translate('valid_until') +"$validTill",
+                        child: Text(AppLocalizations.of(context)!.translate('valid_until') +"$validTill",
                           style: styleElements.captionThemeScalable(context),
                         ),
                       ),
@@ -112,7 +112,7 @@ class CouponListItemCard extends StatelessWidget {
             ],
           ),
           Visibility(
-            visible: isActive != null ? isActive : false,
+            visible: isActive != null ? isActive! : false,
             child: Align(
               alignment: Alignment.topRight,
               child: Padding(
@@ -147,18 +147,19 @@ class CouponListItemCard extends StatelessWidget {
   getPriceWidget(BuildContext context) {
     return Row(
       mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.baseline,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Visibility(
           visible: discountType == COUPON_DISCOUNT_TYPE.Amount.type,
-          child: Text(AppLocalizations.of(context).translate('rupee_symbol'),
+          child: Text(AppLocalizations.of(context)!.translate('rupee_symbol'),
             style: styleElements.headline6ThemeScalable(context),
           ),
         ),
         Padding(
           padding: const EdgeInsets.only(left: 0.0),
           child: Text(
-            discount.toString(),
+    discount!=null?  discount.toString():"",
             style: styleElements.headline4ThemeScalable(context),
           ),
         ),
@@ -172,7 +173,7 @@ class CouponListItemCard extends StatelessWidget {
           ),
         ),
         Text(
-          (isCoinsHide != null && isCoinsHide)
+          (isCoinsHide != null && isCoinsHide!)
               ? ""
               : "@$rewardPoints Tricycle coins",
           style: styleElements.captionThemeScalable(context),

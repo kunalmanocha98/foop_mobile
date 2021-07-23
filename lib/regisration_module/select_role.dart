@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:oho_works_app/api_calls/calls.dart';
-import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/tricycle_buttons.dart';
 import 'package:oho_works_app/components/tricycle_earn_card.dart';
 import 'package:oho_works_app/components/white_button_large.dart';
@@ -40,17 +39,17 @@ class SelectRole extends StatefulWidget {
   int id;
   String studentType;
   String from;
-  int instituteId;
-  Function(List<int>, String) callBack;
+  int? instituteId;
+  Function(List<int?>?, String?)? callBack;
 
   SelectRole(
-      {Key key,
-      @required this.type,
-      @required this.id,
-      @required this.from,
+      {Key? key,
+      required this.type,
+      required this.id,
+      required this.from,
       this.callBack,
       this.instituteId,
-      @required this.studentType})
+      required this.studentType})
       : super(key: key);
 
   _SelectRole createState() =>
@@ -59,37 +58,37 @@ class SelectRole extends StatefulWidget {
 
 class _SelectRole extends State<SelectRole>
     with SingleTickerProviderStateMixin {
-  int currentYear;
+  late int currentYear;
   List<YearsData> startYears = [];
   List<YearsData> passOutYear = [];
-  String studentType;
-  String from;
+  String? studentType;
+  String? from;
   bool isUploadImageActive = false;
-  SharedPreferences prefs;
-  int userId;
-  String selectSchoolUrl;
+  SharedPreferences? prefs;
+  int? userId;
+  String? selectSchoolUrl;
   bool isHaveCode = false;
   Color disabledColor = HexColor(AppColors.appColorGrey500);
-  ScrollController _scrollController;
-  String selectedSchool;
-  String selectedSchoolDec;
+  ScrollController? _scrollController;
+  String? selectedSchool;
+  String? selectedSchoolDec;
   String pageTitle = "";
-  String imageUrl;
+  String? imageUrl;
   int instPageNumber = 1;
   String SearchVal = "";
-  CupertinoDatePicker cupertinoDatePicker;
+  CupertinoDatePicker? cupertinoDatePicker;
   var color1 = HexColor(AppColors.appMainColor);
   bool _enabled = false;
   bool ifNoInstituteFound = false;
   var color2 = HexColor(AppColors.appColorWhite);
-  int id;
+  int? id;
   var color3 = HexColor(AppColors.appColorWhite);
   var isCheckedColor = HexColor(AppColors.appColorWhite);
-  TabController _tabController;
+  late TabController _tabController;
   Map<String, bool> mapRules = Map();
-  List<PersonItem> listRoles = [];
-  List<InstituteItem> listInstitute = [];
-  String type;
+  List<PersonItem>? listRoles = [];
+  List<InstituteItem>? listInstitute = [];
+  String? type;
   var isClassesSelected = HexColor(AppColors.appColorWhite);
   var isSubjectSelected = HexColor(AppColors.appColorWhite);
   var isRoleSelected = false;
@@ -99,14 +98,14 @@ class _SelectRole extends State<SelectRole>
   var isInstituteSelected = false;
   List<Subjects> listOfSubjects = [];
   List<InstituteClass> listOfClasses = [];
-  List<int> personTypeList = [];
-  List<int> institutionRolesList = [];
+  List<int?> personTypeList = [];
+  List<int?> institutionRolesList = [];
   List<int> teachingClasses = [];
   List<int> teachingSubjects = [];
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   _SelectRole(
-      String type, int id, String studentType, String from, int instituteId) {
+      String type, int id, String studentType, String from, int? instituteId) {
     this.type = type;
     this.id = id;
     this.studentType = studentType;
@@ -115,7 +114,7 @@ class _SelectRole extends State<SelectRole>
   }
 
   List<TabMaker> list = [];
-  int instituteId;
+  int? instituteId;
 
   int _currentPosition = 0;
 
@@ -123,9 +122,9 @@ class _SelectRole extends State<SelectRole>
     prefs = await SharedPreferences.getInstance();
     if (from == "created institute") {
       _currentPosition == 1;
-      selectedSchool = prefs.getString(Strings.registeredInstituteName);
-      selectSchoolUrl = prefs.getString(Strings.registeredInstituteImage);
-      instituteId = prefs.getInt("createdSchoolId");
+      selectedSchool = prefs!.getString(Strings.registeredInstituteName);
+      selectSchoolUrl = prefs!.getString(Strings.registeredInstituteImage);
+      instituteId = prefs!.getInt("createdSchoolId");
       isInstituteSelected = true;
       getRoles(null, instituteId);
     } else {
@@ -140,7 +139,7 @@ class _SelectRole extends State<SelectRole>
     getYearsdd();
     _scrollController = ScrollController();
     _tabController = TabController(vsync: this, length: 2);
-    WidgetsBinding.instance.addPostFrameCallback((_) => setSharedPreferences());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => setSharedPreferences());
   }
 
   @override
@@ -159,15 +158,16 @@ class _SelectRole extends State<SelectRole>
     setState(() async {
       Navigator.of(context).pop(true);
     });
+    return new Future(() => false);
   }
 
-  BuildContext sctx;
+  late BuildContext sctx;
 
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
     ScreenUtil.init;
 
-    pageTitle = AppLocalizations.of(context).translate('role');
+    pageTitle = AppLocalizations.of(context)!.translate('role');
 
     return new WillPopScope(
         onWillPop: _onBackPressed,
@@ -211,7 +211,7 @@ class _SelectRole extends State<SelectRole>
                                       }
                                     } else {
                                       ToastBuilder().showSnackBar(
-                                          AppLocalizations.of(context)
+                                          AppLocalizations.of(context)!
                                               .translate("select_role"),
                                           sctx,
                                           HexColor(AppColors.information));
@@ -219,7 +219,7 @@ class _SelectRole extends State<SelectRole>
                                   },
                                   color: Colors.white,
                                   child: Text(
-                                      AppLocalizations.of(context)
+                                      AppLocalizations.of(context)!
                                           .translate("proceed"),
                                       style: styleElements
                                           .buttonThemeScalable(context)
@@ -274,7 +274,7 @@ class _SelectRole extends State<SelectRole>
                                                 right: 8,
                                                 bottom: 80,
                                                 top: 8),
-                                            itemCount: listRoles.length,
+                                            itemCount: listRoles!.length,
                                             itemBuilder: (BuildContext context,
                                                 int index) {
                                               return GestureDetector(
@@ -284,10 +284,10 @@ class _SelectRole extends State<SelectRole>
                                                         "created institute")
                                                       Visibility(
 //                                    visible: !listInstitute[index].isLoading,
-                                                          child: (listRoles[index]
+                                                          child: (listRoles![index]
                                                                           .personTypeId ==
                                                                       2 ||
-                                                                  listRoles[index]
+                                                                  listRoles![index]
                                                                           .personTypeId ==
                                                                       3)
                                                               ? ListTile(
@@ -298,7 +298,7 @@ class _SelectRole extends State<SelectRole>
                                                                   CachedNetworkImage(
                                                                     height: 20,
                                                                     width: 20,
-                                                                    imageUrl: Utility().getUrlForImage(listRoles[index].imageUrl, RESOLUTION_TYPE.R64, SERVICE_TYPE.PERSON) ,
+                                                                    imageUrl: Utility().getUrlForImage(listRoles![index].imageUrl, RESOLUTION_TYPE.R64, SERVICE_TYPE.PERSON) ,
                                                                     fit: BoxFit.cover,
                                                                   ),
                                                                   title: Align(
@@ -306,7 +306,7 @@ class _SelectRole extends State<SelectRole>
                                                                         Alignment
                                                                             .centerLeft,
                                                                     child: Text(
-                                                                      listRoles[index]
+                                                                      listRoles![index]
                                                                               .personTypeName ??
                                                                           "",
                                                                       style: styleElements
@@ -323,7 +323,7 @@ class _SelectRole extends State<SelectRole>
                                                                         Alignment
                                                                             .centerLeft,
                                                                     child: Text(
-                                                                      listRoles[index]
+                                                                      listRoles![index]
                                                                               .personTypeDescription ??
                                                                           "",
                                                                       style: styleElements
@@ -339,7 +339,7 @@ class _SelectRole extends State<SelectRole>
                                                                     activeColor:
                                                                         HexColor(
                                                                             AppColors.appMainColor),
-                                                                    value: listRoles[
+                                                                    value: listRoles![
                                                                             index]
                                                                         .isSelected,
                                                                     onChanged:
@@ -351,20 +351,20 @@ class _SelectRole extends State<SelectRole>
                                                                           if (val ==
                                                                               true) {
                                                                             for (int i = 0;
-                                                                                i < listRoles.length;
+                                                                                i < listRoles!.length;
                                                                                 i++) {
                                                                               if (i == index) {
                                                                                 isRoleSelected = true;
-                                                                                listRoles[i].isSelected = true;
-                                                                                type = listRoles[i].personTypeName;
-                                                                                id = listRoles[i].personTypeId;
+                                                                                listRoles![i].isSelected = true;
+                                                                                type = listRoles![i].personTypeName;
+                                                                                id = listRoles![i].personTypeId;
                                                                               } else
-                                                                                listRoles[i].isSelected = false;
+                                                                                listRoles![i].isSelected = false;
                                                                             }
                                                                           } else {
                                                                             isRoleSelected =
                                                                                 false;
-                                                                            listRoles[index].isSelected =
+                                                                            listRoles![index].isSelected =
                                                                                 false;
                                                                           }
                                                                         });
@@ -384,7 +384,7 @@ class _SelectRole extends State<SelectRole>
                                                               CachedNetworkImage(
                                                                 height: 20,
                                                                 width: 20,
-                                                                imageUrl: Utility().getUrlForImage(listRoles[index].imageUrl, RESOLUTION_TYPE.R64, SERVICE_TYPE.PERSON) ,
+                                                                imageUrl: Utility().getUrlForImage(listRoles![index].imageUrl, RESOLUTION_TYPE.R64, SERVICE_TYPE.PERSON) ,
                                                                 fit: BoxFit.cover,
                                                               ),
                                                               title:
@@ -394,7 +394,7 @@ class _SelectRole extends State<SelectRole>
                                                                 alignment: Alignment
                                                                     .centerLeft,
                                                                 child: Text(
-                                                                  listRoles[index]
+                                                                  listRoles![index]
                                                                           .personTypeName ??
                                                                       "",
                                                                   style: styleElements
@@ -409,7 +409,7 @@ class _SelectRole extends State<SelectRole>
                                                                 alignment: Alignment
                                                                     .centerLeft,
                                                                 child: Text(
-                                                                  listRoles[index]
+                                                                  listRoles![index]
                                                                           .personTypeDescription ??
                                                                       "",
                                                                   style: styleElements
@@ -426,7 +426,7 @@ class _SelectRole extends State<SelectRole>
                                                                     HexColor(
                                                                         AppColors
                                                                             .appMainColor),
-                                                                value: listRoles[
+                                                                value: listRoles![
                                                                         index]
                                                                     .isSelected,
                                                                 onChanged:
@@ -439,26 +439,26 @@ class _SelectRole extends State<SelectRole>
                                                                           true) {
                                                                         for (int i =
                                                                                 0;
-                                                                            i < listRoles.length;
+                                                                            i < listRoles!.length;
                                                                             i++) {
                                                                           if (i ==
                                                                               index) {
                                                                             isRoleSelected =
                                                                                 true;
-                                                                            listRoles[i].isSelected =
+                                                                            listRoles![i].isSelected =
                                                                                 true;
                                                                             type =
-                                                                                listRoles[i].personTypeName;
+                                                                                listRoles![i].personTypeName;
                                                                             id =
-                                                                                listRoles[i].personTypeId;
+                                                                                listRoles![i].personTypeId;
                                                                           } else
-                                                                            listRoles[i].isSelected =
+                                                                            listRoles![i].isSelected =
                                                                                 false;
                                                                         }
                                                                       } else {
                                                                         isRoleSelected =
                                                                             false;
-                                                                        listRoles[index].isSelected =
+                                                                        listRoles![index].isSelected =
                                                                             false;
                                                                       }
                                                                     });
@@ -496,7 +496,7 @@ class _SelectRole extends State<SelectRole>
                                           child: Container(
                                             margin: const EdgeInsets.all(16),
                                             child: Text(
-                                              AppLocalizations.of(context)
+                                              AppLocalizations.of(context)!
                                                   .translate('skip_this_now'),
                                               style: styleElements
                                                   .bodyText2ThemeScalable(
@@ -521,7 +521,7 @@ class _SelectRole extends State<SelectRole>
                                                 }
                                               } else {
                                                 ToastBuilder().showSnackBar(
-                                                    AppLocalizations.of(context)
+                                                    AppLocalizations.of(context)!
                                                         .translate(
                                                             "select_role"),
                                                     sctx,
@@ -531,7 +531,7 @@ class _SelectRole extends State<SelectRole>
                                             },
                                             color: Colors.white,
                                             child: Text(
-                                                AppLocalizations.of(context)
+                                                AppLocalizations.of(context)!
                                                     .translate("next"),
                                                 style: styleElements
                                                     .buttonThemeScalable(
@@ -562,8 +562,8 @@ class _SelectRole extends State<SelectRole>
     payload.personId = userId;
     personTypeList.add(id);
     payload.personTypeList = personTypeList;
-    for (var item in listRoles) {
-      if (item.isSelected) {
+    for (var item in listRoles!) {
+      if (item.isSelected!) {
         institutionRolesList.add(item.personTypeId);
       }
     }
@@ -576,13 +576,13 @@ class _SelectRole extends State<SelectRole>
                 ctx: context,
                 startYears: startYears,
                 passOutYear: passOutYear,
-                selectDateCallBack: (String academicYears) {
+                selectDateCallBack: (String? academicYears) {
                   if (academicYears != null && academicYears != "") {
                     print(academicYears);
                     exit(institutionRolesList, academicYears);
                   } else
                     ToastBuilder().showSnackBar(
-                        AppLocalizations.of(context)
+                        AppLocalizations.of(context)!
                             .translate("academic_years"),
                         sctx,
                         HexColor(AppColors.information));
@@ -593,12 +593,12 @@ class _SelectRole extends State<SelectRole>
     }
   }
 
-  void exit(List<int> list, String academicYears) {
+  void exit(List<int?> list, String academicYears) {
     Navigator.of(context).pop({
       'institutionRolesList': institutionRolesList,
       "academicYears": academicYears
     });
-    widget.callBack(institutionRolesList, academicYears);
+    widget.callBack!(institutionRolesList, academicYears);
   }
 
   Future<void> getYears() async {
@@ -626,7 +626,7 @@ class _SelectRole extends State<SelectRole>
     setState(() {});
   }
 
-  void getRoles(String searchValue, int instituteId) async {
+  void getRoles(String? searchValue, int? instituteId) async {
     _enabled = true;
     final body = jsonEncode({
       "institution_id": instituteId,
@@ -638,8 +638,8 @@ class _SelectRole extends State<SelectRole>
         setState(() {
           _enabled = false;
           listRoles = data.rows;
-          for (int i = 0; i < listRoles.length; i++) {
-            listRoles[i].isSelected = false;
+          for (int i = 0; i < listRoles!.length; i++) {
+            listRoles![i].isSelected = false;
           }
 
           if (from == "created institute") {
@@ -655,7 +655,7 @@ class _SelectRole extends State<SelectRole>
   }
 
   _scrollToTop() {
-    _scrollController.animateTo(_scrollController.position.minScrollExtent,
+    _scrollController!.animateTo(_scrollController!.position.minScrollExtent,
         duration: Duration(milliseconds: 1000), curve: Curves.easeIn);
   }
 
@@ -671,25 +671,25 @@ class _SelectRole extends State<SelectRole>
         var data = InstituteList.fromJson(value);
         if (data != null && data.statusCode == Strings.success_code) {
           isLoading = false;
-          if (data.rows != null && data.rows.isNotEmpty) {
-            for (int i = 0; i < data.rows.length; i++) {
+          if (data.rows != null && data.rows!.isNotEmpty) {
+            for (int i = 0; i < data.rows!.length; i++) {
               // already selected institute mark red
               if (instituteId != null) {
-                if (data.rows[i].id == instituteId)
-                  data.rows[i].isSelected = true;
+                if (data.rows![i].id == instituteId)
+                  data.rows![i].isSelected = true;
                 else
-                  data.rows[i].isSelected = false;
+                  data.rows![i].isSelected = false;
               } else {
-                data.rows[i].isSelected = false;
+                data.rows![i].isSelected = false;
               }
             }
             if (isSearching) {
               listInstitute = data.rows;
             } else {
-              if (listInstitute.length > 0)
-                listInstitute.removeAt(listInstitute.length - 1);
+              if (listInstitute!.length > 0)
+                listInstitute!.removeAt(listInstitute!.length - 1);
               instPageNumber = instPageNumber + 1;
-              listInstitute = listInstitute + data.rows;
+              listInstitute = listInstitute! + data.rows!;
             }
             setState(() {
               ifNoInstituteFound = false;
@@ -701,9 +701,9 @@ class _SelectRole extends State<SelectRole>
                 ifNoInstituteFound = true;
               }
             } else {
-              if (listInstitute != null && listInstitute.length > 0)
-                listInstitute.removeAt(listInstitute.length - 1);
-              if (listInstitute.length == 0)
+              if (listInstitute != null && listInstitute!.length > 0)
+                listInstitute!.removeAt(listInstitute!.length - 1);
+              if (listInstitute!.length == 0)
                 ifNoInstituteFound = true;
               else
                 ifNoInstituteFound = false;
@@ -712,8 +712,8 @@ class _SelectRole extends State<SelectRole>
             setState(() {});
           }
         } else {
-          if (listInstitute.length > 0)
-            listInstitute.removeAt(listInstitute.length - 1);
+          if (listInstitute!.length > 0)
+            listInstitute!.removeAt(listInstitute!.length - 1);
           setState(() {});
         }
       } else {
@@ -735,9 +735,9 @@ class _SelectRole extends State<SelectRole>
           setState(() {
             var data = PersonalProfile.fromJson(value);
             if (data != null && data.statusCode == 'S10001') {
-              Persondata persondata = data.rows;
+              Persondata? persondata = data.rows;
               DataSaveUtils().saveUserData(prefs, persondata);
-              if (from == "welcome") prefs.setBool("isProfileCreated", false);
+              if (from == "welcome") prefs!.setBool("isProfileCreated", false);
             }
           });
         }
@@ -754,11 +754,11 @@ class _SelectRole extends State<SelectRole>
       if (value != null) {
         var data = CodeVerification.fromJson(value);
         if (data != null && data.statusCode == "S10001") {
-          if (data.rows.isValid) {
+          if (data.rows!.isValid!) {
             proceed(true);
           } else {
             ToastBuilder().showSnackBar(
-                AppLocalizations.of(context).translate("codeV"),
+                AppLocalizations.of(context)!.translate("codeV"),
                 sctx,
                 HexColor(AppColors.information));
           }
@@ -770,7 +770,7 @@ class _SelectRole extends State<SelectRole>
 
 // ignore: must_be_immutable
 class NoInstitutePage extends StatelessWidget {
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   @override
   Widget build(BuildContext context) {
@@ -798,7 +798,7 @@ class NoInstitutePage extends StatelessWidget {
                       child: Container(
                         margin: const EdgeInsets.all(16),
                         child: Text(
-                          AppLocalizations.of(context)
+                          AppLocalizations.of(context)!
                               .translate("if_no_inst_found"),
                           textAlign: TextAlign.center,
                           style: styleElements
@@ -809,7 +809,7 @@ class NoInstitutePage extends StatelessWidget {
                       ),
                     ),
                     TricycleEarnCard(
-                      title: AppLocalizations.of(context).translate('register'),
+                      title: AppLocalizations.of(context)!.translate('register'),
                       imageUrl: "",
                       coinsValue: "100",
                       moneyVal: "1000",
@@ -819,7 +819,7 @@ class NoInstitutePage extends StatelessWidget {
                     ),
                     Container(
                       margin: const EdgeInsets.all(16),
-                      child: Text(AppLocalizations.of(context).translate('or'),
+                      child: Text(AppLocalizations.of(context)!.translate('or'),
                           textAlign: TextAlign.center,
                           style: styleElements.captionThemeScalable(context)),
                     ),
@@ -829,7 +829,7 @@ class NoInstitutePage extends StatelessWidget {
                         margin: const EdgeInsets.only(
                             left: 16, right: 16, bottom: 55),
                         child: WhiteLargeButton(
-                          name: AppLocalizations.of(context)
+                          name: AppLocalizations.of(context)!
                               .translate("request_callback"),
                           offsetX: 70.66,
                           offsetY: 12.93,
@@ -853,8 +853,8 @@ class NoInstitutePage extends StatelessWidget {
 }
 
 class TabMaker {
-  String tabName;
-  Widget statelessWidget;
+  String? tabName;
+  Widget? statelessWidget;
 
   TabMaker({this.tabName, this.statelessWidget});
 }

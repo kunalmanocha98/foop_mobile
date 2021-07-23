@@ -22,12 +22,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 // ignore: must_be_immutable
 class WelComeScreen extends StatefulWidget {
-  bool isInstituteSelectedAlready;
+  bool? isInstituteSelectedAlready;
   bool isEdit;
-  int institutionIdtoDelete;
+  int? institutionIdtoDelete;
 
   _WelComeScreen createState() => _WelComeScreen(isInstituteSelectedAlready);
 
@@ -39,17 +38,17 @@ class WelComeScreen extends StatefulWidget {
 
 class _WelComeScreen extends State<WelComeScreen> {
   List<PersonItem> rows = [];
-  ProgressDialog pr;
-  SharedPreferences prefs;
-  BuildContext context;
+  ProgressDialog? pr;
+  late SharedPreferences prefs;
+  late BuildContext context;
   String type = "";
-  bool isInstituteSelected;
-  TextStyleElements styleElements;
-  RegisterUserAs registerUser;
-  int instituteId;
-  bool isInstituteSelectedAlready = false;
+  bool? isInstituteSelected;
+  late TextStyleElements styleElements;
+  RegisterUserAs? registerUser;
+  int? instituteId;
+  bool? isInstituteSelectedAlready = false;
   bool isRoleSelected = false;
-  bool showLimited=false;
+  bool showLimited = false;
   bool isProgramSelected = false;
   bool isDepartmentSelected = false;
   bool isClassSelected = false;
@@ -64,18 +63,17 @@ class _WelComeScreen extends State<WelComeScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => showRoles());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => showRoles());
     setPrefs();
   }
 
   setPrefs() async {
     prefs = await SharedPreferences.getInstance();
     registerUser = RegisterUserAs();
-    if (isInstituteSelectedAlready != null && isInstituteSelectedAlready) {
+    if (isInstituteSelectedAlready != null && isInstituteSelectedAlready!) {
       instituteId = prefs.getInt("createdSchoolId");
 
-
-      registerUser.institutionId = instituteId;
+      registerUser!.institutionId = instituteId;
       setState(() {
         isInstituteSelected = true;
         isRoleSelected = false;
@@ -85,7 +83,6 @@ class _WelComeScreen extends State<WelComeScreen> {
         isClassSelected = false;
         isSubjectSelected = false;
       });
-
     }
   }
 
@@ -107,7 +104,7 @@ class _WelComeScreen extends State<WelComeScreen> {
                   child: GestureDetector(
                     behavior: HitTestBehavior.translucent,
                     onTap: () {
-                      if (registerUser.personTypeList[0] == 4) {
+                      if (registerUser!.personTypeList![0] == 4) {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -120,7 +117,7 @@ class _WelComeScreen extends State<WelComeScreen> {
                     child: Row(
                       children: [
                         Text(
-                          AppLocalizations.of(context).translate('next'),
+                          AppLocalizations.of(context)!.translate('next'),
                           style: styleElements
                               .subtitle2ThemeScalable(context)
                               .copyWith(
@@ -144,7 +141,7 @@ class _WelComeScreen extends State<WelComeScreen> {
               )
             ],
             appBarTitle:
-                AppLocalizations.of(context).translate('update_profile'),
+                AppLocalizations.of(context)!.translate('update_profile'),
             onBackButtonPress: () {
               Navigator.pop(context);
             },
@@ -155,9 +152,8 @@ class _WelComeScreen extends State<WelComeScreen> {
                       left: 16, right: 16, top: 50, bottom: 20),
                   child: ListView(
                     children: [
-
                       Opacity(
-                        opacity:1.0,
+                        opacity: 1.0,
                         child: GestureDetector(
                           behavior: HitTestBehavior.translucent,
                           child: TricycleCard(
@@ -166,7 +162,7 @@ class _WelComeScreen extends State<WelComeScreen> {
                                 title: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
-                                    AppLocalizations.of(context)
+                                    AppLocalizations.of(context)!
                                         .translate("select_role_p"),
                                     style: styleElements
                                         .subtitle1ThemeScalable(context),
@@ -176,7 +172,7 @@ class _WelComeScreen extends State<WelComeScreen> {
                                 subtitle: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
-                                    AppLocalizations.of(context)
+                                    AppLocalizations.of(context)!
                                         .translate("select_institute_role"),
                                     style: styleElements
                                         .bodyText2ThemeScalable(context),
@@ -193,12 +189,16 @@ class _WelComeScreen extends State<WelComeScreen> {
                                 )),
                           ),
                           onTap: () async {
-                           showRoles();
+                            showRoles();
                           },
                         ),
                       ),
                       Visibility(
-                        visible:registerUser!=null && registerUser.personTypeList!=null&& registerUser.personTypeList.isNotEmpty  &&( isInstituteSelectedAlready == null || !isInstituteSelectedAlready),
+                        visible: registerUser != null &&
+                            registerUser!.personTypeList != null &&
+                            registerUser!.personTypeList!.isNotEmpty &&
+                            (isInstituteSelectedAlready == null ||
+                                !isInstituteSelectedAlready!),
                         child: GestureDetector(
                           behavior: HitTestBehavior.translucent,
                           child: TricycleCard(
@@ -207,7 +207,7 @@ class _WelComeScreen extends State<WelComeScreen> {
                                 title: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
-                                    AppLocalizations.of(context)
+                                    AppLocalizations.of(context)!
                                         .translate("institute"),
                                     style: styleElements
                                         .subtitle1ThemeScalable(context),
@@ -217,7 +217,7 @@ class _WelComeScreen extends State<WelComeScreen> {
                                 subtitle: Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
-                                    AppLocalizations.of(context)
+                                    AppLocalizations.of(context)!
                                         .translate("select_institute_text"),
                                     style: styleElements
                                         .bodyText2ThemeScalable(context),
@@ -226,7 +226,7 @@ class _WelComeScreen extends State<WelComeScreen> {
                                 ),
                                 trailing: Visibility(
                                   visible: isInstituteSelected != null &&
-                                      isInstituteSelected,
+                                      isInstituteSelected!,
                                   child: Icon(
                                     Icons.check_circle,
                                     color: HexColor(AppColors.appColorGreen),
@@ -241,8 +241,9 @@ class _WelComeScreen extends State<WelComeScreen> {
                                   builder: (context) => SelectInstitute(
                                       type: "",
                                       id: 0,
-                                      registerUserAs:registerUser,
-                                      isInstituteSelectedAlready: isInstituteSelectedAlready,
+                                      registerUserAs: registerUser,
+                                      isInstituteSelectedAlready:
+                                          isInstituteSelectedAlready,
                                       studentType: "",
                                       from: "welcome"),
                                 ));
@@ -251,15 +252,13 @@ class _WelComeScreen extends State<WelComeScreen> {
                               registerUser = result['registerUserdata'];
                               setState(() {
                                 isInstituteSelected = true;
-
                               });
                             }
-
                           },
                         ),
                       ),
 
-                    /*  Opacity(
+                      /*  Opacity(
                         opacity: isRoleSelected ? 1.0 : 0.25,
                         child: Visibility(
                           visible: !showLimited,
@@ -520,63 +519,54 @@ class _WelComeScreen extends State<WelComeScreen> {
     );
   }
 
-
-  void showRoles()
-  {
+  void showRoles() {
     showModalBottomSheet<void>(
       context: context,
       isScrollControlled: true,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(15.0),
-            topRight: Radius.circular(15.0)),
+            topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)),
       ),
       builder: (context) {
         return SizedBox(
-          height: MediaQuery.of(context).size.height *
-              0.75,
+          height: MediaQuery.of(context).size.height * 0.75,
           child: Card(
             child: SelectRole(
                 type: "",
                 id: 0,
                 studentType: "",
-                callBack:
-                    (List<int> institutionRolesList, String academicYears) {
+                callBack: ( institutionRolesList,  academicYears)
+                {
+                  if (institutionRolesList != null &&
+                      institutionRolesList.isNotEmpty) {
+                    if (institutionRolesList[0] == 3)
+                      type = AppLocalizations.of(context)!.translate("student");
+                    if (institutionRolesList[0] == 2)
+                      type = AppLocalizations.of(context)!.translate("teacher");
+                    if (institutionRolesList[0] == 4)
+                      type = AppLocalizations.of(context)!.translate("parent");
+                    if (institutionRolesList[0] == 5) {
+                      type = AppLocalizations.of(context)!.translate("alumni");
+                      isStepsCompleted = true;
+                      showLimited = true;
 
-                  print(institutionRolesList[0] .toString());
-                  if (institutionRolesList[0] == 3)
-                    type = AppLocalizations.of(context)
-                        .translate("student");
-                  if (institutionRolesList[0] == 2)
-                    type = AppLocalizations.of(context)
-                        .translate("teacher");
-                  if (institutionRolesList[0] == 4)
-                    type = AppLocalizations.of(context)
-                        .translate("parent");
-                  if (institutionRolesList[0] == 5)
-                  {   type = AppLocalizations.of(context)
-                      .translate("alumni");
-                  isStepsCompleted = true;
-                  showLimited=true;
-
-                  registerUser.academicYear= academicYears;
+                      registerUser!.academicYear = academicYears;
+                    }
+                    if (institutionRolesList[0] == 10) {
+                      isStepsCompleted = true;
+                      showLimited = true;
+                      type = AppLocalizations.of(context)!
+                          .translate("other_staff");
+                    }
+                    registerUser!.personTypeList = institutionRolesList;
                   }
-                  if (institutionRolesList[0] == 10) {
-                    isStepsCompleted = true;
-                    showLimited=true;
-                    type = AppLocalizations.of(context)
-                        .translate("other_staff");
-                  }
-                  registerUser.personTypeList = institutionRolesList;
-
-                  setState(()  {
-                    showLimited=true;
+                  setState(() {
+                    showLimited = true;
                     isRoleSelected = true;
-                    isStepsCompleted=true;
+                    isStepsCompleted = true;
 
                     handleEdit();
                   });
-
                 },
                 instituteId: instituteId,
                 from: "welcome"),
@@ -586,14 +576,13 @@ class _WelComeScreen extends State<WelComeScreen> {
     );
   }
 
-  Future<void> handleEdit()
-  async {
-    if(widget.isEdit!=null && widget.isEdit && widget.institutionIdtoDelete!=null)
-    {
-      registerUser.institutionId = widget.institutionIdtoDelete;
+  Future<void> handleEdit() async {
+    if (widget.isEdit != null &&
+        widget.isEdit &&
+        widget.institutionIdtoDelete != null) {
+      registerUser!.institutionId = widget.institutionIdtoDelete;
       setState(() {
         isInstituteSelected = true;
-
       });
       var result = await Navigator.push(
           context,
@@ -601,34 +590,32 @@ class _WelComeScreen extends State<WelComeScreen> {
             builder: (context) => SelectInstitute(
                 type: "",
                 id: 0,
-                registerUserAs:registerUser,
+                registerUserAs: registerUser,
                 isInstituteSelectedAlready: isInstituteSelectedAlready,
                 studentType: "",
                 from: "welcome"),
           ));
-      if (result != null &&
-          result['registerUserdata'] != null) {
+      if (result != null && result['registerUserdata'] != null) {
         registerUser = result['registerUserdata'];
         setState(() {
           isInstituteSelected = true;
-
         });
       }
-
     }
   }
-  void register() async {
-    registerUser.personId = prefs.getInt("userId");
-    registerUser.personTypeList[0] == 2
-        ? type = "teacher"
-        : registerUser.personTypeList[0] == 3
-        ? type = "student"
-        : registerUser.personTypeList[0] == 4
-        ? "parent"
-        : "alumni";
 
-    registerUser.personSubjects ??= [];
-    registerUser.deleted_institution_user_id = widget.institutionIdtoDelete;
+  void register() async {
+    registerUser!.personId = prefs.getInt("userId");
+    registerUser!.personTypeList![0] == 2
+        ? type = "teacher"
+        : registerUser!.personTypeList![0] == 3
+            ? type = "student"
+            : registerUser!.personTypeList![0] == 4
+                ? "parent"
+                : "alumni";
+
+    registerUser!.personSubjects ??= [];
+    registerUser!.deleted_institution_user_id = widget.institutionIdtoDelete;
     final body = jsonEncode(registerUser);
     setState(() {
       isLoading = true;
@@ -650,25 +637,25 @@ class _WelComeScreen extends State<WelComeScreen> {
                 MaterialPageRoute(
                     builder: (context) => DilaogPage(
                         type: type,
-                        isVerified: data.rows.isVerified,
-                        title: AppLocalizations.of(context)
+                        isVerified: data.rows!.isVerified,
+                        title: AppLocalizations.of(context)!
                                 .translate('you_are_added_as') +
                             type,
                         subtitle: type == "parent"
-                            ? ((data.rows.studentName != null
-                                    ? "of" + data.rows.studentName
+                            ? ((data.rows!.studentName != null
+                                    ? "of" + data.rows!.studentName!
                                     : "") +
-                                (data.rows.institutionName != null
-                                    ? " of " + data.rows.institutionName
+                                (data.rows!.institutionName != null
+                                    ? " of " + data.rows!.institutionName!
                                     : ""))
-                            : (data.rows.institutionName != null
-                                ? " of " + data.rows.institutionName
+                            : (data.rows!.institutionName != null
+                                ? " of " + data.rows!.institutionName!
                                 : ""))),
                 (Route<dynamic> route) => false);
           }
         } else
           ToastBuilder().showToast(
-              data.message, context, HexColor(AppColors.information));
+              data.message!, context, HexColor(AppColors.information));
       }
     }).catchError((onError) async {
       setState(() {

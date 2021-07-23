@@ -1,8 +1,8 @@
 class TopicListRequest {
-  String searchVal;
-  int pageNumber;
-  int pageSize;
-  int parentTopicId;
+  String? searchVal;
+  int? pageNumber;
+  int? pageSize;
+  int? parentTopicId;
 
   TopicListRequest(
       {this.searchVal, this.pageNumber, this.pageSize, this.parentTopicId});
@@ -25,10 +25,10 @@ class TopicListRequest {
 }
 
 class TopicListResponse {
-  String statusCode;
-  String message;
-  List<TopicListItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<TopicListItem>? rows;
+  int? total;
 
   TopicListResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -38,7 +38,7 @@ class TopicListResponse {
     if (json['rows'] != null) {
       rows = [];//TopicListItem>();
       json['rows'].forEach((v) {
-        rows.add(new TopicListItem.fromJson(v));
+        rows!.add(new TopicListItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -49,7 +49,7 @@ class TopicListResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -57,12 +57,12 @@ class TopicListResponse {
 }
 
 class TopicListItem {
-  String topicName;
-  String topicCode;
-  String topicDescription;
-  String imageUrl;
-  int topicId;
-  bool isSelected;
+  String? topicName;
+  String? topicCode;
+  String? topicDescription;
+  String? imageUrl;
+  int? topicId;
+  bool? isSelected;
 
   TopicListItem(
       {this.topicName,

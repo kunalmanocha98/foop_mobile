@@ -1,9 +1,9 @@
 class AddNewSkillLangEntity {
-  String categoryType;
-  String valueName;
-  String valueCode;
-  String valueDescription;
-  int instituteId;
+  String? categoryType;
+  String? valueName;
+  String? valueCode;
+  String? valueDescription;
+  int? instituteId;
 
   AddNewSkillLangEntity(
       {this.categoryType,

@@ -2,7 +2,7 @@ import 'package:oho_works_app/models/base_res.dart';
 import 'package:flutter/material.dart';
 
 class PrivateAccountCard extends StatelessWidget {
-  final CommonCardData data;
+  final CommonCardData? data;
   PrivateAccountCard({this.data});
   @override
   Widget build(BuildContext context) {

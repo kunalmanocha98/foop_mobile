@@ -272,7 +272,7 @@ import 'overlaped_circular_images.dart';
 // ignore: must_be_immutable
 class InterestCard extends StatelessWidget {
   final CommonCardData data;
-  List<SubRow> listSubItems = [];
+  List<SubRow>? listSubItems = [];
 
   Size displaySize(BuildContext context) {
     debugPrint('Size = ' + MediaQuery.of(context).size.toString());
@@ -288,8 +288,8 @@ class InterestCard extends StatelessWidget {
     debugPrint('Width = ' + displaySize(context).width.toString());
     return displaySize(context).width;
   }
-  TextStyleElements styleElements;
-  InterestCard({Key key, @required this.data,this.styleElements}) : super(key: key);
+  TextStyleElements? styleElements;
+  InterestCard({Key? key, required this.data,this.styleElements}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -308,7 +308,7 @@ class InterestCard extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 16, right: 16,top:12,bottom:12),
                     child: Text(
                       data.title ?? "",
-                      style:styleElements.headline5ThemeScalable(context),
+                      style:styleElements!.headline5ThemeScalable(context),
                       textAlign: TextAlign.left,
                     ),
                   )),
@@ -337,7 +337,7 @@ class InterestCard extends StatelessWidget {
                     physics: NeverScrollableScrollPhysics(),
                     crossAxisCount: 2,
                     childAspectRatio: 0.9,
-                    children: listSubItems.map((SubRow data) {
+                    children: listSubItems!.map((SubRow data) {
                       return Container(
                         margin: const EdgeInsets.only(
                             left: 4.0, right: 4.0, top: 4.0),
@@ -351,7 +351,7 @@ class InterestCard extends StatelessWidget {
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(4)),
                                 image: DecorationImage(
-                                  image: CachedNetworkImageProvider(data.urlOne),
+                                  image: CachedNetworkImageProvider(data.urlOne!),
                                   fit: BoxFit.fill,
                                 ),
                               ),
@@ -373,7 +373,7 @@ class InterestCard extends StatelessWidget {
                                                 left: 16.0, right: 16.0),
                                             child: Text(
                                               data.textOne ??= "",
-                                              style: styleElements.headline5ThemeScalable(context),
+                                              style: styleElements!.headline5ThemeScalable(context),
                                               textAlign: TextAlign.left,
                                             ),
                                           )),
@@ -390,7 +390,7 @@ class InterestCard extends StatelessWidget {
                                             Flexible(
                                                 child: Text(
                                               data.textTwo ??= "",
-                                              style:styleElements.subtitle1ThemeScalable(context),
+                                              style:styleElements!.subtitle1ThemeScalable(context),
                                               textAlign: TextAlign.left,
                                             )),
                                           ],
@@ -414,8 +414,8 @@ class InterestCard extends StatelessWidget {
               child: Align
                 (
                 alignment:  Alignment.bottomRight,
-                child: Text(AppLocalizations.of(context).translate('see_more'),
-                  style: styleElements.subtitle2ThemeScalable(context),
+                child: Text(AppLocalizations.of(context)!.translate('see_more'),
+                  style: styleElements!.subtitle2ThemeScalable(context),
                   textAlign: TextAlign.center,
                 ),
               ),

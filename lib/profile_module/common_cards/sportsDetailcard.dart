@@ -12,12 +12,12 @@ import 'overlaped_circular_images.dart';
 // ignore: must_be_immutable
 class SportsCardDetail extends StatelessWidget {
   final CommonCardData data;
-  BuildContext context;
-  List<SubRow> listSubItems = [];
-  TextStyleElements styleElements;
-  bool isProfile;
-  String instituteId;
-  Null Function() callbackPicker;
+  BuildContext? context;
+  List<SubRow>? listSubItems = [];
+  TextStyleElements? styleElements;
+  bool? isProfile;
+  String? instituteId;
+  Null Function()? callbackPicker;
 
   Size displaySize(BuildContext context) {
     debugPrint('Size = ' + MediaQuery.of(context).size.toString());
@@ -34,7 +34,7 @@ class SportsCardDetail extends StatelessWidget {
     return displaySize(context).width;
   }
 
-  SportsCardDetail({Key key, @required this.data,this.styleElements, this.instituteId,
+  SportsCardDetail({Key? key, required this.data,this.styleElements, this.instituteId,
     this.isProfile,
     this.callbackPicker}) : super(key: key);
   RandomColor _randomColor = RandomColor();
@@ -49,7 +49,7 @@ class SportsCardDetail extends StatelessWidget {
             shrinkWrap: true,
             padding: const EdgeInsets.all(0.0),
             physics: NeverScrollableScrollPhysics(),
-            itemCount: listSubItems.length,
+            itemCount: listSubItems!.length,
             itemBuilder: (context, index) {
               return GestureDetector(
                 onTap: () {
@@ -95,16 +95,16 @@ class SportsCardDetail extends StatelessWidget {
                               Align(
                                 alignment: Alignment.topLeft,
                                 child:Text(
-                                  listSubItems[index].textOne ??= "",
-                                  style: styleElements.headline6ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite)),
+                                  listSubItems![index].textOne ??= "",
+                                  style: styleElements!.headline6ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite)),
                                   textAlign: TextAlign.left,
                                 ),
                               ),
                               Align(
                                 alignment: Alignment.topLeft,
                                 child:  Text(
-                                  listSubItems[index].textEight ??= "",
-                                  style: styleElements.overlineThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite)),
+                                  listSubItems![index].textEight ??= "",
+                                  style: styleElements!.overlineThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite)),
                                   textAlign: TextAlign.left,
                                 ),
                               ),
@@ -112,15 +112,15 @@ class SportsCardDetail extends StatelessWidget {
                                 margin: const EdgeInsets.only(top: 12,),
                                 child:  Row(
                                   children: <Widget>[
-                                    OverlappedImages( listSubItems[index].images),
+                                    OverlappedImages( listSubItems![index].images),
 
                                     Container(
                                       margin: const EdgeInsets.only(left: 16),
                                       child: Flexible(
                                         child: Text(
-                                          listSubItems[index].totalCount ??=
+                                          listSubItems![index].totalCount ??=
                                           "",
-                                          style: styleElements.captionThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite)),
+                                          style: styleElements!.captionThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite)),
                                           textAlign: TextAlign.left,
                                         ),
                                       ),)

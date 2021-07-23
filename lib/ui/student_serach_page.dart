@@ -29,7 +29,7 @@ import 'dialog_page.dart';
 
 // ignore: must_be_immutable
 class StudentsPageNew extends StatefulWidget {
-  RegisterUserAs registerUserAs;
+  RegisterUserAs? registerUserAs;
 
   StudentsPageNew(this.registerUserAs);
 
@@ -39,19 +39,19 @@ class StudentsPageNew extends StatefulWidget {
 
 class _StudentsPageNew extends State<StudentsPageNew>
     with AutomaticKeepAliveClientMixin<StudentsPageNew> {
-  String searchVal;
-  RegisterUserAs registerUserAs;
-  String personName;
+  String? searchVal;
+  RegisterUserAs? registerUserAs;
+  String? personName;
   String type="parent";
-  int id;
-  String ownerType;
-  int ownerId;
-  Null Function() callback;
+  int? id;
+  String? ownerType;
+  int? ownerId;
+  Null Function()? callback;
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
-  SharedPreferences prefs;
-  TextStyleElements styleElements;
+  late SharedPreferences prefs;
+  late TextStyleElements styleElements;
   String pageTitle = "";
-  ProgressDialog pr;
+  ProgressDialog? pr;
   List<CommonListResponseItem> listInstitute = [];
   List<CommonListResponseItem> selectedL = [];
   CommonListResponseItem selectedItem = CommonListResponseItem();
@@ -59,17 +59,17 @@ class _StudentsPageNew extends State<StudentsPageNew>
 
   @override
   bool get wantKeepAlive => true;
-  int idStudent;
+  int? idStudent;
 
   void setSharedPreferences() async {
     refresh();
   }
 
-  List<CommonListResponseItem> listItemsGetter(CommonListResponse response) {
-    for (int i = 0; i < response.rows.length; i++) {
-      response.rows[i].isSelected = false;
+  List<CommonListResponseItem>? listItemsGetter(CommonListResponse? response) {
+    for (int i = 0; i < response!.rows!.length; i++) {
+      response.rows![i].isSelected = false;
     }
-    listInstitute.addAll(response.rows);
+    listInstitute.addAll(response.rows!);
     return response.rows;
   }
 
@@ -91,11 +91,12 @@ class _StudentsPageNew extends State<StudentsPageNew>
   }
 
   refresh() {
-    paginatorKey.currentState.changeState(resetState: true);
+    paginatorKey.currentState!.changeState(resetState: true);
   }
 
-  void _onBackPressed() {
+  Future<bool> _onBackPressed() {
     Navigator.of(context).pop(true);
+    return new Future(() => false);
   }
 
   @override
@@ -120,7 +121,7 @@ class _StudentsPageNew extends State<StudentsPageNew>
                   SliverToBoxAdapter(
                     child: SearchBox(
                       onvalueChanged: onsearchValueChanged,
-                      hintText: AppLocalizations.of(context).translate('search'),
+                      hintText: AppLocalizations.of(context)!.translate('search'),
                     ),
                   ),
                   SliverToBoxAdapter(
@@ -141,7 +142,7 @@ class _StudentsPageNew extends State<StudentsPageNew>
                               child: Container(
                                 margin: const EdgeInsets.all(16),
                                 child: Text(
-                                  AppLocalizations.of(context)
+                                  AppLocalizations.of(context)!
                                       .translate("selectChildInstruction"),
                                   textAlign: TextAlign.center,
                                   style: styleElements
@@ -155,20 +156,25 @@ class _StudentsPageNew extends State<StudentsPageNew>
                   )
                 ];
               },
-              body:searchVal!=null && searchVal.trim().isNotEmpty? Paginator.listView(
+              body:searchVal!=null && searchVal!.trim().isNotEmpty?
+
+              Paginator.listView(
                   key: paginatorKey,
                   padding: EdgeInsets.only(top: 16,bottom: 50),
                   scrollPhysics: BouncingScrollPhysics(),
                   pageLoadFuture: getChild,
-                  pageItemsGetter: listItemsGetter,
+                  pageItemsGetter: CustomPaginator(context).listItemsGetter,
                   listItemBuilder: listItemBuilder,
-                  loadingWidgetBuilder:
-                      CustomPaginator(context).loadingWidgetMaker,
+                  loadingWidgetBuilder: CustomPaginator(context).loadingWidgetMaker,
                   errorWidgetBuilder: CustomPaginator(context).errorWidgetMaker,
-                  emptyListWidgetBuilder:
-                      CustomPaginator(context).emptyListWidgetMaker,
+                  emptyListWidgetBuilder: CustomPaginator(context).emptyListWidgetMaker,
                   totalItemsGetter: CustomPaginator(context).totalPagesGetter,
-                  pageErrorChecker: CustomPaginator(context).pageErrorChecker):TricycleEmptyWidget(message: "No data found !!",),
+                  pageErrorChecker: CustomPaginator(context).pageErrorChecker):
+
+
+
+
+              TricycleEmptyWidget(message: "No data found !!",),
             )),
             Align(
                 alignment: Alignment.bottomCenter,
@@ -199,7 +205,7 @@ class _StudentsPageNew extends State<StudentsPageNew>
                                   },
                                   child: Container(
                                     margin: const EdgeInsets.all(16),
-                                    child: Text(AppLocalizations.of(context).translate('skip_this_now'),
+                                    child: Text(AppLocalizations.of(context)!.translate('skip_this_now'),
                                       style: styleElements
                                           .bodyText2ThemeScalable(context)
                                           .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -227,7 +233,7 @@ class _StudentsPageNew extends State<StudentsPageNew>
                                             onPressed: () {
                                               var ids = isItemSelected();
                                               if (ids != null) {
-                                                registerUserAs.childId = ids;
+                                                registerUserAs!.childId = ids;
                                                 Navigator.push(
                                                     context,
                                                     MaterialPageRoute(
@@ -242,7 +248,7 @@ class _StudentsPageNew extends State<StudentsPageNew>
                                             },
                                             color: HexColor(AppColors.appColorWhite),
                                             child: Text(
-                                              AppLocalizations.of(context).translate('next'),
+                                              AppLocalizations.of(context)!.translate('next'),
                                               style: styleElements
                                                   .subtitle2ThemeScalable(
                                                       context)
@@ -264,14 +270,14 @@ class _StudentsPageNew extends State<StudentsPageNew>
   }
 
   // ignore: missing_return
-  Future<CommonListResponse> getChild(int page) async {
+  Future<CommonListResponse?> getChild(int page) async {
     prefs = await SharedPreferences.getInstance();
     final body = jsonEncode({
       "page_number": page,
       "page_size": 20,
       "requested_by_type": "institution",
       "list_type": null,
-      "institution_id": registerUserAs.institutionId,
+      "institution_id": registerUserAs!.institutionId,
       "search_val": searchVal,
       "person_type": ["S"],
       "person_id": prefs.getInt("userId").toString(),
@@ -301,7 +307,7 @@ class _StudentsPageNew extends State<StudentsPageNew>
                 onChanged: (val) {
                   if (this.mounted) {
                     setState(() {
-                      if (val) {
+                      if (val!) {
                         for (int i = 0; i < listInstitute.length; i++) {
                           if (i == index) {
                             idStudent = listInstitute[i].id;
@@ -322,24 +328,24 @@ class _StudentsPageNew extends State<StudentsPageNew>
     );
   }
 
-  int isItemSelected() {
+  int? isItemSelected() {
     for (var item in listInstitute) {
-      if (item.isSelected) {
+      if (item.isSelected!) {
         return item.id;
       }
     }
     return null;
   }
 
-  void register(int userId) async {
-    registerUserAs.dateOfBirth = null;
-    registerUserAs.personId = userId;
+  void register(int? userId) async {
+    registerUserAs!.dateOfBirth = null;
+    registerUserAs!.personId = userId;
 
     final body = jsonEncode(registerUserAs);
-    progressButtonKey.currentState.show();
+    progressButtonKey.currentState!.show();
     Calls().call(body, context, Config.REGISTER_USER_AS).then((value) async {
       if (value != null) {
-        progressButtonKey.currentState.hide();
+        progressButtonKey.currentState!.hide();
         var data = RegisterUserAsResponse.fromJson(value);
         print(data.toString());
         if (data.statusCode == "S10001") {
@@ -350,19 +356,19 @@ class _StudentsPageNew extends State<StudentsPageNew>
               MaterialPageRoute(
                   builder: (context) => DilaogPage(
                         type: type,
-                        isVerified: data.rows.isVerified,
-                        title: AppLocalizations.of(context).translate('you_are_added_as') + type??"",
+                        isVerified: data.rows!.isVerified,
+                        title: AppLocalizations.of(context)!.translate('you_are_added_as') + type,
                         subtitle: "",
                       )),
               (Route<dynamic> route) => false);
         } else
           ToastBuilder().showToast(
-              data.message, context, HexColor(AppColors.information));
+              data.message!, context, HexColor(AppColors.information));
       }
     }).catchError((onError) async {
       ToastBuilder().showToast(
           onError.toString(), context, HexColor(AppColors.information));
-      progressButtonKey.currentState.hide();
+      progressButtonKey.currentState!.hide();
     });
   }
 

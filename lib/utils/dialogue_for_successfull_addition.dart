@@ -16,10 +16,10 @@ import 'hexColors.dart';
 class CustomDialogue extends StatelessWidget {
   String title;
   String subtitle;
-  SharedPreferences prefs;
+  late SharedPreferences prefs;
   String type;
-  bool  isVerified;
-  TextStyleElements styleElements;
+  bool?  isVerified;
+  late TextStyleElements styleElements;
   Size displaySize(BuildContext context) {
     debugPrint('Size = ' + MediaQuery.of(context).size.toString());
     return MediaQuery.of(context).size;
@@ -40,11 +40,11 @@ class CustomDialogue extends StatelessWidget {
   }
 
   CustomDialogue({
-    Key key,
-    @required this.type,
-    @required this.title,
-    @required this.subtitle,
-    @required this.isVerified
+    Key? key,
+    required this.type,
+    required this.title,
+    required this.subtitle,
+    required this.isVerified
   }) : super(key: key);
 
   @override
@@ -63,7 +63,7 @@ class CustomDialogue extends StatelessWidget {
                   child: Container(
                     margin: const EdgeInsets.only(bottom: 20, top: 50),
                     child: Text(
-                      AppLocalizations.of(context).translate("congratulations"),
+                      AppLocalizations.of(context)!.translate("congratulations"),
                       style: styleElements.headline5ThemeScalable(context),
                     ),
                   )),
@@ -102,13 +102,13 @@ class CustomDialogue extends StatelessWidget {
                   )),
 
               Visibility(
-                visible: !isVerified,
+                visible: !isVerified!,
                 child: Align(
                     alignment: Alignment.topCenter,
                     child: Container(
                       margin: const EdgeInsets.only(bottom: 20),
                       child: Text(
-                        AppLocalizations.of(context).translate("non_verified_person"),
+                        AppLocalizations.of(context)!.translate("non_verified_person"),
                         style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold),
                         textAlign: TextAlign.center,
                       ),
@@ -138,7 +138,7 @@ class CustomDialogue extends StatelessWidget {
                       },
                       color: HexColor(AppColors.appColorGreen),
                       child: Text(
-                          AppLocalizations.of(context)
+                          AppLocalizations.of(context)!
                               .translate("continueWithProfileSettings"),
                         style: styleElements.subtitle2ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite)),),
                     ),
@@ -162,7 +162,7 @@ class CustomDialogue extends StatelessWidget {
                       },
                       color: HexColor(AppColors.appMainColor),
                       child: Text(
-                          AppLocalizations.of(context)
+                          AppLocalizations.of(context)!
                               .translate("take_me_to_home"),
                         style: styleElements.subtitle2ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite)),),
                     )),

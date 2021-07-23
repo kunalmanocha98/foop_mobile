@@ -1,8 +1,8 @@
 class CountryCodeResponse {
-  String statusCode;
-  String message;
-  List<ContruCodeItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<ContruCodeItem>? rows;
+  int? total;
 
   CountryCodeResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -12,7 +12,7 @@ class CountryCodeResponse {
     if (json['rows'] != null) {
       rows = [];//ContruCodeItem>();
       json['rows'].forEach((v) {
-        rows.add(new ContruCodeItem.fromJson(v));
+        rows!.add(new ContruCodeItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -23,7 +23,7 @@ class CountryCodeResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -31,14 +31,14 @@ class CountryCodeResponse {
 }
 
 class ContruCodeItem {
-  String code;
-  String flagIconUrl;
-  String flagThumbnailUrl;
+  String? code;
+  String? flagIconUrl;
+  String? flagThumbnailUrl;
   Null flagUrl;
-  int isdCode;
-  String name;
-  String localLanguage;
-  String dialCode;
+  int? isdCode;
+  String? name;
+  String? localLanguage;
+  String? dialCode;
 
   ContruCodeItem(
       {this.code,

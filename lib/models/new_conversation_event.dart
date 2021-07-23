@@ -1,34 +1,34 @@
 class NewConversationEvent {
-  int id;
-  int standardEventsId;
-  String eventOwnerType;
-  int eventOwnerId;
-  String eventRoleType;
-  int isModerator;
-  List<String> recipientType;
-  String title;
-  String subtitle;
-  String eventImportanceType;
-  String eventCategory;
-  String eventImage;
+  int? id;
+  int? standardEventsId;
+  String? eventOwnerType;
+  int? eventOwnerId;
+  String? eventRoleType;
+  int? isModerator;
+  List<String>? recipientType;
+  String? title;
+  String? subtitle;
+  String? eventImportanceType;
+  String? eventCategory;
+  String? eventImage;
 
-  String eventDate;
-  String eventTimeZone;
-  String eventColorCode;
-  String eventIcon;
-  int startTime;
-  String endTime;
-  String reminderUnit;
-  String isFullDay;
-  String eventStatus;
-  String eventAccessUrl;
-  String calContextType;
-  int calContextTypeId;
+  String? eventDate;
+  String? eventTimeZone;
+  String? eventColorCode;
+  String? eventIcon;
+  int? startTime;
+  String? endTime;
+  String? reminderUnit;
+  String? isFullDay;
+  String? eventStatus;
+  String? eventAccessUrl;
+  String? calContextType;
+  int? calContextTypeId;
 
-  String eventPrivacyType;
-  List<String> eventTopics;
-  List<String> eventLanguages;
-  String conversationId;
+  String? eventPrivacyType;
+  List<String>? eventTopics;
+  List<String>? eventLanguages;
+  String? conversationId;
 
 
   NewConversationEvent(

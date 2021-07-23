@@ -25,22 +25,22 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class NotificationsPage extends StatefulWidget {
-  Null Function() callback;
+  Null Function()? callback;
 
   @override
   NotificationsPageState createState() => NotificationsPageState(callback);
 
   NotificationsPage({
-    Key key,
-    @required this.callback,
+    Key? key,
+    required this.callback,
   }) : super(key: key);
 }
 
 class NotificationsPageState extends State<NotificationsPage> {
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
-  TextStyleElements styleElements;
-  SharedPreferences prefs;
-  Null Function() callback;
+  late TextStyleElements styleElements;
+  SharedPreferences? prefs;
+  Null Function()? callback;
   List<NotificationItem> notificationItemList = [];
 
   @override
@@ -50,7 +50,7 @@ class NotificationsPageState extends State<NotificationsPage> {
   }
 
   Future<Null> refreshList() async {
-    paginatorKey.currentState.changeState(resetState: true);
+    paginatorKey.currentState!.changeState(resetState: true);
     await new Future.delayed(new Duration(seconds: 2));
 
     return null;
@@ -62,7 +62,7 @@ class NotificationsPageState extends State<NotificationsPage> {
     return SafeArea(
       child: Scaffold(
         appBar: TricycleAppBar().getCustomAppBar(context,
-            appBarTitle: AppLocalizations.of(context).translate('notification'),
+            appBarTitle: AppLocalizations.of(context)!.translate('notification'),
             onBackButtonPress: () {
               Navigator.pop(context);
             }),
@@ -88,11 +88,11 @@ class NotificationsPageState extends State<NotificationsPage> {
   void updateCount() async {
     prefs ??= await SharedPreferences.getInstance();
     final body =
-    jsonEncode({"personId": prefs.getInt("userId"), "type": "bell"});
+    jsonEncode({"personId": prefs!.getInt("userId"), "type": "bell"});
     Calls().call(body, context, Config.UPDATE_COUNT).then((value) {
       var res = NotificationCountResponse.fromJson(value);
       if (res.statusCode == Strings.success_code) {
-        callback();
+        callback!();
       } else {}
     }).catchError((onError) {
       print(onError);
@@ -102,11 +102,11 @@ class NotificationsPageState extends State<NotificationsPage> {
   void getNotificationCount(pid) async {
     prefs ??= await SharedPreferences.getInstance();
     final body = jsonEncode(
-        {"personId": prefs.getInt("userId"), "pid": pid, "type": "read"});
+        {"personId": prefs!.getInt("userId"), "pid": pid, "type": "read"});
     Calls().call(body, context, Config.UPDATE_COUNT).then((value) {
       var res = NotificationCountResponse.fromJson(value);
       if (res.statusCode == Strings.success_code) {
-        callback();
+        callback!();
       } else {}
     }).catchError((onError) {
       print(onError);
@@ -116,7 +116,7 @@ class NotificationsPageState extends State<NotificationsPage> {
   Future<NotificationListResponse> fetchlist(int page) async {
     prefs ??= await SharedPreferences.getInstance();
     NotificationListRequest payload = NotificationListRequest();
-    payload.personId = prefs.getInt(Strings.userId).toString();
+    payload.personId = prefs!.getInt(Strings.userId).toString();
     payload.pageSize = 5;
     payload.pageNumber = page;
     var res = await Calls()
@@ -125,8 +125,8 @@ class NotificationsPageState extends State<NotificationsPage> {
     return NotificationListResponse.fromJson(res);
   }
 
-  List<NotificationItem> listItemsGetter(NotificationListResponse pageData) {
-    notificationItemList.addAll(pageData.rows);
+  List<NotificationItem>? listItemsGetter(NotificationListResponse? pageData) {
+    notificationItemList.addAll(pageData!.rows!);
     return pageData.rows;
   }
 
@@ -134,8 +134,8 @@ class NotificationsPageState extends State<NotificationsPage> {
     NotificationItem item = itemData;
     return InkWell(
       onTap: () {
-        var uri = Uri.parse(item.notificationMobileDeepLink);
-        print("deeplink-" + item.notificationMobileDeepLink);
+        var uri = Uri.parse(item.notificationMobileDeepLink!);
+        print("deeplink-" + item.notificationMobileDeepLink!);
         if (uri.pathSegments.isNotEmpty && uri.pathSegments.length > 0) {
           switch (uri.pathSegments[0]) {
             case "person":
@@ -196,7 +196,7 @@ class NotificationsPageState extends State<NotificationsPage> {
           size: 36,
         ),
         title: Text(
-          item.notificationText,
+          item.notificationText!,
           style: styleElements
               .subtitle2ThemeScalable(context)
               .copyWith(fontWeight: FontWeight.w600),
@@ -210,12 +210,12 @@ class NotificationsPageState extends State<NotificationsPage> {
                 Utility().getDateFormat(
                     "dd MMM yyyy,hh:mm",
                     DateTime.fromMillisecondsSinceEpoch(
-                        int.parse(item.notificationDate))),
+                        int.parse(item.notificationDate!))),
                 style: styleElements.captionThemeScalable(context),
               ),
             ),
             Visibility(
-              visible: isBuddyVerification(item.notificationMobileDeepLink),
+              visible: isBuddyVerification(item.notificationMobileDeepLink!),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -223,7 +223,7 @@ class NotificationsPageState extends State<NotificationsPage> {
                     onPressed: () {},
                     shape: RoundedRectangleBorder(),
                     child: Text(
-                      AppLocalizations.of(context).translate('ignore'),
+                      AppLocalizations.of(context)!.translate('ignore'),
                       style: styleElements
                           .captionThemeScalable(context)
                           .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -231,13 +231,13 @@ class NotificationsPageState extends State<NotificationsPage> {
                   ),
                   TricycleTextButton(
                     onPressed: () {
-                      var uri = Uri.parse(item.notificationMobileDeepLink);
+                      var uri = Uri.parse(item.notificationMobileDeepLink!);
                       handleBuddyDeepLink(uri.pathSegments, prefs, context, item.pid,
                           item.notificationActorImage);
                     },
                     shape: RoundedRectangleBorder(),
                     child: Text(
-                      AppLocalizations.of(context).translate('verify'),
+                      AppLocalizations.of(context)!.translate('verify'),
                       style: styleElements
                           .captionThemeScalable(context)
                           .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -263,8 +263,8 @@ class NotificationsPageState extends State<NotificationsPage> {
     );
   }
 
-  void handlePostDeepLink(List<String> list, SharedPreferences prefs,
-      BuildContext context, String pid,int postId,String type) {
+  void handlePostDeepLink(List<String> list, SharedPreferences? prefs,
+      BuildContext context, String? pid,int postId,String type) {
     getNotificationCount(pid);
     DeepLinkingPayload deepLinkingPayload = DeepLinkingPayload();
    deepLinkingPayload.postId = postId;
@@ -273,8 +273,8 @@ class NotificationsPageState extends State<NotificationsPage> {
         .navigateTo("/postDetailPage", deepLinkingPayload, context);
   }
 
-  void handleBuddyDeepLink(List<String> list, SharedPreferences prefs,
-      BuildContext context, String pid, String profileImage) {
+  void handleBuddyDeepLink(List<String> list, SharedPreferences? prefs,
+      BuildContext context, String? pid, String? profileImage) {
     getNotificationCount(pid);
     DeepLinkingPayload deepLinkingPayload = DeepLinkingPayload();
     deepLinkingPayload.institutionUserId = int.parse(list[1]);
@@ -284,8 +284,8 @@ class NotificationsPageState extends State<NotificationsPage> {
     locator<NavigationService>()
         .navigateTo("/BuddyApproval", deepLinkingPayload, context);
   }
-  void handleEventDeepLink(List<String> list, SharedPreferences prefs,
-      BuildContext context, String pid, String profileImage) {
+  void handleEventDeepLink(List<String> list, SharedPreferences? prefs,
+      BuildContext context, String? pid, String? profileImage) {
     getNotificationCount(pid);
     DeepLinkingPayload deepLinkingPayload = DeepLinkingPayload();
     deepLinkingPayload.postId = int.parse(list[1]);
@@ -293,8 +293,8 @@ class NotificationsPageState extends State<NotificationsPage> {
         .navigateTo("/event_detail", deepLinkingPayload, context);
   }
 
-  void handleProfilePageDeepLinking(List<String> list, SharedPreferences prefs,
-      BuildContext context, String pid) {
+  void handleProfilePageDeepLinking(List<String> list, SharedPreferences? prefs,
+      BuildContext context, String? pid) {
     getNotificationCount(pid);
     DeepLinkingPayload deepLinkingPayload = DeepLinkingPayload();
     if (list.length > 3) deepLinkingPayload.userId = int.parse(list[3]);
@@ -309,7 +309,7 @@ class NotificationsPageState extends State<NotificationsPage> {
     locator<NavigationService>()
         .navigateTo("/ChatHistoryPage", deepLinkingPayload, context);
   }
-  int totalPagesGetter(NotificationListResponse pageData) {
+  int? totalPagesGetter(NotificationListResponse pageData) {
     return pageData.total;
   }
 

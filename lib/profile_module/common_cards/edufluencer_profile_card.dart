@@ -12,7 +12,7 @@ class EdufluemcerProfileCard extends StatefulWidget {
 }
 
 class EdufluemcerProfileCardState extends State<EdufluemcerProfileCard> {
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
   bool isExpanded = false;
 
   @override
@@ -42,7 +42,7 @@ class EdufluemcerProfileCardState extends State<EdufluemcerProfileCard> {
                     TricycleTextButton(
                       onPressed: () {},
                       child: Text(
-                        AppLocalizations.of(context).translate('message'),
+                        AppLocalizations.of(context)!.translate('message'),
                         style: styleElements
                             .captionThemeScalable(context)
                             .copyWith(color: HexColor(AppColors.appMainColor)),

@@ -4,19 +4,19 @@ import 'package:oho_works_app/utils/colors.dart';
 import 'package:oho_works_app/utils/hexColors.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
-String dialogMessage;
-double percentProgress;
+late String dialogMessage;
+double? percentProgress;
 bool _isShowing = false;
-BuildContext context;
-BuildContext _dismissingContext;
-_Body dialog;
-bool dismissable;
+BuildContext? context;
+late BuildContext _dismissingContext;
+_Body? dialog;
+late bool dismissable;
  class UploadDownloadDialog {
   UploadDownloadDialog({
-    String message,
-  double progress,
-    bool barrierDismissable,
-  BuildContext buildContext}) {
+    String? message,
+  double? progress,
+    bool? barrierDismissable,
+  BuildContext? buildContext}) {
      dialogMessage = message??='Please Wait....';
      percentProgress = progress??=0.0;
      context = buildContext;
@@ -49,7 +49,7 @@ bool dismissable;
         _isShowing = true;
         dialog =  _Body();
         showDialog<dynamic>(
-          context: context,
+          context: context!,
           barrierDismissible: dismissable,
           builder: (BuildContext context) {
             _dismissingContext = context;
@@ -84,10 +84,10 @@ bool dismissable;
     }
   }
 
-   void update({double progress}){
+   void update({double? progress}){
     print("*********** Update Progress $progress****************");
     percentProgress = progress;
-    if (_isShowing) dialog.update();
+    if (_isShowing) dialog!.update();
   }
 }
 
@@ -131,7 +131,7 @@ class _BodyState extends State<_Body>{
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: LinearPercentIndicator(
-              percent: percentProgress/100,
+              percent: percentProgress!/100,
               lineHeight: 24,
               animation: true,
               progressColor: HexColor(AppColors.appMainColor),
@@ -139,7 +139,7 @@ class _BodyState extends State<_Body>{
               center: Text(
                 '$percentProgress%',
                 style: styleElements.subtitle1ThemeScalable(context).copyWith(
-                  color: percentProgress>45?HexColor(AppColors.appColorWhite):HexColor(AppColors.appColorBlack85)
+                  color: percentProgress!>45?HexColor(AppColors.appColorWhite):HexColor(AppColors.appColorBlack85)
                 ),
               ),
             ),

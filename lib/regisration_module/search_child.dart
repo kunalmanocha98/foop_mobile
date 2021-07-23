@@ -22,7 +22,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 // ignore: must_be_immutable
 class SearchChild extends StatefulWidget {
   RegisterUserAs registerUserAs;
-  int instituteId;
+  int? instituteId;
 
   SearchChild(this.registerUserAs);
 
@@ -32,26 +32,26 @@ class SearchChild extends StatefulWidget {
 class _SearchChild extends State<SearchChild>
     with SingleTickerProviderStateMixin {
 
-  SharedPreferences prefs;
+  SharedPreferences? prefs;
   RegisterUserAs registerUserAs;
   var pageTitle = "";
   var color1 = HexColor(AppColors.appMainColor);
-  int userId;
+  int? userId;
   var color2 = HexColor(AppColors.appColorWhite);
-  int idStudent;
-  TextStyleElements styleElements;
+  int? idStudent;
+  late TextStyleElements styleElements;
   var color3 = HexColor(AppColors.appColorWhite);
   var isCheckedColor = HexColor(AppColors.appColorWhite);
-  List<User> listUser = [];
+  List<User>? listUser = [];
   List<String> personList = [];
   List<int> teachingClasses = [];
   var isSearching = false;
   bool _enabled = true;
-  String previousYear;
-  String currentYear;
-  String acedemicYear;
+  late String previousYear;
+  late String currentYear;
+  String? acedemicYear;
   String type = "";
-BuildContext sctx;
+late BuildContext sctx;
   @override
   void initState() {
     final DateFormat formatter = DateFormat('yyyy');
@@ -60,17 +60,17 @@ BuildContext sctx;
     currentYear = formatter.format(now);
     previousYear = (int.parse(currentYear) - 1).toString();
     acedemicYear = previousYear + "-" + currentYear;
-    WidgetsBinding.instance.addPostFrameCallback((_) => getRoles(null));
+    WidgetsBinding.instance!.addPostFrameCallback((_) => getRoles(null));
     super.initState();
   }
 
-  void getRoles(String searchValue) async {
+  void getRoles(String? searchValue) async {
 
     final body = jsonEncode({
       "institution_id": registerUserAs.institutionId,
       "searchVal": searchValue,
       "person_type": personList,
-      "class_id": registerUserAs.personClasses[0]
+      "class_id": registerUserAs.personClasses![0]
     });
 
     Calls().call(body, context, Config.USER_LIST).then((value) async {
@@ -80,16 +80,16 @@ BuildContext sctx;
       if (value != null) {
         var data = UserList.fromJson(value);
         if (data != null) {
-          if (data.rows != null && data.rows.isNotEmpty) {
-            for (int i = 0; i < data.rows.length; i++) {
+          if (data.rows != null && data.rows!.isNotEmpty) {
+            for (int i = 0; i < data.rows!.length; i++) {
               // already selected institute mark red
               if (idStudent != null) {
-                if (data.rows[i].id == idStudent)
-                  data.rows[i].isSelected = true;
+                if (data.rows![i].id == idStudent)
+                  data.rows![i].isSelected = true;
                 else
-                  data.rows[i].isSelected = false;
+                  data.rows![i].isSelected = false;
               } else {
-                data.rows[i].isSelected = false;
+                data.rows![i].isSelected = false;
               }
             }
             listUser = data.rows;
@@ -104,13 +104,14 @@ BuildContext sctx;
 
     });
   }
-  void _onBackPressed() {
+  Future<bool> _onBackPressed() {
     Navigator.of(context).pop(true);
+    return new Future(() => false);
   }
   Widget build(BuildContext context) {
     // ScreenUtil.init(context);
     styleElements = TextStyleElements(context);
-    pageTitle = AppLocalizations.of(context).translate('select_child');
+    pageTitle = AppLocalizations.of(context)!.translate('select_child');
     return
       SafeArea(
         child: Scaffold(
@@ -144,7 +145,7 @@ BuildContext sctx;
                                         getRoles(text);
                                       },
                                       progressIndicator: isSearching,
-                                      hintText: AppLocalizations.of(context).translate('search'),
+                                      hintText: AppLocalizations.of(context)!.translate('search'),
                                     ),
                                   ),
                                 ];
@@ -160,7 +161,7 @@ BuildContext sctx;
                                     child: ListView.builder(
                                         padding: EdgeInsets.only(
                                             left: 8, right: 8, bottom: 8, top: 8),
-                                        itemCount: listUser.length,
+                                        itemCount: listUser!.length,
                                         itemBuilder:
                                             (BuildContext context, int index) {
                                           return GestureDetector(
@@ -188,7 +189,7 @@ BuildContext sctx;
                                                             const EdgeInsets.all(16),
                                                             child: Text(
                                                               AppLocalizations.of(
-                                                                  context)
+                                                                  context)!
                                                                   .translate(
                                                                   "parent_search_child"),
                                                               textAlign:
@@ -210,12 +211,11 @@ BuildContext sctx;
                                                                   alignment: Alignment
                                                                       .centerLeft,
                                                                   child: Text(
-                                                                    listUser[index]
-                                                                        .firstName +
-                                                                        listUser[
+                                                                    listUser![index]
+                                                                        .firstName! +
+                                                                        listUser![
                                                                         index]
-                                                                            .lastName ??
-                                                                        "",
+                                                                            .lastName!,
                                                                     style: styleElements.subtitle1ThemeScalable(context),
                                                                     textAlign:
                                                                     TextAlign.left,
@@ -233,7 +233,7 @@ BuildContext sctx;
                                                                 child: Checkbox(
                                                                   activeColor:
                                                                   HexColor(AppColors.appMainColor),
-                                                                  value: listUser[index]
+                                                                  value: listUser![index]
                                                                       .isSelected,
                                                                   onChanged: (val) {
                                                                     if (this.mounted) {
@@ -241,25 +241,25 @@ BuildContext sctx;
                                                                         if (val == true) {
                                                                           for (int i = 0;
                                                                           i <
-                                                                              listUser
+                                                                              listUser!
                                                                                   .length;
                                                                           i++) {
                                                                             if (i ==
                                                                                 index) {
                                                                               idStudent =
-                                                                                  listUser[i]
+                                                                                  listUser![i]
                                                                                       .id;
 
-                                                                              listUser[i]
+                                                                              listUser![i]
                                                                                   .isSelected =
                                                                               true;
                                                                             } else
-                                                                              listUser[i]
+                                                                              listUser![i]
                                                                                   .isSelected =
                                                                               false;
                                                                           }
                                                                         } else {
-                                                                          listUser[index]
+                                                                          listUser![index]
                                                                               .isSelected =
                                                                           false;
                                                                         }
@@ -357,7 +357,7 @@ BuildContext sctx;
                                                   }
                                                 },
                                                 color: HexColor(AppColors.appColorWhite),
-                                                child: Text(AppLocalizations.of(context).translate('next'),
+                                                child: Text(AppLocalizations.of(context)!.translate('next'),
                                                   style: styleElements.subtitle2ThemeScalable(context).copyWith(color:HexColor(AppColors.appMainColor)),),
                                               ),
                                             )),
@@ -373,9 +373,9 @@ BuildContext sctx;
       ;
   }
 
-  int isItemSelected() {
-    for (var item in listUser) {
-      if (item.isSelected) {
+  int? isItemSelected() {
+    for (var item in listUser!) {
+      if (item.isSelected!) {
         return item.id;
       }
     }

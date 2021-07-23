@@ -17,14 +17,14 @@ import 'overlaped_circular_images.dart';
 // ignore: must_be_immutable
 class SubjectsCard extends StatelessWidget {
   final CommonCardData data;
-  List<SubRow> listSubItems = [];
-  BuildContext context;
-final String instId;
-  int id;
-  String personType;
-  SharedPreferences prefs;
-  TextStyleElements styleElements;
-  Null Function() callbackPicker;
+  List<SubRow>? listSubItems = [];
+  BuildContext? context;
+final String? instId;
+  int? id;
+  String? personType;
+  late SharedPreferences prefs;
+  TextStyleElements? styleElements;
+  Null Function()? callbackPicker;
   Size displaySize(BuildContext context) {
     debugPrint('Size = ' + MediaQuery.of(context).size.toString());
     return MediaQuery.of(context).size;
@@ -43,7 +43,7 @@ final String instId;
     return displaySize(context).width;
   }
 
-  SubjectsCard({Key key, @required this.data,this.styleElements,this.callbackPicker,this.instId,this.id,this.personType}) : super(key: key);
+  SubjectsCard({Key? key, required this.data,this.styleElements,this.callbackPicker,this.instId,this.id,this.personType}) : super(key: key);
   void setSharedPreferences() async {
     prefs = await 
     SharedPreferences.getInstance();
@@ -68,7 +68,7 @@ final String instId;
                     padding: const EdgeInsets.only(left: 16, right: 16,top:12,bottom:12),
                     child: Text(
                       data.title ?? "",
-                      style: styleElements.headline6ThemeScalable(context).copyWith(fontWeight: FontWeight.bold,color: HexColor(AppColors.appColorBlack85)),
+                      style: styleElements!.headline6ThemeScalable(context).copyWith(fontWeight: FontWeight.bold,color: HexColor(AppColors.appColorBlack85)),
 
                       textAlign: TextAlign.left,
                     ),
@@ -108,7 +108,7 @@ final String instId;
                                 ),
                               ));
                           if (result != null && result['result'] == "update") {
-                            callbackPicker();
+                            callbackPicker!();
                           }
 
                         }
@@ -127,7 +127,7 @@ final String instId;
           ],
         ),
 
-        listSubItems!=null && listSubItems.isNotEmpty?Container(
+        listSubItems!=null && listSubItems!.isNotEmpty?Container(
             margin: const EdgeInsets.only(left: 12, right: 12, top: 8),
             child: GridView.count(
                 padding: EdgeInsets.all(0.0),
@@ -135,7 +135,7 @@ final String instId;
                 crossAxisCount: 2,
                 childAspectRatio: 2 / 1.5,
                 shrinkWrap: true,
-                children: listSubItems.map((SubRow data) {
+                children: listSubItems!.map((SubRow data) {
                   return GestureDetector(
                     onTap: () {
                       /*  Navigator.push(
@@ -198,7 +198,7 @@ final String instId;
                                                     "",
                                                     maxLines: 1,
                                                     overflow: TextOverflow.ellipsis,
-                                                    style: styleElements.subtitle2ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite),fontWeight: FontWeight.w600),
+                                                    style: styleElements!.subtitle2ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite),fontWeight: FontWeight.w600),
                                                     textAlign:
                                                     TextAlign
                                                         .left,
@@ -226,7 +226,7 @@ final String instId;
                                                     data.textTwo ??= "",
                                                     maxLines: 3,
                                                     overflow: TextOverflow.ellipsis,
-                                                    style: styleElements.captionThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite)),
+                                                    style: styleElements!.captionThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite)),
                                                     textAlign: TextAlign.left,
                                                   ))
                                             ],
@@ -301,18 +301,18 @@ final String instId;
                       ),
                     ));
                 if (result != null && result['result'] == "update") {
-                  callbackPicker();
+                  callbackPicker!();
                 }
               },
               child: Container(
                 margin: const EdgeInsets.only(right: 16, bottom: 16),
                 child: Visibility(
-                  visible: listSubItems!=null && listSubItems.isNotEmpty,
+                  visible: listSubItems!=null && listSubItems!.isNotEmpty,
                   child: Align
                     (
                     alignment:  Alignment.bottomRight,
-                    child:Text(AppLocalizations.of(context).translate('see_more'),
-                      style: styleElements.subtitle2ThemeScalable(context),
+                    child:Text(AppLocalizations.of(context)!.translate('see_more'),
+                      style: styleElements!.subtitle2ThemeScalable(context),
                       textAlign: TextAlign.center,
                     ),
                   ),

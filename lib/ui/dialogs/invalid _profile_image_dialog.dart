@@ -18,7 +18,7 @@ class InvalidProfileImageDilog extends StatelessWidget{
         children: [
           Padding(
               padding: EdgeInsets.only(top: 16,bottom: 16,left:16,right: 16),
-              child: Text(AppLocalizations.of(context).translate('upload_ur_photo'),style: styleElements.subtitle2ThemeScalable(context),)),
+              child: Text(AppLocalizations.of(context)!.translate('upload_ur_photo'),style: styleElements.subtitle2ThemeScalable(context),)),
           Padding(
             padding: const EdgeInsets.only(bottom:8.0,right: 8.0),
             child: Row(
@@ -30,7 +30,7 @@ class InvalidProfileImageDilog extends StatelessWidget{
 
                   },
                   shape: StadiumBorder(),
-                  child: Text(AppLocalizations.of(context).translate('ok'),style: styleElements.bodyText2ThemeScalable(context).copyWith(
+                  child: Text(AppLocalizations.of(context)!.translate('ok'),style: styleElements.bodyText2ThemeScalable(context).copyWith(
                       color: HexColor(AppColors.appMainColor)
                   ),),
                 )

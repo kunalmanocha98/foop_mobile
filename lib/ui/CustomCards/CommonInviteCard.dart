@@ -12,9 +12,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 // ignore: must_be_immutable
 class CommonInviteCard extends StatelessWidget {
   CommonCardData data;
-  TextStyleElements styleElements;
-  String type;
-  CommonInviteCard({Key key, @required this.data,this.styleElements,this.type}) : super(key: key);
+  TextStyleElements? styleElements;
+  String? type;
+  CommonInviteCard({Key? key, required this.data,this.styleElements,this.type}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -56,10 +56,10 @@ class CommonInviteCard extends StatelessWidget {
                       child: Container(
                         child: Text(
                             type=="S"?
-                         AppLocalizations.of(context).translate("invite_parents"): AppLocalizations.of(context).translate("invite_friends"),
+                         AppLocalizations.of(context)!.translate("invite_parents"): AppLocalizations.of(context)!.translate("invite_friends"),
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
-                          style: styleElements.subtitle1ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite)),
+                          style: styleElements!.subtitle1ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite)),
                         ),
                       ),
                     ),

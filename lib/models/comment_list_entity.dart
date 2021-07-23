@@ -1,8 +1,8 @@
 class CommentsListEntity {
-  String statusCode;
-  String message;
-  List<CommentsItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<CommentsItem>? rows;
+  int? total;
 
   CommentsListEntity({this.statusCode, this.message, this.rows,this.total});
 
@@ -13,7 +13,7 @@ class CommentsListEntity {
     if (json['rows'] != null) {
       rows = [];//CommentsItem>();
       json['rows'].forEach((v) {
-        rows.add(new CommentsItem.fromJson(v));
+        rows!.add(new CommentsItem.fromJson(v));
       });
     }
   }
@@ -24,31 +24,31 @@ class CommentsListEntity {
     data['message'] = this.message;
     data['total'] = this.total;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class CommentsItem {
-  int ratingId;
-  int ratingNoteId;
-  String ratingSubjectType;
-  String ratingSubjectId;
-  String ratingGiven;
-  String noteCreatedByType;
-  String notesCreatedByName;
-  String noteCreatedById;
-  String noteSubjectType;
-  String noteSubjectId;
+  int? ratingId;
+  int? ratingNoteId;
+  String? ratingSubjectType;
+  String? ratingSubjectId;
+  String? ratingGiven;
+  String? noteCreatedByType;
+  String? notesCreatedByName;
+  String? noteCreatedById;
+  String? noteSubjectType;
+  String? noteSubjectId;
   Null replyToNoteId;
-  String noteContent;
-  List<String> noteFormat;
-  bool makeAnonymous;
-  String createdDate;
+  String? noteContent;
+  List<String>? noteFormat;
+  bool? makeAnonymous;
+  String? createdDate;
   Null mediaUrl;
   Null mediaThumbnailUrl;
-  int averageRating;
+  int? averageRating;
 
   CommentsItem(
       {this.ratingId,

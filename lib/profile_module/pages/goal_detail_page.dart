@@ -24,11 +24,11 @@ class GoalsDetailPage extends StatefulWidget {
 
 class _GoalsDetailPage extends State<GoalsDetailPage> {
 
-  SharedPreferences prefs;
-  CustomTabMaker customTabMaker;
+  SharedPreferences? prefs;
+  CustomTabMaker? customTabMaker;
   bool isChecked = false;
   List<CustomTabMaker> list = [];
-  Map<String, bool> language = {
+  Map<String, bool?> language = {
     'Chapter 1 to be done': false,
     'Grammar to be covered': false,
     'Letters to be learnt': false,
@@ -38,7 +38,7 @@ class _GoalsDetailPage extends State<GoalsDetailPage> {
   void initState() {
     super.initState();
   }
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
 
@@ -49,7 +49,7 @@ class _GoalsDetailPage extends State<GoalsDetailPage> {
           resizeToAvoidBottomInset: false,
           backgroundColor: HexColor(AppColors.appColorBackground),
           appBar: TricycleAppBar().getCustomAppBarWithSearch(context,
-              appBarTitle:  AppLocalizations.of(context).translate("select_date"),
+              appBarTitle:  AppLocalizations.of(context)!.translate("select_date"),
               onSearchValueChanged: (value){},
               onBackButtonPress: (){
                 _onBackPressed();
@@ -65,7 +65,7 @@ class _GoalsDetailPage extends State<GoalsDetailPage> {
                             Container(
                                 margin: const EdgeInsets.only(
                                     left: 16, top: 8.0, bottom: 8.0),
-                                child: Text(AppLocalizations.of(context).translate('want_to_learn'),
+                                child: Text(AppLocalizations.of(context)!.translate('want_to_learn'),
                                   style: styleElements.headline6ThemeScalable(context),
                                 )),
                             Container(
@@ -108,7 +108,7 @@ class _GoalsDetailPage extends State<GoalsDetailPage> {
                                                 child: Container(
                                                   margin: const EdgeInsets.only(
                                                       left: 16, top: 24),
-                                                  child: Text(AppLocalizations.of(context).translate('check_points'),
+                                                  child: Text(AppLocalizations.of(context)!.translate('check_points'),
                                                     style: styleElements.headline6ThemeScalable(context),
                                                     textAlign: TextAlign.left,
                                                   ),
@@ -164,7 +164,7 @@ class _GoalsDetailPage extends State<GoalsDetailPage> {
                                                                 value:
                                                                     language[key],
                                                                 onChanged:
-                                                                    (bool value) {
+                                                                    (bool? value) {
                                                                   setState(() {
                                                                     language[
                                                                             key] =
@@ -222,7 +222,7 @@ class _GoalsDetailPage extends State<GoalsDetailPage> {
                                                           onPressed: () {},
                                                           color: HexColor(AppColors.appColorWhite),
 
-                                                          child: Text(AppLocalizations.of(context).translate('cancel')
+                                                          child: Text(AppLocalizations.of(context)!.translate('cancel')
                                                                   .toUpperCase(),
                                                               style:  styleElements.bodyText2ThemeScalable(context).copyWith(
                                                                 color: HexColor(AppColors.appMainColor),
@@ -253,7 +253,7 @@ class _GoalsDetailPage extends State<GoalsDetailPage> {
                                                                     DialogFinishGoal());
                                                           },
                                                           color:  HexColor(AppColors.appMainColor),
-                                                          child: Text(AppLocalizations.of(context).translate('finish')
+                                                          child: Text(AppLocalizations.of(context)!.translate('finish')
                                                                   .toUpperCase(),
                                                               style:  styleElements.bodyText2ThemeScalable(context)),
                                                         ),
@@ -661,24 +661,23 @@ class _GoalsDetailPage extends State<GoalsDetailPage> {
           context: context,
           builder: (context) => new AlertDialog(
             title: new Text(
-                AppLocalizations.of(context).translate('are_you_sure')),
+                AppLocalizations.of(context)!.translate('are_you_sure')),
             content: new Text(
-                AppLocalizations.of(context).translate('exit_tricycle')),
+                AppLocalizations.of(context)!.translate('exit_tricycle')),
             actions: <Widget>[
               new GestureDetector(
                 onTap: () => Navigator.of(context).pop(false),
-                child: Text(AppLocalizations.of(context).translate('no')),
+                child: Text(AppLocalizations.of(context)!.translate('no')),
               ),
               SizedBox(height: 16),
               new GestureDetector(
                 onTap: () {
                   SystemChannels.platform.invokeMethod('SystemNavigator.pop');
                 },
-                child: Text(AppLocalizations.of(context).translate('yes')),
+                child: Text(AppLocalizations.of(context)!.translate('yes')),
               ),
             ],
           ),
-        ) ??
-        false;
+        ).then((value) => value as bool) ;
   }
 }

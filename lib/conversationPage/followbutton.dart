@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class FollowButton extends StatelessWidget {
   FollowButton({
-    Key key,
+    Key? key,
   }) : super(key: key);
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class FollowButton extends StatelessWidget {
                 offset: Offset(297.0, 87.17),
                 child: SizedBox(
                   width: 42.0,
-                  child: Text(AppLocalizations.of(context).translate('follow'),
+                  child: Text(AppLocalizations.of(context)!.translate('follow'),
                     style: styleElements.captionThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite)),
                     textAlign: TextAlign.center,
                   ),

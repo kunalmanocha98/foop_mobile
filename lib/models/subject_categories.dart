@@ -1,7 +1,7 @@
 class SubjectsCategories {
-  String statusCode;
-  String message;
-  List<SubjectsItem> rows;
+  String? statusCode;
+  String? message;
+  List<SubjectsItem>? rows;
 
   SubjectsCategories({this.statusCode, this.message, this.rows});
 
@@ -11,7 +11,7 @@ class SubjectsCategories {
     if (json['rows'] != null) {
       rows = [];//SubjectsItem>();
       json['rows'].forEach((v) {
-        rows.add(new SubjectsItem.fromJson(v));
+        rows!.add(new SubjectsItem.fromJson(v));
       });
     }
   }
@@ -21,17 +21,17 @@ class SubjectsCategories {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class SubjectsItem {
-  String subjectCategoryName;
-  String subjectCategoryCode;
-  String subjectCategoryDescription;
-  int subjectCategoryId;
+  String? subjectCategoryName;
+  String? subjectCategoryCode;
+  String? subjectCategoryDescription;
+  int? subjectCategoryId;
 
   SubjectsItem(
       {this.subjectCategoryName,

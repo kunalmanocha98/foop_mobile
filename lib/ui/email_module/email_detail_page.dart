@@ -7,7 +7,7 @@ import 'package:oho_works_app/ui/email_module/email_header.dart';
 import 'package:flutter/material.dart';
 
 class EmailDetailPage extends StatefulWidget{
-  final String subject;
+  final String? subject;
   EmailDetailPage({this.subject});
   @override
   _EmailDetailPage createState() => _EmailDetailPage();

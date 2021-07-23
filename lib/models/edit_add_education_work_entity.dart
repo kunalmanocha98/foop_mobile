@@ -1,22 +1,22 @@
 class EditEducationWork {
-  String cardType;
-  String personId;
-  String schoolName;
-  String startDate;
-  String endDate;
-  String className;
-  String fieldOfStudy;
-  String grade;
-  int id;
-  String description;
-  String designation;
-  bool iscurrent;
-  String classId;
-  int institutionId;
-  String employmentType;
-  String industryType;
-  String location;
-  String institutionName;
+  String? cardType;
+  String? personId;
+  String? schoolName;
+  String? startDate;
+  String? endDate;
+  String? className;
+  String? fieldOfStudy;
+  String? grade;
+  int? id;
+  String? description;
+  String? designation;
+  bool? iscurrent;
+  String? classId;
+  int? institutionId;
+  String? employmentType;
+  String? industryType;
+  String? location;
+  String? institutionName;
 
   EditEducationWork({this.cardType,
     this.personId,

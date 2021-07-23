@@ -1,9 +1,9 @@
 
 class EdufluencerData {
-  String statusCode;
-  String message;
-  List<EdufluncerItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<EdufluncerItem>? rows;
+  int? total;
 
   EdufluencerData({this.statusCode, this.message, this.rows, this.total});
 
@@ -13,7 +13,7 @@ class EdufluencerData {
     if (json['rows'] != null) {
       rows = [];//EdufluncerItem>();
       json['rows'].forEach((v) {
-        rows.add(new EdufluncerItem.fromJson(v));
+        rows!.add(new EdufluncerItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -24,7 +24,7 @@ class EdufluencerData {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -32,27 +32,27 @@ class EdufluencerData {
 }
 
 class EdufluncerItem {
-  int id;
-  int personId;
-  String name;
-  String edufluencerTitle;
-  String edufluencerCurrentPosition;
-  String edufluencerBio;
+  int? id;
+  int? personId;
+  String? name;
+  String? edufluencerTitle;
+  String? edufluencerCurrentPosition;
+  String? edufluencerBio;
   Null edufluencerBioMedia;
-  bool isFreeService;
-  double trialHours;
-  double feesPerHour;
-  String feesCurrency;
-  double totalExperienceYears;
-  List<String> mediumOfCommunication;
-  List<String> workingDays;
-  List<SkillsList> skillsList;
-  List<String> classesList;
-  List<SubjectsList> subjectsList;
-  double rating;
-  bool isRated;
-  bool isFollowing;
-  bool isFollower;
+  bool? isFreeService;
+  double? trialHours;
+  double? feesPerHour;
+  String? feesCurrency;
+  double? totalExperienceYears;
+  List<String>? mediumOfCommunication;
+  List<String>? workingDays;
+  List<SkillsList>? skillsList;
+  List<String>? classesList;
+  List<SubjectsList>? subjectsList;
+  double? rating;
+  bool? isRated;
+  bool? isFollowing;
+  bool? isFollower;
 
   EdufluncerItem(
       {this.id,
@@ -95,14 +95,14 @@ class EdufluncerItem {
     if (json['skills_list'] != null) {
       skillsList = [];//SkillsList>();
       json['skills_list'].forEach((v) {
-        skillsList.add(new SkillsList.fromJson(v));
+        skillsList!.add(new SkillsList.fromJson(v));
       });
     }
     classesList = json['classes_list'].cast<String>();
     if (json['subjects_list'] != null) {
       subjectsList = [];//SubjectsList>();
       json['subjects_list'].forEach((v) {
-        subjectsList.add(new SubjectsList.fromJson(v));
+        subjectsList!.add(new SubjectsList.fromJson(v));
       });
     }
     rating = json['rating'];
@@ -128,11 +128,11 @@ class EdufluncerItem {
     data['medium_of_communication'] = this.mediumOfCommunication;
     data['working_days'] = this.workingDays;
     if (this.skillsList != null) {
-      data['skills_list'] = this.skillsList.map((v) => v.toJson()).toList();
+      data['skills_list'] = this.skillsList!.map((v) => v.toJson()).toList();
     }
     data['classes_list'] = this.classesList;
     if (this.subjectsList != null) {
-      data['subjects_list'] = this.subjectsList.map((v) => v.toJson()).toList();
+      data['subjects_list'] = this.subjectsList!.map((v) => v.toJson()).toList();
     }
     data['rating'] = this.rating;
     data['is_rated'] = this.isRated;
@@ -143,10 +143,10 @@ class EdufluncerItem {
 }
 
 class SkillsList {
-  int id;
+  int? id;
   Null skillId;
-  String skillCode;
-  String skillName;
+  String? skillCode;
+  String? skillName;
 
   SkillsList({this.id, this.skillId, this.skillCode, this.skillName});
 
@@ -168,10 +168,10 @@ class SkillsList {
 }
 
 class SubjectsList {
-  int id;
+  int? id;
   Null subjectId;
   Null subjectCode;
-  String subjectName;
+  String? subjectName;
 
   SubjectsList({this.id, this.subjectId, this.subjectCode, this.subjectName});
 

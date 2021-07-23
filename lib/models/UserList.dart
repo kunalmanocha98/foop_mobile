@@ -1,7 +1,7 @@
 class UserList {
-  String statusCode;
-  String message;
-  List<User> rows;
+  String? statusCode;
+  String? message;
+  List<User>? rows;
 
   UserList({this.statusCode, this.message, this.rows});
 
@@ -11,7 +11,7 @@ class UserList {
     if (json['rows'] != null) {
       rows = [];//User>();
       json['rows'].forEach((v) {
-        rows.add(new User.fromJson(v));
+        rows!.add(new User.fromJson(v));
       });
     }
   }
@@ -21,17 +21,17 @@ class UserList {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class User {
-  int id;
-  String firstName;
-  String lastName;
-  bool isSelected;
+  int? id;
+  String? firstName;
+  String? lastName;
+  bool? isSelected;
 
   User({this.id, this.firstName, this.lastName, this.isSelected});
 

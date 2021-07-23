@@ -1,19 +1,19 @@
 class RegisterUserAs {
-  int institutionId;
-  int personId;
-  List<int> personTypeList;
-  List<PersonClasses> personClasses;
-  List<int> personSubjects;
-  int childId;
-  String dateOfBirth;
-  List<int> personPrograms;
-  List<int> personDepartments;
+  int? institutionId;
+  int? personId;
+  List<int?>? personTypeList;
+  List<PersonClasses>? personClasses;
+  List<int>? personSubjects;
+  int? childId;
+  String? dateOfBirth;
+  List<int?>? personPrograms;
+  List<int>? personDepartments;
   Null personCode;
-  List<String> inactiveInstitutionIds;
-  String academicYear;
-  bool isDepartment;
-  int deleted_institution_user_id;
-bool isDefaultInstitution;
+  List<String>? inactiveInstitutionIds;
+  String? academicYear;
+  bool? isDepartment;
+  int? deleted_institution_user_id;
+bool? isDefaultInstitution;
   RegisterUserAs(
       {this.institutionId,
       this.personId,
@@ -42,7 +42,7 @@ bool isDefaultInstitution;
     if (json['person_classes'] != null) {
       personClasses = [];//PersonClasses>();
       json['person_classes'].forEach((v) {
-        personClasses.add(new PersonClasses.fromJson(v));
+        personClasses!.add(new PersonClasses.fromJson(v));
       });
     }
     personSubjects = json['person_subjects'].cast<int>();
@@ -65,7 +65,7 @@ bool isDefaultInstitution;
     data['person_type_list'] = this.personTypeList;
     if (this.personClasses != null) {
       data['person_classes'] =
-          this.personClasses.map((v) => v.toJson()).toList();
+          this.personClasses!.map((v) => v.toJson()).toList();
     }
     data['person_subjects'] = this.personSubjects;
     data['person_programs'] = this.personPrograms;
@@ -79,9 +79,9 @@ bool isDefaultInstitution;
 }
 
 class PersonClasses {
-  int classId;
-  List<int> sections;
-  String className;
+  int? classId;
+  List<int?>? sections;
+  String? className;
 
   PersonClasses({this.classId, this.sections});
 

@@ -28,10 +28,10 @@ class Verification extends StatefulWidget {
   bool isRecoverPassword = false;
 
   Verification(
-      {Key key,
-        @required this.email,
-        @required this.mobileNo,
-        @required this.isRecoverPassword})
+      {Key? key,
+        required this.email,
+        required this.mobileNo,
+        required this.isRecoverPassword})
       : super(key: key);
 
   @override
@@ -42,9 +42,9 @@ class Verification extends StatefulWidget {
 // ignore: must_be_immutable
 class _Verification extends State<Verification> {
   bool isRecoverPassword = false;
-  BuildContext context;
+ late  BuildContext context;
 
-  SharedPreferences prefs;
+  late SharedPreferences prefs;
   final String email;
   final String mobileNo;
   String _otp = "";
@@ -97,10 +97,10 @@ class _Verification extends State<Verification> {
           } else {
             if (data.message != null)
               ToastBuilder().showSnackBar(
-                  data.message, sctx, HexColor(AppColors.information));
+                  data.message!, sctx, HexColor(AppColors.information));
             else
               ToastBuilder().showSnackBar(
-                  AppLocalizations.of(context).translate("try_again"),
+                  AppLocalizations.of(context)!.translate("try_again"),
                   sctx,
                   HexColor(AppColors.information));
           }
@@ -110,13 +110,13 @@ class _Verification extends State<Verification> {
           isCalling = false;
         });
         ToastBuilder().showSnackBar(
-            AppLocalizations.of(context).translate("try_again"),
+            AppLocalizations.of(context)!.translate("try_again"),
             sctx,
             HexColor(AppColors.information));
       });
     } else
       ToastBuilder().showSnackBar(
-          AppLocalizations.of(context).translate("enter_otp"),
+          AppLocalizations.of(context)!.translate("enter_otp"),
           sctx,
           HexColor(AppColors.information));
   }
@@ -141,17 +141,17 @@ class _Verification extends State<Verification> {
         if (data.statusCode == Strings.success_code &&
             data.message == Strings.success) {
           print(
-              data.statusCode + "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-          print(data.message + "*****************************************");
+              data.statusCode! + "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+          print(data.message! + "*****************************************");
           ToastBuilder().showSnackBar(
-              data.message, sctx, HexColor(AppColors.information));
+              data.message!, sctx, HexColor(AppColors.information));
         } else {
           if (data.message != null)
             ToastBuilder().showSnackBar(
-                data.message, sctx, HexColor(AppColors.information));
+                data.message!, sctx, HexColor(AppColors.information));
           else
             ToastBuilder().showSnackBar(
-                AppLocalizations.of(context).translate("try_again"),
+                AppLocalizations.of(context)!.translate("try_again"),
                 sctx,
                 HexColor(AppColors.information));
         }
@@ -161,13 +161,13 @@ class _Verification extends State<Verification> {
         isCalling = false;
       });
       ToastBuilder().showSnackBar(
-          AppLocalizations.of(context).translate("try_again"),
+          AppLocalizations.of(context)!.translate("try_again"),
           sctx,
           HexColor(AppColors.information));
     });
   }
 
-  void activate(String _code) async {
+  void activate(String? _code) async {
     String code = "";
     if (_code != null) {
       code = _code;
@@ -222,9 +222,9 @@ class _Verification extends State<Verification> {
           var data = CommonBasicResponse.fromJson(value);
           if (data.statusCode == Strings.success_code) {
             if (data.message != null && data.message != "Invalid OTP") {
-              await prefs.setString('expiry', data.rows.expiry ?? "");
-              await prefs.setString('token', data.rows.token ?? "");
-              await  prefs.setInt(Strings.userId, data.rows.userId);
+              await prefs.setString('expiry', data.rows!.expiry ?? "");
+              await prefs.setString('token', data.rows!.token ?? "");
+              await  prefs.setInt(Strings.userId, data.rows!.userId!);
               prefs.setBool("isProfileUpdated", false);
               Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(builder: (context) => UpdateProfilePage()),
@@ -232,15 +232,15 @@ class _Verification extends State<Verification> {
             } else {
               if (data.message != null)
                 ToastBuilder().showSnackBar(
-                    data.message, sctx, HexColor(AppColors.information));
+                    data.message!, sctx, HexColor(AppColors.information));
             }
           } else {
             if (data.message != null)
               ToastBuilder().showSnackBar(
-                  data.message, sctx, HexColor(AppColors.information));
+                  data.message!, sctx, HexColor(AppColors.information));
             else
               ToastBuilder().showSnackBar(
-                  AppLocalizations.of(context).translate("try_again"),
+                  AppLocalizations.of(context)!.translate("try_again"),
                   sctx,
                   HexColor(AppColors.information));
           }
@@ -255,7 +255,7 @@ class _Verification extends State<Verification> {
       });
     } else {
       ToastBuilder().showSnackBar(
-          AppLocalizations.of(context).translate("enter_token"),
+          AppLocalizations.of(context)!.translate("enter_token"),
           sctx,
           HexColor(AppColors.information));
     }
@@ -271,8 +271,8 @@ class _Verification extends State<Verification> {
     return null;
   }
 
-  TextStyleElements styleElements;
-  BuildContext sctx;
+  late TextStyleElements styleElements;
+  late BuildContext sctx;
 
   @override
   Widget build(BuildContext context) {
@@ -306,14 +306,14 @@ class _Verification extends State<Verification> {
                     )),*/
                       Container(
                         margin: const EdgeInsets.only(bottom: 24, top: 20),
-                        child: Text(AppLocalizations.of(context).translate('verification'),
+                        child: Text(AppLocalizations.of(context)!.translate('verification'),
                           textAlign: TextAlign.center,
                           style: styleElements.headline5ThemeScalable(context),
                         ),
                       ),
                       Container(
                         margin: const EdgeInsets.only(bottom: 10.0),
-                        child: Text(AppLocalizations.of(context).translate('otp_des',arguments: {"email":email ?? "","mobileNo":mobileNo ?? ""}),
+                        child: Text(AppLocalizations.of(context)!.translate('otp_des',arguments: {"email":email,"mobileNo":mobileNo}),
                           style: styleElements.subtitle2ThemeScalable(context),
                           textAlign: TextAlign.center,
                         ),
@@ -486,7 +486,7 @@ class _Verification extends State<Verification> {
                                       activate(null);
                                   },
                                   color:  HexColor(AppColors.appMainColor),
-                                  child: Text(AppLocalizations.of(context).translate('verify'),
+                                  child: Text(AppLocalizations.of(context)!.translate('verify'),
                                     style: styleElements
                                         .subtitle2ThemeScalable(context)
                                         .copyWith(color: HexColor(AppColors.appColorWhite)),
@@ -509,7 +509,7 @@ class _Verification extends State<Verification> {
                         },
                         child: Container(
                           margin: const EdgeInsets.only(bottom: 10, top: 8),
-                          child: Text(AppLocalizations.of(context).translate('resend_code'),
+                          child: Text(AppLocalizations.of(context)!.translate('resend_code'),
                             textAlign: TextAlign.center,
                             style: styleElements
                                 .subtitle2ThemeScalable(context)
@@ -536,7 +536,7 @@ class _Verification extends State<Verification> {
                                         onPressed: () {
                                           _handleKeypadClick('1');
                                         },
-                                        child: Text(AppLocalizations.of(context).translate('number_1'),
+                                        child: Text(AppLocalizations.of(context)!.translate('number_1'),
                                             style: styleElements
                                                 .headline5ThemeScalable(context)
                                                 .copyWith(
@@ -547,7 +547,7 @@ class _Verification extends State<Verification> {
                                         onPressed: () {
                                           _handleKeypadClick('2');
                                         },
-                                        child: Text(AppLocalizations.of(context).translate('number_2'),
+                                        child: Text(AppLocalizations.of(context)!.translate('number_2'),
                                             style: styleElements
                                                 .headline5ThemeScalable(context)
                                                 .copyWith(
@@ -558,7 +558,7 @@ class _Verification extends State<Verification> {
                                         onPressed: () {
                                           _handleKeypadClick('3');
                                         },
-                                        child: Text(AppLocalizations.of(context).translate('number_3'),
+                                        child: Text(AppLocalizations.of(context)!.translate('number_3'),
                                             style: styleElements
                                                 .headline5ThemeScalable(context)
                                                 .copyWith(
@@ -574,7 +574,7 @@ class _Verification extends State<Verification> {
                                         onPressed: () {
                                           _handleKeypadClick('4');
                                         },
-                                        child: Text(AppLocalizations.of(context).translate('number_4'),
+                                        child: Text(AppLocalizations.of(context)!.translate('number_4'),
                                             style: styleElements
                                                 .headline5ThemeScalable(context)
                                                 .copyWith(
@@ -585,7 +585,7 @@ class _Verification extends State<Verification> {
                                         onPressed: () {
                                           _handleKeypadClick('5');
                                         },
-                                        child: Text(AppLocalizations.of(context).translate('number_5'),
+                                        child: Text(AppLocalizations.of(context)!.translate('number_5'),
                                             style: styleElements
                                                 .headline5ThemeScalable(context)
                                                 .copyWith(
@@ -596,7 +596,7 @@ class _Verification extends State<Verification> {
                                         onPressed: () {
                                           _handleKeypadClick('6');
                                         },
-                                        child: Text(AppLocalizations.of(context).translate('number_6'),
+                                        child: Text(AppLocalizations.of(context)!.translate('number_6'),
                                             style: styleElements
                                                 .headline5ThemeScalable(context)
                                                 .copyWith(
@@ -612,7 +612,7 @@ class _Verification extends State<Verification> {
                                         onPressed: () {
                                           _handleKeypadClick('7');
                                         },
-                                        child: Text(AppLocalizations.of(context).translate('number_7'),
+                                        child: Text(AppLocalizations.of(context)!.translate('number_7'),
                                             style: styleElements
                                                 .headline5ThemeScalable(context)
                                                 .copyWith(
@@ -623,7 +623,7 @@ class _Verification extends State<Verification> {
                                         onPressed: () {
                                           _handleKeypadClick('8');
                                         },
-                                        child: Text(AppLocalizations.of(context).translate('number_8'),
+                                        child: Text(AppLocalizations.of(context)!.translate('number_8'),
                                             style: styleElements
                                                 .headline5ThemeScalable(context)
                                                 .copyWith(
@@ -634,7 +634,7 @@ class _Verification extends State<Verification> {
                                         onPressed: () {
                                           _handleKeypadClick('9');
                                         },
-                                        child: Text(AppLocalizations.of(context).translate('number_9'),
+                                        child: Text(AppLocalizations.of(context)!.translate('number_9'),
                                             style: styleElements
                                                 .headline5ThemeScalable(context)
                                                 .copyWith(
@@ -664,7 +664,7 @@ class _Verification extends State<Verification> {
                                           onPressed: () {
                                             _handleKeypadClick('0');
                                           },
-                                          child: Text(AppLocalizations.of(context).translate('number_0'),
+                                          child: Text(AppLocalizations.of(context)!.translate('number_0'),
                                               style: styleElements
                                                   .headline5ThemeScalable(
                                                   context)

@@ -12,10 +12,10 @@ class CommonDetailPageCard extends StatelessWidget {
   String content;
   bool isShowMore;
   bool isIntroCard;
-  bool isContentAvailabel;
+  bool? isContentAvailabel;
   String subtitle1;
   String subtitle2;
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   Size displaySize(BuildContext context) {
     debugPrint('Size = ' + MediaQuery.of(context).size.toString());
@@ -33,14 +33,14 @@ class CommonDetailPageCard extends StatelessWidget {
   }
 
   CommonDetailPageCard(
-      {Key key,
-      @required this.isShowMore,
-      @required this.isIntroCard,
-      @required this.title,
-      @required this.subtitle,
-      @required this.subtitle1,
-      @required this.subtitle2,
-      @required this.content})
+      {Key? key,
+      required this.isShowMore,
+      required this.isIntroCard,
+      required this.title,
+      required this.subtitle,
+      required this.subtitle1,
+      required this.subtitle2,
+      required this.content})
       : super(key: key);
 
   @override
@@ -112,7 +112,7 @@ class CommonDetailPageCard extends StatelessWidget {
                                 onPressed: () {},
                                 color: HexColor(AppColors.appMainColor),
                                 child: Text(
-                                    AppLocalizations.of(context)
+                                    AppLocalizations.of(context)!
                                         .translate('follow')
                                         .toUpperCase(),
                                     style:styleElements.buttonThemeScalable(context).copyWith(

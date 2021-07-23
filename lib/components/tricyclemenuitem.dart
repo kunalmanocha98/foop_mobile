@@ -7,24 +7,24 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class TricycleMenuItem extends StatefulWidget{
-  Data item;
-  Function(String code) onMenuItemClick;
+  Data? item;
+  Function(String? code)? onMenuItemClick;
   TricycleMenuItem({this.item,this.onMenuItemClick});
   @override
   TricycleMenuItemState createState() =>  TricycleMenuItemState(menuItem:item);
 }
 
 class TricycleMenuItemState extends State<TricycleMenuItem>{
-  Data menuItem;
+  Data? menuItem;
   TricycleMenuItemState({this.menuItem});
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
   @override
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
     return TricycleListCard(
       padding: EdgeInsets.all(0),
       onTap: (){
-        widget.onMenuItemClick(menuItem.code);
+        widget.onMenuItemClick!(menuItem!.code);
       },
         child: Container(
           child: Stack(
@@ -41,7 +41,7 @@ class TricycleMenuItemState extends State<TricycleMenuItem>{
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       image: DecorationImage(
-                        image: AssetImage(menuItem.imageUrl)
+                        image: AssetImage(menuItem!.imageUrl!)
                       )
                     ),
                   ),
@@ -53,8 +53,8 @@ class TricycleMenuItemState extends State<TricycleMenuItem>{
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Flexible(child: Text(menuItem.title,maxLines: 2,overflow: TextOverflow.ellipsis,style: styleElements.subtitle1ThemeScalable(context))),
-                          Flexible(child: Text(menuItem.description,maxLines: 2,overflow: TextOverflow.ellipsis,style: styleElements.subtitle2ThemeScalable(context).copyWith(
+                          Flexible(child: Text(menuItem!.title!,maxLines: 2,overflow: TextOverflow.ellipsis,style: styleElements.subtitle1ThemeScalable(context))),
+                          Flexible(child: Text(menuItem!.description!,maxLines: 2,overflow: TextOverflow.ellipsis,style: styleElements.subtitle2ThemeScalable(context).copyWith(
                             color: HexColor(AppColors.primaryTextColor35)
                           ),))
                         ],

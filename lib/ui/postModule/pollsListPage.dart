@@ -17,8 +17,8 @@ import 'CampusNewsListPage.dart';
 
 // ignore: must_be_immutable
 class PollsListPage extends StatefulWidget{
-  SharedPreferences prefs;
-  Null Function() callBack;
+  SharedPreferences? prefs;
+  Null Function()? callBack;
   PollsListPage({this.prefs,this.callBack});
 
   @override
@@ -28,19 +28,19 @@ class PollsListPageState extends State<PollsListPage> with SingleTickerProviderS
 
   List<CustomTabMaker> list = [];
   int _currentPosition = 0;
-  TabController _tabController;
+  late TabController _tabController;
   PollsListPageState(this.callBack);
-  Null Function() callBack;
+  Null Function()? callBack;
   GlobalKey<SelectedFeedPageState> pollsKey = GlobalKey();
   GlobalKey<SelectedFeedPageState> pollsKey2 = GlobalKey();
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => loadPages());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => loadPages());
   }
   loadPages() {
       list.add(CustomTabMaker(
-          tabName: AppLocalizations.of(context).translate('all_polls'),
+          tabName: AppLocalizations.of(context)!.translate('all_polls'),
           statelessWidget: SelectedFeedListPage(
             key: pollsKey,
             callBack: (){
@@ -49,13 +49,13 @@ class PollsListPageState extends State<PollsListPage> with SingleTickerProviderS
               Navigator.pop(context);
             },
               isFromProfile:true,
-              appBarTitle: AppLocalizations.of(context).translate('poll'),
+              appBarTitle: AppLocalizations.of(context)!.translate('poll'),
               postRecipientStatus: POST_RECIPIENT_STATUS.UNREAD.status,
               postType: POST_TYPE.POLL.status,
             )
       ));
       list.add(CustomTabMaker(
-          tabName: AppLocalizations.of(context).translate('my_polls'),
+          tabName: AppLocalizations.of(context)!.translate('my_polls'),
           statelessWidget: SelectedFeedListPage(
             key: pollsKey2,
             callBack: (){
@@ -66,7 +66,7 @@ class PollsListPageState extends State<PollsListPage> with SingleTickerProviderS
             },
             isFromProfile:true,
             isOwnPost: true,
-            appBarTitle: AppLocalizations.of(context).translate('poll'),
+            appBarTitle: AppLocalizations.of(context)!.translate('poll'),
             postRecipientStatus: POST_RECIPIENT_STATUS.UNREAD.status,
             postType: POST_TYPE.POLL.status,
           )
@@ -97,7 +97,7 @@ class PollsListPageState extends State<PollsListPage> with SingleTickerProviderS
       ),
       color: HexColor(AppColors.appColorBackground),
       itemBuilder: (context)=> PostListMenu(context: context,type: POST_TYPE.POLL.status).menuList,
-      onSelected: (value) {
+      onSelected: (dynamic value) {
         switch (value) {
           case 'notice':{
             Navigator.of(context).push(MaterialPageRoute(
@@ -109,7 +109,7 @@ class PollsListPageState extends State<PollsListPage> with SingleTickerProviderS
                         Navigator.pop(context);
                       },
                       isFromProfile:false,
-                      appBarTitle: AppLocalizations.of(context).translate('notice_board'),
+                      appBarTitle: AppLocalizations.of(context)!.translate('notice_board'),
                       postRecipientStatus: POST_RECIPIENT_STATUS.UNREAD.status,
                       postType: POST_TYPE.NOTICE.status,)
             ));
@@ -151,7 +151,7 @@ class PollsListPageState extends State<PollsListPage> with SingleTickerProviderS
                           callBack;
                         Navigator.pop(context);
                       },
-                      isFromProfile:false,appBarTitle: AppLocalizations.of(context).translate('article'),
+                      isFromProfile:false,appBarTitle: AppLocalizations.of(context)!.translate('article'),
                       postRecipientStatus: POST_RECIPIENT_STATUS.UNREAD.status,
                       postType: POST_TYPE.BLOG.status,)
             ));
@@ -167,7 +167,7 @@ class PollsListPageState extends State<PollsListPage> with SingleTickerProviderS
                         Navigator.pop(context);
                       },
 
-                      isFromProfile:false,appBarTitle: AppLocalizations.of(context).translate('ask_expert'),
+                      isFromProfile:false,appBarTitle: AppLocalizations.of(context)!.translate('ask_expert'),
                       postRecipientStatus: POST_RECIPIENT_STATUS.UNREAD.status,
                       postType: POST_TYPE.QNA.status,)
             ));
@@ -207,7 +207,7 @@ class PollsListPageState extends State<PollsListPage> with SingleTickerProviderS
                         if(callBack!=null)
                           callBack;
                         Navigator.pop(context);
-                      },isFromProfile:false,appBarTitle: AppLocalizations.of(context).translate('general'),
+                      },isFromProfile:false,appBarTitle: AppLocalizations.of(context)!.translate('general'),
                       postRecipientStatus: POST_RECIPIENT_STATUS.READ.status,)
             ));
             break;
@@ -220,7 +220,7 @@ class PollsListPageState extends State<PollsListPage> with SingleTickerProviderS
                         if(callBack!=null)
                           callBack;
                         Navigator.pop(context);
-                      },isFromProfile:false,appBarTitle: AppLocalizations.of(context).translate('notice'),
+                      },isFromProfile:false,appBarTitle: AppLocalizations.of(context)!.translate('notice'),
                       postRecipientStatus: POST_RECIPIENT_STATUS.UNREAD.status,
                       postType: POST_TYPE.NOTICE.status,)
             ));
@@ -236,9 +236,9 @@ class PollsListPageState extends State<PollsListPage> with SingleTickerProviderS
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: (){  if(callBack!=null)
-        callBack();
+        callBack!();
       Navigator.pop(context);
-      return null;},
+      return new Future(() => false);} ,
       child: SafeArea(
         child: Scaffold(
           appBar: TricycleAppBar().getCustomAppBar(
@@ -253,10 +253,10 @@ class PollsListPageState extends State<PollsListPage> with SingleTickerProviderS
                   )),
                 _simplePopup()
               ],
-              appBarTitle: AppLocalizations.of(context).translate('poll'),
+              appBarTitle: AppLocalizations.of(context)!.translate('poll'),
               onBackButtonPress: (){
                 if(callBack!=null)
-                  callBack();
+                  callBack!();
                 Navigator.pop(context);
               }),
           body:DefaultTabController(
@@ -280,7 +280,7 @@ class PollsListPageState extends State<PollsListPage> with SingleTickerProviderS
                   Center(child: list[index].statelessWidget),
               onPositionChange: (index) {
                 setState(() {
-                  _currentPosition = index;
+                  _currentPosition = index!;
                 });
               },
               onScroll: (position) => print('$position'),
@@ -310,9 +310,9 @@ class PollsListPageState extends State<PollsListPage> with SingleTickerProviderS
 
                   callBack: (){
                     if(_currentPosition==0)
-                      pollsKey.currentState.refresh();
+                      pollsKey.currentState!.refresh();
                     else
-                      pollsKey2.currentState.refresh();
+                      pollsKey2.currentState!.refresh();
 
 
                   },

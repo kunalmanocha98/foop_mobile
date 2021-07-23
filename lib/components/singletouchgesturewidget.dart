@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 class SingleTouchRecognizerWidget extends StatelessWidget {
-  final Widget child;
+  final Widget? child;
   SingleTouchRecognizerWidget({this.child});
 
   @override
@@ -35,7 +35,7 @@ class _SingleTouchRecognizer extends OneSequenceGestureRecognizer {
   }
 
   @override
-  String get debugDescription => null;
+  String get debugDescription => "";
 
   @override
   void didStopTrackingLastPointer(int pointer) {

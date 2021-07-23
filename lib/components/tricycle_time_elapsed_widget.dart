@@ -6,18 +6,18 @@ import 'package:oho_works_app/utils/hexColors.dart';
 import 'package:flutter/material.dart';
 
 class TricycleClockTimerWidget extends StatefulWidget {
-  final int startTime;
-  TricycleClockTimerWidget({Key key, this.startTime}):super(key: key);
+  final int? startTime;
+  TricycleClockTimerWidget({Key? key, this.startTime}):super(key: key);
   @override
   TricycleClockTimerWidgetState createState() => TricycleClockTimerWidgetState(startTimeMilliseconds: startTime);
 }
 
 class TricycleClockTimerWidgetState extends State<TricycleClockTimerWidget> {
-  TextStyleElements styleElements;
-  Timer timer;
-  DateTime startTime;
-  Stopwatch stopwatch;
-  TricycleClockTimerWidgetState({int startTimeMilliseconds}){
+  late TextStyleElements styleElements;
+  Timer? timer;
+  DateTime? startTime;
+  Stopwatch? stopwatch;
+  TricycleClockTimerWidgetState({int? startTimeMilliseconds}){
     print("widget of timer sheet     "+(startTimeMilliseconds!=null ?startTimeMilliseconds.toString():"this is null"));
    startTime = startTimeMilliseconds!=null ? DateTime.fromMillisecondsSinceEpoch(startTimeMilliseconds) :  DateTime.now();
   }
@@ -26,12 +26,12 @@ class TricycleClockTimerWidgetState extends State<TricycleClockTimerWidget> {
   void initState() {
     super.initState();
     // stopwatch = Stopwatch();
-    WidgetsBinding.instance.addPostFrameCallback((_){
+    WidgetsBinding.instance!.addPostFrameCallback((_){
       if(startTime!=null) startTimer(startTime);
     });
   }
 
-  void startTimer(DateTime startTime) {
+  void startTimer(DateTime? startTime) {
     // stopwatch.start();
     this.startTime = startTime;
     timer = Timer.periodic(Duration(seconds: 1), (timer) {
@@ -44,7 +44,7 @@ class TricycleClockTimerWidgetState extends State<TricycleClockTimerWidget> {
   @override
   void dispose() {
     if(timer!=null) {
-      timer.cancel();
+      timer!.cancel();
     }
     // stopwatch.stop();
     super.dispose();
@@ -54,7 +54,7 @@ class TricycleClockTimerWidgetState extends State<TricycleClockTimerWidget> {
   @override
   void deactivate() {
     if(timer!=null) {
-      timer.cancel();
+      timer!.cancel();
     }
     super.deactivate();
   }
@@ -62,7 +62,7 @@ class TricycleClockTimerWidgetState extends State<TricycleClockTimerWidget> {
   String get time {
     var nowTime = DateTime.now().toUtc();
     int diff =
-        nowTime.millisecondsSinceEpoch - startTime.millisecondsSinceEpoch;
+        nowTime.millisecondsSinceEpoch - startTime!.millisecondsSinceEpoch;
     var time = TimerTextFormatter.format(diff);
     // var nowDate = DateTime.now();
     // log('start time ${startTime.millisecondsSinceEpoch}');

@@ -15,13 +15,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class RatingCardDialog extends StatelessWidget{
-  TextStyleElements styleElements ;
+  late TextStyleElements styleElements ;
   double ratingGiven = 0.0;
-  SharedPreferences prefs;
-  String contexType;
-  int contextId;
-  String subjectType;
-  int subjectId;
+  late SharedPreferences prefs;
+  String? contexType;
+  int? contextId;
+  String? subjectType;
+  int? subjectId;
   RatingCardDialog({this.contextId,this.contexType,this.subjectId,this.subjectType});
 
   void setSharedPrefs() async{
@@ -57,7 +57,7 @@ class RatingCardDialog extends StatelessWidget{
               children: [
                 Container(
                   margin:  EdgeInsets.all(16),
-                  child: Text(AppLocalizations.of(context).translate('leave_your_rating'),
+                  child: Text(AppLocalizations.of(context)!.translate('leave_your_rating'),
                     style: styleElements.subtitle2ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorBlack65)),),
                 ),
                 Container(
@@ -102,7 +102,7 @@ class RatingCardDialog extends StatelessWidget{
                             onPressed: () {
                               Navigator.pop(context,false);
                               },
-                            child: Text(AppLocalizations.of(context).translate('cancel'),style: styleElements.captionThemeScalable(context).copyWith(color:HexColor(AppColors.appMainColor)),),
+                            child: Text(AppLocalizations.of(context)!.translate('cancel'),style: styleElements.captionThemeScalable(context).copyWith(color:HexColor(AppColors.appMainColor)),),
                           ),
                         ),
                       ),
@@ -113,7 +113,7 @@ class RatingCardDialog extends StatelessWidget{
                             onPressed: () {
                               submitRating(context);
                             },
-                            child: Text(AppLocalizations.of(context).translate('submit'),style: styleElements.captionThemeScalable(context).copyWith(color:HexColor(AppColors.appMainColor))),
+                            child: Text(AppLocalizations.of(context)!.translate('submit'),style: styleElements.captionThemeScalable(context).copyWith(color:HexColor(AppColors.appMainColor))),
                           ),
                         ),
                       ),
@@ -142,7 +142,7 @@ class RatingCardDialog extends StatelessWidget{
       GenericCommentReviewFeedback(context, body).apiCreateRatings();
       Navigator.pop(context, true);
     }else{
-      ToastBuilder().showToast(AppLocalizations.of(context).translate('please_give_rating'), context, HexColor(AppColors.information));
+      ToastBuilder().showToast(AppLocalizations.of(context)!.translate('please_give_rating'), context, HexColor(AppColors.information));
       Navigator.pop(context, false);
     }
   }

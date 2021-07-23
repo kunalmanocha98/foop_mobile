@@ -1,11 +1,11 @@
 class CalenderEventListRequest {
-  String eventOwnerType;
-  String searchVal;
-  int eventOwnerId;
-  String eventDate;
-  int pageNumber;
-  int pageSize;
-  String listType;
+  String? eventOwnerType;
+  String? searchVal;
+  int? eventOwnerId;
+  String? eventDate;
+  int? pageNumber;
+  int? pageSize;
+  String? listType;
 
   CalenderEventListRequest(
       {this.eventOwnerType, this.eventOwnerId, this.eventDate,this.pageNumber,this.pageSize});
@@ -36,10 +36,10 @@ class CalenderEventListRequest {
 
 
 class CalenderEventListResponse {
-  String statusCode;
-  String message;
-  List<CalenderEventItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<CalenderEventItem>? rows;
+  int? total;
 
   CalenderEventListResponse(
       {this.statusCode, this.message, this.rows, this.total});
@@ -50,7 +50,7 @@ class CalenderEventListResponse {
     if (json['rows'] != null) {
       rows = [];//CalenderEventItem>();
       json['rows'].forEach((v) {
-        rows.add(new CalenderEventItem.fromJson(v));
+        rows!.add(new CalenderEventItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -61,7 +61,7 @@ class CalenderEventListResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -69,34 +69,34 @@ class CalenderEventListResponse {
 }
 
 class CalenderEventItem {
-  int id;
-  int calEventsId;
-  int standardEventsId;
-  String calendarOwnerType;
-  int calendarOwnerId;
-  String eventRoleType;
-  String title;
-  String subtitle;
+  int? id;
+  int? calEventsId;
+  int? standardEventsId;
+  String? calendarOwnerType;
+  int? calendarOwnerId;
+  String? eventRoleType;
+  String? title;
+  String? subtitle;
   Null eventImportanceType;
   Null eventCategory;
   Null eventImage;
-  EventLocation eventLocation;
-  String eventDate;
+  EventLocation? eventLocation;
+  String? eventDate;
   Null eventTimeZone;
   Null eventColorCode;
   Null eventIcon;
-  String startTime;
-  String endTime;
+  String? startTime;
+  String? endTime;
   Null reminderTime;
   Null reminderUnit;
-  bool isFullDay;
-  String eventStatus;
+  bool? isFullDay;
+  String? eventStatus;
   Null eventAccessUrl;
-  String calContextType;
-  int calContextTypeId;
-  Header header;
-  List<ParticipantList> participantList;
-  List<String> recipientType;
+  String? calContextType;
+  int? calContextTypeId;
+  Header? header;
+  List<ParticipantList>? participantList;
+  List<String>? recipientType;
 
   CalenderEventItem(
       {this.id,
@@ -158,7 +158,7 @@ class CalenderEventItem {
     if (json['participant_list'] != null) {
       participantList = [];//ParticipantList>();
       json['participant_list'].forEach((v) {
-        participantList.add(new ParticipantList.fromJson(v));
+        participantList!.add(new ParticipantList.fromJson(v));
       });
     }
     recipientType = json['recipient_type'].cast<String>();
@@ -178,7 +178,7 @@ class CalenderEventItem {
     data['event_category'] = this.eventCategory;
     data['event_image'] = this.eventImage;
     if(this.eventLocation !=null){
-      data['event_location'] = this.eventLocation.toJson();
+      data['event_location'] = this.eventLocation!.toJson();
     }
     data['event_date'] = this.eventDate;
     data['event_time_zone'] = this.eventTimeZone;
@@ -194,10 +194,10 @@ class CalenderEventItem {
     data['cal_context_type'] = this.calContextType;
     data['cal_context_type_id'] = this.calContextTypeId;
     if (this.header != null) {
-      data['header'] = this.header.toJson();
+      data['header'] = this.header!.toJson();
     }
     if (this.participantList != null) {
-      data['participant_list'] = this.participantList.map((v) => v.toJson()).toList();
+      data['participant_list'] = this.participantList!.map((v) => v.toJson()).toList();
     }
     data['recipient_type'] = this.recipientType;
     return data;
@@ -205,13 +205,13 @@ class CalenderEventItem {
 }
 
 class EventLocation {
-  String lat;
-  String long;
-  String address;
-  String city;
-  String state;
-  String country;
-  String pincode;
+  String? lat;
+  String? long;
+  String? address;
+  String? city;
+  String? state;
+  String? country;
+  String? pincode;
 
   EventLocation(
       {this.lat,
@@ -246,12 +246,12 @@ class EventLocation {
 }
 
 class Header {
-  String title;
-  List<Action> action;
-  String avatar;
-  double rating;
-  String subtitle1;
-  bool isVerified;
+  String? title;
+  List<Action>? action;
+  String? avatar;
+  double? rating;
+  String? subtitle1;
+  bool? isVerified;
 
   Header(
       {this.title,
@@ -266,7 +266,7 @@ class Header {
     if (json['action'] != null) {
       action = [];//Action>();
       json['action'].forEach((v) {
-        action.add(new Action.fromJson(v));
+        action!.add(new Action.fromJson(v));
       });
     }
     avatar = json['avatar'];
@@ -279,7 +279,7 @@ class Header {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['title'] = this.title;
     if (this.action != null) {
-      data['action'] = this.action.map((v) => v.toJson()).toList();
+      data['action'] = this.action!.map((v) => v.toJson()).toList();
     }
     data['avatar'] = this.avatar;
     data['rating'] = this.rating;
@@ -290,8 +290,8 @@ class Header {
 }
 
 class Action {
-  String type;
-  bool value;
+  String? type;
+  bool? value;
 
   Action({this.type, this.value});
 
@@ -309,8 +309,8 @@ class Action {
 }
 
 class ParticipantList {
-  String name;
-  String profileImage;
+  String? name;
+  String? profileImage;
 
   ParticipantList({this.name, this.profileImage});
 

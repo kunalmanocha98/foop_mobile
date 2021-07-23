@@ -20,15 +20,15 @@ class AssignmentPageState extends State<AssignmentPage>
     with SingleTickerProviderStateMixin {
   List<CustomTabMaker> list = [];
   int currentPosition = 0;
-  TabController _tabController;
-  TextStyleElements styleElements;
-  SharedPreferences prefs = locator<SharedPreferences>();
-  BuildContext sctx;
+  late TabController _tabController;
+  TextStyleElements? styleElements;
+  SharedPreferences? prefs = locator<SharedPreferences>();
+  BuildContext? sctx;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => loadPages());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => loadPages());
   }
 
   onPositionChange() {
@@ -44,21 +44,21 @@ class AssignmentPageState extends State<AssignmentPage>
         statelessWidget:  SelectedFeedListPage(
           isFromProfile:true,
           isOwnPost: true,
-          appBarTitle: AppLocalizations.of(context).translate('assignment'),
+          appBarTitle: AppLocalizations.of(context)!.translate('assignment'),
           postRecipientStatus: POST_RECIPIENT_STATUS.UNREAD.status,
           postType: POST_TYPE.ASSIGNMENT.status,
         ),
-        tabName: AppLocalizations.of(context).translate('given')));
+        tabName: AppLocalizations.of(context)!.translate('given')));
     list.add(CustomTabMaker(
         statelessWidget: SelectedFeedListPage(
           isFromProfile:true,
           isOwnPost: false,
           isReceivedPost: true,
-          appBarTitle: AppLocalizations.of(context).translate('assignment'),
+          appBarTitle: AppLocalizations.of(context)!.translate('assignment'),
           postRecipientStatus: POST_RECIPIENT_STATUS.UNREAD.status,
           postType: POST_TYPE.ASSIGNMENT.status,
         ),
-        tabName: AppLocalizations.of(context).translate('received')));
+        tabName: AppLocalizations.of(context)!.translate('received')));
     setState(() {
       _tabController = TabController(vsync: this, length: list.length);
       _tabController.addListener(onPositionChange);
@@ -72,7 +72,7 @@ class AssignmentPageState extends State<AssignmentPage>
       child: new Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: TricycleAppBar().getCustomAppBar(context,
-              appBarTitle: AppLocalizations.of(context).translate("assignment"),
+              appBarTitle: AppLocalizations.of(context)!.translate("assignment"),
               onBackButtonPress: () {
                 Navigator.pop(context);
               }),
@@ -97,7 +97,7 @@ class AssignmentPageState extends State<AssignmentPage>
                     Center(child: list[index].statelessWidget),
                 onPositionChange: (index) {
                   setState(() {
-                    currentPosition = index;
+                    currentPosition = index!;
                   });
                 },
                 onScroll: (position) => print('$position'),

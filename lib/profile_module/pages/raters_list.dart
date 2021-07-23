@@ -21,10 +21,10 @@ class RatersListPage extends StatefulWidget {
 
   final int type;
   final String userType;
-  final int userId;
-  final  Null Function() callback;
-  final int ownerId;
-  final String ownerType;
+  final int? userId;
+  final  Null Function()? callback;
+  final int? ownerId;
+  final String? ownerType;
   final bool isProfile;
   RatersListPage( this.type,this.userId,this.userType,this.callback,{this.ownerId,this.ownerType,this.isProfile = true});
 
@@ -35,19 +35,19 @@ class RatersListPage extends StatefulWidget {
 
 class _RatersListPage extends State<RatersListPage>
     with AutomaticKeepAliveClientMixin<RatersListPage> {
-  String searchVal;
-  String personName;
+  String? searchVal;
+  String? personName;
 
   int type;
-  int id;
+  int? id;
    String userType;
-   int userId;
-  String ownerType;
-  int ownerId;
-  Null Function() callback;
+   int? userId;
+  String? ownerType;
+  int? ownerId;
+  Null Function()? callback;
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
-  SharedPreferences prefs;
-  TextStyleElements styleElements;
+  SharedPreferences? prefs;
+  TextStyleElements? styleElements;
 
   @override
   bool get wantKeepAlive => true;
@@ -64,7 +64,7 @@ class _RatersListPage extends State<RatersListPage>
   }
 
   refresh() {
-    paginatorKey.currentState.changeState(resetState: true);
+    paginatorKey.currentState!.changeState(resetState: true);
   }
 
   @override
@@ -89,8 +89,8 @@ class _RatersListPage extends State<RatersListPage>
 
   Future<RatersData> getFollowers(int page) async {
     prefs ??= await SharedPreferences.getInstance();
-    ownerId= widget.ownerId!=null ? widget.ownerId :prefs.getInt(Strings.userId);
-    ownerType=widget.ownerType!=null?widget.ownerType:prefs.getString(Strings.ownerType);
+    ownerId= widget.ownerId!=null ? widget.ownerId :prefs!.getInt(Strings.userId);
+    ownerType=widget.ownerType!=null?widget.ownerType:prefs!.getString(Strings.ownerType);
     final body = jsonEncode(
         {
           "rating_subject_type": widget.isProfile?null:userType,
@@ -123,7 +123,7 @@ class _RatersListPage extends State<RatersListPage>
                       : "thirdPerson",
                   userId: item.id != ownerId ? item.id : null,
                   callback: () {
-                    callback();
+                    callback!();
                   },
                   currentPosition: 1,
                   type: null,
@@ -133,22 +133,22 @@ class _RatersListPage extends State<RatersListPage>
         imageUrl: item.profileImage,
         title:  item.name ?? "",
         trailingWidget:    Visibility(
-          visible: item.id != prefs.getInt(Strings.userId) && !item.isObjectFollowing,
+          visible: item.id != prefs!.getInt(Strings.userId) && !item.isObjectFollowing!,
           child: GenericFollowUnfollowButton(
-            actionByObjectType: prefs.getString("ownerType"),
-            actionByObjectId: prefs.getInt("userId"),
+            actionByObjectType: prefs!.getString("ownerType"),
+            actionByObjectId: prefs!.getInt("userId"),
             actionOnObjectType: "person",
             actionOnObjectId: item.id,
             engageFlag: item.isObjectFollowing ?? false
-                ? AppLocalizations.of(context)
+                ? AppLocalizations.of(context)!
                 .translate('following')
-                : AppLocalizations.of(context)
+                : AppLocalizations.of(context)!
                 .translate('follow'),
             actionFlag: item.isObjectFollowing ?? false ? "U" : "F",
             actionDetails: [],
             personName: item.name ?? "",
             callback: (isCallSuccess) {
-              callback();
+              callback!();
              refresh();
             },
           ),

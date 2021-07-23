@@ -25,12 +25,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class SelectMembersPage extends StatefulWidget {
-  final int roomId;
-  final String selectedRoomType;
-  final Null Function() callback;
+  final int? roomId;
+  final String? selectedRoomType;
+  final Null Function()? callback;
 
   const SelectMembersPage(
-      {Key key,
+      {Key? key,
         this.roomId,
         this.selectedRoomType,
         this.callback})
@@ -45,15 +45,15 @@ class _SelectMembersPage extends State<SelectMembersPage> {
   GlobalKey<PaginatorState> paginatorGlobalKey = GlobalKey();
   List<MembersItem> _selectedList = [];
   // int selectedRadio;
-  int roomId;
-  TextStyleElements styleElements;
-  String searchVal;
-  SharedPreferences prefs;
+  int? roomId;
+  late TextStyleElements styleElements;
+  String? searchVal;
+  SharedPreferences? prefs;
   List<MemberListItem> memberItemList = [];
-  String selectedRoomType;
-  int total = 0;
+  String? selectedRoomType;
+  int? total = 0;
   bool isAddAll = false;
-  Null Function() callback;
+  Null Function()? callback;
 
   _SelectMembersPage(
       this.roomId, this.selectedRoomType, this.callback);
@@ -72,7 +72,7 @@ class _SelectMembersPage extends State<SelectMembersPage> {
   void onsearchValueChanged(String value) {
     searchVal = value;
     memberItemList.clear();
-    paginatorGlobalKey.currentState.changeState(resetState: true);
+    paginatorGlobalKey.currentState!.changeState(resetState: true);
   }
 
   @override
@@ -83,9 +83,9 @@ class _SelectMembersPage extends State<SelectMembersPage> {
           resizeToAvoidBottomInset: false,
           appBar: TricycleAppBar().getCustomAppBarWithSearch(context,
               onSearchValueChanged: onsearchValueChanged,
-              hintText: AppLocalizations.of(context)
+              hintText: AppLocalizations.of(context)!
                   .translate("search_tricycle_user"),
-              appBarTitle: AppLocalizations.of(context)
+              appBarTitle: AppLocalizations.of(context)!
                   .translate("select_members"), onBackButtonPress: () {
                 Navigator.pop(context);
               }),
@@ -146,7 +146,7 @@ class _SelectMembersPage extends State<SelectMembersPage> {
                             },
                             color: HexColor(AppColors.appColorWhite),
                             child: Text(
-                              AppLocalizations.of(context).translate("next"),
+                              AppLocalizations.of(context)!.translate("next"),
                               style: styleElements
                                   .bodyText2ThemeScalable(context)
                                   .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -176,7 +176,7 @@ class _SelectMembersPage extends State<SelectMembersPage> {
     // } else if (selectedRadio == 3) {
     //   payload.withInInstitution = false;
     // }
-    payload.personId = prefs.getInt(Strings.userId);
+    payload.personId = prefs!.getInt(Strings.userId);
     var data = jsonEncode(payload);
     var value = await Calls().call(data, context, Config.MEMBERSLIST);
     var res = MemberListResponse.fromJson(value);
@@ -188,8 +188,8 @@ class _SelectMembersPage extends State<SelectMembersPage> {
     return res;
   }
 
-  List<MemberListItem> listItemsGetter(MemberListResponse response) {
-    memberItemList.addAll(response.rows);
+  List<MemberListItem>? listItemsGetter(MemberListResponse? response) {
+    memberItemList.addAll(response!.rows!);
     if (!isAddAll) {
       for (int i = 0; i < memberItemList.length; i++) {
         for (int j = 0; j < _selectedList.length; j++) {
@@ -257,7 +257,7 @@ class _SelectMembersPage extends State<SelectMembersPage> {
                   setState(() {});
                 },
                 child: Text(
-                  AppLocalizations.of(context).translate('add'),
+                  AppLocalizations.of(context)!.translate('add'),
                   style: styleElements
                       .captionThemeScalable(context)
                       .copyWith(
@@ -277,7 +277,7 @@ class _SelectMembersPage extends State<SelectMembersPage> {
   void addmembers() {
     MemberAddPayload payload = MemberAddPayload();
     payload.roomId = roomId;
-    payload.roomInstitutionId = prefs.getInt(Strings.instituteId);
+    payload.roomInstitutionId = prefs!.getInt(Strings.instituteId);
     payload.isAddAllMembers = false;
     payload.members = _selectedList;
     payload.isAddAllMembers = isAddAll;
@@ -287,11 +287,11 @@ class _SelectMembersPage extends State<SelectMembersPage> {
       if (res.statusCode == Strings.success_code) {
         ToastBuilder()
             .showToast("success", context, HexColor(AppColors.information));
-        if (callback != null) callback();
+        if (callback != null) callback!();
         Navigator.pop(context, Strings.success_code);
       } else {
         ToastBuilder()
-            .showToast(res.message, context, HexColor(AppColors.information));
+            .showToast(res.message!, context, HexColor(AppColors.information));
       }
     }).catchError((onError) {
       print(onError);
@@ -301,7 +301,7 @@ class _SelectMembersPage extends State<SelectMembersPage> {
   void addmember(MemberListItem memberitem, MEMBER_ADD_METHOD method) {
     MemberAddPayload payload = MemberAddPayload();
     payload.roomId = roomId;
-    payload.roomInstitutionId = prefs.getInt(Strings.instituteId);
+    payload.roomInstitutionId = prefs!.getInt(Strings.instituteId);
     payload.isAddAllMembers = false;
     List<MembersItem> list = [];
     MembersItem item = MembersItem();
@@ -314,12 +314,12 @@ class _SelectMembersPage extends State<SelectMembersPage> {
     Calls().call(data, context, Config.MEMBER_ADD).then((value) {
       var res = DynamicResponse.fromJson(value);
       if (res.statusCode == Strings.success_code) {
-        if (callback != null) callback();
+        if (callback != null) callback!();
         ToastBuilder()
             .showToast("success", context, HexColor(AppColors.information));
       } else {
         ToastBuilder()
-            .showToast(res.message, context, HexColor(AppColors.information));
+            .showToast(res.message!, context, HexColor(AppColors.information));
       }
     }).catchError((onError) {
       print(onError);

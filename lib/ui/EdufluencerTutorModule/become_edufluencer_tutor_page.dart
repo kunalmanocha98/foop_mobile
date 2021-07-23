@@ -19,7 +19,7 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 
 enum edufluencer_type{E,T}
 
-extension edufluencerExt on edufluencer_type{
+extension edufluencerExt on edufluencer_type?{
   String get type{
     if(this == edufluencer_type.E){
       return 'E';
@@ -30,7 +30,7 @@ extension edufluencerExt on edufluencer_type{
 }
 
 class BecomeEdufluencerTutorForm extends StatefulWidget {
-  final edufluencer_type type;
+  final edufluencer_type? type;
   BecomeEdufluencerTutorForm({this.type});
   @override
   BecomeEdufluencerTutorFormState createState() =>
@@ -39,19 +39,19 @@ class BecomeEdufluencerTutorForm extends StatefulWidget {
 
 class BecomeEdufluencerTutorFormState extends State<BecomeEdufluencerTutorForm>
     with CommonMixins {
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
   GlobalKey<FormState> formKey = GlobalKey();
   GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
   TextEditingController typeAheadMediumofConversation = TextEditingController();
-  String title;
-  String jobDes;
-  String yearsofExperience;
-  String trialHours;
-  String fees;
+  String? title;
+  String? jobDes;
+  String? yearsofExperience;
+  String? trialHours;
+  String? fees;
 
-  String profileInfo;
+  String? profileInfo;
   bool isFree = false;
-  List<String> medium_of_conversation = [];
+  List<String?> medium_of_conversation = [];
   List<String> weekDaysList = [];
 
   @override
@@ -61,7 +61,7 @@ class BecomeEdufluencerTutorFormState extends State<BecomeEdufluencerTutorForm>
       appBar: TricycleAppBar().getCustomAppBar(
         context,
         appBarTitle:
-        AppLocalizations.of(context).translate(
+        AppLocalizations.of(context)!.translate(
           widget.type == edufluencer_type.E
             ?'become_edufluencer'
               :"become_tutor"
@@ -73,10 +73,10 @@ class BecomeEdufluencerTutorFormState extends State<BecomeEdufluencerTutorForm>
             color: HexColor(AppColors.appColorBackground),
             elevation: 0,
             onPressed: () {
-              progressButtonKey.currentState.show();
-              if (formKey.currentState.validate()) {
-                formKey.currentState.save();
-                progressButtonKey.currentState.hide();
+              progressButtonKey.currentState!.show();
+              if (formKey.currentState!.validate()) {
+                formKey.currentState!.save();
+                progressButtonKey.currentState!.hide();
                 Navigator.push(context,
                     MaterialPageRoute(builder: (BuildContext context) {
                       return BecomeEdufluencerFollowupPage(
@@ -90,7 +90,7 @@ class BecomeEdufluencerTutorFormState extends State<BecomeEdufluencerTutorForm>
                       }
                 });
               }else{
-                progressButtonKey.currentState.hide();
+                progressButtonKey.currentState!.hide();
               }
             },
             child: Wrap(
@@ -98,7 +98,7 @@ class BecomeEdufluencerTutorFormState extends State<BecomeEdufluencerTutorForm>
               crossAxisAlignment: WrapCrossAlignment.center,
               children: [
                 Text(
-                  AppLocalizations.of(context).translate('next'),
+                  AppLocalizations.of(context)!.translate('next'),
                   style: styleElements
                       .subtitle2ThemeScalable(context)
                       .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -131,7 +131,7 @@ class BecomeEdufluencerTutorFormState extends State<BecomeEdufluencerTutorForm>
     );
   }
 
-  Widget customCard(String heading, {Widget child}) {
+  Widget customCard(String heading, {Widget? child}) {
     return TricycleListCard(
         padding: EdgeInsets.only(top: 16, bottom: 16, left: 24, right: 24),
         child: Column(
@@ -144,13 +144,13 @@ class BecomeEdufluencerTutorFormState extends State<BecomeEdufluencerTutorForm>
                   .headline6ThemeScalable(context)
                   .copyWith(fontWeight: FontWeight.bold),
             ),
-            child
+            child!
           ],
         ));
   }
 
   Widget getEdufluencerInfo() {
-    return customCard(AppLocalizations.of(context).translate(widget.type == edufluencer_type.E
+    return customCard(AppLocalizations.of(context)!.translate(widget.type == edufluencer_type.E
         ?'edufluencer'
         :"tutor"),
         child: Column(
@@ -165,7 +165,7 @@ class BecomeEdufluencerTutorFormState extends State<BecomeEdufluencerTutorForm>
               },
               decoration: InputDecoration(
                   contentPadding: EdgeInsets.all(4),
-                  hintText: AppLocalizations.of(context)
+                  hintText: AppLocalizations.of(context)!
                       .translate('hint_heading_describe_you'),
                   hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35))),
             ),
@@ -177,7 +177,7 @@ class BecomeEdufluencerTutorFormState extends State<BecomeEdufluencerTutorForm>
               },
               decoration: InputDecoration(
                   contentPadding: EdgeInsets.all(4),
-                  hintText: AppLocalizations.of(context)
+                  hintText: AppLocalizations.of(context)!
                       .translate('hint_cuurent_job'),
                   hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(
                     color: HexColor(AppColors.appColorBlack35)
@@ -194,7 +194,7 @@ class BecomeEdufluencerTutorFormState extends State<BecomeEdufluencerTutorForm>
                   },
                   decoration: InputDecoration(
                       contentPadding: EdgeInsets.all(4),
-                      hintText: AppLocalizations.of(context)
+                      hintText: AppLocalizations.of(context)!
                           .translate('hint_years_experience'),
                       hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(
                         color: HexColor(AppColors.appColorBlack35)
@@ -260,7 +260,7 @@ class BecomeEdufluencerTutorFormState extends State<BecomeEdufluencerTutorForm>
                   ),
                   Flexible(
                       child: Text(
-                        AppLocalizations.of(context).translate('offering_free'),
+                        AppLocalizations.of(context)!.translate('offering_free'),
                         style: styleElements.subtitle1ThemeScalable(context),
                       )),
                 ],
@@ -278,7 +278,7 @@ class BecomeEdufluencerTutorFormState extends State<BecomeEdufluencerTutorForm>
                     },
                     decoration: InputDecoration(
                         contentPadding: EdgeInsets.all(4),
-                        hintText: AppLocalizations.of(context)
+                        hintText: AppLocalizations.of(context)!
                             .translate('trial_hours'),
                         hintStyle:
                         styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35))),
@@ -297,7 +297,7 @@ class BecomeEdufluencerTutorFormState extends State<BecomeEdufluencerTutorForm>
                     },
                     decoration: InputDecoration(
                         contentPadding: EdgeInsets.all(4),
-                        hintText: AppLocalizations.of(context)
+                        hintText: AppLocalizations.of(context)!
                             .translate('fees_hours'),
                         hintStyle:
                         styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35))),
@@ -310,7 +310,7 @@ class BecomeEdufluencerTutorFormState extends State<BecomeEdufluencerTutorForm>
   }
 
   Widget getBriefIntro() {
-    return customCard(AppLocalizations.of(context).translate('brief_intro'),
+    return customCard(AppLocalizations.of(context)!.translate('brief_intro'),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -319,7 +319,7 @@ class BecomeEdufluencerTutorFormState extends State<BecomeEdufluencerTutorForm>
               height: 4,
             ),
             Text(
-              AppLocalizations.of(context)
+              AppLocalizations.of(context)!
                   .translate('write_something_about_edufluencer'),
               style: styleElements.subtitle1ThemeScalable(context),
             ),
@@ -336,7 +336,7 @@ class BecomeEdufluencerTutorFormState extends State<BecomeEdufluencerTutorForm>
               maxLines: 8,
               decoration: InputDecoration(
                   contentPadding: EdgeInsets.all(8),
-                  hintText: AppLocalizations.of(context)
+                  hintText: AppLocalizations.of(context)!
                       .translate('write_your_intro'),
                   hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
                   border: OutlineInputBorder(
@@ -352,11 +352,11 @@ class BecomeEdufluencerTutorFormState extends State<BecomeEdufluencerTutorForm>
     payload.edufluencerType = widget.type.type;
     payload.edufluencerTitle = title;
     payload.edufluencerCurrentPosition = jobDes;
-    payload.totalExperienceYears = double.parse(yearsofExperience);
+    payload.totalExperienceYears = double.parse(yearsofExperience!);
     payload.isFreeService = isFree;
-    payload.trialHours = double.parse(trialHours);
+    payload.trialHours = double.parse(trialHours!);
     payload.feesCurrency = "INR";
-    payload.feesPerHour = int.parse(fees);
+    payload.feesPerHour = int.parse(fees!);
     payload.edufluencerBio = profileInfo;
     payload.mediumOfCommunication = medium_of_conversation;
     payload.working_days = weekDaysList;
@@ -365,7 +365,7 @@ class BecomeEdufluencerTutorFormState extends State<BecomeEdufluencerTutorForm>
 
   Widget getMediumofConversation() {
     return customCard(
-      AppLocalizations.of(context).translate('medium_conversation'),
+      AppLocalizations.of(context)!.translate('medium_conversation'),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -382,24 +382,27 @@ class BecomeEdufluencerTutorFormState extends State<BecomeEdufluencerTutorForm>
                 };
                 var res = await Calls()
                     .call(jsonEncode(data), context, Config.EXPERTISE_API);
-                if (ExpertiseList.fromJson(res).rows.length > 0) {
-                  return ExpertiseList.fromJson(res).rows;
+                if (ExpertiseList.fromJson(res).rows!.length > 0) {
+                  return ExpertiseList.fromJson(res).rows!;
                 } else {
-                  return null;
+                  return [];
                 }
               } else {
-                return null;
+                return [];
               }
             },
-            itemBuilder: (BuildContext context, LanguageItem itemData) {
+            itemBuilder: ( context,  itemData) {
+
+              itemData as LanguageItem;
               return ListTile(
                 title: Text(
-                  itemData.expertiseTypeDescription,
+                  itemData.expertiseTypeDescription??"",
                   style: styleElements.subtitle1ThemeScalable(context),
                 ),
               );
             },
-            onSuggestionSelected: (LanguageItem suggestion) {
+            onSuggestionSelected: ( suggestion) {
+              suggestion as LanguageItem;
               setState(() {
                 typeAheadMediumofConversation.text = "";
                 medium_of_conversation.add(suggestion.expertiseTypeDescription);
@@ -411,7 +414,7 @@ class BecomeEdufluencerTutorFormState extends State<BecomeEdufluencerTutorForm>
               controller: typeAheadMediumofConversation,
               decoration: InputDecoration(
                   contentPadding: EdgeInsets.only(top: 16, left: 8, right: 16),
-                  hintText: AppLocalizations.of(context)
+                  hintText: AppLocalizations.of(context)!
                       .translate('enter_languages_talk'),
                   hintStyle: styleElements.bodyText2ThemeScalable(context)),
             ),
@@ -426,7 +429,7 @@ class BecomeEdufluencerTutorFormState extends State<BecomeEdufluencerTutorForm>
                 itemCount: medium_of_conversation.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Chip(
-                    label: Text(medium_of_conversation[index]),
+                    label: Text(medium_of_conversation[index]!),
                     padding: EdgeInsets.all(8),
                     onDeleted: () {
                       setState(() {

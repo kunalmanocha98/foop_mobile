@@ -1,8 +1,8 @@
 class NotesListResponse {
-  String statusCode;
-  String message;
-  List<NotesListItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<NotesListItem>? rows;
+  int? total;
 
   NotesListResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -12,7 +12,7 @@ class NotesListResponse {
     if (json['rows'] != null) {
       rows = [];//NotesListItem>();
       json['rows'].forEach((v) {
-        rows.add(new NotesListItem.fromJson(v));
+        rows!.add(new NotesListItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -23,7 +23,7 @@ class NotesListResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -31,27 +31,27 @@ class NotesListResponse {
 }
 
 class NotesListItem {
-  int note_id;
-  int id;
-  String noteType;
-  String noteCreatedByType;
-  String notesCreatedByName;
-  String noteCreatedById;
-  String noteSubjectType;
-  String noteSubjectId;
+  int? note_id;
+  int? id;
+  String? noteType;
+  String? noteCreatedByType;
+  String? notesCreatedByName;
+  String? noteCreatedById;
+  String? noteSubjectType;
+  String? noteSubjectId;
   Null replyToNoteId;
-  String noteContent;
-  List<String> noteFormat;
-  bool hasAttachment;
-  bool makeAnonymous;
-  String createdDate;
-  String notesCreatedByProfile;
+  String? noteContent;
+  List<String>? noteFormat;
+  bool? hasAttachment;
+  bool? makeAnonymous;
+  String? createdDate;
+  String? notesCreatedByProfile;
   Null mediaUrl;
   Null mediaThumbnailUrl;
   Null otherImageUrls;
   Null fileName;
-  String postRate;
-  int commRateCount;
+  String? postRate;
+  int? commRateCount;
 
   NotesListItem(
       {this.id,

@@ -14,20 +14,20 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class TricycleChatFooter extends StatefulWidget {
-  String hintText;
-  Function(String) onValueRecieved;
-  Function(String) onReceiveOption;
-  Function(String) onTyping;
-  bool isShowAddIcon = false;
-  MessagePayloadDatabase data;
-  String userName;
-  Function() onCrossCLicked;
-  bool isEmptyTextAccepted;
-  String linkPreviewUrl;
+  String? hintText;
+  Function(String?) onValueRecieved;
+  Function(String)? onReceiveOption;
+  Function(String)? onTyping;
+  bool? isShowAddIcon = false;
+  MessagePayloadDatabase? data;
+  String? userName;
+  Function()? onCrossCLicked;
+  bool? isEmptyTextAccepted;
+  String? linkPreviewUrl;
 
   TricycleChatFooter(Key key,
       {this.hintText,
-      @required this.onValueRecieved,
+      required this.onValueRecieved,
       this.onTyping,
       this.userName,
       this.linkPreviewUrl,
@@ -52,23 +52,23 @@ class TricycleChatFooter extends StatefulWidget {
 
 class TricycleChatFooterState extends State<TricycleChatFooter> {
   bool isTyping = false;
-  bool isEmptyTextAccepted;
-  Function(String) onReceiveOption;
-  String hintText;
-  String value;
-  String linkPreviewUrl;
-  MessagePayloadDatabase data;
-  bool isShowAddIcon = false;
-  Function(String) onValueRecieved;
-  Function() onCrossCLicked;
-  Function(String) onTyping;
-  TextStyleElements styleElements;
+  bool? isEmptyTextAccepted;
+  Function(String)? onReceiveOption;
+  String? hintText;
+  String? value;
+  String? linkPreviewUrl;
+  MessagePayloadDatabase? data;
+  bool? isShowAddIcon = false;
+  Function(String?) onValueRecieved;
+  Function()? onCrossCLicked;
+  Function(String)? onTyping;
+  TextStyleElements? styleElements;
   var controller = TextEditingController();
-  String userName;
+  String? userName;
 
   TricycleChatFooterState(
       {this.hintText,
-      @required this.onValueRecieved,
+      required this.onValueRecieved,
       this.onTyping,
       this.isEmptyTextAccepted,
       this.isShowAddIcon,
@@ -120,14 +120,14 @@ class TricycleChatFooterState extends State<TricycleChatFooter> {
                               Text(userName ?? "",
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
-                                  style: styleElements
+                                  style: styleElements!
                                       .bodyText2ThemeScalable(context)
                                       .copyWith(
                                           color:
                                               HexColor(AppColors.orangeText))),
                               InkWell(
                                 onTap: () {
-                                  if (onCrossCLicked != null) onCrossCLicked();
+                                  if (onCrossCLicked != null) onCrossCLicked!();
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.only(right: 4.0),
@@ -154,9 +154,9 @@ class TricycleChatFooterState extends State<TricycleChatFooter> {
                                   children: [
                                     Visibility(
                                       visible: data != null &&
-                                          data.messageAttachmentThumbnail !=
+                                          data!.messageAttachmentThumbnail !=
                                               null &&
-                                          data.messageAttachmentThumbnail
+                                          data!.messageAttachmentThumbnail!
                                               .isNotEmpty,
                                       child: Container(
                                         margin:
@@ -172,7 +172,7 @@ class TricycleChatFooterState extends State<TricycleChatFooter> {
                                                     CachedNetworkImageProvider(
                                                   Utility().getUrlForImage(
                                                       data != null
-                                                          ? data.messageAttachmentThumbnail ??
+                                                          ? data!.messageAttachmentThumbnail ??
                                                               ""
                                                           : "",
                                                       RESOLUTION_TYPE.R64,
@@ -188,12 +188,12 @@ class TricycleChatFooterState extends State<TricycleChatFooter> {
                                                 alignment: Alignment.topLeft,
                                                 child: Text(
                                                     data != null
-                                                        ? data.message ?? ""
+                                                        ? data!.message ?? ""
                                                         : "",
                                                     maxLines: 3,
                                                     overflow:
                                                         TextOverflow.ellipsis,
-                                                    style: styleElements
+                                                    style: styleElements!
                                                         .bodyText1ThemeScalable(
                                                             context))))),
                                   ],
@@ -229,7 +229,7 @@ class TricycleChatFooterState extends State<TricycleChatFooter> {
                             focusNode: FocusNode(canRequestFocus: false),
                             textInputAction: TextInputAction.next,
                             textCapitalization: TextCapitalization.sentences,
-                            style: styleElements.subtitle1ThemeScalable(context).copyWith(
+                            style: styleElements!.subtitle1ThemeScalable(context).copyWith(
                                 color: HexColor(AppColors.appColorBlack65)
                             ),
                             decoration: InputDecoration(
@@ -240,7 +240,7 @@ class TricycleChatFooterState extends State<TricycleChatFooter> {
                               enabledBorder: InputBorder.none,
                               errorBorder: InputBorder.none,
                               disabledBorder: InputBorder.none,
-                              hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35))
+                              hintStyle: styleElements!.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35))
                             ),
                             controller: controller,
                             onChanged: (value) {
@@ -255,12 +255,12 @@ class TricycleChatFooterState extends State<TricycleChatFooter> {
                                 });
                               }
 
-                              if (onTyping != null) onTyping(value ?? "");
+                              if (onTyping != null) onTyping!(value);
                             },
                           ),
                         ),
                         Visibility(
-                            visible: isShowAddIcon,
+                            visible: isShowAddIcon!,
                             child: popItem(
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
@@ -281,15 +281,15 @@ class TricycleChatFooterState extends State<TricycleChatFooter> {
                     color: HexColor(AppColors.appColorBlack85),
                   ),
                   onPressed: () {
-                    if (isEmptyTextAccepted != null && isEmptyTextAccepted) {
+                    if (isEmptyTextAccepted != null && isEmptyTextAccepted!) {
                       print("empty"
                               "" +
                           "---------------------------------------------------------------------");
                       onValueRecieved(value);
                       value = null;
                       controller.clear();
-                    } else if (value != null && value.isNotEmpty) {
-                      print(value +
+                    } else if (value != null && value!.isNotEmpty) {
+                      print(value! +
                           "---------------------------------------------------------------------");
                       onValueRecieved(value);
                       value = null;
@@ -317,7 +317,7 @@ class TricycleChatFooterState extends State<TricycleChatFooter> {
   Widget popItem(Widget item) {
     return PopupMenuButton<String>(
         onSelected: (String value) {
-          onReceiveOption(value);
+          onReceiveOption!(value);
         },
         child: item,
         itemBuilder: (context) => [
@@ -329,7 +329,7 @@ class TricycleChatFooterState extends State<TricycleChatFooter> {
                         padding: const EdgeInsets.fromLTRB(2, 2, 8, 2),
                         child: Icon(Icons.camera_alt_outlined),
                       ),
-                      Text(AppLocalizations.of(context).translate("image"))
+                      Text(AppLocalizations.of(context)!.translate("image"))
                     ],
                   )),
               PopupMenuItem(
@@ -340,7 +340,7 @@ class TricycleChatFooterState extends State<TricycleChatFooter> {
                         padding: const EdgeInsets.fromLTRB(2, 2, 8, 2),
                         child: Icon(Icons.video_call_outlined),
                       ),
-                      Text(AppLocalizations.of(context).translate("video"))
+                      Text(AppLocalizations.of(context)!.translate("video"))
                     ],
                   )),
               PopupMenuItem(
@@ -351,7 +351,7 @@ class TricycleChatFooterState extends State<TricycleChatFooter> {
                         padding: const EdgeInsets.fromLTRB(2, 2, 8, 2),
                         child: Icon(Icons.insert_drive_file_outlined),
                       ),
-                      Text(AppLocalizations.of(context).translate("file"))
+                      Text(AppLocalizations.of(context)!.translate("file"))
                     ],
                   )),
               /*   PopupMenuItem(

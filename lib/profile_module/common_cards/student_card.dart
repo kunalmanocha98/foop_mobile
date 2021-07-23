@@ -12,8 +12,8 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class StudentCard extends StatelessWidget {
   final CommonCardData data;
-  BuildContext context;
-  TextStyleElements styleElements;
+  BuildContext? context;
+  TextStyleElements? styleElements;
   // Widget _simplePopup() => PopupMenuButton<int>(
   //       itemBuilder: (context) => [
   //         PopupMenuItem(
@@ -51,7 +51,7 @@ class StudentCard extends StatelessWidget {
     return displaySize(context).width;
   }
 
-  StudentCard({Key key, @required this.data,this.styleElements}) : super(key: key);
+  StudentCard({Key? key, required this.data,this.styleElements}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -93,8 +93,8 @@ class StudentCard extends StatelessWidget {
                       onPressed: () {},
                       color:  HexColor(AppColors.appMainColor),
                       child: Text(
-                          AppLocalizations.of(context).translate('follow'),
-                          style: styleElements.subtitle1ThemeScalable(context).copyWith(
+                          AppLocalizations.of(context)!.translate('follow'),
+                          style: styleElements!.subtitle1ThemeScalable(context).copyWith(
                             color:  HexColor(AppColors.appColorWhite),
                           )),
                     ),

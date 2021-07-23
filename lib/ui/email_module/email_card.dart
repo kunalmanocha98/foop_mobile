@@ -17,7 +17,7 @@ import 'email_header.dart';
 
 class TricycleEmailCard extends StatefulWidget {
   final bool isDetailPage;
-  final EmailListItem emailItem;
+  final EmailListItem? emailItem;
 
   TricycleEmailCard({this.isDetailPage= false,this.emailItem});
 
@@ -27,10 +27,10 @@ class TricycleEmailCard extends StatefulWidget {
 }
 
 class _TricycleEmailCard extends State<TricycleEmailCard> {
-  SharedPreferences prefs = locator<SharedPreferences>();
-  TextStyleElements styleElements;
-  bool isDetailPage;
-  EmailListItem emailItem;
+  SharedPreferences? prefs = locator<SharedPreferences>();
+  late TextStyleElements styleElements;
+  bool? isDetailPage;
+  EmailListItem? emailItem;
 
   _TricycleEmailCard({this.isDetailPage,this.emailItem});
 
@@ -43,7 +43,7 @@ class _TricycleEmailCard extends State<TricycleEmailCard> {
         Navigator.push(context,
             MaterialPageRoute(builder: (BuildContext context) {
               return EmailDetailPage(
-                subject:emailItem.subject
+                subject:emailItem!.subject
               );
             }));
       },
@@ -69,7 +69,7 @@ class _TricycleEmailCard extends State<TricycleEmailCard> {
                 Padding(
                   padding: EdgeInsets.only(left: 8.0, bottom: 0, top: 4),
                   child: Text(
-                    timeago.format(DateTime.fromMillisecondsSinceEpoch(emailItem.date)),
+                    timeago.format(DateTime.fromMillisecondsSinceEpoch(emailItem!.date!)),
                     style: styleElements
                         .captionThemeScalable(context)
                         .copyWith(
@@ -117,7 +117,7 @@ class _TricycleEmailCard extends State<TricycleEmailCard> {
                       Padding(
                         padding: const EdgeInsets.only(left: 8.0),
                         child: Text(
-                          emailItem.subject,
+                          emailItem!.subject!,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: styleElements
@@ -142,7 +142,7 @@ class _TricycleEmailCard extends State<TricycleEmailCard> {
                             Expanded(
                               child: TricycleHtmlViewer(
                                 isDetailPage: widget.isDetailPage,
-                               sourceString: emailItem.text,
+                               sourceString: emailItem!.text,
                                 isEmail: true,
                               ),
                             ),

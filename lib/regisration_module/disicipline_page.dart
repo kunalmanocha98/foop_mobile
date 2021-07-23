@@ -30,9 +30,9 @@ import 'department_notifier.dart';
 
 // ignore: must_be_immutable
 class SelectDiscipline extends StatefulWidget {
-  RegisterUserAs registerUserAs;
+  RegisterUserAs? registerUserAs;
   int instituteId;
-  int personType;
+  int? personType;
   bool isVerified;
   bool isAddClass;
 
@@ -45,42 +45,42 @@ class SelectDiscipline extends StatefulWidget {
 
 class _SelectDisicipline extends State<SelectDiscipline>
     with SingleTickerProviderStateMixin {
-  String searchVal;
-  String personName;
-  String type;
-  int id;
-  String ownerType;
-  int ownerId;
-  int instituteId;
-  RegisterUserAs registerUserAs;
-  int personType=0;
+  String? searchVal;
+  String? personName;
+  String? type;
+  int? id;
+  String? ownerType;
+  int? ownerId;
+  int? instituteId;
+  RegisterUserAs? registerUserAs;
+  int? personType=0;
   bool isVerified;
   bool isAddClass;
-  String accedamicId;
-  Null Function() callback;
+  String? accedamicId;
+  Null Function()? callback;
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
   GlobalKey<PaginatorState> paginatorKeyChat = GlobalKey();
-  SharedPreferences prefs;
-  TextStyleElements styleElements;
+  late SharedPreferences prefs;
+  late TextStyleElements styleElements;
 
   List<Departments> _listSelectedDepartments = [];
   List<CustomTabMaker> list = [];
 
-  String pageTitle;
-  DisciplineNotifier chatNotifier;
-  BuildContext ctx;
+  String? pageTitle;
+  DisciplineNotifier? chatNotifier;
+  BuildContext? ctx;
   bool isAlreadySent = false;
-  String acedemicYear;
+  String? acedemicYear;
 
   Future<void> _setPref() async {
     prefs = await SharedPreferences.getInstance();
     setState(() {
       ownerId = prefs.getInt(Strings.userId);
-      instituteId = registerUserAs.institutionId;
+      instituteId = registerUserAs!.institutionId;
     });
     DisciplineNotifier notifier =
     Provider.of<DisciplineNotifier>(context, listen: false);
-    if (searchVal != null && searchVal.isNotEmpty)
+    if (searchVal != null && searchVal!.isNotEmpty)
       notifier.search(searchVal, instituteId, context, _listSelectedDepartments);
     else
       notifier.reload(searchVal, instituteId, context,_listSelectedDepartments);
@@ -90,11 +90,11 @@ class _SelectDisicipline extends State<SelectDiscipline>
   void initState() {
     super.initState();
     if (registerUserAs != null) {
-      acedemicYear = registerUserAs.academicYear;
-      instituteId = registerUserAs.institutionId;
-      personType = registerUserAs.personTypeList[0];
+      acedemicYear = registerUserAs!.academicYear;
+      instituteId = registerUserAs!.institutionId;
+      personType = registerUserAs!.personTypeList![0];
     }
-    WidgetsBinding.instance.addPostFrameCallback((_) => _setPref());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => _setPref());
   }
 
   void onsearchValueChanged(String text) {
@@ -102,9 +102,9 @@ class _SelectDisicipline extends State<SelectDiscipline>
       searchVal = text;
     });
     if (text.isNotEmpty)
-      chatNotifier.search(text, instituteId, context,_listSelectedDepartments);
+      chatNotifier!.search(text, instituteId, context,_listSelectedDepartments);
     else
-      chatNotifier.reload(text, instituteId, context, _listSelectedDepartments);
+      chatNotifier!.reload(text, instituteId, context, _listSelectedDepartments);
   }
 
   @override
@@ -116,12 +116,13 @@ class _SelectDisicipline extends State<SelectDiscipline>
       // ignore: missing_return
       onWillPop: () async {
         Navigator.pop(context);
-      },
+        return new Future(() => false);
+      } ,
       child: SafeArea(
         child: Scaffold(
             appBar: TricycleAppBar().getCustomAppBar(
               context,
-              appBarTitle: AppLocalizations.of(context).translate('discipline'),
+              appBarTitle: AppLocalizations.of(context)!.translate('discipline'),
               onBackButtonPress: () async {
                 Navigator.pop(context);
               },
@@ -134,7 +135,7 @@ class _SelectDisicipline extends State<SelectDiscipline>
                       child: SearchBox(
                         onvalueChanged: onsearchValueChanged,
                         hintText:
-                        AppLocalizations.of(context).translate('search'),
+                        AppLocalizations.of(context)!.translate('search'),
                       ),
                     ),
                     SliverToBoxAdapter(
@@ -153,7 +154,7 @@ class _SelectDisicipline extends State<SelectDiscipline>
                                   accedamicId = result['result'];
                                   if (acedemicYear != null &&
                                       registerUserAs != null)
-                                    registerUserAs.academicYear = acedemicYear;
+                                    registerUserAs!.academicYear = acedemicYear;
                                 });
                               }
                             },
@@ -194,11 +195,11 @@ class _SelectDisicipline extends State<SelectDiscipline>
                                                           child: Text(
                                                             acedemicYear != null
                                                                 ? AppLocalizations.of(
-                                                                context)
+                                                                context)!
                                                                 .translate(
                                                                 'selected_academic_year')
                                                                 : AppLocalizations.of(
-                                                                context)
+                                                                context)!
                                                                 .translate(
                                                                 'select_academic_year'),
                                                             style: styleElements
@@ -241,15 +242,15 @@ class _SelectDisicipline extends State<SelectDiscipline>
                                 margin: const EdgeInsets.all(16),
                                 child: Text(
                                   personType == 3
-                                      ? AppLocalizations.of(context)
+                                      ? AppLocalizations.of(context)!
                                       .translate("dep_quote")
                                       : personType == 4
-                                      ? AppLocalizations.of(context)
+                                      ? AppLocalizations.of(context)!
                                       .translate("dep_parent")
                                       : personType == 5
-                                      ? AppLocalizations.of(context)
+                                      ? AppLocalizations.of(context)!
                                       .translate("dep_alumni")
-                                      : AppLocalizations.of(context)
+                                      : AppLocalizations.of(context)!
                                       .translate("dep_teacher"),
                                   textAlign: TextAlign.center,
                                   style: styleElements
@@ -267,13 +268,13 @@ class _SelectDisicipline extends State<SelectDiscipline>
                     Container(
                       margin: const EdgeInsets.only(bottom: 62),
                       child: chatNotifier != null &&
-                          chatNotifier.getConversationList() != null &&
-                          chatNotifier.getConversationList().isNotEmpty
+                          chatNotifier!.getConversationList() != null &&
+                          chatNotifier!.getConversationList()!.isNotEmpty
                           ? NotificationListener<ScrollNotification>(
                         onNotification: (ScrollNotification scrollInfo) {
                           if (scrollInfo is ScrollEndNotification &&
                               scrollInfo.metrics.extentAfter == 0) {
-                            chatNotifier.getMore(
+                            chatNotifier!.getMore(
                                 searchVal, instituteId, context,_listSelectedDepartments);
                             return true;
                           }
@@ -282,10 +283,10 @@ class _SelectDisicipline extends State<SelectDiscipline>
                         child:   ListView.builder(
                             padding: EdgeInsets.all(0.0),
                             physics: BouncingScrollPhysics(),
-                            itemCount: chatNotifier.getConversationList().length,
+                            itemCount: chatNotifier!.getConversationList()!.length,
                             itemBuilder: (context, index) {
-                              return listItemBuilder(chatNotifier.getConversationList()[index].departments,
-                                  chatNotifier.getConversationList()[index].departmentGroup);
+                              return listItemBuilder(chatNotifier!.getConversationList()![index].departments!,
+                                  chatNotifier!.getConversationList()![index].departmentGroup!);
                             }),
                       )
                           : ListView.builder(
@@ -296,8 +297,8 @@ class _SelectDisicipline extends State<SelectDiscipline>
                                 child: Padding(
                                   padding: const EdgeInsets.all(20.0),
                                   child: TricycleEmptyWidget(
-                                    message: searchVal!=null && searchVal.isNotEmpty?AppLocalizations.of(context)
-                                        .translate('add_new_discipline_click'):AppLocalizations.of(context)
+                                    message: searchVal!=null && searchVal!.isNotEmpty?AppLocalizations.of(context)!
+                                        .translate('add_new_discipline_click'):AppLocalizations.of(context)!
                                         .translate('no_data'),
                                   ),
                                 )
@@ -326,29 +327,29 @@ class _SelectDisicipline extends State<SelectDiscipline>
                                   onPressed: () async {
                                     if (acedemicYear != null) {
                                       List<int> ids = getIds();
-                                      print(chatNotifier
-                                          .getConversationList()
+                                      print(chatNotifier!
+                                          .getConversationList()!
                                           .length
                                           .toString() +
                                           "--------------------------------------------------");
-                                      if (chatNotifier
+                                      if (chatNotifier!
                                           .getConversationList() !=
                                           null &&
-                                          chatNotifier
-                                              .getConversationList()
+                                          chatNotifier!
+                                              .getConversationList()!
                                               .isEmpty &&
                                           searchVal != null &&
-                                          searchVal.isNotEmpty) {
+                                          searchVal!.isNotEmpty) {
                                         addNewLangSkill(searchVal);
                                       } else {
                                         if (ids.length > 0) {
-                                          registerUserAs.personDepartments =
+                                          registerUserAs!.personDepartments =
                                               ids;
                                           Navigator.of(context).pop(
                                               {'registerUser': registerUserAs});
                                         } else {
                                           ToastBuilder().showToast(
-                                              AppLocalizations.of(context)
+                                              AppLocalizations.of(context)!
                                                   .translate("select_dep"),
                                               context,
                                               HexColor(AppColors.information));
@@ -356,7 +357,7 @@ class _SelectDisicipline extends State<SelectDiscipline>
                                       }
                                     } else {
                                       ToastBuilder().showToast(
-                                          AppLocalizations.of(context)
+                                          AppLocalizations.of(context)!
                                               .translate("select_academic"),
                                           context,
                                           HexColor(AppColors.information));
@@ -364,7 +365,7 @@ class _SelectDisicipline extends State<SelectDiscipline>
                                   },
                                   color: HexColor(AppColors.appColorWhite),
                                   child: Text(
-                                    AppLocalizations.of(context)
+                                    AppLocalizations.of(context)!
                                         .translate('next')
                                         .toUpperCase(),
                                     style: styleElements
@@ -394,14 +395,14 @@ class _SelectDisicipline extends State<SelectDiscipline>
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
-        if (programs.isSelected) {
-          chatNotifier.updateItem(
+        if (programs.isSelected!) {
+          chatNotifier!.updateItem(
               programs, degreeType, false, personType == 2 ? true : false);
           removeSelected(programs.id);
         } else {
           if (personType != 2) _listSelectedDepartments.clear();
 
-          chatNotifier.updateItem(
+          chatNotifier!.updateItem(
               programs, degreeType, true, personType == 2 ? true : false);
           _listSelectedDepartments.add(programs);
           setState(() {
@@ -411,14 +412,14 @@ class _SelectDisicipline extends State<SelectDiscipline>
       },
       child: Chip(
           elevation: 2.0,
-          backgroundColor: programs.isSelected
+          backgroundColor: programs.isSelected!
               ? HexColor(AppColors.appMainColor)
               : HexColor(AppColors.appColorWhite),
           label: Padding(
             padding: const EdgeInsets.all(4.0),
             child: Text(programs.departmentName ?? "",
                 style: styleElements.subtitle2ThemeScalable(context).copyWith(
-                    color: programs.isSelected
+                    color: programs.isSelected!
                         ? HexColor(AppColors.appColorWhite)
                         : HexColor(AppColors.appColorBlack65))),
           )),
@@ -448,7 +449,7 @@ class _SelectDisicipline extends State<SelectDiscipline>
     );
   }
 
-  removeSelected(int id) {
+  removeSelected(int? id) {
     for (var i = 0; i < _listSelectedDepartments.length; i++) {
       if (id == _listSelectedDepartments[i].id) {
         _listSelectedDepartments.removeAt(i);
@@ -457,7 +458,7 @@ class _SelectDisicipline extends State<SelectDiscipline>
     }
   }
 
-  void addNewLangSkill(String searchValue) async {
+  void addNewLangSkill(String? searchValue) async {
     AddNewSkillLangEntity addNewSkillLangEntity = AddNewSkillLangEntity();
     addNewSkillLangEntity.categoryType = "department";
     addNewSkillLangEntity.valueCode = searchValue;
@@ -471,7 +472,7 @@ class _SelectDisicipline extends State<SelectDiscipline>
         .then((value) {
       var res = AddNewSkillLangResponse.fromJson(value);
       if (res.statusCode == Strings.success_code) {
-        chatNotifier.search(searchVal, instituteId, context,_listSelectedDepartments);
+        chatNotifier!.search(searchVal, instituteId, context,_listSelectedDepartments);
       } else {}
     }).catchError((onError) {
       print(onError);
@@ -479,7 +480,7 @@ class _SelectDisicipline extends State<SelectDiscipline>
   }
 
   getIds() {
-    List<int> list = [];
+    List<int?> list = [];
     for (var i = 0; i < _listSelectedDepartments.length; i++) {
       list.add(_listSelectedDepartments[i].id);
     }

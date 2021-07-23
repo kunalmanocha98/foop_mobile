@@ -7,8 +7,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DialogLiveEvent extends StatelessWidget{
-  final Function okCallback;
-  final String date;
+  final Function? okCallback;
+  final String? date;
   DialogLiveEvent({this.date,this.okCallback});
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class DialogLiveEvent extends StatelessWidget{
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(AppLocalizations.of(context).translate('confirm'),style:
+            Text(AppLocalizations.of(context)!.translate('confirm'),style:
             styleElements.headline6ThemeScalable(context).copyWith(
                 color: HexColor(AppColors.appColorBlack85),
                 fontWeight: FontWeight.bold,
@@ -33,7 +33,7 @@ class DialogLiveEvent extends StatelessWidget{
               text: TextSpan(
               children: [
                 TextSpan(
-                  text: AppLocalizations.of(context).translate('start_time'),
+                  text: AppLocalizations.of(context)!.translate('start_time'),
                   style: styleElements.subtitle2ThemeScalable(context).copyWith(fontWeight: FontWeight.bold)
                 ),
                 TextSpan(
@@ -48,7 +48,7 @@ class DialogLiveEvent extends StatelessWidget{
               ),
             ),
             SizedBox(height: 16,),
-            Text(AppLocalizations.of(context).translate('confirm_live_des'),
+            Text(AppLocalizations.of(context)!.translate('confirm_live_des'),
               textAlign: TextAlign.center,
               style:
               styleElements.subtitle1ThemeScalable(context).copyWith(
@@ -62,14 +62,14 @@ class DialogLiveEvent extends StatelessWidget{
                 TricycleTextButton(
                     shape: RoundedRectangleBorder(),
                     onPressed: (){Navigator.pop(context);},
-                    child: Text(AppLocalizations.of(context).translate('cancel'),style: styleElements.captionThemeScalable(context).copyWith(
+                    child: Text(AppLocalizations.of(context)!.translate('cancel'),style: styleElements.captionThemeScalable(context).copyWith(
                         color: HexColor(AppColors.appMainColor)
                     ),)
                 ),
                 TricycleTextButton(
                     shape: RoundedRectangleBorder(),
-                    onPressed: (){Navigator.pop(context);okCallback();},
-                    child: Text(AppLocalizations.of(context).translate('start_now'),style: styleElements.captionThemeScalable(context).copyWith(
+                    onPressed: (){Navigator.pop(context);okCallback!();},
+                    child: Text(AppLocalizations.of(context)!.translate('start_now'),style: styleElements.captionThemeScalable(context).copyWith(
                         color: HexColor(AppColors.appMainColor)
                     ),)
                 )

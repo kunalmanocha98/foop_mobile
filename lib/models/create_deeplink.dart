@@ -1,11 +1,11 @@
 class CreateUrlPayload {
-  int shareItemId;
-  String shareById;
-  String shareItemType;
-  String shareMedium;
+  int? shareItemId;
+  String? shareById;
+  String? shareItemType;
+  String? shareMedium;
   Null slugUrl;
   Null targetAudience;
-  String deepLinkType;
+  String? deepLinkType;
 
   CreateUrlPayload(
       {this.shareItemId,

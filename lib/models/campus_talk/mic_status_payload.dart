@@ -1,8 +1,8 @@
 class MicStatusPayload {
-  int personId;
-  int eventId;
-  int isSpeakerOn;
-  int isVideoOn;
+  int? personId;
+  int? eventId;
+  int? isSpeakerOn;
+  int? isVideoOn;
   MicStatusPayload({this.personId, this.eventId, this.isSpeakerOn,this.isVideoOn});
 
   MicStatusPayload.fromJson(Map<String, dynamic> json) {

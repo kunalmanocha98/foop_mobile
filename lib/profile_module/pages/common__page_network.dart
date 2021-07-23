@@ -33,16 +33,16 @@ class CommonListingPageNetwork extends StatefulWidget {
 
 class _CommonListingPageNetwork extends State<CommonListingPageNetwork>
     with AutomaticKeepAliveClientMixin<CommonListingPageNetwork> {
-  String searchVal;
-  String personName;
+  String? searchVal;
+  String? personName;
   String type;
-  int id;
-  String ownerType;
-  int ownerId;
-  Null Function() callback;
+  int? id;
+  String? ownerType;
+  int? ownerId;
+  late Null Function() callback;
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
-  SharedPreferences prefs;
-  TextStyleElements styleElements;
+  late SharedPreferences prefs;
+  late TextStyleElements styleElements;
 
   @override
   bool get wantKeepAlive => true;
@@ -70,7 +70,7 @@ class _CommonListingPageNetwork extends State<CommonListingPageNetwork>
   }
 
   refresh() {
-    paginatorKey.currentState.changeState(resetState: true);
+    paginatorKey.currentState!.changeState(resetState: true);
   }
 
   @override
@@ -85,7 +85,7 @@ class _CommonListingPageNetwork extends State<CommonListingPageNetwork>
           SliverToBoxAdapter(
             child: SearchBox(
               onvalueChanged: onsearchValueChanged,
-              hintText: AppLocalizations.of(context).translate('search'),
+              hintText: AppLocalizations.of(context)!.translate('search'),
             ),
           ),
           SliverToBoxAdapter(
@@ -104,10 +104,10 @@ class _CommonListingPageNetwork extends State<CommonListingPageNetwork>
                       child: Container(
                         margin: const EdgeInsets.all(16),
                         child: Text(
-                         type=="S"? AppLocalizations.of(context)
-                              .translate("verified_student"):type=="P"?AppLocalizations.of(context)
-                             .translate("verified_parent"):type=="T"?AppLocalizations.of(context)
-                             .translate("verified_teachers"):AppLocalizations.of(context)
+                         type=="S"? AppLocalizations.of(context)!
+                              .translate("verified_student"):type=="P"?AppLocalizations.of(context)!
+                             .translate("verified_parent"):type=="T"?AppLocalizations.of(context)!
+                             .translate("verified_teachers"):AppLocalizations.of(context)!
                              .translate("verified_Alumni"),
                           textAlign: TextAlign.center,
                           style: styleElements
@@ -166,7 +166,7 @@ class _CommonListingPageNetwork extends State<CommonListingPageNetwork>
   Widget listItemBuilder(value, int index) {
     CommonListResponseItem item = value;
     var schoolName=item.institutionName!=null?item.institutionName??"":"";
-    var desig=item.subTitle1.designation!=null ?item.subTitle1.designation??"":"";
+    var desig=item.subTitle1!.designation!=null ?item.subTitle1!.designation??"":"";
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
@@ -213,9 +213,9 @@ class _CommonListingPageNetwork extends State<CommonListingPageNetwork>
             actionOnObjectType: "person",
             actionOnObjectId: item.id,
             engageFlag: item.isFollowing ?? false
-                ? AppLocalizations.of(context)
+                ? AppLocalizations.of(context)!
                 .translate('following')
-                : AppLocalizations.of(context)
+                : AppLocalizations.of(context)!
                 .translate('follow'),
             actionFlag: item.isFollowing ?? false ? "U" : "F",
             actionDetails: [],

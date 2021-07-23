@@ -1,8 +1,8 @@
 class RequestDetailEdufluencer {
-  String statusCode;
-  String message;
-  EdufluencerRequestData rows;
-  int total;
+  String? statusCode;
+  String? message;
+  EdufluencerRequestData? rows;
+  int? total;
 
   RequestDetailEdufluencer(
       {this.statusCode, this.message, this.rows, this.total});
@@ -19,7 +19,7 @@ class RequestDetailEdufluencer {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     data['total'] = this.total;
     return data;
@@ -27,14 +27,14 @@ class RequestDetailEdufluencer {
 }
 
 class EdufluencerRequestData {
-  int id;
-  int personId;
-  String title;
-  String subtitle;
-  String avatar;
-  bool isFollowed;
-  String bookingStatus;
-  String conversationId;
+  int? id;
+  int? personId;
+  String? title;
+  String? subtitle;
+  String? avatar;
+  bool? isFollowed;
+  String? bookingStatus;
+  String? conversationId;
 
   EdufluencerRequestData(
       {this.id,

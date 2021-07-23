@@ -15,12 +15,12 @@ import 'package:intl/intl.dart';
 // ignore: must_be_immutable
 class EducationCard extends StatelessWidget {
   final CommonCardData data;
-  BuildContext context;
-  Null Function() callbackPicker;
-  String type;
-  int id;
-  String personType;
-  String CardType;
+  BuildContext? context;
+  Null Function()? callbackPicker;
+  String? type;
+  int? id;
+  String? personType;
+  String? CardType;
 
 
   Size displaySize(BuildContext context) {
@@ -38,11 +38,11 @@ class EducationCard extends StatelessWidget {
     return displaySize(context).width;
   }
 
-  TextStyleElements styleElements;
+  TextStyleElements? styleElements;
 
   EducationCard(
-      {Key key,
-      @required this.data,
+      {Key? key,
+      required this.data,
       this.styleElements,
       this.callbackPicker,
       this.id,
@@ -75,7 +75,7 @@ class EducationCard extends StatelessWidget {
                           bottom: 12.h),
                       child: Text(
                         data.title ?? "",
-                        style: styleElements
+                        style: styleElements!
                             .headline6ThemeScalable(context)
                             .copyWith(
                                 fontWeight: FontWeight.bold,
@@ -103,7 +103,7 @@ class EducationCard extends StatelessWidget {
                                           EditEducation(null, false, false, null)));
 
                               if (result != null && result['result'] == "success") {
-                                callbackPicker();
+                                callbackPicker!();
                               }
                             } else {
                               var result = await Navigator.push(
@@ -113,7 +113,7 @@ class EducationCard extends StatelessWidget {
                                           EditEducation(null, true, false, null)));
 
                               if (result != null && result['result'] == "success") {
-                                callbackPicker();
+                                callbackPicker!();
                               }
                             }
 
@@ -151,8 +151,8 @@ class EducationCard extends StatelessWidget {
                                 margin: EdgeInsets.only(
                                     left: 8.h, right: 8.h, top: 8.0.h),
                                 child: Text(
-                                  data.textOne,
-                                  style: styleElements
+                                  data.textOne!,
+                                  style: styleElements!
                                       .subtitle1ThemeScalable(context)
                                       .copyWith(
                                           fontWeight: FontWeight.w600),
@@ -171,21 +171,21 @@ class EducationCard extends StatelessWidget {
                                 (data.textFive != null &&
                                             data.textFive != "None"
                                         ? DateFormat('MM/yyyy').format(
-                                            DateTime.parse(data.textFive))
+                                            DateTime.parse(data.textFive!))
                                         : "  --") +
                                     (data.textSix != null &&
                                             data.textSix != "None"
                                         ? " to " +
                                             DateFormat('MM/yyyy').format(
                                                 DateTime.parse(
-                                                    data.textSix))
+                                                    data.textSix!))
                                         : data.textFive != null &&
                                                 data.textFive != "None"
-                                            ? data.isCurrent
+                                            ? data.isCurrent!
                                                 ? " to till now"
                                                 : ""
                                             : ""),
-                                style: styleElements
+                                style: styleElements!
                                     .subtitle2ThemeScalable(context),
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.left,
@@ -199,7 +199,7 @@ class EducationCard extends StatelessWidget {
                                   left: 8.h, right: 8.h, top: 8.0.h),
                               child: Text(
                                 data.textThree ??= "",
-                                style: styleElements
+                                style: styleElements!
                                     .subtitle1ThemeScalable(context)
                                     .copyWith(
                                         fontWeight: FontWeight.w600,
@@ -231,7 +231,7 @@ class EducationCard extends StatelessWidget {
 
                                 if (result != null &&
                                     result['result'] == "success") {
-                                  callbackPicker();
+                                  callbackPicker!();
                                 }
                               } else {
                                 var result = await Navigator.push(
@@ -241,7 +241,7 @@ class EducationCard extends StatelessWidget {
                                             data, true, false, null)));
                                 if (result != null &&
                                     result['result'] == "success") {
-                                  callbackPicker();
+                                  callbackPicker!();
                                 }
                               }
                             }
@@ -274,7 +274,7 @@ class EducationCard extends StatelessWidget {
 
                         if (result != null &&
                             result['result'] == "success") {
-                          callbackPicker();
+                          callbackPicker!();
                         }
                       } else {
                         var result = await Navigator.push(
@@ -284,7 +284,7 @@ class EducationCard extends StatelessWidget {
                                     null, true, false, null)));
                         if (result != null &&
                             result['result'] == "success") {
-                          callbackPicker();
+                          callbackPicker!();
                         }
                       }
                     }
@@ -304,7 +304,7 @@ class EducationCard extends StatelessWidget {
           margin: EdgeInsets.only(left: 16.h, right: 20.h, top: 8.0.h),
           child: Text(
             data.textFour ??= "",
-            style: styleElements.subtitle2ThemeScalable(context),
+            style: styleElements!.subtitle2ThemeScalable(context),
             overflow: TextOverflow.ellipsis,
             maxLines: 3,
             textAlign: TextAlign.left,
@@ -328,7 +328,7 @@ class EducationCard extends StatelessWidget {
                       ),
                     ));
                 if (result != null && result['result'] == "update") {
-                  callbackPicker();
+                  callbackPicker!();
                 }
               },
               child: Container(
@@ -338,8 +338,8 @@ class EducationCard extends StatelessWidget {
                   visible: data.isShowMore ??= false,
                   child: Align(
                     alignment: Alignment.bottomRight,
-                    child: Text(AppLocalizations.of(context).translate('see_more'),
-                      style: styleElements.subtitle2ThemeScalable(context),
+                    child: Text(AppLocalizations.of(context)!.translate('see_more'),
+                      style: styleElements!.subtitle2ThemeScalable(context),
                       textAlign: TextAlign.center,
                     ),
                   ),

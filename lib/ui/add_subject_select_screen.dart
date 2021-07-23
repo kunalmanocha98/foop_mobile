@@ -25,10 +25,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class AddSelectSubject extends StatefulWidget {
-  int instituteId;
-  RegisterUserAs registerUserAs;
+  int? instituteId;
+  RegisterUserAs? registerUserAs;
   bool fromBasicProfileFLow;
-  Null Function() callbackPicker;
+  Null Function()? callbackPicker;
 
   AddSelectSubject(
       this.instituteId, this.fromBasicProfileFLow, this.callbackPicker);
@@ -40,21 +40,21 @@ class AddSelectSubject extends StatefulWidget {
 class _SelectSubject extends State<AddSelectSubject>
     with SingleTickerProviderStateMixin {
   bool isLoading = false;
-  SharedPreferences prefs;
+  late SharedPreferences prefs;
   var pageTitle = "";
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
   var color1 = HexColor(AppColors.appMainColor);
-  int instituteId;
+  int? instituteId;
   var color2 = HexColor(AppColors.appColorWhite);
   var isSearching = false;
   String type = "";
-  int userId;
-  String subjectId;
+  int? userId;
+  String? subjectId;
   final _debouncer = Debouncer(500);
   var color3 = HexColor(AppColors.appColorWhite);
   var isCheckedColor = HexColor(AppColors.appColorWhite);
   List<String> teachingSubjects = [];
-  List<SubjectItem> listOfSubjects = [];
+  List<SubjectItem>? listOfSubjects = [];
   List<SubjectItem> selectedSubjects = [];
   List<int> personTypeList = [];
   bool _enabled = true;
@@ -69,23 +69,24 @@ class _SelectSubject extends State<AddSelectSubject>
   @override
   void initState() {
     setSharedPreferences();
-    WidgetsBinding.instance.addPostFrameCallback((_) => getRoles(null));
+    WidgetsBinding.instance!.addPostFrameCallback((_) => getRoles(null));
 
     super.initState();
   }
 
-  void _onBackPressed() {
+  Future<bool> _onBackPressed() {
     Navigator.of(context).pop(true);
+    return new Future(() => false);
   }
 
-  bool contains(int id) {
+  bool contains(int? id) {
     for (var item in selectedSubjects) {
       if (item.id == id) return true;
     }
     return false;
   }
 
-  void getRoles(String searchValue) async {
+  void getRoles(String? searchValue) async {
     prefs = await SharedPreferences.getInstance();
     setState(() {
       isLoading = true;
@@ -109,19 +110,19 @@ class _SelectSubject extends State<AddSelectSubject>
         var data = SubjectExperties.fromJson(value);
         setState(() {
           _enabled = false;
-          if (data.rows != null && data.rows.length > 0) {
-            if (listOfSubjects.length > 0) {
+          if (data.rows != null && data.rows!.length > 0) {
+            if (listOfSubjects!.length > 0) {
               {
-                for (var i = 0; i < data.rows.length; i++) {
-                  if (contains(data.rows[i].id))
-                    data.rows[i].isSelected = true;
+                for (var i = 0; i < data.rows!.length; i++) {
+                  if (contains(data.rows![i].id))
+                    data.rows![i].isSelected = true;
                   else
-                    data.rows[i].isSelected = false;
+                    data.rows![i].isSelected = false;
                 }
               }
             } else {
-              for (var i = 0; i < data.rows.length; i++) {
-                data.rows[i].isSelected = false;
+              for (var i = 0; i < data.rows!.length; i++) {
+                data.rows![i].isSelected = false;
               }
             }
             listOfSubjects = data.rows;
@@ -144,7 +145,7 @@ class _SelectSubject extends State<AddSelectSubject>
   Widget build(BuildContext context) {
     // ScreenUtil.init(context);
     styleElements = TextStyleElements(context);
-    pageTitle = AppLocalizations.of(context).translate("subjects");
+    pageTitle = AppLocalizations.of(context)!.translate("subjects");
 
     return SafeArea(
         child: Scaffold(
@@ -177,7 +178,7 @@ class _SelectSubject extends State<AddSelectSubject>
                                   });
                                 },
                                 progressIndicator: isSearching,
-                                hintText: AppLocalizations.of(context).translate('search'),
+                                hintText: AppLocalizations.of(context)!.translate('search'),
                               ),
                             ),
                           ];
@@ -196,7 +197,7 @@ class _SelectSubject extends State<AddSelectSubject>
                                     child: Visibility(
                                       visible: empty,
                                       child: TricycleEmptyWidget(
-                                        message: AppLocalizations.of(context)
+                                        message: AppLocalizations.of(context)!
                                             .translate('no_data'),
                                       ),
                                     ),
@@ -210,7 +211,7 @@ class _SelectSubject extends State<AddSelectSubject>
                                               right: 8,
                                               bottom: 8,
                                               top: 8),
-                                          itemCount: listOfSubjects.length,
+                                          itemCount: listOfSubjects!.length,
                                           itemBuilder:
                                               (BuildContext context, int index) {
                                             return GestureDetector(
@@ -230,7 +231,7 @@ class _SelectSubject extends State<AddSelectSubject>
                                                             alignment: Alignment
                                                                 .centerLeft,
                                                             child: Text(
-                                                              listOfSubjects[
+                                                              listOfSubjects![
                                                                           index]
                                                                       .standardExpertiseCategoryId ??
                                                                   "",
@@ -246,7 +247,7 @@ class _SelectSubject extends State<AddSelectSubject>
                                                             alignment: Alignment
                                                                 .centerLeft,
                                                             child: Text(
-                                                              listOfSubjects[
+                                                              listOfSubjects![
                                                                           index]
                                                                       .expertiseTypeDescription ??
                                                                   "",
@@ -270,7 +271,7 @@ class _SelectSubject extends State<AddSelectSubject>
                                                                 HexColor(
                                                                     "#F66666"),
                                                             value:
-                                                                listOfSubjects[
+                                                                listOfSubjects![
                                                                         index]
                                                                     .isSelected,
                                                             onChanged: (val) {
@@ -280,22 +281,22 @@ class _SelectSubject extends State<AddSelectSubject>
                                                                   if (val ==
                                                                       true) {
                                                                     subjectId =
-                                                                        listOfSubjects[index]
+                                                                        listOfSubjects![index]
                                                                             .id
                                                                             .toString();
                                                                     setState(
                                                                         () {
-                                                                      listOfSubjects[index].isSelected =
+                                                                      listOfSubjects![index].isSelected =
                                                                           true;
                                                                       selectedSubjects
-                                                                          .add(listOfSubjects[index]);
+                                                                          .add(listOfSubjects![index]);
                                                                     });
                                                                   } else {
-                                                                    listOfSubjects[index]
+                                                                    listOfSubjects![index]
                                                                             .isSelected =
                                                                         false;
                                                                     removeSelected(
-                                                                        listOfSubjects[index]
+                                                                        listOfSubjects![index]
                                                                             .id);
                                                                   }
                                                                 });
@@ -358,16 +359,16 @@ class _SelectSubject extends State<AddSelectSubject>
                                                                             "userId"),
                                                                     type:
                                                                         "add_subject",
-                                                                    title2: AppLocalizations.of(context)
+                                                                    title2: AppLocalizations.of(context)!
                                                                         .translate(
                                                                             "what_want_to_be"),
                                                                     title: AppLocalizations.of(
-                                                                            context)
+                                                                            context)!
                                                                         .translate(
                                                                             "my_proficiency"),
                                                                     subtitle: AppLocalizations
                                                                             .of(
-                                                                                context)
+                                                                                context)!
                                                                         .translate(
                                                                             "rate_experties"),
                                                                     categoryType:
@@ -381,7 +382,7 @@ class _SelectSubject extends State<AddSelectSubject>
                                                                     callbackPicker:
                                                                         () {
                                                                       if (fromBasicProfileFLow) {
-                                                                        callbackPicker();
+                                                                        callbackPicker!();
                                                                         Navigator.of(context)
                                                                             .pop({
                                                                           'result':
@@ -395,7 +396,7 @@ class _SelectSubject extends State<AddSelectSubject>
                                                                         });
                                                                     }));
                                                       } else {
-                                                        callbackPicker();
+                                                        callbackPicker!();
                                                         Navigator.of(context)
                                                             .pop({
                                                           'result': "success"
@@ -405,7 +406,7 @@ class _SelectSubject extends State<AddSelectSubject>
                                                     color: HexColor(AppColors.appColorWhite),
                                                     child: Text(
                                                       AppLocalizations.of(
-                                                              context)
+                                                              context)!
                                                           .translate(
                                                               'save_exit')
                                                           .toUpperCase(),
@@ -452,16 +453,16 @@ class _SelectSubject extends State<AddSelectSubject>
                                                                             "userId"),
                                                                     type:
                                                                         "add_subject",
-                                                                    title2: AppLocalizations.of(context)
+                                                                    title2: AppLocalizations.of(context)!
                                                                         .translate(
                                                                             "what_want_to_be"),
                                                                     title: AppLocalizations.of(
-                                                                            context)
+                                                                            context)!
                                                                         .translate(
                                                                             "my_proficiency"),
                                                                     subtitle: AppLocalizations
                                                                             .of(
-                                                                                context)
+                                                                                context)!
                                                                         .translate(
                                                                             "rate_experties"),
                                                                     categoryType:
@@ -495,7 +496,7 @@ class _SelectSubject extends State<AddSelectSubject>
                                                         if (result != null &&
                                                             result['result'] ==
                                                                 "success") {
-                                                          callbackPicker();
+                                                          callbackPicker!();
                                                           Navigator.of(context)
                                                               .pop({
                                                             'result': "success"
@@ -506,7 +507,7 @@ class _SelectSubject extends State<AddSelectSubject>
                                                     color: HexColor(AppColors.appColorWhite),
                                                     child: Text(
                                                       AppLocalizations.of(
-                                                              context)
+                                                              context)!
                                                           .translate('next')
                                                           .toUpperCase(),
                                                       style: styleElements
@@ -590,15 +591,15 @@ class _SelectSubject extends State<AddSelectSubject>
                                                                           "userId"),
                                                                       type:
                                                                           "add_subject",
-                                                                      title2: AppLocalizations.of(context)
+                                                                      title2: AppLocalizations.of(context)!
                                                                           .translate(
                                                                               "what_want_to_be"),
                                                                       title: AppLocalizations.of(
-                                                                              context)
+                                                                              context)!
                                                                           .translate(
                                                                               "my_proficiency"),
                                                                       subtitle: AppLocalizations.of(
-                                                                              context)
+                                                                              context)!
                                                                           .translate(
                                                                               "rate_experties"),
                                                                       categoryType:
@@ -620,7 +621,7 @@ class _SelectSubject extends State<AddSelectSubject>
                                                         } else {
                                                           ToastBuilder().showToast(
                                                               AppLocalizations.of(
-                                                                      context)
+                                                                      context)!
                                                                   .translate(
                                                                       "subjects_required"),
                                                               context,
@@ -632,7 +633,7 @@ class _SelectSubject extends State<AddSelectSubject>
 
                                                       child: Text(
                                                         AppLocalizations.of(
-                                                                context)
+                                                                context)!
                                                             .translate('next')
                                                             .toUpperCase(),
                                                         style: styleElements
@@ -667,14 +668,14 @@ class _SelectSubject extends State<AddSelectSubject>
           ));
 
       if (result != null && result['result'] == "success") {
-        callbackPicker();
+        callbackPicker!();
         Navigator.of(context).pop({'result': "success"});
       }
     } else
       Navigator.of(context).pop({'result': "success"});
   }
 
-  removeSelected(int id) {
+  removeSelected(int? id) {
     for (var i = 0; i < selectedSubjects.length; i++) {
       if (id == selectedSubjects[i].id) {
         selectedSubjects.removeAt(i);
@@ -684,7 +685,7 @@ class _SelectSubject extends State<AddSelectSubject>
   }
 
   bool fromBasicProfileFLow;
-  Null Function() callbackPicker;
+  Null Function()? callbackPicker;
 
   _SelectSubject(
       this.instituteId, this.fromBasicProfileFLow, this.callbackPicker);

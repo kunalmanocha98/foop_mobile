@@ -8,8 +8,8 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class SocketService {
   // final NavigationService _navigationService = locator<NavigationService>();
-  IO.Socket socket;
-String personId;
+  IO.Socket? socket;
+String? personId;
   final db = DatabaseHelper.instance;
   SocketService(){
     print('in the constructor');
@@ -17,7 +17,7 @@ String personId;
   }
 
   // ignore: missing_return
-  Future<IO.Socket> setupConnection() async {
+  Future<IO.Socket?>? setupConnection() async {
     socket = IO.io(Config.BASE_URL_MESSENGER, <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': true,
@@ -25,23 +25,23 @@ String personId;
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     personId=  sharedPreferences.getInt("userId").toString();
     // socket.connect();
-    socket.onConnect((_) {
+    socket!.onConnect((_) {
       print("cobnected+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
       UserStatusPayload userStatusPayload = UserStatusPayload();
       userStatusPayload.isOnline = true;
       userStatusPayload.personId = personId;
-      socket.emit('user_status', userStatusPayload);
-    /*  joinChat(sharedPreferences.getInt("userId").toString());*/
+      socket!.emit('user_status', userStatusPayload);
       return socket;
     });
-    socket.onDisconnect((_) {
+    socket!.onDisconnect((_) {
       print(
           "disconnected+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     });
-    socket.onError((_) {
+    socket!.onError((_) {
       print(
           "errrorr+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     });
+    return socket;
   }
 
 /*  joinChat(dynamic personId) {
@@ -56,7 +56,7 @@ String personId;
     await db.updateStatus(userStatusPayload.personId, userStatusPayload.isOnline?1:0);
   }*/
 
-  IO.Socket getSocket() {
+  IO.Socket? getSocket() {
     return socket;
   }
 }

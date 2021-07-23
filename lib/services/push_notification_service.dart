@@ -11,10 +11,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 import 'navigation_service.dart';
 
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 // ignore: missing_return
 
 
@@ -30,7 +27,7 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 showSimpleNotification(RemoteMessage message) async {
   var notificationData = message.data;
   // var redirect = notificationData['type'];
-  var basicData = message.notification;
+  var basicData = message.notification!;
   var androidDetails = AndroidNotificationDetails(
       'id', 'channel ', 'description',
       priority: Priority.high, importance: Importance.max);
@@ -50,19 +47,19 @@ showSimpleNotification(RemoteMessage message) async {
 }
 class PushNotificationService {
 
-  AndroidNotificationChannel channel;
+  late AndroidNotificationChannel channel;
   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
-  BuildContext context;
-  EventBus eventbus = locator<EventBus>();
-  final NavigationService _navigationService = locator<NavigationService>();
+  BuildContext? context;
+  EventBus? eventbus = locator<EventBus>();
+  final NavigationService? _navigationService = locator<NavigationService>();
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
 
   Future initialise({
-    Null Function() callback,
-      Null Function(String) callbackMessenger,
-      BuildContext context}) async {
+    Null Function()? callback,
+      Null Function(String?)? callbackMessenger,
+      BuildContext? context}) async {
     this.context = context;
     requestPermissions();
     var androidSettings = AndroidInitializationSettings('logo');
@@ -101,10 +98,11 @@ class PushNotificationService {
     }
     var initSetttings = InitializationSettings(android: androidSettings, iOS: iOSSettings);
 
-    flutterLocalNotificationsPlugin.initialize(initSetttings,
-        onSelectNotification: onClickNotification);
 
-
+    await flutterLocalNotificationsPlugin.initialize(initSetttings,
+        onSelectNotification: (String? payload) async {
+          onClickNotification(payload);
+        });
 
 
 
@@ -115,21 +113,21 @@ class PushNotificationService {
 
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      RemoteNotification notification = message.notification;
-      AndroidNotification android = message.notification?.android;
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
       showSimpleNotification(message);
-      callback();
+      callback!();
       print('onMessage=============================: ${message.data}');
-      callbackMessenger(message.data['type']);
+      callbackMessenger!(message.data['type']);
 
 
     });
 
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage event) {
       print('onLaunch: ${event.data}');
-      callback();
+      callback!();
       showSimpleNotification(event);
-      callbackMessenger(event.data['type']);
+      callbackMessenger!(event.data['type']);
       _serialiseAndNavigate(event);
     });
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
@@ -137,9 +135,9 @@ class PushNotificationService {
   }
 
   // ignore: missing_return
-  Future onClickNotification(String payload) {
+  Future ? onClickNotification(String? payload) {
     try {
-      print(payload + "-----------------------cliked notification click ");
+      print(payload! + "-----------------------cliked notification click ");
       final body = json.decode(payload);
       _handleClick(body['type'],body['id'],body);
     } catch (e) {
@@ -161,7 +159,7 @@ class PushNotificationService {
   showSimpleNotification(RemoteMessage message) async {
     var notificationData = message.data;
     // var redirect = notificationData['type'];
-    var basicData = message.notification;
+    var basicData = message.notification!;
     var androidDetails = AndroidNotificationDetails(
         'id', 'channel ', 'description',
         priority: Priority.high, importance: Importance.max);
@@ -178,10 +176,10 @@ class PushNotificationService {
   }
 
   // ignore: missing_return
-  Future onSelectNotification(String payload) {
+   onSelectNotification(String payload) {
     DeepLinkingPayload deepLinkingPayload = DeepLinkingPayload();
     deepLinkingPayload.postId = int.parse("211");
-    _navigationService.navigateTo("/postDetailPage", deepLinkingPayload, null);
+    _navigationService!.navigateTo("/postDetailPage", deepLinkingPayload, null);
   }
 
   void _serialiseAndNavigate(RemoteMessage message) {
@@ -191,28 +189,28 @@ class PushNotificationService {
 
   }
 
-  void _handleClick(String type,String id,dynamic body) {
-    eventbus.fire(NewMessage());
+  void _handleClick(String? type,String? id,dynamic body) {
+    eventbus!.fire(NewMessage());
     if (type != null) {
       if (type != null) {
         switch (type) {
           case "person":
-            handleProfilePageDeepLinking(type, id, context);
+            handleProfilePageDeepLinking(type, id!, context);
             break;
           case "institution":
-            handleProfilePageDeepLinking(type, id, context);
+            handleProfilePageDeepLinking(type, id!, context);
             break;
           case "post":
-            handlePostDeepLink(type, id, context);
+            handlePostDeepLink(type, id!, context);
             break;
           case "room":
-            handleRoom(type, id, context);
+            handleRoom(type, id!, context);
             break;
           case "cal":
-            handleEvent(type, id, context);
+            handleEvent(type, id!, context);
             break;
           case "buddy":
-            handleBuddyDeepLink(context,id,body['institution_id'],body['person_id'],body['profile_image']);
+            handleBuddyDeepLink(context,id!,body['institution_id'],body['person_id'],body['profile_image']);
             break;
           case "messenger":
             handleMessages(type, id, context);
@@ -227,50 +225,50 @@ class PushNotificationService {
   }
 
   void handleProfilePageDeepLinking(
-      String type, String id, BuildContext context) {
+      String type, String id, BuildContext? context) {
     DeepLinkingPayload deepLinkingPayload = DeepLinkingPayload();
     deepLinkingPayload.userId = int.parse(id);
     deepLinkingPayload.userType = type;
-    _navigationService.navigateTo("/profile", deepLinkingPayload, context);
+    _navigationService!.navigateTo("/profile", deepLinkingPayload, context);
   }
 
-  void handlePostDeepLink(String type, String id, BuildContext context) {
+  void handlePostDeepLink(String type, String id, BuildContext? context) {
     DeepLinkingPayload deepLinkingPayload = DeepLinkingPayload();
     deepLinkingPayload.postId = int.parse(id);
     deepLinkingPayload.userType = type;
 
-    _navigationService.navigateTo(
+    _navigationService!.navigateTo(
         "/postDetailPage", deepLinkingPayload, context);
   }
-  void handleBuddyDeepLink(BuildContext context, String id, String institutionId, String personId, String profileImage) {
+  void handleBuddyDeepLink(BuildContext? context, String id, String institutionId, String personId, String? profileImage) {
     DeepLinkingPayload deepLinkingPayload = DeepLinkingPayload();
     deepLinkingPayload.institutionUserId = int.parse(id);
     deepLinkingPayload.institutionId = int.parse(institutionId);
     deepLinkingPayload.personId = int.parse(personId);
     deepLinkingPayload.profileImage = profileImage;
-    _navigationService.navigateTo("/BuddyApproval", deepLinkingPayload,context);
+    _navigationService!.navigateTo("/BuddyApproval", deepLinkingPayload,context);
   }
   void handleRoom(
-      String type,String id,BuildContext context) {
+      String type,String id,BuildContext? context) {
     DeepLinkingPayload deepLinkingPayload = DeepLinkingPayload();
     deepLinkingPayload.postId = int.parse(id);
     deepLinkingPayload.userType = type;
-    _navigationService.navigateTo("/room_detail", deepLinkingPayload, context);
+    _navigationService!.navigateTo("/room_detail", deepLinkingPayload, context);
   }
 
-  void handleEvent(String type, String id, BuildContext context) {
+  void handleEvent(String type, String id, BuildContext? context) {
     DeepLinkingPayload deepLinkingPayload = DeepLinkingPayload();
     deepLinkingPayload.postId = int.parse(id);
     deepLinkingPayload.userType = type;
-    _navigationService.navigateTo("/event_detail", deepLinkingPayload, context);
+    _navigationService!.navigateTo("/event_detail", deepLinkingPayload, context);
   }
 
 
 
-  void handleMessages(String type, String id, BuildContext context) {
+  void handleMessages(String type, String? id, BuildContext? context) {
     DeepLinkingPayload deepLinkingPayload = DeepLinkingPayload();
     deepLinkingPayload.id = id;
     deepLinkingPayload.type = "notification";
-    _navigationService.navigateTo("/ChatHistoryPage", deepLinkingPayload, context);
+    _navigationService!.navigateTo("/ChatHistoryPage", deepLinkingPayload, context);
   }
 }

@@ -1,7 +1,7 @@
 class SignUpSuccess {
-  String statusCode;
-  String message;
-  String rows;
+  String? statusCode;
+  String? message;
+  String? rows;
 
   SignUpSuccess({this.statusCode, this.message, this.rows});
 

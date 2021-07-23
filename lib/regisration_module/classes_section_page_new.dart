@@ -24,9 +24,9 @@ import 'classes_section_provider.dart';
 
 // ignore: must_be_immutable
 class selectClassesAndSections extends StatefulWidget {
-  RegisterUserAs registerUserAs;
+  RegisterUserAs? registerUserAs;
   int instituteId;
-  int personType;
+  int? personType;
   bool isVerified;
   bool isAddClass;
 
@@ -39,41 +39,41 @@ class selectClassesAndSections extends StatefulWidget {
 
 class _SelectDisicipline extends State<selectClassesAndSections>
     with SingleTickerProviderStateMixin {
-  String searchVal;
-  String personName;
-  String type;
-  int id;
-  String ownerType;
-  int ownerId;
-  int instituteId;
-  RegisterUserAs registerUserAs;
-  int personType;
+  String? searchVal;
+  String? personName;
+  String? type;
+  int? id;
+  String? ownerType;
+  int? ownerId;
+  int? instituteId;
+  RegisterUserAs? registerUserAs;
+  int? personType;
   bool isVerified;
   bool isAddClass;
-  String accedamicId;
-  Null Function() callback;
+  String? accedamicId;
+  Null Function()? callback;
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
   GlobalKey<PaginatorState> paginatorKeyChat = GlobalKey();
-  SharedPreferences prefs;
-  TextStyleElements styleElements;
+  late SharedPreferences prefs;
+  late TextStyleElements styleElements;
 
   List<CustomTabMaker> list = [];
-  String pageTitle;
-  ClassesAndSectionsProvider chatNotifier;
-  BuildContext ctx;
+  String? pageTitle;
+  ClassesAndSectionsProvider? chatNotifier;
+  BuildContext? ctx;
   bool isAlreadySent = false;
-  String acedemicYear;
+  String? acedemicYear;
   List<PersonClasses> listSelectedClasses = [];
 
   Future<void> _setPref() async {
     prefs = await SharedPreferences.getInstance();
     setState(() {
       ownerId = prefs.getInt(Strings.userId);
-      instituteId = registerUserAs.institutionId;
+      instituteId = registerUserAs!.institutionId;
     });
     ClassesAndSectionsProvider notifier =
         Provider.of<ClassesAndSectionsProvider>(context, listen: false);
-    if (searchVal != null && searchVal.isNotEmpty)
+    if (searchVal != null && searchVal!.isNotEmpty)
       notifier.search(searchVal, instituteId, context, listSelectedClasses);
     else
       notifier.reload(searchVal, instituteId, context, listSelectedClasses);
@@ -83,11 +83,11 @@ class _SelectDisicipline extends State<selectClassesAndSections>
   void initState() {
     super.initState();
     if (registerUserAs != null) {
-      acedemicYear = registerUserAs.academicYear;
-      instituteId = registerUserAs.institutionId;
-      personType = registerUserAs.personTypeList[0];
+      acedemicYear = registerUserAs!.academicYear;
+      instituteId = registerUserAs!.institutionId;
+      personType = registerUserAs!.personTypeList![0];
     }
-    WidgetsBinding.instance.addPostFrameCallback((_) => _setPref());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => _setPref());
   }
 
   void onsearchValueChanged(String text) {
@@ -95,9 +95,9 @@ class _SelectDisicipline extends State<selectClassesAndSections>
       searchVal = text;
     });
     if (text.isNotEmpty)
-      chatNotifier.search(text, instituteId, context, listSelectedClasses);
+      chatNotifier!.search(text, instituteId, context, listSelectedClasses);
     else
-      chatNotifier.reload(text, instituteId, context, listSelectedClasses);
+      chatNotifier!.reload(text, instituteId, context, listSelectedClasses);
   }
 
   @override
@@ -109,12 +109,13 @@ class _SelectDisicipline extends State<selectClassesAndSections>
       // ignore: missing_return
       onWillPop: () async {
         Navigator.pop(context);
+        return new Future(() => false);
       },
       child: SafeArea(
         child: Scaffold(
             appBar: TricycleAppBar().getCustomAppBar(
               context,
-              appBarTitle: AppLocalizations.of(context).translate('classes'),
+              appBarTitle: AppLocalizations.of(context)!.translate('classes'),
               onBackButtonPress: () async {
                 Navigator.pop(context);
               },
@@ -127,7 +128,7 @@ class _SelectDisicipline extends State<selectClassesAndSections>
                       child: SearchBox(
                         onvalueChanged: onsearchValueChanged,
                         hintText:
-                            AppLocalizations.of(context).translate('search'),
+                            AppLocalizations.of(context)!.translate('search'),
                       ),
                     ),
                     SliverToBoxAdapter(
@@ -146,7 +147,7 @@ class _SelectDisicipline extends State<selectClassesAndSections>
                                   accedamicId = result['result'];
                                   if (acedemicYear != null &&
                                       registerUserAs != null)
-                                    registerUserAs.academicYear = acedemicYear;
+                                    registerUserAs!.academicYear = acedemicYear;
                                 });
                               }
                             },
@@ -187,11 +188,11 @@ class _SelectDisicipline extends State<selectClassesAndSections>
                                                   child: Text(
                                                     acedemicYear != null
                                                         ? AppLocalizations.of(
-                                                                context)
+                                                                context)!
                                                             .translate(
                                                                 'selected_academic_year')
                                                         : AppLocalizations.of(
-                                                                context)
+                                                                context)!
                                                             .translate(
                                                                 'select_academic_year'),
                                                     style: styleElements
@@ -234,15 +235,15 @@ class _SelectDisicipline extends State<selectClassesAndSections>
                             margin: const EdgeInsets.all(16),
                             child: Text(
                               personType == 3
-                                  ? AppLocalizations.of(context)
+                                  ? AppLocalizations.of(context)!
                                       .translate("select_class_student")
                                   : personType == 4
-                                      ? AppLocalizations.of(context).translate(
+                                      ? AppLocalizations.of(context)!.translate(
                                           "parent_child_select_class")
                                       : personType == 5
-                                          ? AppLocalizations.of(context)
+                                          ? AppLocalizations.of(context)!
                                               .translate("alumni_select_class")
-                                          : AppLocalizations.of(context)
+                                          : AppLocalizations.of(context)!
                                               .translate(
                                                   "teacher_classes_info"),
                               textAlign: TextAlign.center,
@@ -261,13 +262,13 @@ class _SelectDisicipline extends State<selectClassesAndSections>
                 body: Stack(
                   children: [
                     chatNotifier != null &&
-                            chatNotifier.getConversationList() != null &&
-                            chatNotifier.getConversationList().isNotEmpty
+                            chatNotifier!.getConversationList() != null &&
+                            chatNotifier!.getConversationList()!.isNotEmpty
                         ? NotificationListener<ScrollNotification>(
                             onNotification: (ScrollNotification scrollInfo) {
                               if (scrollInfo is ScrollEndNotification &&
                                   scrollInfo.metrics.extentAfter == 0) {
-                                chatNotifier.getMore(searchVal, instituteId,
+                                chatNotifier!.getMore(searchVal, instituteId,
                                     context, listSelectedClasses);
                                 return true;
                               }
@@ -277,25 +278,25 @@ class _SelectDisicipline extends State<selectClassesAndSections>
                                 padding: EdgeInsets.only(left:0.0,right: 0.0,top:0.0,bottom: 70),
                                 physics: BouncingScrollPhysics(),
                                 itemCount:
-                                    chatNotifier.getConversationList().length,
+                                    chatNotifier!.getConversationList()!.length,
                                 itemBuilder: (context, index) {
                                   return listItemBuilder(
 
-                                      chatNotifier
-                                          .getConversationList()[index]
-                                          .sections,
-                                      chatNotifier
-                                          .getConversationList()[index]
-                                          .className,
-                                      chatNotifier
-                                          .getConversationList()[index]
+                                      chatNotifier!
+                                          .getConversationList()![index]
+                                          .sections!,
+                                      chatNotifier!
+                                          .getConversationList()![index]
+                                          .className!,
+                                      chatNotifier!
+                                          .getConversationList()![index]
                                           .id,
-                                    chatNotifier
-                                        .getConversationList()[index]
+                                    chatNotifier!
+                                        .getConversationList()![index]
                                         .className,
 
-                                    chatNotifier
-                                        .getConversationList()[index]
+                                    chatNotifier!
+                                        .getConversationList()![index]
                                         .classCode,
 
                                   );
@@ -341,7 +342,7 @@ class _SelectDisicipline extends State<selectClassesAndSections>
                                   child: Padding(
                                 padding: const EdgeInsets.all(20.0),
                                 child: TricycleEmptyWidget(
-                                  message: AppLocalizations.of(context)
+                                  message: AppLocalizations.of(context)!
                                       .translate('no_data'),
                                 ),
                               )
@@ -369,20 +370,20 @@ class _SelectDisicipline extends State<selectClassesAndSections>
                                   onPressed: () async {
                                     if (acedemicYear != null) {
                                       if (listSelectedClasses.isNotEmpty) {
-                                        registerUserAs.personClasses =
+                                        registerUserAs!.personClasses =
                                             listSelectedClasses;
                                         Navigator.of(context).pop(
                                             {'registerUser': registerUserAs});
                                       } else {
                                         ToastBuilder().showToast(
-                                            AppLocalizations.of(context)
+                                            AppLocalizations.of(context)!
                                                 .translate("classes_subjects"),
                                             context,
                                             HexColor(AppColors.information));
                                       }
                                     } else {
                                       ToastBuilder().showToast(
-                                          AppLocalizations.of(context)
+                                          AppLocalizations.of(context)!
                                               .translate("select_academic"),
                                           context,
                                           HexColor(AppColors.information));
@@ -390,7 +391,7 @@ class _SelectDisicipline extends State<selectClassesAndSections>
                                   },
                                   color: HexColor(AppColors.appColorWhite),
                                   child: Text(
-                                    AppLocalizations.of(context)
+                                    AppLocalizations.of(context)!
                                         .translate('next')
                                         .toUpperCase(),
                                     style: styleElements
@@ -412,58 +413,58 @@ class _SelectDisicipline extends State<selectClassesAndSections>
     );
   }
 
-  generate_tags(List<Sections> programs, String degreeType, int id,String className,String classCode) {
+  generate_tags(List<Sections> programs, String degreeType, int? id,String? className,String? classCode) {
     return programs
         .map((programs) => get_chip(programs, degreeType, id,className,classCode))
         .toList();
   }
 
-  get_chip(Sections programs, String degreeType, int id,String className,String classCode) {
+  get_chip(Sections programs, String degreeType, int? id,String? className,String? classCode) {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
         if(programs.sectionName=="More")
           {
-            if(programs.isSelected)
-            chatNotifier.updateItemMoreLess(className, false);
+            if(programs.isSelected!)
+            chatNotifier!.updateItemMoreLess(className, false);
             else
-              chatNotifier.updateItemMoreLess(className, true);
+              chatNotifier!.updateItemMoreLess(className, true);
           }
         else if(programs.sectionName=="Less")
         {
-          if(programs.isSelected)
-            chatNotifier.updateItemMoreLess(classCode, false);
+          if(programs.isSelected!)
+            chatNotifier!.updateItemMoreLess(classCode, false);
           else
-            chatNotifier.updateItemMoreLess(classCode, true);
+            chatNotifier!.updateItemMoreLess(classCode, true);
         }
-       else if (programs.isSelected) {
-          chatNotifier.updateItem(programs, degreeType, false, personType == 2 ? true : false);
+       else if (programs.isSelected!) {
+          chatNotifier!.updateItem(programs, degreeType, false, personType == 2 ? true : false);
           removeSelected(programs.id, degreeType, id);
         } else {
           if (personType != 2) listSelectedClasses.clear();
-          chatNotifier.updateItem(programs, degreeType, true, personType == 2 ? true : false);
+          chatNotifier!.updateItem(programs, degreeType, true, personType == 2 ? true : false);
           addSection(programs.id, degreeType, id);
         }
       },
       child: Chip(
           elevation: 2.0,
-          backgroundColor: programs.isSelected
+          backgroundColor: programs.isSelected!
               ? HexColor(AppColors.appMainColor)
               : HexColor(AppColors.appColorWhite),
           label: Padding(
             padding: const EdgeInsets.all(4.0),
             child: Text(programs.sectionName ?? "",
                 style: styleElements.subtitle2ThemeScalable(context).copyWith(
-                    color: programs.isSelected
+                    color: programs.isSelected!
                         ? HexColor(AppColors.appColorWhite)
                         : HexColor(AppColors.appColorBlack65))),
           )),
     );
   }
 
-  addSection(int id, String name, int classId) {
+  addSection(int? id, String name, int? classId) {
     if (listSelectedClasses.isEmpty) {
-      List<int> sections = [];
+      List<int?> sections = [];
       PersonClasses personClasses = PersonClasses();
       personClasses.classId = classId;
       personClasses.className = name;
@@ -473,7 +474,7 @@ class _SelectDisicipline extends State<selectClassesAndSections>
     } else {
       if (isClassAlreadyAdded(id, name, classId)) {
       } else {
-        List<int> sections = [];
+        List<int?> sections = [];
         PersonClasses personClasses = PersonClasses();
         personClasses.classId = classId;
         personClasses.className = name;
@@ -484,18 +485,18 @@ class _SelectDisicipline extends State<selectClassesAndSections>
     }
   }
 
-  bool isClassAlreadyAdded(int id, String name, int classId) {
+  bool isClassAlreadyAdded(int? id, String name, int? classId) {
     for (int i = 0; i < listSelectedClasses.length; i++) {
       if (listSelectedClasses[i].classId == classId) {
-        listSelectedClasses[i].sections.add(id);
+        listSelectedClasses[i].sections!.add(id);
         return true;
       }
     }
     return false;
   }
 
-  Widget listItemBuilder(List<Sections> programs, String degreeType, int id,String className,String classCode) {
-    List<Sections> sectionsWithMore;
+  Widget listItemBuilder(List<Sections> programs, String degreeType, int? id,String? className,String? classCode) {
+    late List<Sections> sectionsWithMore;
    if(programs!=null && programs.length>4)
     sectionsWithMore=programs.sublist(0,4);
 
@@ -522,7 +523,7 @@ class _SelectDisicipline extends State<selectClassesAndSections>
             runSpacing: 4.0, // gap between lines
             // children: <Widget>[...generate_tags(programs[3].isSelected?programs :sectionsWithMore, degreeType, id,className,classCode)],
 
-            children: <Widget>[...generate_tags(programs.length<5?programs:programs[3].isSelected?programs :sectionsWithMore, degreeType, id,className,classCode)],
+            children: <Widget>[...generate_tags(programs.length<5?programs:programs[3].isSelected!?programs :sectionsWithMore, degreeType, id,className,classCode)],
 
           ),
         ],
@@ -530,13 +531,13 @@ class _SelectDisicipline extends State<selectClassesAndSections>
     );
   }
 
-  removeSelected(int id, String name, int classId) {
+  removeSelected(int? id, String name, int? classId) {
     for (var i = 0; i < listSelectedClasses.length; i++) {
       if (classId == listSelectedClasses[i].classId) {
-        if(listSelectedClasses[i].sections.length==1)
+        if(listSelectedClasses[i].sections!.length==1)
           listSelectedClasses.removeAt(i);
         else
-        listSelectedClasses[i].sections.remove(id);
+        listSelectedClasses[i].sections!.remove(id);
         break;
       }
     }

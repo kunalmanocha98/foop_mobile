@@ -58,48 +58,48 @@ import 'menu_user_popularity_card.dart';
 
 // ignore: must_be_immutable
 class AppMenuPage extends StatefulWidget {
-  SharedPreferences prefs;
-  final Null Function(String) newMessageCallBack;
-  AppMenuPage({Key key, this.prefs,this.newMessageCallBack}) : super(key: key);
+  SharedPreferences? prefs;
+  final Null Function(String)? newMessageCallBack;
+  AppMenuPage({Key? key, this.prefs,this.newMessageCallBack}) : super(key: key);
 
   @override
   AppMenuPageState createState() => AppMenuPageState(prefs: prefs);
 }
 
 class AppMenuPageState extends State<AppMenuPage> {
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
   bool isLoading = false;
-  Persondata rows;
+  Persondata? rows;
   var followers = 0;
   var following = 0;
   var roomsCount = 0;
   var postCount = 0;
 
-  final SharedDataService sharedDataService = locator<SharedDataService>();
+  final SharedDataService? sharedDataService = locator<SharedDataService>();
 
   bool cb1 = false, cb2 = false;
-  List<MenuListItemNew> menuList = [];
-  int selectedRadio;
-  SharedPreferences prefs = locator<SharedPreferences>();
+  List<MenuListItemNew>? menuList = [];
+  int? selectedRadio;
+  SharedPreferences? prefs = locator<SharedPreferences>();
   List<Institutions> institutionList = [];
   int i = 0;
   bool seeMore = false;
-  PackageInfo packageInfo;
+  PackageInfo? packageInfo;
 
-  int notificationCount;
+  int? notificationCount;
   final db = DatabaseHelper.instance;
 
-  int progress;
+  int? progress;
   AppMenuPageState({this.prefs});
 
   @override
   void initState() {
     super.initState();
-    sharedDataService.handleReceivedData(context);
+    sharedDataService!.handleReceivedData(context);
 
 
     DataSaveUtils().getUserData(context, prefs);
-    WidgetsBinding.instance
+    WidgetsBinding.instance!
         .addPostFrameCallback((_) => getPersonProfile(context));
   }
 
@@ -111,21 +111,21 @@ class AppMenuPageState extends State<AppMenuPage> {
         i = 1;
         institutionList.clear();
         if (rows != null) {
-          for (int i = 0; i < rows.institutions.length; i++) {
+          for (int i = 0; i < rows!.institutions!.length; i++) {
             if (institutionList.any((element) {
-              return element.name == rows.institutions[i].name;
+              return element.name == rows!.institutions![i].name;
             })) {
               Institutions institutions = institutionList.firstWhere((element) {
-                return element.name == rows.institutions[i].name;
+                return element.name == rows!.institutions![i].name;
               });
               var index = institutionList.indexOf(institutions);
-              if (institutionList[index].role != rows.institutions[i].role) {
-                institutionList[index].role = institutionList[index].role +
+              if (institutionList[index].role != rows!.institutions![i].role) {
+                institutionList[index].role = institutionList[index].role! +
                     ', ' +
-                    rows.institutions[i].role;
+                    rows!.institutions![i].role!;
               }
             } else {
-              institutionList.add(rows.institutions[i]);
+              institutionList.add(rows!.institutions![i]);
             }
           }
         }
@@ -183,7 +183,7 @@ class AppMenuPageState extends State<AppMenuPage> {
                                     ),
                                     child: Center(
                                       child: Text(
-                                        notificationCount!=null?notificationCount.toString() ?? "":"0",
+                                        notificationCount!=null?notificationCount.toString():"0",
                                         style: TextStyle(
                                             color: HexColor(AppColors.appColorWhite),
                                             fontSize: 12,
@@ -234,18 +234,18 @@ class AppMenuPageState extends State<AppMenuPage> {
                               clicked: null,
                               showQr: true,
                               instId:
-                              prefs!=null? prefs.getInt(Strings.instituteId).toString():"",
-                              title: prefs!=null?prefs.getString(Strings.userName):"",
+                              prefs!=null? prefs!.getInt(Strings.instituteId).toString():"",
+                              title: prefs!=null?prefs!.getString(Strings.userName):"",
                               isUserVerified:
-                              rows != null ? rows.isVerified : false,
+                              rows != null ? rows!.isVerified : false,
                               ownerTye: prefs != null
-                                  ? prefs.getString("ownerType")
+                                  ? prefs!.getString("ownerType")
                                   : "",
                               userType: 'person',
                               userId:
-                              prefs != null ? prefs.getInt("userId") : null,
-                              thirdPersonId: prefs!=null?prefs.getInt(Strings.userId):0,
-                              subtitle: rows != null ? rows.userName ?? "" : "",
+                              prefs != null ? prefs!.getInt("userId") : null,
+                              thirdPersonId: prefs!=null?prefs!.getInt(Strings.userId):0,
+                              subtitle: rows != null ? rows!.userName ?? "" : "",
                               isFollow: false,
                               isPersonProfile: true,
                               showProgress: true,
@@ -256,14 +256,14 @@ class AppMenuPageState extends State<AppMenuPage> {
                                     MaterialPageRoute(
                                         builder: (context) => UserProfileCards(
                                           userType: 'person',
-                                          userId: rows.id,
+                                          userId: rows!.id,
                                           callback: () {},
                                           currentPosition: 1,
                                           type: null,
                                         )));
                               },
                               imageUrl: Utility().getUrlForImage(
-                                  prefs!=null?  prefs.getString(Strings.profileImage):"",
+                                  prefs!=null?  prefs!.getString(Strings.profileImage):"",
                                   RESOLUTION_TYPE.R64,
                                   SERVICE_TYPE.PERSON),
                               imagePath: null,
@@ -354,7 +354,7 @@ class AppMenuPageState extends State<AppMenuPage> {
                                       institutionList[index]
                                           .profileImage !=
                                           null
-                                      ? institutionList[index].profileImage
+                                      ? institutionList[index].profileImage!
                                       : ""),
                               service_type: SERVICE_TYPE.INSTITUTION,
                               title:  institutionList[index].name,
@@ -431,10 +431,10 @@ class AppMenuPageState extends State<AppMenuPage> {
             },
             body:ListView.builder(
               shrinkWrap: true,
-              itemCount: menuList.length >0 ?menuList.length+1:0,
+              itemCount: menuList!.length >0 ?menuList!.length+1:0,
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (BuildContext context, int index){
-                if(index== menuList.length){
+                if(index== menuList!.length){
                   return packageInfo!=null?Container(
                     margin: EdgeInsets.only(top:16),
                     child: Center(
@@ -443,7 +443,7 @@ class AppMenuPageState extends State<AppMenuPage> {
                         children: [
                           Image.asset('assets/appimages/logo.png',width: 30,height: 30,),
                           SizedBox(width: 8,),
-                          Text("Version -"+packageInfo.version+"(${packageInfo.buildNumber})")
+                          Text("Version -"+packageInfo!.version+"(${packageInfo!.buildNumber})")
                         ],
                       ),
                     ),
@@ -456,20 +456,20 @@ class AppMenuPageState extends State<AppMenuPage> {
                       Padding(
                         padding: EdgeInsets.only(
                             top: 8.0, bottom: 8.0, left: 12),
-                        child: Text(menuList[index].title,
+                        child: Text(menuList![index].title!,
                           style: styleElements.subtitle1ThemeScalable(
                               context).copyWith(
                               fontWeight: FontWeight.bold
                           ),),
                       ),
                       GridView.builder(
-                        itemCount: menuList[index].data.length,
+                        itemCount: menuList![index].data!.length,
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
                         itemBuilder: (BuildContext context, int indx) {
                           return TricycleMenuItem(
                             onMenuItemClick: menuitemClick,
-                            item: menuList[index].data[indx],
+                            item: menuList![index].data![indx],
                           );
                         },
                         gridDelegate:
@@ -497,7 +497,7 @@ class AppMenuPageState extends State<AppMenuPage> {
           setState(() {
             var data = PersonalProfile.fromJson(value);
             if (data != null && data.statusCode == 'S10001') {
-              Persondata row = data.rows;
+              Persondata? row = data.rows;
               rows = row;
               DataSaveUtils().saveUserData(prefs, row);
             }
@@ -520,17 +520,17 @@ class AppMenuPageState extends State<AppMenuPage> {
     });
 
     DeviceInfo deviceInfo = DeviceInfo();
-    if (prefs.getString("DeviceInfo") != null) {
+    if (prefs!.getString("DeviceInfo") != null) {
       Map<String, dynamic> map =
-      json.decode(prefs.getString("DeviceInfo") ?? "");
+      json.decode(prefs!.getString("DeviceInfo") ?? "");
       deviceInfo = DeviceInfo.fromJson(map);
     }
-    if (prefs.getDouble("lat") != null)
+    if (prefs!.getDouble("lat") != null)
       deviceInfo.gpsInfo = "Latitude :" +
-          prefs.getDouble("lat").toString() +
+          prefs!.getDouble("lat").toString() +
           ", Longitude : " +
-          prefs.getDouble("longi").toString();
-    deviceInfo.fcmId = prefs.getString("fcmId");
+          prefs!.getDouble("longi").toString();
+    deviceInfo.fcmId = prefs!.getString("fcmId");
 
     LogOutApi().logOut(context, jsonEncode(deviceInfo)).then((value) async {
       if (value != null) {
@@ -540,8 +540,8 @@ class AppMenuPageState extends State<AppMenuPage> {
         prefs = await SharedPreferences.getInstance();
         var data = CommonBasicResponse.fromJson(value);
         if (data.statusCode == Strings.success_code) {
-          prefs.clear();
-          prefs.setBool("isLogout", true);
+          prefs!.clear();
+          prefs!.setBool("isLogout", true);
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: (context) => Home()),
                   (Route<dynamic> route) => false);
@@ -570,9 +570,9 @@ class AppMenuPageState extends State<AppMenuPage> {
   getPersonProfile(BuildContext context) async {
     fetchMenuListData();
     prefs ??= await SharedPreferences.getInstance();
-    if (prefs.getString("basicData") != null) {
+    if (prefs!.getString("basicData") != null) {
       Map<String, dynamic> map =
-      json.decode(prefs.getString("basicData") ?? "");
+      json.decode(prefs!.getString("basicData") ?? "");
       rows = Persondata.fromJson(map);
       followersCountApi(context);
     }
@@ -581,24 +581,24 @@ class AppMenuPageState extends State<AppMenuPage> {
   void followersCountApi(BuildContext context) async {
     final body = jsonEncode({
       "object_type": "person",
-      "object_id": prefs.getInt(Strings.userId),
+      "object_id": prefs!.getInt(Strings.userId),
     });
     Calls().call(body, context, Config.FOLLOWERS_COUNT).then((value) async {
       if (value != null) {
         var data = FollowersFollowingCountEntity.fromJson(value);
         if (data != null && data.statusCode == 'S10001') {
           setState(() {
-            followers = data.rows.followersCount ?? 0;
-            following = data.rows.followingCount ?? 0;
-            roomsCount = data.rows.roomsCount ?? 0;
-            postCount = data.rows.postCount ?? 0;
+            followers = data.rows!.followersCount ?? 0;
+            following = data.rows!.followingCount ?? 0;
+            roomsCount = data.rows!.roomsCount ?? 0;
+            postCount = data.rows!.postCount ?? 0;
           });
         } else {}
       } else {}
     }).catchError((onError) {});
   }
 
-  void menuitemClick(String code) {
+  void menuitemClick(String ?code) {
     switch (code) {
       case 'parentalcontrol':
         {
@@ -610,18 +610,18 @@ class AppMenuPageState extends State<AppMenuPage> {
               context,
               MaterialPageRoute(
                   builder: (context) => NetworkPage(
-                      id: prefs.getInt("userId"),
+                      id: prefs!.getInt("userId"),
                       imageUrl: Utility().getUrlForImage(
-                          prefs.getString(Strings.profileImage),
+                          prefs!.getString(Strings.profileImage),
                           RESOLUTION_TYPE.R64,
-                          prefs.getString("ownerType") == "institution"
+                          prefs!.getString("ownerType") == "institution"
                               ? SERVICE_TYPE.INSTITUTION
                               : SERVICE_TYPE.PERSON),
-                      type: prefs.getString("ownerType") == "institution"
+                      type: prefs!.getString("ownerType") == "institution"
                           ? "institution"
                           : "person",
                       currentTab: 0,
-                      pageTitle: prefs.getString(Strings.firstName),
+                      pageTitle: prefs!.getString(Strings.firstName),
                       callback: () {})));
           break;
         }
@@ -643,7 +643,7 @@ class AppMenuPageState extends State<AppMenuPage> {
               builder: (context) => SelectedFeedListPage(
                 isFromProfile: false,
                 appBarTitle:
-                AppLocalizations.of(context).translate('notice_board'),
+                AppLocalizations.of(context)!.translate('notice_board'),
                 postRecipientStatus: POST_RECIPIENT_STATUS.UNREAD.status,
                 postType: POST_TYPE.NOTICE.status,
               )));
@@ -655,7 +655,7 @@ class AppMenuPageState extends State<AppMenuPage> {
               builder: (context) => SelectedFeedListPage(
                 isFromProfile: false,
                 appBarTitle:
-                AppLocalizations.of(context).translate('ask_expert'),
+                AppLocalizations.of(context)!.translate('ask_expert'),
                 postRecipientStatus: POST_RECIPIENT_STATUS.UNREAD.status,
                 postType: POST_TYPE.QNA.status,
               )));
@@ -667,7 +667,7 @@ class AppMenuPageState extends State<AppMenuPage> {
               builder: (context) => SelectedFeedListPage(
                 isFromProfile: false,
                 appBarTitle:
-                AppLocalizations.of(context).translate('article'),
+                AppLocalizations.of(context)!.translate('article'),
                 postRecipientStatus: POST_RECIPIENT_STATUS.UNREAD.status,
                 postType: POST_TYPE.BLOG.status,
               )));
@@ -679,7 +679,7 @@ class AppMenuPageState extends State<AppMenuPage> {
               builder: (context) => SelectedFeedListPage(
                 isFromProfile: false,
                 isBookMarked: true,
-                appBarTitle: AppLocalizations.of(context)
+                appBarTitle: AppLocalizations.of(context)!
                     .translate('bookmarked_posts'),
                 postRecipientStatus: POST_RECIPIENT_STATUS.UNREAD.status,
               )));
@@ -800,7 +800,7 @@ class AppMenuPageState extends State<AppMenuPage> {
   }
   void getNotificationCount() async {
     final body = jsonEncode({
-      "personId": prefs.getInt(Strings.userId),
+      "personId": prefs!.getInt(Strings.userId),
     });
     Calls().call(body, context, Config.NOTIFICATION_COUNT).then((value) {
       var res = NotificationCountResponse.fromJson(value);
@@ -808,7 +808,7 @@ class AppMenuPageState extends State<AppMenuPage> {
         if (res.rows != null) {
           if (this.mounted)
             setState(() {
-              notificationCount = int.parse(res.rows);
+              notificationCount = int.parse(res.rows!);
             });
         }
       } else {}
@@ -819,13 +819,13 @@ class AppMenuPageState extends State<AppMenuPage> {
   void fetchMenuListData() async {
     packageInfo = await PackageInfo.fromPlatform();
     var res = await rootBundle.loadString('assets/menulist_new.json');
-    final Map parsed = json.decode(res);
+    final Map? parsed = json.decode(res);
     setState(() {
-      menuList = MenuListResponseNew.fromJson(parsed).rows;
+      menuList = MenuListResponseNew.fromJson(parsed as Map<String, dynamic>).rows;
     });
     var data = jsonEncode({
-      "owner_id": prefs.getInt(Strings.userId),
-      "owner_type": prefs.getString(Strings.ownerType)
+      "owner_id": prefs!.getInt(Strings.userId),
+      "owner_type": prefs!.getString(Strings.ownerType)
     });
     Calls().call(data, context, Config.GET_PROFILE_PROGRESS).then((value){
       var response  = ProfileCardResponse.fromJson(value);

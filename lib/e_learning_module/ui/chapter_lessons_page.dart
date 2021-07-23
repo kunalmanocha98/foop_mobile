@@ -18,24 +18,24 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class CreateChapterLessonsPage extends StatefulWidget {
- final List<PostCreatePayload> list;
-  final PostReceiverListItem  selectedReceiverData;
-final Function callBack;
-final PostCreatePayload createLessonData;
-  const CreateChapterLessonsPage({Key key, this.list, this.selectedReceiverData,this.callBack,this.createLessonData}) : super(key: key);
+ final List<PostCreatePayload?>? list;
+  final PostReceiverListItem?  selectedReceiverData;
+final Function? callBack;
+final PostCreatePayload? createLessonData;
+  const CreateChapterLessonsPage({Key? key, this.list, this.selectedReceiverData,this.callBack,this.createLessonData}) : super(key: key);
   _CreateChapterLessonsPage createState() => _CreateChapterLessonsPage(createLessonData: createLessonData);
 
 
 }
 
 class _CreateChapterLessonsPage extends State<CreateChapterLessonsPage> {
-  BuildContext context;
-  TextStyleElements styleElements;
-  List<PostCreatePayload> list;
+  late BuildContext context;
+  late TextStyleElements styleElements;
+  List<PostCreatePayload>? list;
   GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
   GlobalKey<TricycleProgressButtonState> progressButtonKeyNext = GlobalKey();
-  PostReceiverListItem selectedReceiverData;
-  PostCreatePayload createLessonData;
+  PostReceiverListItem? selectedReceiverData;
+  PostCreatePayload? createLessonData;
   _CreateChapterLessonsPage({this.list,this.selectedReceiverData,this.createLessonData});
   @override
   void initState() {
@@ -54,7 +54,7 @@ class _CreateChapterLessonsPage extends State<CreateChapterLessonsPage> {
           appBar: TricycleAppBar().getCustomAppBar(
             context,
             appBarTitle:
-            AppLocalizations.of(context).translate('institution_type'),
+            AppLocalizations.of(context)!.translate('institution_type'),
             actions: [
             ],
             onBackButtonPress: () {
@@ -76,7 +76,7 @@ class _CreateChapterLessonsPage extends State<CreateChapterLessonsPage> {
                     child: Padding(
                         padding: EdgeInsets.only(top:16,left: 16,right: 16,bottom: 8),
                         child: Text(
-                          AppLocalizations.of(context).translate("lesson_desc"),
+                          AppLocalizations.of(context)!.translate("lesson_desc"),
                           style: styleElements.subtitle2ThemeScalable(context).copyWith(fontWeight: FontWeight.w500),
 
                         )
@@ -111,7 +111,7 @@ class _CreateChapterLessonsPage extends State<CreateChapterLessonsPage> {
                                         title: Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            AppLocalizations.of(context)
+                                            AppLocalizations.of(context)!
                                                 .translate("k12"),
                                             style: styleElements
                                                 .subtitle1ThemeScalable(context),
@@ -121,7 +121,7 @@ class _CreateChapterLessonsPage extends State<CreateChapterLessonsPage> {
                                         subtitle: Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            AppLocalizations.of(context)
+                                            AppLocalizations.of(context)!
                                                 .translate("lessons_schools"),
                                             style: styleElements
                                                 .bodyText2ThemeScalable(context),
@@ -138,7 +138,7 @@ class _CreateChapterLessonsPage extends State<CreateChapterLessonsPage> {
                                             selectedList: getSelectedList(AcademicDetailType.classes),
                                             callBack:(){Navigator.of(context).pop();
                                             if(widget.callBack!=null)
-                                            widget.callBack();
+                                            widget.callBack!();
                                             },
                                             createLessonData:createLessonData,
                                             list: widget.list,
@@ -164,7 +164,7 @@ class _CreateChapterLessonsPage extends State<CreateChapterLessonsPage> {
                                         title: Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            AppLocalizations.of(context)
+                                            AppLocalizations.of(context)!
                                                 .translate("collage_lesson"),
                                             style: styleElements
                                                 .subtitle1ThemeScalable(context),
@@ -174,7 +174,7 @@ class _CreateChapterLessonsPage extends State<CreateChapterLessonsPage> {
                                         subtitle: Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            AppLocalizations.of(context)
+                                            AppLocalizations.of(context)!
                                                 .translate("lessons_collage"),
                                             style: styleElements
                                                 .bodyText2ThemeScalable(context),
@@ -191,7 +191,7 @@ class _CreateChapterLessonsPage extends State<CreateChapterLessonsPage> {
                                             selectedList: getSelectedList(AcademicDetailType.programme),
                                               callBack:(){Navigator.of(context).pop();
                                               if(widget.callBack!=null)
-                                                widget.callBack();
+                                                widget.callBack!();
                                               },
                                               createLessonData:createLessonData,
                                             type: AcademicDetailType.programme,
@@ -216,28 +216,28 @@ class _CreateChapterLessonsPage extends State<CreateChapterLessonsPage> {
 
   List<AcademicDetailSelectionItem> getSelectedList(AcademicDetailType type) {
     if(type == AcademicDetailType.programme) {
-      if (createLessonData != null && createLessonData.programmesList != null &&
-          createLessonData.programmesList.length > 0) {
+      if (createLessonData != null && createLessonData!.programmesList != null &&
+          createLessonData!.programmesList!.length > 0) {
         return List<AcademicDetailSelectionItem>.generate(
-            createLessonData.programmesList.length, (index) {
+            createLessonData!.programmesList!.length, (index) {
           return AcademicDetailSelectionItem(
-            programName: createLessonData.programmesList[index].programName,
-            programCode: createLessonData.programmesList[index].programCode,
-            programId: createLessonData.programmesList[index].id,
+            programName: createLessonData!.programmesList![index].programName,
+            programCode: createLessonData!.programmesList![index].programCode,
+            programId: createLessonData!.programmesList![index].id,
           );
         });
       } else {
         return [];
       }
     }else{
-      if (createLessonData != null && createLessonData.classesList != null &&
-          createLessonData.classesList.length > 0) {
+      if (createLessonData != null && createLessonData!.classesList != null &&
+          createLessonData!.classesList!.length > 0) {
         return List<AcademicDetailSelectionItem>.generate(
-            createLessonData.classesList.length, (index) {
+            createLessonData!.classesList!.length, (index) {
           return AcademicDetailSelectionItem(
-            className: createLessonData.classesList[index].className,
-            classCode: createLessonData.classesList[index].classCode,
-            classId: createLessonData.classesList[index].id,
+            className: createLessonData!.classesList![index].className,
+            classCode: createLessonData!.classesList![index].classCode,
+            classId: createLessonData!.classesList![index].id,
           );
         });
       } else {
@@ -256,7 +256,7 @@ class CommentSheet extends StatefulWidget {
 }
 
 class _CommentSheet extends State<CommentSheet> {
-  SharedPreferences prefs = locator<SharedPreferences>();
+  SharedPreferences? prefs = locator<SharedPreferences>();
   final lastNameController = TextEditingController();
 
   @override
@@ -279,7 +279,7 @@ class _CommentSheet extends State<CommentSheet> {
         },
         decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(8.0, 15.0, 20.0, 4.0),
-          hintText: AppLocalizations.of(context).translate('give_topic_name'),
+          hintText: AppLocalizations.of(context)!.translate('give_topic_name'),
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorBlack35)),
         ));
     return Column(
@@ -292,7 +292,7 @@ class _CommentSheet extends State<CommentSheet> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                AppLocalizations.of(context).translate(''),
+                AppLocalizations.of(context)!.translate(''),
                 style: styleElements
                     .headline6ThemeScalable(context)
                     .copyWith(fontWeight: FontWeight.bold),
@@ -301,7 +301,7 @@ class _CommentSheet extends State<CommentSheet> {
             Padding(
               padding: const EdgeInsets.only(top:20.0),
               child: Text(
-                AppLocalizations.of(context).translate('topic_name'),
+                AppLocalizations.of(context)!.translate('topic_name'),
                 style: styleElements
                     .subtitle1ThemeScalable(context)
                     .copyWith(fontWeight: FontWeight.bold),
@@ -310,7 +310,7 @@ class _CommentSheet extends State<CommentSheet> {
             Padding(
               padding: const EdgeInsets.only(top:20.0,left: 16.0,right: 16.0),
               child: Text(
-                AppLocalizations.of(context).translate('next'),
+                AppLocalizations.of(context)!.translate('next'),
                 style: styleElements
                     .subtitle2ThemeScalable(context)
                     .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -325,7 +325,7 @@ class _CommentSheet extends State<CommentSheet> {
         Padding(
           padding: const EdgeInsets.only(left:45.0,right: 45.0,top: 20,bottom: 60),
           child: Text(
-            AppLocalizations.of(context).translate('topic_detail_dec'),
+            AppLocalizations.of(context)!.translate('topic_detail_dec'),
             style: styleElements
                 .bodyText1ThemeScalable(context)
             ,

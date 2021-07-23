@@ -1,5 +1,5 @@
 class InviteUserAsSpeakerResponse {
-  Result result;
+  Result? result;
 
   InviteUserAsSpeakerResponse({this.result});
 
@@ -11,19 +11,19 @@ class InviteUserAsSpeakerResponse {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.result != null) {
-      data['result'] = this.result.toJson();
+      data['result'] = this.result!.toJson();
     }
     return data;
   }
 }
 
 class Result {
-  String name;
-  String profileImage;
-  String personType;
-  String role;
-  String participantType;
-  int participantId;
+  String? name;
+  String? profileImage;
+  String? personType;
+  String? role;
+  String? participantType;
+  int? participantId;
 
   Result(
       {this.name,

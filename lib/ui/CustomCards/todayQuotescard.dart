@@ -12,14 +12,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 // ignore: must_be_immutable
 class TodaysQouteCard extends StatelessWidget {
   final CommonCardData data;
-  BuildContext context;
-  List<Data> listSubItems = [];
-  TextStyleElements styleElements;
-  bool isProfile;
-  String instituteId;
-  Null Function() callbackPicker;
-  int id;
-  String personType;
+  BuildContext? context;
+  List<Data>? listSubItems = [];
+  late TextStyleElements styleElements;
+  bool? isProfile;
+  String? instituteId;
+  Null Function()? callbackPicker;
+  int? id;
+  String? personType;
 
   Size displaySize(BuildContext context) {
     debugPrint('Size = ' + MediaQuery.of(context).size.toString());
@@ -37,8 +37,8 @@ class TodaysQouteCard extends StatelessWidget {
   }
 
   TodaysQouteCard({
-    Key key,
-    @required this.data,
+    Key? key,
+    required this.data,
     this.instituteId,
     this.isProfile,
     this.id,
@@ -57,7 +57,7 @@ class TodaysQouteCard extends StatelessWidget {
           shrinkWrap: true,
           padding: const EdgeInsets.all(0.0),
           physics: NeverScrollableScrollPhysics(),
-          itemCount: listSubItems.length,
+          itemCount: listSubItems!.length,
           itemBuilder: (context, index) {
             return GestureDetector(
                 onTap: () {
@@ -86,7 +86,7 @@ class TodaysQouteCard extends StatelessWidget {
                                     child: Padding(
                                       padding: EdgeInsets.only(top: 8.h, bottom: 8.h),
                                       child: Text(
-                                        listSubItems[index].quoteText??"",
+                                        listSubItems![index].quoteText??"",
                                         style: styleElements.subtitle1ThemeScalable(context).copyWith(fontStyle:FontStyle.italic),
                                       ),
                                     ),
@@ -94,7 +94,7 @@ class TodaysQouteCard extends StatelessWidget {
                                   Align(
                                     alignment: Alignment.topLeft,
                                     child: Text(
-                                      listSubItems[index].quotedByName??"",
+                                      listSubItems![index].quotedByName??"",
                                       style: styleElements.bodyText1ThemeScalable(context),
                                     ),
                                   ),
@@ -117,7 +117,7 @@ class TodaysQouteCard extends StatelessWidget {
                               fit: BoxFit.fill,
                               child: Image(
                                 fit: BoxFit.fill,
-                                image: CachedNetworkImageProvider(Config.BASE_URL+ listSubItems[index].quoteImageThumbnailUrl??""),
+                                image: CachedNetworkImageProvider(Config.BASE_URL+ listSubItems![index].quoteImageThumbnailUrl!),
                               ),
                             ),
                           ),

@@ -8,10 +8,10 @@ import 'package:flutter/material.dart';
 
 class ProgramNotifier extends ChangeNotifier {
   int _pageNumber = 1;
-  List<ProgramDataItem> _listConversations;
-  Map mapItems;
+  List<ProgramDataItem>? _listConversations;
+  Map? mapItems;
 
-  Future<void> reload(String searchVal, int instituteId, BuildContext context,
+  Future<void> reload(String? searchVal, int? instituteId, BuildContext context,
       List<Programs> _listSelectedPrograms) async {
     _listConversations = <ProgramDataItem>[];
     _pageNumber = 1;
@@ -19,7 +19,7 @@ class ProgramNotifier extends ChangeNotifier {
         _listSelectedPrograms);
   }
 
-  Future<void> search(String searchVal, int instituteId, BuildContext context,
+  Future<void> search(String? searchVal, int? instituteId, BuildContext context,
      List<Programs> _listSelectedPrograms) async {
     _listConversations = <ProgramDataItem>[];
     _pageNumber = 1;
@@ -28,13 +28,13 @@ class ProgramNotifier extends ChangeNotifier {
         _listSelectedPrograms);
   }
 
-  Future<void> getMore(String searchVal, int instituteId, BuildContext context,
+  Future<void> getMore(String? searchVal, int? instituteId, BuildContext context,
       List<Programs> _listSelectedPrograms) async {
     await getConversations(_pageNumber, searchVal, instituteId, context,
         _listSelectedPrograms);
   }
 
-  List<ProgramDataItem> getConversationList() {
+  List<ProgramDataItem>? getConversationList() {
     return _listConversations;
   }
 
@@ -47,8 +47,8 @@ class ProgramNotifier extends ChangeNotifier {
 
   Future<void> getConversations(
       int page,
-      String searchVal,
-      int instituteId,
+      String? searchVal,
+      int? instituteId,
       BuildContext context,
 
       List<Programs> _listSelectedPrograms) async {
@@ -64,21 +64,21 @@ class ProgramNotifier extends ChangeNotifier {
       if (v != null) {
         var data = ProgramsData.fromJson(v);
         if (data != null && data.statusCode == Strings.success_code) {
-          if (data.rows.isNotEmpty) {
+          if (data.rows!.isNotEmpty) {
             pageNumber++;
             _pageNumber = pageNumber;
 
-            _listConversations.addAll(data.rows);
+            _listConversations!.addAll(data.rows!);
             if (_listSelectedPrograms != null &&
                 _listSelectedPrograms.isNotEmpty) {
               for (var item in _listSelectedPrograms) {
-                if (item.isSelected) {
-                  for (int i = 0; i < _listConversations.length; i++) {
+                if (item.isSelected!) {
+                  for (int i = 0; i < _listConversations!.length; i++) {
                     for (int j = 0;
-                        j < _listConversations[i].programs.length;
+                        j < _listConversations![i].programs!.length;
                         j++) {
-                      if (_listConversations[i].programs[j].id == item.id) {
-                        _listConversations[i].programs[j].isSelected = true;
+                      if (_listConversations![i].programs![j].id == item.id) {
+                        _listConversations![i].programs![j].isSelected = true;
                       }
                     }
                   }
@@ -94,12 +94,12 @@ class ProgramNotifier extends ChangeNotifier {
   }
 
   updateItem(Programs pr, String degreeType, bool isSelected, bool isTeacher) {
-    for (int i = 0; i < _listConversations.length; i++) {
-      for (int j = 0; j < _listConversations[i].programs.length; j++) {
-        if (pr.programCode == _listConversations[i].programs[j].programCode) {
-          _listConversations[i].programs[j].isSelected = isSelected;
+    for (int i = 0; i < _listConversations!.length; i++) {
+      for (int j = 0; j < _listConversations![i].programs!.length; j++) {
+        if (pr.programCode == _listConversations![i].programs![j].programCode) {
+          _listConversations![i].programs![j].isSelected = isSelected;
         } else {
-          if (!isTeacher) _listConversations[i].programs[j].isSelected = false;
+          if (!isTeacher) _listConversations![i].programs![j].isSelected = false;
         }
       }
     }

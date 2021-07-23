@@ -14,9 +14,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class TricycleCalenderCard extends StatefulWidget {
-  final CalenderEventItem data;
+  final CalenderEventItem? data;
 
-  TricycleCalenderCard({Key key, this.data});
+  TricycleCalenderCard({Key? key, this.data});
 
   @override
   TricycleCalenderCardState createState() =>
@@ -24,11 +24,11 @@ class TricycleCalenderCard extends StatefulWidget {
 }
 
 class TricycleCalenderCardState extends State<TricycleCalenderCard> {
-  final CalenderEventItem data;
+  final CalenderEventItem? data;
 
   TricycleCalenderCardState({this.data});
 
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   @override
   Widget build(BuildContext context) {
@@ -45,13 +45,13 @@ class TricycleCalenderCardState extends State<TricycleCalenderCard> {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       DateTagPostComponent(
-                        date: DateTime.parse(data.endTime),
+                        date: DateTime.parse(data!.endTime!),
                         showTime: true,
                       ),
-                      data.startTime != null ? Text("to") : Container(),
-                      data.startTime != null
+                      data!.startTime != null ? Text("to") : Container(),
+                      data!.startTime != null
                           ? DateTagPostComponent(
-                        date: DateTime.parse(data.startTime),
+                        date: DateTime.parse(data!.startTime!),
                         showTime: true,
                       )
                           : Container(),
@@ -70,7 +70,7 @@ class TricycleCalenderCardState extends State<TricycleCalenderCard> {
                               TricycleAvatar(
                                 size: 16,
                                 imageUrl: Utility().getUrlForImage(
-                                    data.header.avatar,
+                                    data!.header!.avatar,
                                     RESOLUTION_TYPE.R64,
                                     SERVICE_TYPE.PERSON),
                                 key: UniqueKey(),
@@ -84,9 +84,9 @@ class TricycleCalenderCardState extends State<TricycleCalenderCard> {
                                       style: styleElements.captionThemeScalable(context).copyWith(color: HexColor(AppColors.appColorBlack35)),
                                       children: [
                                         TextSpan(text: ' by '),
-                                        TextSpan(text: data.header.title),
+                                        TextSpan(text: data!.header!.title),
                                         TextSpan(text:', '),
-                                        TextSpan(text:data.header.subtitle1)
+                                        TextSpan(text:data!.header!.subtitle1)
                                       ]
                                     ),
                                   )
@@ -94,7 +94,7 @@ class TricycleCalenderCardState extends State<TricycleCalenderCard> {
                             ],
                           ),
                           Text(
-                            data.title,
+                            data!.title!,
                             style: styleElements
                                 .subtitle1ThemeScalable(context)
                                 .copyWith(fontWeight: FontWeight.bold),
@@ -103,14 +103,14 @@ class TricycleCalenderCardState extends State<TricycleCalenderCard> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
-                                data.header.rating.toString(),
+                                data!.header!.rating.toString(),
                                 style: styleElements
                                     .subtitle2ThemeScalable(context)
                                     .copyWith(
                                     color: HexColor(AppColors.appMainColor)),
                               ),
                               RatingBar(
-                                initialRating: data.header.rating,
+                                initialRating: data!.header!.rating!,
                                 minRating: 0,
                                 direction: Axis.horizontal,
                                 allowHalfRating: false,
@@ -129,12 +129,12 @@ class TricycleCalenderCardState extends State<TricycleCalenderCard> {
                                     full: Icon(
                                       Icons.star,
                                       color: Theme.of(context).accentColor,
-                                    )),
+                                    )), onRatingUpdate: (double value) {  },
                                 // itemBuilder: (context, _) => Icon(
                                 //   Icons.star,
                                 //   color: Theme.of(context).accentColor,
                                 // ),
-                                onRatingUpdate: null,
+
                               ),
                               Container(
                                 margin: EdgeInsets.only(left: 6, right: 6),
@@ -155,7 +155,7 @@ class TricycleCalenderCardState extends State<TricycleCalenderCard> {
                             height: 8,
                           ),
                           Text(
-                            data.subtitle,
+                            data!.subtitle!,
                             style: styleElements.bodyText2ThemeScalable(context),
                           ),
                           SizedBox(
@@ -163,15 +163,15 @@ class TricycleCalenderCardState extends State<TricycleCalenderCard> {
                           ),
                           TricycleUserImageList(
                             listOfImages: List.generate(
-                                data.participantList != null
-                                    ? data.participantList.length
+                                data!.participantList != null
+                                    ? data!.participantList!.length
                                     : 0,
-                                    (index) => data.participantList[index].profileImage),
+                                    (index) => data!.participantList![index].profileImage),
                           ),
                           SizedBox(
                             height: 4,
                           ),
-                          (data.eventLocation != null)
+                          (data!.eventLocation != null)
                               ? Row(
                             children: [
                               Icon(
@@ -180,7 +180,7 @@ class TricycleCalenderCardState extends State<TricycleCalenderCard> {
                                 color: HexColor(AppColors.appColorBlack35),
                               ),
                               Text(
-                                data.eventLocation.state,
+                                data!.eventLocation!.state!,
                                 style: styleElements
                                     .captionThemeScalable(context)
                                     .copyWith(

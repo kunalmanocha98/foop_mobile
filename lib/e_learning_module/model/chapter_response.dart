@@ -1,8 +1,8 @@
 class ChaptersResponse {
-  String statusCode;
-  String message;
-  List<ChapterItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<ChapterItem>? rows;
+  int? total;
 
   ChaptersResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -12,7 +12,7 @@ class ChaptersResponse {
     if (json['rows'] != null) {
       rows = [];//ChapterItem>();
       json['rows'].forEach((v) {
-        rows.add(new ChapterItem.fromJson(v));
+        rows!.add(new ChapterItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -23,7 +23,7 @@ class ChaptersResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -31,8 +31,8 @@ class ChaptersResponse {
 }
 
 class ChapterItem {
-  String chapterName;
-  int id;
+  String? chapterName;
+  int? id;
 
   ChapterItem({this.chapterName, this.id});
 

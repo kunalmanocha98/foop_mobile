@@ -14,15 +14,15 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class RoomPrivacyTypeWidget extends StatefulWidget{
-  final String selectedValue;
-  RoomPrivacyTypeWidget({Key key, this.selectedValue=""}):super(key: key);
+  final String? selectedValue;
+  RoomPrivacyTypeWidget({Key? key, this.selectedValue=""}):super(key: key);
   @override
   RoomPrivacyTypeWidgetState createState() => RoomPrivacyTypeWidgetState(selectedTypeCode: selectedValue);
 }
 class RoomPrivacyTypeWidgetState extends State<RoomPrivacyTypeWidget>{
 
-  String selectedTypeCode;
-  SharedPreferences _prefs;
+  String? selectedTypeCode;
+  SharedPreferences? _prefs;
   List<PrivacyListItem> _privacyList = [];
   RoomPrivacyTypeWidgetState({this.selectedTypeCode});
   bool isFixed = false;
@@ -30,14 +30,14 @@ class RoomPrivacyTypeWidgetState extends State<RoomPrivacyTypeWidget>{
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _getPrivacyList());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => _getPrivacyList());
   }
-  String get getSelectedTypeCode => this.selectedTypeCode;
+  String? get getSelectedTypeCode => this.selectedTypeCode;
 
-  void setPrivacyType(String privacyType) {
+  void setPrivacyType(String? privacyType) {
     setState(() {
       selectedTypeCode = privacyType;
-      isFixed = (selectedTypeCode!=null && selectedTypeCode.isNotEmpty);
+      isFixed = (selectedTypeCode!=null && selectedTypeCode!.isNotEmpty);
     });
   }
 
@@ -50,7 +50,7 @@ class RoomPrivacyTypeWidgetState extends State<RoomPrivacyTypeWidget>{
       var res = RoomPrivacyListResponse.fromJson(value);
       if(res.statusCode == Strings.success_code){
         setState(() {
-          _privacyList.addAll(res.rows);
+          _privacyList.addAll(res.rows!);
         });
       }
     });
@@ -85,8 +85,8 @@ class RoomPrivacyTypeWidgetState extends State<RoomPrivacyTypeWidget>{
 
 class _SelectionWidget extends StatelessWidget{
   final bool isSelected;
-  final String url;
-  final String title;
+  final String? url;
+  final String? title;
   _SelectionWidget({this.isSelected=false,this.url,this.title});
   @override
   Widget build(BuildContext context) {
@@ -101,7 +101,7 @@ class _SelectionWidget extends StatelessWidget{
           mainAxisSize: MainAxisSize.min,
           children: [
             TricycleAvatar(
-              imageUrl: Config.BASE_URL+url,
+              imageUrl: Config.BASE_URL+url!,
               // imageUrl: "https://test.tricycle.group/logo.png",
               isFullUrl: true,
               key: UniqueKey(),
@@ -114,7 +114,7 @@ class _SelectionWidget extends StatelessWidget{
               borderColor:HexColor(AppColors.appColorWhite),
             ),
             SizedBox(height: 8,),
-            Text(title,style: styleElements.subtitle2ThemeScalable(context),)
+            Text(title!,style: styleElements.subtitle2ThemeScalable(context),)
           ],
         ),
       ),

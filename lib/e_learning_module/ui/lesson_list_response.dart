@@ -1,8 +1,8 @@
 class LessonListResponse {
-  String statusCode;
-  String message;
-  List<LessonListItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<LessonListItem>? rows;
+  int? total;
 
   LessonListResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -12,7 +12,7 @@ class LessonListResponse {
     if (json['rows'] != null) {
       rows = [];//LessonListItem>();
       json['rows'].forEach((v) {
-        rows.add(new LessonListItem.fromJson(v));
+        rows!.add(new LessonListItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -23,7 +23,7 @@ class LessonListResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -31,10 +31,10 @@ class LessonListResponse {
 }
 
 class LessonListItem {
-  int id;
-  String lessonName;
-  String referenceType;
-  int referenceId;
+  int? id;
+  String? lessonName;
+  String? referenceType;
+  int? referenceId;
 
   LessonListItem({this.id, this.lessonName, this.referenceType, this.referenceId});
 

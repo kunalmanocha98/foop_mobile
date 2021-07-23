@@ -11,16 +11,16 @@ class ApiCall {
       BuildContext context,
       String url,
       String filePath,
-      String token,
+      String? token,
       String ownerType,
       String ownerId,
       String contextType,
-      String contextId,
+      String? contextId,
       String subContextType,
       String subContextId,
-      String contentType,
-      Function(int progress) onProgressCallback,
-      String mimeType) async {
+      String? contentType,
+      Function(int progress)? onProgressCallback,
+      String? mimeType) async {
     return _netUtil
         .upload(context, url, token, filePath, ownerType, ownerId, contextType,
             contextId, subContextType, subContextId, contentType, onProgressCallback,mimeType)

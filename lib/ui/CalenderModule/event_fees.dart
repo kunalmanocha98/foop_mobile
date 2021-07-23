@@ -16,7 +16,7 @@ class EventFeesPage extends StatefulWidget{
   EventFeesPageState createState() => EventFeesPageState();
 }
 class EventFeesPageState extends State<EventFeesPage>{
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
   @override
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);

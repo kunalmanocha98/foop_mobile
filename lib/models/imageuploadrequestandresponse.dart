@@ -1,8 +1,8 @@
 class ImageUpdateRequest {
-  String ownerType;
-  int ownerId;
-  String imageType;
-  String imagePath;
+  String? ownerType;
+  int? ownerId;
+  String? imageType;
+  String? imagePath;
 
   ImageUpdateRequest(
       {this.ownerType, this.ownerId, this.imageType, this.imagePath});
@@ -25,9 +25,9 @@ class ImageUpdateRequest {
 }
 
 class ImageUpdateResponse {
-  String statusCode;
-  String message;
-  ImageUpdateUrls rows;
+  String? statusCode;
+  String? message;
+  ImageUpdateUrls? rows;
 
   ImageUpdateResponse({this.statusCode, this.message, this.rows});
 
@@ -44,16 +44,16 @@ class ImageUpdateResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     return data;
   }
 }
 
 class ImageUpdateUrls {
-  String fileUrl;
-  String fileThumbnailUrl;
-  List<OtherUrls> otherUrls;
+  String? fileUrl;
+  String? fileThumbnailUrl;
+  List<OtherUrls>? otherUrls;
 
   ImageUpdateUrls({this.fileUrl, this.fileThumbnailUrl, this.otherUrls});
 
@@ -63,7 +63,7 @@ class ImageUpdateUrls {
     if (json['other_urls'] != null) {
       otherUrls = [];//OtherUrls>();
       json['other_urls'].forEach((v) {
-        otherUrls.add(new OtherUrls.fromJson(v));
+        otherUrls!.add(new OtherUrls.fromJson(v));
       });
     }
   }
@@ -73,18 +73,18 @@ class ImageUpdateUrls {
     data['file_url'] = this.fileUrl;
     data['file_thumbnail_url'] = this.fileThumbnailUrl;
     if (this.otherUrls != null) {
-      data['other_urls'] = this.otherUrls.map((v) => v.toJson()).toList();
+      data['other_urls'] = this.otherUrls!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class OtherUrls {
-  String original;
-  String s128dp;
-  String s256dp;
-  String s512dp;
-  String s720dp;
+  String? original;
+  String? s128dp;
+  String? s256dp;
+  String? s512dp;
+  String? s720dp;
 
   OtherUrls(
       {this.original, this.s128dp, this.s256dp, this.s512dp, this.s720dp});

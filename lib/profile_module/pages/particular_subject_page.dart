@@ -27,7 +27,7 @@ class ParticularSubject extends StatefulWidget {
   int currentPosition;
 
   ParticularSubject(
-      {Key key, @required this.type, @required this.currentPosition})
+      {Key? key, required this.type, required this.currentPosition})
       : super(key: key);
 
   _ParticularSubject createState() => _ParticularSubject(type, currentPosition);
@@ -35,21 +35,21 @@ class ParticularSubject extends StatefulWidget {
 
 class _ParticularSubject extends State<ParticularSubject>
     with SingleTickerProviderStateMixin {
-  String type;
-  int _currentPosition;
-  TextStyleElements styleElements;
+  String? type;
+  int? _currentPosition;
+  TextStyleElements? styleElements;
 
   _ParticularSubject(String type, int currentPosition) {
     this.type = type;
     this._currentPosition = currentPosition;
   }
 
-  ProgressDialog pr;
-  SharedPreferences prefs;
+  ProgressDialog? pr;
+  SharedPreferences? prefs;
   var pageTitle = "";
-  PersonalProfile personalProfile;
-  Persondata rows;
-  List<CommonCardData> listCardData = [];
+  PersonalProfile? personalProfile;
+  Persondata? rows;
+  List<CommonCardData>? listCardData = [];
   var color1 = HexColor(AppColors.appMainColor);
   var selectedTextColor1 = HexColor(AppColors.appColorWhite);
   var selectedTextColor2 = HexColor(AppColors.appColorBlack85);
@@ -68,7 +68,7 @@ class _ParticularSubject extends State<ParticularSubject>
   CommonCardData content = CommonCardData();
   List<StatelessWidget> listCards = [];
   var isCheckedColor = HexColor(AppColors.appColorWhite);
-  TabController _tabController;
+  TabController? _tabController;
   Map<String, bool> mapRules = Map();
   List<Roles> listRules = [];
   List<Subjects> listOfSubjects = [];
@@ -79,25 +79,25 @@ class _ParticularSubject extends State<ParticularSubject>
   var isRoleSelected = false;
   List<CommonCardData> listCardDataClasses = [];
   List<CommonCardData> listSubjectsCards = [];
-  List<CommonCardData> listStudentsCards = [];
-  List<CommonCardData> listGurusCard = [];
+  List<CommonCardData>? listStudentsCards = [];
+  List<CommonCardData>? listGurusCard = [];
   List<CommonCardData> listLanguageData = [];
   List<CommonCardData> listWorkData = [];
   List<CustomTabMaker> list = [];
-  BuildContext context;
+  late BuildContext context;
 
   onPositionChange() {
-    if (!_tabController.indexIsChanging && this.mounted) {
+    if (!_tabController!.indexIsChanging && this.mounted) {
       setState(() {
-        _currentPosition = _tabController.index;
+        _currentPosition = _tabController!.index;
       });
     }
   }
 
   onTabClicked() {
-    if (!_tabController.indexIsChanging && this.mounted) {
+    if (!_tabController!.indexIsChanging && this.mounted) {
       setState(() {
-        _currentPosition = _tabController.index;
+        _currentPosition = _tabController!.index;
       });
     }
   }
@@ -274,7 +274,7 @@ class _ParticularSubject extends State<ParticularSubject>
                                         children: <Widget>[
                                           InstituteCard(
                                             title: "",
-                                            subtitle: AppLocalizations.of(context).translate('academics'),
+                                            subtitle: AppLocalizations.of(context)!.translate('academics'),
                                             subtitle1: type,
                                             isShowMore: true,
                                             isIntroCard: true,
@@ -326,7 +326,7 @@ class _ParticularSubject extends State<ParticularSubject>
                                                         _currentPosition,
                                                     tabName:  list[index].tabName,
                                                     onPressed: (){
-                                                      _tabController.animateTo(index);
+                                                      _tabController!.animateTo(index);
                                                       if (this.mounted) {
                                                         setState(() {
                                                           _currentPosition =
@@ -354,7 +354,7 @@ class _ParticularSubject extends State<ParticularSubject>
                                           children: List<Widget>.generate(
                                               list.length, (int index) {
                                             return new Center(
-                                                child: list[_currentPosition]
+                                                child: list[_currentPosition!]
                                                     .statelessWidget);
                                           }),
                                         )),
@@ -368,7 +368,7 @@ class _ParticularSubject extends State<ParticularSubject>
     );
   }
 
-  loadPages(String type) async {
+  loadPages(String? type) async {
     var resAbout;
     if (type == "student")
       resAbout =
@@ -380,21 +380,21 @@ class _ParticularSubject extends State<ParticularSubject>
       resAbout = await rootBundle.loadString('assets/parent_profile_json.json');
 
     final Map parsedAbout = json.decode(resAbout);
-    listCardData = BaseResponses.fromJson(parsedAbout).rows;
+    listCardData = BaseResponses.fromJson(parsedAbout as Map<String, dynamic>).rows;
     // for (var item in listCardData) {
     //   /*    listCardsAbout.add(GetAllCards().getCard(item));*/
     // }
 
     var res = await rootBundle.loadString('assets/students.json');
     final Map parsed = json.decode(res);
-    listStudentsCards = BaseResponses.fromJson(parsed).rows;
+    listStudentsCards = BaseResponses.fromJson(parsed as Map<String, dynamic>).rows;
     // for (var item in listStudentsCards) {
     //   /* listStudentsData.add(GetAllCards().getCard(item));*/
     // }
 
     var resG = await rootBundle.loadString('assets/gurus.json');
     final Map parsedG = json.decode(resG);
-    listGurusCard = BaseResponses.fromJson(parsedG).rows;
+    listGurusCard = BaseResponses.fromJson(parsedG as Map<String, dynamic>).rows;
     // for (var item in listGurusCard) {
     //   /*listGurusData.add(GetAllCards().getCard(item));*/
     // }
@@ -410,29 +410,29 @@ class _ParticularSubject extends State<ParticularSubject>
               type: "open",
               listCardsAbout: listCardsAbout,
             ),
-            tabName: AppLocalizations.of(context).translate('timeline')));
+            tabName: AppLocalizations.of(context)!.translate('timeline')));
         list.add(CustomTabMaker(
             statelessWidget: AboutPage(
               type: "closed",
               listCardsAbout: listStudentsData,
             ),
-            tabName: AppLocalizations.of(context).translate('student')));
+            tabName: AppLocalizations.of(context)!.translate('student')));
 
         list.add(CustomTabMaker(
             statelessWidget: AboutPage(
               type: "assigned",
               listCardsAbout: listGurusData,
             ),
-            tabName: AppLocalizations.of(context).translate('guru')));
+            tabName: AppLocalizations.of(context)!.translate('guru')));
 
         list.add(CustomTabMaker(
             statelessWidget: AboutPage(
               type: "assigned",
               listCardsAbout: listCardsAbout,
             ),
-            tabName: AppLocalizations.of(context).translate('more')));
+            tabName: AppLocalizations.of(context)!.translate('more')));
         _tabController = TabController(vsync: this, length: list.length);
-        _tabController.addListener(onPositionChange);
+        _tabController!.addListener(onPositionChange);
       });
     }
   }
@@ -443,7 +443,7 @@ class AboutPage extends StatelessWidget {
   String type;
   List<StatelessWidget> listCardsAbout = [];
 
-  AboutPage({Key key, @required this.type, @required this.listCardsAbout})
+  AboutPage({Key? key, required this.type, required this.listCardsAbout})
       : super(key: key);
 
   @override
@@ -459,9 +459,7 @@ class AboutPage extends StatelessWidget {
               return listCardsAbout[index];
             }),
         // ignore: missing_return
-        onNotification: (t) {
-          if (t is ScrollStartNotification) {}
-        },
+
       ),
     ));
   }

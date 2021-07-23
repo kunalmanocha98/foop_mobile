@@ -1,6 +1,6 @@
 class BasicRes {
-  String statusCode;
-  String message;
+  String? statusCode;
+  String? message;
   BasicRes({this.statusCode, this.message});
   BasicRes.fromJson(Map<String, dynamic> json) {
     statusCode = json['statusCode'];

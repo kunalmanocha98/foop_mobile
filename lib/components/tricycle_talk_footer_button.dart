@@ -3,17 +3,18 @@ import 'package:oho_works_app/utils/hexColors.dart';
 import 'package:flutter/material.dart';
 
 class TricycleTalkFooterButton extends StatefulWidget {
-  final TALKFOOTERENUM type;
-  final Function(bool) muteCallBack;
-  final Function handRaiseCallback;
-  final Function(bool) handRaisedByOthersCallback;
+  final TALKFOOTERENUM? type;
+  final Function(bool)? muteCallBack;
 
-  final Function postCreateCallback;
-  final Function(bool) videoCallBack;
-  final bool isMute;
+  final Function? handRaiseCallback;
+  final Function(bool)? handRaisedByOthersCallback;
+
+  final Function? postCreateCallback;
+  final Function(bool)? videoCallBack;
+  final bool? isMute;
 
   TricycleTalkFooterButton(
-      {Key key,
+      {Key? key,
         this.type,
         this.isMute = true,
         this.muteCallBack,
@@ -25,7 +26,7 @@ class TricycleTalkFooterButton extends StatefulWidget {
 
   @override
   TricycleTalkFooterButtonState createState() =>
-      TricycleTalkFooterButtonState(isMute);
+      TricycleTalkFooterButtonState(isMute!);
 }
 
 enum TALKFOOTERENUM { speaker, moderator, audience, chat, post }
@@ -33,7 +34,7 @@ enum TALKFOOTERENUM { speaker, moderator, audience, chat, post }
 class TricycleTalkFooterButtonState extends State<TricycleTalkFooterButton> {
   bool _handRaise = false;
   bool _speakerOn = false;
-  // bool _videoOn = false;
+   bool _videoOn = false;
 
   int count = 0;
 
@@ -98,22 +99,22 @@ class TricycleTalkFooterButtonState extends State<TricycleTalkFooterButton> {
   );
 
 
-/*  Widget get _videoButton => Row(
+  Widget get _videoButton => Row(
     children: [
       FloatingActionButton(
         heroTag: null,
         backgroundColor: !_videoOn
-            ? HexColor(AppColors.appColorWhite)
-            : HexColor(AppColors.appMainColor),
+            ? HexColor(AppColors.appMainColor)
+            : HexColor(AppColors.appColorWhite),
         onPressed: () {
           print(_videoOn.toString());
           if (!_videoOn) {
-            widget.videoCallBack(true);
+            widget.videoCallBack!(true);
             setState(() {
               _videoOn = !_videoOn;
             });
           } else {
-            widget.videoCallBack(false);
+            widget.videoCallBack!(false);
             setState(() {
               _videoOn = !_videoOn;
             });
@@ -122,12 +123,12 @@ class TricycleTalkFooterButtonState extends State<TricycleTalkFooterButton> {
         child: Icon(
           _videoOn ? Icons.videocam_outlined : Icons.videocam_off_outlined,
           color: !_videoOn
-              ? HexColor(AppColors.appColorBlack65)
-              : HexColor(AppColors.appColorWhite),
+              ?HexColor(AppColors.appColorWhite)
+              : HexColor(AppColors.appColorBlack65),
         ),
       )
     ],
-  );*/
+  );
 
   Widget get _audienceButton => Row(
     children: [
@@ -138,12 +139,12 @@ class TricycleTalkFooterButtonState extends State<TricycleTalkFooterButton> {
             : HexColor(AppColors.appColorWhite),
         onPressed: () {
           if (!_handRaise) {
-            widget.handRaisedByOthersCallback(true);
+            widget.handRaisedByOthersCallback!(true);
             setState(() {
               _handRaise = !_handRaise;
             });
           } else {
-            widget.handRaisedByOthersCallback(false);
+            widget.handRaisedByOthersCallback!(false);
             setState(() {
               _handRaise = !_handRaise;
             });
@@ -167,7 +168,7 @@ class TricycleTalkFooterButtonState extends State<TricycleTalkFooterButton> {
             ?HexColor(AppColors.appMainColor)
             : HexColor(AppColors.appColorWhite),
         onPressed: () {
-          widget.muteCallBack(!_speakerOn);
+          widget.muteCallBack!(!_speakerOn);
           setState(() {
             _speakerOn = !_speakerOn;
           });
@@ -186,7 +187,7 @@ class TricycleTalkFooterButtonState extends State<TricycleTalkFooterButton> {
     children: [
       FloatingActionButton(
         heroTag: null,
-        onPressed: widget.postCreateCallback,
+        onPressed: widget.postCreateCallback as void Function()?,
         backgroundColor: HexColor(AppColors.appColorWhite),
         child: Icon(
           Icons.add_circle_outline_outlined,
@@ -207,7 +208,7 @@ class TricycleTalkFooterButtonState extends State<TricycleTalkFooterButton> {
             ? HexColor(AppColors.appMainColor)
             : HexColor(AppColors.appColorWhite),
         onPressed: () {
-          widget.muteCallBack(!_speakerOn);
+          widget.muteCallBack!(!_speakerOn);
           setState(() {
             _speakerOn = !_speakerOn;
           });
@@ -222,10 +223,10 @@ class TricycleTalkFooterButtonState extends State<TricycleTalkFooterButton> {
       SizedBox(
         width: 12,
       ),
-     /* _videoButton,
+      _videoButton,
       SizedBox(
         width: 12,
-      ),*/
+      ),
       Stack(
         children: [
           FloatingActionButton(
@@ -233,7 +234,7 @@ class TricycleTalkFooterButtonState extends State<TricycleTalkFooterButton> {
               backgroundColor: count>0
                   ? HexColor(AppColors.appColorWhite)
                   : HexColor(AppColors.appMainColor),
-              onPressed: widget.handRaiseCallback,
+              onPressed: widget.handRaiseCallback as void Function()?,
               child: Icon(
                 Icons.pan_tool_outlined,
                 color: count>0

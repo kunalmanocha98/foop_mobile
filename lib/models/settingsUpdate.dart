@@ -5,9 +5,9 @@
 import 'language_list.dart';
 
 class AccountSettingUpdateResponse {
-  String statusCode;
-  String message;
-  AccountSettingUpdateRequest rows;
+  String? statusCode;
+  String? message;
+  AccountSettingUpdateRequest? rows;
 
   AccountSettingUpdateResponse({this.statusCode, this.message, this.rows});
 
@@ -24,25 +24,25 @@ class AccountSettingUpdateResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     return data;
   }
 }
 
 class AccountSettingUpdateRequest {
-  int id;
-  int institutionId;
-  int personId;
-  String academicDateStart;
-  String academicDateEnd;
-  LanguageItemNew transLateLanguage;
-  int languageId;
+  int? id;
+  int? institutionId;
+  int? personId;
+  String? academicDateStart;
+  String? academicDateEnd;
+  LanguageItemNew? transLateLanguage;
+  int? languageId;
 
-  List<int> contentLanguageIds;
-  String dateFormat;
-  String timeFormat;
-  int currencyId;
+  List<int?>? contentLanguageIds;
+  String? dateFormat;
+  String? timeFormat;
+  int? currencyId;
 
   AccountSettingUpdateRequest(
       {this.id,
@@ -89,9 +89,9 @@ class AccountSettingUpdateRequest {
 }
 
 class PrivacySettingUpdateResponse {
-  String statusCode;
-  String message;
-  PrivacySettingUpdateRequest rows;
+  String? statusCode;
+  String? message;
+  PrivacySettingUpdateRequest? rows;
 
   PrivacySettingUpdateResponse({this.statusCode, this.message, this.rows});
 
@@ -108,23 +108,23 @@ class PrivacySettingUpdateResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     return data;
   }
 }
 
 class PrivacySettingUpdateRequest {
-  int id;
-  int institutionId;
-  int personId;
-  String networkType;
-  List<String> postVisibleTo;
-  List<String> postBy;
-  List<String> goalsObjectiviesVisibleTo;
-  List<String> ratingVisibleTo;
-  List<String> ratingBy;
-  List<String> profileVisibleTo;
+  int? id;
+  int? institutionId;
+  int? personId;
+  String? networkType;
+  List<String?>? postVisibleTo;
+  List<String?>? postBy;
+  List<String?>? goalsObjectiviesVisibleTo;
+  List<String?>? ratingVisibleTo;
+  List<String?>? ratingBy;
+  List<String?>? profileVisibleTo;
 
   PrivacySettingUpdateRequest(
       {this.id,

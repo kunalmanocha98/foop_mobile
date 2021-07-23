@@ -1,10 +1,10 @@
 class DeleteMessage {
-  String conversationOwnerId;
-  String conversationId;
-  String messageStatus;
-  List<String> messageIds;
-  int messageDeletedTime;
-  String conversationOwnerType;
+  String? conversationOwnerId;
+  String? conversationId;
+  String? messageStatus;
+  List<String>? messageIds;
+  int? messageDeletedTime;
+  String? conversationOwnerType;
 
   DeleteMessage(
       {this.conversationOwnerId,

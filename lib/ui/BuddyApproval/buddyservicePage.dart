@@ -18,11 +18,11 @@ class BuddyServicesPage extends StatefulWidget {
 }
 
 class BuddyServicesPageState extends State<BuddyServicesPage> {
-  SharedPreferences prefs;
+  SharedPreferences? prefs;
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
 
   refresh() {
-    paginatorKey.currentState.changeState(resetState: true);
+    paginatorKey.currentState!.changeState(resetState: true);
   }
 
   @override
@@ -31,7 +31,7 @@ class BuddyServicesPageState extends State<BuddyServicesPage> {
       child: Scaffold(
         appBar: TricycleAppBar().getCustomAppBar(
           context,
-          appBarTitle: AppLocalizations.of(context).translate('buddy_services'),
+          appBarTitle: AppLocalizations.of(context)!.translate('buddy_services'),
           onBackButtonPress: () {
             Navigator.pop(context);
           },
@@ -53,7 +53,7 @@ class BuddyServicesPageState extends State<BuddyServicesPage> {
   Future<BuddyServiceListResponse> fetchList(int page) async{
     prefs ??= await SharedPreferences.getInstance();
     BuddyServiceListRequest payload = BuddyServiceListRequest();
-    payload.ownerId = prefs.getInt(Strings.userId);
+    payload.ownerId = prefs!.getInt(Strings.userId);
     payload.ownerType = 'person';
     var res  = await Calls().call(jsonEncode(payload), context, Config.BUDDY_SERVICE_LIST);
     var model =  BuddyServiceListResponse.fromJson(res);
@@ -66,8 +66,8 @@ class BuddyServicesPageState extends State<BuddyServicesPage> {
     return model;
   }
 
-  List<BuddyServiceListItem> pageItemGetter(BuddyServiceListResponse pageData) {
-    return pageData.rows;
+  List<BuddyServiceListItem>? pageItemGetter(BuddyServiceListResponse? pageData) {
+    return pageData!.rows;
   }
 
   Widget listItemBuilder(itemData, int index) {
@@ -75,7 +75,7 @@ class BuddyServicesPageState extends State<BuddyServicesPage> {
     return TricycleEarnCard(
       title: item.heading,
       coinsValue: item.coins,
-      imageUrl: Config.BASE_URL+ item.imageUrl,
+      imageUrl: Config.BASE_URL+ item.imageUrl!,
       quote: '',
       moneyVal: item.moneyVal,
       type: item.cardName,
@@ -83,6 +83,6 @@ class BuddyServicesPageState extends State<BuddyServicesPage> {
   }
 
   int totalPageGettter(BuddyServiceListResponse pageData) {
-    return pageData.rows.length;
+    return pageData.rows!.length;
   }
 }

@@ -23,7 +23,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class UserContacts extends StatefulWidget {
-  SharedPreferences prefs;
+  SharedPreferences? prefs;
 
   UserContacts({this.prefs});
 
@@ -32,9 +32,9 @@ class UserContacts extends StatefulWidget {
 }
 
 class _UserContacts extends State<UserContacts> {
-  TextStyleElements styleElements;
-  ProgressDialog pr;
-  Persondata rows;
+  late TextStyleElements styleElements;
+  ProgressDialog? pr;
+  Persondata? rows;
   var followers = 0;
   var following = 0;
   var roomsCount = 0;
@@ -42,16 +42,16 @@ class _UserContacts extends State<UserContacts> {
   bool cb1 = false,
       cb2 = false;
   var list = [];
-  int selectedRadio;
+  int? selectedRadio;
   int totalSelected=0;
-  SharedPreferences prefs;
+  SharedPreferences? prefs;
   final dbHelper = DatabaseHelper.instance;
   _UserContacts({this.prefs});
   List<InvitationRecipientList> invitationRecipientList = [];
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) =>
+    WidgetsBinding.instance!.addPostFrameCallback((_) =>
         getListContacts(null));
   }
   void onsearchValueChanged(String text) {
@@ -78,7 +78,7 @@ else
                   SliverToBoxAdapter(
                     child: SearchBox(
                       onvalueChanged: onsearchValueChanged,
-                      hintText: AppLocalizations.of(context).translate('search'),
+                      hintText: AppLocalizations.of(context)!.translate('search'),
                     ),
                   )
                 ];
@@ -110,7 +110,7 @@ else
                             value:
                             list[index].isSelected==1?true:false,
                             onChanged:
-                                (bool value) async {
+                                (bool? value) async {
                               var row= list[index];
                               row.isSelected=0;
                               await dbHelper.updateIsSelected(row);
@@ -135,7 +135,7 @@ else
 
                               });
                             },
-                            child: Text(AppLocalizations.of(context).translate("select"),
+                            child: Text(AppLocalizations.of(context)!.translate("select"),
                               style: styleElements.subtitle2ThemeScalable(context).copyWith(color: HexColor(AppColors.appMainColor)),),
                           ),
                         ),
@@ -184,7 +184,7 @@ else
                               },
                               color: HexColor(AppColors.appColorWhite),
                               child: Text(
-                                AppLocalizations.of(context).translate('next'),
+                                AppLocalizations.of(context)!.translate('next'),
                                 style: styleElements
                                     .subtitle2ThemeScalable(context)
                                     .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -217,15 +217,15 @@ else
       prefs = await SharedPreferences.getInstance();
       InviteUserPayload payload = InviteUserPayload();
       payload.inviteContextType = 'TR';
-      payload.inviteContextTypeId = prefs.getInt(Strings.userId);
+      payload.inviteContextTypeId = prefs!.getInt(Strings.userId);
       payload.invitedByType = 'person';
-      payload.invitedById = prefs.getInt(Strings.userId);
+      payload.invitedById = prefs!.getInt(Strings.userId);
 
       payload.invitationRecipientList = invitationRecipientList;
       uploadData(payload);
     } else {
       ToastBuilder().showToast(
-          AppLocalizations.of(context)
+          AppLocalizations.of(context)!
               .translate("select_contact"),
           context,
           HexColor(AppColors.success));
@@ -252,7 +252,7 @@ else
       progressDialog.hide();
     });
   }
-  void getListContacts(String name) async {
+  void getListContacts(String? name) async {
     if(name==null)
     list = await dbHelper.getContactsAll();
     else

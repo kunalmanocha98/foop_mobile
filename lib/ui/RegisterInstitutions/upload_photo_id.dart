@@ -33,17 +33,17 @@ import 'models/scratch_data.dart';
 // ignore: must_be_immutable
 class UploadUserId extends StatefulWidget {
 
-  int instId;
-  CreateReferralEntity createReferralEntity;
-  String fromPage;
-   Null Function() callbackPicker;
+  int? instId;
+  CreateReferralEntity? createReferralEntity;
+  String? fromPage;
+   Null Function()? callbackPicker;
   @override
   _UploadUserIdState createState() => _UploadUserIdState(instId,createReferralEntity,fromPage,callbackPicker);
 
 
 
   UploadUserId(
-      {Key key,
+      {Key? key,
         this.instId, this.createReferralEntity, this.fromPage,this.callbackPicker})
       : super(key: key);
 }
@@ -53,18 +53,18 @@ var imageChild;
 class _UploadUserIdState extends State<UploadUserId> {
   var imageFile;
   _UploadUserIdState(this.instId, this.createReferralEntity, this.fromPage,this.callbackPicker);
-  String type;
-  int id;
-  int instId;
-  Null Function() callbackPicker;
-  CreateReferralEntity createReferralEntity;
-  String fromPage;
-  String imageUrl;
-  String studentType;
+  String? type;
+  int? id;
+  int? instId;
+  Null Function()? callbackPicker;
+  CreateReferralEntity? createReferralEntity;
+  String? fromPage;
+  String? imageUrl;
+  String? studentType;
 
-  SharedPreferences prefs;
-  BuildContext context;
-  File imagePath;
+  late SharedPreferences prefs;
+ late BuildContext context;
+  late File imagePath;
 
   bool isLoading = false;
 
@@ -95,7 +95,7 @@ class _UploadUserIdState extends State<UploadUserId> {
   }
 
   _profilePicker(String type) async {
-    File pickedFile;
+    File? pickedFile;
     var pr = ToastBuilder()
         .setProgressDialogWithPercent(context, 'Uploading Image...');
     if (type == "Gallery")
@@ -141,7 +141,7 @@ class _UploadUserIdState extends State<UploadUserId> {
             .then((value) async {
           await pr.hide();
           var imageResponse = ImageUpdateResponse.fromJson(value);
-          updateImage(imageResponse.rows.fileUrl, OWNERTYPE.person.type,
+          updateImage(imageResponse.rows!.fileUrl, OWNERTYPE.person.type,
               IMAGETYPE.profile.type);
         }).catchError((onError) async {
           await pr.hide();
@@ -151,7 +151,7 @@ class _UploadUserIdState extends State<UploadUserId> {
     }
   }
 
-  updateImage(String url, String ownerType, String imageType) async {
+  updateImage(String? url, String ownerType, String imageType) async {
     setState(() {
       imageUrl = url;
 
@@ -161,10 +161,11 @@ class _UploadUserIdState extends State<UploadUserId> {
   // ignore: missing_return
   Future<bool> _onBackPressed() {
     Navigator.of(context).pop({'result': imageUrl});
+    return new Future(() => false);
   }
 
-  TextStyleElements styleElements;
-  BuildContext sctx;
+  late TextStyleElements styleElements;
+  BuildContext? sctx;
 
   @override
   Widget build(BuildContext context) {
@@ -198,7 +199,7 @@ class _UploadUserIdState extends State<UploadUserId> {
               resizeToAvoidBottomInset: false,
               backgroundColor: HexColor(AppColors.appColorBackground),
               appBar: TricycleAppBar().getCustomAppBar(context,
-                  appBarTitle: AppLocalizations.of(context).translate('upload_photo_id_header'),
+                  appBarTitle: AppLocalizations.of(context)!.translate('upload_photo_id_header'),
                   actions: [
                     Padding(
                       padding: const EdgeInsets.all(16.0),
@@ -216,7 +217,7 @@ class _UploadUserIdState extends State<UploadUserId> {
                         child: Row(
                           children: [
                             Text(
-                              AppLocalizations.of(context).translate('next'),
+                              AppLocalizations.of(context)!.translate('next'),
                               style: styleElements
                                   .subtitle2ThemeScalable(context)
                                   .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -254,7 +255,7 @@ class _UploadUserIdState extends State<UploadUserId> {
                                 margin: const EdgeInsets.only(
                                     left: 16.0, right: 16.0, top: 5),
                                 child: Text(
-                                  AppLocalizations.of(context).translate(
+                                  AppLocalizations.of(context)!.translate(
                                       "upload_photo_id"),
                                   style: styleElements
                                       .subtitle1ThemeScalable(context),
@@ -334,14 +335,14 @@ class _UploadUserIdState extends State<UploadUserId> {
               context: context,
               builder: (BuildContext context) => ScratchCardDialogue(
                 prefs.getInt("userId"),
-                data.rows.id,
-                data.rows.scratchCardValue,
-                data.rows.scratchCardRewardType,
+                data.rows!.id,
+                data.rows!.scratchCardValue,
+                data.rows!.scratchCardRewardType,
                 fromPage: fromPage,
                   callBack: () {
                   if(callbackPicker!=null)
                     {
-                      callbackPicker();
+                      callbackPicker!();
                       Navigator.pop(context);
                     }
 
@@ -366,7 +367,7 @@ class _UploadUserIdState extends State<UploadUserId> {
         getScratchCardData();
       } else {
 
-        ToastBuilder().showToast(basicDataForRefral.message, context,
+        ToastBuilder().showToast(basicDataForRefral.message!, context,
             HexColor(AppColors.information));
       }
     }).catchError((onError) async {
@@ -381,13 +382,13 @@ class _UploadUserIdState extends State<UploadUserId> {
         builder: (BuildContext context) {
           return AlertDialog(
               title: Text(
-                  AppLocalizations.of(context).translate('from_where_picture')),
+                  AppLocalizations.of(context)!.translate('from_where_picture')),
               content: SingleChildScrollView(
                 child: ListBody(
                   children: <Widget>[
                     GestureDetector(
                       child: Text(
-                          AppLocalizations.of(context).translate('gallery')),
+                          AppLocalizations.of(context)!.translate('gallery')),
                       onTap: () {
                         Navigator.pop(context, null);
                         _profilePicker("Gallery");
@@ -396,7 +397,7 @@ class _UploadUserIdState extends State<UploadUserId> {
                     Padding(padding: EdgeInsets.all(16.0)),
                     GestureDetector(
                       child: Text(
-                          AppLocalizations.of(context).translate('camera')),
+                          AppLocalizations.of(context)!.translate('camera')),
                       onTap: () {
                         Navigator.pop(context, null);
                         _profilePicker("Camera");

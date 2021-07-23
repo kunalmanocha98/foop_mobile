@@ -28,18 +28,18 @@ class Profiledetailcard extends StatelessWidget {
   final CommonCardData data;
 
   // int colorCode = 0xFFEF9A9A;
-  Persondata persondata;
-  Null Function() callback;
-  BuildContext context;
-  List<SubRow> listSubItems;
-  TextStyleElements styleElements;
-  String ownerType;
-  String PersonType;
-  int ownerId;
-  SharedPreferences prefs = locator<SharedPreferences>();
+  Persondata? persondata;
+  Null Function()? callback;
+  BuildContext? context;
+  List<SubRow>? listSubItems;
+  late TextStyleElements styleElements;
+  String? ownerType;
+  String? PersonType;
+  int? ownerId;
+  SharedPreferences? prefs = locator<SharedPreferences>();
 
   Profiledetailcard(
-      {Key key, @required this.data, this.persondata, this.callback, this.ownerId, this.ownerType, this.PersonType})
+      {Key? key, required this.data, this.persondata, this.callback, this.ownerId, this.ownerType, this.PersonType})
       : super(key: key);
 
 
@@ -63,7 +63,7 @@ class Profiledetailcard extends StatelessWidget {
                             padding: const EdgeInsets.only(
                                 left: 16, right: 16, top: 12, bottom: 12),
                             child: Text(
-                              AppLocalizations.of(context)
+                              AppLocalizations.of(context)!
                                   .translate("my_roles"),
                               style: styleElements
                                   .headline6ThemeScalable(context)
@@ -103,38 +103,38 @@ class Profiledetailcard extends StatelessWidget {
                         ))
                   ],
                 )),
-            listSubItems != null && listSubItems.length > 0 ? Container(
+            listSubItems != null && listSubItems!.length > 0 ? Container(
               margin: const EdgeInsets.only(top: 8.0, bottom: 8.0),
               child: ListView.builder(
                   shrinkWrap: true,
                   padding: const EdgeInsets.all(0.0),
                   physics: NeverScrollableScrollPhysics(),
-                  itemCount: listSubItems.length,
+                  itemCount: listSubItems!.length,
                   itemBuilder: (context, index) {
                     return
-                      listSubItems[index].subRow != null &&
-                          listSubItems[index].subRow.isNotEmpty ?
+                      listSubItems![index].subRow != null &&
+                          listSubItems![index].subRow!.isNotEmpty ?
                       GestureDetector(
                           onTap: () {
-                            if (listSubItems[index].subRow[0].childId != null &&
-                                listSubItems[index].subRow[0].childId != "" &&
-                                listSubItems[index].subRow[0].childId != "None")
+                            if (listSubItems![index].subRow![0].childId != null &&
+                                listSubItems![index].subRow![0].childId != "" &&
+                                listSubItems![index].subRow![0].childId != "None")
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
                                           UserProfileCards(
                                             userType: int.parse(
-                                                listSubItems[index].subRow[0]
-                                                    .childId) == ownerId
+                                                listSubItems![index].subRow![0]
+                                                    .childId!) == ownerId
                                                 ? "person"
                                                 : "thirdPerson",
                                             userId: int.parse(
-                                                listSubItems[index].subRow[0]
-                                                    .childId) != ownerId ? int
+                                                listSubItems![index].subRow![0]
+                                                    .childId!) != ownerId ? int
                                                 .parse(
-                                                listSubItems[index].subRow[0]
-                                                    .childId) : null,
+                                                listSubItems![index].subRow![0]
+                                                    .childId!) : null,
                                             callback: () {
 
                                             },
@@ -144,28 +144,28 @@ class Profiledetailcard extends StatelessWidget {
                           },
                           child: TricycleUserListTile(
                             imageUrl: Config.BASE_URL +
-                                listSubItems[index].subRow[0].urlOne ?? "",
+                                listSubItems![index].subRow![0].urlOne!,
                             isFullImageUrl: true,
-                            title: listSubItems[index].textOne ?? "",
+                            title: listSubItems![index].textOne ?? "",
                             subtitleWidget: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  listSubItems[index].subRow[0].textOne ?? "",
+                                  listSubItems![index].subRow![0].textOne ?? "",
                                   style: styleElements
                                       .subtitle1ThemeScalable(context)
                                       .copyWith(fontWeight: FontWeight.w600),
                                   textAlign: TextAlign.left,
                                 ),
                                 Visibility(
-                                  visible: listSubItems[index].subRow[0]
+                                  visible: listSubItems![index].subRow![0]
                                       .textThree != null,
                                   child: RichText(
                                     text: TextSpan(children: [
 
                                       TextSpan(
-                                          text: listSubItems[index].subRow[0]
+                                          text: listSubItems![index].subRow![0]
                                               .textThree ?? "",
                                           style: styleElements
                                               .overlineThemeScalable(context)
@@ -179,7 +179,7 @@ class Profiledetailcard extends StatelessWidget {
                               ],
                             ),
                             trailingWidget: Visibility(
-                              visible: !listSubItems[index].subRow[0].isFollow2,
+                              visible: !listSubItems![index].subRow![0].isFollow2!,
                               child: GenericFollowUnfollowButton(
                                 textColor: HexColor(AppColors.appColorWhite),
                                 backGroundColor:
@@ -188,31 +188,31 @@ class Profiledetailcard extends StatelessWidget {
                                 actionByObjectId: ownerId,
                                 actionOnObjectType: "person",
                                 actionOnObjectId: int.parse(
-                                    listSubItems[index].subRow[0].childId),
-                                engageFlag: listSubItems[index].subRow[0]
-                                    .isFollow2
-                                    ? AppLocalizations.of(context)
+                                    listSubItems![index].subRow![0].childId!),
+                                engageFlag: listSubItems![index].subRow![0]
+                                    .isFollow2!
+                                    ? AppLocalizations.of(context)!
                                     .translate('following')
-                                    : AppLocalizations.of(context)
+                                    : AppLocalizations.of(context)!
                                     .translate('follow'),
-                                actionFlag: listSubItems[index].subRow[0]
-                                    .isFollow2
+                                actionFlag: listSubItems![index].subRow![0]
+                                    .isFollow2!
                                     ? "U"
                                     : "F",
                                 actionDetails: [],
                                 personName: "",
                                 callback: (isCallSuccess) {
                                   if (callback != null)
-                                    callback();
+                                    callback!();
                                 },
                               ),
                             ),
 
                           )) : GestureDetector(
                           onTap: () {
-                            if (listSubItems[index].institutionId != null &&
-                                listSubItems[index].institutionId != "" &&
-                                listSubItems[index].institutionId != "None")
+                            if (listSubItems![index].institutionId != null &&
+                                listSubItems![index].institutionId != "" &&
+                                listSubItems![index].institutionId != "None")
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -221,8 +221,8 @@ class Profiledetailcard extends StatelessWidget {
                                           callback: callback,
                                           currentPosition: 1,
                                           userType: "institution",
-                                          userId: int.parse(listSubItems[index]
-                                              .institutionId),
+                                          userId: int.parse(listSubItems![index]
+                                              .institutionId!),
                                           type: null,
                                         ),
                                   ));
@@ -231,7 +231,7 @@ class Profiledetailcard extends StatelessWidget {
                               leading:
                               TricycleAvatar(
                                 imageUrl: Config.BASE_URL +
-                                    listSubItems[index].urlOne ?? "",
+                                    listSubItems![index].urlOne!,
                                 service_type: SERVICE_TYPE.INSTITUTION,
                                 resolution_type: RESOLUTION_TYPE.R64,
                                 isFullUrl: true,
@@ -240,7 +240,7 @@ class Profiledetailcard extends StatelessWidget {
                               )
                               ,
                               title: Text(
-                                listSubItems[index].textOne ?? "",
+                                listSubItems![index].textOne ?? "",
                                 style: styleElements
                                     .subtitle2ThemeScalable(context)
                                 ,
@@ -251,14 +251,14 @@ class Profiledetailcard extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    listSubItems[index].textFour ?? "",
+                                    listSubItems![index].textFour ?? "",
                                     style: styleElements
                                         .subtitle1ThemeScalable(context)
                                         .copyWith(fontWeight: FontWeight.w600),
                                     textAlign: TextAlign.left,
                                   ),
                                   Visibility(
-                                    visible: listSubItems[index].locality !=
+                                    visible: listSubItems![index].locality !=
                                         null,
                                     child: RichText(
                                       text: TextSpan(children: [
@@ -278,7 +278,7 @@ class Profiledetailcard extends StatelessWidget {
                                           ),
                                         ),
                                         TextSpan(
-                                            text: listSubItems[index]
+                                            text: listSubItems![index]
                                                 .locality ?? "",
                                             style: styleElements
                                                 .overlineThemeScalable(context)
@@ -295,7 +295,7 @@ class Profiledetailcard extends StatelessWidget {
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
                                   Visibility(
-                                    visible: !listSubItems[index].isFollow2,
+                                    visible: !listSubItems![index].isFollow2!,
                                     child: GenericFollowUnfollowButton(
                                       textColor: HexColor(
                                           AppColors.appColorWhite),
@@ -304,28 +304,28 @@ class Profiledetailcard extends StatelessWidget {
                                       actionByObjectType: ownerType,
                                       actionByObjectId: ownerId,
                                       actionOnObjectType: "institution",
-                                      actionOnObjectId: listSubItems[index]
+                                      actionOnObjectId: listSubItems![index]
                                           .institutionId != null &&
-                                          listSubItems[index].institutionId !=
+                                          listSubItems![index].institutionId !=
                                               "None" ? int.parse(
-                                          listSubItems[index].institutionId ??
+                                          listSubItems![index].institutionId ??
                                               "0") : null,
-                                      engageFlag: (listSubItems[index]
+                                      engageFlag: (listSubItems![index]
                                           .isFollow2 != null
-                                          ? listSubItems[index].isFollow2
-                                          : false)
-                                          ? AppLocalizations.of(context)
+                                          ? listSubItems![index].isFollow2
+                                          : false)!
+                                          ? AppLocalizations.of(context)!
                                           .translate('following')
-                                          : AppLocalizations.of(context)
+                                          : AppLocalizations.of(context)!
                                           .translate('follow'),
-                                      actionFlag: (listSubItems[index]
+                                      actionFlag: (listSubItems![index]
                                           .isFollow2 != null
-                                          ? listSubItems[index].isFollow2
-                                          : false) ? "U" : "F",
+                                          ? listSubItems![index].isFollow2
+                                          : false)! ? "U" : "F",
                                       actionDetails: [],
                                       personName: "",
                                       callback: (isCallSuccess) {
-                                        callback();
+                                        callback!();
                                       },
                                     ),
                                   ),
@@ -350,12 +350,12 @@ class Profiledetailcard extends StatelessWidget {
         return [
           PopupMenuItem(
             value: 'edit',
-            child: Text(AppLocalizations.of(context).translate('edit'),
+            child: Text(AppLocalizations.of(context)!.translate('edit'),
             ),
           ),
           PopupMenuItem(
             value: 'delete',
-            child: Text(AppLocalizations.of(context).translate('delete'),
+            child: Text(AppLocalizations.of(context)!.translate('delete'),
             ),
           ),
         ];
@@ -365,12 +365,12 @@ class Profiledetailcard extends StatelessWidget {
           case 'delete':
             {
               print('delete');
-              deleteRole(listSubItems[index].institutionId,listSubItems[index].id);
+              deleteRole(listSubItems![index].institutionId!,listSubItems![index].id!);
               break;
             }
           case 'edit':
             {
-              editRole(listSubItems[index].id);
+              editRole(listSubItems![index].id);
               print('edit');
               break;
             }
@@ -386,24 +386,24 @@ class Profiledetailcard extends StatelessWidget {
   void deleteRole(String institutionId, String deleteUserId) {
     var body = {
       "institution_id" : int.parse(institutionId),
-      "person_id": prefs.getInt(Strings.userId),
+      "person_id": prefs!.getInt(Strings.userId),
       "deleted_institution_user_id": int.parse(deleteUserId)
     };
     Calls().call(jsonEncode(body), context, Config.INSTITUTION_DELETE_ROLE).then((value) {
       log("delete role----------------------------"+jsonEncode(value));
-      callback();
+      callback!();
     });
   }
 
-  void editRole(String id) {
-    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+  void editRole(String? id) {
+    Navigator.push(context!, MaterialPageRoute(builder: (BuildContext context){
       return WelComeScreen(
-        institutionIdtoDelete: int.parse(id),
+        institutionIdtoDelete: int.parse(id!),
         isEdit: true,
       );
     })).then((value){
       if(value!=null && value){
-        callback();
+        callback!();
       }
     });
   }

@@ -17,15 +17,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class TricycleEarnCard extends StatelessWidget {
-  final String type;
-  final String moneyVal;
-  final String imageUrl;
-  final String quote;
-  final String title;
-  final String coinsValue;
-  TextStyleElements styleElements;
-  SharedPreferences prefs;
-  bool isClickable;
+  final String? type;
+  final String? moneyVal;
+  final String? imageUrl;
+  final String? quote;
+  final String? title;
+  final String? coinsValue;
+  late TextStyleElements styleElements;
+  SharedPreferences? prefs;
+  bool? isClickable;
 
   TricycleEarnCard(
       {this.moneyVal,
@@ -74,7 +74,7 @@ class TricycleEarnCard extends StatelessWidget {
                             height: 4,
                           ),
                           Text(
-                           type=="register_institute"?AppLocalizations.of(context).translate("either_student_teacher") :'Minimum Guaranteed $coinsValue coins',
+                           type=="register_institute"?AppLocalizations.of(context)!.translate("either_student_teacher") :'Minimum Guaranteed $coinsValue coins',
                             style: styleElements
                                 .captionThemeScalable(context)
                                 .copyWith(),
@@ -99,7 +99,7 @@ class TricycleEarnCard extends StatelessWidget {
                         ),
                       ),
                     ):  CachedNetworkImage(
-                      imageUrl: imageUrl,
+                      imageUrl: imageUrl!,
                       width: 100,
                       height: 100,
                     )
@@ -129,19 +129,19 @@ class TricycleEarnCard extends StatelessWidget {
     prefs??=await SharedPreferences.getInstance();
      if(type=="register_institute" )
     {
-      if(isClickable)
+      if(isClickable!)
         Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>RegisInstruction()));}
      else{
        if (type == 'Buddy_Approval') {
          var personData = await DataSaveUtils().getUserData(context, prefs);
-         var isVerified = personData!=null?personData.isVerified : prefs.getBool(Strings.isVerified);
+         var isVerified = personData!=null?personData.isVerified! : prefs!.getBool(Strings.isVerified)!;
          if(isVerified) {
            Navigator.push(
                context,
                MaterialPageRoute(
                    builder: (BuildContext context) => ApprovalListPage()));
          }else{
-           ToastBuilder().showSnackBar(AppLocalizations.of(context).translate('verified_buddy'), context, HexColor(AppColors.information));
+           ToastBuilder().showSnackBar(AppLocalizations.of(context)!.translate('verified_buddy'), context, HexColor(AppColors.information));
          }
        }
 
@@ -205,7 +205,7 @@ class TricycleEarnCard extends StatelessWidget {
         text: TextSpan(children: [
           TextSpan(
               text:
-              AppLocalizations.of(context).translate("user_int_not_registered"),
+              AppLocalizations.of(context)!.translate("user_int_not_registered"),
               style: styleElements
                   .subtitle1ThemeScalable(context)
                   .copyWith(

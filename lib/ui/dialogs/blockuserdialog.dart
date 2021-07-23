@@ -14,7 +14,7 @@ class BlockUserDialog extends StatefulWidget {
 }
 
 class _BlockUserDialog extends State<BlockUserDialog> {
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class _BlockUserDialog extends State<BlockUserDialog> {
                 child: Container(
                   margin: const EdgeInsets.only(bottom: 16, top: 16),
                   child: Text(
-                    AppLocalizations.of(context).translate("block_user_title"),
+                    AppLocalizations.of(context)!.translate("block_user_title"),
                     style:  styleElements.headline5ThemeScalable(context),
                   ),
                 )),
@@ -49,7 +49,7 @@ class _BlockUserDialog extends State<BlockUserDialog> {
                 child: Container(
                   margin: const EdgeInsets.all(16),
                   child: Text(
-                    AppLocalizations.of(context).translate("block_user_des"),
+                    AppLocalizations.of(context)!.translate("block_user_des"),
                     style:  styleElements.bodyText2ThemeScalable(context),
                   ),
                 )),
@@ -64,7 +64,7 @@ class _BlockUserDialog extends State<BlockUserDialog> {
                         side: BorderSide(color: HexColor(AppColors.appMainColor))),
                     onPressed: () {},
                     color: HexColor(AppColors.appColorWhite),
-                    child: Text(AppLocalizations.of(context).translate('cancel'),
+                    child: Text(AppLocalizations.of(context)!.translate('cancel'),
                       style:  styleElements.subtitle1ThemeScalable(context),
                     ),
                   ),
@@ -77,7 +77,7 @@ class _BlockUserDialog extends State<BlockUserDialog> {
                         side: BorderSide(color: HexColor(AppColors.appMainColor))),
                     onPressed: () {},
                     color: HexColor(AppColors.appMainColor),
-                    child: Text(AppLocalizations.of(context).translate('ok'),
+                    child: Text(AppLocalizations.of(context)!.translate('ok'),
                       style:  styleElements.subtitle1ThemeScalable(context).copyWith(
                         color: HexColor(AppColors.appColorWhite),
                       ),

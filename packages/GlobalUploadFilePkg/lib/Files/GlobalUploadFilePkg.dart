@@ -7,33 +7,33 @@ import 'package:GlobalUploadFilePkg/Utils/StringUtils.dart';
 import 'package:flutter/material.dart';
 
 class UploadFile {
-  File file;
+  File? file;
   BuildContext context;
   String ownerType;
   String ownerId;
   String contextType;
-  String contextId;
+  String? contextId;
   String subContextType;
   String subContextId;
   String baseUrl;
-  String token;
-  String contentType;
-  String mimeType;
-  Function(int progress) onProgressCallback;
+  String? token;
+  String? contentType;
+  String? mimeType;
+  Function(int progress)? onProgressCallback;
 
   UploadFile(
-      {@required this.baseUrl,
-      @required this.context,
-      @required this.file,
-      @required this.token,
-      @required this.ownerType,
-      @required this.ownerId,
-      @required this.contextType,
-      @required this.contextId,
-      @required this.subContextType,
-      @required this.subContextId,
-      @required this.contentType,
-      @required this.mimeType,
+      {required this.baseUrl,
+      required this.context,
+      required this.file,
+      required this.token,
+      required this.ownerType,
+      required this.ownerId,
+      required this.contextType,
+      required this.contextId,
+      required this.subContextType,
+      required this.subContextId,
+      required this.contentType,
+      required this.mimeType,
        this.onProgressCallback});
 
   Future<dynamic> uploadFile() async {
@@ -43,7 +43,7 @@ print(url);
     return await apiCall.upload(
         context,
         url,
-        file.path,
+        file!.path,
         token,
         ownerType,
         ownerId,

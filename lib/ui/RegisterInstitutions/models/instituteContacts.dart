@@ -1,9 +1,9 @@
 class InstituteContactDetail {
-  int institutionId;
-  String email;
-  int phone;
-  int mobile;
-  String website;
+  int? institutionId;
+  String? email;
+  int? phone;
+  int? mobile;
+  String? website;
 
   InstituteContactDetail(
       {this.institutionId, this.email, this.phone, this.mobile, this.website});

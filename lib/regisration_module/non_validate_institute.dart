@@ -11,8 +11,8 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class NonValidatedDialog extends StatelessWidget {
 
-  TextStyleElements styleElements;
-int instId;
+  late TextStyleElements styleElements;
+int? instId;
 
   @override
   Widget build(BuildContext context) {
@@ -33,14 +33,14 @@ int instId;
                   child: Container(
                     margin: const EdgeInsets.only(bottom: 20, top: 20),
                     child: Text(
-                      AppLocalizations.of(context).translate("unvalidated"),
+                      AppLocalizations.of(context)!.translate("unvalidated"),
                       style: styleElements.headline5ThemeScalable(context),
                     ),
                   )),
               Container(
                 margin: const EdgeInsets.all(16),
                 child: Text(
-                  AppLocalizations.of(context)
+                  AppLocalizations.of(context)!
                       .translate(
                       "non_validated_inst"),
                   textAlign: TextAlign.center,
@@ -58,7 +58,7 @@ int instId;
                   margin: const EdgeInsets.only(
                       left: 16, right: 16, bottom: 16),
                   child: WhiteLargeButton(
-                    name: AppLocalizations.of(context)
+                    name: AppLocalizations.of(context)!
                         .translate("exit"),
                     offsetX: 70.66,
                     offsetY: 12.93,
@@ -74,7 +74,7 @@ int instId;
 
               Container(
                 margin: const EdgeInsets.all(16),
-                child: Text(AppLocalizations.of(context).translate('or'),
+                child: Text(AppLocalizations.of(context)!.translate('or'),
                     textAlign: TextAlign.center,
                     style: styleElements.captionThemeScalable(context)),
               ),
@@ -84,7 +84,7 @@ int instId;
                   margin: const EdgeInsets.only(
                       left: 16, right: 16, bottom: 30),
                   child: WhiteLargeButton(
-                    name: AppLocalizations.of(context)
+                    name: AppLocalizations.of(context)!
                         .translate("validate"),
                     offsetX: 70.66,
                     offsetY: 12.93,

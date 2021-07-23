@@ -44,41 +44,42 @@ class SelectSection extends StatefulWidget {
 
 class _SelectSection extends State<SelectSection>
     with SingleTickerProviderStateMixin {
-  ProgressDialog pr;
-  SharedPreferences prefs;
+  ProgressDialog? pr;
+  late SharedPreferences prefs;
   RegisterUserAs registerUserAs;
-  int personType;
-  String sectionId;
-  String accedamicId;
+  int? personType;
+  String? sectionId;
+  String? accedamicId;
   bool isVerified;
   bool isAddClass;
   var pageTitle = "";
   var color1 = HexColor(AppColors.appMainColor);
-  int userId;
+  int? userId;
   var color2 = HexColor(AppColors.appColorWhite);
-  int instituteId;
+  int? instituteId;
   var color3 = HexColor(AppColors.appColorWhite);
   var isCheckedColor = HexColor(AppColors.appColorWhite);
-  List<Rows> listSections = [];
+  List<Rows>? listSections = [];
   List<Rows> selectedSection = [];
-  List<PersonClasses> teachingClasses = [];
+  List<PersonClasses>? teachingClasses = [];
   var isSearching = false;
   bool _enabled = true;
-  String nextYear;
-  String currentYear;
-  String acedemicYear;
+  String? nextYear;
+  String? currentYear;
+  String? acedemicYear;
   final _debouncer = Debouncer(500);
   String type = "";
-  TextStyleElements styleElements;
-  PersonClasses currentSelected;
+  late TextStyleElements styleElements;
+  late PersonClasses currentSelected;
 
-  Animation _animation;
-  AnimationController _controller;
+  late Animation _animation;
+  late AnimationController _controller;
   int currentItem=0;
   GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
 
-  void _onBackPressed() {
+  Future<bool> _onBackPressed() {
     Navigator.of(context).pop(true);
+    return new Future(() => false);
   }
 
   @override
@@ -99,24 +100,24 @@ class _SelectSection extends State<SelectSection>
     if (registerUserAs != null) {
       acedemicYear = registerUserAs.academicYear;
       instituteId = registerUserAs.institutionId;
-      personType = registerUserAs.personTypeList[0];
+      personType = registerUserAs.personTypeList![0];
       teachingClasses = registerUserAs.personClasses;
-      if (teachingClasses.isNotEmpty)
-        currentSelected = teachingClasses[0];
+      if (teachingClasses!.isNotEmpty)
+        currentSelected = teachingClasses![0];
     }
 
-    WidgetsBinding.instance.addPostFrameCallback((_) => getRoles(null));
+    WidgetsBinding.instance!.addPostFrameCallback((_) => getRoles(null));
     super.initState();
   }
 
-  bool contains(int id) {
+  bool contains(int? id) {
     for (var item in selectedSection) {
       if (item.id == id) return true;
     }
     return false;
   }
 
-  void getRoles(String searchValue) async {
+  void getRoles(String? searchValue) async {
 
     final body = jsonEncode({
       "institution_id": instituteId,
@@ -134,19 +135,19 @@ class _SelectSection extends State<SelectSection>
 
 
         _enabled = false;
-          if (data.statusCode==Strings.success_code && data.rows.length > 0 ) {
-            if (listSections.length > 0) {
+          if (data.statusCode==Strings.success_code && data.rows!.length > 0 ) {
+            if (listSections!.length > 0) {
               {
-                for (var i = 0; i < data.rows.length; i++) {
-                  if (contains(data.rows[i].id))
-                    data.rows[i].isSelected = true;
+                for (var i = 0; i < data.rows!.length; i++) {
+                  if (contains(data.rows![i].id))
+                    data.rows![i].isSelected = true;
                   else
-                    data.rows[i].isSelected = false;
+                    data.rows![i].isSelected = false;
                 }
               }
             } else {
-              for (var i = 0; i < data.rows.length; i++) {
-                data.rows[i].isSelected = false;
+              for (var i = 0; i < data.rows!.length; i++) {
+                data.rows![i].isSelected = false;
               }
             }
             listSections = data.rows;
@@ -161,7 +162,7 @@ class _SelectSection extends State<SelectSection>
               if(personType==2)
               {
 
-                  if(teachingClasses.length>currentItem+1)
+                  if(teachingClasses!.length>currentItem+1)
                   {
                     if (_animation.isDismissed) {
                       _controller.forward();
@@ -170,7 +171,7 @@ class _SelectSection extends State<SelectSection>
                     }
                     selectedSection=[];
                     currentItem++;
-                    currentSelected=teachingClasses[currentItem];
+                    currentSelected=teachingClasses![currentItem];
 
                     setState(() {
                       getRoles(null);
@@ -179,7 +180,7 @@ class _SelectSection extends State<SelectSection>
                   else
                   {
 
-                      teachingClasses[currentItem].sections=getSection();
+                      teachingClasses![currentItem].sections=getSection();
                       registerUserAs.personClasses=teachingClasses;
                       /*Navigator.push(
                           context,
@@ -247,11 +248,11 @@ class _SelectSection extends State<SelectSection>
       _enabled = false;
     });
   }
-BuildContext sctx;
+late BuildContext sctx;
   Widget build(BuildContext context) {
     ScreenUtil.init;
 
-    pageTitle = AppLocalizations.of(context).translate("select_section");
+    pageTitle = AppLocalizations.of(context)!.translate("select_section");
     styleElements = TextStyleElements(context);
     return SafeArea(
         child: Scaffold(
@@ -285,13 +286,13 @@ BuildContext sctx;
                                     });
                                   },
                                   progressIndicator: isSearching,
-                                  hintText: AppLocalizations.of(context).translate('search'),
+                                  hintText: AppLocalizations.of(context)!.translate('search'),
                                 ),
                               ),
                               SliverToBoxAdapter(
                                 child: AnimatedBuilder(
                                   animation: _controller,
-                                  builder: (BuildContext context, Widget child) {
+                                  builder: (BuildContext context, Widget? child) {
                                     bool isFront = _controller.value < .5;
                                     return InkWell(
                                       onTap: () async {
@@ -351,7 +352,7 @@ BuildContext sctx;
                                                                         .start,
                                                                     children: <
                                                                         Widget>[
-                                                                      Text(AppLocalizations.of(context).translate('current_selection'),
+                                                                      Text(AppLocalizations.of(context)!.translate('current_selection'),
                                                                         style: styleElements
                                                                             .subtitle2ThemeScalable(
                                                                             context),
@@ -393,8 +394,7 @@ BuildContext sctx;
                                                                               Alignment.center,
                                                                               child:
                                                                               Text(
-                                                                                ("( " + acedemicYear + " )") ??
-                                                                                    "",
+                                                                                ("( " + acedemicYear! + " )"),
                                                                                 style:
                                                                                 styleElements.bodyText2ThemeScalable(context),
                                                                                 textAlign:
@@ -418,7 +418,7 @@ BuildContext sctx;
                                                                           .centerRight,
                                                                       child: Text(
                                                                         AppLocalizations.of(
-                                                                            context)
+                                                                            context)!
                                                                             .translate(
                                                                             "change"),
                                                                         style: styleElements
@@ -454,7 +454,7 @@ BuildContext sctx;
                                 child: ListView.builder(
                                     padding: EdgeInsets.only(
                                         left: 8, right: 8, bottom: 8, top: 8),
-                                    itemCount: listSections.length,
+                                    itemCount: listSections!.length,
                                     itemBuilder:
                                         (BuildContext context, int index) {
                                       return GestureDetector(
@@ -480,7 +480,7 @@ BuildContext sctx;
                                                     margin:
                                                     const EdgeInsets.all(16),
                                                     child: Text(
-                                                    personType==2?  AppLocalizations.of(context).translate("sec_quote_teacher"):AppLocalizations.of(context).translate("sec_quote"),
+                                                    personType==2?  AppLocalizations.of(context)!.translate("sec_quote_teacher"):AppLocalizations.of(context)!.translate("sec_quote"),
                                                       textAlign: TextAlign.center,
                                                       style: styleElements
                                                           .captionThemeScalable(
@@ -496,8 +496,8 @@ BuildContext sctx;
                                                 title: Align(
                                                   alignment: Alignment.centerLeft,
                                                   child: Text(
-                                                    listSections[index]
-                                                        .sectionName,
+                                                    listSections![index]
+                                                        .sectionName!,
                                                     style: styleElements
                                                         .subtitle1ThemeScalable(
                                                         context),
@@ -507,23 +507,23 @@ BuildContext sctx;
                                                 trailing: Checkbox(
                                                   activeColor:
                                                   HexColor(AppColors.appMainColor),
-                                                  value: listSections[index]
+                                                  value: listSections![index]
                                                       .isSelected,
                                                   onChanged: (val) {
                                                     if (this.mounted) {
                                                       setState(() {
                                                         if (val == true) {
-                                                          sectionId = listSections[index].id.toString();
+                                                          sectionId = listSections![index].id.toString();
 
                                                           if (personType == 2) {
                                                             // if role type is teacher
                                                             // let teachers select multiple classes
                                                             setState(() {
-                                                              listSections[
+                                                              listSections![
                                                               index]
                                                                   .isSelected = true;
                                                               selectedSection.add(
-                                                                  listSections[
+                                                                  listSections![
                                                                   index]);
                                                             });
                                                           }
@@ -532,16 +532,16 @@ BuildContext sctx;
                                                               // other roles can only select one class
                                                               for (int i =
                                                               0;
-                                                              i < listSections.length;
+                                                              i < listSections!.length;
                                                               i++) {
                                                                 if (i == index) {
-                                                                  listSections[i].isSelected = true;
-                                                                  selectedSection.add(listSections[index]);
+                                                                  listSections![i].isSelected = true;
+                                                                  selectedSection.add(listSections![index]);
                                                                 } else {
-                                                                  listSections[i].isSelected =
+                                                                  listSections![i].isSelected =
                                                                   false;
                                                                   removeSelected(
-                                                                      listSections[i].id);
+                                                                      listSections![i].id);
                                                                 }
                                                               }
                                                             });
@@ -549,11 +549,11 @@ BuildContext sctx;
                                                         } else {
                                                           sectionId = "";
 
-                                                          listSections[index]
+                                                          listSections![index]
                                                               .isSelected =
                                                           false;
                                                           removeSelected(
-                                                              listSections[
+                                                              listSections![
                                                               index]
                                                                   .id);
                                                         }
@@ -589,13 +589,13 @@ BuildContext sctx;
                                               if(personType==2)
                                               {
                                                 setState(() {
-                                                  if(teachingClasses.length>currentItem+1)
+                                                  if(teachingClasses!.length>currentItem+1)
                                                   {
                                                     ToastBuilder().showSnackBar(
                                                         "Please add sections for the next class shown above.",
                                                         sctx,HexColor(AppColors.information));
                                                     if(selectedSection.length>0)
-                                                    {  teachingClasses[currentItem].sections=getSection();
+                                                    {  teachingClasses![currentItem].sections=getSection();
                                                     if (_animation.isDismissed) {
                                                       _controller.forward();
                                                     } else if (_animation.isCompleted) {
@@ -603,7 +603,7 @@ BuildContext sctx;
                                                     }
                                                     selectedSection=[];
                                                     currentItem++;
-                                                    currentSelected=teachingClasses[currentItem];
+                                                    currentSelected=teachingClasses![currentItem];
 
                                                     setState(() {
                                                       getRoles(null);
@@ -622,7 +622,7 @@ BuildContext sctx;
                                                   {
                                                     if(selectedSection.length>0)
                                                     {
-                                                      teachingClasses[currentItem].sections=getSection();
+                                                      teachingClasses![currentItem].sections=getSection();
                                                       registerUserAs.personClasses=teachingClasses;
                                                    /*   Navigator.push(
                                                           context,
@@ -647,7 +647,7 @@ BuildContext sctx;
                                               {
                                                 if(selectedSection.length>0)
                                                 {
-                                                  teachingClasses[currentItem].sections=getSection();
+                                                  teachingClasses![currentItem].sections=getSection();
                                                   registerUserAs.personClasses=teachingClasses;
                                                   if (personType == 4) {
                                                     Navigator.push(
@@ -691,7 +691,7 @@ BuildContext sctx;
                                             },
                                             color: HexColor(AppColors.appColorWhite),
                                             child: Text(
-                                              AppLocalizations.of(context).translate('next'),
+                                              AppLocalizations.of(context)!.translate('next'),
                                               style: styleElements
                                                   .subtitle2ThemeScalable(context)
                                                   .copyWith(
@@ -710,7 +710,7 @@ BuildContext sctx;
     ));
   }
 
-  removeSelected(int id) {
+  removeSelected(int? id) {
     for (var i = 0; i < selectedSection.length; i++) {
       if (id == selectedSection[i].id) {
         selectedSection.removeAt(i);
@@ -719,15 +719,15 @@ BuildContext sctx;
     }
   }
 
-  void register(int userId) async {
+  void register(int? userId) async {
     registerUserAs.personId = userId;
-    progressButtonKey.currentState.show();
+    progressButtonKey.currentState!.show();
     registerUserAs.personClasses = teachingClasses;
     final body = jsonEncode(registerUserAs);
 
     Calls().call(body, context, Config.REGISTER_USER_AS).then((value) async {
       if (value != null) {
-        progressButtonKey.currentState.hide();
+        progressButtonKey.currentState!.hide();
         var data = RegisterUserAsResponse.fromJson(value);
         print(data.toString());
         if (data.statusCode == "S10001") {
@@ -737,26 +737,26 @@ BuildContext sctx;
               MaterialPageRoute(
                   builder: (context) => DilaogPage(
                       type: type,
-                      isVerified: data.rows.isVerified,
-                      title:AppLocalizations.of(context).translate('you_are_added_as') + "Alumni ",
-                      subtitle: (data.rows.institutionName != null
-                          ? " of " + data.rows.institutionName
+                      isVerified: data.rows!.isVerified,
+                      title:AppLocalizations.of(context)!.translate('you_are_added_as') + "Alumni ",
+                      subtitle: (data.rows!.institutionName != null
+                          ? " of " + data.rows!.institutionName!
                           : ""))),
               (Route<dynamic> route) => false);
         } else
           ToastBuilder().showSnackBar(
-              data.message, sctx, HexColor(AppColors.information));
+              data.message!, sctx, HexColor(AppColors.information));
       }
     }).catchError((onError) async {
       ToastBuilder().showSnackBar(
           onError.toString(), sctx, HexColor(AppColors.information));
-      progressButtonKey.currentState.hide();
+      progressButtonKey.currentState!.hide();
     });
   }
 
-  List<int> getSection()
+  List<int?> getSection()
   {
-    List<int> list=[];
+    List<int?> list=[];
 
     for(var item in selectedSection)
       {

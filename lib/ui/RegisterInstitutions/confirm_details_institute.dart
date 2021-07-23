@@ -33,13 +33,13 @@ import 'models/scratch_data.dart';
 
 // ignore: must_be_immutable
 class ConfirmDetails extends StatefulWidget {
-  int instId;
-  Persondata personData;
-  String fromPage;
-  final Null Function() callbackPicker;
+  int? instId;
+  Persondata? personData;
+  String? fromPage;
+  final Null Function()? callbackPicker;
   _ConfirmDetails createState() => _ConfirmDetails(instId, fromPage,callbackPicker);
   ConfirmDetails(
-      {Key key,
+      {Key? key,
         this.instId, this.fromPage,this.callbackPicker})
       : super(key: key);
 
@@ -48,10 +48,10 @@ class ConfirmDetails extends StatefulWidget {
 class _ConfirmDetails extends State<ConfirmDetails>
     with EditProfileMixins, SingleTickerProviderStateMixin {
   final formKey = GlobalKey<FormState>();
-  String fromPage;
-   Null Function() callbackPicker;
-  SharedPreferences prefs;
-  TextStyleElements styleElements;
+  String? fromPage;
+   Null Function()? callbackPicker;
+  late SharedPreferences prefs;
+  late TextStyleElements styleElements;
   final emailController = TextEditingController();
   final upidController = TextEditingController();
   final studentIdController = TextEditingController();
@@ -64,15 +64,15 @@ class _ConfirmDetails extends State<ConfirmDetails>
   final secondCon = TextEditingController();
   String bioCharacterLength = "0";
   String quotesCharacterLength = "0";
-  String userPhotoId;
-  String email, biog, quotes;
-  BuildContext context;
+  String? userPhotoId;
+  String? email, biog, quotes;
+  late BuildContext context;
   String selectedDoA = 'Date of Anniversary';
   String selectedDate = 'Date of Birth';
   String selectedGender = "Gender";
   String selectedBGroup = "Blood Group";
-  int selectedEpoch;
-  String name = "";
+  int? selectedEpoch;
+  String? name = "";
   String image = "";
   var items = ['Male', 'Female', 'Transgender'];
   var itemsBG = ['A+', 'A-', 'B+', ' B-', ' O+', 'O-', 'AB+', ' AB-'];
@@ -104,7 +104,7 @@ class _ConfirmDetails extends State<ConfirmDetails>
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) => setData());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => setData());
   }
   void setSharedPreferences() async {
     prefs = await SharedPreferences.getInstance();
@@ -210,7 +210,7 @@ class _ConfirmDetails extends State<ConfirmDetails>
       textCapitalization: TextCapitalization.words,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: AppLocalizations.of(context).translate('last_name'),
+          hintText: AppLocalizations.of(context)!.translate('last_name'),
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
           border: UnderlineInputBorder(
             borderSide: BorderSide(
@@ -240,7 +240,7 @@ class _ConfirmDetails extends State<ConfirmDetails>
       },
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(8.0, 15.0, 20.0, 4.0),
-          hintText: AppLocalizations.of(context).translate('first_name'),
+          hintText: AppLocalizations.of(context)!.translate('first_name'),
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(
             color: HexColor(AppColors.appColorBlack35)
           ),
@@ -261,7 +261,7 @@ class _ConfirmDetails extends State<ConfirmDetails>
 
         decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(8.0, 15.0, 20.0, 4.0),
-          hintText: AppLocalizations.of(context).translate("ur_mobile"),
+          hintText: AppLocalizations.of(context)!.translate("ur_mobile"),
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
         ));
     final studentId = TextField(
@@ -275,7 +275,7 @@ class _ConfirmDetails extends State<ConfirmDetails>
         decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(8.0, 15.0, 20.0, 4.0),
           hintText:
-          AppLocalizations.of(context).translate("student_id_required"),
+          AppLocalizations.of(context)!.translate("student_id_required"),
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
         ));
     final upid = TextField(
@@ -288,7 +288,7 @@ class _ConfirmDetails extends State<ConfirmDetails>
 
         decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(8.0, 15.0, 20.0, 4.0),
-          hintText: AppLocalizations.of(context).translate('upi'),
+          hintText: AppLocalizations.of(context)!.translate('upi'),
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
         ));
 
@@ -318,27 +318,27 @@ class _ConfirmDetails extends State<ConfirmDetails>
                                   resolution_type: RESOLUTION_TYPE.R64,
                                   service_type: SERVICE_TYPE.INSTITUTION,
                                   imageUrl: fromPage == "registration"
-                                      ?snapshot.data.getString(Strings.registeredInstituteImage)
-                                      : snapshot.data.getStringList(Strings.institutionImageList)[0],
+                                      ?snapshot.data!.getString(Strings.registeredInstituteImage)
+                                      : snapshot.data!.getStringList(Strings.institutionImageList)![0],
                                   size: 52,
                                 ),
                                 title: Text(
                                   fromPage == "registration"
-                                      ? snapshot.data.getString(Strings
+                                      ? snapshot.data!.getString(Strings
                                       .registeredInstituteName) ??
                                       ""
-                                      : snapshot.data.getStringList(
-                                      Strings.institutionNameList)[0],
+                                      : snapshot.data!.getStringList(
+                                      Strings.institutionNameList)![0],
                                   style: styleElements
                                       .subtitle1ThemeScalable(context),
                                 ),
                                 subtitle: Text(
                                   fromPage == "registration"
-                                      ? snapshot.data.getString(Strings
+                                      ? snapshot.data!.getString(Strings
                                       .registeredInstituteLocation) ??
                                       ""
-                                      : snapshot.data.getStringList(
-                                      Strings.roleTypeList)[0],
+                                      : snapshot.data!.getStringList(
+                                      Strings.roleTypeList)![0],
                                   style: styleElements
                                       .bodyText2ThemeScalable(context),
                                 ),
@@ -347,7 +347,7 @@ class _ConfirmDetails extends State<ConfirmDetails>
                             Padding(
                               padding: const EdgeInsets.all(16.0),
                               child: Text(
-                                AppLocalizations.of(context).translate("ensure_details"),
+                                AppLocalizations.of(context)!.translate("ensure_details"),
                                 style: styleElements
                                     .bodyText2ThemeScalable(context)
                                     .copyWith(fontWeight: FontWeight.bold),
@@ -412,7 +412,7 @@ class _ConfirmDetails extends State<ConfirmDetails>
                             ),
                             Padding(
                               padding: const EdgeInsets.all(16.0),
-                              child: Text(AppLocalizations.of(context).translate('institute_confirm_des'),
+                              child: Text(AppLocalizations.of(context)!.translate('institute_confirm_des'),
                                 style: styleElements
                                     .bodyText2ThemeScalable(context)
                                     .copyWith(fontWeight: FontWeight.bold),
@@ -420,7 +420,7 @@ class _ConfirmDetails extends State<ConfirmDetails>
                             ),
                             Padding(
                               padding: const EdgeInsets.all(16.0),
-                              child: Text(AppLocalizations.of(context).translate('share_detail_outside'),
+                              child: Text(AppLocalizations.of(context)!.translate('share_detail_outside'),
                                 style: styleElements
                                     .bodyText2ThemeScalable(context)
                                     .copyWith(fontWeight: FontWeight.bold),
@@ -462,7 +462,7 @@ class _ConfirmDetails extends State<ConfirmDetails>
                                               "") {
 
                                           if (userPhotoId != null &&
-                                              userPhotoId.isNotEmpty)
+                                              userPhotoId!.isNotEmpty)
                                             _createReferral();
                                           else {
 
@@ -483,7 +483,7 @@ class _ConfirmDetails extends State<ConfirmDetails>
                                                         UploadUserId(instId:instId,createReferralEntity:createReferralEntity,fromPage:fromPage,callbackPicker:(){
                                                           if(callbackPicker!=null)
                                                             {
-                                                              callbackPicker();
+                                                              callbackPicker!();
                                                               Navigator.pop(context);
                                                             }
                                                         })));
@@ -498,13 +498,13 @@ class _ConfirmDetails extends State<ConfirmDetails>
                                           _createReferral();
                                         } else
                                           ToastBuilder().showToast(
-                                              AppLocalizations.of(context)
+                                              AppLocalizations.of(context)!
                                                   .translate("upid_req"),
                                               context,
                                               HexColor(AppColors.information));
                                       } else {
                                         ToastBuilder().showToast(
-                                            AppLocalizations.of(context)
+                                            AppLocalizations.of(context)!
                                                 .translate(
                                                 "student_id_required"),
                                             context,
@@ -513,7 +513,7 @@ class _ConfirmDetails extends State<ConfirmDetails>
                                     },
                                     color: HexColor(AppColors.appColorWhite),
                                     child: Text(
-                                      AppLocalizations.of(context)
+                                      AppLocalizations.of(context)!
                                           .translate('next'),
                                       style: styleElements
                                           .subtitle2ThemeScalable(context)
@@ -553,7 +553,7 @@ class _ConfirmDetails extends State<ConfirmDetails>
   }
 
   void getScratchCardData() async {
-    progressButtonKey.currentState.show();
+    progressButtonKey.currentState!.show();
     ScratchCardEntity scratchCardEntity = ScratchCardEntity();
     scratchCardEntity.allPersonsId = prefs.getInt("userId");
     scratchCardEntity.scratchCardContextId = instId;
@@ -567,7 +567,7 @@ class _ConfirmDetails extends State<ConfirmDetails>
     Calls()
         .call(jsonEncode(scratchCardEntity), context, Config.CARD_ALLOCATE)
         .then((value) async {
-      progressButtonKey.currentState.hide();
+      progressButtonKey.currentState!.hide();
       if (value != null) {
         var data = ScratchCardResult.fromJson(value);
         if (data.statusCode == Strings.success_code) {
@@ -578,9 +578,9 @@ class _ConfirmDetails extends State<ConfirmDetails>
                 builder: (BuildContext context) =>
                     ScratchCardDialogue(
                       prefs.getInt("userId"),
-                      data.rows.id,
-                      data.rows.scratchCardValue,
-                      data.rows.scratchCardRewardType,
+                      data.rows!.id,
+                      data.rows!.scratchCardValue,
+                      data.rows!.scratchCardRewardType,
                       fromPage: fromPage,
                       callBack: callback,
                     ));
@@ -590,7 +590,7 @@ class _ConfirmDetails extends State<ConfirmDetails>
         }
       }
     }).catchError((onError) {
-      progressButtonKey.currentState.hide();
+      progressButtonKey.currentState!.hide();
       ToastBuilder().showToast(
          "Something Went Wrong !!", context, HexColor(AppColors.information));
     });
@@ -608,40 +608,40 @@ class _ConfirmDetails extends State<ConfirmDetails>
     }
     _getData();
     if (personData != null) {
-      if (personData.firstName != null)
-        firstNameController.text = personData.firstName ?? "";
-      if (personData.lastName != null)
-        secondCon.text = personData.lastName ?? "";
-      if (personData.mobile != null)
-        mobileController.text = personData.mobile ?? "";
-      if (personData.email != null)
-        emailController.text = personData.email ?? "";
-      if (personData.dateOfBirth != null)
-        selectedDate = personData.dateOfBirth ?? "";
-      if (personData.dateOfAnniversary != null)
-        selectedDoA = personData.dateOfAnniversary ?? "";
-      if (personData.gender != null)
-        selectedGender = personData.gender == 1
+      if (personData!.firstName != null)
+        firstNameController.text = personData!.firstName ?? "";
+      if (personData!.lastName != null)
+        secondCon.text = personData!.lastName ?? "";
+      if (personData!.mobile != null)
+        mobileController.text = personData!.mobile ?? "";
+      if (personData!.email != null)
+        emailController.text = personData!.email ?? "";
+      if (personData!.dateOfBirth != null)
+        selectedDate = personData!.dateOfBirth ?? "";
+      if (personData!.dateOfAnniversary != null)
+        selectedDoA = personData!.dateOfAnniversary ?? "";
+      if (personData!.gender != null)
+        selectedGender = personData!.gender == 1
             ? 'Male'
-            : personData.gender == 2
+            : personData!.gender == 2
             ? 'Female'
-            : personData.gender == 3
+            : personData!.gender == 3
             ? 'Transgender'
             : "Select gender";
-      if (personData.fullBio != null) {
-        bioController.text = personData.fullBio ?? "";
-        bioCharacterLength = personData.fullBio.length.toString();
+      if (personData!.fullBio != null) {
+        bioController.text = personData!.fullBio ?? "";
+        bioCharacterLength = personData!.fullBio!.length.toString();
       }
 
-      if (personData.message != null) {
-        quotesController.text = personData.message ?? "";
-        quotesCharacterLength = personData.message.length.toString();
+      if (personData!.message != null) {
+        quotesController.text = personData!.message ?? "";
+        quotesCharacterLength = personData!.message!.length.toString();
       }
 
-      if (personData.middleName != null)
-        secondCon.text = personData.middleName ?? "";
-      if (personData.bloodGroup != null)
-        selectedBGroup = mpGroupRev[personData.bloodGroup] ?? "";
+      if (personData!.middleName != null)
+        secondCon.text = personData!.middleName ?? "";
+      if (personData!.bloodGroup != null)
+        selectedBGroup = mpGroupRev[personData!.bloodGroup!] ?? "";
     }
   }
 
@@ -671,7 +671,7 @@ class _ConfirmDetails extends State<ConfirmDetails>
   }
 
   // ignore: missing_return
-  Widget _showModalBottomSheet(context, type) {
+  Widget? _showModalBottomSheet(context, type) {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
@@ -695,15 +695,15 @@ class _ConfirmDetails extends State<ConfirmDetails>
       if (basicDataForRefral.statusCode == Strings.success_code) {
         setState(() {
           if (basicDataForRefral.rows != null &&
-              basicDataForRefral.rows.referredByUpiId != null)
-            upidController.text = basicDataForRefral.rows.referredByUpiId;
+              basicDataForRefral.rows!.referredByUpiId != null)
+            upidController.text = basicDataForRefral.rows!.referredByUpiId!;
           if (basicDataForRefral.rows != null &&
-              basicDataForRefral.rows.adminStaffPersonId != null)
+              basicDataForRefral.rows!.adminStaffPersonId != null)
             studentIdController.text =
-                basicDataForRefral.rows.adminStaffPersonId.toString();
+                basicDataForRefral.rows!.adminStaffPersonId.toString();
         });
       } else {
-        ToastBuilder().showToast(basicDataForRefral.message, context,
+        ToastBuilder().showToast(basicDataForRefral.message!, context,
             HexColor(AppColors.information));
       }
     }).catchError((onError) {
@@ -713,7 +713,7 @@ class _ConfirmDetails extends State<ConfirmDetails>
   }
 
   Future<void> _createReferral() async {
-    progressButtonKey.currentState.show();
+    progressButtonKey.currentState!.show();
     CreateReferralEntity createReferralEntity = CreateReferralEntity();
     createReferralEntity.referredByPersonMobileNumber = mobileController.text;
     createReferralEntity.referredByUpiId = upidController.text;
@@ -731,27 +731,27 @@ class _ConfirmDetails extends State<ConfirmDetails>
       CreateReferraResponselEntity basicDataForRefral =
       CreateReferraResponselEntity.fromJson(value);
       if (basicDataForRefral.statusCode == Strings.success_code) {
-        progressButtonKey.currentState.hide();
+        progressButtonKey.currentState!.hide();
         // if(fromPage=='buddy'){
         //   callback();
         // }else {
           getScratchCardData();
         // }
       } else {
-        progressButtonKey.currentState.hide();
-        ToastBuilder().showToast(basicDataForRefral.message, context,
+        progressButtonKey.currentState!.hide();
+        ToastBuilder().showToast(basicDataForRefral.message!, context,
             HexColor(AppColors.information));
       }
     }).catchError((onError) async {
-      progressButtonKey.currentState.hide();
+      progressButtonKey.currentState!.hide();
       ToastBuilder().showToast(
           "Something Went Wrong !!", context, HexColor(AppColors.information));
     });
   }
 
-  Persondata personData;
+  Persondata? personData;
 
-  int instId;
+  int? instId;
 
   _ConfirmDetails(this.instId, this.fromPage,this.callbackPicker);
 }

@@ -1,8 +1,8 @@
 class RatingSummaryResponse {
-  String statusCode;
-  String message;
-  List<RatingSummaryItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<RatingSummaryItem>? rows;
+  int? total;
 
   RatingSummaryResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -12,7 +12,7 @@ class RatingSummaryResponse {
     if (json['rows'] != null) {
       rows = [];//RatingSummaryItem>();
       json['rows'].forEach((v) {
-        rows.add(new RatingSummaryItem.fromJson(v));
+        rows!.add(new RatingSummaryItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -23,7 +23,7 @@ class RatingSummaryResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -31,17 +31,17 @@ class RatingSummaryResponse {
 }
 
 class RatingSummaryItem {
-  String ratingSubjectType;
-  String ratingSubjectId;
-  String ratingContextType;
-  String ratingContextId;
-  int rating01;
-  int rating02;
-  int rating03;
-  int rating04;
-  int rating05;
-  String averageRating;
-  int totalRatedUsers;
+  String? ratingSubjectType;
+  String? ratingSubjectId;
+  String? ratingContextType;
+  String? ratingContextId;
+  int? rating01;
+  int? rating02;
+  int? rating03;
+  int? rating04;
+  int? rating05;
+  String? averageRating;
+  int? totalRatedUsers;
 
   RatingSummaryItem(
       {this.ratingSubjectType,

@@ -1,7 +1,7 @@
 class CouponHeaderResponse {
-  String statusCode;
-  String message;
-  CouponHeaderResponseModel rows;
+  String? statusCode;
+  String? message;
+  CouponHeaderResponseModel? rows;
 
   CouponHeaderResponse({this.statusCode, this.message, this.rows});
 
@@ -18,18 +18,18 @@ class CouponHeaderResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     return data;
   }
 }
 
 class CouponHeaderResponseModel {
-  int id;
-  String personId;
-  String currentBalance;
-  String lifetimeEarned;
-  String lifetimeBurn;
+  int? id;
+  String? personId;
+  String? currentBalance;
+  String? lifetimeEarned;
+  String? lifetimeBurn;
 
   CouponHeaderResponseModel(
       {this.id,

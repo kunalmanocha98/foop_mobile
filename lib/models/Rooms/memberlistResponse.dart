@@ -1,11 +1,11 @@
 class MemberListPayload {
-  int roomId;
-  int personId;
-  bool withInInstitution;
-  String searchVal;
-  int pageSize;
-  int pageNumber;
-  String privacyType;
+  int? roomId;
+  int? personId;
+  bool? withInInstitution;
+  String? searchVal;
+  int? pageSize;
+  int? pageNumber;
+  String? privacyType;
 
   MemberListPayload(
       {this.roomId,
@@ -40,10 +40,10 @@ class MemberListPayload {
 }
 
 class MemberListResponse {
-  String statusCode;
-  String message;
-  List<MemberListItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<MemberListItem>? rows;
+  int? total;
 
   MemberListResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -53,7 +53,7 @@ class MemberListResponse {
     if (json['rows'] != null) {
       rows = [];//MemberListItem>();
       json['rows'].forEach((v) {
-        rows.add(new MemberListItem.fromJson(v));
+        rows!.add(new MemberListItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -64,7 +64,7 @@ class MemberListResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -72,13 +72,13 @@ class MemberListResponse {
 }
 
 class MemberListItem {
-  int id;
-  String firstName;
-  String lastName;
-  String profileImage;
-  bool isFollowed;
-  bool isFollowing;
-  bool isSelected;
+  int? id;
+  String? firstName;
+  String? lastName;
+  String? profileImage;
+  bool? isFollowed;
+  bool? isFollowing;
+  bool? isSelected;
 
   MemberListItem(
       {this.id,
@@ -113,10 +113,10 @@ class MemberListItem {
 }
 
 class InviteeListResponse {
-  String statusCode;
-  String message;
-  List<InviteeListItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<InviteeListItem>? rows;
+  int? total;
 
   InviteeListResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -126,7 +126,7 @@ class InviteeListResponse {
     if (json['rows'] != null) {
       rows = [];//InviteeListItem>();
       json['rows'].forEach((v) {
-        rows.add(new InviteeListItem.fromJson(v));
+        rows!.add(new InviteeListItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -137,7 +137,7 @@ class InviteeListResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -145,13 +145,13 @@ class InviteeListResponse {
 }
 
 class InviteeListItem {
-  String recipientTypeCode;
-  String recipientTypeDescription;
-  String recipientImage;
-  String recipientType;
-  int recipientTypeReferenceId;
-  bool isAllowed;
-  bool isSelected;
+  String? recipientTypeCode;
+  String? recipientTypeDescription;
+  String? recipientImage;
+  String? recipientType;
+  int? recipientTypeReferenceId;
+  bool? isAllowed;
+  bool? isSelected;
 
   InviteeListItem(
       {this.recipientTypeCode,

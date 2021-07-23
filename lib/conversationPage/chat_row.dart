@@ -1,27 +1,27 @@
 class ChatRow {
-  String sId;
-  String conversationOwnerType;
-  String conversationOwnerId;
-  String mcId;
-  String conversationId;
-  String conversationWithType;
-  String conversationWithTypeId;
-  String conversationWithName;
-  String conversationName;
-  String lastMessageByType;
-  String lastMessageById;
-  String lastMessageByName;
-  String lastMessage;
+  String? sId;
+  String? conversationOwnerType;
+  String? conversationOwnerId;
+  String? mcId;
+  String? conversationId;
+  String? conversationWithType;
+  String? conversationWithTypeId;
+  String? conversationWithName;
+  String? conversationName;
+  String? lastMessageByType;
+  String? lastMessageById;
+  String? lastMessageByName;
+  String? lastMessage;
   Null lastMessageIcon;
-  int lastMessageTime;
-  String lastMessageUTCTime;
-  bool isGroupConversation;
-  bool isCommunityConversation;
-  bool isRoomAvailable;
-  bool isBotConversation;
-  String conversationImageThumbnail;
-  String conversationImage;
-  int unreadCount;
+  int? lastMessageTime;
+  String? lastMessageUTCTime;
+  bool? isGroupConversation;
+  bool? isCommunityConversation;
+  bool? isRoomAvailable;
+  bool? isBotConversation;
+  String? conversationImageThumbnail;
+  String? conversationImage;
+  int? unreadCount;
 
   ChatRow(
       {this.sId,

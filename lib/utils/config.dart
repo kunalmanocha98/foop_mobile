@@ -417,6 +417,10 @@ class Config {
   static String SAVE_HISTORY = BASE_URL+'/api/v1/global/save/history';
 
   static String SET_REMINDER_CALENDAR = BASE_URL + '/api/v1/calendar/event/set/reminder';
+  static String NEXGE_TOKEN = BaseUrls.NEXGE_BASE_URL + '/api/v1/auth/login';
+
+
+
 
 
 

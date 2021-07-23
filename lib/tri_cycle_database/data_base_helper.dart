@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:oho_works_app/messenger_module/entities/conversation_list_reponse.dart';
@@ -121,6 +122,7 @@ class DatabaseHelper {
   static final participantType = 'participant_type';
   static final participantId = 'participant_id';
   static final isSpeakerOn = 'is_speaker_on';
+  static final isVideoOn = 'is_video_on';
   static final isModerator = 'is_moderator';
   static final personType = 'person_type';
   static final joinedDate = 'joined_date';
@@ -129,9 +131,9 @@ class DatabaseHelper {
   DatabaseHelper._privateConstructor();
 
   static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
-  static Database _database;
+  static Database? _database;
 
-  Future<Database> get database async {
+  Future<Database?> get database async {
     if (_database != null) return _database;
     _database = await _initDatabase();
     return _database;
@@ -173,6 +175,7 @@ $profileImage TEXT,
 $participantType TEXT,
 $participantId INTEGER ,
 $isSpeakerOn INTEGER ,
+$isVideoOn INTEGER ,
 $isSpeaking INTEGER ,
 $type TEXT,
 $isModerator INTEGER,
@@ -303,68 +306,76 @@ $isFailed INTEGER
 
   //=====================================================================TALK queries
   insertParticipants(List<ParticipantListItem> row) async {
-    Database db = await instance.database;
-    Batch batch = db.batch();
+    Database? db = await (instance.database );
+    Batch batch = db!.batch();
     batch.insert('Test', {'name': 'item'});
     batch.rawInsert(participantTable, row);
     return await batch.commit();
   }
 
   Future<int> insertParticipant(ParticipantListItem row) async {
-    Database db = await instance.database;
-    return await db.insert(participantTable, row.toJson());
+  Database? db = await (instance.database );
+    return await db!.insert(participantTable, row.toJson());
   }
 
-  updateMuteStatus(int isOn, int _participantId) async {
-    final db = await instance.database;
-    return await db.rawUpdate(
+  updateMuteStatus(int? isOn, int? _participantId) async {
+    Database? db = await (instance.database );
+    return await db!.rawUpdate(
         'UPDATE $participantTable SET $isSpeakerOn = ? WHERE $participantId = ?',
         [isOn, _participantId]);
   }
 
+  updateVideoStatus(int? isOn, int? _participantId) async {
+    print("step 3=-----------------------------------------------------");
+    Database? db = await (instance.database );
+    return await db!.rawUpdate(
+        'UPDATE $participantTable SET $isVideoOn = ? WHERE $participantId = ?',
+        [isOn, _participantId]);
+  }
+
   updateSpeakingStatus(int isSpeak, int _participantId) async {
-    final db = await instance.database;
-    return await db.rawUpdate(
+    Database? db = await (instance.database );
+    return await db!.rawUpdate(
         'UPDATE $participantTable SET $isSpeaking = ? WHERE $participantId = ?',
         [isSpeak, _participantId]);
   }
 
   updateSpeakingStatusAll() async {
-    final db = await instance.database;
-    return await db
+    Database? db = await (instance.database );
+    return await db!
         .rawUpdate('UPDATE $participantTable SET $isSpeaking = ?', [0]);
   }
 
-  updateModeratorStatus(int isMod, int _participantId) async {
-    final db = await instance.database;
-    return await db.rawUpdate(
+  updateModeratorStatus(int? isMod, int? _participantId) async {
+    Database? db = await (instance.database );
+    return await db!.rawUpdate(
         'UPDATE $participantTable SET $isModerator = ? WHERE $participantId = ?',
         [isMod, _participantId]);
   }
 
-  updateRole(String _role, String _type, int _participantId) async {
-    final db = await instance.database;
-    return await db.rawUpdate(
+  updateRole(String? _role, String _type, int? _participantId) async {
+    Database? db = await (instance.database );
+    return await db!.rawUpdate(
         'UPDATE $participantTable SET $role = ?,$type = ?  WHERE $participantId = ?',
         [_role, _type, _participantId]);
   }
 
-  Future<int> deleteParticipant(int id) async {
-    Database db = await instance.database;
-    return await db.rawDelete(
+  Future<int> deleteParticipant(int? id) async {
+  Database? db = await (instance.database );
+    return await db!.rawDelete(
         'DELETE FROM $participantTable WHERE $participantId = ?', [id]);
   }
 
   Future<int> deleteParticipants() async {
-    Database db = await instance.database;
+  Database? db = await (instance.database );
     print(
         "deltingggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggggg");
-    return await db.delete(participantTable);
+    return await db!.delete(participantTable);
   }
 
   Future<bool> getMember(int participant_id) async {
-    Database db = await instance.database;
-    List<Map> maps = await db.query(participantTable,
+  Database? db = await (instance.database );
+    List<Map> maps = await db!.query(participantTable,
         distinct: true,
         groupBy: participantId,
         where: '$participantId = ?',
@@ -372,7 +383,7 @@ $isFailed INTEGER
     List<ParticipantListItem> data = [];
     if (maps.length > 0) {
       for (int i = 0; i < maps.length; i++) {
-        data.add(ParticipantListItem.fromJson(maps[i]));
+        data.add(ParticipantListItem.fromJson(maps[i] as Map<String, dynamic>));
       }
     }
     if (data.isNotEmpty)
@@ -382,8 +393,8 @@ $isFailed INTEGER
   }
 
   Future<List<ParticipantListItem>> getModerators() async {
-    Database db = await instance.database;
-    List<Map> maps = await db.query(participantTable,
+  Database? db = await (instance.database );
+    List<Map> maps = await db!.query(participantTable,
         distinct: true,
         groupBy: participantId,
         where: '$isModerator = ?',
@@ -391,15 +402,15 @@ $isFailed INTEGER
     List<ParticipantListItem> data = [];
     if (maps.length > 0) {
       for (int i = 0; i < maps.length; i++) {
-        data.add(ParticipantListItem.fromJson(maps[i]));
+        data.add(ParticipantListItem.fromJson(maps[i] as Map<String, dynamic>));
       }
     }
     return data;
   }
 
   Future<List<ParticipantListItem>> getFloorParticipants(String t) async {
-    Database db = await instance.database;
-    List<Map> maps = await db.query(participantTable,
+  Database? db = await (instance.database );
+    List<Map> maps = await db!.query(participantTable,
         distinct: true,
         groupBy: participantId,
         where: '$type = ?',
@@ -408,7 +419,7 @@ $isFailed INTEGER
     List<ParticipantListItem> data = [];
     if (maps.length > 0) {
       for (int i = 0; i < maps.length; i++) {
-        data.add(ParticipantListItem.fromJson(maps[i]));
+        data.add(ParticipantListItem.fromJson(maps[i] as Map<String, dynamic>));
       }
     }
     return data;
@@ -417,84 +428,84 @@ $isFailed INTEGER
   //=====================================================================Conversation queries
 
   Future<int> insertConversation(ConversationItemDb row) async {
-    Database db = await instance.database;
-    return await db.insert(tableConversations, row.toJson());
+  Database? db = await (instance.database );
+    return await db!.insert(tableConversations, row.toJson());
   }
 
   Future<List<ConversationItemDb>> allConversations() async {
-    Database db = await instance.database;
-    List<Map> maps = await db.query(tableConversations,
+  Database? db = await (instance.database );
+    List<Map> maps = await db!.query(tableConversations,
         distinct: true,
         groupBy: conversationId,
         orderBy: '$lastMessageTime DESC');
     List<ConversationItemDb> data = [];
     if (maps.length > 0) {
       for (int i = 0; i < maps.length; i++) {
-        data.add(ConversationItemDb.fromJson(maps[i]));
+        data.add(ConversationItemDb.fromJson(maps[i] as Map<String, dynamic>));
       }
     }
     return data;
   }
 
   Future<List<ConversationItemDb>> searchedList(String value) async {
-    Database db = await instance.database;
-    List<Map> maps = await db.query(tableConversations,
+  Database? db = await (instance.database );
+    List<Map> maps = await db!.query(tableConversations,
         where: '$conversationName LIKE ?',
         whereArgs: ['%$value%'],
         orderBy: '$lastMessageTime DESC');
     List<ConversationItemDb> data = [];
     if (maps.length > 0) {
       for (int i = 0; i < maps.length; i++) {
-        data.add(ConversationItemDb.fromJson(maps[i]));
+        data.add(ConversationItemDb.fromJson(maps[i] as Map<String, dynamic>));
       }
     }
     return data;
   }
 
 
-  Future<ConversationItemDb> getConversationItemFromPeronId(String id) async {
-    Database db = await instance.database;
-    List<Map> maps = (await db.query(tableConversations,
+  Future<ConversationItemDb?> getConversationItemFromPeronId(String id) async {
+  Database? db = await (instance.database );
+    List<Map> maps = (await db!.query(tableConversations,
         where: '$conversationWithTypeId = ?', whereArgs: [id]));
     if (maps.length > 0) {
-      ConversationItemDb user = ConversationItemDb.fromJson(maps[0]);
+      ConversationItemDb user = ConversationItemDb.fromJson(maps[0] as Map<String, dynamic>);
       return user;
     }
     return null;
   }
 
-  Future<ConversationItemDb> getConversationItem(String id) async {
-    Database db = await instance.database;
-    List<Map> maps = (await db.query(tableConversations,
+  Future<ConversationItemDb?> getConversationItem(String? id) async {
+  Database? db = await (instance.database );
+    List<Map> maps = (await db!.query(tableConversations,
         where: '$conversationId = ?', whereArgs: [id]));
     if (maps.length > 0) {
-      ConversationItemDb user = ConversationItemDb.fromJson(maps[0]);
+      ConversationItemDb user = ConversationItemDb.fromJson(maps[0] as Map<String, dynamic>);
       return user;
     }
     return null;
   }
 
   // ignore: missing_return
-  Future<ConversationItemDb> getConversationWithOnlineStatus(
+  Future<ConversationItemDb?> getConversationWithOnlineStatus(
       String userId) async {
-    Database db = await instance.database;
+    Database? db = await instance.database;
     if(userId!=null)
-   { List<Map> maps = await db.query(tableConversations,
+   { List<Map> maps = await db!.query(tableConversations,
         where: '$conversationOwnerId = ?', whereArgs: [userId]);
 
-    return maps.isNotEmpty ? ConversationItemDb.fromJson(maps[0]) : null;}
+    return maps.isNotEmpty ? ConversationItemDb.fromJson(maps[0] as Map<String, dynamic>) : null;}
   }
 
-  Future<int> makeUnreadCountZero(String id, int count) async {
-    Database db = await instance.database;
-    return await db.rawUpdate(
+  Future<int> makeUnreadCountZero(String? id, int count) async {
+  Database? db = await (instance.database );
+    return await db!.rawUpdate(
         'UPDATE $tableConversations SET $unreadCount = ? WHERE $conversationId = ?',
         [count, id]);
   }
 
   updateConversationData(ConversationItemDb data) async {
-    final db = await instance.database;
-    var res = await db.rawUpdate(
+    Database? db = await (instance.database );
+    var res = await db!.rawUpdate(
         'UPDATE $tableConversations SET $lastMessageTime = ?  ,$lastMessage = ?,$isOnline = ?  WHERE $conversationWithTypeId = ?',
         [
           data.lastMessageTime,
@@ -510,35 +521,35 @@ $isFailed INTEGER
 
   updateStatus(String userId, int status) async {
     if(userId!=null && status!=null )
-   { final db = await instance.database;
-    return await db.rawUpdate(
+   {  Database? db = await (instance.database );
+    return await db!.rawUpdate(
         'UPDATE $tableConversations SET $isOnline = ? WHERE $conversationWithTypeId = ?',
         [status, userId]);}
   }
 
   updateAllStatus() async {
-    final db = await instance.database;
+    Database? db = await (instance.database );
 
-    return await db
+    return await db!
         .rawUpdate('UPDATE $tableConversations SET $isOnline = ?', [0]);
   }
 
   Future<int> deleteConversations() async {
-    Database db = await instance.database;
-    return await db.delete(tableConversations);
+  Database? db = await (instance.database );
+    return await db!.delete(tableConversations);
   }
 
   //======================================================Messages quries
 
   Future<int> insertMessage(MessagePayloadDatabase row) async {
-    Database db = await instance.database;
-    return await db.insert(tableMessages, row.toJson());
+  Database? db = await (instance.database );
+    return await db!.insert(tableMessages, row.toJson());
   }
 
-  Future<List<MessagePayloadDatabase>> getMessages(String id) async {
+  Future<List<MessagePayloadDatabase>?> getMessages(String? id) async {
     if(id!=null)
-  {  Database db = await instance.database;
-    List<Map> maps = await db.query(tableMessages,
+  {  Database? db = await (instance.database );
+    List<Map> maps = await db!.query(tableMessages,
         distinct: true,
         where: '$conversationId = ?',
         whereArgs: [id],
@@ -547,7 +558,7 @@ $isFailed INTEGER
     List<MessagePayloadDatabase> data = [];
     if (maps.length > 0) {
       for (int i = 0; i < maps.length; i++) {
-        data.add(MessagePayloadDatabase.fromJson(maps[i]));
+        data.add(MessagePayloadDatabase.fromJson(maps[i] as Map<String, dynamic>));
       }
     }
     return data;}
@@ -556,52 +567,52 @@ $isFailed INTEGER
   }
 
   deleteMessage(String id) async {
-    final db = await instance.database;
-    var res = await db
+    Database? db = await (instance.database );
+    var res = await db!
         .delete(tableMessages, where: '$messageId = ? ', whereArgs: [id]);
     return res;
   }
 
   updateMessage(MessagePayloadDatabase data) async {
-    final db = await instance.database;
-    var res = await db.update(tableMessages, data.toJson(),
+    Database? db = await (instance.database );
+    var res = await db!.update(tableMessages, data.toJson(),
         where: '$messageId = ? AND $conversationId = ?',
         whereArgs: [data.messageId, data.conversationId]);
     return res;
   }
 
-  Future<MessagePayloadDatabase> getMessageItem(String cId, String mId) async {
-    Database db = await instance.database;
-    List<Map> maps = (await db
+  Future<MessagePayloadDatabase?> getMessageItem(String? cId, String? mId) async {
+  Database? db = await (instance.database );
+    List<Map> maps = (await db!
         .query(tableMessages, where: '$messageId = ?', whereArgs: [mId]));
     if (maps.length > 0) {
-      MessagePayloadDatabase user = MessagePayloadDatabase.fromJson(maps[0]);
+      MessagePayloadDatabase user = MessagePayloadDatabase.fromJson(maps[0] as Map<String, dynamic>);
       return user;
     }
     return null;
   }
 
   Future<int> deleteMessages() async {
-    Database db = await instance.database;
-    return await db.delete(tableMessages);
+  Database? db = await (instance.database );
+    return await db!.delete(tableMessages);
   }
 
   //=====================================contact database queriesssss
   Future<int> insertContacts(UserContact row) async {
-    Database db = await instance.database;
-    return await db.insert(tableContacts, row.toJson());
+  Database? db = await (instance.database );
+    return await db!.insert(tableContacts, row.toJson());
   }
 
   updateIsSelected(UserContact userContact) async {
-    final db = await instance.database;
-    var res = await db.update(tableContacts, userContact.toJson(),
+    Database? db = await (instance.database );
+    var res = await db!.update(tableContacts, userContact.toJson(),
         where: '$columnMobile = ?', whereArgs: [userContact.mobileNumber]);
     return res;
   }
 
   updateIsSelectedAll() async {
-    final db = await instance.database;
-    var res = await db.rawUpdate(
+    Database? db = await (instance.database );
+    var res = await db!.rawUpdate(
         'UPDATE $tableContacts SET $columnIsSelected = ?,  $columnIsSelected = ?',
         [1, 0]);
     return res;
@@ -609,26 +620,26 @@ $isFailed INTEGER
 
   Future<List<UserContact>> getContactsUsingName(String name) async {
     print(name);
-    Database db = await instance.database;
-    List<Map> maps = await db.query(tableContacts,
+  Database? db = await (instance.database );
+    List<Map> maps = await db!.query(tableContacts,
         where: '$columnName  LIKE ?', whereArgs: ['$name%']);
     List<UserContact> data = [];
     if (maps.length > 0) {
       for (int i = 0; i < maps.length; i++) {
-        data.add(UserContact.fromJson(maps[i]));
+        data.add(UserContact.fromJson(maps[i] as Map<String, dynamic>));
       }
     }
     return data;
   }
 
   Future<List<UserContact>> getContacts() async {
-    Database db = await instance.database;
-    List<Map> maps = await db.query(tableContacts,
+    Database? db = await (instance.database);
+    List<Map> maps = await db!.query(tableContacts,
         where: '$columnIsSync = ?', whereArgs: [0], limit: 50);
     List<UserContact> data = [];
     if (maps.length > 0) {
       for (int i = 0; i < maps.length; i++) {
-        data.add(UserContact.fromJson(maps[i]));
+        data.add(UserContact.fromJson(maps[i] as Map<String, dynamic>));
       }
     }
     return data;
@@ -636,23 +647,23 @@ $isFailed INTEGER
 
 //===================================================================
   Future<List<UserContact>> getContactsAll() async {
-    Database db = await instance.database;
-    List<Map> maps = await db.query(tableContacts);
+  Database? db = await (instance.database );
+    List<Map> maps = await db!.query(tableContacts);
     List<UserContact> data = [];
     if (maps.length > 0) {
       for (int i = 0; i < maps.length; i++) {
-        data.add(UserContact.fromJson(maps[i]));
+        data.add(UserContact.fromJson(maps[i] as Map<String, dynamic>));
       }
     }
     return data;
   }
 
-  Future<UserContact> getContactUsingMobileNumber(String mobNum) async {
-    Database db = await instance.database;
-    List<Map> maps = (await db
+  Future<UserContact?> getContactUsingMobileNumber(String? mobNum) async {
+    Database? db = await (instance.database );
+    List<Map> maps = (await db!
         .query(tableContacts, where: '$columnMobile = ?', whereArgs: [mobNum]));
     if (maps.length > 0) {
-      UserContact user = UserContact.fromJson(maps[0]);
+      UserContact user = UserContact.fromJson(maps[0] as Map<String, dynamic>);
 
       return user;
     }
@@ -660,22 +671,22 @@ $isFailed INTEGER
   }
 
   Future<int> updateSync(UserContact row) async {
-    Database db = await instance.database;
-    return await db.rawUpdate(
+    Database? db = await (instance.database );
+    return await db!.rawUpdate(
         'UPDATE $tableContacts SET isSync = ? WHERE mobileNumber = ?',
         [1, row.mobileNumber]);
   }
 
   Future<int> update(UserContact row) async {
-    Database db = await instance.database;
-    return await db.rawUpdate(
+    Database? db = await (instance.database );
+    return await db!.rawUpdate(
         'UPDATE $tableContacts SET name = ?, firstName = ?, lastName = ?,isSync = ? WHERE mobileNumber = ?',
         [row.name, row.firstName, row.lastName, 0, row.mobileNumber]);
   }
 
   Future<int> delete(int id) async {
-    Database db = await instance.database;
-    return await db
+    Database? db = await (instance.database );
+    return await db!
         .delete(tableContacts, where: '$columnId = ?', whereArgs: [id]);
   }
 //=====================================contact databse queriesssss

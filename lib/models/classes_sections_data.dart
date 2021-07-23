@@ -1,8 +1,8 @@
 class ClassesAndSectionsData {
-  String statusCode;
-  String message;
-  List<ClassesAndSections> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<ClassesAndSections>? rows;
+  int? total;
   ClassesAndSectionsData(
       {this.statusCode, this.message, this.rows, this.total});
 
@@ -12,7 +12,7 @@ class ClassesAndSectionsData {
     if (json['rows'] != null) {
       rows = [];//ClassesAndSections>();
       json['rows'].forEach((v) {
-        rows.add(new ClassesAndSections.fromJson(v));
+        rows!.add(new ClassesAndSections.fromJson(v));
       });
     }
     total = json['total'];
@@ -23,7 +23,7 @@ class ClassesAndSectionsData {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -31,14 +31,14 @@ class ClassesAndSectionsData {
 }
 
 class ClassesAndSections {
-  String sectionName;
-  String sectionDescription;
-  String className;
-  String classCode;
-  int isSelected;
-  String classDescription;
-  int classId;
-  int sectionId;
+  String? sectionName;
+  String? sectionDescription;
+  String? className;
+  String? classCode;
+  int? isSelected;
+  String? classDescription;
+  int? classId;
+  int? sectionId;
 
   ClassesAndSections(
       {this.sectionName,

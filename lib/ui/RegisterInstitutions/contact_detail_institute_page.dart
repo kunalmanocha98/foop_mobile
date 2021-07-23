@@ -24,7 +24,7 @@ import 'models/instituteContacts.dart';
 
 // ignore: must_be_immutable
 class ContactsDetailsPageInstitute extends StatefulWidget {
-  int instId;
+  int? instId;
 
   ContactsDetailsPageInstitute(this.instId);
 
@@ -35,18 +35,18 @@ class ContactsDetailsPageInstitute extends StatefulWidget {
 
 class _ContactsDetailsPageInstitute extends State<ContactsDetailsPageInstitute>
     with SingleTickerProviderStateMixin {
-  String facebookId;
-  String googleSignInId;
-  String userName;
-  String imageUrl;
-  int instId;
+  String? facebookId;
+  String? googleSignInId;
+  String? userName;
+  String? imageUrl;
+  int? instId;
   var range = <String>[];
   var rangeStudent = <String>[];
 
   var instituteTypelist = <String>[];
   var relationship = <String>[];
   bool isTermAndConditionAccepted = false;
-  String email = "";
+  String? email = "";
   bool isGoogleOrFacebookDataReceived = false;
   double startPos = -1.0;
   double endPos = 1.0;
@@ -62,20 +62,20 @@ class _ContactsDetailsPageInstitute extends State<ContactsDetailsPageInstitute>
   final genderController = TextEditingController();
   final descriptionController = TextEditingController();
 
-  BuildContext context;
-  TextStyleElements styleElements;
+ late BuildContext context;
+  late TextStyleElements styleElements;
 
 
-  String selectInstCategory;
+  String? selectInstCategory;
 
-  String selectInstType;
+  String? selectInstType;
 
-  String selectStRange;
+  String? selectStRange;
 
-  String selectTecRange;
-  int selectedEpoch;
+  String? selectTecRange;
+  int? selectedEpoch;
 
-  SharedPreferences prefs;
+  late SharedPreferences prefs;
 
   @override
   void initState() {
@@ -98,11 +98,11 @@ bool isLoading=false;
       style: styleElements.subtitle1ThemeScalable(context).copyWith(
           color: HexColor(AppColors.appColorBlack65)
       ),
-      onSaved: (String value) {},
+      onSaved: (String? value) {},
       controller: websiteCon,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-          hintText: AppLocalizations.of(context).translate('website'),
+          hintText: AppLocalizations.of(context)!.translate('website'),
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
           border: UnderlineInputBorder(
             borderSide: BorderSide(
@@ -125,7 +125,7 @@ bool isLoading=false;
         ],
         decoration: InputDecoration(
             contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-            hintText: AppLocalizations.of(context).translate('email'),
+            hintText: AppLocalizations.of(context)!.translate('email'),
             hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
             border: UnderlineInputBorder(
               borderSide: BorderSide(
@@ -133,7 +133,7 @@ bool isLoading=false;
               ),
             )),
         validator: EditProfileMixins().validateEmail,
-        onSaved: (String value) {
+        onSaved: (String? value) {
           email = value;
         },
       ),
@@ -152,7 +152,7 @@ bool isLoading=false;
       scrollPadding: EdgeInsets.all(20.0.w),
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-          hintText: AppLocalizations.of(context).translate('mobile_number'),
+          hintText: AppLocalizations.of(context)!.translate('mobile_number'),
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
           border: UnderlineInputBorder(
             borderSide: BorderSide(
@@ -174,7 +174,7 @@ bool isLoading=false;
       scrollPadding: EdgeInsets.all(20.0.w),
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-          hintText: AppLocalizations.of(context).translate('phone'),
+          hintText: AppLocalizations.of(context)!.translate('phone'),
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
           border: UnderlineInputBorder(
             borderSide: BorderSide(
@@ -189,7 +189,7 @@ bool isLoading=false;
           child: Scaffold(
               // resizeToAvoidBottomInset: false,
               appBar: TricycleAppBar().getCustomAppBar(context,
-                  appBarTitle: AppLocalizations.of(context).translate('register_institute'),
+                  appBarTitle: AppLocalizations.of(context)!.translate('register_institute'),
                   isIconVisible:false,
                   actions: [
 
@@ -204,7 +204,7 @@ bool isLoading=false;
                         },
                         child: Row(
                           children: [
-                            Text(AppLocalizations.of(context).translate('next'), style:styleElements.subtitle2ThemeScalable(context).copyWith(color: HexColor(AppColors.appMainColor)),),
+                            Text(AppLocalizations.of(context)!.translate('next'), style:styleElements.subtitle2ThemeScalable(context).copyWith(color: HexColor(AppColors.appMainColor)),),
                             Visibility(
                               visible: isLoading,
                               child: Padding(
@@ -243,7 +243,7 @@ bool isLoading=false;
                                 child: Container(
                                   margin: EdgeInsets.only(
                                       left: 8.w, right: 8.w, bottom: 8.h),
-                                  child: Text(AppLocalizations.of(context).translate('contact_details'),
+                                  child: Text(AppLocalizations.of(context)!.translate('contact_details'),
                                     style: styleElements
                                         .headline6ThemeScalable(context)
                                         .copyWith(fontWeight: FontWeight.bold),
@@ -288,7 +288,7 @@ bool isLoading=false;
                                       alignment: Alignment.centerLeft,
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: Text(AppLocalizations.of(context).translate('tricycle_web_auto')),
+                                        child: Text(AppLocalizations.of(context)!.translate('tricycle_web_auto')),
                                       ))),
                                 )),
 
@@ -304,6 +304,7 @@ bool isLoading=false;
   // ignore: missing_return
   Future<bool> _onBackPressed() {
 
+    return new Future(() => false);
   }
 
   void submit(BuildContext ctx) async {

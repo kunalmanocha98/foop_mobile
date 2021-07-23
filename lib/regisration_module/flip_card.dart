@@ -7,15 +7,15 @@ import 'package:flutter/material.dart';
 class FlipView extends StatefulWidget {
   final Widget front, back;
 
-  FlipView({Key key, @required this.front, @required this.back}) : super(key: key);
+  FlipView({Key? key, required this.front, required this.back}) : super(key: key);
 
   @override
   _FlipViewState createState() => _FlipViewState();
 }
 
 class _FlipViewState extends State<FlipView> with SingleTickerProviderStateMixin {
-  Animation _animation;
-  AnimationController _controller;
+  late Animation _animation;
+  late AnimationController _controller;
 
   @override
   void initState() {
@@ -28,7 +28,7 @@ class _FlipViewState extends State<FlipView> with SingleTickerProviderStateMixin
   Widget build(BuildContext context) {
     return AnimatedBuilder(
       animation: _controller,
-      builder: (BuildContext context, Widget child) {
+      builder: (BuildContext context, Widget? child) {
         bool isFront = _controller.value < .5;
         return InkWell(
           onTap: () {

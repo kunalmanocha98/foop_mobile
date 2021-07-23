@@ -23,7 +23,7 @@ class RecoverPasswordApis {
     });
   }
 
-  Future<dynamic> recoverPasswordOtp(BuildContext context, String data) async {
+  Future<dynamic> recoverPasswordOtp(BuildContext? context, String data) async {
     print(data);
     var headers = {
       "Content-Type": 'application/json',

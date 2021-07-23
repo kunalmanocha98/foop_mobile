@@ -42,12 +42,12 @@ class SignUpPage extends StatefulWidget {
 }
 
 class StateSignUp extends State<SignUpPage> with SingleTickerProviderStateMixin {
-  String facebookId;
-  String googleSignInId;
-  String userName;
-  String imageUrl;
-  bool isTermAndConditionAccepted= false;
-  String email = "";
+  String? facebookId;
+  String? googleSignInId;
+  String? userName;
+  String? imageUrl;
+  bool? isTermAndConditionAccepted= false;
+  String? email = "";
   bool isGoogleOrFacebookDataReceived = false;
   // GoogleSignInAccount _currentUser;
   double startPos = -1.0;
@@ -57,27 +57,28 @@ class StateSignUp extends State<SignUpPage> with SingleTickerProviderStateMixin 
   final emailController = TextEditingController();
   final passwordTextController = TextEditingController();
   final mobileController = TextEditingController();
-  var countryCodeList = [];
+  List<dynamic>? countryCodeList = [];
   var mapState = HashMap<String, String>();
-  BuildContext context;
-  BuildContext stx;
-  TextStyleElements styleElements;
-  String cCode;
+ late BuildContext context;
+  late BuildContext stx;
+  late TextStyleElements styleElements;
+  String? cCode;
   bool _validate = false;
-  TextStyleElements tsE;
+  late TextStyleElements tsE;
   FocusNode _focus = new FocusNode();
   String selectedDate = 'Date Of Birth*';
-  String selectedGender;
-  int selectedEpoch;
+  String? selectedGender;
+  int? selectedEpoch;
   var items = ['Male', 'Female', 'Transgender'];
-  SharedPreferences prefs;
+  SharedPreferences? prefs;
 
 
 
   @override
   void initState() {
     super.initState();
-    getCounrtyCode();
+    WidgetsBinding.instance!.addPostFrameCallback((_) =>  getCounrtyCode());
+
   }
 
 
@@ -85,15 +86,15 @@ class StateSignUp extends State<SignUpPage> with SingleTickerProviderStateMixin 
     prefs = await SharedPreferences.getInstance();
     FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
     _firebaseMessaging.getToken().then((token) {
-      prefs.setString("fcmId", token);
+      prefs!.setString("fcmId", token!);
       getDeviceDetails(prefs);
     });
   }
-  static Future<List<String>> getDeviceDetails(SharedPreferences prefs) async {
-    String deviceName;
-    String deviceVersion;
-    String identifier;
-    DeviceInfo deviceInfo;
+  static Future<List<String?>> getDeviceDetails(SharedPreferences? prefs) async {
+    String? deviceName;
+    String? deviceVersion;
+    String? identifier;
+    DeviceInfo? deviceInfo;
     final DeviceInfoPlugin deviceInfoPlugin = new DeviceInfoPlugin();
     try {
       if (Platform.isAndroid) {
@@ -101,7 +102,7 @@ class StateSignUp extends State<SignUpPage> with SingleTickerProviderStateMixin 
         var build = await deviceInfoPlugin.androidInfo;
         deviceName = build.model;
         deviceVersion = build.version.toString();
-        prefs.setString('UUID', build.androidId); //UUID for Android
+        prefs!.setString('UUID', build.androidId); //UUID for Android
         deviceInfo.machineCode = build.androidId;
         deviceInfo.deviceInfo = build.device;
         deviceInfo.deviceType = "android";
@@ -115,8 +116,8 @@ class StateSignUp extends State<SignUpPage> with SingleTickerProviderStateMixin 
         var data = await deviceInfoPlugin.iosInfo;
         deviceName = data.name.toString();
         deviceVersion = data.systemVersion.toString();
-        prefs.setString('UUID', data.identifierForVendor.toString()); //UUID for iOS
-        deviceInfo.machineCode = data.identifierForVendor.toString();
+        prefs!.setString('UUID', data.identifierForVendor.toString()); //UUID for iOS
+        deviceInfo!.machineCode = data.identifierForVendor.toString();
         deviceInfo.deviceInfo = data.name.toString().trim();
         deviceInfo.deviceType = "ios";
         deviceInfo.deviceVendor = data.identifierForVendor.toString();
@@ -147,11 +148,11 @@ class StateSignUp extends State<SignUpPage> with SingleTickerProviderStateMixin 
     newDate = new DateTime(DateTime.now().year - 4, DateTime.now().month, DateTime.now().day);
 
 
-    final DateTime picked = await showDatePicker(
+    final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: newDate,
         firstDate: DateTime(1900),
-        builder: (BuildContext context, Widget child) {
+        builder: (BuildContext context, Widget? child) {
           return Theme(
             data: ThemeData.light().copyWith(
               primaryColor: HexColor(AppColors.appColorBlack),
@@ -166,7 +167,7 @@ class StateSignUp extends State<SignUpPage> with SingleTickerProviderStateMixin 
                   textTheme: ButtonTextTheme.primary
               ),
             ),
-            child: child,
+            child: child!,
           );
         },
         lastDate: newDate);
@@ -185,26 +186,26 @@ class StateSignUp extends State<SignUpPage> with SingleTickerProviderStateMixin 
     setSharedPreferences();
     List<DropdownMenuItem> countryCodes = [];
     _getCountryCodes() {
-      for (int i = 0; i < countryCodeList.length; i++) {
+      for (int i = 0; i < countryCodeList!.length; i++) {
         countryCodes.add(DropdownMenuItem(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
-                countryCodeList[i].flagIconUrl??"",
+                countryCodeList![i].flagIconUrl??"",
                 style: styleElements.bodyText2ThemeScalable(context),
               ),
               Padding(
                 padding: const EdgeInsets.only(left:4.0,right: 4.0),
                 child: Text(
-                  countryCodeList[i].dialCode,
+                  countryCodeList![i].dialCode,
                   style: styleElements.bodyText2ThemeScalable(context),
                 ),
               ),
             ],
           ),
-          value: countryCodeList[i].dialCode,
+          value: countryCodeList![i].dialCode,
         ));
       }
       return countryCodes;
@@ -212,7 +213,7 @@ class StateSignUp extends State<SignUpPage> with SingleTickerProviderStateMixin 
 
     tsE =TextStyleElements(context);
 
-    final codes = DropdownButtonFormField(
+    final codes = DropdownButtonFormField<dynamic>(
       value: null,
       isExpanded: true,
       decoration: InputDecoration(
@@ -224,14 +225,18 @@ class StateSignUp extends State<SignUpPage> with SingleTickerProviderStateMixin 
       hint: Padding(
           padding: const EdgeInsets.only(left: 0),
           child: Text(cCode ??
-              AppLocalizations.of(context).translate("code"),
+              AppLocalizations.of(context)!.translate("code"),
             style: styleElements.bodyText2ThemeScalable(context),)
       ),
 
       items: _getCountryCodes(),
       onChanged: (value) {
+
+        value as String ;
+
+
         setState(() {
-          cCode = value ?? cCode;
+          cCode = value;
         });
       },
     );
@@ -251,7 +256,7 @@ class StateSignUp extends State<SignUpPage> with SingleTickerProviderStateMixin 
         ],
         decoration: InputDecoration(
             contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-            hintText: AppLocalizations.of(context).translate('email'),
+            hintText: AppLocalizations.of(context)!.translate('email'),
             hintStyle: tsE.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
             prefixIcon: Padding(
                 padding: EdgeInsets.all(0.0.h),
@@ -262,7 +267,7 @@ class StateSignUp extends State<SignUpPage> with SingleTickerProviderStateMixin 
               ),
             )),
         validator: EditProfileMixins().validateEmail,
-        onSaved: (String value) {
+        onSaved: (String? value) {
           email = value;
         },
       ),
@@ -279,12 +284,12 @@ class StateSignUp extends State<SignUpPage> with SingleTickerProviderStateMixin 
               v.trim().length<8?_validate=false:_validate=true; return null;
             });
           },
-          onSaved: (String value) {},
+          onSaved: (String? value) {},
           controller: passwordTextController,
           decoration: InputDecoration(
               contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-              hintText: AppLocalizations.of(context).translate('password'),
-              errorText:!_validate?AppLocalizations.of(context).translate("min_character"):null,
+              hintText: AppLocalizations.of(context)!.translate('password'),
+              errorText:!_validate?AppLocalizations.of(context)!.translate("min_character"):null,
               hintStyle: tsE.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
               prefixIcon: Padding(
                   padding: EdgeInsets.all(0.0.h),
@@ -309,7 +314,7 @@ class StateSignUp extends State<SignUpPage> with SingleTickerProviderStateMixin 
       scrollPadding: EdgeInsets.all(20.0.w),
       decoration: InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-        hintText: AppLocalizations.of(context).translate('mobile_number'),
+        hintText: AppLocalizations.of(context)!.translate('mobile_number'),
         hintStyle: tsE.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
 
         border: InputBorder.none,),
@@ -355,7 +360,7 @@ class StateSignUp extends State<SignUpPage> with SingleTickerProviderStateMixin 
                                   margin:  EdgeInsets.only(bottom: 30.h),
                                   alignment: Alignment.center,
                                   child: Text(
-                                    AppLocalizations.of(context).translate("sign_up"),
+                                    AppLocalizations.of(context)!.translate("sign_up"),
                                     style: styleElements.headline5ThemeScalable(context)
                                         .copyWith(fontSize: 24.sp),
                                   ),
@@ -435,7 +440,7 @@ class StateSignUp extends State<SignUpPage> with SingleTickerProviderStateMixin 
                                         children: <Widget>[
                                           Checkbox(value: isTermAndConditionAccepted,
                                             activeColor: HexColor(AppColors.appMainColor),
-                                            onChanged: (bool v){
+                                            onChanged: (bool? v){
                                               setState(() {
                                                 isTermAndConditionAccepted=v;
                                               });
@@ -492,10 +497,10 @@ class StateSignUp extends State<SignUpPage> with SingleTickerProviderStateMixin 
                                         offsetX: 96.66.w,
                                         offsetY: 12.93.w,
                                         callback: (){
-                                          if(isTermAndConditionAccepted)
+                                          if(isTermAndConditionAccepted!)
                                             signUp();
                                           else
-                                            ToastBuilder().showSnackBar(AppLocalizations.of(context).translate("accept_term_condition"), stx,HexColor(AppColors.information));
+                                            ToastBuilder().showSnackBar(AppLocalizations.of(context)!.translate("accept_term_condition"), stx,HexColor(AppColors.information));
                                         },),
                                     )):Center(child: SizedBox(
 
@@ -545,7 +550,7 @@ class StateSignUp extends State<SignUpPage> with SingleTickerProviderStateMixin 
                                   child: Container(
                                     margin:  EdgeInsets.only(
                                         left: 16.w, right: 16.w, bottom: 16.w),
-                                    child: Text(AppLocalizations.of(context).translate('please_update_details'),
+                                    child: Text(AppLocalizations.of(context)!.translate('please_update_details'),
                                       style: styleElements.subtitle1ThemeScalable(context),
                                     ),
                                   )),
@@ -624,6 +629,8 @@ class StateSignUp extends State<SignUpPage> with SingleTickerProviderStateMixin 
       });
     } else
       Navigator.of(context).pop(true);
+
+    return new Future(() => false);
   }
 
   void signUp() async {
@@ -640,9 +647,9 @@ class StateSignUp extends State<SignUpPage> with SingleTickerProviderStateMixin 
             RegisterUserPayload registerUserPayload = RegisterUserPayload();
             if(mobileController.text.isNotEmpty)
             {
-              if(cCode==null || cCode.isEmpty)
+              if(cCode==null || cCode!.isEmpty)
               {
-                ToastBuilder().showSnackBar(AppLocalizations.of(context).translate("country_code"), stx,HexColor(AppColors.information));
+                ToastBuilder().showSnackBar(AppLocalizations.of(context)!.translate("country_code"), stx,HexColor(AppColors.information));
                 return;
               }
               else
@@ -674,7 +681,7 @@ class StateSignUp extends State<SignUpPage> with SingleTickerProviderStateMixin 
 
 
                   if (data.rows != null) {
-                    activate(int.parse((data.rows)), emailController.text);
+                    activate(int.parse(data.rows!), emailController.text);
                   } else {
 
                     setState(() {
@@ -697,10 +704,10 @@ class StateSignUp extends State<SignUpPage> with SingleTickerProviderStateMixin 
                     isCalling=false;
                   });
                   if (data.message != null)
-                    ToastBuilder().showSnackBar(data.message, stx,HexColor(AppColors.information));
+                    ToastBuilder().showSnackBar(data.message!, stx,HexColor(AppColors.information));
                   else
                     ToastBuilder().showSnackBar(
-                        AppLocalizations.of(context).translate("try_again"),
+                        AppLocalizations.of(context)!.translate("try_again"),
                         stx,HexColor(AppColors.information));
                 }
               }
@@ -715,12 +722,12 @@ class StateSignUp extends State<SignUpPage> with SingleTickerProviderStateMixin 
         }
       } else {
         ToastBuilder().showSnackBar(
-            AppLocalizations.of(context).translate("login_password_empty"),
+            AppLocalizations.of(context)!.translate("login_password_empty"),
             stx,HexColor(AppColors.information));
       }
     } else {
       ToastBuilder().showSnackBar(
-          AppLocalizations.of(context).translate("email_required"),
+          AppLocalizations.of(context)!.translate("email_required"),
           stx,HexColor(AppColors.information));
     }
 
@@ -741,15 +748,15 @@ class StateSignUp extends State<SignUpPage> with SingleTickerProviderStateMixin 
       }
       print(registerUserPayload.toJson().toString());
       DeviceInfo deviceInfo=DeviceInfo();
-      if (prefs.getString("DeviceInfo") != null) {
+      if (prefs!.getString("DeviceInfo") != null) {
         Map<String, dynamic> map =
-        json.decode(prefs.getString("DeviceInfo") ?? "");
+        json.decode(prefs!.getString("DeviceInfo") ?? "");
         deviceInfo = DeviceInfo.fromJson(map);
       }
 
-      if (prefs.getDouble("lat")!= null)
-        deviceInfo.gpsInfo ="Latitude :"+ prefs.getDouble("lat").toString() + ", Longitude : " + prefs.getDouble("longi").toString();
-      deviceInfo.fcmId=prefs.getString("fcmId");
+      if (prefs!.getDouble("lat")!= null)
+        deviceInfo.gpsInfo ="Latitude :"+ prefs!.getDouble("lat").toString() + ", Longitude : " + prefs!.getDouble("longi").toString();
+      deviceInfo.fcmId=prefs!.getString("fcmId");
 
 
       SignUpApi()
@@ -761,24 +768,24 @@ class StateSignUp extends State<SignUpPage> with SingleTickerProviderStateMixin 
           if (data.statusCode == Strings.success_code) {
             if (data.message != null && data.message != "Invalid OTP") {
               if (data.message != null)
-                await prefs.setString('expiry', data.rows.expiry ?? "");
-              await prefs.setString('token', data.rows.token ?? "");
+                await prefs!.setString('expiry', data.rows!.expiry ?? "");
+              await prefs!.setString('token', data.rows!.token ?? "");
               Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(builder: (context) => SelectLanguage(true)),
                       (Route<dynamic> route) => false);
             } else {
               if (data.message != null)
-                ToastBuilder().showSnackBar(data.message, stx,HexColor(AppColors.information));
+                ToastBuilder().showSnackBar(data.message!, stx,HexColor(AppColors.information));
             }
           } else {
             setState(() {
               isCalling=false;
             });
             if (data.message != null)
-              ToastBuilder().showSnackBar(data.message, stx,HexColor(AppColors.information));
+              ToastBuilder().showSnackBar(data.message!, stx,HexColor(AppColors.information));
             else
               ToastBuilder().showSnackBar(
-                  AppLocalizations.of(context).translate("try_again"), stx,HexColor(AppColors.information));
+                  AppLocalizations.of(context)!.translate("try_again"), stx,HexColor(AppColors.information));
           }
         }
       }).catchError((onError) async {
@@ -790,7 +797,7 @@ class StateSignUp extends State<SignUpPage> with SingleTickerProviderStateMixin 
       });
     } else {
       ToastBuilder().showSnackBar(
-          AppLocalizations.of(context).translate("enter_token"), stx,HexColor(AppColors.information));
+          AppLocalizations.of(context)!.translate("enter_token"), stx,HexColor(AppColors.information));
     }
   }
 }

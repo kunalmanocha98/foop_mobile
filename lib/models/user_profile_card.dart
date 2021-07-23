@@ -1,6 +1,6 @@
 class UserProfileCard {
-  int id;
-  String cardData;
+  int? id;
+  String? cardData;
 
   UserProfileCard({
     this.cardData,

@@ -29,9 +29,9 @@ import 'models/states.dart';
 
 // ignore: must_be_immutable
 class InstituteLocationAddressPage extends StatefulWidget {
-  int instId;
+  int? instId;
   bool isEvent;
-  EventLocation offlineLocation;
+  EventLocation? offlineLocation;
 
   InstituteLocationAddressPage(this.instId,{this.isEvent=false,this.offlineLocation});
 
@@ -42,18 +42,18 @@ class InstituteLocationAddressPage extends StatefulWidget {
 
 class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
     with SingleTickerProviderStateMixin {
-  String facebookId;
-  String googleSignInId;
-  String userName;
-  String imageUrl;
-  bool isEvent;
+  String? facebookId;
+  String? googleSignInId;
+  String? userName;
+  String? imageUrl;
+  bool? isEvent;
   var range = <String>[];
   var rangeStudent = <String>[];
 
   var instituteTypelist = <String>[];
-  var relationship = <String>[];
+  var relationship = <String?>[];
   var mapCountry = HashMap<String, String>();
-  var mapState = HashMap<String, String>();
+  var mapState = HashMap<String?, String?>();
   bool isTermAndConditionAccepted = false;
   String email = "";
   bool isGoogleOrFacebookDataReceived = false;
@@ -64,21 +64,21 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
   final pinController = TextEditingController();
   final addController = TextEditingController();
   final fromMapController = TextEditingController();
-  BuildContext context;
-  TextStyleElements styleElements;
+ late BuildContext context;
+  late TextStyleElements styleElements;
 
    bool isLoading=false;
-  String selectState;
+  String? selectState;
 
-  String selectCountry = "Country";
+  String? selectCountry = "Country";
 
-  String selectStRange;
+  String? selectStRange;
 
-  String selectTecRange;
-  int selectedEpoch;
-  int instId;
-  SharedPreferences prefs;
-  EventLocation offlineLocation;
+  String? selectTecRange;
+  int? selectedEpoch;
+  int? instId;
+  late SharedPreferences prefs;
+  EventLocation? offlineLocation;
 
 
   _InstituteLocationAddressPage(this.instId, {this.isEvent,this.offlineLocation});
@@ -86,9 +86,9 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
   @override
   void initState() {
     if(offlineLocation!=null){
-      cityMapController.text = offlineLocation.address.city;
-      pinController.text = offlineLocation.address.pincode;
-      addController.text = offlineLocation.address.address;
+      cityMapController.text = offlineLocation!.address!.city!;
+      pinController.text = offlineLocation!.address!.pincode!;
+      addController.text = offlineLocation!.address!.address!;
     }
     super.initState();
     getInstituteType();
@@ -113,7 +113,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
       for (int i = 0; i < relationship.length; i++) {
         relationType.add(DropdownMenuItem(
           child: Text(
-            relationship[i],
+            relationship[i]!,
             style: styleElements.bodyText2ThemeScalable(context),
           ),
           value: relationship[i],
@@ -127,11 +127,11 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
       style: styleElements.subtitle1ThemeScalable(context).copyWith(
           color: HexColor(AppColors.appColorBlack65)
       ),
-      onSaved: (String value) {},
+      onSaved: (String? value) {},
       controller: pinController,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-          hintText: AppLocalizations.of(context).translate('pin_zip'),
+          hintText: AppLocalizations.of(context)!.translate('pin_zip'),
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
           border: UnderlineInputBorder(
             borderSide: BorderSide(
@@ -144,11 +144,11 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
       style: styleElements.subtitle1ThemeScalable(context).copyWith(
           color: HexColor(AppColors.appColorBlack65)
       ),
-      onSaved: (String value) {},
+      onSaved: (String? value) {},
       controller: cityMapController,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-          hintText: AppLocalizations.of(context).translate('city_town'),
+          hintText: AppLocalizations.of(context)!.translate('city_town'),
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
           border: UnderlineInputBorder(
             borderSide: BorderSide(
@@ -182,7 +182,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
           disabledBorder: InputBorder.none,
           contentPadding: EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
-          hintText: AppLocalizations.of(context).translate('address')),
+          hintText: AppLocalizations.of(context)!.translate('address')),
     );
     styleElements = TextStyleElements(context);
 
@@ -209,7 +209,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
             Padding(
               padding: const EdgeInsets.only(top: 20.0, left: 22),
               child: Text(
-                selectCountry,
+                selectCountry!,
                 style: styleElements
                     .bodyText2ThemeScalable(context)
                     .copyWith(color: HexColor(AppColors.appColorBlack65)),
@@ -251,7 +251,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
     )*/
         ;
 
-    final state = DropdownButtonFormField(
+    final state = DropdownButtonFormField<dynamic>(
       value: null,
       isExpanded: true,
 
@@ -268,21 +268,22 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
       ),
       items: _getRelationtype(),
       onChanged: (value) {
+        value as DropdownMenuItem;
         setState(() {
-          selectState = value ?? selectState;
+          selectState = (value) as String?;
         });
       },
     );
 
     return new WillPopScope(
-      onWillPop:isEvent?()async{return true;}:_onBackPressed ,
+      onWillPop:isEvent!?()async{return new Future(() => false);}:_onBackPressed,
       child: SafeArea(
           child: Scaffold(
               // resizeToAvoidBottomInset: false,
               appBar: TricycleAppBar().getCustomAppBar(context,
-                  appBarTitle: isEvent ?
-                  AppLocalizations.of(context).translate('register_institute'):
-                  AppLocalizations.of(context).translate('select_location'),
+                  appBarTitle: isEvent! ?
+                  AppLocalizations.of(context)!.translate('register_institute'):
+                  AppLocalizations.of(context)!.translate('select_location'),
                   isIconVisible:isEvent,
                   actions: [
 
@@ -297,7 +298,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
                         },
                         child: Row(
                           children: [
-                            Text(AppLocalizations.of(context).translate('next'), style:styleElements.subtitle2ThemeScalable(context).copyWith(color: HexColor(AppColors.appMainColor)),),
+                            Text(AppLocalizations.of(context)!.translate('next'), style:styleElements.subtitle2ThemeScalable(context).copyWith(color: HexColor(AppColors.appMainColor)),),
                             Visibility(
                               visible: isLoading,
                               child: Padding(
@@ -336,7 +337,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
                                   child: Container(
                                     margin: EdgeInsets.only(
                                         left: 8.w, right: 8.w, bottom: 8.h),
-                                    child: Text(AppLocalizations.of(context).translate('location'),
+                                    child: Text(AppLocalizations.of(context)!.translate('location'),
                                       style: styleElements
                                           .headline6ThemeScalable(context)
                                           .copyWith(
@@ -405,7 +406,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
 
   // ignore: missing_return
   Future<bool> _onBackPressed() {
-
+    return new Future(() => false);
   }
 
   void getInstituteType() async {
@@ -414,7 +415,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
       if (value != null) {
         var data = Country.fromJson(value);
 
-        for (var item in data.rows) {
+        for (var item in data.rows!) {
           instituteTypelist.add(item[1].toString());
 
           mapCountry.putIfAbsent(item[1].toString(), () => item[0].toString());
@@ -427,7 +428,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
     });
   }
 
-  void getRelationType(String code) async {
+  void getRelationType(String? code) async {
     if (code != null) {
       final body = jsonEncode({
         "country": code,
@@ -435,7 +436,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
       Calls().calWithoutToken(body, context, Config.STATES).then((value) async {
         if (value != null) {
           var data = States.fromJson(value);
-          for (var item in data.rows) {
+          for (var item in data.rows!) {
             relationship.add(item.name);
             mapState.putIfAbsent(item.name, () => item.code);
           }
@@ -452,9 +453,9 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
     setState(() {
       isLoading=true;
     });
-    if (selectCountry!=null && selectCountry.isNotEmpty)
+    if (selectCountry!=null && selectCountry!.isNotEmpty)
     {
-        if (selectState!=null && selectState.isNotEmpty)
+        if (selectState!=null && selectState!.isNotEmpty)
         {
           if (pinController.text.trim().isNotEmpty) {
             if (cityMapController.text.trim().isNotEmpty) {
@@ -468,7 +469,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
                   if (key == selectState) state = value;
                 });
 
-                if(!isEvent) {
+                if(!isEvent!) {
                   InstituteLocationDetail instituteContactDetail = InstituteLocationDetail();
                   instituteContactDetail.institutionId = instId;
                   instituteContactDetail.address = addController.text;
@@ -477,7 +478,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
                   instituteContactDetail.postalCode = pinController.text;
                   instituteContactDetail.city = cityMapController.text;
                   prefs.setString(Strings.registeredInstituteLocation,
-                      cityMapController.text ?? "");
+                      cityMapController.text);
                   print(jsonEncode(instituteContactDetail));
 
                   Calls()
@@ -527,7 +528,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
               });
 
               ToastBuilder().showToast(
-                  AppLocalizations.of(context).translate("city_req"),
+                  AppLocalizations.of(context)!.translate("city_req"),
                   context,
                   HexColor(AppColors.information));
             }
@@ -537,7 +538,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
             });
 
             ToastBuilder().showToast(
-                AppLocalizations.of(context).translate("pin_code_req"),
+                AppLocalizations.of(context)!.translate("pin_code_req"),
                 context,
                 HexColor(AppColors.information));
           }
@@ -548,7 +549,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
           });
 
           ToastBuilder().showToast(
-              AppLocalizations.of(context).translate("state_req"),
+              AppLocalizations.of(context)!.translate("state_req"),
               context,
               HexColor(AppColors.information));
         }
@@ -559,7 +560,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
       });
 
       ToastBuilder().showToast(
-          AppLocalizations.of(context).translate("country_req"),
+          AppLocalizations.of(context)!.translate("country_req"),
           context,
           HexColor(AppColors.information));
     }

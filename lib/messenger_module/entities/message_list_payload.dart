@@ -1,10 +1,10 @@
 class MessagesPayload {
-  String conversationOwnerType;
-  String conversationOwnerId;
-  String conversationId;
-  String message;
-  String pageNumber;
-  String pageSize;
+  String? conversationOwnerType;
+  String? conversationOwnerId;
+  String? conversationId;
+  String? message;
+  String? pageNumber;
+  String? pageSize;
 
   MessagesPayload(
       {this.conversationOwnerType,

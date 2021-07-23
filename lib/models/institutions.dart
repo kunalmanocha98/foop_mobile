@@ -1,7 +1,7 @@
 class Institutions {
-int id;
-String name;
-String role;
+int? id;
+String? name;
+String? role;
 
 Institutions({this.id, this.name, this.role});
 

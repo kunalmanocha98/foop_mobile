@@ -51,7 +51,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class GlobalSearchNew extends StatefulWidget {
-  String entitySubType;
+  String? entitySubType;
   bool isSearching;
   bool onlyOneSearch;
 
@@ -67,31 +67,31 @@ class GlobalSearchNew extends StatefulWidget {
 class _GlobalSearchNew extends State<GlobalSearchNew>
     with TickerProviderStateMixin {
   List<CustomTabMaker> list = [];
-  TabController _tabController;
-  TextStyleElements styleElements;
-  String type;
-  int id;
+  late TabController _tabController;
+  late TextStyleElements styleElements;
+  String? type;
+  int? id;
   bool isSearching;
-  SharedPreferences prefs;
-  String ownerType;
-  int ownerId;
+  SharedPreferences? prefs;
+  String? ownerType;
+  int? ownerId;
   int _currentPosition = 0;
-  String pageTitle;
-  Null Function() callback;
-  String imageUrl;
-  String searchVal = "search";
+  String? pageTitle;
+  Null Function()? callback;
+  String? imageUrl;
+  String? searchVal = "search";
   GlobalKey<GlobalSeachState> searchPageKey = GlobalKey();
   GlobalKey<GlobalSeachState> searchPageKeyPerson = GlobalKey();
-  List<GlobalSearchHistoryItem> searchHistory;
-  List<Rows> suggestions;
-  String entitySubType;
+  List<GlobalSearchHistoryItem>? searchHistory;
+  List<Rows>? suggestions;
+  String? entitySubType;
 
   _GlobalSearchNew({this.isSearching = false, this.entitySubType});
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => setSharedPreferences());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => setSharedPreferences());
   }
 
   onPositionChange() {
@@ -105,21 +105,21 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
   void setSharedPreferences() async {
     prefs = await SharedPreferences.getInstance();
 
-    id = prefs.getInt("userId");
+    id = prefs!.getInt("userId");
     imageUrl = Utility().getUrlForImage(
-        prefs.getString(Strings.profileImage),
+        prefs!.getString(Strings.profileImage),
         RESOLUTION_TYPE.R64,
-        prefs.getString("ownerType") == "institution"
+        prefs!.getString("ownerType") == "institution"
             ? SERVICE_TYPE.INSTITUTION
             : SERVICE_TYPE.PERSON);
-    type = prefs.getString("ownerType") == "institution"
+    type = prefs!.getString("ownerType") == "institution"
         ? "institution"
         : "person";
 
-    pageTitle = prefs.getString(Strings.firstName);
+    pageTitle = prefs!.getString(Strings.firstName);
 
-    ownerType = prefs.getString("ownerType");
-    ownerId = prefs.getInt("userId");
+    ownerType = prefs!.getString("ownerType");
+    ownerId = prefs!.getInt("userId");
 
     getHistory();
     getSuggestion();
@@ -142,7 +142,7 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
             },
             type: GLOBAL_SEARCH_ENUM.POST.type,
           ),
-          tabName: AppLocalizations.of(context).translate('post')));
+          tabName: AppLocalizations.of(context)!.translate('post')));
     } else {
       list.add(new CustomTabMaker(
           statelessWidget: new GlobalSearchPersonInstitutePage(
@@ -156,7 +156,7 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
             searchVal: searchVal,
             type: GLOBAL_SEARCH_ENUM.ALL.type,
           ),
-          tabName: AppLocalizations.of(context).translate('all')));
+          tabName: AppLocalizations.of(context)!.translate('all')));
       list.add(new CustomTabMaker(
           statelessWidget: new GlobalSearchPersonInstitutePage(
             entitySubType: entitySubType,
@@ -169,7 +169,7 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
             key: UniqueKey(),
             type: GLOBAL_SEARCH_ENUM.PERSON.type,
           ),
-          tabName: AppLocalizations.of(context).translate('person')));
+          tabName: AppLocalizations.of(context)!.translate('person')));
       list.add(new CustomTabMaker(
           statelessWidget: new GlobalSearchPersonInstitutePage(
             entitySubType: entitySubType,
@@ -182,7 +182,7 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
             key: UniqueKey(),
             type: GLOBAL_SEARCH_ENUM.INSTITUTION.type,
           ),
-          tabName: AppLocalizations.of(context).translate('institute_title')));
+          tabName: AppLocalizations.of(context)!.translate('institute_title')));
       list.add(new CustomTabMaker(
           statelessWidget: new GlobalSearchPersonInstitutePage(
             entitySubType: entitySubType,
@@ -195,7 +195,7 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
             searchVal: searchVal,
             type: GLOBAL_SEARCH_ENUM.ROOM.type,
           ),
-          tabName: AppLocalizations.of(context).translate('room')));
+          tabName: AppLocalizations.of(context)!.translate('room')));
       list.add(new CustomTabMaker(
           statelessWidget: new GlobalSearchPersonInstitutePage(
             entitySubType: entitySubType,
@@ -208,7 +208,7 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
             },
             type: GLOBAL_SEARCH_ENUM.EVENT.type,
           ),
-          tabName: AppLocalizations.of(context).translate('events')));
+          tabName: AppLocalizations.of(context)!.translate('events')));
       list.add(new CustomTabMaker(
           statelessWidget: new GlobalSearchPersonInstitutePage(
             entitySubType: entitySubType,
@@ -221,7 +221,7 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
             },
             type: GLOBAL_SEARCH_ENUM.POST.type,
           ),
-          tabName: AppLocalizations.of(context).translate('post')));
+          tabName: AppLocalizations.of(context)!.translate('post')));
     }
 
     setState(() {
@@ -291,7 +291,7 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
                                                 contentPadding:
                                                 EdgeInsets.only(top: 12, left: 16),
                                                 border: InputBorder.none,
-                                                hintText: AppLocalizations.of(context)
+                                                hintText: AppLocalizations.of(context)!
                                                     .translate('search'),
                                                 hintStyle: styleElements
                                                     .bodyText2ThemeScalable(context)
@@ -310,16 +310,16 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
                                                   searchVal = value;
                                                 });
                                               }),
-                                          suggestionsCallback: (String pattern) async {
-                                            if (pattern.isEmpty &&
+                                          suggestionsCallback: (String? pattern) async {
+                                            if (pattern!.isEmpty &&
                                                 searchHistory != null &&
-                                                searchHistory.isNotEmpty) {
-                                              return searchHistory;
+                                                searchHistory!.isNotEmpty) {
+                                              return searchHistory!;
                                             } else {
-                                              return null;
+                                              return searchHistory!;
                                             }
                                           },
-                                          itemBuilder: (context, suggestion) {
+                                          itemBuilder: (context, dynamic suggestion) {
                                             GlobalSearchHistoryItem item = suggestion;
                                             return ListTile(
                                               leading: Container(
@@ -329,11 +329,11 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
                                                 child: Icon(Icons.access_time_rounded),
                                               ),
                                               title: Text(item.searchVal != null
-                                                  ? item.searchVal
+                                                  ? item.searchVal!
                                                   : ""),
                                             );
                                           },
-                                          onSuggestionSelected: (suggestion) {
+                                          onSuggestionSelected: (dynamic suggestion) {
                                             print(
                                                 "iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii" +
                                                     suggestion.searchVal);
@@ -344,8 +344,6 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
                                                 searchVal = suggestion.searchVal;
                                               });
                                             } catch (e) {
-                                              print(e +
-                                                  "-----------------------------------------------------------------------");
                                             }
                                           },
                                         ),
@@ -383,11 +381,11 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
                   ),
                 ),
                 pageBuilder: (context, index) =>
-                list[index].statelessWidget,
+                list[index].statelessWidget!,
                 onPositionChange: (index) {
                   setState(() {
                     // loadPages(searchVal);
-                    _currentPosition = index;
+                    _currentPosition = index!;
                   });
                 },
                 onScroll: (position) => print('$position'),
@@ -412,9 +410,9 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: searchHistory != null &&
-                        searchHistory.isNotEmpty
+                        searchHistory!.isNotEmpty
                         ? Text(
-                      AppLocalizations.of(context)
+                      AppLocalizations.of(context)!
                           .translate('recently_searhced'),
                       style: styleElements
                           .subtitle1ThemeScalable(context)
@@ -423,18 +421,18 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
                         : Container(),
                   ),
                 ),
-                searchHistory != null && searchHistory.isNotEmpty
+                searchHistory != null && searchHistory!.isNotEmpty
                     ? SliverList(
                   delegate: SliverChildBuilderDelegate(
                           (BuildContext context, int index) {
-                        if (searchHistory[index].entityType ==
+                        if (searchHistory![index].entityType ==
                             'person' ||
-                            searchHistory[index].entityType ==
+                            searchHistory![index].entityType ==
                                 'institution') {
-                          EntityDetails details =
-                          searchHistory[index].entityDetails != null
+                          EntityDetails? details =
+                          searchHistory![index].entityDetails != null
                               ? EntityDetails.fromJson(jsonDecode(
-                              jsonEncode(searchHistory[index]
+                              jsonEncode(searchHistory![index]
                                   .entityDetails)))
                               : null;
                           // searchHistory[index].entityDetails;
@@ -443,15 +441,15 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
                                 ? details.avatar
                                 : null,
                             service_type:
-                            searchHistory[index].entityType ==
+                            searchHistory![index].entityType ==
                                 'person'
                                 ? SERVICE_TYPE.PERSON
                                 : SERVICE_TYPE.INSTITUTION,
-                            callBack: (int userId) {
+                            callBack: (int? userId) {
                               setState(() {
                                 isSearching = true;
                                 searchVal =
-                                    searchHistory[index].searchVal;
+                                    searchHistory![index].searchVal;
                               });
                             },
                             iconWidget: (details != null)
@@ -464,7 +462,7 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
                               ),
                             ),
                             isFullImageUrl: false,
-                            title: searchHistory[index].searchVal ?? "",
+                            title: searchHistory![index].searchVal ?? "",
                             subtitle1: (details != null)
                                 ? details.subtitle1
                                 : null,
@@ -492,13 +490,13 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
                                       : Radius.circular(0),
                                 )),
                           );
-                        } else if (searchHistory[index].entityType ==
+                        } else if (searchHistory![index].entityType ==
                             'post') {
-                          if (searchHistory[index].entityDetails !=
+                          if (searchHistory![index].entityDetails !=
                               null) {
                             PostListItem item = PostListItem.fromJson(
                                 jsonDecode(jsonEncode(
-                                    searchHistory[index]
+                                    searchHistory![index]
                                         .entityDetails)));
                             return GestureDetector(
                                 onTap: () {
@@ -527,7 +525,7 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
                                     },
                                     ratingCallback: () {
                                       for (var i in item
-                                          .postContent.header.action) {
+                                          .postContent!.header!.action!) {
                                         if (i.type == 'is_rated') {
                                           i.value = true;
                                         }
@@ -548,8 +546,8 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
                                       if (this.mounted)
                                         setState(() {
                                           print("follow");
-                                          for (var j in item.postContent
-                                              .header.action) {
+                                          for (var j in item.postContent!
+                                              .header!.action!) {
                                             if (j.type ==
                                                 'is_followed') {
                                               j.value = isFollow;
@@ -566,9 +564,9 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
                                               (BuildContext context) {
                                             return AudioPostDialog(
                                                 title: item
-                                                    .postContent
-                                                    .content
-                                                    .contentMeta
+                                                    .postContent!
+                                                    .content!
+                                                    .contentMeta!
                                                     .title,
                                                 okCallback: () {
                                                   Navigator.push(
@@ -582,9 +580,9 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
                                                               standardEventId:
                                                               5,
                                                               title: item
-                                                                  .postContent
-                                                                  .content
-                                                                  .contentMeta
+                                                                  .postContent!
+                                                                  .content!
+                                                                  .contentMeta!
                                                                   .title,
                                                             );
                                                           }));
@@ -599,9 +597,9 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
                                                   PostCreatePage(
                                                     type: 'answer',
                                                     question: item
-                                                        .postContent
-                                                        .content
-                                                        .contentMeta
+                                                        .postContent!
+                                                        .content!
+                                                        .contentMeta!
                                                         .title,
                                                     postId: item.postId,
                                                     prefs: prefs,
@@ -615,9 +613,9 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
                                                 type:
                                                 'submit_assign',
                                                 question: item
-                                                    .postContent
-                                                    .content
-                                                    .contentMeta
+                                                    .postContent!
+                                                    .content!
+                                                    .contentMeta!
                                                     .title,
                                                 postId: item.postId,
                                                 prefs: prefs,
@@ -639,10 +637,10 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
                           } else {
                             return Container();
                           }
-                        } else if (searchHistory[index].entityType ==
+                        } else if (searchHistory![index].entityType ==
                             'room') {
                           RoomListItem value = RoomListItem.fromJson(
-                              searchHistory[index].entityDetails);
+                              searchHistory![index].entityDetails);
                           return GestureDetector(
                             onTap: () {},
                             child: TricycleEventCard(
@@ -655,44 +653,44 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
                                         (BuildContext context) {
                                       return RoomDetailPage(
                                         value,
-                                        prefs.getInt(Strings.userId),
-                                        prefs.getString(Strings.ownerType),
-                                        prefs.getString(Strings.ownerType),
-                                        prefs.getInt(Strings.instituteId),
-                                        prefs.getInt(Strings.userId),
+                                        prefs!.getInt(Strings.userId),
+                                        prefs!.getString(Strings.ownerType),
+                                        prefs!.getString(Strings.ownerType),
+                                        prefs!.getInt(Strings.instituteId),
+                                        prefs!.getInt(Strings.userId),
                                         null,
                                       );
                                     }));
                               },
                               key: UniqueKey(),
                               byTitle: RoomButtons(context: context)
-                                  .getByTitle(value.header.title,
-                                  value.header.subtitle1),
-                              byImage: value.header.avatar,
+                                  .getByTitle(value.header!.title,
+                                  value.header!.subtitle1),
+                              byImage: value.header!.avatar,
                               cardImage: value.roomProfileImageUrl,
                               serviceType: SERVICE_TYPE.ROOM,
                               title: value.roomName,
                               isPrivate: value.isPrivate ?? false,
                               cardRating:
-                              value.otherDetails.rating != null
-                                  ? value.otherDetails.rating
+                              value.otherDetails!.rating != null
+                                  ? value.otherDetails!.rating
                                   : 0.0,
                               isModerator: value.memberRoleType == 'A',
                               description: value.roomDescription,
-                              listofImages: List<String>.generate(
-                                  value.membersCount, (index) {
-                                if (index < value.membersList.length) {
+                              listofImages: List<String?>.generate(
+                                  value.membersCount!, (index) {
+                                if (index < value.membersList!.length) {
                                   return value
-                                      .membersList[index].profileImage;
+                                      .membersList![index].profileImage;
                                 } else {
                                   return "";
                                 }
                               }),
-                              isRated: value.otherDetails.isRated,
+                              isRated: value.otherDetails!.isRated,
                               ownerType: value.roomOwnerType,
                               ownerId: value.roomOwnerTypeId,
                               totalRatedUsers:
-                              value.otherDetails.totalRatedUsers,
+                              value.otherDetails!.totalRatedUsers,
                               showRateCount: false,
                               subjectId: value.id,
                               subjectType: 'room',
@@ -762,37 +760,37 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
                                   }).joinButton,
                             ),
                           );
-                        } else if (searchHistory[index].entityType ==
+                        } else if (searchHistory![index].entityType ==
                             'event') {
                           EventListItem item = EventListItem.fromJson(
                               jsonDecode(jsonEncode(
-                                  searchHistory[index].entityDetails)));
+                                  searchHistory![index].entityDetails)));
                           return TricycleEventCard(
                             onClickEvent: () {
                               saveHistory(jsonDecode(jsonEncode(item)),
                                   'event');
                             },
                             title: item.title,
-                            listofImages: List<String>.generate(
+                            listofImages: List<String?>.generate(
                                 item.participantList != null &&
-                                    item.participantList.isNotEmpty
-                                    ? item.participantList.length
+                                    item.participantList!.isNotEmpty
+                                    ? item.participantList!.length
                                     : 0, (index) {
                               return item.participantList != null &&
-                                  item.participantList.isNotEmpty
-                                  ? item.participantList[index]
+                                  item.participantList!.isNotEmpty
+                                  ? item.participantList![index]
                                   .profileImage
                                   : "";
                             }),
                             description: item.subtitle,
                             dateVisible: true,
                             date: DateTime.fromMillisecondsSinceEpoch(
-                                item.startTime),
+                                item.startTime!),
                             byTitle: ' by ' +
-                                item.header.title +
+                                item.header!.title! +
                                 ', ' +
-                                item.header.subtitle1,
-                            byImage: item.header.avatar,
+                                item.header!.subtitle1!,
+                            byImage: item.header!.avatar,
                             onlyHeader: false,
                             isShareVisible: true,
                             isModerator: item.eventRoleType == 'admin',
@@ -804,11 +802,11 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
                               setState(() {
                                 isSearching = true;
                                 searchVal =
-                                    searchHistory[index].searchVal;
+                                    searchHistory![index].searchVal;
                               });
                             },
                             service_type:
-                            searchHistory[index].entityType ==
+                            searchHistory![index].entityType ==
                                 'person'
                                 ? SERVICE_TYPE.PERSON
                                 : SERVICE_TYPE.INSTITUTION,
@@ -820,7 +818,7 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
                               ),
                             ),
                             isFullImageUrl: false,
-                            title: searchHistory[index].searchVal ?? "",
+                            title: searchHistory![index].searchVal ?? "",
                             subtitle1: null,
                             padding: EdgeInsets.only(
                                 top: 12,
@@ -860,15 +858,15 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
                         ),
                         title: Text(searchHistory[index].searchVal),
                       )*/
-                      }, childCount: searchHistory.length),
+                      }, childCount: searchHistory!.length),
                 )
                     : SliverToBoxAdapter(),
                 SliverToBoxAdapter(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: suggestions != null && suggestions.isNotEmpty
+                    child: suggestions != null && suggestions!.isNotEmpty
                         ? Text(
-                      AppLocalizations.of(context)
+                      AppLocalizations.of(context)!
                           .translate('suggested_connections'),
                       style: styleElements
                           .subtitle1ThemeScalable(context)
@@ -877,43 +875,42 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
                         : Container(),
                   ),
                 ),
-                suggestions != null && suggestions.isNotEmpty
+                suggestions != null && suggestions!.isNotEmpty
                     ? SliverList(
                   delegate: SliverChildBuilderDelegate(
                           (BuildContext context, int index) {
                         return TricycleUserListTile(
                           imageUrl: Config.BASE_URL +
-                              suggestions[index].avatar ??
-                              "",
+                              suggestions![index].avatar!,
                           isFullImageUrl: true,
-                          userId: suggestions[index].id,
-                          trailingWidget: suggestions[index].id !=
+                          userId: suggestions![index].id,
+                          trailingWidget: suggestions![index].id !=
                               ownerId &&
-                              !suggestions[index].isFollowed
+                              !suggestions![index].isFollowed!
                               ? GenericFollowUnfollowButton(
                             actionByObjectType:
-                            prefs.getString("ownerType"),
+                            prefs!.getString("ownerType"),
                             actionByObjectId:
-                            prefs.getInt("userId"),
+                            prefs!.getInt("userId"),
                             actionOnObjectType: "person",
                             actionOnObjectId:
-                            suggestions[index].id,
+                            suggestions![index].id,
                             engageFlag:
-                            AppLocalizations.of(context)
+                            AppLocalizations.of(context)!
                                 .translate('follow'),
                             actionFlag: "F",
                             actionDetails: [],
                             personName:
-                            suggestions[index].title ?? "",
+                            suggestions![index].title ?? "",
                             callback: (isCallSuccess) {
                               setState(() {
-                                suggestions[index].isFollowed =
+                                suggestions![index].isFollowed =
                                 true;
                               });
                             },
                           )
                               : null,
-                          callBack: (int userId) {
+                          callBack: (int? userId) {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -927,14 +924,14 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
                                               : null,
                                           callback: () {
                                             if (callback != null)
-                                              callback();
+                                              callback!();
                                           },
                                           currentPosition: 1,
                                           type: null,
                                         )));
                           },
-                          title: suggestions[index].title ?? "",
-                          subtitle1: suggestions[index].subtitle,
+                          title: suggestions![index].title ?? "",
+                          subtitle1: suggestions![index].subtitle,
                           padding: EdgeInsets.only(
                               top: 12, bottom: 12, left: 12, right: 12),
                           margin: EdgeInsets.only(left: 8, right: 8),
@@ -955,7 +952,7 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
                                     : Radius.circular(0),
                               )),
                         );
-                      }, childCount: suggestions.length),
+                      }, childCount: suggestions!.length),
                 )
                     : SliverToBoxAdapter(),
               ],
@@ -965,7 +962,7 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
   }
 
   String getPageTitle() {
-    var vals = pageTitle.split(' ');
+    var vals = pageTitle!.split(' ');
     if (vals.length > 0)
       return vals[0];
     else
@@ -985,8 +982,8 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
 
   Future<void> getHistory() async {
     GlobalSearchRequest payload = GlobalSearchRequest();
-    payload.institutionId = prefs.getInt(Strings.instituteId);
-    payload.personId = prefs.getInt(Strings.userId);
+    payload.institutionId = prefs!.getInt(Strings.instituteId);
+    payload.personId = prefs!.getInt(Strings.userId);
     payload.pageNumber = 1;
     payload.pageSize = 5;
     payload.searchType = 'person';
@@ -1000,7 +997,7 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
   void exitRoom(RoomListItem value) {
     MembershipRoleStatusPayload payload = MembershipRoleStatusPayload();
     payload.roomId = value.id;
-    payload.memberId = prefs.getInt(Strings.userId);
+    payload.memberId = prefs!.getInt(Strings.userId);
     payload.memberType = "person";
     payload.action = MEMBERSHIP_ROLE.remove.type;
     var body = jsonEncode(payload);
@@ -1012,7 +1009,7 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
         // refresh();
       } else {
         ToastBuilder()
-            .showToast(res.message, context, HexColor(AppColors.information));
+            .showToast(res.message!, context, HexColor(AppColors.information));
       }
     }).catchError((onError) {
       print(onError);
@@ -1022,12 +1019,12 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
   void joingroup(RoomListItem value) {
     MemberAddPayload payload = MemberAddPayload();
     payload.roomId = value.id;
-    payload.roomInstitutionId = prefs.getInt(Strings.instituteId);
+    payload.roomInstitutionId = prefs!.getInt(Strings.instituteId);
     payload.isAddAllMembers = false;
     List<MembersItem> list = [];
     MembersItem item = MembersItem();
     item.memberType = 'person';
-    item.memberId = prefs.getInt(Strings.userId);
+    item.memberId = prefs!.getInt(Strings.userId);
     item.addMethod = MEMBER_ADD_METHOD.JOIN.type;
     list.add(item);
     payload.members = list;
@@ -1040,18 +1037,18 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
         // refresh();
       } else {
         ToastBuilder()
-            .showToast(res.message, context, HexColor(AppColors.information));
+            .showToast(res.message!, context, HexColor(AppColors.information));
       }
     }).catchError((onError) {
       print(onError);
     });
   }
 
-  final CreateDeeplink createDeeplink = locator<CreateDeeplink>();
+  final CreateDeeplink? createDeeplink = locator<CreateDeeplink>();
 
-  void _onShare(int id) async {
+  void _onShare(int? id) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    createDeeplink.getDeeplink(SHAREITEMTYPE.DETAIL.type,
+    createDeeplink!.getDeeplink(SHAREITEMTYPE.DETAIL.type,
         prefs.getInt("userId").toString(), id, DEEPLINKTYPE.POST.type, context);
   }
 
@@ -1060,8 +1057,8 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
         entityType: type,
         pageNumber: 1,
         pageSize: 10,
-        institutionId: prefs.getInt(Strings.instituteId),
-        personId: prefs.getInt(Strings.userId),
+        institutionId: prefs!.getInt(Strings.instituteId),
+        personId: prefs!.getInt(Strings.userId),
         searchPage: 'common',
         searchType: 'person',
         entityDetails: entity);

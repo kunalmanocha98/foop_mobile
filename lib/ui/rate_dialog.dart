@@ -11,13 +11,13 @@ class RateDialog extends StatefulWidget {
   String title;
   String subtitle;
   String type;
-  Null Function(bool isSubmitted, double rateStarValue) callback;
+  Null Function(bool isSubmitted, double rateStarValue)? callback;
 
   RateDialog({
-    Key key,
-    @required this.type,
-    @required this.title,
-    @required this.subtitle,
+    Key? key,
+    required this.type,
+    required this.title,
+    required this.subtitle,
     this.callback,
   }) : super(key: key);
 
@@ -29,8 +29,8 @@ class _RateDialog extends State<RateDialog> {
   String title;
   String subtitle;
   double ratingValue = 1;
-  TextStyleElements styleElements;
-  Null Function(bool isSubmitted, double rateStarValue) callback;
+  late TextStyleElements styleElements;
+  Null Function(bool isSubmitted, double rateStarValue)? callback;
   Map<String, bool> language = {
     'Read': false,
     'Write': false,
@@ -40,9 +40,9 @@ class _RateDialog extends State<RateDialog> {
   String type;
 
   _RateDialog(
-      {@required this.type,
-      @required this.title,
-      @required this.subtitle,
+      {required this.type,
+      required this.title,
+      required this.subtitle,
       this.callback});
 
   @override
@@ -104,14 +104,14 @@ class _RateDialog extends State<RateDialog> {
                         Container(
                           margin: const EdgeInsets.only(left: 30),
                           child: Text(
-                            AppLocalizations.of(context).translate('rate_average'),
+                            AppLocalizations.of(context)!.translate('rate_average'),
                             style: styleElements.captionThemeScalable(context),
                           ),
                         ),
                         Container(
                           margin: const EdgeInsets.only(right: 30),
                           child: Text(
-                            AppLocalizations.of(context).translate('rate_verygood'),
+                            AppLocalizations.of(context)!.translate('rate_verygood'),
                             style: styleElements.captionThemeScalable(context),
                           ),
                         )
@@ -131,7 +131,7 @@ class _RateDialog extends State<RateDialog> {
                     child: Container(
                       margin: const EdgeInsets.all(8),
                       child: Text(
-                        AppLocalizations.of(context).translate('cancel'),
+                        AppLocalizations.of(context)!.translate('cancel'),
                         style: styleElements.subtitle1ThemeScalable(context),
                       ),
                     ),
@@ -143,12 +143,12 @@ class _RateDialog extends State<RateDialog> {
                   GestureDetector(
                       onTap: () {
                         Navigator.pop(context, null);
-                        callback(true, ratingValue);
+                        callback!(true, ratingValue);
                       },
                       child: Container(
                         margin: const EdgeInsets.all(8),
                         child: Text(
-                          AppLocalizations.of(context).translate('submit'),
+                          AppLocalizations.of(context)!.translate('submit'),
                           style: styleElements.subtitle1ThemeScalable(context),
                         ),
                       ))

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -57,28 +58,28 @@ import 'expertise_classes.dart';
 import 'facility_create.dart';
 
 class UserProfileCards extends StatefulWidget {
-  final String type;
+  final String? type;
   final int currentPosition;
-  final String userType;
-  final int userId;
-  final Null Function() callback;
-  final bool isUserExist;
-  final bool isFromRegisration;
+  final String? userType;
+  final int? userId;
+  final Null Function()? callback;
+  final bool? isUserExist;
+  final bool? isFromRegisration;
   final bool isFromAudioConf;
-  final Function audioOptionsCallback;
-  final bool isSwipeDisabled;
+  final Function? audioOptionsCallback;
+  final bool? isSwipeDisabled;
 
   const UserProfileCards({
-    Key key,
-    @required this.type,
-    @required this.userId,
-    @required this.userType,
+    Key? key,
+    required this.type,
+    required this.userId,
+    required this.userType,
     this.callback,
     this.isSwipeDisabled,
     this.isFromAudioConf= false,
     this.isFromRegisration,
     this.audioOptionsCallback,
-    @required this.currentPosition,
+    required this.currentPosition,
     this.isUserExist,
   }) : super(key: key);
 
@@ -88,49 +89,49 @@ class UserProfileCards extends StatefulWidget {
 }
 
 class UserProfileCardsState extends State<UserProfileCards> {
-  final Null Function() callback;
-  String userType;
-  int userId;
-  String type;
-  bool isFromRegisration;
-  int ownerId;
-  String subTitle;
-  String ownerType;
-  bool isPersonalProfile;
+  final Null Function()? callback;
+  String? userType;
+  int? userId;
+  String? type;
+  bool? isFromRegisration;
+  int? ownerId;
+  String? subTitle;
+  String? ownerType;
+  bool? isPersonalProfile;
   int currentPosition;
-  List<CustomTabMaker> data;
-  String profileImage;
+  List<CustomTabMaker>? data;
+  String? profileImage;
   bool isUserVerified = false;
   bool isFromAudioConf;
 
-  String profileImageFromPath;
-  String coverImage;
-  String coverPath;
-  SharedPreferences prefs;
+  String? profileImageFromPath;
+  String? coverImage;
+  String? coverPath;
+  SharedPreferences? prefs;
   var followers = 0;
   var following = 0;
   var roomsCount = 0;
   var postCount = 0;
   var personId;
   bool isFollow = false;
-  String instituteId;
-  bool isUserExist;
+  String? instituteId;
+  bool? isUserExist;
   bool isAllowed = true;
   var pageTitle = "";
 
-  TextStyleElements styleElements;
-  var userName = "";
+  TextStyleElements? styleElements;
+  String? userName = "";
 
 /*  Location location = new Location();*/
-  ProgressDialog pr;
+  ProgressDialog? pr;
 
 /*  PermissionStatus _permissionGranted;
   LocationData _locationData;*/
   List<StatelessWidget> listCardsAbout = [];
-  List<CommonCardData> listCardData = [];
-  List<CommonCardData> listEducations = [];
+  List<CommonCardData>? listCardData = [];
+  List<CommonCardData>? listEducations = [];
   List<StatelessWidget> listCardsCommon = [];
-  Persondata rows;
+  Persondata? rows;
   bool isLoading = false;
   bool isEmpty = false;
 
@@ -144,9 +145,9 @@ class UserProfileCardsState extends State<UserProfileCards> {
 
   void addTabs() {
     data = [];
-    data.add(CustomTabMaker(
+    data!.add(CustomTabMaker(
         statelessWidget: SelectedFeedListPage(
-          appBarTitle: userName + "'s Activity",
+          appBarTitle: userName! + "'s Activity",
           isOthersPostList: true,
           isFromProfile: true,
           postOwnerTypeId: userId != null ? userId : ownerId,
@@ -156,8 +157,8 @@ class UserProfileCardsState extends State<UserProfileCards> {
               : "person"
               : ownerType,
         ),
-        tabName: AppLocalizations.of(context).translate('timeline')));
-    data.add(CustomTabMaker(
+        tabName: AppLocalizations.of(context)!.translate('timeline')));
+    data!.add(CustomTabMaker(
         statelessWidget: AboutPage(
           type: "closed",
           rows: null,
@@ -169,9 +170,9 @@ class UserProfileCardsState extends State<UserProfileCards> {
             setState(() {});
           },
         ),
-        tabName: AppLocalizations.of(context).translate('about')));
+        tabName: AppLocalizations.of(context)!.translate('about')));
     if (type == "education")
-      data.add(CustomTabMaker(
+      data!.add(CustomTabMaker(
           statelessWidget: EducationPage(
               type: type,
               isEmpty: isEmpty,
@@ -181,9 +182,9 @@ class UserProfileCardsState extends State<UserProfileCards> {
               callBck: () {
                 getEducations(context);
               }),
-          tabName: AppLocalizations.of(context).translate('education')));
+          tabName: AppLocalizations.of(context)!.translate('education')));
     else if (type == "work")
-      data.add(CustomTabMaker(
+      data!.add(CustomTabMaker(
           statelessWidget: EducationPage(
               type: type,
               isEmpty: isEmpty,
@@ -194,9 +195,9 @@ class UserProfileCardsState extends State<UserProfileCards> {
               callBck: () {
                 getWorkExperience(context);
               }),
-          tabName: AppLocalizations.of(context).translate('work')));
+          tabName: AppLocalizations.of(context)!.translate('work')));
     else if (type == "class") {
-      data.add(CustomTabMaker(
+      data!.add(CustomTabMaker(
           statelessWidget: EducationPage(
               type: type,
               isEmpty: isEmpty,
@@ -207,9 +208,9 @@ class UserProfileCardsState extends State<UserProfileCards> {
               callBck: () {
                 getDetailedClasses(context);
               }),
-          tabName: AppLocalizations.of(context).translate('class')));
+          tabName: AppLocalizations.of(context)!.translate('class')));
     } else if (type == "subject")
-      data.add(CustomTabMaker(
+      data!.add(CustomTabMaker(
           statelessWidget: EducationPage(
               type: type,
               isEmpty: isEmpty,
@@ -220,9 +221,9 @@ class UserProfileCardsState extends State<UserProfileCards> {
               callBck: () {
                 getDetailedSubjects(context);
               }),
-          tabName: AppLocalizations.of(context).translate('subject')));
+          tabName: AppLocalizations.of(context)!.translate('subject')));
     else if (type == "language")
-      data.add(CustomTabMaker(
+      data!.add(CustomTabMaker(
           statelessWidget: EducationPage(
               type: type,
               isEmpty: isEmpty,
@@ -233,9 +234,9 @@ class UserProfileCardsState extends State<UserProfileCards> {
               callBck: () {
                 getLanguagesDetail(context, "language");
               }),
-          tabName: AppLocalizations.of(context).translate('language')));
+          tabName: AppLocalizations.of(context)!.translate('language')));
     else if (type == "skill")
-      data.add(CustomTabMaker(
+      data!.add(CustomTabMaker(
           statelessWidget: EducationPage(
               type: type,
               isEmpty: isEmpty,
@@ -246,9 +247,9 @@ class UserProfileCardsState extends State<UserProfileCards> {
               callBck: () {
                 getLanguagesDetail(context, "skill");
               }),
-          tabName: AppLocalizations.of(context).translate('skill')));
+          tabName: AppLocalizations.of(context)!.translate('skill')));
     else if (type == "medium")
-      data.add(CustomTabMaker(
+      data!.add(CustomTabMaker(
           statelessWidget: EducationPage(
               type: type,
               isEmpty: isEmpty,
@@ -259,9 +260,9 @@ class UserProfileCardsState extends State<UserProfileCards> {
               callBck: () {
                 getMediums(context, type);
               }),
-          tabName: AppLocalizations.of(context).translate('medium')));
+          tabName: AppLocalizations.of(context)!.translate('medium')));
     else if (type == "course")
-      data.add(CustomTabMaker(
+      data!.add(CustomTabMaker(
           statelessWidget: EducationPage(
               type: type,
               isEmpty: isEmpty,
@@ -272,9 +273,9 @@ class UserProfileCardsState extends State<UserProfileCards> {
               callBck: () {
                 getCourses(context, type);
               }),
-          tabName: AppLocalizations.of(context).translate('courses')));
+          tabName: AppLocalizations.of(context)!.translate('courses')));
     else if (type == "department")
-      data.add(CustomTabMaker(
+      data!.add(CustomTabMaker(
           statelessWidget: EducationPage(
               type: type,
               isEmpty: isEmpty,
@@ -285,9 +286,9 @@ class UserProfileCardsState extends State<UserProfileCards> {
               callBck: () {
                 getCourses(context, type);
               }),
-          tabName: AppLocalizations.of(context).translate('department')));
+          tabName: AppLocalizations.of(context)!.translate('department')));
     else if (type == "club")
-      data.add(CustomTabMaker(
+      data!.add(CustomTabMaker(
           statelessWidget: EducationPage(
               type: "club",
               isEmpty: isEmpty,
@@ -298,9 +299,9 @@ class UserProfileCardsState extends State<UserProfileCards> {
               callBck: () {
                 getClubs(context, type);
               }),
-          tabName: AppLocalizations.of(context).translate('club')));
+          tabName: AppLocalizations.of(context)!.translate('club')));
     else if (type == "sports")
-      data.add(CustomTabMaker(
+      data!.add(CustomTabMaker(
           statelessWidget: EducationPage(
               type: "sports",
               isEmpty: isEmpty,
@@ -311,16 +312,16 @@ class UserProfileCardsState extends State<UserProfileCards> {
               callBck: () {
                 getSports(context, type);
               }),
-          tabName: AppLocalizations.of(context).translate('sport')));
+          tabName: AppLocalizations.of(context)!.translate('sport')));
     else if (type == "learning")
-      data.add(CustomTabMaker(
+      data!.add(CustomTabMaker(
         statelessWidget: LessonsListPage(
           headerVisible: false
         ),
-        tabName: AppLocalizations.of(context).translate('learning')
+        tabName: AppLocalizations.of(context)!.translate('learning')
       ));
     else if (type == "Campus & Facilities")
-      data.add(CustomTabMaker(
+      data!.add(CustomTabMaker(
           statelessWidget: ImagesSeeMore(
             type: userType,
             instituteId: userId.toString(),
@@ -328,36 +329,36 @@ class UserProfileCardsState extends State<UserProfileCards> {
           ),
           tabName: type));
     else
-      data.add(CustomTabMaker(
+      data!.add(CustomTabMaker(
           statelessWidget: MediaPage(
             userType: userType,
             instituteId: userId.toString(),
             userId: userId,
           ),
-          tabName: AppLocalizations.of(context).translate('media')));
-    data.add(CustomTabMaker(
+          tabName: AppLocalizations.of(context)!.translate('media')));
+    data!.add(CustomTabMaker(
         statelessWidget: Container(),
-        tabName: AppLocalizations.of(context).translate('more')));
+        tabName: AppLocalizations.of(context)!.translate('more')));
   }
 
   void setSharedPreferences() async {
     prefs = await SharedPreferences.getInstance();
     if (userType == "person") {
       setState(() {
-        if (prefs.getString("coverImage") != null)
+        if (prefs!.getString("coverImage") != null)
           coverImage =
-              Config.BASE_URL + prefs.getString("coverImage") ?? "";
-        if (prefs.getString("profileImage") != null)
+              Config.BASE_URL + prefs!.getString("coverImage")!;
+        if (prefs!.getString("profileImage") != null)
           profileImage =
-              Config.BASE_URL + prefs.getString("profileImage") ?? "";
+              Config.BASE_URL + prefs!.getString("profileImage")!;
       });
     }
 
-    ownerId = prefs.getInt("userId");
-    ownerType = prefs.getString("ownerType");
+    ownerId = prefs!.getInt("userId");
+    ownerType = prefs!.getString("ownerType");
     addTabs();
     styleElements = TextStyleElements(context);
-    WidgetsBinding.instance
+    WidgetsBinding.instance!
         .addPostFrameCallback((_) => userType == "thirdPerson"
         ? getThirdPersonInfo(context)
         : userType == "person"
@@ -368,7 +369,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
   }
 
   void backPressed() {
-    if (isFromRegisration != null && isFromRegisration)
+    if (isFromRegisration != null && isFromRegisration!)
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => DashboardPage()),
               (Route<dynamic> route) => false);
@@ -386,27 +387,28 @@ class UserProfileCardsState extends State<UserProfileCards> {
     return displaySize(context).height;
   }
 
-  final CreateDeeplink createDeeplink = locator<CreateDeeplink>();
-  BuildContext sctx;
+  final CreateDeeplink? createDeeplink = locator<CreateDeeplink>();
+  BuildContext? sctx;
 
   Widget build(BuildContext context) {
     ScreenUtil.init;
     var dHeight = displayHeight(context) / 4;
     styleElements = TextStyleElements(context);
     if (userType == "person" && prefs != null) {
-      if (prefs.getString("coverImage") != null)
+      if (prefs!.getString("coverImage") != null)
         coverImage =
-            Config.BASE_URL + prefs.getString("coverImage") ?? null;
-      if (prefs.getString("profileImage") != null)
+            Config.BASE_URL + prefs!.getString("coverImage")!;
+      if (prefs!.getString("profileImage") != null)
         profileImage =
-            Config.BASE_URL + prefs.getString("profileImage") ?? null;
+            Config.BASE_URL + prefs!.getString("profileImage")!;
     }
 
     return WillPopScope(
       // ignore: missing_return
         onWillPop: () {
           backPressed();
-        },
+          return new Future(() => false);
+        } ,
         child: Scaffold(
             resizeToAvoidBottomInset: false,
             appBar: TricycleAppBar().getCustomAppBar(context,
@@ -419,7 +421,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                     Flexible(
                       child: Text(
                         userName ??= "",
-                        style: styleElements
+                        style: styleElements!
                             .headline6ThemeScalable(context)
                             .copyWith(
                             fontWeight: FontWeight.w600,
@@ -445,7 +447,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                     child: IconButton(
                         icon: Icon(Icons.more_vert,
                             color: HexColor(AppColors.primaryTextColor65)),
-                        onPressed: widget.audioOptionsCallback
+                        onPressed: widget.audioOptionsCallback as void Function()?
                     ),
                   ),
                 ], onBackButtonPress: backPressed),
@@ -673,11 +675,11 @@ class UserProfileCardsState extends State<UserProfileCards> {
                                           });
                                         },
                                         ownerTye: prefs != null
-                                            ? prefs.getString("ownerType")
+                                            ? prefs!.getString("ownerType")
                                             : "",
                                         userType: userType,
                                         userId: prefs != null
-                                            ? prefs.getInt("userId")
+                                            ? prefs!.getInt("userId")
                                             : null,
                                         thirdPersonId: userId,
                                         subtitle: subTitle,
@@ -690,7 +692,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                                         imageUrl: profileImage ?? "",
                                         imagePath: profileImageFromPath,
                                         callbackPicker: () {
-                                          if (callback != null) callback();
+                                          if (callback != null) callback!();
 
                                           if (userType == "person")
                                             updatePersonProfile(context);
@@ -739,7 +741,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                         marginTop: const EdgeInsets.only(top: 0.0),
                         currentPosition: currentPosition,
                         itemCount:
-                        data != null && data.isNotEmpty ? data.length : 0,
+                        data != null && data!.isNotEmpty ? data!.length : 0,
                         tabBuilder: (context, index) => Visibility(
                           visible: !isFromAudioConf,
                           child: TricycleTabButton(
@@ -753,15 +755,15 @@ class UserProfileCardsState extends State<UserProfileCards> {
                                   currentPosition = index;
                               });
                             },
-                            tabName: data[index].tabName,
+                            tabName: data![index].tabName,
                             isActive: index == currentPosition,
                           ),
                         ),
                         pageBuilder: (context, index) =>
-                            Center(child: data[index].statelessWidget),
+                            Center(child: data![index].statelessWidget),
                         onPositionChange: (index) {
                           setState(() {
-                            currentPosition = index;
+                            currentPosition = index!;
                           });
                         },
                         onScroll: (position) => print('$position'),
@@ -771,8 +773,8 @@ class UserProfileCardsState extends State<UserProfileCards> {
             })));
   }
 
-  void _showModalBottomSheet(BuildContext context, String personType, int id,
-      final Null Function() callback) {
+  void _showModalBottomSheet(BuildContext context, String? personType, int? id,
+      final Null Function()? callback) {
     showModalBottomSheet<void>(
       context: context,
       shape: RoundedRectangleBorder(
@@ -811,7 +813,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
 
   void getInstituteData() async {
     setState(() {
-      personId = prefs.getInt("userIdOriginal");
+      personId = prefs!.getInt("userIdOriginal");
       profileImage = "";
       coverImage = "";
 
@@ -829,21 +831,21 @@ class UserProfileCardsState extends State<UserProfileCards> {
 
   void getPersonProfile() async {
     setState(() {
-      if (userType == "person") userId = prefs.getInt("userId");
-      print(prefs.getString("basicData"));
-      if (prefs.getString("basicData") != null) {
+      if (userType == "person") userId = prefs!.getInt("userId");
+      print(prefs!.getString("basicData"));
+      if (prefs!.getString("basicData") != null) {
         Map<String, dynamic> map =
-        json.decode(prefs.getString("basicData") ?? "");
+        json.decode(prefs!.getString("basicData") ?? "");
         rows = Persondata.fromJson(map);
       } else {
         updatePersonProfile(context);
       }
-      profileImage = Config.BASE_URL + prefs.getString("profileImage");
-      coverImage = Config.BASE_URL + prefs.getString("coverImage");
-      personId = prefs.getInt("userIdOriginal");
-      userName = prefs.getString("userName");
-      instituteId = prefs.getInt("instituteId").toString();
-      ownerType = prefs.getString("ownerType");
+      profileImage = Config.BASE_URL + prefs!.getString("profileImage")!;
+      coverImage = Config.BASE_URL + prefs!.getString("coverImage")!;
+      personId = prefs!.getInt("userIdOriginal");
+      userName = prefs!.getString("userName");
+      instituteId = prefs!.getInt("instituteId").toString();
+      ownerType = prefs!.getString("ownerType");
     });
 
     followersCountApi(context);
@@ -852,7 +854,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
   }
 
   void getDeeplink() async {
-    createDeeplink.getDeeplink(
+    createDeeplink!.getDeeplink(
         SHAREITEMTYPE.PROFILE.type,
         ownerId.toString(),
         userId,
@@ -871,7 +873,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
           setState(() {
             var data = PersonalProfile.fromJson(value);
             if (data != null && data.statusCode == 'S10001') {
-              Persondata rows = data.rows;
+              Persondata? rows = data.rows;
               DataSaveUtils().saveUserData(prefs, rows);
             } else {
               setState(() {
@@ -889,7 +891,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
       print(onError.toString());
 
       ToastBuilder().showSnackBar(
-          "Something went wrong !!", sctx, HexColor(AppColors.failure));
+          "Something went wrong !!", sctx!, HexColor(AppColors.failure));
     });
   }
 
@@ -904,23 +906,23 @@ class UserProfileCardsState extends State<UserProfileCards> {
             var data = PersonalProfile.fromJson(value);
             if (data != null && data.statusCode == 'S10001') {
               rows = data.rows;
-              coverImage = Config.BASE_URL + rows.coverImage;
-              profileImage = Config.BASE_URL + rows.profileImage;
-              personId = data.rows.id;
-              userName = data.rows.firstName ?? "";
-              if (data.rows.middleName != null)
-                userName = userName + " " + data.rows.middleName ?? "";
-              if (data.rows.lastName != null)
-                userName = userName + " " + data.rows.lastName ?? "";
-              if (data.rows.userLocation != null) {}
+              coverImage = Config.BASE_URL + rows!.coverImage!;
+              profileImage = Config.BASE_URL + rows!.profileImage!;
+              personId = data.rows!.id;
+              userName = data.rows!.firstName ?? "";
+              if (data.rows!.middleName != null)
+                userName = userName! + " " + data.rows!.middleName!;
+              if (data.rows!.lastName != null)
+                userName = userName! + " " + data.rows!.lastName!;
+              if (data.rows!.userLocation != null) {}
 
-              if (data.rows.institutions != null &&
-                  data.rows.institutions.isNotEmpty ||
-                  data.rows.institutionId != null) {
-                if (data.rows.institutions.isNotEmpty)
-                  instituteId = data.rows.institutions[0].id.toString();
+              if (data.rows!.institutions != null &&
+                  data.rows!.institutions!.isNotEmpty ||
+                  data.rows!.institutionId != null) {
+                if (data.rows!.institutions!.isNotEmpty)
+                  instituteId = data.rows!.institutions![0].id.toString();
                 else {
-                  instituteId = data.rows.institutionId.toString();
+                  instituteId = data.rows!.institutionId.toString();
                 }
 
                 followersCountApi(context);
@@ -973,16 +975,16 @@ class UserProfileCardsState extends State<UserProfileCards> {
       getSports(context, "sports");
     else if(type == 'learning')
       setState(() {
-        data[2] = CustomTabMaker(
+        data![2] = CustomTabMaker(
             statelessWidget: LessonsListPage(
                 headerVisible: false
             ),
-            tabName: AppLocalizations.of(context).translate('learning')
+            tabName: AppLocalizations.of(context)!.translate('learning')
         );
       });
     else if (type == "Campus & facilities") {
       setState(() {
-        data[2] = CustomTabMaker(
+        data![2] = CustomTabMaker(
             statelessWidget: ImagesSeeMore(
               type: userType,
               instituteId: userId.toString(),
@@ -1018,25 +1020,24 @@ class UserProfileCardsState extends State<UserProfileCards> {
             if (d != null && d.statusCode == 'S10001') {
               if (d.rows != null) {
                 listCardData = d.rows;
-                if (listCardData != null && listCardData.length > 0) {
-                  for (var item in listCardData) {
+                if (listCardData != null && listCardData!.length > 0) {
+                  for (var item in listCardData!) {
                     if (item != null) {
                       if (item != null && item.cardName == "profileNameCard") {
                         isFollow = item.isFollow2 ?? false;
                         if (userType == "institution") {
                           if (item.image != null)
                             profileImage =
-                                Config.BASE_URL + item.image ?? "";
+                                Config.BASE_URL + item.image!;
                           if (item.coverImage != null)
                             coverImage =
-                                Config.BASE_URL + item.coverImage ??
-                                    "";
+                                Config.BASE_URL + item.coverImage!;
                           userName = item.name ?? "";
                           isFollow = item.isFollow2 ?? false;
                         } else {
                           subTitle = item.userName ?? "";
-                          isUserVerified = item.isVerified ?? "";
-                          rows.userName = subTitle;
+                          isUserVerified = item.isVerified ?? "" as bool;
+                          rows!.userName = subTitle;
                         }
                       }
                       if(isFromAudioConf){
@@ -1062,7 +1063,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                                 else
                                   getInstituteData();
                               });
-                          if (widget != null) listCardsAbout.add(widget);
+                          if (widget != null) listCardsAbout.add(widget as StatelessWidget);
                         }
                       }else{
                         var widget = GetAllCards().getCard(
@@ -1085,14 +1086,14 @@ class UserProfileCardsState extends State<UserProfileCards> {
                           else
                             getInstituteData();
                         });
-                        if (widget != null) listCardsAbout.add(widget);
+                        if (widget != null) listCardsAbout.add(widget as StatelessWidget);
                       }
                     }
                   }
                 }
               }
             }
-            data[1] = CustomTabMaker(
+            data![1] = CustomTabMaker(
                 statelessWidget: AboutPage(
                   type: "closed",
                   rows: null,
@@ -1105,7 +1106,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                     setState(() {});
                   },
                 ),
-                tabName: AppLocalizations.of(context).translate('about'));
+                tabName: AppLocalizations.of(context)!.translate('about'));
           });
         }
       } else {
@@ -1125,7 +1126,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
 
   void getEducations(BuildContext context) async {
     setState(() {
-      data[2] = CustomTabMaker(
+      data![2] = CustomTabMaker(
           statelessWidget: EducationPage(
               type: type,
               rows: null,
@@ -1158,11 +1159,11 @@ class UserProfileCardsState extends State<UserProfileCards> {
           setState(() {
             var d = BaseResponses.fromJson(value);
             if (d != null && d.statusCode == 'S10001') {
-              if (d.rows != null && d.rows.isNotEmpty) {
+              if (d.rows != null && d.rows!.isNotEmpty) {
                 listCardsCommon = [];
                 listEducations = d.rows;
-                if (listEducations != null && listEducations.length > 0) {
-                  for (var item in listEducations) {
+                if (listEducations != null && listEducations!.length > 0) {
+                  for (var item in listEducations!) {
                     if (item != null) {
                       var widget = GetAllCards().getCard(
                           userName,
@@ -1178,7 +1179,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                           profileImage, callBck: () {
                         getEducations(context);
                       });
-                      if (widget != null) listCardsCommon.add(widget);
+                      if (widget != null) listCardsCommon.add(widget as StatelessWidget);
                     }
                   }
                 } else
@@ -1192,7 +1193,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
               }
 
               setState(() {
-                data[2] = CustomTabMaker(
+                data![2] = CustomTabMaker(
                     statelessWidget: EducationPage(
                         type: type,
                         rows: null,
@@ -1205,7 +1206,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                           getEducations(context);
                         }),
                     tabName:
-                    AppLocalizations.of(context).translate('education'));
+                    AppLocalizations.of(context)!.translate('education'));
               });
             }
           });
@@ -1220,7 +1221,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
 
   void getWorkExperience(BuildContext context) async {
     setState(() {
-      data[2] = CustomTabMaker(
+      data![2] = CustomTabMaker(
           statelessWidget: EducationPage(
               type: type,
               rows: null,
@@ -1251,11 +1252,11 @@ class UserProfileCardsState extends State<UserProfileCards> {
           setState(() {
             var d = BaseResponses.fromJson(value);
             if (d != null && d.statusCode == 'S10001') {
-              if (d.rows != null && d.rows.isNotEmpty) {
+              if (d.rows != null && d.rows!.isNotEmpty) {
                 listEducations = d.rows;
                 listCardsCommon = [];
-                if (listEducations != null && listEducations.length > 0) {
-                  for (var item in listEducations) {
+                if (listEducations != null && listEducations!.length > 0) {
+                  for (var item in listEducations!) {
                     if (item != null) {
                       var widget = GetAllCards().getCard(
                           userName,
@@ -1271,7 +1272,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                           profileImage, callBck: () {
                         getWorkExperience(context);
                       });
-                      if (widget != null) listCardsCommon.add(widget);
+                      if (widget != null) listCardsCommon.add(widget as StatelessWidget);
                     }
                   }
                 } else
@@ -1284,7 +1285,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                 });
               }
               setState(() {
-                data[2] = CustomTabMaker(
+                data![2] = CustomTabMaker(
                     statelessWidget: EducationPage(
                         type: type,
                         rows: null,
@@ -1296,7 +1297,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                         callBck: () {
                           getWorkExperience(context);
                         }),
-                    tabName: AppLocalizations.of(context).translate('work'));
+                    tabName: AppLocalizations.of(context)!.translate('work'));
               });
             }
           });
@@ -1305,14 +1306,14 @@ class UserProfileCardsState extends State<UserProfileCards> {
     }).catchError((onError) {
       print(onError.toString());
       ToastBuilder().showSnackBar(
-          "Something went wrong !!", sctx, HexColor(AppColors.information));
+          "Something went wrong !!", sctx!, HexColor(AppColors.information));
     });
   }
 
   _addPhoto() async {
     var pr = ToastBuilder()
         .setProgressDialogWithPercent(context, 'Uploading Image...');
-    File pickedFile = await ImagePickerAndCropperUtil().pickImage(context);
+    File pickedFile = await (ImagePickerAndCropperUtil().pickImage(context) as FutureOr<File>);
     var croppedFile =
     await ImagePickerAndCropperUtil().cropFile(context, pickedFile);
     if (croppedFile != null) {
@@ -1322,11 +1323,11 @@ class UserProfileCardsState extends State<UserProfileCards> {
       await UploadFile(
           baseUrl: Config.BASE_URL,
           context: context,
-          token: prefs.getString("token"),
+          token: prefs!.getString("token"),
           contextId: instituteId,
           contextType: CONTEXTTYPE_ENUM.PROFILE.type,
           subContextType: SUBCONTEXTTYPE_ENUM.FACILITIES.type,
-          ownerId: prefs.getInt("userId").toString(),
+          ownerId: prefs!.getInt("userId").toString(),
           ownerType: OWNERTYPE_ENUM.PERSON.type,
           file: croppedFile,
           subContextId: "",
@@ -1338,7 +1339,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
           .uploadFile()
           .then((value) async {
         var imageResponse = ImageUpdateResponse.fromJson(value);
-        var url = imageResponse.rows.otherUrls[0].original;
+        var url = imageResponse.rows!.otherUrls![0].original;
         print(url);
         await pr.hide();
         var result = await Navigator.push(
@@ -1350,7 +1351,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
               ),
             ));
         if (result != null && result['result'] != null) {
-          callback();
+          callback!();
         }
       }).catchError((onError) async {
         await pr.hide();
@@ -1361,7 +1362,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
 
   void getPhotos(BuildContext context, String type) async {
     setState(() {
-      data[2] = CustomTabMaker(
+      data![2] = CustomTabMaker(
           statelessWidget: EducationPage(
               type: "Campus & Facilities",
               rows: null,
@@ -1377,7 +1378,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
               callBck: () {
                 getPhotos(context, "Campus & Facilities");
               }),
-          tabName: AppLocalizations.of(context).translate('campus_facilities'));
+          tabName: AppLocalizations.of(context)!.translate('campus_facilities'));
     });
     final body = jsonEncode({
       "person_id": null,
@@ -1399,13 +1400,13 @@ class UserProfileCardsState extends State<UserProfileCards> {
           setState(() {
             var d = BaseResponses.fromJson(value);
             if (d != null && d.statusCode == 'S10001') {
-              if (d.rows != null && d.rows.isNotEmpty && d.total != 0) {
+              if (d.rows != null && d.rows!.isNotEmpty && d.total != 0) {
                 listEducations = [];
                 listEducations = d.rows;
                 listCardsCommon = [];
 
-                if (listEducations != null && listEducations.length > 0) {
-                  for (var item in listEducations) {
+                if (listEducations != null && listEducations!.length > 0) {
+                  for (var item in listEducations!) {
                     if (item != null) {
                       if (item.cardName == "Campus&FacilityCard") {
                         isUserExist = item.isUserExist ?? false;
@@ -1424,10 +1425,10 @@ class UserProfileCardsState extends State<UserProfileCards> {
                           profileImage, callBck: () {
                         getPhotos(
                             context,
-                            AppLocalizations.of(context)
+                            AppLocalizations.of(context)!
                                 .translate("campus_facilities"));
                       });
-                      if (widget != null) listCardsCommon.add(widget);
+                      if (widget != null) listCardsCommon.add(widget as StatelessWidget);
                     }
                   }
                 } else
@@ -1440,7 +1441,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                 });
               }
               setState(() {
-                data[2] = CustomTabMaker(
+                data![2] = CustomTabMaker(
                     statelessWidget: EducationPage(
                         type: type,
                         rows: null,
@@ -1456,7 +1457,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                         callBck: () {
                           getPhotos(
                               context,
-                              AppLocalizations.of(context)
+                              AppLocalizations.of(context)!
                                   .translate("campus_facilities"));
                         }),
                     tabName: type);
@@ -1468,13 +1469,13 @@ class UserProfileCardsState extends State<UserProfileCards> {
     }).catchError((onError) {
       print(onError.toString());
       ToastBuilder().showSnackBar(
-          "Something went wrong!!", sctx, HexColor(AppColors.information));
+          "Something went wrong!!", sctx!, HexColor(AppColors.information));
     });
   }
 
   void getDetailedClasses(BuildContext context) async {
     setState(() {
-      data[2] = CustomTabMaker(
+      data![2] = CustomTabMaker(
           statelessWidget: EducationPage(
               type: type,
               rows: null,
@@ -1505,11 +1506,11 @@ class UserProfileCardsState extends State<UserProfileCards> {
           setState(() {
             var d = BaseResponses.fromJson(value);
             if (d != null && d.statusCode == 'S10001') {
-              if (d.rows != null && d.rows.isNotEmpty && d.total != 0) {
+              if (d.rows != null && d.rows!.isNotEmpty && d.total != 0) {
                 listEducations = d.rows;
                 listCardsCommon = [];
-                if (listEducations != null && listEducations.length > 0) {
-                  for (var item in listEducations) {
+                if (listEducations != null && listEducations!.length > 0) {
+                  for (var item in listEducations!) {
                     if (item != null) {
                       var widget = GetAllCards().getCard(
                           userName,
@@ -1525,7 +1526,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                           profileImage, callBck: () {
                         getDetailedClasses(context);
                       });
-                      if (widget != null) listCardsCommon.add(widget);
+                      if (widget != null) listCardsCommon.add(widget as StatelessWidget);
                     }
                   }
                 } else
@@ -1538,7 +1539,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                 });
               }
               setState(() {
-                data[2] = CustomTabMaker(
+                data![2] = CustomTabMaker(
                     statelessWidget: EducationPage(
                         type: type,
                         rows: null,
@@ -1550,7 +1551,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                         callBck: () {
                           getDetailedClasses(context);
                         }),
-                    tabName: AppLocalizations.of(context).translate('class'));
+                    tabName: AppLocalizations.of(context)!.translate('class'));
               });
             }
           });
@@ -1559,13 +1560,13 @@ class UserProfileCardsState extends State<UserProfileCards> {
     }).catchError((onError) {
       print(onError.toString());
       ToastBuilder().showSnackBar(
-          "Something went wrong !!", sctx, HexColor(AppColors.information));
+          "Something went wrong !!", sctx!, HexColor(AppColors.information));
     });
   }
 
   void getDetailedSubjects(BuildContext context) async {
     setState(() {
-      data[2] = CustomTabMaker(
+      data![2] = CustomTabMaker(
           statelessWidget: EducationPage(
               type: type,
               rows: null,
@@ -1597,11 +1598,11 @@ class UserProfileCardsState extends State<UserProfileCards> {
           setState(() {
             var d = BaseResponses.fromJson(value);
             if (d != null && d.statusCode == 'S10001') {
-              if (d.rows != null && d.rows.isNotEmpty && d.total != 0) {
+              if (d.rows != null && d.rows!.isNotEmpty && d.total != 0) {
                 listCardsCommon = [];
                 listEducations = d.rows;
-                if (listEducations != null && listEducations.length > 0) {
-                  for (var item in listEducations) {
+                if (listEducations != null && listEducations!.length > 0) {
+                  for (var item in listEducations!) {
                     if (item != null) {
                       var widget = GetAllCards().getCard(
                           userName,
@@ -1617,7 +1618,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                           profileImage, callBck: () {
                         getDetailedSubjects(context);
                       });
-                      if (widget != null) listCardsCommon.add(widget);
+                      if (widget != null) listCardsCommon.add(widget as StatelessWidget);
                     }
                   }
                 } else
@@ -1630,7 +1631,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                 });
               }
               setState(() {
-                data[2] = CustomTabMaker(
+                data![2] = CustomTabMaker(
                     statelessWidget: EducationPage(
                         type: type,
                         rows: null,
@@ -1642,7 +1643,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                         callBck: () {
                           getDetailedSubjects(context);
                         }),
-                    tabName: AppLocalizations.of(context).translate('subject'));
+                    tabName: AppLocalizations.of(context)!.translate('subject'));
               });
             }
           });
@@ -1652,13 +1653,13 @@ class UserProfileCardsState extends State<UserProfileCards> {
     }).catchError((onError) {
       print(onError.toString());
       ToastBuilder().showSnackBar(
-          "Something went wrong !!", sctx, HexColor(AppColors.information));
+          "Something went wrong !!", sctx!, HexColor(AppColors.information));
     });
   }
 
   void getLanguagesDetail(BuildContext context, String type) async {
     setState(() {
-      data[2] = CustomTabMaker(
+      data![2] = CustomTabMaker(
           statelessWidget: EducationPage(
               type: type,
               rows: null,
@@ -1691,14 +1692,14 @@ class UserProfileCardsState extends State<UserProfileCards> {
           setState(() {
             var d = BaseResponses.fromJson(value);
             if (d != null && d.statusCode == 'S10001') {
-              if (d.rows != null && d.rows.isNotEmpty && d.total != 0) {
+              if (d.rows != null && d.rows!.isNotEmpty && d.total != 0) {
                 setState(() {
                   isEmpty = false;
                 });
                 listCardsCommon = [];
                 listEducations = d.rows;
-                if (listEducations != null && listEducations.length > 0) {
-                  for (var item in listEducations) {
+                if (listEducations != null && listEducations!.length > 0) {
+                  for (var item in listEducations!) {
                     if (item != null) {
                       var widget = GetAllCards().getCard(
                           userName,
@@ -1715,7 +1716,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                         getLanguagesDetail(
                             context, type == "skill" ? "skill" : "language");
                       });
-                      if (widget != null) listCardsCommon.add(widget);
+                      if (widget != null) listCardsCommon.add(widget as StatelessWidget);
                     }
                   }
                 } else
@@ -1728,7 +1729,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                 });
               }
               setState(() {
-                data[2] = CustomTabMaker(
+                data![2] = CustomTabMaker(
                     statelessWidget: EducationPage(
                         type: type,
                         rows: null,
@@ -1751,7 +1752,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
     }).catchError((onError) {
       print(onError.toString());
       ToastBuilder().showSnackBar(
-          "Something went wrong !!", sctx, HexColor(AppColors.information));
+          "Something went wrong !!", sctx!, HexColor(AppColors.information));
     });
   }
 
@@ -1772,11 +1773,11 @@ class UserProfileCardsState extends State<UserProfileCards> {
           setState(() {
             var d = BaseResponses.fromJson(value);
             if (d != null && d.statusCode == 'S10001') {
-              if (d.rows != null && d.rows.isNotEmpty && d.total != 0) {
+              if (d.rows != null && d.rows!.isNotEmpty && d.total != 0) {
                 listEducations = d.rows;
                 listCardsCommon = [];
-                if (listEducations != null && listEducations.length > 0) {
-                  for (var item in listEducations) {
+                if (listEducations != null && listEducations!.length > 0) {
+                  for (var item in listEducations!) {
                     if (item != null) {
                       var widget = GetAllCards().getCard(
                           userName,
@@ -1792,7 +1793,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                           profileImage, callBck: () {
                         getDetailedClasses(context);
                       });
-                      if (widget != null) listCardsCommon.add(widget);
+                      if (widget != null) listCardsCommon.add(widget as StatelessWidget);
                     }
                   }
                 } else
@@ -1804,7 +1805,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                 isEmpty = true;
               });
               setState(() {
-                data[2] = CustomTabMaker(
+                data![2] = CustomTabMaker(
                     statelessWidget: EducationPage(
                         type: type,
                         rows: null,
@@ -1816,7 +1817,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                         callBck: () {
                           getDetailedClasses(context);
                         }),
-                    tabName: AppLocalizations.of(context).translate('courses'));
+                    tabName: AppLocalizations.of(context)!.translate('courses'));
               });
             }
           });
@@ -1825,11 +1826,11 @@ class UserProfileCardsState extends State<UserProfileCards> {
     }).catchError((onError) {
       print(onError.toString());
       ToastBuilder().showSnackBar(
-          "Something went wrong !!", sctx, HexColor(AppColors.information));
+          "Something went wrong !!", sctx!, HexColor(AppColors.information));
     });
   }
 
-  void getCourses(BuildContext context, String type) async {
+  void getCourses(BuildContext context, String? type) async {
     final body = jsonEncode({
       "person_id": personId,
       "institution_id": instituteId,
@@ -1846,11 +1847,11 @@ class UserProfileCardsState extends State<UserProfileCards> {
           setState(() {
             var d = BaseResponses.fromJson(value);
             if (d != null && d.statusCode == 'S10001') {
-              if (d.rows != null && d.rows.isNotEmpty && d.total != 0) {
+              if (d.rows != null && d.rows!.isNotEmpty && d.total != 0) {
                 listEducations = d.rows;
                 listCardsCommon = [];
-                if (listEducations != null && listEducations.length > 0) {
-                  for (var item in listEducations) {
+                if (listEducations != null && listEducations!.length > 0) {
+                  for (var item in listEducations!) {
                     if (item != null) {
                       var widget = GetAllCards().getCard(
                           userName,
@@ -1866,7 +1867,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                           profileImage, callBck: () {
                         getDetailedClasses(context);
                       });
-                      if (widget != null) listCardsCommon.add(widget);
+                      if (widget != null) listCardsCommon.add(widget as StatelessWidget);
                     }
                   }
                 } else
@@ -1878,7 +1879,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                 isEmpty = true;
               });
               setState(() {
-                data[2] = CustomTabMaker(
+                data![2] = CustomTabMaker(
                     statelessWidget: EducationPage(
                         type: type,
                         rows: null,
@@ -1890,7 +1891,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                         callBck: () {
                           getDetailedClasses(context);
                         }),
-                    tabName: AppLocalizations.of(context).translate('courses'));
+                    tabName: AppLocalizations.of(context)!.translate('courses'));
               });
             }
           });
@@ -1899,11 +1900,11 @@ class UserProfileCardsState extends State<UserProfileCards> {
     }).catchError((onError) {
       print(onError.toString());
       ToastBuilder().showSnackBar(
-          "Something went wrong !!", sctx, HexColor(AppColors.information));
+          "Something went wrong !!", sctx!, HexColor(AppColors.information));
     });
   }
 
-  void getMediums(BuildContext context, String type) async {
+  void getMediums(BuildContext context, String? type) async {
     final body = jsonEncode({
       "person_id": personId,
       "institution_id":
@@ -1921,11 +1922,11 @@ class UserProfileCardsState extends State<UserProfileCards> {
           setState(() {
             var d = BaseResponses.fromJson(value);
             if (d != null && d.statusCode == 'S10001') {
-              if (d.rows != null && d.rows.isNotEmpty && d.total != 0) {
+              if (d.rows != null && d.rows!.isNotEmpty && d.total != 0) {
                 listEducations = d.rows;
                 listCardsCommon = [];
-                if (listEducations != null && listEducations.length > 0) {
-                  for (var item in listEducations) {
+                if (listEducations != null && listEducations!.length > 0) {
+                  for (var item in listEducations!) {
                     if (item != null) {
                       var widget = GetAllCards().getCard(
                           userName,
@@ -1941,7 +1942,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                           profileImage, callBck: () {
                         getDetailedClasses(context);
                       });
-                      if (widget != null) listCardsCommon.add(widget);
+                      if (widget != null) listCardsCommon.add(widget as StatelessWidget);
                     }
                   }
                 } else
@@ -1953,7 +1954,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                 isEmpty = true;
               });
               setState(() {
-                data[2] = CustomTabMaker(
+                data![2] = CustomTabMaker(
                     statelessWidget: EducationPage(
                         type: type,
                         rows: null,
@@ -1965,7 +1966,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                         callBck: () {
                           getDetailedClasses(context);
                         }),
-                    tabName: AppLocalizations.of(context).translate('medium'));
+                    tabName: AppLocalizations.of(context)!.translate('medium'));
               });
             }
           });
@@ -1974,11 +1975,11 @@ class UserProfileCardsState extends State<UserProfileCards> {
     }).catchError((onError) {
       print(onError.toString());
       ToastBuilder().showSnackBar(
-          "Something went wrong !!", sctx, HexColor(AppColors.information));
+          "Something went wrong !!", sctx!, HexColor(AppColors.information));
     });
   }
 
-  void getClubs(BuildContext context, String type) async {
+  void getClubs(BuildContext context, String? type) async {
     final body = jsonEncode({
       "person_id": personId,
       "institution_id":
@@ -1997,11 +1998,11 @@ class UserProfileCardsState extends State<UserProfileCards> {
             setState(() {
               var d = BaseResponses.fromJson(value);
               if (d != null && d.statusCode == 'S10001') {
-                if (d.rows != null && d.rows.isNotEmpty && d.total != 0) {
+                if (d.rows != null && d.rows!.isNotEmpty && d.total != 0) {
                   listEducations = d.rows;
                   listCardsCommon = [];
-                  if (listEducations != null && listEducations.length > 0) {
-                    for (var item in listEducations) {
+                  if (listEducations != null && listEducations!.length > 0) {
+                    for (var item in listEducations!) {
                       if (item != null) {
                         var widget = GetAllCards().getCard(
                             userName,
@@ -2017,7 +2018,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                             profileImage, callBck: () {
                           getDetailedClasses(context);
                         });
-                        if (widget != null) listCardsCommon.add(widget);
+                        if (widget != null) listCardsCommon.add(widget as StatelessWidget);
                       }
                     }
                   } else
@@ -2029,7 +2030,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                   isEmpty = true;
                 });
                 setState(() {
-                  data[2] = CustomTabMaker(
+                  data![2] = CustomTabMaker(
                       statelessWidget: EducationPage(
                           type: type,
                           rows: null,
@@ -2041,7 +2042,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                           callBck: () {
                             getDetailedClasses(context);
                           }),
-                      tabName: AppLocalizations.of(context).translate('club'));
+                      tabName: AppLocalizations.of(context)!.translate('club'));
                 });
               }
             });
@@ -2052,11 +2053,11 @@ class UserProfileCardsState extends State<UserProfileCards> {
     }).catchError((onError) {
       print(onError.toString());
       ToastBuilder().showSnackBar(
-          "Something went wrong !!", sctx, HexColor(AppColors.information));
+          "Something went wrong !!", sctx!, HexColor(AppColors.information));
     });
   }
 
-  void getSports(BuildContext context, String type) async {
+  void getSports(BuildContext context, String? type) async {
     final body = jsonEncode({
       "person_id": personId,
       "institution_id":
@@ -2074,11 +2075,11 @@ class UserProfileCardsState extends State<UserProfileCards> {
           setState(() {
             var d = BaseResponses.fromJson(value);
             if (d != null && d.statusCode == 'S10001') {
-              if (d.rows != null && d.rows.isNotEmpty && d.total != 0) {
+              if (d.rows != null && d.rows!.isNotEmpty && d.total != 0) {
                 listEducations = d.rows;
                 listCardsCommon = [];
-                if (listEducations != null && listEducations.length > 0) {
-                  for (var item in listEducations) {
+                if (listEducations != null && listEducations!.length > 0) {
+                  for (var item in listEducations!) {
                     if (item != null) {
                       var widget = GetAllCards().getCard(
                           userName,
@@ -2094,7 +2095,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                           profileImage, callBck: () {
                         getDetailedClasses(context);
                       });
-                      if (widget != null) listCardsCommon.add(widget);
+                      if (widget != null) listCardsCommon.add(widget as StatelessWidget);
                     }
                   }
                 } else
@@ -2106,7 +2107,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                   isEmpty = true;
                 });
               setState(() {
-                data[2] = CustomTabMaker(
+                data![2] = CustomTabMaker(
                     statelessWidget: EducationPage(
                         type: type,
                         rows: null,
@@ -2118,7 +2119,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                         callBck: () {
                           getDetailedClasses(context);
                         }),
-                    tabName: AppLocalizations.of(context).translate('sport'));
+                    tabName: AppLocalizations.of(context)!.translate('sport'));
               });
             }
           });
@@ -2127,7 +2128,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
     }).catchError((onError) {
       print(onError.toString());
       ToastBuilder().showSnackBar(
-          "Something went wrong !!", sctx, HexColor(AppColors.information));
+          "Something went wrong !!", sctx!, HexColor(AppColors.information));
     });
   }
 
@@ -2148,10 +2149,10 @@ class UserProfileCardsState extends State<UserProfileCards> {
         var data = FollowersFollowingCountEntity.fromJson(value);
         if (data != null && data.statusCode == 'S10001') {
           setState(() {
-            followers = data.rows.followersCount ?? 0;
-            following = data.rows.followingCount ?? 0;
-            roomsCount = data.rows.roomsCount ?? 0;
-            postCount = data.rows.postCount ?? 0;
+            followers = data.rows!.followersCount ?? 0;
+            following = data.rows!.followingCount ?? 0;
+            roomsCount = data.rows!.roomsCount ?? 0;
+            postCount = data.rows!.postCount ?? 0;
           });
         } else {}
       } else {}
@@ -2161,7 +2162,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
   _coverPicker() async {
     var pr = ToastBuilder()
         .setProgressDialogWithPercent(context, 'Uploading Image...');
-    File pickedFile = await ImagePickerAndCropperUtil().pickImage(context);
+    File pickedFile = await (ImagePickerAndCropperUtil().pickImage(context) as FutureOr<File>);
     var croppedFile =
     await ImagePickerAndCropperUtil().cropFile(context, pickedFile);
     if (croppedFile != null) {
@@ -2174,10 +2175,10 @@ class UserProfileCardsState extends State<UserProfileCards> {
       await UploadFile(
           baseUrl: Config.BASE_URL,
           context: context,
-          token: prefs.getString("token"),
-          contextId: rows.id.toString(),
+          token: prefs!.getString("token"),
+          contextId: rows!.id.toString(),
           contextType: CONTEXTTYPE_ENUM.COVER.type,
-          ownerId: rows.id.toString(),
+          ownerId: rows!.id.toString(),
           ownerType: OWNERTYPE_ENUM.PERSON.type,
           file: croppedFile,
           subContextId: "",
@@ -2191,7 +2192,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
           .then((value) async {
         await pr.hide();
         var imageResponse = ImageUpdateResponse.fromJson(value);
-        updateImage(imageResponse.rows.fileUrl, OWNERTYPE.person.type,
+        updateImage(imageResponse.rows!.fileUrl, OWNERTYPE.person.type,
             IMAGETYPE.cover.type);
       }).catchError((onError) {
         print(onError.toString());
@@ -2203,7 +2204,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
 
     var pr = ToastBuilder()
         .setProgressDialogWithPercent(context, 'Uploading Image...');
-    File pickedFile = await ImagePickerAndCropperUtil().pickImage(context);
+    File pickedFile = await (ImagePickerAndCropperUtil().pickImage(context) as FutureOr<File>);
     var croppedFile =
     await ImagePickerAndCropperUtil().cropFile(context, pickedFile);
     if (croppedFile != null) {
@@ -2220,10 +2221,10 @@ class UserProfileCardsState extends State<UserProfileCards> {
         await UploadFile(
             baseUrl: Config.BASE_URL,
             context: context,
-            token: prefs.getString("token"),
-            contextId: rows.id.toString(),
+            token: prefs!.getString("token"),
+            contextId: rows!.id.toString(),
             contextType: CONTEXTTYPE_ENUM.PROFILE.type,
-            ownerId: rows.id.toString(),
+            ownerId: rows!.id.toString(),
             ownerType: OWNERTYPE_ENUM.PERSON.type,
             file: croppedFile,
             subContextId: "",
@@ -2237,7 +2238,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
             .then((value) async {
           await pr.hide();
           var imageResponse = ImageUpdateResponse.fromJson(value);
-          updateImage(imageResponse.rows.fileUrl, OWNERTYPE.person.type,
+          updateImage(imageResponse.rows!.fileUrl, OWNERTYPE.person.type,
               IMAGETYPE.profile.type);
         }).catchError((onError) {
           print(onError.toString());
@@ -2252,13 +2253,13 @@ class UserProfileCardsState extends State<UserProfileCards> {
     }
   }
 
-  updateImage(String url, String ownerType, String imageType) async {
+  updateImage(String? url, String ownerType, String imageType) async {
     var pr = ToastBuilder()
         .setProgressDialogWithPercent(context, 'Updating Image...');
     ImageUpdateRequest request = ImageUpdateRequest();
     request.imagePath = url;
     request.imageType = imageType;
-    request.ownerId = rows.id;
+    request.ownerId = rows!.id;
     request.ownerType = ownerType;
     var data = jsonEncode(request);
     await pr.show();
@@ -2267,15 +2268,15 @@ class UserProfileCardsState extends State<UserProfileCards> {
       var resposne = DynamicResponse.fromJson(value);
       if (resposne.statusCode == Strings.success_code) {
         if (imageType == IMAGETYPE.cover.type) {
-          if (prefs != null) prefs.setString("coverImage", url);
+          if (prefs != null) prefs!.setString("coverImage", url!);
           setState(() {
-            coverImage = Config.BASE_URL + url;
+            coverImage = Config.BASE_URL + url!;
           });
         } else {
-          if (prefs != null) prefs.setString("profileImage", url);
-          if (callback != null) callback();
+          if (prefs != null) prefs!.setString("profileImage", url!);
+          if (callback != null) callback!();
           setState(() {
-            profileImage = Config.BASE_URL + url;
+            profileImage = Config.BASE_URL + url!;
           });
         }
       }
@@ -2295,18 +2296,18 @@ class CustomTabView extends StatefulWidget {
   final int itemCount;
   final IndexedWidgetBuilder tabBuilder;
   final IndexedWidgetBuilder pageBuilder;
-  final Widget stub;
-  final ValueChanged<int> onPositionChange;
-  final ValueChanged<double> onScroll;
-  final int currentPosition;
-  final Null Function() callback;
-  final EdgeInsetsGeometry marginTop;
-final bool isTabVisible;
-final bool isSwipeDisabled;
+  final Widget? stub;
+  final ValueChanged<int?>? onPositionChange;
+  final ValueChanged<double>? onScroll;
+  final int? currentPosition;
+  final Null Function()? callback;
+  final EdgeInsetsGeometry? marginTop;
+final bool? isTabVisible;
+final bool? isSwipeDisabled;
   CustomTabView({
-    @required this.itemCount,
-    @required this.tabBuilder,
-    @required this.pageBuilder,
+    required this.itemCount,
+    required this.tabBuilder,
+    required this.pageBuilder,
     this.stub,
     this.onPositionChange,
     this.onScroll,
@@ -2324,10 +2325,10 @@ final bool isSwipeDisabled;
 class _CustomTabsState extends State<CustomTabView>
     with TickerProviderStateMixin {
 
-  TabController controller;
-  int _currentCount;
-  int _currentPosition;
-  final Null Function() callback;
+  TabController? controller;
+  int? _currentCount;
+  int? _currentPosition;
+  final Null Function()? callback;
 
 
 
@@ -2339,10 +2340,10 @@ class _CustomTabsState extends State<CustomTabView>
     controller = TabController(
       length: widget.itemCount,
       vsync: this,
-      initialIndex: _currentPosition,
+      initialIndex: _currentPosition!,
     );
-    controller.addListener(onPositionChange);
-    controller.animation.addListener(onScroll);
+    controller!.addListener(onPositionChange);
+    controller!.animation!.addListener(onScroll);
     _currentCount = widget.itemCount;
     super.initState();
   }
@@ -2350,21 +2351,21 @@ class _CustomTabsState extends State<CustomTabView>
   @override
   void didUpdateWidget(CustomTabView oldWidget) {
     if (_currentCount != widget.itemCount) {
-      controller.animation.removeListener(onScroll);
-      controller.removeListener(onPositionChange);
-      controller.dispose();
+      controller!.animation!.removeListener(onScroll);
+      controller!.removeListener(onPositionChange);
+      controller!.dispose();
 
       if (widget.currentPosition != null) {
         _currentPosition = widget.currentPosition;
       }
 
-      if (_currentPosition > widget.itemCount - 1) {
+      if (_currentPosition! > widget.itemCount - 1) {
         _currentPosition = widget.itemCount - 1;
-        _currentPosition = _currentPosition < 0 ? 0 : _currentPosition;
+        _currentPosition = _currentPosition! < 0 ? 0 : _currentPosition;
         if (widget.onPositionChange is ValueChanged<int>) {
-          WidgetsBinding.instance.addPostFrameCallback((_) {
+          WidgetsBinding.instance!.addPostFrameCallback((_) {
             if (mounted) {
-              widget.onPositionChange(_currentPosition);
+              widget.onPositionChange!(_currentPosition);
             }
           });
         }
@@ -2375,13 +2376,13 @@ class _CustomTabsState extends State<CustomTabView>
         controller = TabController(
           length: widget.itemCount,
           vsync: this,
-          initialIndex: _currentPosition,
+          initialIndex: _currentPosition!,
         );
-        controller.addListener(onPositionChange);
-        controller.animation.addListener(onScroll);
+        controller!.addListener(onPositionChange);
+        controller!.animation!.addListener(onScroll);
       });
     } else if (widget.currentPosition != null) {
-      controller.animateTo(widget.currentPosition);
+      controller!.animateTo(widget.currentPosition!);
     }
 
     super.didUpdateWidget(oldWidget);
@@ -2389,9 +2390,9 @@ class _CustomTabsState extends State<CustomTabView>
 
   @override
   void dispose() {
-    controller.animation.removeListener(onScroll);
-    controller.removeListener(onPositionChange);
-    controller.dispose();
+    controller!.animation!.removeListener(onScroll);
+    controller!.removeListener(onPositionChange);
+    controller!.dispose();
     super.dispose();
   }
 
@@ -2404,7 +2405,7 @@ class _CustomTabsState extends State<CustomTabView>
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         Visibility(
-          visible:widget.isTabVisible!=null ?widget.isTabVisible:true,
+          visible:widget.isTabVisible!=null ?widget.isTabVisible!:true,
           child: Container(
             margin: widget.marginTop,
             alignment: Alignment.center,
@@ -2433,7 +2434,7 @@ class _CustomTabsState extends State<CustomTabView>
         Expanded(
           child:TabBarView(
             controller: controller,
-            physics: widget.isSwipeDisabled?NeverScrollableScrollPhysics():BouncingScrollPhysics(),
+            physics: widget.isSwipeDisabled!?NeverScrollableScrollPhysics():BouncingScrollPhysics(),
             children: List.generate(
               widget.itemCount,
                   (index) => widget.pageBuilder(context, index),
@@ -2445,20 +2446,20 @@ class _CustomTabsState extends State<CustomTabView>
   }
 
   onPositionChange() {
-    if(!widget.isSwipeDisabled)
+    if(!widget.isSwipeDisabled!)
 
-   { if (!controller.indexIsChanging ) {
-      _currentPosition = controller.index;
+   { if (!controller!.indexIsChanging ) {
+      _currentPosition = controller!.index;
       if (widget.onPositionChange is ValueChanged<int>) {
-        widget.onPositionChange(_currentPosition);
+        widget.onPositionChange!(_currentPosition);
       }
     }}
   }
 
   onScroll() {
-    if(!widget.isSwipeDisabled)
+    if(!widget.isSwipeDisabled!)
   {  if (widget.onScroll is ValueChanged<double>) {
-      widget.onScroll(controller.animation.value);
+      widget.onScroll!(controller!.animation!.value);
     }}
   }
 
@@ -2467,20 +2468,20 @@ class _CustomTabsState extends State<CustomTabView>
 
 // ignore: must_be_immutable
 class AboutPage extends StatelessWidget {
-  final Null Function() callBck;
+  final Null Function()? callBck;
   final String type;
-  final List<StatelessWidget> listCardsAbout;
+  final List<StatelessWidget>? listCardsAbout;
   final isLoading;
   final isAllowed;
   List<CommonCardData> listCardData = [];
 
-  Persondata rows;
-  TextStyleElements styleElements;
-  ProgressDialog pr;
+  Persondata? rows;
+  TextStyleElements? styleElements;
+  ProgressDialog? pr;
 
   AboutPage(
-      {Key key,
-        @required this.type,
+      {Key? key,
+        required this.type,
         this.listCardsAbout,
         this.rows,
 
@@ -2492,7 +2493,7 @@ class AboutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
-    return listCardsAbout.isNotEmpty
+    return listCardsAbout!.isNotEmpty
         ? Stack(
       children: [
 
@@ -2501,9 +2502,9 @@ class AboutPage extends StatelessWidget {
           child: ListView.builder(
               padding: EdgeInsets.all(0.0),
               physics: BouncingScrollPhysics(),
-              itemCount: listCardsAbout.length,
+              itemCount: listCardsAbout!.length,
               itemBuilder: (context, index) {
-                return listCardsAbout[index];
+                return listCardsAbout![index];
               }),
         )
 
@@ -2513,7 +2514,7 @@ class AboutPage extends StatelessWidget {
   }
 
   Future<Null> refreshList() async {
-    callBck();
+    callBck!();
     await new Future.delayed(new Duration(seconds: 2));
 
     return null;
@@ -2522,9 +2523,9 @@ class AboutPage extends StatelessWidget {
 
 // ignore: must_be_immutable
 class BottomSheetContent extends StatelessWidget {
-  String personType;
-  int id;
-  final Null Function(String type) callback;
+  String? personType;
+  int? id;
+  final Null Function(String type)? callback;
 
   @override
   Widget build(BuildContext context) {
@@ -2544,14 +2545,14 @@ class BottomSheetContent extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.all(16.h),
                   child: Text(
-                    AppLocalizations.of(context).translate('more_options'),
+                    AppLocalizations.of(context)!.translate('more_options'),
                     style: styleElements.headline6ThemeScalable(context),
                   ),
                 ),
               ),
               GestureDetector(
                 onTap: () async {
-                  callback("class");
+                  callback!("class");
                 },
                 child: Align(
                   alignment: Alignment.topLeft,
@@ -2559,7 +2560,7 @@ class BottomSheetContent extends StatelessWidget {
                       padding: EdgeInsets.all(4.h),
                       child: ListTile(
                         title: Text(
-                          AppLocalizations.of(context)
+                          AppLocalizations.of(context)!
                               .translate("classes_branches"),
                           style: styleElements.headline6ThemeScalable(context),
                         ),
@@ -2568,7 +2569,7 @@ class BottomSheetContent extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () async {
-                  callback("education");
+                  callback!("education");
                 },
                 child: Align(
                   alignment: Alignment.topLeft,
@@ -2576,7 +2577,7 @@ class BottomSheetContent extends StatelessWidget {
                       padding: EdgeInsets.all(4.h),
                       child: ListTile(
                         title: Text(
-                          AppLocalizations.of(context).translate("education"),
+                          AppLocalizations.of(context)!.translate("education"),
                           style: styleElements.headline6ThemeScalable(context),
                         ),
                       )),
@@ -2584,7 +2585,7 @@ class BottomSheetContent extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () async {
-                  callback("language");
+                  callback!("language");
                 },
                 child: Align(
                   alignment: Alignment.topLeft,
@@ -2592,7 +2593,7 @@ class BottomSheetContent extends StatelessWidget {
                       padding: EdgeInsets.all(4.h),
                       child: ListTile(
                         title: Text(
-                          AppLocalizations.of(context).translate("language"),
+                          AppLocalizations.of(context)!.translate("language"),
                           style: styleElements.headline6ThemeScalable(context),
                         ),
                       )),
@@ -2600,7 +2601,7 @@ class BottomSheetContent extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () async {
-                  callback("skill");
+                  callback!("skill");
                 },
                 child: Align(
                   alignment: Alignment.topLeft,
@@ -2608,7 +2609,7 @@ class BottomSheetContent extends StatelessWidget {
                       padding: EdgeInsets.all(4.h),
                       child: ListTile(
                         title: Text(
-                          AppLocalizations.of(context).translate("skill"),
+                          AppLocalizations.of(context)!.translate("skill"),
                           style: styleElements.headline6ThemeScalable(context),
                         ),
                       )),
@@ -2616,7 +2617,7 @@ class BottomSheetContent extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () async {
-                  callback("subject");
+                  callback!("subject");
                 },
                 child: Align(
                   alignment: Alignment.topLeft,
@@ -2624,7 +2625,7 @@ class BottomSheetContent extends StatelessWidget {
                       padding: EdgeInsets.all(4.h),
                       child: ListTile(
                         title: Text(
-                          AppLocalizations.of(context).translate("subject"),
+                          AppLocalizations.of(context)!.translate("subject"),
                           style: styleElements.headline6ThemeScalable(context),
                         ),
                       )),
@@ -2632,7 +2633,7 @@ class BottomSheetContent extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () async {
-                  callback("work");
+                  callback!("work");
                 },
                 child: Align(
                   alignment: Alignment.topLeft,
@@ -2640,7 +2641,7 @@ class BottomSheetContent extends StatelessWidget {
                       padding: EdgeInsets.all(4.h),
                       child: ListTile(
                         title: Text(
-                          AppLocalizations.of(context)
+                          AppLocalizations.of(context)!
                               .translate("work_experience"),
                           style: styleElements.headline6ThemeScalable(context),
                         ),
@@ -2649,7 +2650,7 @@ class BottomSheetContent extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () async {
-                  callback("learning");
+                  callback!("learning");
                 },
                 child: Align(
                   alignment: Alignment.topLeft,
@@ -2657,7 +2658,7 @@ class BottomSheetContent extends StatelessWidget {
                       padding: EdgeInsets.all(4.h),
                       child: ListTile(
                         title: Text(
-                          AppLocalizations.of(context)
+                          AppLocalizations.of(context)!
                               .translate("learning"),
                           style: styleElements.headline6ThemeScalable(context),
                         ),
@@ -2671,19 +2672,19 @@ class BottomSheetContent extends StatelessWidget {
     );
   }
 
-  BottomSheetContent({Key key, this.personType, this.id, this.callback})
+  BottomSheetContent({Key? key, this.personType, this.id, this.callback})
       : super(key: key);
 }
 
 // ignore: must_be_immutable
 class BottomSheetContentInstitute extends StatelessWidget {
-  int instituteId;
-  String personType;
-  int id;
-  final Null Function(String type) callback;
+  int? instituteId;
+  String? personType;
+  int? id;
+  final Null Function(String type)? callback;
 
   BottomSheetContentInstitute(
-      {Key key, this.personType, this.id, this.callback})
+      {Key? key, this.personType, this.id, this.callback})
       : super(key: key);
 
   @override
@@ -2704,15 +2705,15 @@ class BottomSheetContentInstitute extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.all(16.h),
                   child: Text(
-                    AppLocalizations.of(context).translate('more_options'),
+                    AppLocalizations.of(context)!.translate('more_options'),
                     style: styleElements.headline6ThemeScalable(context),
                   ),
                 ),
               ),
               GestureDetector(
                 onTap: () async {
-                  callback(
-                    AppLocalizations.of(context).translate("campus_facilities"),
+                  callback!(
+                    AppLocalizations.of(context)!.translate("campus_facilities"),
                   );
                 },
                 child: Align(
@@ -2721,7 +2722,7 @@ class BottomSheetContentInstitute extends StatelessWidget {
                       padding: EdgeInsets.all(4.h),
                       child: ListTile(
                         title: Text(
-                          AppLocalizations.of(context)
+                          AppLocalizations.of(context)!
                               .translate("campus_facilities"),
                           style: styleElements.headline6ThemeScalable(context),
                         ),
@@ -2730,7 +2731,7 @@ class BottomSheetContentInstitute extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () async {
-                  callback(
+                  callback!(
                     "class",
                   );
                 },
@@ -2740,7 +2741,7 @@ class BottomSheetContentInstitute extends StatelessWidget {
                       padding: EdgeInsets.all(4.h),
                       child: ListTile(
                         title: Text(
-                          AppLocalizations.of(context)
+                          AppLocalizations.of(context)!
                               .translate("classes_branches"),
                           style: styleElements.headline6ThemeScalable(context),
                         ),
@@ -2749,7 +2750,7 @@ class BottomSheetContentInstitute extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () async {
-                  callback(
+                  callback!(
                     "course",
                   );
                 },
@@ -2759,7 +2760,7 @@ class BottomSheetContentInstitute extends StatelessWidget {
                       padding: EdgeInsets.all(4.h),
                       child: ListTile(
                         title: Text(
-                          AppLocalizations.of(context).translate("courses"),
+                          AppLocalizations.of(context)!.translate("courses"),
                           style: styleElements.headline6ThemeScalable(context),
                         ),
                       )),
@@ -2767,7 +2768,7 @@ class BottomSheetContentInstitute extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () async {
-                  callback(
+                  callback!(
                     "medium",
                   );
                 },
@@ -2777,7 +2778,7 @@ class BottomSheetContentInstitute extends StatelessWidget {
                       padding: EdgeInsets.all(4.h),
                       child: ListTile(
                         title: Text(
-                          AppLocalizations.of(context).translate("medium"),
+                          AppLocalizations.of(context)!.translate("medium"),
                           style: styleElements.headline6ThemeScalable(context),
                         ),
                       )),
@@ -2785,7 +2786,7 @@ class BottomSheetContentInstitute extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () async {
-                  callback(
+                  callback!(
                     "sports",
                   );
                 },
@@ -2795,7 +2796,7 @@ class BottomSheetContentInstitute extends StatelessWidget {
                       padding: EdgeInsets.all(4.h),
                       child: ListTile(
                         title: Text(
-                          AppLocalizations.of(context).translate("sports"),
+                          AppLocalizations.of(context)!.translate("sports"),
                           style: styleElements.headline6ThemeScalable(context),
                         ),
                       )),
@@ -2803,7 +2804,7 @@ class BottomSheetContentInstitute extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () async {
-                  callback(
+                  callback!(
                     "subject",
                   );
                 },
@@ -2813,7 +2814,7 @@ class BottomSheetContentInstitute extends StatelessWidget {
                       padding: EdgeInsets.all(4.h),
                       child: ListTile(
                         title: Text(
-                          AppLocalizations.of(context).translate("subject"),
+                          AppLocalizations.of(context)!.translate("subject"),
                           style: styleElements.headline6ThemeScalable(context),
                         ),
                       )),
@@ -2829,25 +2830,25 @@ class BottomSheetContentInstitute extends StatelessWidget {
 
 // ignore: must_be_immutable
 class EducationPage extends StatelessWidget {
-  String type;
-  String userType;
-  List<StatelessWidget> listCardsAbout = [];
-  TextStyleElements styleElements;
-  BuildContext context;
-  String instituteId;
+  String? type;
+  String? userType;
+  List<StatelessWidget>? listCardsAbout = [];
+  late TextStyleElements styleElements;
+  BuildContext? context;
+  String? instituteId;
 
-  final bool isPersonalProfile;
-  bool isUserExist = false;
-  final Persondata rows;
+  final bool? isPersonalProfile;
+  bool? isUserExist = false;
+  final Persondata? rows;
   List<CommonCardData> listCardData = [];
-  SharedPreferences prefs;
-  final Null Function() callBck;
-  final Null Function() callBackCreate;
-  bool isEmpty = false;
+  SharedPreferences? prefs;
+  final Null Function()? callBck;
+  final Null Function()? callBackCreate;
+  bool? isEmpty = false;
 
   EducationPage(
-      {Key key,
-        @required this.type,
+      {Key? key,
+        required this.type,
         this.listCardsAbout,
         this.rows,
         this.callBck,
@@ -2888,45 +2889,45 @@ class EducationPage extends StatelessWidget {
                       ),
                       child: Text(
                         type == "work"
-                            ? AppLocalizations.of(context)
+                            ? AppLocalizations.of(context)!
                             .translate("work_experience")
                             : type == "class"
-                            ? AppLocalizations.of(context)
+                            ? AppLocalizations.of(context)!
                             .translate("classes_branches")
                             : type == "subject"
-                            ? AppLocalizations.of(context)
+                            ? AppLocalizations.of(context)!
                             .translate("subject")
                             : type == "skill"
-                            ? AppLocalizations.of(context)
+                            ? AppLocalizations.of(context)!
                             .translate("skill")
                             : type == "language"
-                            ? AppLocalizations.of(context)
+                            ? AppLocalizations.of(context)!
                             .translate("language")
                             : type == "medium"
-                            ? AppLocalizations.of(context)
+                            ? AppLocalizations.of(context)!
                             .translate("medium_title")
                             : type == "courses"
-                            ? AppLocalizations.of(context)
+                            ? AppLocalizations.of(context)!
                             .translate(
                             "academic_programs")
                             : type == "department"
-                            ? AppLocalizations.of(context)
+                            ? AppLocalizations.of(context)!
                             .translate(
                             "department")
                             : type == "club"
                             ? AppLocalizations.of(
-                            context)
+                            context)!
                             .translate(
                             "club")
                             : type == "sports"
                             ? AppLocalizations.of(
-                            context)
+                            context)!
                             .translate(
                             "sports")
                             : type ==
-                            AppLocalizations.of(context).translate("campus_facilities")
-                            ? AppLocalizations.of(context).translate("campus_facilities")
-                            : AppLocalizations.of(context).translate("education"),
+                            AppLocalizations.of(context)!.translate("campus_facilities")
+                            ? AppLocalizations.of(context)!.translate("campus_facilities")
+                            : AppLocalizations.of(context)!.translate("education"),
                         style: styleElements
                             .headline6ThemeScalable(context)
                             .copyWith(
@@ -2943,7 +2944,7 @@ class EducationPage extends StatelessWidget {
                     child: GestureDetector(
                         behavior: HitTestBehavior.translucent,
                         onTap: () async {
-                          callBackCreate();
+                          callBackCreate!();
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(16),
@@ -2975,7 +2976,7 @@ class EducationPage extends StatelessWidget {
 
                                 if (result != null &&
                                     result['result'] == "success") {
-                                  callBck();
+                                  callBck!();
                                 }
                               } else if (type == "education") {
                                 var result = await Navigator.push(
@@ -2986,7 +2987,7 @@ class EducationPage extends StatelessWidget {
 
                                 if (result != null &&
                                     result['result'] == "success") {
-                                  callBck();
+                                  callBck!();
                                 }
                               } else if (type == "class") {
                                 var result = await Navigator.push(
@@ -2994,7 +2995,7 @@ class EducationPage extends StatelessWidget {
                                     MaterialPageRoute(
                                       builder: (context) =>
                                           ExpertiseSelectClass(
-                                              int.parse(instituteId),
+                                              int.parse(instituteId!),
                                               null,
                                               true,
                                               0,
@@ -3004,20 +3005,20 @@ class EducationPage extends StatelessWidget {
 
                                 if (result != null &&
                                     result['result'] == "success") {
-                                  callBck();
+                                  callBck!();
                                 }
                               } else if (type == "subject") {
                                 var result = await Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => AddSelectSubject(
-                                            int.parse(instituteId),
+                                            int.parse(instituteId!),
                                             false,
                                             null)));
 
                                 if (result != null &&
                                     result['result'] == "success") {
-                                  callBck();
+                                  callBck!();
                                 }
                               } else if (type == "skill") {
                                 var result = await Navigator.push(
@@ -3029,7 +3030,7 @@ class EducationPage extends StatelessWidget {
 
                                 if (result != null &&
                                     result['result'] == "success") {
-                                  callBck();
+                                  callBck!();
                                 }
                               } else if (type == "language") {
                                 var result = await Navigator.push(
@@ -3044,7 +3045,7 @@ class EducationPage extends StatelessWidget {
 
                                 if (result != null &&
                                     result['result'] == "success") {
-                                  callBck();
+                                  callBck!();
                                 }
                               }
                             }
@@ -3065,23 +3066,23 @@ class EducationPage extends StatelessWidget {
               child: Container(
                 margin: const EdgeInsets.only(bottom: 2, top: 16),
                 child: NotificationListener(
-                  child: listCardsAbout.isNotEmpty
+                  child: listCardsAbout!.isNotEmpty
                       ? RefreshIndicator(
                     onRefresh: refreshList,
                     child: ListView.builder(
                         shrinkWrap: true,
                         padding: const EdgeInsets.all(0.0),
                         physics: BouncingScrollPhysics(),
-                        itemCount: listCardsAbout.length,
+                        itemCount: listCardsAbout!.length,
                         itemBuilder: (context, index) {
-                          return listCardsAbout[index];
+                          return listCardsAbout![index];
                         }),
                   )
-                      : isEmpty
+                      : isEmpty!
                       ? Center(
                       child: TricycleEmptyWidget(
                         message:
-                        AppLocalizations.of(context).translate('no_data'),
+                        AppLocalizations.of(context)!.translate('no_data'),
                       )
                     // EmptyWidget(AppLocalizations.of(context)
                     //     .translate('no_data'),
@@ -3089,9 +3090,7 @@ class EducationPage extends StatelessWidget {
                   )
                       : CircularProgressIndicator(),
                   // ignore: missing_return
-                  onNotification: (t) {
-                    if (t is ScrollStartNotification) {}
-                  },
+
                 ),
               ))
         ],
@@ -3099,7 +3098,7 @@ class EducationPage extends StatelessWidget {
     );
   }
   Future<Null> refreshList() async {
-    callBck();
+    callBck!();
     await new Future.delayed(new Duration(seconds: 2));
 
     return null;

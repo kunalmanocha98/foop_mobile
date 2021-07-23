@@ -20,20 +20,20 @@ class _CouponsPage extends State<CouponsPage>
     with SingleTickerProviderStateMixin {
   List<CustomTabMaker> list = [];
   int _currentPosition = 0;
-  TabController _tabController;
-  TextStyleElements styleElements;
+  TabController? _tabController;
+  TextStyleElements? styleElements;
   GlobalKey<CouponPageHeaderCardState> couponPageHeaderKey = GlobalKey();
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => loadPages());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => loadPages());
   }
 
   onPositionChange() {
-    if (!_tabController.indexIsChanging && this.mounted) {
+    if (!_tabController!.indexIsChanging && this.mounted) {
       setState(() {
-        _currentPosition = _tabController.index;
+        _currentPosition = _tabController!.index;
       });
     }
   }
@@ -41,14 +41,14 @@ class _CouponsPage extends State<CouponsPage>
   loadPages() {
     list.add(CustomTabMaker(
         statelessWidget: CouponsListPage(headerKey: couponPageHeaderKey),
-        tabName: AppLocalizations.of(context).translate('coupons')));
+        tabName: AppLocalizations.of(context)!.translate('coupons')));
     list.add(CustomTabMaker(
-        statelessWidget: RedeemedCouponsListPage(), tabName: AppLocalizations.of(context).translate('my_coupons')));
+        statelessWidget: RedeemedCouponsListPage(), tabName: AppLocalizations.of(context)!.translate('my_coupons')));
     list.add(CustomTabMaker(
-        statelessWidget: CouponHistoryListPage(), tabName: AppLocalizations.of(context).translate('history')));
+        statelessWidget: CouponHistoryListPage(), tabName: AppLocalizations.of(context)!.translate('history')));
     setState(() {
       _tabController = TabController(vsync: this, length: list.length);
-      _tabController.addListener(onPositionChange);
+      _tabController!.addListener(onPositionChange);
     });
   }
 
@@ -57,7 +57,7 @@ class _CouponsPage extends State<CouponsPage>
     styleElements = TextStyleElements(context);
     return SafeArea(
       child: Scaffold(
-        appBar: TricycleAppBar().getCustomAppBar(context, appBarTitle: AppLocalizations.of(context).translate('rewards'),
+        appBar: TricycleAppBar().getCustomAppBar(context, appBarTitle: AppLocalizations.of(context)!.translate('rewards'),
             onBackButtonPress: () {
               Navigator.pop(context);
             }),
@@ -92,7 +92,7 @@ class _CouponsPage extends State<CouponsPage>
                             return new Tab(
                               child: TricycleTabButton(
                                 onPressed: () {
-                                  _tabController.animateTo(index);
+                                  _tabController!.animateTo(index);
                                   if (this.mounted) {
                                     setState(() {
                                       _currentPosition = index;

@@ -18,17 +18,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class EmailPhoneVerification extends StatefulWidget {
-  final int id;
+  final int? id;
   final bool isEmail;
-  final String contactDetail;
+  final String? contactDetail;
   final Null Function() callBack;
 
   EmailPhoneVerification(
-      {Key key,
-        @required this.id,
-        @required this.isEmail,
-        @required this.contactDetail,
-        @required this.callBack
+      {Key? key,
+        required this.id,
+        required this.isEmail,
+        required this.contactDetail,
+        required this.callBack
        })
       : super(key: key);
 
@@ -39,14 +39,14 @@ class EmailPhoneVerification extends StatefulWidget {
 
 // ignore: must_be_immutable
 class _EmailPhoneVerification extends State<EmailPhoneVerification> {
-   int id;
+   int? id;
    bool isEmail;
    Null Function() callBack;
-  BuildContext context;
-   String contactDetail;
-  SharedPreferences prefs;
-   String email;
-   String mobileNo;
+  late BuildContext context;
+   String? contactDetail;
+  SharedPreferences? prefs;
+   String? email;
+   String? mobileNo;
   String _otp = "";
   var _otpSymbols = ["0", "0", "0", "0", "0", "0"];
   bool isCalling = false;
@@ -87,7 +87,7 @@ class _EmailPhoneVerification extends State<EmailPhoneVerification> {
       });
      } else {
        ToastBuilder().showSnackBar(
-           AppLocalizations.of(context).translate("enter_token"),
+           AppLocalizations.of(context)!.translate("enter_token"),
            sctx,
            HexColor(AppColors.information));
      }
@@ -110,8 +110,8 @@ class _EmailPhoneVerification extends State<EmailPhoneVerification> {
     return null;
   }
 
-  TextStyleElements styleElements;
-  BuildContext sctx;
+  late TextStyleElements styleElements;
+  late BuildContext sctx;
 
   @override
   Widget build(BuildContext context) {
@@ -138,14 +138,14 @@ class _EmailPhoneVerification extends State<EmailPhoneVerification> {
 
                       Container(
                         margin: const EdgeInsets.only(bottom: 24, top: 20),
-                        child: Text(AppLocalizations.of(context).translate(isEmail?'verify_email':'verify_mobile'),
+                        child: Text(AppLocalizations.of(context)!.translate(isEmail?'verify_email':'verify_mobile'),
                           textAlign: TextAlign.center,
                           style: styleElements.headline5ThemeScalable(context),
                         ),
                       ),
                       Container(
                         margin: const EdgeInsets.only(bottom: 10.0),
-                        child: Text(AppLocalizations.of(context).translate('otp_des_verification',arguments: {"email":contactDetail ?? "",}),
+                        child: Text(AppLocalizations.of(context)!.translate('otp_des_verification',arguments: {"email":contactDetail ?? "",}),
                           style: styleElements.subtitle2ThemeScalable(context),
                           textAlign: TextAlign.center,
                         ),
@@ -315,7 +315,7 @@ class _EmailPhoneVerification extends State<EmailPhoneVerification> {
                                     submit();
                                   },
                                   color:  HexColor(AppColors.appMainColor),
-                                  child: Text(AppLocalizations.of(context).translate('verify'),
+                                  child: Text(AppLocalizations.of(context)!.translate('verify'),
                                     style: styleElements
                                         .subtitle2ThemeScalable(context)
                                         .copyWith(color: HexColor(AppColors.appColorWhite)),
@@ -338,7 +338,7 @@ class _EmailPhoneVerification extends State<EmailPhoneVerification> {
                         },
                         child: Container(
                           margin: const EdgeInsets.only(bottom: 10, top: 8),
-                          child: Text(AppLocalizations.of(context).translate('resend_code'),
+                          child: Text(AppLocalizations.of(context)!.translate('resend_code'),
                             textAlign: TextAlign.center,
                             style: styleElements
                                 .subtitle2ThemeScalable(context)
@@ -365,7 +365,7 @@ class _EmailPhoneVerification extends State<EmailPhoneVerification> {
                                         onPressed: () {
                                           _handleKeypadClick('1');
                                         },
-                                        child: Text(AppLocalizations.of(context).translate('number_1'),
+                                        child: Text(AppLocalizations.of(context)!.translate('number_1'),
                                             style: styleElements
                                                 .headline5ThemeScalable(context)
                                                 .copyWith(
@@ -376,7 +376,7 @@ class _EmailPhoneVerification extends State<EmailPhoneVerification> {
                                         onPressed: () {
                                           _handleKeypadClick('2');
                                         },
-                                        child: Text(AppLocalizations.of(context).translate('number_2'),
+                                        child: Text(AppLocalizations.of(context)!.translate('number_2'),
                                             style: styleElements
                                                 .headline5ThemeScalable(context)
                                                 .copyWith(
@@ -387,7 +387,7 @@ class _EmailPhoneVerification extends State<EmailPhoneVerification> {
                                         onPressed: () {
                                           _handleKeypadClick('3');
                                         },
-                                        child: Text(AppLocalizations.of(context).translate('number_3'),
+                                        child: Text(AppLocalizations.of(context)!.translate('number_3'),
                                             style: styleElements
                                                 .headline5ThemeScalable(context)
                                                 .copyWith(
@@ -403,7 +403,7 @@ class _EmailPhoneVerification extends State<EmailPhoneVerification> {
                                         onPressed: () {
                                           _handleKeypadClick('4');
                                         },
-                                        child: Text(AppLocalizations.of(context).translate('number_4'),
+                                        child: Text(AppLocalizations.of(context)!.translate('number_4'),
                                             style: styleElements
                                                 .headline5ThemeScalable(context)
                                                 .copyWith(
@@ -414,7 +414,7 @@ class _EmailPhoneVerification extends State<EmailPhoneVerification> {
                                         onPressed: () {
                                           _handleKeypadClick('5');
                                         },
-                                        child: Text(AppLocalizations.of(context).translate('number_5'),
+                                        child: Text(AppLocalizations.of(context)!.translate('number_5'),
                                             style: styleElements
                                                 .headline5ThemeScalable(context)
                                                 .copyWith(
@@ -425,7 +425,7 @@ class _EmailPhoneVerification extends State<EmailPhoneVerification> {
                                         onPressed: () {
                                           _handleKeypadClick('6');
                                         },
-                                        child: Text(AppLocalizations.of(context).translate('number_6'),
+                                        child: Text(AppLocalizations.of(context)!.translate('number_6'),
                                             style: styleElements
                                                 .headline5ThemeScalable(context)
                                                 .copyWith(
@@ -441,7 +441,7 @@ class _EmailPhoneVerification extends State<EmailPhoneVerification> {
                                         onPressed: () {
                                           _handleKeypadClick('7');
                                         },
-                                        child: Text(AppLocalizations.of(context).translate('number_7'),
+                                        child: Text(AppLocalizations.of(context)!.translate('number_7'),
                                             style: styleElements
                                                 .headline5ThemeScalable(context)
                                                 .copyWith(
@@ -452,7 +452,7 @@ class _EmailPhoneVerification extends State<EmailPhoneVerification> {
                                         onPressed: () {
                                           _handleKeypadClick('8');
                                         },
-                                        child: Text(AppLocalizations.of(context).translate('number_8'),
+                                        child: Text(AppLocalizations.of(context)!.translate('number_8'),
                                             style: styleElements
                                                 .headline5ThemeScalable(context)
                                                 .copyWith(
@@ -463,7 +463,7 @@ class _EmailPhoneVerification extends State<EmailPhoneVerification> {
                                         onPressed: () {
                                           _handleKeypadClick('9');
                                         },
-                                        child: Text(AppLocalizations.of(context).translate('number_9'),
+                                        child: Text(AppLocalizations.of(context)!.translate('number_9'),
                                             style: styleElements
                                                 .headline5ThemeScalable(context)
                                                 .copyWith(
@@ -493,7 +493,7 @@ class _EmailPhoneVerification extends State<EmailPhoneVerification> {
                                           onPressed: () {
                                             _handleKeypadClick('0');
                                           },
-                                          child: Text(AppLocalizations.of(context).translate('number_0'),
+                                          child: Text(AppLocalizations.of(context)!.translate('number_0'),
                                               style: styleElements
                                                   .headline5ThemeScalable(
                                                   context)

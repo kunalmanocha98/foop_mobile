@@ -19,11 +19,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class AllTabsNetwork extends StatefulWidget {
-  String personName;
-  String type;
-  int id;
-  String ownerType;
-  int ownerId;
+  String? personName;
+  String? type;
+  int? id;
+  String? ownerType;
+  int? ownerId;
   Null Function() callback;
 
   AllTabsNetwork(this.personName, this.type, this.id, this.ownerId,
@@ -38,30 +38,30 @@ class _FollowingSuggestionPage extends State<AllTabsNetwork> {
   _FollowingSuggestionPage(
       this.type, this.id, this.ownerId, this.ownerType, this.callback);
 
-  String searchVal;
-  String personName;
-  String type;
-  int id;
-  String ownerType;
-  int ownerId;
+  String? searchVal;
+  String? personName;
+  String? type;
+  int? id;
+  String? ownerType;
+  int? ownerId;
   Null Function() callback;
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
-  SharedPreferences prefs;
-  TextStyleElements styleElements;
+  late SharedPreferences prefs;
+  late TextStyleElements styleElements;
   bool isSuggestionShowed = false;
   bool isFirst = false;
   int j=0;
   bool get wantKeepAlive => true;
 
-  PAGINATOR_ENUMS pageEnum_suggestion;
-  PAGINATOR_ENUMS pageEnum_following;
+  PAGINATOR_ENUMS? pageEnum_suggestion;
+  PAGINATOR_ENUMS? pageEnum_following;
   bool isPostDataAvailable = true;
-  String errorMessage;
+  String? errorMessage;
   List<FollowersItem> followersList = [];
   List<FollowersItem> followingList = [];
-  int totalfollowing = 0;
+  int? totalfollowing = 0;
   int pagefollowing = 1;
-  int totalsuggestions = 0;
+  int? totalsuggestions = 0;
   int pageOfFollowers = 1;
   var followingSliverKey = GlobalKey();
   var suggestionSliverKey = GlobalKey();
@@ -100,7 +100,7 @@ class _FollowingSuggestionPage extends State<AllTabsNetwork> {
                     child: Padding(
                       padding: const EdgeInsets.only(
                           left: 20.0, top: 8, bottom: 8),
-                      child: Text(AppLocalizations.of(context).translate('following'),
+                      child: Text(AppLocalizations.of(context)!.translate('following'),
                         style: styleElements
                             .headline6ThemeScalable(context)
                             .copyWith(fontWeight: FontWeight.w600),
@@ -113,7 +113,7 @@ class _FollowingSuggestionPage extends State<AllTabsNetwork> {
                     child: Padding(
                       padding: const EdgeInsets.only(
                           left: 20.0, top: 8, bottom: 8),
-                      child: Text(AppLocalizations.of(context).translate('followers'),
+                      child: Text(AppLocalizations.of(context)!.translate('followers'),
                         style: styleElements
                             .headline6ThemeScalable(context)
                             .copyWith(fontWeight: FontWeight.w600),
@@ -209,15 +209,15 @@ class _FollowingSuggestionPage extends State<AllTabsNetwork> {
                             followingList[index].institutionRole !=
                                 null &&
                                 followingList[index]
-                                    .institutionRole
+                                    .institutionRole!
                                     .isNotEmpty,
                             child: Text(
                               (followingList[index].institutionRole !=
                                   null &&
                                   followingList[index]
-                                      .institutionRole
+                                      .institutionRole!
                                       .isNotEmpty)
-                                  ? followingList[index].institutionRole
+                                  ? followingList[index].institutionRole!
                                   : "",
                               style: styleElements
                                   .captionThemeScalable(context),
@@ -240,9 +240,9 @@ class _FollowingSuggestionPage extends State<AllTabsNetwork> {
                               engageFlag: followingList[index]
                                   .isObjectFollowing ??
                                   false
-                                  ? AppLocalizations.of(context)
+                                  ? AppLocalizations.of(context)!
                                   .translate('following')
-                                  : AppLocalizations.of(context)
+                                  : AppLocalizations.of(context)!
                                   .translate('follow'),
                               actionFlag: followingList[index]
                                   .isObjectFollowing ??
@@ -279,15 +279,15 @@ class _FollowingSuggestionPage extends State<AllTabsNetwork> {
                           null &&
                           followingList[index].suggestedType ==
                               "suggestion"
-                          ? AppLocalizations.of(context).translate('follow')
+                          ? AppLocalizations.of(context)!.translate('follow')
                           : id == ownerId
-                          ? AppLocalizations.of(context)
+                          ? AppLocalizations.of(context)!
                           .translate('remove')
                           : followingList[index].isObjectFollowing ??
                           false
-                          ? AppLocalizations.of(context)
+                          ? AppLocalizations.of(context)!
                           .translate('following')
-                          : AppLocalizations.of(context)
+                          : AppLocalizations.of(context)!
                           .translate('follow'),
                       actionFlag:
                       followingList[index].suggestedType != null &&
@@ -322,7 +322,7 @@ class _FollowingSuggestionPage extends State<AllTabsNetwork> {
                       return CustomPaginator(context).loadingWidgetMaker();
                     case ConnectionState.done:
                       pageOfFollowers++;
-                      followingList.addAll(snapshot.data.rows);
+                      followingList.addAll(snapshot.data!.rows!);
                       Future.microtask(() {
                         setState(() {});
                       });
@@ -403,7 +403,7 @@ class _FollowingSuggestionPage extends State<AllTabsNetwork> {
                       return CustomPaginator(context).loadingWidgetMaker();
                     case ConnectionState.done:
                       pagefollowing++;
-                      followersList.addAll(snapshot.data.rows);
+                      followersList.addAll(snapshot.data!.rows!);
                       Future.microtask(() {
                         setState(() {});
                       });
@@ -465,15 +465,15 @@ class _FollowingSuggestionPage extends State<AllTabsNetwork> {
               null &&
               followersList[index].suggestedType ==
                   "suggestion"
-              ? AppLocalizations.of(context)
+              ? AppLocalizations.of(context)!
               .translate('follow')
-              : followersList[index].isObjectFollowing
-              ? AppLocalizations.of(context)
+              : followersList[index].isObjectFollowing!
+              ? AppLocalizations.of(context)!
               .translate('following')
-              : AppLocalizations.of(context)
+              : AppLocalizations.of(context)!
               .translate('follow'),
           actionFlag:
-          followersList[index].isObjectFollowing
+          followersList[index].isObjectFollowing!
               ? "U"
               : "F",
           actionDetails: [],
@@ -503,8 +503,8 @@ class _FollowingSuggestionPage extends State<AllTabsNetwork> {
     totalfollowing = response.total;
 
     if (response.statusCode == Strings.success_code) {
-      if (response.total > 0) {
-        followersList.addAll(response.rows);
+      if (response.total! > 0) {
+        followersList.addAll(response.rows!);
         setState(() {
           pageEnum_following = PAGINATOR_ENUMS.SUCCESS;
           pagefollowing++;
@@ -529,8 +529,8 @@ class _FollowingSuggestionPage extends State<AllTabsNetwork> {
     }
   }
 
-  int getItemsCountfollowing() {
-    if (totalfollowing > followersList.length) {
+  int? getItemsCountfollowing() {
+    if (totalfollowing! > followersList.length) {
       return followersList.length + 1;
     } else {
       if(j==0) {
@@ -555,8 +555,8 @@ class _FollowingSuggestionPage extends State<AllTabsNetwork> {
     var response = FollowersData.fromJson(res);
     totalsuggestions = response.total;
     if (response.statusCode == Strings.success_code) {
-      if (response.total > 0) {
-        followingList.addAll(response.rows);
+      if (response.total! > 0) {
+        followingList.addAll(response.rows!);
         pageOfFollowers++;
         setState(() {
           pageEnum_suggestion = PAGINATOR_ENUMS.SUCCESS;
@@ -573,8 +573,8 @@ class _FollowingSuggestionPage extends State<AllTabsNetwork> {
     }
   }
 
-  int getItemsCountsuggestion() {
-    if (totalsuggestions > followingList.length) {
+  int? getItemsCountsuggestion() {
+    if (totalsuggestions! > followingList.length) {
       return followingList.length + 1;
     } else {
       return totalsuggestions;

@@ -24,20 +24,20 @@ class GoalsScreen extends StatefulWidget {
 
 class _GoalsScreen extends State<GoalsScreen> {
 
-  SharedPreferences prefs;
-  CustomTabMaker customTabMaker;
+  SharedPreferences? prefs;
+  CustomTabMaker? customTabMaker;
   List<CustomTabMaker> list = [];
-  TextStyleElements styleElements;
+  TextStyleElements? styleElements;
 
   @override
   void initState() {
     super.initState();
     list.add(CustomTabMaker(
-        statelessWidget: MainPage(goalType: "open"), tabName: AppLocalizations.of(context).translate('open')));
+        statelessWidget: MainPage(goalType: "open"), tabName: AppLocalizations.of(context)!.translate('open')));
     list.add(CustomTabMaker(
-        statelessWidget: MainPage(goalType: "closed"), tabName: AppLocalizations.of(context).translate('closed')));
+        statelessWidget: MainPage(goalType: "closed"), tabName: AppLocalizations.of(context)!.translate('closed')));
     list.add(CustomTabMaker(
-        statelessWidget: MainPage(goalType: "assigned"), tabName: AppLocalizations.of(context).translate('assigned')));
+        statelessWidget: MainPage(goalType: "assigned"), tabName: AppLocalizations.of(context)!.translate('assigned')));
   }
 
   Widget build(BuildContext context) {
@@ -65,33 +65,32 @@ class _GoalsScreen extends State<GoalsScreen> {
           context: context,
           builder: (context) => new AlertDialog(
             title: new Text(
-                AppLocalizations.of(context).translate('are_you_sure')),
+                AppLocalizations.of(context)!.translate('are_you_sure')),
             content: new Text(
-                AppLocalizations.of(context).translate('exit_tricycle')),
+                AppLocalizations.of(context)!.translate('exit_tricycle')),
             actions: <Widget>[
               new GestureDetector(
                 onTap: () => Navigator.of(context).pop(false),
-                child: Text(AppLocalizations.of(context).translate('no')),
+                child: Text(AppLocalizations.of(context)!.translate('no')),
               ),
               SizedBox(height: 16),
               new GestureDetector(
                 onTap: () {
                   SystemChannels.platform.invokeMethod('SystemNavigator.pop');
                 },
-                child: Text(AppLocalizations.of(context).translate('yes')),
+                child: Text(AppLocalizations.of(context)!.translate('yes')),
               ),
             ],
           ),
-        ) ??
-        false;
+        ).then((value) => value as bool) ;
   }
 }
 
 // ignore: must_be_immutable
 class MainPage extends StatelessWidget {
   String goalType;
-  TextStyleElements styleElements;
-  MainPage({Key key, @required this.goalType}) : super(key: key);
+  late TextStyleElements styleElements;
+  MainPage({Key? key, required this.goalType}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +114,7 @@ class MainPage extends StatelessWidget {
                                 margin:
                                     const EdgeInsets.only(left: 16, top: 24),
                                 child: Text(
-                                  AppLocalizations.of(context)
+                                  AppLocalizations.of(context)!
                                       .translate("goals_and_objectives"),
                                   style: styleElements.headline6ThemeScalable(context),
                                   textAlign: TextAlign.left,
@@ -143,7 +142,7 @@ class MainPage extends StatelessWidget {
                         margin: const EdgeInsets.only(
                             left: 20, top: 20, right: 20, bottom: 20),
                         child: Text(
-                          AppLocalizations.of(context)
+                          AppLocalizations.of(context)!
                               .translate("select_right_institute"),
                           style:styleElements.subtitle1ThemeScalable(context),
                           textAlign: TextAlign.left,
@@ -186,7 +185,7 @@ class MainPage extends StatelessWidget {
                                     child: Container(
                                       margin: const EdgeInsets.only(
                                           left: 8, right: 8, top: 8.0),
-                                      child: Text(AppLocalizations.of(context).translate('want_to_learn'),
+                                      child: Text(AppLocalizations.of(context)!.translate('want_to_learn'),
                                         style: styleElements.subtitle1ThemeScalable(context),
                                         textAlign: TextAlign.left,
                                       ),
@@ -314,7 +313,7 @@ class MainPage extends StatelessWidget {
                                   child: Container(
                                     margin: const EdgeInsets.only(
                                         left: 8, right: 8, top: 8.0),
-                                    child: Text(AppLocalizations.of(context).translate('want_to_learn'),
+                                    child: Text(AppLocalizations.of(context)!.translate('want_to_learn'),
                                       style: styleElements.subtitle1ThemeScalable(context),
                                       textAlign: TextAlign.left,
                                     ),
@@ -441,7 +440,7 @@ class MainPage extends StatelessWidget {
                                   child: Container(
                                     margin: const EdgeInsets.only(
                                         left: 8, right: 8, top: 8.0),
-                                    child: Text(AppLocalizations.of(context).translate('want_to_learn'),
+                                    child: Text(AppLocalizations.of(context)!.translate('want_to_learn'),
                                       style: styleElements.subtitle2ThemeScalable(context),
                                       textAlign: TextAlign.left,
                                     ),

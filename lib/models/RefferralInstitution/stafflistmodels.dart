@@ -1,9 +1,9 @@
 class StaffListRequest {
-  String searchVal;
-  int institutionId;
-  String personType;
-  int pageNumber;
-  int pageSize;
+  String? searchVal;
+  int? institutionId;
+  String? personType;
+  int? pageNumber;
+  int? pageSize;
 
   StaffListRequest(
       {this.searchVal,
@@ -34,10 +34,10 @@ class StaffListRequest {
 
 
 class StaffListResponse {
-  String statusCode;
-  String message;
-  List<StaffListItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<StaffListItem>? rows;
+  int? total;
 
   StaffListResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -47,7 +47,7 @@ class StaffListResponse {
     if (json['rows'] != null) {
       rows = [];//StaffListItem>();
       json['rows'].forEach((v) {
-        rows.add(new StaffListItem.fromJson(v));
+        rows!.add(new StaffListItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -58,7 +58,7 @@ class StaffListResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -66,12 +66,12 @@ class StaffListResponse {
 }
 
 class StaffListItem {
-  int id;
-  String firstName;
-  String lastName;
-  String profileImage;
-  String coverImages;
-  String personType;
+  int? id;
+  String? firstName;
+  String? lastName;
+  String? profileImage;
+  String? coverImages;
+  String? personType;
 
   StaffListItem(
       {this.id,

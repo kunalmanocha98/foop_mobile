@@ -28,24 +28,24 @@ class CommunityPage extends StatefulWidget {
 class _CommunityPage extends State<CommunityPage>
     with SingleTickerProviderStateMixin {
   List<CustomTabMaker> list = [];
-  TabController _tabController;
-  TextStyleElements styleElements;
+  late TabController _tabController;
+  late TextStyleElements styleElements;
 
-  SharedPreferences prefs;
-  String ownerType;
-  int ownerId;
+  late SharedPreferences prefs;
+  String? ownerType;
+  int? ownerId;
   int _currentPosition = 0;
-  String pageTitle;
-  Null Function() callback;
-  String imageUrl;
+  String? pageTitle;
+  late Null Function() callback;
+  String? imageUrl;
   List<PopupMenuItem> menuList = [];
-  String type ;
+  String? type ;
   GlobalKey<RoomsPageState> roomsKey = GlobalKey();
   GlobalKey<NetworkPageState> networkKey = GlobalKey();
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => setSharedPreferences());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => setSharedPreferences());
   }
 
   onPositionChange() {
@@ -63,7 +63,7 @@ class _CommunityPage extends State<CommunityPage>
 
   Future<void> getMenuList() async {
     type= _currentPosition ==0 ? "room": "network" ;
-  print(type+"----------------------------------------------------------------------");
+  print(type!+"----------------------------------------------------------------------");
    menuList.clear();
     menuList =  getList(type);
     setState(() {
@@ -92,7 +92,7 @@ class _CommunityPage extends State<CommunityPage>
             key:roomsKey,
             isSwipeDisabled:true,
             hideAppBar: true,hideTabs:true),
-        tabName: AppLocalizations.of(context).translate('rooms')));
+        tabName: AppLocalizations.of(context)!.translate('rooms')));
     list.add(CustomTabMaker(
         statelessWidget: NetworkPage(
           key:networkKey,
@@ -112,7 +112,7 @@ class _CommunityPage extends State<CommunityPage>
             callback: () {
               callback();
             }),
-        tabName: AppLocalizations.of(context).translate('network')));
+        tabName: AppLocalizations.of(context)!.translate('network')));
 
     setState(() {
       _tabController = TabController(vsync: this, length: list.length);
@@ -132,7 +132,7 @@ class _CommunityPage extends State<CommunityPage>
           imageUrl: imageUrl,
           title: getPageTitle() +
               "'s " +
-              AppLocalizations.of(context).translate('community'),
+              AppLocalizations.of(context)!.translate('community'),
           isHomepage: false,
           centerTitle: false,
           backButtonPress: () {
@@ -144,18 +144,18 @@ class _CommunityPage extends State<CommunityPage>
               child: GestureDetector(
                 onTap: () {
 
-                  if(prefs.getBool(Strings.isVerified)!=null&&prefs.getBool(Strings.isVerified))
+                  if(prefs.getBool(Strings.isVerified)!=null&&prefs.getBool(Strings.isVerified)!)
                   {  Navigator.push(
                       context,
                       MaterialPageRoute(
                           builder: (context) => CreateRoomPage(value: null,isEdit: false,callback:(){})))
                       .then((value) {
-                    roomsKey.currentState.refresh();
+                    roomsKey.currentState!.refresh();
                   });}
                   else
                   {
                     ToastBuilder().showToast(
-                        AppLocalizations.of(context).translate("only_verirfied"), context, HexColor(AppColors.information));
+                        AppLocalizations.of(context)!.translate("only_verirfied"), context, HexColor(AppColors.information));
                   }
 
 
@@ -207,7 +207,7 @@ class _CommunityPage extends State<CommunityPage>
 
                   if (!_tabController.indexIsChanging && this.mounted) {
                     setState(() {
-                      _currentPosition = index;
+                      _currentPosition = index!;
 
                       setState(() {
                         getMenuList();
@@ -236,74 +236,74 @@ class _CommunityPage extends State<CommunityPage>
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       color: HexColor(AppColors.appColorBackground),
       itemBuilder: (context) => menuList,
-      onSelected: (value) {
+      onSelected: (dynamic value) {
         switch (value) {
           case 'all':
             {
-              roomsKey.currentState.setCurrentPage(0);
+              roomsKey.currentState!.setCurrentPage(0);
               break;
             }
           case 'private':
             {
-              roomsKey.currentState.setCurrentPage(1);
+              roomsKey.currentState!.setCurrentPage(1);
               break;
             }
           case 'public':
             {
-              roomsKey.currentState.setCurrentPage(2);
+              roomsKey.currentState!.setCurrentPage(2);
               break;
             }
           case 'social':
             {
-              roomsKey.currentState.setCurrentPage(3);
+              roomsKey.currentState!.setCurrentPage(3);
               break;
             }
           case 'campus':
             {
-              roomsKey.currentState.setCurrentPage(4);
+              roomsKey.currentState!.setCurrentPage(4);
               break;
             }
 
           case 'networkAll':
             {
-              networkKey.currentState.setCurrentPage(0);
+              networkKey.currentState!.setCurrentPage(0);
 
               break;
             }
 
           case 'following':
             {
-              networkKey.currentState.setCurrentPage(1);
+              networkKey.currentState!.setCurrentPage(1);
 
               break;
             }
           case 'follower':
             {
-              networkKey.currentState.setCurrentPage(2);
+              networkKey.currentState!.setCurrentPage(2);
 
               break;
             }
           case 'teacher':
             {
-              networkKey.currentState.setCurrentPage(3);
+              networkKey.currentState!.setCurrentPage(3);
 
               break;
             }
           case 'parent':
             {
-              networkKey.currentState.setCurrentPage(4);
+              networkKey.currentState!.setCurrentPage(4);
 
               break;
             }
           case 'student':
             {
-              networkKey.currentState.setCurrentPage(5);
+              networkKey.currentState!.setCurrentPage(5);
 
               break;
             }
           case 'alumni':
             {
-              networkKey.currentState.setCurrentPage(6);
+              networkKey.currentState!.setCurrentPage(6);
 
               break;
             }
@@ -318,7 +318,7 @@ class _CommunityPage extends State<CommunityPage>
 
     String getPageTitle() {
     if (pageTitle != null) {
-      var vals = pageTitle.split(' ');
+      var vals = pageTitle!.split(' ');
       if (vals.length > 0)
         return vals[0];
       else
@@ -327,7 +327,7 @@ class _CommunityPage extends State<CommunityPage>
     return '';
   }
 
-  List<PopupMenuItem> getList(String type) {
+  List<PopupMenuItem> getList(String? type) {
     List<PopupMenuItem> list = [];
 
 

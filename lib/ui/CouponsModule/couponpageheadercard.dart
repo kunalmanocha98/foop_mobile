@@ -14,28 +14,28 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CouponPageHeaderCard extends StatefulWidget {
-  CouponPageHeaderCard({Key key}) : super(key: key);
+  CouponPageHeaderCard({Key? key}) : super(key: key);
 
   @override
   CouponPageHeaderCardState createState() => CouponPageHeaderCardState();
 }
 
 class CouponPageHeaderCardState extends State<CouponPageHeaderCard> {
-  SharedPreferences prefs;
-  String currentbalance = "0";
-  String lifetimeearned = "0";
-  String lifetimeburn = "0";
+  late SharedPreferences prefs;
+  String? currentbalance = "0";
+  String? lifetimeearned = "0";
+  String? lifetimeburn = "0";
 
-  String currentbalanceCash = "0";
-  String lifetimeearnedCash = "0";
-  String lifetimeburnCash = "0";
+  String? currentbalanceCash = "0";
+  String? lifetimeearnedCash = "0";
+  String? lifetimeburnCash = "0";
   bool isCashSelected = false;
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => fetchData());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => fetchData());
   }
 
   fetchData() async {
@@ -49,9 +49,9 @@ class CouponPageHeaderCardState extends State<CouponPageHeaderCard> {
       var res = CouponHeaderResponse.fromJson(value);
       if (res.statusCode == Strings.success_code) {
         setState(() {
-          currentbalance = res.rows.currentBalance;
-          lifetimeburn = res.rows.lifetimeBurn;
-          lifetimeearned = res.rows.lifetimeEarned;
+          currentbalance = res.rows!.currentBalance;
+          lifetimeburn = res.rows!.lifetimeBurn;
+          lifetimeearned = res.rows!.lifetimeEarned;
         });
       }
       fetchDataCash();
@@ -70,9 +70,9 @@ class CouponPageHeaderCardState extends State<CouponPageHeaderCard> {
       var res = CouponHeaderResponse.fromJson(value);
       if (res.statusCode == Strings.success_code) {
         setState(() {
-          currentbalanceCash = res.rows.currentBalance;
-          lifetimeburnCash = res.rows.lifetimeBurn;
-          lifetimeearnedCash = res.rows.lifetimeEarned;
+          currentbalanceCash = res.rows!.currentBalance;
+          lifetimeburnCash = res.rows!.lifetimeBurn;
+          lifetimeearnedCash = res.rows!.lifetimeEarned;
         });
       }
     }).catchError((onError) {
@@ -96,7 +96,7 @@ class CouponPageHeaderCardState extends State<CouponPageHeaderCard> {
                 child: Padding(
                   padding:
                       EdgeInsets.only(left: 8.0, right: 8, top: 4, bottom: 4),
-                  child: Text(AppLocalizations.of(context).translate('tricycle_coins'),
+                  child: Text(AppLocalizations.of(context)!.translate('tricycle_coins'),
                     style: styleElements.captionThemeScalable(context).copyWith(
                         color: !isCashSelected
                             ? HexColor(AppColors.appMainColor)
@@ -113,7 +113,7 @@ class CouponPageHeaderCardState extends State<CouponPageHeaderCard> {
                 child: Padding(
                   padding:
                       EdgeInsets.only(left: 8.0, right: 8, top: 4, bottom: 4),
-                  child: Text(AppLocalizations.of(context).translate('cash_rewards'),
+                  child: Text(AppLocalizations.of(context)!.translate('cash_rewards'),
                     style: styleElements.captionThemeScalable(context).copyWith(
                         color: isCashSelected
                             ? HexColor(AppColors.appMainColor)
@@ -131,7 +131,7 @@ class CouponPageHeaderCardState extends State<CouponPageHeaderCard> {
                 Column(
                   children: [
                     Text(
-                      AppLocalizations.of(context).translate('current_balance'),
+                      AppLocalizations.of(context)!.translate('current_balance'),
                       style: styleElements.bodyText2ThemeScalable(context),
                     ),
 
@@ -178,7 +178,7 @@ class CouponPageHeaderCardState extends State<CouponPageHeaderCard> {
                 Column(
                   children: [
                     Text(
-                      AppLocalizations.of(context).translate('lifetime_earned'),
+                      AppLocalizations.of(context)!.translate('lifetime_earned'),
                       style: styleElements.bodyText2ThemeScalable(context),
                     ),
 
@@ -217,7 +217,7 @@ class CouponPageHeaderCardState extends State<CouponPageHeaderCard> {
                 Column(
                   children: [
                     Text(
-                      AppLocalizations.of(context).translate('lifetime_burn'),
+                      AppLocalizations.of(context)!.translate('lifetime_burn'),
                       style: styleElements.bodyText2ThemeScalable(context),
                     ),
 

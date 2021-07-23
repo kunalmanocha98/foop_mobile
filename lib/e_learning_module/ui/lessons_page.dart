@@ -27,15 +27,15 @@ import 'lesson_list_response.dart';
 
 // ignore: must_be_immutable
 class CreateLessonsPage extends StatefulWidget {
-  final int chapterId;
-  final String chapterName;
-  final PostCreatePayload createLessonData;
-  final Function callBack;
-  final bool isEdit;
-  final bool isFromDetailPage;
+  final int? chapterId;
+  final String? chapterName;
+  final PostCreatePayload? createLessonData;
+  final Function? callBack;
+  final bool isEdit ;
+  final bool? isFromDetailPage;
 
   const CreateLessonsPage({
-    Key key,
+    Key? key,
     this.chapterId,
     this.chapterName,
     this.createLessonData,
@@ -48,10 +48,10 @@ class CreateLessonsPage extends StatefulWidget {
 }
 
 class _CreateLessonsPage extends State<CreateLessonsPage> {
-  BuildContext context;
-  String searchVal;
-  SharedPreferences prefs;
-  TextStyleElements styleElements;
+ late BuildContext context;
+  String? searchVal;
+  SharedPreferences? prefs;
+  late TextStyleElements styleElements;
   GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
   GlobalKey<TricycleProgressButtonState> progressButtonKeyNext = GlobalKey();
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
@@ -64,7 +64,7 @@ class _CreateLessonsPage extends State<CreateLessonsPage> {
   }
 
   refresh() {
-    paginatorKey.currentState.changeState(resetState: true);
+    paginatorKey.currentState!.changeState(resetState: true);
   }
 
   void setPrefs() async {
@@ -82,7 +82,7 @@ class _CreateLessonsPage extends State<CreateLessonsPage> {
           resizeToAvoidBottomInset: false,
           appBar: TricycleAppBar().getCustomAppBar(
             context,
-            appBarTitle: AppLocalizations.of(context).translate('lessons'),
+            appBarTitle: AppLocalizations.of(context)!.translate('lessons'),
             actions: [
               Padding(
                 padding:
@@ -95,7 +95,7 @@ class _CreateLessonsPage extends State<CreateLessonsPage> {
                           return PostCreatePage(
                             callBack: () {
                               Navigator.of(context).pop();
-                              widget.callBack();
+                              widget.callBack!();
                             },
                             createLessonData: widget.createLessonData,
                             type: 'lesson',
@@ -321,7 +321,7 @@ class _CreateLessonsPage extends State<CreateLessonsPage> {
             title: Align(
               alignment: Alignment.centerLeft,
               child: Text("${index+1}. "+
-                item.lessonName ?? "",
+                item.lessonName!,
                 style: styleElements.subtitle1ThemeScalable(context),
                 textAlign: TextAlign.left,
               ),
@@ -333,12 +333,12 @@ class _CreateLessonsPage extends State<CreateLessonsPage> {
           Calls().call(body, context, Config.POST_VIEW).then((value) {
             var res = PostViewResponse.fromJson(value);
             if (res.statusCode == Strings.success_code) {
-              widget.createLessonData.lessonListItem = item;
-              widget.createLessonData.contentMeta.meta =
-                  res.rows.postContent.content.contentMeta.meta;
-              widget.createLessonData.contentMeta.title =
-                  res.rows.postContent.content.contentMeta.title;
-              !widget.isEdit
+              widget.createLessonData!.lessonListItem = item;
+              widget.createLessonData!.contentMeta!.meta =
+                  res.rows!.postContent!.content!.contentMeta!.meta;
+              widget.createLessonData!.contentMeta!.title =
+                  res.rows!.postContent!.content!.contentMeta!.title;
+              widget.isEdit
                   ? Navigator.push(context,
                   MaterialPageRoute(builder: (BuildContext context) {
                     return NewNewsAndArticleDetailPage(postData: res.rows);
@@ -347,19 +347,19 @@ class _CreateLessonsPage extends State<CreateLessonsPage> {
                   builder: (context) => PostCreatePage(
                     callBack: () {
                       Navigator.of(context).pop();
-                      widget.callBack();
+                      widget.callBack!();
                     },
-                    mediaFromEdit: res.rows.postContent.content.media,
+                    mediaFromEdit: res.rows!.postContent!.content!.media,
                     createLessonData: widget.createLessonData,
                     type: 'lesson',
-                    postId: res.rows.postId,
+                    postId: res.rows!.postId,
                     contentData:
-                    res.rows.postContent.content.contentMeta.meta,
+                    res.rows!.postContent!.content!.contentMeta!.meta,
                     isEdit: true,
                   )));
             } else {
               ToastBuilder()
-                  .showToast(res.message, context, HexColor(AppColors.failure));
+                  .showToast(res.message!, context, HexColor(AppColors.failure));
             }
           });
         },
@@ -372,7 +372,7 @@ class _CreateLessonsPage extends State<CreateLessonsPage> {
       "searchVal": searchVal,
       "page_number": page,
       "owner_type": "person",
-      "owner_id": prefs.getInt(Strings.userId),
+      "owner_id": prefs!.getInt(Strings.userId),
       "chapter_id": widget.chapterId,
       "page_size": 10,
       "list_type": "all"
@@ -382,11 +382,11 @@ class _CreateLessonsPage extends State<CreateLessonsPage> {
 
     if(page==1)
       {
-        if(model!=null && model.rows!=null && model.rows.isEmpty &&widget.isFromDetailPage!=null &&  widget.isFromDetailPage)
+        if(model!=null && model.rows!=null && model.rows!.isEmpty &&widget.isFromDetailPage!=null &&  widget.isFromDetailPage!)
           {
 
             ToastBuilder().showToast(
-                AppLocalizations.of(context)
+                AppLocalizations.of(context)!
                     .translate("no_more_lessons"),
                 context,
                 HexColor(AppColors.information));
@@ -401,12 +401,12 @@ class _CreateLessonsPage extends State<CreateLessonsPage> {
 }
 
 class CommentSheet extends StatefulWidget {
-  final int chapterId;
-  final int userId;
-  final Function chapterCreateCallBack;
+  final int? chapterId;
+  final int? userId;
+  final Function? chapterCreateCallBack;
 
   const CommentSheet(
-      {Key key, this.chapterId, this.userId, this.chapterCreateCallBack})
+      {Key? key, this.chapterId, this.userId, this.chapterCreateCallBack})
       : super(key: key);
 
   @override
@@ -414,7 +414,7 @@ class CommentSheet extends StatefulWidget {
 }
 
 class _CommentSheet extends State<CommentSheet> {
-  SharedPreferences prefs = locator<SharedPreferences>();
+  SharedPreferences? prefs = locator<SharedPreferences>();
   final lastNameController = TextEditingController();
 
   @override
@@ -436,7 +436,7 @@ class _CommentSheet extends State<CommentSheet> {
         },
         decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(8.0, 15.0, 20.0, 4.0),
-          hintText: AppLocalizations.of(context).translate('give_lessons_name'),
+          hintText: AppLocalizations.of(context)!.translate('give_lessons_name'),
           hintStyle: styleElements
               .bodyText2ThemeScalable(context)
               .copyWith(color: HexColor(AppColors.appColorBlack35)),
@@ -451,7 +451,7 @@ class _CommentSheet extends State<CommentSheet> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                AppLocalizations.of(context).translate(''),
+                AppLocalizations.of(context)!.translate(''),
                 style: styleElements
                     .headline6ThemeScalable(context)
                     .copyWith(fontWeight: FontWeight.bold),
@@ -460,7 +460,7 @@ class _CommentSheet extends State<CommentSheet> {
             Padding(
               padding: const EdgeInsets.only(top: 20.0),
               child: Text(
-                AppLocalizations.of(context).translate('name_of_lesson'),
+                AppLocalizations.of(context)!.translate('name_of_lesson'),
                 style: styleElements
                     .subtitle1ThemeScalable(context)
                     .copyWith(fontWeight: FontWeight.bold),
@@ -486,7 +486,7 @@ class _CommentSheet extends State<CommentSheet> {
                           lastNameController.text.toString(), widget.userId);
                   },
                   child: Text(
-                    AppLocalizations.of(context).translate('next'),
+                    AppLocalizations.of(context)!.translate('next'),
                     style: styleElements
                         .subtitle2ThemeScalable(context)
                         .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -504,7 +504,7 @@ class _CommentSheet extends State<CommentSheet> {
           padding: const EdgeInsets.only(
               left: 45.0, right: 45.0, top: 20, bottom: 60),
           child: Text(
-            AppLocalizations.of(context).translate('give_lesson_name'),
+            AppLocalizations.of(context)!.translate('give_lesson_name'),
             style: styleElements.bodyText1ThemeScalable(context),
           ),
         ),
@@ -515,7 +515,7 @@ class _CommentSheet extends State<CommentSheet> {
     );
   }
 
-  void createLesson(int chapterId, String lessonName, int userId) async {
+  void createLesson(int? chapterId, String lessonName, int? userId) async {
     var body = jsonEncode({
       "lesson_name": lessonName,
       "chapter_id": chapterId,
@@ -526,10 +526,10 @@ class _CommentSheet extends State<CommentSheet> {
     var model = CreateChaptersResponse.fromJson(res);
     if (model.statusCode == Strings.success_code) {
       Navigator.of(context).pop();
-      widget.chapterCreateCallBack();
+      widget.chapterCreateCallBack!();
     } else {
       ToastBuilder().showToast(
-          AppLocalizations.of(context).translate("something_wrong"),
+          AppLocalizations.of(context)!.translate("something_wrong"),
           context,
           HexColor(AppColors.information));
     }

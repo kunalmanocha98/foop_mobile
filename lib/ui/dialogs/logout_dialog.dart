@@ -4,6 +4,7 @@ import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
 import 'package:oho_works_app/utils/hexColors.dart';
 import 'package:flutter/material.dart';
+import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 
 class LogoutDialog extends StatelessWidget{
   final Function logoutCallback;
@@ -18,7 +19,7 @@ class LogoutDialog extends StatelessWidget{
         children: [
           Padding(
             padding: EdgeInsets.only(top: 16,bottom: 16,left:16,right: 16),
-              child: Text(AppLocalizations.of(context).translate('are_you_sure_logout'),style: styleElements.subtitle2ThemeScalable(context),)),
+              child: Text(AppLocalizations.of(context)!.translate('are_you_sure_logout'),style: styleElements.subtitle2ThemeScalable(context),)),
           Padding(
             padding: const EdgeInsets.only(bottom:8.0,right: 8.0),
             child: Row(
@@ -29,7 +30,7 @@ class LogoutDialog extends StatelessWidget{
                     Navigator.pop(context);
                   },
                   shape: StadiumBorder(),
-                  child: Text(AppLocalizations.of(context).translate('cancel'),style: styleElements.bodyText2ThemeScalable(context).copyWith(
+                  child: Text(AppLocalizations.of(context)!.translate('cancel'),style: styleElements.bodyText2ThemeScalable(context).copyWith(
                     color: HexColor(AppColors.appMainColor)
                   ),),
                 ),
@@ -39,7 +40,7 @@ class LogoutDialog extends StatelessWidget{
                     logoutCallback();
                   },
                   shape: StadiumBorder(),
-                  child: Text(AppLocalizations.of(context).translate('ok'),style: styleElements.bodyText2ThemeScalable(context).copyWith(
+                  child: Text(AppLocalizations.of(context)!.translate('ok'),style: styleElements.bodyText2ThemeScalable(context).copyWith(
                     color: HexColor(AppColors.appMainColor)
                   ),),
                 )

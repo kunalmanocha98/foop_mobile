@@ -27,17 +27,17 @@ class CallBackPage extends StatefulWidget {
 
 class _CallBackPage extends State<CallBackPage>
     with SingleTickerProviderStateMixin {
-  String facebookId;
-  String googleSignInId;
-  String userName;
-  String imageUrl;
-  var range = <String>[];
-  var rangeStudent = <String>[];
+  String? facebookId;
+  String? googleSignInId;
+  String? userName;
+  String? imageUrl;
+  var range = <String?>[];
+  var rangeStudent = <String?>[];
   bool isCalling = false;
-  var instituteTypelist = <String>[];
-  var relationship = <String>[];
+  var instituteTypelist = <String?>[];
+  var relationship = <String?>[];
   bool isTermAndConditionAccepted = false;
-  String email = "";
+  String? email = "";
   bool isGoogleOrFacebookDataReceived = false;
   double startPos = -1.0;
   double endPos = 1.0;
@@ -52,20 +52,20 @@ class _CallBackPage extends State<CallBackPage>
   final lastNameController = TextEditingController();
   final genderController = TextEditingController();
   final descriptionController = TextEditingController();
-  BuildContext context;
-  TextStyleElements styleElements;
+  late BuildContext context;
+  late TextStyleElements styleElements;
 
-  TextStyleElements tsE;
-  String selectRelation;
+  late TextStyleElements tsE;
+  String? selectRelation;
 
-  String selectInstType;
+  String? selectInstType;
 
-  String selectStRange;
+  String? selectStRange;
 
-  String selectTecRange;
-  int selectedEpoch;
+  String? selectTecRange;
+  int? selectedEpoch;
 
-  SharedPreferences prefs;
+  SharedPreferences? prefs;
 
   @override
   void initState() {
@@ -90,7 +90,7 @@ class _CallBackPage extends State<CallBackPage>
       for (int i = 0; i < range.length; i++) {
         _genderValuesIndus.add(DropdownMenuItem(
           child: Text(
-            range[i],
+            range[i]!,
             style: styleElements.bodyText2ThemeScalable(context),
           ),
           value: range[i],
@@ -103,7 +103,7 @@ class _CallBackPage extends State<CallBackPage>
       for (int i = 0; i < rangeStudent.length; i++) {
         _geneRange.add(DropdownMenuItem(
           child: Text(
-            rangeStudent[i],
+            rangeStudent[i]!,
             style: styleElements.bodyText2ThemeScalable(context),
           ),
           value: rangeStudent[i],
@@ -117,7 +117,7 @@ class _CallBackPage extends State<CallBackPage>
         instituteType.add(DropdownMenuItem(
 
           child: Text(
-            instituteTypelist[i],
+            instituteTypelist[i]!,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: styleElements.captionThemeScalable(context),
@@ -132,7 +132,7 @@ class _CallBackPage extends State<CallBackPage>
       for (int i = 0; i < relationship.length; i++) {
         relationType.add(DropdownMenuItem(
           child: Text(
-            relationship[i],
+            relationship[i]!,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: styleElements.captionThemeScalable(context),
@@ -170,7 +170,7 @@ class _CallBackPage extends State<CallBackPage>
           disabledBorder: InputBorder.none,
           contentPadding: EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorBlack35)),
-          hintText: AppLocalizations.of(context).translate('say_something_about_you')),
+          hintText: AppLocalizations.of(context)!.translate('say_something_about_you')),
     );
     tsE = TextStyleElements(context);
 
@@ -189,7 +189,7 @@ class _CallBackPage extends State<CallBackPage>
         ],
         decoration: InputDecoration(
             contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-            hintText: AppLocalizations.of(context).translate('email'),
+            hintText: AppLocalizations.of(context)!.translate('email'),
             hintStyle: tsE.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
             prefixIcon: Padding(
                 padding: EdgeInsets.all(0.0.h),
@@ -204,7 +204,7 @@ class _CallBackPage extends State<CallBackPage>
               ),
             )),
         validator: EditProfileMixins().validateEmail,
-        onSaved: (String value) {
+        onSaved: (String? value) {
           email = value;
         },
       ),
@@ -219,7 +219,7 @@ class _CallBackPage extends State<CallBackPage>
       scrollPadding: EdgeInsets.all(20.0.w),
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-          hintText: AppLocalizations.of(context).translate('name_of_institute'),
+          hintText: AppLocalizations.of(context)!.translate('name_of_institute'),
           hintStyle: tsE.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)).copyWith(color: HexColor(AppColors.appColorBlack35)),
           prefixIcon: Padding(
               padding: EdgeInsets.all(0.0.h),
@@ -241,7 +241,7 @@ class _CallBackPage extends State<CallBackPage>
       scrollPadding: EdgeInsets.all(20.0.w),
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-          hintText: AppLocalizations.of(context).translate('location'),
+          hintText: AppLocalizations.of(context)!.translate('location'),
           hintStyle: tsE.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
           prefixIcon: Padding(
               padding: EdgeInsets.all(0.0.h),
@@ -268,7 +268,7 @@ class _CallBackPage extends State<CallBackPage>
       scrollPadding: EdgeInsets.all(20.0.w),
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-          hintText: AppLocalizations.of(context).translate('mobile_number'),
+          hintText: AppLocalizations.of(context)!.translate('mobile_number'),
           hintStyle: tsE.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
           prefixIcon: Padding(
               padding: EdgeInsets.all(0.0.h),
@@ -302,7 +302,7 @@ class _CallBackPage extends State<CallBackPage>
       },
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-          hintText: AppLocalizations.of(context).translate('first_name'),
+          hintText: AppLocalizations.of(context)!.translate('first_name'),
           hintStyle: styleElements
               .bodyText2ThemeScalable(context)
               .copyWith(fontSize: 14.sp),
@@ -342,12 +342,12 @@ class _CallBackPage extends State<CallBackPage>
         },
         decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-          hintText: AppLocalizations.of(context).translate('second_name'),
+          hintText: AppLocalizations.of(context)!.translate('second_name'),
           hintStyle: styleElements
               .bodyText2ThemeScalable(context)
               .copyWith(fontSize: 14.sp, color: HexColor(AppColors.appColorBlack35)),
         ));
-    final studentRange = DropdownButtonFormField(
+    final studentRange = DropdownButtonFormField<dynamic>(
       value: null,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(8.0.w, 15.0.h, 2.0.w, 15.0.h)),
@@ -369,7 +369,7 @@ class _CallBackPage extends State<CallBackPage>
                 ),
                 TextSpan(
                   text: selectStRange ??
-                      AppLocalizations.of(context).translate("student_range"),
+                      AppLocalizations.of(context)!.translate("student_range"),
                   style: styleElements.bodyText2ThemeScalable(context),
                 ),
               ],
@@ -377,13 +377,14 @@ class _CallBackPage extends State<CallBackPage>
           )),
       items: _getRangeValuesIndus(),
       onChanged: (value) {
+        value as DropdownMenuItem;
         setState(() {
-          selectStRange = value ?? selectStRange;
+          selectStRange = (value) as String?;
         });
       },
     );
 
-    final institute = DropdownButtonFormField(
+    final institute = DropdownButtonFormField<dynamic>(
       value: null,
       isExpanded: true,
       decoration: InputDecoration(
@@ -392,7 +393,7 @@ class _CallBackPage extends State<CallBackPage>
         padding: const EdgeInsets.only(left: 0),
         child: Text(
           selectInstType ??
-              AppLocalizations.of(context).translate("inst_type"),
+              AppLocalizations.of(context)!.translate("inst_type"),
           style: styleElements.bodyText2ThemeScalable(context),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
@@ -400,13 +401,14 @@ class _CallBackPage extends State<CallBackPage>
       ),
       items: _getInstituteType(),
       onChanged: (value) {
+        value as DropdownMenuItem;
         setState(() {
-          selectInstType = value ?? selectInstType;
+          selectInstType = (value) as String?;
         });
       },
     );
 
-    final relation = DropdownButtonFormField(
+    final relation = DropdownButtonFormField<dynamic>(
       value: null,
       isExpanded: true,
       decoration: InputDecoration(
@@ -415,7 +417,7 @@ class _CallBackPage extends State<CallBackPage>
         padding: const EdgeInsets.only(left: 0),
         child: Text(
           selectRelation ??
-              AppLocalizations.of(context).translate("Relationship"),
+              AppLocalizations.of(context)!.translate("Relationship"),
           style: styleElements.bodyText2ThemeScalable(context),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
@@ -423,12 +425,13 @@ class _CallBackPage extends State<CallBackPage>
       ),
       items: _getRelationtype(),
       onChanged: (value) {
+        value as DropdownMenuItem;
         setState(() {
-          selectRelation = value ?? selectRelation;
+          selectRelation = (value) as String?;
         });
       },
     );
-    final teacherRange = DropdownButtonFormField(
+    final teacherRange = DropdownButtonFormField<dynamic>(
       value: null,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(8.0.w, 15.0.h, 2.0.w, 15.0.h)),
@@ -450,7 +453,7 @@ class _CallBackPage extends State<CallBackPage>
                 ),
                 TextSpan(
                   text: selectTecRange ??
-                      AppLocalizations.of(context).translate("teacher_range"),
+                      AppLocalizations.of(context)!.translate("teacher_range"),
                   style: styleElements.bodyText2ThemeScalable(context),
                 ),
               ],
@@ -458,8 +461,9 @@ class _CallBackPage extends State<CallBackPage>
           )),
       items: _getGenderValuesIndus(),
       onChanged: (value) {
+        value as DropdownMenuItem;
         setState(() {
-          selectTecRange = value ?? selectTecRange;
+          selectTecRange = (value) as String?;
         });
       },
     );
@@ -496,7 +500,7 @@ class _CallBackPage extends State<CallBackPage>
                               margin: EdgeInsets.only(bottom: 8.h),
                               alignment: Alignment.center,
                               child: Text(
-                                AppLocalizations.of(context)
+                                AppLocalizations.of(context)!
                                     .translate("call_back"),
                                 style: styleElements
                                     .headline5ThemeScalable(context)
@@ -642,6 +646,7 @@ class _CallBackPage extends State<CallBackPage>
   // ignore: missing_return
   Future<bool> _onBackPressed() {
     Navigator.of(context).pop(true);
+    return new Future(() => false);
   }
 
   void submit(BuildContext ctx) async {
@@ -689,7 +694,7 @@ class _CallBackPage extends State<CallBackPage>
                     Navigator.pop(ctx);
                     var data = BaseResponse.fromJson(value);
                     ToastBuilder().showToast(
-                        data.message, context, HexColor(AppColors.information));
+                        data.message!, context, HexColor(AppColors.information));
 
                   }
                 }).catchError((onError) async {
@@ -704,18 +709,18 @@ class _CallBackPage extends State<CallBackPage>
           }
         } else {
           ToastBuilder().showToast(
-              AppLocalizations.of(context).translate("email_required"),
+              AppLocalizations.of(context)!.translate("email_required"),
               context,
               HexColor(AppColors.information));
         }
       } else
         ToastBuilder().showToast(
-            AppLocalizations.of(context).translate("last_name_required"),
+            AppLocalizations.of(context)!.translate("last_name_required"),
             context,
             HexColor(AppColors.information));
     } else
       ToastBuilder().showToast(
-          AppLocalizations.of(context).translate("first_name_required"),
+          AppLocalizations.of(context)!.translate("first_name_required"),
           context,
           HexColor(AppColors.warning));
   }
@@ -731,7 +736,7 @@ class _CallBackPage extends State<CallBackPage>
       if (value != null) {
         var data = DropDownCommon.fromJson(value);
 
-        for (var item in data.rows) {
+        for (var item in data.rows!) {
           range.add(item.description);
           rangeStudent.add(item.description);
         }
@@ -754,7 +759,7 @@ class _CallBackPage extends State<CallBackPage>
       if (value != null) {
         var data = DropDownCommon.fromJson(value);
 
-        for (var item in data.rows) {
+        for (var item in data.rows!) {
           instituteTypelist.add(item.description);
         }
         setState(() {});
@@ -776,7 +781,7 @@ class _CallBackPage extends State<CallBackPage>
       if (value != null) {
         var data = DropDownCommon.fromJson(value);
 
-        for (var item in data.rows) {
+        for (var item in data.rows!) {
           relationship.add(item.description);
         }
         setState(() {});

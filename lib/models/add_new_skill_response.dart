@@ -1,8 +1,8 @@
 class AddNewSkillLangResponse {
-  String statusCode;
-  String message;
-  Rows rows;
-  int total;
+  String? statusCode;
+  String? message;
+  Rows? rows;
+  int? total;
 
   AddNewSkillLangResponse(
       {this.statusCode, this.message, this.rows, this.total});
@@ -19,7 +19,7 @@ class AddNewSkillLangResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     data['total'] = this.total;
     return data;
@@ -27,10 +27,10 @@ class AddNewSkillLangResponse {
 }
 
 class Rows {
-  String categoryType;
-  String valueCode;
-  String valueDescription;
-  int id;
+  String? categoryType;
+  String? valueCode;
+  String? valueDescription;
+  int? id;
 
   Rows({this.categoryType, this.valueCode, this.valueDescription, this.id});
 

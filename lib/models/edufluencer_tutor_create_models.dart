@@ -1,19 +1,19 @@
 class CreateEdufluencerTutorRequest {
-  String edufluencerType;
-  String edufluencerTitle;
-  String edufluencerCurrentPosition;
-  String edufluencerBio;
-  bool isFreeService;
-  double trialHours;
-  int feesPerHour;
-  String feesCurrency;
-  double totalExperienceYears;
-  List<String> mediumOfCommunication;
-  List<String> working_days;
-  List<SubjectsList> subjectsList;
-  List<SkillsList> skillsList;
-  List<SpecialitiesList> specialitiesList;
-  List<ClassesList> classesList;
+  String? edufluencerType;
+  String? edufluencerTitle;
+  String? edufluencerCurrentPosition;
+  String? edufluencerBio;
+  bool? isFreeService;
+  double? trialHours;
+  int? feesPerHour;
+  String? feesCurrency;
+  double? totalExperienceYears;
+  List<String?>? mediumOfCommunication;
+  List<String>? working_days;
+  List<SubjectsList>? subjectsList;
+  List<SkillsList>? skillsList;
+  List<SpecialitiesList>? specialitiesList;
+  List<ClassesList>? classesList;
 
   CreateEdufluencerTutorRequest(
       {this.edufluencerType,
@@ -47,25 +47,25 @@ class CreateEdufluencerTutorRequest {
     if (json['subjects_list'] != null) {
       subjectsList = [];//SubjectsList>();
       json['subjects_list'].forEach((v) {
-        subjectsList.add(new SubjectsList.fromJson(v));
+        subjectsList!.add(new SubjectsList.fromJson(v));
       });
     }
     if (json['skills_list'] != null) {
       skillsList = [];//SkillsList>();
       json['skills_list'].forEach((v) {
-        skillsList.add(new SkillsList.fromJson(v));
+        skillsList!.add(new SkillsList.fromJson(v));
       });
     }
     if (json['specialities_list'] != null) {
       specialitiesList = [];//SpecialitiesList>();
       json['specialities_list'].forEach((v) {
-        specialitiesList.add(new SpecialitiesList.fromJson(v));
+        specialitiesList!.add(new SpecialitiesList.fromJson(v));
       });
     }
     if (json['classes_list'] != null) {
       classesList = [];//ClassesList>();
       json['classes_list'].forEach((v) {
-        classesList.add(new ClassesList.fromJson(v));
+        classesList!.add(new ClassesList.fromJson(v));
       });
     }
   }
@@ -84,26 +84,26 @@ class CreateEdufluencerTutorRequest {
     data['medium_of_communication'] = this.mediumOfCommunication;
     data['working_days'] = this.working_days;
     if (this.subjectsList != null) {
-      data['subjects_list'] = this.subjectsList.map((v) => v.toJson()).toList();
+      data['subjects_list'] = this.subjectsList!.map((v) => v.toJson()).toList();
     }
     if (this.skillsList != null) {
-      data['skills_list'] = this.skillsList.map((v) => v.toJson()).toList();
+      data['skills_list'] = this.skillsList!.map((v) => v.toJson()).toList();
     }
     if (this.specialitiesList != null) {
       data['specialities_list'] =
-          this.specialitiesList.map((v) => v.toJson()).toList();
+          this.specialitiesList!.map((v) => v.toJson()).toList();
     }
     if (this.classesList != null) {
-      data['classes_list'] = this.classesList.map((v) => v.toJson()).toList();
+      data['classes_list'] = this.classesList!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class SubjectsList {
-  int subjectId;
-  String subjectCode;
-  String subjectName;
+  int? subjectId;
+  String? subjectCode;
+  String? subjectName;
 
   SubjectsList({this.subjectId, this.subjectCode, this.subjectName});
 
@@ -123,9 +123,9 @@ class SubjectsList {
 }
 
 class SkillsList {
-  int skillId;
-  String skillCode;
-  String skillName;
+  int? skillId;
+  String? skillCode;
+  String? skillName;
 
   SkillsList({this.skillId, this.skillCode, this.skillName});
 
@@ -145,9 +145,9 @@ class SkillsList {
 }
 
 class SpecialitiesList {
-  int specialityId;
-  String specialityCode;
-  String specialityName;
+  int? specialityId;
+  String? specialityCode;
+  String? specialityName;
 
   SpecialitiesList(
       {this.specialityId, this.specialityCode, this.specialityName});
@@ -168,9 +168,9 @@ class SpecialitiesList {
 }
 
 class ClassesList {
-  int classId;
-  String classCode;
-  String className;
+  int? classId;
+  String? classCode;
+  String? className;
 
   ClassesList({this.classId, this.classCode, this.className});
 
@@ -190,9 +190,9 @@ class ClassesList {
 }
 
 class CreateEdufluencerResponse {
-  String statusCode;
-  String message;
-  int total;
+  String? statusCode;
+  String? message;
+  int? total;
 
   CreateEdufluencerResponse(
       {this.statusCode, this.message, this.total});

@@ -17,13 +17,13 @@ class EventLocationPage extends StatefulWidget {
 }
 
 class EventLocationPageState extends State<EventLocationPage> {
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
   TextEditingController controller = TextEditingController();
-  String address;
-  String country;
-  String state;
-  String city;
-  String pin;
+  String? address;
+  String? country;
+  String? state;
+  String? city;
+  String? pin;
   GlobalKey<FormState> formKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
@@ -134,7 +134,7 @@ class EventLocationPageState extends State<EventLocationPage> {
                   direction: Axis.horizontal,
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
-                    Text(AppLocalizations.of(context).translate('next'),
+                    Text(AppLocalizations.of(context)!.translate('next'),
                       style: styleElements
                           .subtitle2ThemeScalable(context)
                           .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -201,8 +201,8 @@ class EventLocationPageState extends State<EventLocationPage> {
   }
 
   void updateLocation() {
-    if(formKey.currentState.validate()){
-      formKey.currentState.save();
+    if(formKey.currentState!.validate()){
+      formKey.currentState!.save();
       var location = EventLocation(
         type: 'offline',
         address: Address(

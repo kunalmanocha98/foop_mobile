@@ -13,7 +13,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 // ignore: must_be_immutable
 class GoalsAndObjectiveCardDetailPage extends StatelessWidget {
   final CommonCardData data;
-  BuildContext context;
+  late BuildContext context;
 
   // double _sigmaX = 5.01; // from 0-10
   // double _sigmaY = 5.01; // from 0-10
@@ -22,7 +22,7 @@ class GoalsAndObjectiveCardDetailPage extends StatelessWidget {
         itemBuilder: (context) => [
           PopupMenuItem(
             value: 1,
-            child: Text(AppLocalizations.of(context).translate('add_goal')),
+            child: Text(AppLocalizations.of(context)!.translate('add_goal')),
           ),
         ],
         onSelected: (value) {
@@ -53,8 +53,8 @@ class GoalsAndObjectiveCardDetailPage extends StatelessWidget {
     debugPrint('Width = ' + displaySize(context).width.toString());
     return displaySize(context).width;
   }
-  TextStyleElements styleElements;
-  GoalsAndObjectiveCardDetailPage({Key key, @required this.data})
+  late TextStyleElements styleElements;
+  GoalsAndObjectiveCardDetailPage({Key? key, required this.data})
       : super(key: key);
 
   @override
@@ -76,7 +76,7 @@ class GoalsAndObjectiveCardDetailPage extends StatelessWidget {
                         child: Container(
                           padding: const EdgeInsets.only(left: 16, right: 16,top:12,bottom:12),
                           child: Text(
-                            data.title ?? "" ?? "",
+                            data.title ?? "",
                             style: styleElements.headline5ThemeScalable(context),
                             textAlign: TextAlign.left,
                           ),

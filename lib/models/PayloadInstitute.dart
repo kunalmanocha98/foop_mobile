@@ -1,5 +1,5 @@
 class PayloadInstitute {
-  int institutionId;
+  int? institutionId;
   Null searchVal;
 
   PayloadInstitute({this.institutionId, this.searchVal});

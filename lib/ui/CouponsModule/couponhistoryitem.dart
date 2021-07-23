@@ -6,15 +6,15 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class CouponHistoryItemCard extends StatelessWidget {
-  String title;
-  String dayOfMonth;
-  String month;
-  String rewardPoints;
-  bool isDeduct;
-  TextStyleElements styleElements;
-String currencyCode;
+  String? title;
+  String? dayOfMonth;
+  String? month;
+  String? rewardPoints;
+  bool? isDeduct;
+  late TextStyleElements styleElements;
+String? currencyCode;
   CouponHistoryItemCard(
-      {Key key,
+      {Key? key,
       this.title,
       this.dayOfMonth,
       this.month,
@@ -37,7 +37,7 @@ String currencyCode;
                   child: Padding(
                     padding: EdgeInsets.all(4),
                     child: Text(
-                      dayOfMonth,
+                      dayOfMonth!,
                       style: styleElements.bodyText2ThemeScalable(context)
                           .copyWith(fontWeight: FontWeight.bold),
                     ),
@@ -47,7 +47,7 @@ String currencyCode;
                   child: Padding(
                     padding: EdgeInsets.all(4),
                     child: Text(
-                      month,
+                      month!,
                       style: styleElements.captionThemeScalable(context),
                     ),
                   ),
@@ -64,7 +64,7 @@ String currencyCode;
                   child: Padding(
                     padding: EdgeInsets.all(4),
                     child: Text(
-                      title,
+                      title!,
                       style:styleElements.bodyText2ThemeScalable(context)
                           .copyWith(fontWeight: FontWeight.bold),
                     ),
@@ -98,19 +98,19 @@ String currencyCode;
                       "₹",
                       style: styleElements.bodyText2ThemeScalable(context).copyWith(
                           fontWeight: FontWeight.bold,
-                          color: isDeduct ? HexColor(AppColors.appMainColor) : HexColor(AppColors.appColorGreen)),
+                          color: isDeduct! ? HexColor(AppColors.appMainColor) : HexColor(AppColors.appColorGreen)),
                     ):Text(
                       "",
                       style: styleElements.bodyText2ThemeScalable(context).copyWith(
                           fontWeight: FontWeight.bold,
-                          color: isDeduct ? HexColor(AppColors.appMainColor) : HexColor(AppColors.appColorGreen)),
+                          color: isDeduct! ? HexColor(AppColors.appMainColor) : HexColor(AppColors.appColorGreen)),
                     ),
                     Expanded(
                       child: Text(
-                        rewardPoints,
+                        rewardPoints!,
                         style: styleElements.bodyText2ThemeScalable(context).copyWith(
                             fontWeight: FontWeight.bold,
-                            color: isDeduct ? HexColor(AppColors.appMainColor) : HexColor(AppColors.appColorGreen)),
+                            color: isDeduct! ? HexColor(AppColors.appMainColor) : HexColor(AppColors.appColorGreen)),
                       ),
                     ),
                   ],

@@ -12,8 +12,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 // ignore: must_be_immutable
 class RatingCard extends StatelessWidget {
   CommonCardData data;
-  TextStyleElements styleElements;
-  RatingCard({Key key, @required this.data,this.styleElements}) : super(key: key);
+  TextStyleElements? styleElements;
+  RatingCard({Key? key, required this.data,this.styleElements}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +40,8 @@ class RatingCard extends StatelessWidget {
          children: [
            Container(
            margin:  EdgeInsets.all(16.w),
-           child: Text(AppLocalizations.of(context).translate('leave_your_review'),
-           style: styleElements.subtitle2ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite)),),
+           child: Text(AppLocalizations.of(context)!.translate('leave_your_review'),
+           style: styleElements!.subtitle2ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite)),),
          ),
            Container(
            margin:  EdgeInsets.only(top:8.h,bottom: 8.h,left: 16.w,right: 16.w),

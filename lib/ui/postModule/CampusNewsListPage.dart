@@ -30,7 +30,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CampusNewsListPage extends StatefulWidget{
-  final Null Function() callBack;
+  final Null Function()? callBack;
   @override
   CampusNewsListPageState createState()=> CampusNewsListPageState(callBack);
 
@@ -38,17 +38,17 @@ class CampusNewsListPage extends StatefulWidget{
 }
 
 class CampusNewsListPageState extends State<CampusNewsListPage>{
-  Null Function() callBack;
-  PAGINATOR_ENUMS pageEnum ;
+  Null Function()? callBack;
+  PAGINATOR_ENUMS? pageEnum ;
   List<PostListItem> feedList = [];
-  int totalItems = 0;
-  SharedPreferences prefs;
+  int? totalItems = 0;
+  SharedPreferences? prefs;
   int page = 0;
   String postType = 'news';
-  TextStyleElements styleElements;
+  TextStyleElements? styleElements;
   List<PostSubTypeListItem> selectedList = [];
-  List<String> listOfSelections = [];
-  String topic="Choose topic";
+  List<String?> listOfSelections = [];
+  String? topic="Choose topic";
   GlobalKey<PostCardHeaderState> headerKey = GlobalKey();
   PageController _controller = PageController();
 
@@ -60,7 +60,7 @@ class CampusNewsListPageState extends State<CampusNewsListPage>{
 
   }
   void refresh() {
-    Future((){headerKey.currentState.clear();});
+    Future((){headerKey.currentState!.clear();});
     setState(() {
       pageEnum = PAGINATOR_ENUMS.LOADING;
       feedList.clear();
@@ -74,7 +74,7 @@ class CampusNewsListPageState extends State<CampusNewsListPage>{
     PostListRequest payload = PostListRequest();
     payload.pageNumber = page + 1;
     payload.pageSize = 10;
-    payload.personId = prefs.getInt(Strings.userId);
+    payload.personId = prefs!.getInt(Strings.userId);
     payload.isOwnPost = false;
     payload.postSubTypes = listOfSelections;
     if (postType != 'all') payload.postType = postType;
@@ -100,7 +100,7 @@ class CampusNewsListPageState extends State<CampusNewsListPage>{
       } else {
         // isLoading = false;
         page++;
-        feedList.addAll(response.rows);
+        feedList.addAll(response.rows!);
         setState(() {
           pageEnum = PAGINATOR_ENUMS.SUCCESS;
         });
@@ -112,7 +112,7 @@ class CampusNewsListPageState extends State<CampusNewsListPage>{
     PostListRequest payload = PostListRequest();
     payload.pageNumber = page;
     payload.pageSize = 10;
-    payload.personId = prefs.getInt(Strings.userId);
+    payload.personId = prefs!.getInt(Strings.userId);
     payload.isOwnPost = false;
     payload.postType = postType;
     payload.postSubTypes = listOfSelections;
@@ -238,15 +238,15 @@ class CampusNewsListPageState extends State<CampusNewsListPage>{
   //       onBackButtonPress: (){  Navigator.pop(context);});
   // }
   void updateHeader(PostListItem item, int index) {
-    bool isFollowed = false;
-    for (var i in item.postContent.header.action) {
+    bool? isFollowed = false;
+    for (var i in item.postContent!.header!.action!) {
       if (i.type == 'is_followed') {
         isFollowed = i.value;
         break;
       }
     }
     Future((){
-      headerKey.currentState.update(
+      headerKey.currentState!.update(
         postListItem: item,
         prefs: prefs,
         onFollowCallback: (isFollow) {
@@ -280,7 +280,7 @@ class CampusNewsListPageState extends State<CampusNewsListPage>{
             refresh();
           }else {
             if(callBack!=null)
-              callBack();
+              callBack!();
             Navigator.pop(context);
           }
         },
@@ -346,8 +346,8 @@ class CampusNewsListPageState extends State<CampusNewsListPage>{
         return CustomPaginator(context).emptyListWidgetMaker(null);
     }
   }
-  int _getItemCount() {
-    if (totalItems > feedList.length) {
+  int? _getItemCount() {
+    if (totalItems! > feedList.length) {
       return feedList.length + 1;
     } else {
       return totalItems;
@@ -371,7 +371,7 @@ class CampusNewsListPageState extends State<CampusNewsListPage>{
             case ConnectionState.active:
               return CustomPaginator(context).loadingWidgetMaker();
             case ConnectionState.done:
-              feedList.addAll(snapshot.data.rows);
+              feedList.addAll(snapshot.data!.rows!);
               page++;
               Future.microtask(() {
                 setState(() {});
@@ -413,7 +413,7 @@ class CampusNewsListPageState extends State<CampusNewsListPage>{
               _onRatingCallback(index);
             },
             bookmarkCallback: (isBookmarked) {
-              _onBookmarkCallback(item.postId, index, isBookmarked);
+              _onBookmarkCallback(item.postId, index, isBookmarked!);
             },
             commentCallback: () {
               _onCommentCallback(index);
@@ -435,7 +435,7 @@ class CampusNewsListPageState extends State<CampusNewsListPage>{
             },
             onAnswerClickCallback: () {
               openAnswerPage(
-                  item.postContent.content.contentMeta.title, item.postId);
+                  item.postContent!.content!.contentMeta!.title, item.postId);
             }));
   }
   void onTalkCallback(int index) {
@@ -443,14 +443,14 @@ class CampusNewsListPageState extends State<CampusNewsListPage>{
         context: context,
         builder: (BuildContext context) {
           return AudioPostDialog(
-              title: feedList[index].postContent.content.contentMeta.title,
+              title: feedList[index].postContent!.content!.contentMeta!.title,
               okCallback:(){
                 Navigator.push(context,
                     MaterialPageRoute(builder: (BuildContext context) {
                       return CreateEventPage(
                         type: 'talk',
                         standardEventId: 5,
-                        title: feedList[index].postContent.content.contentMeta.title,
+                        title: feedList[index].postContent!.content!.contentMeta!.title,
                       );
                     }));
               },
@@ -467,11 +467,11 @@ class CampusNewsListPageState extends State<CampusNewsListPage>{
   void removeFromList(int index) {
     setState(() {
       feedList.removeAt(index);
-      totalItems = totalItems - 1;
+      totalItems = totalItems! - 1;
     });
   }
 
-  void openAnswerPage(String question, int postId) {
+  void openAnswerPage(String? question, int? postId) {
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => PostCreatePage(
           type: 'answer',
@@ -480,16 +480,16 @@ class CampusNewsListPageState extends State<CampusNewsListPage>{
           prefs: prefs,
         )));
   }
-  final CreateDeeplink  createDeeplink =locator<CreateDeeplink>();
-  void _onShareCallback(int id) async {
+  final CreateDeeplink?  createDeeplink =locator<CreateDeeplink>();
+  void _onShareCallback(int? id) async {
     SharedPreferences prefs= await SharedPreferences.getInstance();
-    createDeeplink.getDeeplink(SHAREITEMTYPE.DETAIL.type,prefs.getInt("userId").toString(),id,DEEPLINKTYPE.POST.type, context);
+    createDeeplink!.getDeeplink(SHAREITEMTYPE.DETAIL.type,prefs.getInt("userId").toString(),id,DEEPLINKTYPE.POST.type, context);
     // _showModalBottomSheet(context,id);
   }
 
   void _onRatingCallback(int index) {
     // setState(() {
-    for (var i in feedList[index].postContent.header.action) {
+    for (var i in feedList[index].postContent!.header!.action!) {
       if (i.type == 'is_rated') {
         i.value = true;
       }
@@ -497,7 +497,7 @@ class CampusNewsListPageState extends State<CampusNewsListPage>{
     // });
   }
 
-  void _onBookmarkCallback(int postId, int index, bool isBookmarked) {
+  void _onBookmarkCallback(int? postId, int index, bool isBookmarked) {
     bookmarkPost(postId, index, isBookmarked);
   }
 
@@ -514,14 +514,14 @@ class CampusNewsListPageState extends State<CampusNewsListPage>{
 
   void _onFollowCallback(bool isFollow, int index) {
     setState(() {
-      for (var i in feedList[index].postContent.header.action) {
+      for (var i in feedList[index].postContent!.header!.action!) {
         if (i.type == 'is_followed') {
           i.value = isFollow;
         }
       }
     });
   }
-  void bookmarkPost(int postId, int index, bool isBookMarked) {
+  void bookmarkPost(int? postId, int index, bool isBookMarked) {
     // setState(() {
     feedList[index].isBookmarked = isBookMarked;
     // });
@@ -535,7 +535,7 @@ class CampusNewsListPageState extends State<CampusNewsListPage>{
       return false;
     }else {
       if(callBack!=null)
-        callBack();
+        callBack!();
       return true;
     }
   }
@@ -553,8 +553,8 @@ class BottomSheetContent extends StatefulWidget {
 }
 
 class _ShareBottomSheet extends State<BottomSheetContent> {
-  TextStyleElements styleElements;
-  int _selectedshareoption;
+  late TextStyleElements styleElements;
+  int? _selectedshareoption;
   int id;
 
   @override
@@ -574,7 +574,7 @@ class _ShareBottomSheet extends State<BottomSheetContent> {
                 alignment: Alignment.topCenter,
                 child: Padding(
                   padding: EdgeInsets.all(16),
-                  child: Text(AppLocalizations.of(context).translate('who_want_share'),
+                  child: Text(AppLocalizations.of(context)!.translate('who_want_share'),
                     style: styleElements.headline6ThemeScalable(context),
                   ),
                 ),
@@ -587,13 +587,13 @@ class _ShareBottomSheet extends State<BottomSheetContent> {
                       leading: Radio(
                         value: 1,
                         groupValue: _selectedshareoption,
-                        onChanged: (value) {
+                        onChanged: (dynamic value) {
                           setState(() {
                             _selectedshareoption = value;
                           });
                         },
                       ),
-                      title: Text(AppLocalizations.of(context).translate('share_within'),
+                      title: Text(AppLocalizations.of(context)!.translate('share_within'),
                         style: styleElements.bodyText2ThemeScalable(context),
                       ),
                     )),
@@ -626,14 +626,14 @@ class _ShareBottomSheet extends State<BottomSheetContent> {
                       leading: Radio(
                         value: 3,
                         groupValue: _selectedshareoption,
-                        onChanged: (value) {
+                        onChanged: (dynamic value) {
                           _onShare();
                           setState(() {
                             _selectedshareoption = value;
                           });
                         },
                       ),
-                      title: Text(AppLocalizations.of(context).translate('share_through_other'),
+                      title: Text(AppLocalizations.of(context)!.translate('share_through_other'),
                         style: styleElements.bodyText2ThemeScalable(context),
                       ),
                     )),
@@ -645,11 +645,11 @@ class _ShareBottomSheet extends State<BottomSheetContent> {
     );
   }
 
-  final CreateDeeplink createDeeplink = locator<CreateDeeplink>();
+  final CreateDeeplink? createDeeplink = locator<CreateDeeplink>();
 
   void _onShare() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    createDeeplink.getDeeplink(SHAREITEMTYPE.DETAIL.type,
+    createDeeplink!.getDeeplink(SHAREITEMTYPE.DETAIL.type,
         prefs.getInt("userId").toString(), id, DEEPLINKTYPE.POST.type, context);
   }
 

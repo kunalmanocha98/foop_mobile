@@ -27,8 +27,8 @@ class PreloadingView extends StatelessWidget {
   }
 
   PreloadingView({
-    Key key,
-    @required this.url,
+    Key? key,
+    required this.url,
   }) : super(key: key);
 
   Widget build(BuildContext context) {
@@ -107,7 +107,7 @@ class PreloadingViewParagraph extends StatelessWidget {
   }
 
   PreloadingViewParagraph({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   Widget build(BuildContext context) {
@@ -163,7 +163,7 @@ class PreLoadingShimmerCard extends StatelessWidget {
   }
 
   PreLoadingShimmerCard({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   Widget build(BuildContext context) {

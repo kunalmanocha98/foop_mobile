@@ -24,30 +24,30 @@ import 'package:shared_preferences/shared_preferences.dart';
 // ignore: must_be_immutable
 class SelectLanguageProficiencyDialogue extends StatefulWidget {
   String title;
-  String title2;
+  String? title2;
   String subtitle;
-  String type;
-  String categoryType;
-  String id1;
-  String id2;
-  String instId;
-  int personId;
-  int starRatingsId;
-  double starRatings;
-  int itemId;
-  String rattingType;
-  List<String> abilites;
-  List<String> goals;
-  List<String> ids;
-  Null Function() callbackPicker;
-  String id3;
-  int sectionId;
+  String? type;
+  String? categoryType;
+  String? id1;
+  String? id2;
+  String? instId;
+  int? personId;
+  int? starRatingsId;
+  double? starRatings;
+  int? itemId;
+  String? rattingType;
+  List<String>? abilites;
+  List<String>? goals;
+  List<String>? ids;
+  Null Function()? callbackPicker;
+  String? id3;
+  int? sectionId;
 
-  SelectLanguageProficiencyDialogue({Key key,
-    @required this.type,
-    @required this.title,
-    @required this.subtitle,
-    @required this.categoryType,
+  SelectLanguageProficiencyDialogue({Key? key,
+    required this.type,
+    required this.title,
+    required this.subtitle,
+    required this.categoryType,
     this.instId,
     this.title2,
     this.id3,
@@ -91,32 +91,32 @@ class _SelectLanguageProficiency
     extends State<SelectLanguageProficiencyDialogue> {
   String title;
   String subtitle;
-  String title2;
-  int personId;
-  String id3;
-  int sectionId;
-  int starRatingsId;
-  int itemId;
-  Null Function() callbackPicker;
-  List<String> goals;
-  double starRatings;
-  List<String> ids;
-  List<String> abilites;
-  String categoryType;
-  String id1;
-  String id2;
-  String personType;
-  String instId;
+  String? title2;
+  int? personId;
+  String? id3;
+  int? sectionId;
+  int? starRatingsId;
+  int? itemId;
+  Null Function()? callbackPicker;
+  List<String>? goals;
+  double? starRatings;
+  List<String>? ids;
+  List<String>? abilites;
+  String? categoryType;
+  String? id1;
+  String? id2;
+  String? personType;
+  String? instId;
   bool isCategory = true;
-  SharedPreferences prefs;
-  Map<String, bool> catList = Map();
-  Map<String, bool> goalsList = Map();
-  BuildContext context;
-  String type;
-  String ratingType;
+  late SharedPreferences prefs;
+  Map<String?, bool?> catList = Map();
+  Map<String?, bool?> goalsList = Map();
+ late BuildContext context;
+  String? type;
+  String? ratingType;
 bool isLoading=false;
-  int ownerId;
-  String ownerType;
+  int? ownerId;
+  String? ownerType;
 
   @override
   void initState() {
@@ -145,9 +145,9 @@ bool isLoading=false;
         : categoryType == "Class" ? "class" : "";
   }
 
-  _SelectLanguageProficiency({@required this.type,
-    @required this.title,
-    @required this.subtitle,
+  _SelectLanguageProficiency({required this.type,
+    required this.title,
+    required this.subtitle,
     this.id1,
     this.id2,
     this.title2,
@@ -162,9 +162,9 @@ bool isLoading=false;
     this.ids,
     this.sectionId,
     this.abilites,
-    @required this.categoryType});
+    required this.categoryType});
 
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   @override
   Widget build(BuildContext context) {
@@ -183,7 +183,7 @@ bool isLoading=false;
                   child: Container(
                     margin: const EdgeInsets.only(left:16,bottom: 16, top: 20,right: 16),
                     child: Text(
-                      isCategory ? title ?? "" : title2 ?? "",
+                      isCategory ? title : title2 ?? "",
                       style: styleElements.headline6ThemeScalable(context).copyWith(fontWeight: FontWeight.w700),
                       textAlign: TextAlign.center,
                     ),
@@ -196,7 +196,7 @@ bool isLoading=false;
                       scrollDirection: Axis.vertical,
                       padding: EdgeInsets.all(8.0),
                       children: catList.keys
-                          .map((String key) =>
+                          .map((String? key) =>
                           CheckboxListTile(
                             title: Text(
                               key ?? "",
@@ -223,10 +223,10 @@ bool isLoading=false;
                       scrollDirection: Axis.vertical,
                       padding: EdgeInsets.all(8.0),
                       children: goalsList.keys
-                          .map((String key) =>
+                          .map((String? key) =>
                           CheckboxListTile(
                             title: Text(
-                              key,
+                              key!,
                               style: styleElements
                                   .subtitle1ThemeScalable(context),
                             ),
@@ -259,7 +259,7 @@ bool isLoading=false;
                       children: <Widget>[
                         RatingBar.builder(
                           initialRating:
-                          starRatings != null ? starRatings : 0.0,
+                          starRatings != null ? starRatings! : 0.0,
                           minRating: 0,
                           direction: Axis.horizontal,
                           allowHalfRating: false,
@@ -283,7 +283,7 @@ bool isLoading=false;
                               margin:
                               const EdgeInsets.only(left: 60, right: 20),
                               child: Text(
-                                AppLocalizations.of(context).translate("poor"),
+                                AppLocalizations.of(context)!.translate("poor"),
                                 style:
                                 styleElements.captionThemeScalable(context),
                               ),
@@ -292,7 +292,7 @@ bool isLoading=false;
                               margin:
                               const EdgeInsets.only(left: 20, right: 60),
                               child: Text(
-                                AppLocalizations.of(context)
+                                AppLocalizations.of(context)!
                                     .translate("excellent"),
                                 style:
                                 styleElements.captionThemeScalable(context),
@@ -317,7 +317,7 @@ bool isLoading=false;
                       margin:
                       const EdgeInsets.only(right: 30, top: 16, bottom: 16),
                       child: Text(
-                        AppLocalizations.of(context).translate('cancel'),
+                        AppLocalizations.of(context)!.translate('cancel'),
                         style: styleElements
                             .bodyText1ThemeScalable(context)
                             .copyWith(fontWeight: FontWeight.w600),
@@ -384,7 +384,7 @@ bool isLoading=false;
                         margin: const EdgeInsets.only(
                             left: 30, top: 16, bottom: 16),
                         child: Text(
-                          AppLocalizations.of(context).translate('submit'),
+                          AppLocalizations.of(context)!.translate('submit'),
                           style: styleElements
                               .bodyText1ThemeScalable(context)
                               .copyWith(fontWeight: FontWeight.w600),
@@ -399,7 +399,7 @@ bool isLoading=false;
 
   void addLang(BuildContext context) async {
     AddLanguageSkills addClassNew = new AddLanguageSkills();
-    addClassNew.institutionId = int.parse(instId);
+    addClassNew.institutionId = int.parse(instId!);
     addClassNew.personId = personId;
     addClassNew.isSelected = "Y";
     addClassNew.selfRating = "0";
@@ -408,16 +408,16 @@ bool isLoading=false;
     addClassNew.id = itemId;
     addClassNew.givenById = ownerId;
     addClassNew.personType = personType;
-    addClassNew.standardExpertiseCategoryTypes = int.parse(id1); //id2;
-    addClassNew.standardExpertiseCategory = int.parse(id2);
-    var listAbilities = <String>[];
+    addClassNew.standardExpertiseCategoryTypes = int.parse(id1!); //id2;
+    addClassNew.standardExpertiseCategory = int.parse(id2!);
+    var listAbilities = <String?>[];
     catList.forEach((key, value) {
-      if (value) listAbilities.add(key);
+      if (value!) listAbilities.add(key);
     });
     addClassNew.abilities = listAbilities;
-    var listGoals = <String>[];
+    var listGoals = <String?>[];
     goalsList.forEach((key, value) {
-      if (value) listGoals.add(key);
+      if (value!) listGoals.add(key);
     });
     addClassNew.goals = listGoals;
     setState(() {
@@ -445,7 +445,7 @@ bool isLoading=false;
     if(ids==null)
     {
       ids=[];
-      ids.add(id3??"");
+      ids!.add(id3??"");
 
     }
 
@@ -458,16 +458,16 @@ bool isLoading=false;
     addClassNew.standardExpertiseCategoryId = "6";
     addClassNew.givenById = ownerId;
 
-    var listAbilities = <String>[];
+    var listAbilities = <String?>[];
 
     catList.forEach((key, value) {
-      if (value) listAbilities.add(key);
+      if (value!) listAbilities.add(key);
     });
     addClassNew.abilities = listAbilities;
 
-    var listGoals = <String>[];
+    var listGoals = <String?>[];
     goalsList.forEach((key, value) {
-      if (value) listGoals.add(key);
+      if (value!) listGoals.add(key);
     });
     addClassNew.goals = listGoals;
     setState(() {
@@ -500,9 +500,9 @@ bool isLoading=false;
     addClassNew.institutionClassId = id1;
     addClassNew.givenById =ownerId;
     addClassNew.standardExpertiseCategoryId = "5";
-    var listAbilities = <String>[];
+    var listAbilities = <String?>[];
     catList.forEach((key, value) {
-      if (value) listAbilities.add(key);
+      if (value!) listAbilities.add(key);
     });
     addClassNew.abilities = listAbilities;
     setState(() {
@@ -543,9 +543,9 @@ bool isLoading=false;
     addClassNew.institutionAcademicYearId = id2; //id2;
     addClassNew.institutionClassId = id1;
     addClassNew.standardExpertiseCategoryId = "5";
-    var listAbilities = <String>[];
+    var listAbilities = <String?>[];
     catList.forEach((key, value) {
-      if (value) listAbilities.add(key);
+      if (value!) listAbilities.add(key);
     });
     addClassNew.abilities = listAbilities;
     setState(() {
@@ -585,9 +585,9 @@ bool isLoading=false;
     addClassNew.standardExpertiseCategoryId = "6";
     addClassNew.id = itemId.toString();
     addClassNew.personId = personId.toString();
-    var listAbilities = <String>[];
+    var listAbilities = <String?>[];
     catList.forEach((key, value) {
-      if (value) listAbilities.add(key);
+      if (value!) listAbilities.add(key);
     });
     addClassNew.abilities = listAbilities;
     setState(() {
@@ -649,7 +649,7 @@ Enums for standard category list-
             if (data != null && data.statusCode == 'S10001') {
 
               if (data.rows != null) {
-                for (var item in data.rows) {
+                for (var item in data.rows!) {
                   if (item.isSelected == "Yes")
                     catList[item.expertiseAbilityCode] = true;
                   else
@@ -700,7 +700,7 @@ Enums for standard category list-
             if (data != null && data.statusCode == 'S10001') {
 
               if (data.rows != null) {
-                for (var item in data.rows) {
+                for (var item in data.rows!) {
                   if (item.isSelected == "Yes")
                     goalsList[item.expertiseGoalCode] = true;
                   else
@@ -724,13 +724,13 @@ Enums for standard category list-
     });
   }
 
-  handleCategoryForLanguage(bool val, String key) {
+  handleCategoryForLanguage(bool? val, String? key) {
     setState(() {
       catList[key] = val;
     });
   }
 
-  handleCategoryForClassesAndSubjects(bool val, String key) {
+  handleCategoryForClassesAndSubjects(bool? val, String? key) {
     catList[key] = val;
 
     if (isCategory) {
@@ -768,11 +768,11 @@ Enums for standard category list-
       "id": starRatingsId,
       "rating_note_id": null,
       "rating_subject_type": ratingType,
-      "rating_subject_id": int.parse(id1),
+      "rating_subject_id": int.parse(id1!),
       "rating_context_type": "person",
       "rating_context_id": personId,
       "rating_given_by_id": ownerId,
-      "rating_given": starRatings != null ? starRatings.toInt().toString() : "0"
+      "rating_given": starRatings != null ? starRatings!.toInt().toString() : "0"
     });
     Calls().call(body, ctx, Config.UPDATE_RATINGS).then((value) async {
       if (value != null) {
@@ -782,7 +782,7 @@ Enums for standard category list-
         var data = DynamicResponse.fromJson(value);
         if (data != null && data.statusCode == 'S10001') {
           Navigator.of(ctx).pop(true);
-          callbackPicker();
+          callbackPicker!();
         } else {
           setState(() {
             isLoading=false;
@@ -808,11 +808,11 @@ Enums for standard category list-
     var body = jsonEncode({
       "rating_note_id": null,
       "rating_subject_type": ratingType,
-      "rating_subject_id": int.parse(id1),
+      "rating_subject_id": int.parse(id1!),
       "rating_context_type": "person",
       "rating_context_id": personId,
       "rating_given_by_id": ownerId,
-      "rating_given": starRatings != null ? starRatings.toInt().toString() : "0"
+      "rating_given": starRatings != null ? starRatings!.toInt().toString() : "0"
     });
     setState(() {
       isLoading=true;
@@ -826,7 +826,7 @@ Enums for standard category list-
         if (data != null && data.statusCode == 'S10001') {
           ToastBuilder().showToast(data.message ?? "", ctx,HexColor(AppColors.success));
           Navigator.of(ctx).pop(true);
-          callbackPicker();
+          callbackPicker!();
         } else {
           setState(() {
             isLoading=false;

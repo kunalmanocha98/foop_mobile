@@ -131,7 +131,7 @@ class DialogWeekDaysState extends State<DialogWeekDays> {
                   },
                   shape: StadiumBorder(),
                   child: Text(
-                    AppLocalizations.of(context).translate('cancel'),
+                    AppLocalizations.of(context)!.translate('cancel'),
                     style: styleElements
                         .captionThemeScalable(context)
                         .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -169,7 +169,7 @@ class DialogWeekDaysState extends State<DialogWeekDays> {
                   },
                   shape: StadiumBorder(),
                   child: Text(
-                    AppLocalizations.of(context).translate('submit'),
+                    AppLocalizations.of(context)!.translate('submit'),
                     style: styleElements
                         .captionThemeScalable(context)
                         .copyWith(color: HexColor(AppColors.appMainColor)),

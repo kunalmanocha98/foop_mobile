@@ -31,16 +31,16 @@ import 'host_list_page.dart';
 class CreateEventPage extends StatefulWidget {
   final String type;
   final int standardEventId;
-  final String title;
-  final String ownerName;
-  final String ownerType;
-  final String ownerImage;
-  final int ownerId;
-  final RoomListItem roomItem;
-final Function refreshCallBack;
+  final String? title;
+  final String? ownerName;
+  final String? ownerType;
+  final String? ownerImage;
+  final int? ownerId;
+  final RoomListItem? roomItem;
+final Function? refreshCallBack;
   CreateEventPage({
-    @required this.type,
-    @required this.standardEventId,
+    required this.type,
+    required this.standardEventId,
     this.title,
     this.ownerId,
     this.ownerName,
@@ -57,43 +57,43 @@ final Function refreshCallBack;
 
 class CreateEventPageState extends State<CreateEventPage> {
   String type;
-  String title;
+  String? title;
   final int standardEventId;
 
-  CreateEventPageState({@required this.type, @required this.standardEventId,});
+  CreateEventPageState({required this.type, required this.standardEventId,});
 
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
   int selectedStartEpoch = 0;
   String selectedStartDate = "Start date";
   int selectedEndEpoch = 0;
   String selectedEndDate = "End date";
   int selectedDueEpoch = 0;
   String selectedDueDate = "Due date";
-  TimeOfDay selectedStartTimeOfDay;
+  TimeOfDay? selectedStartTimeOfDay;
   String selectedStartTime = 'Start Time';
-  TimeOfDay selectedEndTimeOfDay;
+  TimeOfDay? selectedEndTimeOfDay;
   String selectedEndTime = 'End Time';
-  String selectedPrivacyType;
+  String? selectedPrivacyType;
 
-  SharedPreferences prefs = locator<SharedPreferences>();
+  SharedPreferences? prefs = locator<SharedPreferences>();
   GlobalKey<SelectRoomTopicWidgetState> roomTopicKey = GlobalKey();
   GlobalKey<RoomPrivacyTypeWidgetState> privacyTypeKey = GlobalKey();
   GlobalKey<FormState> formKey = GlobalKey();
   bool isOnline = false;
   bool startsNow = false;
-  List<MembersItem> selectedMembersItem = [];
+  List<MembersItem>? selectedMembersItem = [];
 
-  String ownerImage;
-  String ownerName;
-  int ownerId;
-  String ownerType = 'person';
+  String? ownerImage;
+  String? ownerName;
+  int? ownerId;
+  String? ownerType = 'person';
 
   @override
   void initState() {
-    ownerName = widget.ownerName ?? prefs.getString(Strings.userName);
-    ownerId = widget.ownerId ?? prefs.getInt(Strings.userId);
+    ownerName = widget.ownerName ?? prefs!.getString(Strings.userName);
+    ownerId = widget.ownerId ?? prefs!.getInt(Strings.userId);
     ownerType = widget.ownerType ?? 'person';
-    ownerImage = widget.ownerImage ?? prefs.getString(Strings.profileImage);
+    ownerImage = widget.ownerImage ?? prefs!.getString(Strings.profileImage);
     super.initState();
   }
 
@@ -115,7 +115,7 @@ class CreateEventPageState extends State<CreateEventPage> {
                 .bodyText2ThemeScalable(context)
                 .copyWith(color: HexColor(AppColors.appColorBlack35)),
             hintText:
-            AppLocalizations.of(context).translate('give_name_to_event')));
+            AppLocalizations.of(context)!.translate('give_name_to_event')));
     final startDateWidget = GestureDetector(
         onTap: () {
           _selectStartDate(context);
@@ -194,10 +194,10 @@ class CreateEventPageState extends State<CreateEventPage> {
     final startsNowWidget = Row(
       children: [
         Checkbox(
-          onChanged: (bool value) {
+          onChanged: (bool? value) {
             setState(() {
               startsNow = !startsNow;
-              if (value) {
+              if (value!) {
                 selectedStartEpoch = DateTime.now().millisecondsSinceEpoch;
                 selectedStartTimeOfDay = TimeOfDay.now();
                 selectedStartDate =
@@ -239,11 +239,11 @@ class CreateEventPageState extends State<CreateEventPage> {
                 ))));
     final participantsListWidget = GestureDetector(
       onTap: () {
-        if (privacyTypeKey.currentState.selectedTypeCode.isNotEmpty) {
+        if (privacyTypeKey.currentState!.selectedTypeCode!.isNotEmpty) {
           Navigator.push(context,
               MaterialPageRoute(builder: (BuildContext context) {
                 return HostListPage(
-                  privacyType: privacyTypeKey.currentState.selectedTypeCode,
+                  privacyType: privacyTypeKey.currentState!.selectedTypeCode,
                   selectedList: selectedMembersItem,
                 );
               })).then((value) {
@@ -258,7 +258,7 @@ class CreateEventPageState extends State<CreateEventPage> {
           });
         } else {
           ToastBuilder().showToast(
-              AppLocalizations.of(context)
+              AppLocalizations.of(context)!
                   .translate('please_select_privacy_type'),
               context,
               HexColor(AppColors.information));
@@ -268,18 +268,18 @@ class CreateEventPageState extends State<CreateEventPage> {
         contentPadding: EdgeInsets.all(0),
         leading: TricycleAvatar(
           key: UniqueKey(),
-          imageUrl: selectedMembersItem.length > 0
-              ? selectedMembersItem[0].profileImage
+          imageUrl: selectedMembersItem!.length > 0
+              ? selectedMembersItem![0].profileImage
               : '',
           service_type: SERVICE_TYPE.PERSON,
           resolution_type: RESOLUTION_TYPE.R64,
           size: 36,
         ),
         title: Text(
-          selectedMembersItem.length > 0
-              ? selectedMembersItem.length > 1
-              ? selectedMembersItem[0].memberName + ' & Others'
-              : selectedMembersItem[0].memberName
+          selectedMembersItem!.length > 0
+              ? selectedMembersItem!.length > 1
+              ? selectedMembersItem![0].memberName! + ' & Others'
+              : selectedMembersItem![0].memberName!
               : 'Co-hosts',
           style: styleElements.subtitle1ThemeScalable(context),
         ),
@@ -314,7 +314,7 @@ class CreateEventPageState extends State<CreateEventPage> {
                     crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
                       Text(
-                        AppLocalizations.of(context).translate('next'),
+                        AppLocalizations.of(context)!.translate('next'),
                         style: styleElements
                             .subtitle2ThemeScalable(context)
                             .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -326,7 +326,7 @@ class CreateEventPageState extends State<CreateEventPage> {
                   shape: CircleBorder(),
                 ),
               ],
-              appBarTitle: AppLocalizations.of(context).translate('create_event'),
+              appBarTitle: AppLocalizations.of(context)!.translate('create_event'),
               onBackButtonPress: () {
                 Navigator.pop(context);
               }),
@@ -346,7 +346,7 @@ class CreateEventPageState extends State<CreateEventPage> {
                       child: TricycleAvatar(
                         key: UniqueKey(),
                         imageUrl:
-                        ownerImage ?? prefs.getString(Strings.profileImage),
+                        ownerImage ?? prefs!.getString(Strings.profileImage),
                         isClickable: false,
                         service_type: ownerType == 'person'
                             ? SERVICE_TYPE.PERSON
@@ -362,7 +362,7 @@ class CreateEventPageState extends State<CreateEventPage> {
                       style: styleElements.captionThemeScalable(context),
                     ),
                     subtitle: Text(
-                      ownerName ?? prefs.getString(Strings.userName),
+                      ownerName ?? prefs!.getString(Strings.userName)!,
                       style: styleElements.subtitle1ThemeScalable(context),
                     ),
                   ),
@@ -495,7 +495,7 @@ class CreateEventPageState extends State<CreateEventPage> {
               ownerImage = item.eventOwnerImageUrl;
               ownerName = item.eventOwnerName;
               print(item.privacyType);
-              privacyTypeKey.currentState.setPrivacyType(item.privacyType);
+              privacyTypeKey.currentState!.setPrivacyType(item.privacyType);
             });
           },
         );
@@ -505,9 +505,9 @@ class CreateEventPageState extends State<CreateEventPage> {
 
   String getTitle() {
     if (type == 'event') {
-      return AppLocalizations.of(context).translate('create_event');
+      return AppLocalizations.of(context)!.translate('create_event');
     } else if (type == 'task') {
-      return AppLocalizations.of(context).translate('task_details');
+      return AppLocalizations.of(context)!.translate('task_details');
     } else {
       return "Details";
     }
@@ -527,11 +527,11 @@ class CreateEventPageState extends State<CreateEventPage> {
 
     newDate = new DateTime.now();
 
-    final DateTime picked = await showDatePicker(
+    final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: newDate,
         firstDate: newDate,
-        builder: (BuildContext context, Widget child) {
+        builder: (BuildContext context, Widget? child) {
           return Theme(
             data: ThemeData.light().copyWith(
               primaryColor: Colors.black,
@@ -544,7 +544,7 @@ class CreateEventPageState extends State<CreateEventPage> {
               ),
               buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
             ),
-            child: child,
+            child: child!,
           );
         },
         lastDate: DateTime(DateTime.now().year + 100));
@@ -559,11 +559,11 @@ class CreateEventPageState extends State<CreateEventPage> {
     var newDate = new DateTime(
         DateTime.now().year, DateTime.now().month, DateTime.now().day);
 
-    final DateTime picked = await showDatePicker(
+    final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime(newDate.year, newDate.month, newDate.day + 1),
       firstDate: DateTime(newDate.year, newDate.month, newDate.day),
-      builder: (BuildContext context, Widget child) {
+      builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData.light().copyWith(
             primaryColor: Colors.black,
@@ -576,7 +576,7 @@ class CreateEventPageState extends State<CreateEventPage> {
             ),
             buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
           ),
-          child: child,
+          child: child!,
         );
       },
       lastDate: DateTime(newDate.year + 100),
@@ -589,11 +589,11 @@ class CreateEventPageState extends State<CreateEventPage> {
   }
 
   Future<void> _selectStartTime(BuildContext context) async {
-    final TimeOfDay picked = await showTimePicker(
+    final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
 
-      builder: (BuildContext context, Widget child) {
+      builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData.light().copyWith(
             primaryColor: Colors.black,
@@ -606,7 +606,7 @@ class CreateEventPageState extends State<CreateEventPage> {
             ),
             buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
           ),
-          child: child,
+          child: child!,
         );
       },
     );
@@ -629,7 +629,7 @@ class CreateEventPageState extends State<CreateEventPage> {
         else
           {
             ToastBuilder().showToast(
-                AppLocalizations.of(context).translate('future_date'),
+                AppLocalizations.of(context)!.translate('future_date'),
                 context,
                 HexColor(AppColors.information));
           }
@@ -638,10 +638,10 @@ class CreateEventPageState extends State<CreateEventPage> {
   }
 
   Future<void> _selectEndTime(BuildContext context) async {
-    final TimeOfDay picked = await showTimePicker(
+    final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
-      builder: (BuildContext context, Widget child) {
+      builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData.light().copyWith(
             primaryColor: Colors.black,
@@ -654,7 +654,7 @@ class CreateEventPageState extends State<CreateEventPage> {
             ),
             buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
           ),
-          child: child,
+          child: child!,
         );
       },
     );
@@ -666,7 +666,7 @@ class CreateEventPageState extends State<CreateEventPage> {
       });
   }
 
-  Widget getEventDetailCard(String title, Widget child, {EdgeInsets padding}) {
+  Widget getEventDetailCard(String title, Widget child, {EdgeInsets? padding}) {
     return Container(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -682,34 +682,34 @@ class CreateEventPageState extends State<CreateEventPage> {
   }
 
   void createPayload() {
-    if (formKey.currentState.validate()) {
-      formKey.currentState.save();
-      if (privacyTypeKey.currentState.selectedTypeCode != null && privacyTypeKey.currentState.selectedTypeCode.isNotEmpty) {
+    if (formKey.currentState!.validate()) {
+      formKey.currentState!.save();
+      if (privacyTypeKey.currentState!.selectedTypeCode != null && privacyTypeKey.currentState!.selectedTypeCode!.isNotEmpty) {
         if (selectedStartEpoch != null && selectedStartTimeOfDay != null) {
           if (type == 'talk' || (selectedEndEpoch != null && selectedEndTimeOfDay != null)) {
-            if (roomTopicKey.currentState.selectedList != null && roomTopicKey.currentState.selectedList.length > 0) {
+            if (roomTopicKey.currentState!.selectedList != null && roomTopicKey.currentState!.selectedList.length > 0) {
               EventCreateRequest payload = EventCreateRequest();
 
               var d = DateTime.fromMillisecondsSinceEpoch(selectedStartEpoch);
               var sd = DateTime(d.year, d.month, d.day,
-                  selectedStartTimeOfDay.hour, selectedStartTimeOfDay.minute);
+                  selectedStartTimeOfDay!.hour, selectedStartTimeOfDay!.minute);
               // var startDate =
               // Utility().getDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", sd);
 
               if (type != 'talk') {
                 var e_d = DateTime.fromMillisecondsSinceEpoch(selectedEndEpoch);
                 var ed = DateTime(e_d.year, e_d.month, e_d.day,
-                    selectedEndTimeOfDay.hour, selectedEndTimeOfDay.minute);
+                    selectedEndTimeOfDay!.hour, selectedEndTimeOfDay!.minute);
                 // var endDate =
                 // Utility().getDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", ed);
                 payload.endTime = ed.millisecondsSinceEpoch;
               }
-              payload.eventOwnerType = prefs.getString(Strings.ownerType);
-              payload.eventOwnerId = prefs.getInt(Strings.userId);
-              payload.eventOrganizerType = prefs.getString(Strings.ownerType);
-              payload.eventOrganizerId = prefs.getInt(Strings.userId);
-              payload.calContextType = prefs.getString(Strings.ownerType);
-              payload.calContextTypeId = prefs.getInt(Strings.userId);
+              payload.eventOwnerType = prefs!.getString(Strings.ownerType);
+              payload.eventOwnerId = prefs!.getInt(Strings.userId);
+              payload.eventOrganizerType = prefs!.getString(Strings.ownerType);
+              payload.eventOrganizerId = prefs!.getInt(Strings.userId);
+              payload.calContextType = prefs!.getString(Strings.ownerType);
+              payload.calContextTypeId = prefs!.getInt(Strings.userId);
               payload.standardEventsId = standardEventId;
               payload.eventName = title;
               payload.startTime = sd.millisecondsSinceEpoch;
@@ -717,17 +717,17 @@ class CreateEventPageState extends State<CreateEventPage> {
               payload.eventDate = Utility().getDateFormat('yyyy-MM-dd',
                   DateTime.fromMillisecondsSinceEpoch(selectedStartEpoch));
               payload.eventStatus = EVENT_STATUS.ACTIVE.status;
-              payload.eventTopics = List<String>.generate(
-                  roomTopicKey.currentState.selectedList.length, (index) {
-                return roomTopicKey.currentState.selectedList[index].topicName;
+              payload.eventTopics = List<String?>.generate(
+                  roomTopicKey.currentState!.selectedList.length, (index) {
+                return roomTopicKey.currentState!.selectedList[index].topicName;
               });
               payload.eventPrivacyType =
-                  privacyTypeKey.currentState.selectedTypeCode;
+                  privacyTypeKey.currentState!.selectedTypeCode;
               payload.involvedPeopleList = List<InvolvedPeopleList>.generate(
-                  selectedMembersItem.length, (index) {
+                  selectedMembersItem!.length, (index) {
                 return InvolvedPeopleList(
-                    memberType: selectedMembersItem[index].memberType,
-                    memberId: selectedMembersItem[index].memberId,
+                    memberType: selectedMembersItem![index].memberType,
+                    memberId: selectedMembersItem![index].memberId,
                     roleType: 'cohost');
               });
 
@@ -741,25 +741,25 @@ class CreateEventPageState extends State<CreateEventPage> {
               });
             } else {
               ToastBuilder().showToast(
-                  AppLocalizations.of(context).translate('please_select_topic'),
+                  AppLocalizations.of(context)!.translate('please_select_topic'),
                   context,
                   HexColor(AppColors.information));
             }
           } else {
             ToastBuilder().showToast(
-                AppLocalizations.of(context).translate('select_end_date_time'),
+                AppLocalizations.of(context)!.translate('select_end_date_time'),
                 context,
                 HexColor(AppColors.information));
           }
         } else {
           ToastBuilder().showToast(
-              AppLocalizations.of(context).translate('select_start_date_time'),
+              AppLocalizations.of(context)!.translate('select_start_date_time'),
               context,
               HexColor(AppColors.information));
         }
       } else {
         ToastBuilder().showToast(
-            AppLocalizations.of(context)
+            AppLocalizations.of(context)!
                 .translate('please_select_privacy_type'),
             context,
             HexColor(AppColors.information));

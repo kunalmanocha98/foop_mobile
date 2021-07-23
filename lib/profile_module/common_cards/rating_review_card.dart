@@ -18,15 +18,15 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 // ignore: must_be_immutable
 class RatingAndReviewCard extends StatelessWidget {
   final CommonCardData data;
-  Persondata persondata;
-  Null Function() callback;
-  BuildContext context;
-  TextStyleElements styleElements;
-  int userId;
-  int ownerId;
-  String type;
-  String imageUrl;
-  String userName;
+  Persondata? persondata;
+  Null Function()? callback;
+  BuildContext? context;
+  late TextStyleElements styleElements;
+  int? userId;
+  int? ownerId;
+  String? type;
+  String? imageUrl;
+  String? userName;
   bool showRating;
 
 
@@ -45,7 +45,7 @@ class RatingAndReviewCard extends StatelessWidget {
     return displaySize(context).width;
   }
 
-  RatingAndReviewCard({Key key, @required this.data, this.showRating = true,this.persondata, this.callback,this.type,this.ownerId,this.userId,this.userName,this.imageUrl})
+  RatingAndReviewCard({Key? key, required this.data, this.showRating = true,this.persondata, this.callback,this.type,this.ownerId,this.userId,this.userName,this.imageUrl})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -94,7 +94,7 @@ class RatingAndReviewCard extends StatelessWidget {
                             alignment: Alignment.topCenter,
                             child: Container(
                               child: Text(
-                                data.textOne!=null?  double.parse(data.textOne).toStringAsFixed(1).toString()??"":"",
+                                data.textOne!=null?  double.parse(data.textOne!).toStringAsFixed(1).toString():"",
                                 style: TextStyle(
                                   fontFamily: 'Source Sans Pro',
                                   fontSize: ScreenUtil()
@@ -179,7 +179,7 @@ class RatingAndReviewCard extends StatelessWidget {
                                         margin:
                                         const EdgeInsets.only(left: 8, top: 8.0),
                                         child: Text(
-                                          AppLocalizations.of(context).translate('number_5'),
+                                          AppLocalizations.of(context)!.translate('number_5'),
                                           style: TextStyle(
                                             fontFamily: 'Source Sans Pro',
                                             fontSize: ScreenUtil()
@@ -200,7 +200,7 @@ class RatingAndReviewCard extends StatelessWidget {
                                         animation: true,
                                         lineHeight:10.0,
                                         animationDuration: 2000,
-                                        percent: data.ratingValueFiveStar!=0?(data.ratingValueFiveStar.toDouble() /10):0.1,
+                                        percent: data.ratingValueFiveStar!=0?(data.ratingValueFiveStar!.toDouble() /10):0.1,
                                         linearStrokeCap: LinearStrokeCap.roundAll,
                                         progressColor: HexColor(AppColors.appColorGreen),
                                         backgroundColor: HexColor(AppColors.appColorTransparent),
@@ -221,7 +221,7 @@ class RatingAndReviewCard extends StatelessWidget {
                                         margin:
                                         const EdgeInsets.only(left: 8, top: 8.0),
                                         child: Text(
-                                          AppLocalizations.of(context).translate('number_4'),
+                                          AppLocalizations.of(context)!.translate('number_4'),
                                           style: TextStyle(
                                             fontFamily: 'Source Sans Pro',
                                             fontSize: ScreenUtil()
@@ -242,7 +242,7 @@ class RatingAndReviewCard extends StatelessWidget {
                                         animation: true,
                                         lineHeight: 10.0,
                                         animationDuration: 2000,
-                                        percent: data.ratingValueFourStar!=0?(data.ratingValueFourStar.toDouble() /10):0.1,
+                                        percent: data.ratingValueFourStar!=0?(data.ratingValueFourStar!.toDouble() /10):0.1,
                                         linearStrokeCap: LinearStrokeCap.roundAll,
                                         progressColor: HexColor(AppColors.appColorLightGreen),
                                         backgroundColor: HexColor(AppColors.appColorTransparent),
@@ -263,7 +263,7 @@ class RatingAndReviewCard extends StatelessWidget {
                                         margin:
                                         const EdgeInsets.only(left: 8, top: 8.0),
                                         child: Text(
-                                          AppLocalizations.of(context).translate('number_3'),
+                                          AppLocalizations.of(context)!.translate('number_3'),
                                           style: TextStyle(
                                             fontFamily: 'Source Sans Pro',
                                             fontSize: ScreenUtil()
@@ -284,7 +284,7 @@ class RatingAndReviewCard extends StatelessWidget {
                                         animation: true,
                                         lineHeight: 10.0,
                                         animationDuration: 2000,
-                                        percent: data.ratingValueThreeStar!=0?(data.ratingValueThreeStar.toDouble() /10):0.1,
+                                        percent: data.ratingValueThreeStar!=0?(data.ratingValueThreeStar!.toDouble() /10):0.1,
                                         linearStrokeCap: LinearStrokeCap.roundAll,
                                         progressColor: HexColor(AppColors.appColorYellow),
                                         backgroundColor: HexColor(AppColors.appColorTransparent),
@@ -305,7 +305,7 @@ class RatingAndReviewCard extends StatelessWidget {
                                         margin:
                                         const EdgeInsets.only(left: 8, top: 8.0),
                                         child: Text(
-                                          AppLocalizations.of(context).translate('number_2'),
+                                          AppLocalizations.of(context)!.translate('number_2'),
                                           style: TextStyle(
                                             fontFamily: 'Source Sans Pro',
                                             fontSize: ScreenUtil()
@@ -326,7 +326,7 @@ class RatingAndReviewCard extends StatelessWidget {
                                         animation: true,
                                         lineHeight: 10.0,
                                         animationDuration: 2000,
-                                        percent: data.ratingValueTwoStar!=0?(data.ratingValueTwoStar.toDouble() /10):0.1,
+                                        percent: data.ratingValueTwoStar!=0?(data.ratingValueTwoStar!.toDouble() /10):0.1,
                                         linearStrokeCap: LinearStrokeCap.roundAll,
                                         progressColor: HexColor(AppColors.appColorOrange),
                                         backgroundColor: HexColor(AppColors.appColorTransparent),
@@ -347,7 +347,7 @@ class RatingAndReviewCard extends StatelessWidget {
                                         margin:
                                         const EdgeInsets.only(left: 8, top: 8.0),
                                         child: Text(
-                                          AppLocalizations.of(context).translate('number_1'),
+                                          AppLocalizations.of(context)!.translate('number_1'),
                                           style: TextStyle(
                                             fontFamily: 'Source Sans Pro',
                                             fontSize: ScreenUtil()
@@ -368,7 +368,7 @@ class RatingAndReviewCard extends StatelessWidget {
                                         animation: true,
                                         lineHeight: 10.0,
                                         animationDuration: 2000,
-                                        percent: data.ratingValueOneStar!=0?(data.ratingValueOneStar.toDouble() /10):0.1,
+                                        percent: data.ratingValueOneStar!=0?(data.ratingValueOneStar!.toDouble() /10):0.1,
                                         linearStrokeCap: LinearStrokeCap.roundAll,
                                         progressColor: HexColor(AppColors.appMainColor),
                                         backgroundColor: HexColor(AppColors.appColorTransparent),
@@ -409,7 +409,7 @@ class RatingAndReviewCard extends StatelessWidget {
                 child: Align(
                   alignment: Alignment.bottomRight,
                   child: Text(
-                    AppLocalizations.of(context).translate('see_people'),
+                    AppLocalizations.of(context)!.translate('see_people'),
                     style: TextStyle(
                       fontFamily: 'Source Sans Pro',
                       fontSize: ScreenUtil()
@@ -440,7 +440,7 @@ class RatingAndReviewCard extends StatelessWidget {
                           Align(
                             alignment: Alignment.center,
                             child: Text(
-                              AppLocalizations.of(context).translate('rate'),
+                              AppLocalizations.of(context)!.translate('rate'),
                               style: TextStyle(
                                 fontFamily: 'Source Sans Pro',
                                 fontSize: ScreenUtil()
@@ -452,7 +452,7 @@ class RatingAndReviewCard extends StatelessWidget {
                             ),
                           ),
                           RatingBar.builder(
-                            initialRating:data.givenRating.toDouble()??0.0,
+                            initialRating:data.givenRating!.toDouble(),
                             minRating: 0,
                             ignoreGestures: true,
                             direction: Axis.horizontal,
@@ -476,7 +476,7 @@ class RatingAndReviewCard extends StatelessWidget {
                                 margin:
                                 const EdgeInsets.only(left: 60, right: 20),
                                 child: Text(
-                                  AppLocalizations.of(context).translate("poor"),
+                                  AppLocalizations.of(context)!.translate("poor"),
                                   style:
                                   styleElements.captionThemeScalable(context),
                                 ),
@@ -485,7 +485,7 @@ class RatingAndReviewCard extends StatelessWidget {
                                 margin:
                                 const EdgeInsets.only(left: 20, right: 60),
                                 child: Text(
-                                  AppLocalizations.of(context).translate("excellent"),
+                                  AppLocalizations.of(context)!.translate("excellent"),
                                   style: styleElements.captionThemeScalable(context),
                                 ),
                               )

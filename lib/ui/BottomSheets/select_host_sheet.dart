@@ -19,8 +19,8 @@ import 'package:oho_works_app/components/paginator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SelectHostSheet extends StatefulWidget {
-  final int selectedId;
-  final Function(HostListItem) onClickCallback;
+  final int? selectedId;
+  final Function(HostListItem)? onClickCallback;
 
   SelectHostSheet({this.selectedId, this.onClickCallback});
 
@@ -29,8 +29,8 @@ class SelectHostSheet extends StatefulWidget {
 }
 
 class _SelectHostSheet extends State<SelectHostSheet> {
-  TextStyleElements styleElements;
-  SharedPreferences prefs = locator<SharedPreferences>();
+  late TextStyleElements styleElements;
+  SharedPreferences? prefs = locator<SharedPreferences>();
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,7 @@ class _SelectHostSheet extends State<SelectHostSheet> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    AppLocalizations.of(context).translate('select_host'),
+                    AppLocalizations.of(context)!.translate('select_host'),
                     style: styleElements.headline6ThemeScalable(context).copyWith(
                       fontWeight: FontWeight.bold
                     ),
@@ -72,7 +72,7 @@ class _SelectHostSheet extends State<SelectHostSheet> {
 
   Future<HostListResponse> fetchList(int page) async {
     var payload = HostListRequest(
-        pageNumber: page, pageSize: 10, personId: prefs.getInt(Strings.userId));
+        pageNumber: page, pageSize: 10, personId: prefs!.getInt(Strings.userId));
     var res = await Calls()
         .call(jsonEncode(payload), context, Config.EVENT_HOST_LIST);
     return HostListResponse.fromJson(res);
@@ -85,7 +85,7 @@ class _SelectHostSheet extends State<SelectHostSheet> {
       child: InkWell(
         onTap: () {
           Navigator.pop(context);
-          widget.onClickCallback(item);
+          widget.onClickCallback!(item);
         },
         child: ListTile(
           leading: TricycleAvatar(
@@ -99,7 +99,7 @@ class _SelectHostSheet extends State<SelectHostSheet> {
             imageUrl: item.eventOwnerImageUrl,
           ),
           title: Text(
-            item.eventOwnerName,
+            item.eventOwnerName!,
             style: styleElements.subtitle1ThemeScalable(context),
           ),
           trailing: (widget.selectedId == item.eventOwnerId)

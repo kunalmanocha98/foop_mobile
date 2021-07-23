@@ -20,14 +20,14 @@ class OverlappedImages16dp extends StatelessWidget {
               shape: BoxShape.circle,
               image: DecorationImage(
                   image:images!=null&&images.isNotEmpty?  CachedNetworkImage(
-                    imageUrl: images[0]?? "",
+                    imageUrl: images[0],
                     placeholder: (context, url) => Center(
                         child:  Image.asset(
                           'assets/appimages/image_place.png',
 
                         )),
                     fit: BoxFit.fill,
-                  ):AssetImage("assets/appimages/userplaceholder.jpg"),
+                  ) as ImageProvider<Object>:AssetImage("assets/appimages/userplaceholder.jpg"),
                   fit: BoxFit.fill),
             ),
           ),
@@ -40,14 +40,14 @@ class OverlappedImages16dp extends StatelessWidget {
                 shape: BoxShape.circle,
                 image: DecorationImage(
                     image: images!=null && images.length>1? CachedNetworkImage(
-                      imageUrl: images[1]?? "",
+                      imageUrl: images[1],
                       placeholder: (context, url) => Center(
                           child:  Image.asset(
                             'assets/appimages/image_place.png',
 
                           )),
                       fit: BoxFit.fill,
-                    ):AssetImage("assets/appimages/userplaceholder.jpg"),
+                    ) as ImageProvider<Object>:AssetImage("assets/appimages/userplaceholder.jpg"),
                     fit: BoxFit.fill),
               ),
             ),
@@ -61,14 +61,14 @@ class OverlappedImages16dp extends StatelessWidget {
                 shape: BoxShape.circle,
                 image: DecorationImage(
                     image: images!=null && images.length>2? CachedNetworkImage(
-                      imageUrl: images[2]?? "",
+                      imageUrl: images[2],
                       placeholder: (context, url) => Center(
                           child:  Image.asset(
                             'assets/appimages/image_place.png',
 
                           )),
                       fit: BoxFit.fill,
-                    ):AssetImage("assets/appimages/userplaceholder.jpg"),
+                    ) as ImageProvider<Object>:AssetImage("assets/appimages/userplaceholder.jpg"),
                     fit: BoxFit.fill),
               ),
             ),
@@ -81,15 +81,15 @@ class OverlappedImages16dp extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                    image: images!=null && images.length>3? CachedNetworkImage(
-                      imageUrl: images[3]?? "",
+                    image: images.length>3? CachedNetworkImage(
+                      imageUrl: images[3],
                       placeholder: (context, url) => Center(
                           child:  Image.asset(
                             'assets/appimages/image_place.png',
 
                           )),
                       fit: BoxFit.fill,
-                    ):AssetImage("assets/appimages/userplaceholder.jpg"),
+                    ) as ImageProvider<Object>:AssetImage("assets/appimages/userplaceholder.jpg"),
                     fit: BoxFit.fill),
               ),
             ),
@@ -103,14 +103,14 @@ class OverlappedImages16dp extends StatelessWidget {
                 shape: BoxShape.circle,
                 image: DecorationImage(
                     image: images!=null && images.length>4? CachedNetworkImage(
-                      imageUrl: images[4]?? "",
+                      imageUrl: images[4],
                       placeholder: (context, url) => Center(
                           child:  Image.asset(
                             'assets/appimages/image_place.png',
 
                           )),
                       fit: BoxFit.fill,
-                    ):AssetImage("assets/appimages/userplaceholder.jpg"),
+                    ) as ImageProvider<Object>:AssetImage("assets/appimages/userplaceholder.jpg"),
                     fit: BoxFit.fill),
               ),
             ),

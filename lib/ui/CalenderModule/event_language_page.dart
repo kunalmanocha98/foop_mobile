@@ -18,24 +18,24 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class EventLanguagePage extends StatefulWidget {
-   List<String> selectedLanguages;
+   List<String>? selectedLanguages;
   EventLanguagePage({this.selectedLanguages});
   @override
   _EventLanguagePage createState() => _EventLanguagePage(selectedList: selectedLanguages);
 }
 
 class _EventLanguagePage extends State<EventLanguagePage> {
-  String searchVal;
-  SharedPreferences prefs = locator<SharedPreferences>();
-  List<LanguageItem> languageList = [];
-  List<String> selectedList ;
-  TextStyleElements styleElements ;
+  String? searchVal;
+  SharedPreferences? prefs = locator<SharedPreferences>();
+  List<LanguageItem>? languageList = [];
+  List<String?>? selectedList ;
+  late TextStyleElements styleElements ;
   _EventLanguagePage({this.selectedList});
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => getList());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => getList());
   }
 
   @override
@@ -51,10 +51,10 @@ class _EventLanguagePage extends State<EventLanguagePage> {
             actions: [
               TricycleTextButton(
                 onPressed: () {
-                  if(selectedList.length>0){
+                  if(selectedList!.length>0){
                     Navigator.pop(context,selectedList);
                   }else{
-                    ToastBuilder().showToast(AppLocalizations.of(context).translate('please_select_language'),
+                    ToastBuilder().showToast(AppLocalizations.of(context)!.translate('please_select_language'),
                         context,
                         HexColor(AppColors.information));
                   }
@@ -63,7 +63,7 @@ class _EventLanguagePage extends State<EventLanguagePage> {
                   direction: Axis.horizontal,
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
-                    Text(AppLocalizations.of(context).translate('next'),
+                    Text(AppLocalizations.of(context)!.translate('next'),
                       style: styleElements
                           .subtitle2ThemeScalable(context)
                           .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -75,21 +75,21 @@ class _EventLanguagePage extends State<EventLanguagePage> {
                 shape: CircleBorder(),
               )
             ],
-            appBarTitle: AppLocalizations.of(context)
+            appBarTitle: AppLocalizations.of(context)!
                 .translate('select_language'), onBackButtonPress: () {
               Navigator.pop(context);
             }),
         body: TricycleListCard(child:
         ListView.builder(
-          itemCount: languageList.length,
+          itemCount: languageList!.length,
           itemBuilder: (BuildContext context, int index) {
             return ListTile(
-              title: Text(languageList[index].expertiseTypeCode,
+              title: Text(languageList![index].expertiseTypeCode!,
               style: styleElements.subtitle1ThemeScalable(context),),
               trailing: Checkbox(
-                value: languageList[index].isSelected ?? false,
-                onChanged: (bool value) {
-                  if (value) {
+                value: languageList![index].isSelected ?? false,
+                onChanged: (bool? value) {
+                  if (value!) {
                     _addSelection(index);
                   } else {
                     _removeSelection(index);
@@ -103,7 +103,7 @@ class _EventLanguagePage extends State<EventLanguagePage> {
     );
   }
   void refresh() {
-    languageList.clear();
+    languageList!.clear();
     getList();
   }
 
@@ -122,8 +122,8 @@ class _EventLanguagePage extends State<EventLanguagePage> {
         languageList = data.rows;
         languageList = languageList ??= [];
         setState(() {
-          for (var item in selectedList) {
-            for (LanguageItem it  in languageList){
+          for (var item in selectedList!) {
+            for (LanguageItem it  in languageList!){
               if(it.expertiseTypeCode == item){
                 it.isSelected = true;
               }
@@ -136,15 +136,15 @@ class _EventLanguagePage extends State<EventLanguagePage> {
 
   void _addSelection(int index) {
     setState(() {
-      selectedList.add(languageList[index].expertiseTypeCode);
-      languageList[index].isSelected = true;
+      selectedList!.add(languageList![index].expertiseTypeCode);
+      languageList![index].isSelected = true;
     });
   }
 
   void _removeSelection(int index) {
     setState(() {
-      selectedList.remove(languageList[index].expertiseTypeCode);
-      languageList[index].isSelected = false;
+      selectedList!.remove(languageList![index].expertiseTypeCode);
+      languageList![index].isSelected = false;
     });
   }
 

@@ -14,15 +14,15 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 // ignore: must_be_immutable
 class CommentItem extends StatelessWidget {
   CommentsItem data;
-  TextStyleElements styleElements;
-  BuildContext context;
-  Null Function(int replyTo) callback;
+  TextStyleElements? styleElements;
+  BuildContext? context;
+  Null Function(int replyTo)? callback;
 
   Widget _simplePopup() => PopupMenuButton<int>(
         itemBuilder: (context) => [
           PopupMenuItem(
             value: 1,
-            child: Text(AppLocalizations.of(context).translate('report_abuse')),
+            child: Text(AppLocalizations.of(context)!.translate('report_abuse')),
           ),
         ],
         onSelected: (value) {},
@@ -33,7 +33,7 @@ class CommentItem extends StatelessWidget {
         ),
       );
 
-  CommentItem({Key key, @required this.data,this.styleElements}) : super(key: key);
+  CommentItem({Key? key, required this.data,this.styleElements}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -62,14 +62,14 @@ class CommentItem extends StatelessWidget {
                   padding: EdgeInsets.only(left: 4, right: 8),
                   child: Text(
                     data.notesCreatedByName ?? "",
-                    style: styleElements.subtitle2ThemeScalable(context),
+                    style: styleElements!.subtitle2ThemeScalable(context),
                   ),
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 8, right: 8),
                   child: Text(
                     data.createdDate ?? "",
-                    style: styleElements.overlineThemeScalable(context),
+                    style: styleElements!.overlineThemeScalable(context),
                   ),
                 ),
                 Spacer(),
@@ -117,7 +117,7 @@ class CommentItem extends StatelessWidget {
                 data.noteContent ?? "",
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
-                style: styleElements.subtitle2ThemeScalable(context),
+                style: styleElements!.subtitle2ThemeScalable(context),
               ),
             ),
             Row(
@@ -128,7 +128,7 @@ class CommentItem extends StatelessWidget {
                         context: context,
                         builder: (BuildContext context) => RateDialog(
                               type: "",
-                              title: AppLocalizations.of(context).translate('rate_comment'),
+                              title: AppLocalizations.of(context)!.translate('rate_comment'),
                               subtitle: "",
                               callback: (isSubmitted, rateStarValue) {
                                 updateRatings(isSubmitted, rateStarValue);
@@ -144,7 +144,7 @@ class CommentItem extends StatelessWidget {
                         padding: EdgeInsets.only(left: 8, right: 1),
                         child: Text(
                           data.averageRating.toString(),
-                          style: styleElements.bodyText2ThemeScalable(context).copyWith(color: HexColor(AppColors.appMainColor)),
+                          style: styleElements!.bodyText2ThemeScalable(context).copyWith(color: HexColor(AppColors.appMainColor)),
                         ),
                       ),
                       RatingBar(
@@ -177,8 +177,8 @@ class CommentItem extends StatelessWidget {
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 8, right: 8),
-                  child: Text(AppLocalizations.of(context).translate('reply'),
-                    style: styleElements.bodyText2ThemeScalable(context).copyWith(color: HexColor(AppColors.appMainColor)),
+                  child: Text(AppLocalizations.of(context)!.translate('reply'),
+                    style: styleElements!.bodyText2ThemeScalable(context).copyWith(color: HexColor(AppColors.appMainColor)),
                   ),
                 ),
               ],

@@ -6,9 +6,9 @@ import 'package:oho_works_app/utils/hexColors.dart';
 import 'package:flutter/material.dart';
 
 class AudioPostDialog extends StatelessWidget{
-  final String title;
-  final Function okCallback;
-  final Function cancelCallback;
+  final String? title;
+  final Function? okCallback;
+  final Function? cancelCallback;
   AudioPostDialog({this.title,this.okCallback,this.cancelCallback});
   @override
   Widget build(BuildContext context) {
@@ -46,10 +46,10 @@ class AudioPostDialog extends StatelessWidget{
                  TricycleTextButton(
                      onPressed: (){
                        Navigator.pop(context);
-                       cancelCallback();
+                       cancelCallback!();
                        },
                      shape: StadiumBorder(),
-                     child: Text(AppLocalizations.of(context).translate('cancel'),
+                     child: Text(AppLocalizations.of(context)!.translate('cancel'),
                      style: styleElements.captionThemeScalable(context).copyWith(
                        color: HexColor(AppColors.appMainColor)
                      ),)
@@ -57,10 +57,10 @@ class AudioPostDialog extends StatelessWidget{
                  TricycleTextButton(
                      onPressed:(){
                        Navigator.pop(context);
-                       okCallback();
+                       okCallback!();
                      },
                      shape: StadiumBorder(),
-                     child: Text(AppLocalizations.of(context).translate('ok'),
+                     child: Text(AppLocalizations.of(context)!.translate('ok'),
                        style: styleElements.captionThemeScalable(context).copyWith(
                            color: HexColor(AppColors.appMainColor)
                        ),)

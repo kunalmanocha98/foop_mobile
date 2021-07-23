@@ -1,7 +1,7 @@
 class PersonTypeList {
-  String statusCode;
-  String message;
-  List<PersonItem> rows;
+  String? statusCode;
+  String? message;
+  List<PersonItem>? rows;
 
   PersonTypeList({this.statusCode, this.message, this.rows});
 
@@ -11,7 +11,7 @@ class PersonTypeList {
     if (json['rows'] != null) {
       rows = [];//PersonItem>();
       json['rows'].forEach((v) {
-        rows.add(new PersonItem.fromJson(v));
+        rows!.add(new PersonItem.fromJson(v));
       });
     }
   }
@@ -21,19 +21,19 @@ class PersonTypeList {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class PersonItem {
-  String personTypeName;
-  String personTypeCode;
-  String personTypeDescription;
-  String imageUrl;
-  int personTypeId;
-  bool isSelected;
+  String? personTypeName;
+  String? personTypeCode;
+  String? personTypeDescription;
+  String? imageUrl;
+  int? personTypeId;
+  bool? isSelected;
 
   PersonItem(
       {this.personTypeName,

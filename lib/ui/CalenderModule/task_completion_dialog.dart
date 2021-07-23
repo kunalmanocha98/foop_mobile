@@ -11,7 +11,7 @@ class TaskCompletionDialog extends StatefulWidget {
 }
 
 class TaskCompletionDialogState extends State<TaskCompletionDialog> {
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
   int selectedCompletionEpoch = 0;
   String selectedCompletionDate = "Completion date";
 
@@ -146,11 +146,11 @@ class TaskCompletionDialogState extends State<TaskCompletionDialog> {
 
     newDate = new DateTime.now();
 
-    final DateTime picked = await showDatePicker(
+    final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: newDate,
         firstDate: DateTime(1900),
-        builder: (BuildContext context, Widget child) {
+        builder: (BuildContext context, Widget? child) {
           return Theme(
             data: ThemeData.light().copyWith(
               primaryColor: Colors.black,
@@ -163,7 +163,7 @@ class TaskCompletionDialogState extends State<TaskCompletionDialog> {
               ),
               buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
             ),
-            child: child,
+            child: child!,
           );
         },
         lastDate: newDate);

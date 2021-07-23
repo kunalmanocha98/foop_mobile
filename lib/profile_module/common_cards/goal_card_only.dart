@@ -37,8 +37,8 @@ class GoalsCardOnly extends StatelessWidget {
     debugPrint('Width = ' + displaySize(context).width.toString());
     return displaySize(context).width;
   }
-  TextStyleElements styleElements;
-  GoalsCardOnly({Key key, @required this.data}) : super(key: key);
+  late TextStyleElements styleElements;
+  GoalsCardOnly({Key? key, required this.data}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -185,7 +185,7 @@ class GoalsCardOnly extends StatelessWidget {
                 ],
               ),
               Visibility(
-                visible: data.isBlur,
+                visible: data.isBlur!,
                 child: ClipRect(
                   child: Container(
                     width: displayWidth(context),

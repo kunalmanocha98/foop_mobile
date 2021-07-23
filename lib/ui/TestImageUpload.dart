@@ -27,18 +27,18 @@ class TestImageUpload extends StatefulWidget {
 
 class _TestImageUpload extends State<TestImageUpload> {
   var imagePicker = ImagePicker();
-  File _imageFile;
-  SharedPreferences prefs;
-  String mimeType, contentType;
-  File _videoFile;
+  File? _imageFile;
+  late SharedPreferences prefs;
+  String? mimeType, contentType;
+  File? _videoFile;
 
   // File _documentFile;
 
   void _openGallery(BuildContext context) async {
     try {
-      var picture = await imagePicker.getImage(source: ImageSource.gallery);
+      var picture = await (imagePicker.getImage(source: ImageSource.gallery) as FutureOr<PickedFile>);
       prefs = await SharedPreferences.getInstance();
-      String lookupmime = lookupMimeType(picture.path);
+      String lookupmime = lookupMimeType(picture.path)!;
       var filetype = lookupmime.split('/');
       mimeType = filetype[1];
       contentType = filetype[0];
@@ -54,9 +54,9 @@ class _TestImageUpload extends State<TestImageUpload> {
 
   void _openGalleryForVideo(BuildContext context) async {
     try {
-      var picture = await imagePicker.getVideo(source: ImageSource.gallery);
+      var picture = await (imagePicker.getVideo(source: ImageSource.gallery) as FutureOr<PickedFile>);
       prefs = await SharedPreferences.getInstance();
-      String lookupmime = lookupMimeType(picture.path);
+      String lookupmime = lookupMimeType(picture.path)!;
       var filetype = lookupmime.split('/');
       mimeType = filetype[1];
       contentType = filetype[0];
@@ -72,9 +72,9 @@ class _TestImageUpload extends State<TestImageUpload> {
 
   void _openGalleryForDocument(BuildContext context) async {
     try {
-      var file = await FilePicker.platform.pickFiles(type: FileType.custom);
+      var file = await (FilePicker.platform.pickFiles(type: FileType.custom) as FutureOr<FilePickerResult>);
       prefs = await SharedPreferences.getInstance();
-      String lookupmime = lookupMimeType(file.files.first.path);
+      String lookupmime = lookupMimeType(file.files.first.path!)!;
       var filetype = lookupmime.split('/');
       mimeType = filetype[1];
       contentType = filetype[0];
@@ -89,7 +89,7 @@ class _TestImageUpload extends State<TestImageUpload> {
   }
 
   Future<Null> _cropImage(String path) async {
-    File croppedFile = await ImageCropper.cropImage(
+    File? croppedFile = await ImageCropper.cropImage(
         sourcePath: path,
         aspectRatioPresets: Platform.isAndroid
             ? [
@@ -140,14 +140,14 @@ class _TestImageUpload extends State<TestImageUpload> {
               width: 100,
               child: _imageFile != null
                   ? Image.file(
-                      _imageFile,
+                      _imageFile!,
                       fit: BoxFit.fill,
                     )
-                  : Text(AppLocalizations.of(context).translate('no_image_selected')),
+                  : Text(AppLocalizations.of(context)!.translate('no_image_selected')),
             ),
             TricycleElevatedButton(
               elevation: 8,
-              child: Text(AppLocalizations.of(context).translate('img_upload')),
+              child: Text(AppLocalizations.of(context)!.translate('img_upload')),
               shape: StadiumBorder(),
               onPressed: () {
                 _openGallery(context);
@@ -155,7 +155,7 @@ class _TestImageUpload extends State<TestImageUpload> {
             ),
             TricycleElevatedButton(
               elevation: 8,
-              child: Text(AppLocalizations.of(context).translate('vid_upload')),
+              child: Text(AppLocalizations.of(context)!.translate('vid_upload')),
               shape: StadiumBorder(),
               onPressed: () {
                 _openGalleryForVideo(context);
@@ -163,7 +163,7 @@ class _TestImageUpload extends State<TestImageUpload> {
             ),
             TricycleElevatedButton(
               elevation: 8,
-              child: Text(AppLocalizations.of(context).translate('doc_upload')),
+              child: Text(AppLocalizations.of(context)!.translate('doc_upload')),
               shape: StadiumBorder(),
               onPressed: () {
                 _openGalleryForDocument(context);
@@ -173,7 +173,7 @@ class _TestImageUpload extends State<TestImageUpload> {
               color: HexColor(AppColors.appMainColor),
               padding: EdgeInsets.all(16),
               elevation: 8,
-              child: Text(AppLocalizations.of(context).translate('doc_upload')),
+              child: Text(AppLocalizations.of(context)!.translate('doc_upload')),
               shape: StadiumBorder(),
               onPressed: () {
                 uploadDocumentfile();

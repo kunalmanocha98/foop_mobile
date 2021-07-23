@@ -17,6 +17,7 @@ import 'package:oho_works_app/services/audio_socket_service.dart';
 import 'package:oho_works_app/tri_cycle_database/data_base_helper.dart';
 import 'package:oho_works_app/ui/BottomSheets/CreateNewSheet.dart';
 import 'package:oho_works_app/ui/campus_talk/event_post_screen.dart';
+import 'package:oho_works_app/ui/campus_talk/nexge_video_audience_page.dart';
 import 'package:oho_works_app/ui/campus_talk/talk_audience_page.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/colors.dart';
@@ -35,15 +36,15 @@ import 'campus_talk_list.dart';
 import 'event_chat_screen.dart';
 
 class TalkEventPage extends StatefulWidget {
-  final IO.Socket socket;
-  final EventListItem eventModel;
-  final Function successCallback;
-  final bool hideLoader;
-  final TALKFOOTERENUM role;
-  final int startTime;
+  final IO.Socket? socket;
+  final EventListItem? eventModel;
+  final Function? successCallback;
+  final bool? hideLoader;
+  final TALKFOOTERENUM? role;
+  final int? startTime;
 
   TalkEventPage(
-      {Key key,
+      {Key? key,
       this.socket,
       this.eventModel,
       this.successCallback,
@@ -62,41 +63,43 @@ class TalkEventPage extends StatefulWidget {
 
 class TalkEventPageState extends State<TalkEventPage> {
   static const String EMIT_ON_EVENT_RATING = "event_rating";
-  TextStyleElements styleElements;
-  BuildContext sctx;
-  final IO.Socket socket;
-  EventListItem eventModel;
+  TextStyleElements? styleElements;
+  BuildContext? sctx;
+  final IO.Socket? socket;
+  EventListItem? eventModel;
   int _selectedIndex = 0;
   int chatCount = 0;
   final db = DatabaseHelper.instance;
-  bool hideLoader;
+  bool? hideLoader;
 
   TalkEventPageState(
       {this.socket, this.eventModel, this.hideLoader, this.role});
 
-  String conversationId;
-  SharedPreferences prefs = locator<SharedPreferences>();
+  String? conversationId;
+  SharedPreferences? prefs = locator<SharedPreferences>();
   List<int> participantIds = [];
-  GlobalKey<TalkAudiencePageState> audiencePageKey = GlobalKey();
+  GlobalKey<TalkAudiencePageNexgeState> audiencePageKey = GlobalKey();
   GlobalKey<EventChatScreenPageState> chatPageKey = GlobalKey();
   GlobalKey<TricycleTalkFooterState> footerKey = GlobalKey();
-  AudioSocketService audioSocketService = locator<AudioSocketService>();
-  EventBus eventbus = locator<EventBus>();
+  AudioSocketService? audioSocketService = locator<AudioSocketService>();
+  EventBus? eventbus = locator<EventBus>();
   GlobalKey<EventPostScreenPageState> postScreenKey = GlobalKey();
 
-  TALKFOOTERENUM role;
+  TALKFOOTERENUM? role;
 
   List<Widget> get _widgetOptions => [
-        TalkAudiencePage(
+
+
+    TalkAudiencePageNexge(
             key: audiencePageKey,
-            eventId: eventModel.id,
+            eventId: eventModel!.id,
             authToken: "",
             hideLoader: hideLoader,
             role: role,
             startTime: widget.startTime,
             eventModel: eventModel,
-            participantId: prefs.getInt(Strings.userId).toString(),
-            mute: eventModel.isMute ?? true,
+            participantId: prefs!.getInt(Strings.userId).toString(),
+            mute: eventModel!.isMute ?? true,
             participantIds: participantIds,
             countCallBack: countUpdate,
             successCallback: widget.successCallback,
@@ -105,12 +108,12 @@ class TalkEventPageState extends State<TalkEventPage> {
             popCallback: () {
               Navigator.pop(context);
             },
-            conversationCallBack: (String id) {
+            conversationCallBack: (String? id) {
               print(id ??
                   "-----------------------------------------------------");
               // setState(() {
                 conversationId = id;
-                if (conversationId != null) getCount(conversationId);
+                if (conversationId != null) getCount(conversationId!);
               // });
             },
             ratingSuccessCallback: emitRatingSuccess,
@@ -119,20 +122,20 @@ class TalkEventPageState extends State<TalkEventPage> {
         EventChatScreenPage(
           key: chatPageKey,
           conversationId: conversationId,
-          eventName: eventModel.title,
-          eventImage: eventModel.eventImage,
-          eventId: eventModel.id,
-          participantId: prefs.getInt(Strings.userId),
+          eventName: eventModel!.title,
+          eventImage: eventModel!.eventImage,
+          eventId: eventModel!.id,
+          participantId: prefs!.getInt(Strings.userId),
         ),
         EventPostScreenPage(
           key: postScreenKey,
-          eventId: eventModel.id,
+          eventId: eventModel!.id,
         )
       ];
 
   @override
   void initState() {
-    audioSocketService.getSocket().on(EMIT_ON_EVENT_RATING, onEventRating);
+    audioSocketService!.getSocket()!.on(EMIT_ON_EVENT_RATING, onEventRating);
     super.initState();
   }
 
@@ -158,16 +161,16 @@ class TalkEventPageState extends State<TalkEventPage> {
       color: HexColor(AppColors.appColorBackground),
       itemBuilder: (context) =>
           CampusTalkDropMenu(context: context).eventMenuList,
-      onSelected: (value) {
+      onSelected: (dynamic value) {
         switch (value) {
           case 'search':
             {
-              audiencePageKey.currentState.menuCalls('search');
+              audiencePageKey.currentState!.menuCalls('search');
               break;
             }
           case 'menu':
             {
-              audiencePageKey.currentState.menuCalls('menu');
+              audiencePageKey.currentState!.menuCalls('menu');
               break;
             }
           default:
@@ -181,10 +184,10 @@ class TalkEventPageState extends State<TalkEventPage> {
 
   closeMinimizeActions() {
     print("minimie actions closed");
-    eventbus.fire(TalkEventData(
+    eventbus!.fire(TalkEventData(
         model: null,
         showPlayback: false,
-        engine: audiencePageKey.currentState.engine.instance()));
+        engine: null));
   }
 
   void newMessage() {
@@ -208,14 +211,14 @@ class TalkEventPageState extends State<TalkEventPage> {
           });
           return false;
         } else {
-          audiencePageKey.currentState.switchOffSocket();
-          eventbus.fire(
+          audiencePageKey.currentState!.switchOffSocket();
+          eventbus!.fire(
               TalkEventData(
               model: eventModel,
               showPlayback: true,
               role: role,
-              startTime: audiencePageKey.currentState.getStartTime(),
-              engine: audiencePageKey.currentState.engine.instance()));
+              startTime: audiencePageKey.currentState!.getStartTime(),
+              engine: null));
           // Navigator.pop(context);
           // audiencePageKey.currentState.leaveEvent();
           // eventbus.fire(TalkEventData(
@@ -232,37 +235,37 @@ class TalkEventPageState extends State<TalkEventPage> {
               key: footerKey,
               chatCount: chatCount,
               role: role,
-              isMute: eventModel.isMute ?? true,
+              isMute: eventModel!.isMute ?? true,
               postCreateCallback: () {
                 _showPostBottomSheet(context);
               },
               exitCallback: () {
-                audiencePageKey.currentState.leaveEvent();
-                eventbus.fire(TalkEventData(
+                audiencePageKey.currentState?.leaveEvent();
+                eventbus!.fire(TalkEventData(
                     model: null,
                     showPlayback: false,
-                    engine: audiencePageKey.currentState.engine.instance()));
+                    engine: null));
               },
               postCallback: () {
-                chatPageKey.currentState.setCurrentVisible(false);
+                chatPageKey.currentState!.setCurrentVisible(false);
                 setState(() {
-                  postScreenKey.currentState.refresh();
-                  footerKey.currentState.updateType(TALKFOOTERENUM.post);
+                  postScreenKey.currentState!.refresh();
+                  footerKey.currentState!.updateType(TALKFOOTERENUM.post);
                   _selectedIndex = 2;
                 });
               },
               muteCallBack: (bool micOn) {
-                eventModel.isMute = !micOn;
-                audiencePageKey.currentState.connectorMuteCall(!micOn);
+                eventModel!.isMute = !micOn;
+                audiencePageKey.currentState?.connectorMuteCall(!micOn);
               },
               videoCallBack: (bool isVideoOn) {
 
 
                 print(isVideoOn.toString()+"-------------------------------------------!");
-                audiencePageKey.currentState.turnOnOffVideo(isVideoOn);
+                audiencePageKey.currentState?.turnOnOffVideo(isVideoOn);
               },
               talkCallback: () {
-                chatPageKey.currentState.setCurrentVisible(false);
+                chatPageKey.currentState!.setCurrentVisible(false);
                 setState(() {
                   roleCallback(role);
                   if(_selectedIndex==1)
@@ -273,9 +276,9 @@ class TalkEventPageState extends State<TalkEventPage> {
               },
               chatCallback: () {
                 setState(() {
-                  footerKey.currentState.updateType(TALKFOOTERENUM.chat);
-                  chatPageKey.currentState.refresh(conversationId);
-                  chatPageKey.currentState.setCurrentVisible(true);
+                  footerKey.currentState!.updateType(TALKFOOTERENUM.chat);
+                  chatPageKey.currentState!.refresh(conversationId);
+                  chatPageKey.currentState!.setCurrentVisible(true);
 
                   chatCountReset();
 
@@ -284,13 +287,13 @@ class TalkEventPageState extends State<TalkEventPage> {
               },
               handRaisebyOthersCallback: (value) {
                 if (value) {
-                  audiencePageKey.currentState.handRaise();
+                  audiencePageKey.currentState!.handRaise();
                 } else {
-                  audiencePageKey.currentState.handDown();
+                  audiencePageKey.currentState!.handDown();
                 }
               },
               handRaiseCallback: () {
-                audiencePageKey.currentState.handRaiseRequestList();
+                audiencePageKey.currentState!.handRaiseRequestList();
               },
             ),
             body: Builder(
@@ -312,18 +315,16 @@ class TalkEventPageState extends State<TalkEventPage> {
                                       // audiencePageKey.currentState.leaveEvent();
                                       // widget.callback(true,eventModel);
                                       if (_selectedIndex == 0) {
-                                        audiencePageKey.currentState
+                                        audiencePageKey.currentState!
                                             .switchOffSocket();
-                                        eventbus.fire(TalkEventData(
+                                        eventbus!.fire(TalkEventData(
                                             model: eventModel,
                                             showPlayback: true,
                                             role: role,
                                             startTime: audiencePageKey
-                                                .currentState
+                                                .currentState!
                                                 .getStartTime(),
-                                            engine: audiencePageKey
-                                                .currentState.engine
-                                                .instance()));
+                                            engine: null));
                                         Navigator.pop(context);
                                       } else {
                                         SystemChannels.textInput
@@ -361,16 +362,16 @@ class TalkEventPageState extends State<TalkEventPage> {
                                     child: TricycleEventCard(
                                       key: UniqueKey(),
                                       withCard: false,
-                                      title: eventModel.title,
-                                      byImage: eventModel.header.avatar,
+                                      title: eventModel!.title,
+                                      byImage: eventModel!.header!.avatar,
                                       byTitle: ' by ' +
-                                          eventModel.header.title +
+                                          eventModel!.header!.title! +
                                           ', ' +
-                                          eventModel.header.subtitle1,
+                                          eventModel!.header!.subtitle1!,
                                       cardRating:
-                                          eventModel.header.rating ?? 0.0,
+                                          eventModel!.header!.rating ?? 0.0,
                                       isModerator:
-                                          eventModel.eventRoleType == 'admin',
+                                          eventModel!.eventRoleType == 'admin',
                                       onlyHeader: true,
                                     ),
                                   ),
@@ -402,7 +403,7 @@ class TalkEventPageState extends State<TalkEventPage> {
   void getCount(String conversationId) async {
     GetUnreadCount unreadCount = GetUnreadCount();
     unreadCount.conversationId = conversationId;
-    unreadCount.conversationOwnerId = prefs.getInt(Strings.userId).toString();
+    unreadCount.conversationOwnerId = prefs!.getInt(Strings.userId).toString();
     unreadCount.conversationOwnerType = "person";
     Calls()
         .call(
@@ -422,27 +423,27 @@ class TalkEventPageState extends State<TalkEventPage> {
     }).catchError((onError) {});
   }
 
-  countUpdate(int count) {
+  countUpdate(int? count) {
     Future.delayed(Duration(milliseconds: 500), () {
-      footerKey.currentState.countUpdate(count);
+      footerKey.currentState!.countUpdate(count!);
     });
   }
 
-  chatCountUpdate(int count){
-    footerKey.currentState.chatcountUpdate(count);
+  chatCountUpdate(int? count){
+    footerKey.currentState!.chatcountUpdate(count);
   }
   chatCountIncrementUpdate(){
     print("event_message-----------------------------------------------step4");
-    footerKey.currentState.incrementChatCount();
+    footerKey.currentState!.incrementChatCount();
   }
   chatCountReset(){
-    footerKey.currentState.resetChatCount();
+    footerKey.currentState!.resetChatCount();
   }
 
-  roleCallback(TALKFOOTERENUM role) {
+  roleCallback(TALKFOOTERENUM? role) {
     Future.delayed(Duration(milliseconds: 10), () {
       this.role = role;
-      footerKey.currentState.updateType(role);
+      footerKey.currentState!.updateType(role);
       // updateMuteStatus(eventModel.isMute ?? true);
     });
 
@@ -454,33 +455,33 @@ class TalkEventPageState extends State<TalkEventPage> {
 
   updateHandRaise(bool handRaise) {
     Future.delayed(Duration(milliseconds: 500), () {
-      footerKey.currentState.updateHandRaise(handRaise);
+      footerKey.currentState!.updateHandRaise(handRaise);
     });
   }
 
-  void updateMuteStatus(bool b) {
+  void updateMuteStatus(bool? b) {
     Future.delayed(Duration(milliseconds: 300), () {
       log("mute status =========" + b.toString());
-      footerKey.currentState.updateMuteStatus(b);
+      footerKey.currentState!.updateMuteStatus(b!);
     });
   }
 
   emitRatingSuccess() {
     JoinEventPayload payload = JoinEventPayload();
-    payload.eventId = eventModel.id;
-    payload.personId = prefs.getInt(Strings.userId);
-    audioSocketService.getSocket().emit(EMIT_ON_EVENT_RATING, payload);
+    payload.eventId = eventModel!.id;
+    payload.personId = prefs!.getInt(Strings.userId);
+    audioSocketService!.getSocket()!.emit(EMIT_ON_EVENT_RATING, payload);
     print('rating emitted');
   }
 
   onEventRating(data) {
     log("OnEvent--Rated------" + jsonEncode(data));
     var res = EventListItem.fromJson(data);
-    log("OnEvent--Rated------" + res.header.rating.toString());
-    if (eventModel.id == res.id) {
+    log("OnEvent--Rated------" + res.header!.rating.toString());
+    if (eventModel!.id == res.id) {
       setState(() {
-        log("OnEvent--Rated same id ------" + res.header.rating.toString());
-        eventModel.header.rating = res.header.rating;
+        log("OnEvent--Rated same id ------" + res.header!.rating.toString());
+        eventModel!.header!.rating = res.header!.rating;
       });
     }
   }
@@ -497,9 +498,9 @@ class TalkEventPageState extends State<TalkEventPage> {
           allowedMsg: "",
           isAllowed: true,
           isSelected: true,
-          recipientTypeReferenceId: eventModel.id,
+          recipientTypeReferenceId: eventModel!.id,
           recipientTypeDescription: "",
-          recipientType: eventModel.title,
+          recipientType: eventModel!.title,
           recipientTypeCode: 'event',
         );
         return CreateNewBottomSheet(
@@ -518,7 +519,7 @@ class TalkEventPageState extends State<TalkEventPage> {
                 if (value != null && value) {
                   setState(() {
                     // if (_selectedIndex == 2) {
-                    postScreenKey.currentState.refresh();
+                    postScreenKey.currentState!.refresh();
                     // }
                   });
                 }

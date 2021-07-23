@@ -1,5 +1,5 @@
 class CouponDetailRequest {
-  String id;
+  String? id;
   CouponDetailRequest({this.id});
 
   CouponDetailRequest.fromJson(Map<String, dynamic> json) {
@@ -16,9 +16,9 @@ class CouponDetailRequest {
 
 
 class CouponDetailResponse {
-  String statusCode;
-  String message;
-  CouponDetailModel rows;
+  String? statusCode;
+  String? message;
+  CouponDetailModel? rows;
 
   CouponDetailResponse({this.statusCode, this.message, this.rows});
 
@@ -35,31 +35,31 @@ class CouponDetailResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     return data;
   }
 }
 
 class CouponDetailModel {
-  int id;
-  String couponCode;
-  String couponProvider;
-  String couponProviderLogo;
-  String couponText;
-  String couponImage;
-  String couponDiscountType;
-  int couponDiscount;
-  int rewardPointsRequired;
-  String validFrom;
-  String validTill;
-  String couponStatus;
-  String createdDate;
-  String updatedDate;
-  String barCode;
-  String qrCode;
-  String couponTermsConditionsHeading;
-  List<dynamic> couponTermsConditionsPoints;
+  int? id;
+  String? couponCode;
+  String? couponProvider;
+  String? couponProviderLogo;
+  String? couponText;
+  String? couponImage;
+  String? couponDiscountType;
+  int? couponDiscount;
+  int? rewardPointsRequired;
+  String? validFrom;
+  String? validTill;
+  String? couponStatus;
+  String? createdDate;
+  String? updatedDate;
+  String? barCode;
+  String? qrCode;
+  String? couponTermsConditionsHeading;
+  List<dynamic>? couponTermsConditionsPoints;
 
   CouponDetailModel(
       {this.id,

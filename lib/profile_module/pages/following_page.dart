@@ -22,8 +22,8 @@ class FollowingPage extends StatefulWidget {
   String personName;
   String type;
   int id;
-  String ownerType;
-  int ownerId;
+  String? ownerType;
+  int? ownerId;
   Null Function() callback;
 
   FollowingPage(this.personName, this.type, this.id, this.ownerId,
@@ -36,14 +36,14 @@ class FollowingPage extends StatefulWidget {
 
 class _FollowingPage extends State<FollowingPage>
     with AutomaticKeepAliveClientMixin<FollowingPage> {
-  String searchVal;
-  String personName;
-  String ownerType;
-  int ownerId;
+  String? searchVal;
+  String? personName;
+  String? ownerType;
+  int? ownerId;
   Null Function() callback;
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
-  SharedPreferences prefs;
-  TextStyleElements styleElements;
+  late SharedPreferences prefs;
+  late TextStyleElements styleElements;
   String type;
   int id;
   bool isSuggestionShowed = false;
@@ -78,7 +78,7 @@ class _FollowingPage extends State<FollowingPage>
 
   refresh() {
     isFirst = false;
-    paginatorKey.currentState.changeState(resetState: true);
+    paginatorKey.currentState!.changeState(resetState: true);
   }
 
   @override
@@ -93,7 +93,7 @@ class _FollowingPage extends State<FollowingPage>
               SliverToBoxAdapter(
                 child: SearchBox(
                   onvalueChanged: onsearchValueChanged,
-                  hintText: AppLocalizations.of(context).translate('search'),
+                  hintText: AppLocalizations.of(context)!.translate('search'),
                 ),
               )
             ];
@@ -128,11 +128,11 @@ class _FollowingPage extends State<FollowingPage>
     return FollowersData.fromJson(res);
   }
 
-  List<FollowersItem> listItemsGetter(FollowersData pageData) {
+  List<FollowersItem>? listItemsGetter(FollowersData ?pageData) {
     if (!isFirst) {
-      FollowersItem val;
+      FollowersItem? val;
       try {
-        val = pageData.rows.firstWhere((element) {
+        val = pageData!.rows!.firstWhere((element) {
           return element.suggestedType != null &&
               element.suggestedType == 'suggestion';
         });
@@ -146,7 +146,7 @@ class _FollowingPage extends State<FollowingPage>
         isFirst = false;
       }
     }
-    return pageData.rows;
+    return pageData!.rows;
   }
 
   Widget listItemBuilderFollowing(value, int index) {
@@ -190,7 +190,7 @@ class _FollowingPage extends State<FollowingPage>
               child: Padding(
                 padding: EdgeInsets.all(10),
                 child: Text(
-                    AppLocalizations.of(context).translate("suggestions"),
+                    AppLocalizations.of(context)!.translate("suggestions"),
                     style: styleElements
                         .headline6ThemeScalable(context)
                         .copyWith(color: HexColor(AppColors.appColorBlack65))),
@@ -230,13 +230,13 @@ class _FollowingPage extends State<FollowingPage>
                       actionOnObjectId: item.id,
                       engageFlag: item.suggestedType != null &&
                           item.suggestedType == "suggestion"
-                          ? AppLocalizations.of(context).translate('follow')
-                          : item.isObjectFollowing
-                          ? AppLocalizations.of(context)
+                          ? AppLocalizations.of(context)!.translate('follow')
+                          : item.isObjectFollowing!
+                          ? AppLocalizations.of(context)!
                           .translate('following')
-                          : AppLocalizations.of(context)
+                          : AppLocalizations.of(context)!
                           .translate('follow'),
-                      actionFlag: item.isObjectFollowing ? "U" : "F",
+                      actionFlag: item.isObjectFollowing! ? "U" : "F",
                       actionDetails: [],
                       personName: prefs.getString("userName"),
                       callback: (isCallSuccess) {

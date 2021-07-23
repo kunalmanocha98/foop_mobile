@@ -20,18 +20,18 @@ import 'new_password.dart';
 class OTPRecoverPasswords extends StatelessWidget {
   final userNameTextController = TextEditingController();
 
-  BuildContext context;
+  BuildContext? context;
 
   final String email;
-  SharedPreferences prefs;
-  TextStyleElements styleElements;
+  SharedPreferences? prefs;
+  late TextStyleElements styleElements;
   GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
 
-  OTPRecoverPasswords({Key key, @required this.email}) : super(key: key);
+  OTPRecoverPasswords({Key? key, required this.email}) : super(key: key);
 
   void recoverPassword() async {
     if (userNameTextController.text.trim().isNotEmpty) {
-      progressButtonKey.currentState.show();
+      progressButtonKey.currentState!.show();
       RegisterUserPayload loginPayLoad = RegisterUserPayload();
       loginPayLoad.email = email;
       loginPayLoad.token = int.parse(userNameTextController.text);
@@ -39,13 +39,13 @@ class OTPRecoverPasswords extends StatelessWidget {
       RecoverPasswordApis()
           .recoverPasswordOtp(context, jsonEncode(loginPayLoad.toJson()))
           .then((value) async {
-        progressButtonKey.currentState.hide();
+        progressButtonKey.currentState!.hide();
         if (value != null) {
           var data = CommonBasicResponse.fromJson(value);
           if (data.statusCode == Strings.success_code &&
               data.message == Strings.success) {
             Navigator.push(
-                context,
+                context!,
                 MaterialPageRoute(
                   builder: (context) => NewPassword(
                     email: email,
@@ -53,20 +53,20 @@ class OTPRecoverPasswords extends StatelessWidget {
                 ));
           } else {
             if (data.message != null)
-              ToastBuilder().showToast(data.message, context,HexColor(AppColors.information));
+              ToastBuilder().showToast(data.message!, context,HexColor(AppColors.information));
             else
               ToastBuilder().showToast(
-                  AppLocalizations.of(context).translate("try_again"), context,HexColor(AppColors.information));
+                  AppLocalizations.of(context!)!.translate("try_again"), context,HexColor(AppColors.information));
           }
         }
       }).catchError((onError) async {
-        progressButtonKey.currentState.hide();
+        progressButtonKey.currentState!.hide();
         ToastBuilder().showToast(
-            AppLocalizations.of(context).translate("try_again"), context,HexColor(AppColors.information));
+            AppLocalizations.of(context!)!.translate("try_again"), context,HexColor(AppColors.information));
       });
     } else
       ToastBuilder().showToast(
-          AppLocalizations.of(context).translate("enter_otp"), context,HexColor(AppColors.information));
+          AppLocalizations.of(context!)!.translate("enter_otp"), context,HexColor(AppColors.information));
   }
 
   @override
@@ -84,7 +84,7 @@ class OTPRecoverPasswords extends StatelessWidget {
       ),
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: AppLocalizations.of(context).translate('enter_otp'),
+          hintText: AppLocalizations.of(context)!.translate('enter_otp'),
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
           border: UnderlineInputBorder(
             borderSide: BorderSide(
@@ -115,7 +115,7 @@ class OTPRecoverPasswords extends StatelessWidget {
             Container(
               alignment: Alignment(0, -0.4),
               child: Text(
-                AppLocalizations.of(context).translate("enter_otp"),
+                AppLocalizations.of(context)!.translate("enter_otp"),
                 style: styleElements.headline4ThemeScalable(context),
               ),
             ),
@@ -134,7 +134,7 @@ class OTPRecoverPasswords extends StatelessWidget {
                 child: TricycleProgressButton(
                   key: progressButtonKey,
                 child: Text(
-                    AppLocalizations.of(context).translate("submit"),
+                    AppLocalizations.of(context)!.translate("submit"),
                   style: styleElements.subtitle1ThemeScalable(context).copyWith(
                     color: HexColor(AppColors.appColorWhite)
                   ),

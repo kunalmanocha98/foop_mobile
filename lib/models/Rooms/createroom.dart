@@ -1,19 +1,19 @@
 class CreateRoomPayload {
-  int institutionId;
-  String roomCreatedByType;
-  int roomCreatedById;
-  String roomOwnerType;
-  int roomOwnerTypeId;
-  String roomName;
-  String roomDescription;
-  bool isPrivate;
-  bool isSharable;
-  String roomStatus;
-  String roomType;
-  int id;
-  String roomProfileImageUrl;
-  String roomPrivacyType;
-  List<String> roomTopics;
+  int? institutionId;
+  String? roomCreatedByType;
+  int? roomCreatedById;
+  String? roomOwnerType;
+  int? roomOwnerTypeId;
+  String? roomName;
+  String? roomDescription;
+  bool? isPrivate;
+  bool? isSharable;
+  String? roomStatus;
+  String? roomType;
+  int? id;
+  String? roomProfileImageUrl;
+  String? roomPrivacyType;
+  List<String?>? roomTopics;
 
   CreateRoomPayload(
       {this.institutionId,

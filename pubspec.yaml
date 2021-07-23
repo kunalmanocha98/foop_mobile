@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 2.0.4
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: '>=2.12.0 <3.0.0'
 
 dependencies:
   # flutter_svg: ^0.18.0
@@ -64,7 +64,7 @@ dependencies:
   responsive_framework: ^0.1.4
 
   url_launcher: ^6.0.9
-
+  google_fonts: ^2.1.0
   scratcher: ^2.1.0
   video_player: ^2.1.10
   flutter_html: ^2.1.0
@@ -75,7 +75,7 @@ dependencies:
   permission_handler: ^8.1.2
   timeago: ^3.1.0
   inview_notifier_list: ^2.0.0
-  flutter_chat_bubble: ^1.0.2
+
   event_bus: ^2.0.0
   build_resolvers: ^2.0.4
   carousel_slider: ^4.0.0
@@ -96,20 +96,27 @@ dependencies:
   delta_markdown: ^0.2.0
 
   #  flutter_downloader: ^1.5.2
-  ext_storage: ^1.0.3
+  #ext_storage: ^1.0.3
   package_info: ^2.0.2
   quill_delta: ^3.0.0-nullsafety.0
   flutter_tts: ^3.2.1
   grouped_list: ^4.0.0
-  gbk2utf8: ^1.0.1
+  #gbk2utf8: ^1.0.1
   rich_editor: ^0.0.4
+  flutter_webrtc: ^0.6.5
+  eventify: ^1.0.0
 
 
   GlobalUploadFilePkg:
     path: packages/GlobalUploadFilePkg
+  nexge_video_conference:
+    path: packages/nexge_video_conference
 
-#  GlobalUploadFilePkg:
-#  path: packages/GlobalUploadFilePkg
+
+
+  #  GlobalUploadFilePkg:
+  #  path: packages/GlobalUploadFilePkg
+  collection: ^1.15.0-nullsafety.4
 
 dev_dependencies:
   flutter_test:

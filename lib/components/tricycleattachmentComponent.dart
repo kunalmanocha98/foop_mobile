@@ -29,8 +29,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class TricycleAttachments extends StatefulWidget {
-  Function(String) mentionCallback;
-  Function(String) hashTagCallback;
+  Function(String?)? mentionCallback;
+  Function(String)? hashTagCallback;
   bool isHashTagVisible;
   bool isMentionVisible;
 
@@ -41,15 +41,15 @@ class TricycleAttachments extends StatefulWidget {
 
 class TricycleAttachmentsState extends State<TricycleAttachments> {
   List<MediaDetails> mediaList = [];
-  TextStyleElements styleElements;
-  SharedPreferences prefs;
+  late TextStyleElements styleElements;
+  SharedPreferences? prefs;
   TextEditingController typeAheadControllerMention =TextEditingController();
   TextEditingController typeAheadControllerHashTag =TextEditingController();
   bool isMentionActive = false;
   bool isHashTagActive = false;
-  List<String> _listOfHashTags = [];
+  List<String?> _listOfHashTags = [];
 
-  List<String> get  getListOfTags => _listOfHashTags;
+  List<String?> get  getListOfTags => _listOfHashTags;
 
   @override
   Widget build(BuildContext context) {
@@ -162,7 +162,7 @@ class TricycleAttachmentsState extends State<TricycleAttachments> {
                   itemBuilder: (BuildContext context, int index) {
                     return Flexible(
                       child: Chip(
-                        label: Text(_listOfHashTags[index]),
+                        label: Text(_listOfHashTags[index]!),
                         padding: EdgeInsets.all(8),
                         onDeleted: (){
                           setState(() {
@@ -190,32 +190,35 @@ class TricycleAttachmentsState extends State<TricycleAttachments> {
                         var res = await Calls().call(jsonEncode(data), context, Config.MENTIONS_LIST);
                         if(MentionsListResponse
                             .fromJson(res)
-                            .rows.length>0) {
+                            .rows!.length>0) {
                           return MentionsListResponse
                               .fromJson(res)
-                              .rows;
+                              .rows!;
                         }else{
-                          return null;
+                          return [];
                         }
                       }else{
-                        return null;
+                        return [];
                       }
                     },
 
-                    itemBuilder: (BuildContext context, MentionListItem itemData) {
+                    itemBuilder: ( context,  itemData) {
+
+                      itemData as MentionListItem;
                       return ListTile(
                         leading: TricycleAvatar(
                           service_type: SERVICE_TYPE.PERSON,
                           resolution_type: RESOLUTION_TYPE.R64,
                           imageUrl: itemData.profileImage,
                         ),
-                        title: Text(itemData.fullName, style: styleElements.subtitle1ThemeScalable(context),),
-                        subtitle: Text(AppLocalizations.of(context).translate('at_the_rate')+itemData.slug,style: styleElements.subtitle2ThemeScalable(context),),
+                        title: Text(itemData.fullName!, style: styleElements.subtitle1ThemeScalable(context),),
+                        subtitle: Text(AppLocalizations.of(context)!.translate('at_the_rate')+itemData.slug!,style: styleElements.subtitle2ThemeScalable(context),),
                       );
                     },
-                    onSuggestionSelected: (MentionListItem suggestion) {
+                    onSuggestionSelected: ( suggestion) {
+                      suggestion as MentionListItem;
                       typeAheadControllerMention.text ="";
-                      widget.mentionCallback(suggestion.slug);
+                      widget.mentionCallback!(suggestion.slug);
                     },
                     direction: AxisDirection.up,
                     textFieldConfiguration: TextFieldConfiguration(
@@ -227,10 +230,10 @@ class TricycleAttachmentsState extends State<TricycleAttachments> {
                       decoration: InputDecoration(
                         prefixIcon: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text(AppLocalizations.of(context).translate('at_the_rate'),style: styleElements.headline6ThemeScalable(context),),
+                          child: Text(AppLocalizations.of(context)!.translate('at_the_rate'),style: styleElements.headline6ThemeScalable(context),),
                         ),
                         contentPadding: EdgeInsets.only(top:16,left: 16,right: 16),
-                        hintText: AppLocalizations.of(context).translate('mention_here'),
+                        hintText: AppLocalizations.of(context)!.translate('mention_here'),
                         hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35))
                       ),
                     ),
@@ -253,24 +256,28 @@ class TricycleAttachmentsState extends State<TricycleAttachments> {
                             jsonEncode(payload), context, Config.KEYWORDS_LIST);
                         if(KeywordListResponse
                             .fromJson(res)
-                            .rows.length>0) {
+                            .rows!.length>0) {
                           return KeywordListResponse
                               .fromJson(res)
-                              .rows;
+                              .rows!;
                         }else{
-                          return null;
+                          return [];
                         }
                       }else{
-                        return null;
+                        return [];
                       }
                     },
 
-                    itemBuilder: (BuildContext context, KeywordListItem itemData) {
+                    itemBuilder: ( context,  itemData) {
+
+                      itemData as KeywordListItem;
                       return ListTile(
-                        title: Text(AppLocalizations.of(context).translate('hash')+itemData.keyword, style: styleElements.subtitle1ThemeScalable(context),),
+                        title: Text(AppLocalizations.of(context)!.translate('hash')+itemData.keyword!, style: styleElements.subtitle1ThemeScalable(context),),
                       );
                     },
-                    onSuggestionSelected: (KeywordListItem suggestion) {
+                    onSuggestionSelected: ( suggestion) {
+
+                      suggestion as KeywordListItem;
                       typeAheadControllerHashTag.text ="";
                       setState(() {
                         _listOfHashTags.add(suggestion.display);
@@ -294,10 +301,10 @@ class TricycleAttachmentsState extends State<TricycleAttachments> {
                       decoration: InputDecoration(
                         prefixIcon: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text(AppLocalizations.of(context).translate('hash'),style: styleElements.headline6ThemeScalable(context),),
+                          child: Text(AppLocalizations.of(context)!.translate('hash'),style: styleElements.headline6ThemeScalable(context),),
                         ),
                         contentPadding: EdgeInsets.only(top:16,left: 16,right: 16),
-                        hintText: AppLocalizations.of(context).translate('enter_tags'),
+                        hintText: AppLocalizations.of(context)!.translate('enter_tags'),
                         hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35))
                       ),
                     ),
@@ -312,7 +319,7 @@ class TricycleAttachmentsState extends State<TricycleAttachments> {
                 Visibility(
                   visible: widget.isMentionVisible,
                   child: IconButton(
-                    icon: Text(AppLocalizations.of(context).translate('at_the_rate'),style: styleElements.headline6ThemeScalable(context).copyWith(
+                    icon: Text(AppLocalizations.of(context)!.translate('at_the_rate'),style: styleElements.headline6ThemeScalable(context).copyWith(
                         color: HexColor(AppColors.appColorBlack35)
                     ),),
                     onPressed: (){
@@ -330,7 +337,7 @@ class TricycleAttachmentsState extends State<TricycleAttachments> {
                 Visibility(
                   visible: widget.isHashTagVisible,
                   child: IconButton(
-                    icon: Text(AppLocalizations.of(context).translate('hash'),style: styleElements.headline6ThemeScalable(context).copyWith(
+                    icon: Text(AppLocalizations.of(context)!.translate('hash'),style: styleElements.headline6ThemeScalable(context).copyWith(
                         color: HexColor(AppColors.appColorBlack35)
                     ),),
                     onPressed: (){
@@ -411,7 +418,7 @@ class TricycleAttachmentsState extends State<TricycleAttachments> {
         builder: (BuildContext context) {
           return AlertDialog(
               title: Text(
-                  AppLocalizations.of(context).translate('select_an_option')
+                  AppLocalizations.of(context)!.translate('select_an_option')
               ),
               content: SingleChildScrollView(
                 child: ListBody(
@@ -429,7 +436,7 @@ class TricycleAttachmentsState extends State<TricycleAttachments> {
                         // _profilePicker("Gallery");
                       },
                       child: Text(
-                          AppLocalizations.of(context).translate('gallery')),
+                          AppLocalizations.of(context)!.translate('gallery')),
                     ),
                     Padding(padding: EdgeInsets.all(16.0)),
                     GestureDetector(
@@ -444,7 +451,7 @@ class TricycleAttachmentsState extends State<TricycleAttachments> {
                         }
                       },
                       child: Text(
-                          AppLocalizations.of(context).translate('camera')),
+                          AppLocalizations.of(context)!.translate('camera')),
                     ),
                     Padding(padding: EdgeInsets.all(8.0)),
                   ],
@@ -454,12 +461,12 @@ class TricycleAttachmentsState extends State<TricycleAttachments> {
   }
 
   void imagePicker(String type) async {
-    File pickedFile;
+    File? pickedFile;
     var pr = ToastBuilder().setProgressDialogWithPercent(context,'Uploading Image...');
     prefs ??= await SharedPreferences.getInstance();
     if(type=="gallery"){
       pickedFile = await ImagePickerAndCropperUtil().pickImage(context);
-      print("#####PATH###  "+pickedFile.path);
+      print("#####PATH###  "+pickedFile!.path);
     }else{
       final cameras = await availableCameras();
       var reult = await Navigator.push(context,
@@ -478,10 +485,10 @@ class TricycleAttachmentsState extends State<TricycleAttachments> {
       await UploadFile(
           baseUrl: Config.BASE_URL,
           context: context,
-          token: prefs.getString("token"),
+          token: prefs!.getString("token"),
           contextId: '',
           contextType: CONTEXTTYPE_ENUM.FEED.type,
-          ownerId: prefs.getInt(Strings.userId).toString(),
+          ownerId: prefs!.getInt(Strings.userId).toString(),
           ownerType: OWNERTYPE_ENUM.PERSON.type,
           file: pickedFile,
           subContextId: "",
@@ -498,26 +505,26 @@ class TricycleAttachmentsState extends State<TricycleAttachments> {
         print (jsonEncode(imageResponse));
         if(imageResponse.statusCode == Strings.success_code) {
           addImage(
-              imageResponse.rows.fileUrl, imageResponse.rows.fileThumbnailUrl,
+              imageResponse.rows!.fileUrl, imageResponse.rows!.fileThumbnailUrl,
               "image");
           await pr.hide();
         }else{
           await pr.hide();
-          ToastBuilder().showToast(imageResponse.message, context, HexColor(AppColors.information));
+          ToastBuilder().showToast(imageResponse.message!, context, HexColor(AppColors.information));
         }
       }).catchError((onError) async {
         await pr.hide();
         print(onError.toString());
-        ToastBuilder().showToast(AppLocalizations.of(context).translate('some_error_occurred'), context, HexColor(AppColors.information));
+        ToastBuilder().showToast(AppLocalizations.of(context)!.translate('some_error_occurred'), context, HexColor(AppColors.information));
       });
     }else{
       await pr.hide();
-      ToastBuilder().showToast(AppLocalizations.of(context).translate('corrupted_file_error'), context, HexColor(AppColors.information));
+      ToastBuilder().showToast(AppLocalizations.of(context)!.translate('corrupted_file_error'), context, HexColor(AppColors.information));
 
     }
   }
   void fileUploader() async {
-    File pickedFile;
+    File? pickedFile;
     prefs ??= await SharedPreferences.getInstance();
     var pr = ToastBuilder().setProgressDialogWithPercent(context,'Uploading File...');
     pickedFile = await ImagePickerAndCropperUtil().pickFiles(context);
@@ -527,10 +534,10 @@ class TricycleAttachmentsState extends State<TricycleAttachments> {
       await UploadFile(
           baseUrl: Config.BASE_URL,
           context: context,
-          token: prefs.getString("token"),
+          token: prefs!.getString("token"),
           contextId: '',
           contextType: CONTEXTTYPE_ENUM.FEED.type,
-          ownerId: prefs.getInt(Strings.userId).toString(),
+          ownerId: prefs!.getInt(Strings.userId).toString(),
           ownerType: OWNERTYPE_ENUM.PERSON.type,
           onProgressCallback: (int value){
             pr.update(progress:value.toDouble());
@@ -549,33 +556,33 @@ class TricycleAttachmentsState extends State<TricycleAttachments> {
         if(imageResponse.statusCode == Strings.success_code) {
           await pr.hide();
 
-          print(Utility().getExtension(context, pickedFile.path)+"-------------------------------------------------------file uploader method");
+          print(Utility().getExtension(context, pickedFile!.path)+"-------------------------------------------------------file uploader method");
           addImage(
-              imageResponse.rows.fileUrl, imageResponse.rows.fileThumbnailUrl,
+              imageResponse.rows!.fileUrl, imageResponse.rows!.fileThumbnailUrl,
               Utility().getExtension(context, pickedFile.path));
         }else{
           await pr.hide();
-          ToastBuilder().showToast(imageResponse.message, context, HexColor(AppColors.information));
+          ToastBuilder().showToast(imageResponse.message!, context, HexColor(AppColors.information));
         }
       }).catchError((onError) async {
         await pr.hide();
         print(onError.toString());
-        ToastBuilder().showToast(AppLocalizations.of(context).translate('some_error_occurred'), context, HexColor(AppColors.information));
+        ToastBuilder().showToast(AppLocalizations.of(context)!.translate('some_error_occurred'), context, HexColor(AppColors.information));
       });
     }else{
       await pr.hide();
-      ToastBuilder().showToast(AppLocalizations.of(context).translate('corrupted_file_error'), context, HexColor(AppColors.information));
+      ToastBuilder().showToast(AppLocalizations.of(context)!.translate('corrupted_file_error'), context, HexColor(AppColors.information));
     }
   }
   void videoPicker(String type) async {
-    File pickedFile;
+    File? pickedFile;
     var pr = ToastBuilder().setProgressDialogWithPercent(context, 'Uploading Video');
     prefs = await SharedPreferences.getInstance();
     if(type=="gallery"){
       pickedFile = await ImagePickerAndCropperUtil().pickVideo(context);
     }else{
       pickedFile = await ImagePickerAndCropperUtil().pickVideoCamera(context);
-      print(pickedFile.path.toString()+"------------------------------------------------------------");
+      print(pickedFile!.path.toString()+"------------------------------------------------------------");
     }
     // File pickedFile = await ImagePickerAndCropperUtil().pickImage(context);
     // var croppedFile = await ImagePickerAndCropperUtil().cropFile(
@@ -587,10 +594,10 @@ class TricycleAttachmentsState extends State<TricycleAttachments> {
       await UploadFile(
           baseUrl: Config.BASE_URL,
           context: context,
-          token: prefs.getString("token"),
+          token: prefs!.getString("token"),
           contextId: '',
           contextType: CONTEXTTYPE_ENUM.FEED.type,
-          ownerId:  prefs.getInt(Strings.userId).toString(),
+          ownerId:  prefs!.getInt(Strings.userId).toString(),
           ownerType: OWNERTYPE_ENUM.PERSON.type,
           file: pickedFile,
           subContextId: "",
@@ -606,23 +613,23 @@ class TricycleAttachmentsState extends State<TricycleAttachments> {
         print(value);
         if(imageResponse.statusCode == Strings.success_code) {
           addImage(
-              imageResponse.rows.fileUrl, imageResponse.rows.fileThumbnailUrl,
+              imageResponse.rows!.fileUrl, imageResponse.rows!.fileThumbnailUrl,
               "video");
           await pr.hide();
         }else{
-          ToastBuilder().showToast(imageResponse.message, context, HexColor(AppColors.information));
+          ToastBuilder().showToast(imageResponse.message!, context, HexColor(AppColors.information));
         }
       }).catchError((onError) async {
         await pr.hide();
         print(onError.toString());
-        ToastBuilder().showToast(AppLocalizations.of(context).translate('some_error_occurred'), context, HexColor(AppColors.information));
+        ToastBuilder().showToast(AppLocalizations.of(context)!.translate('some_error_occurred'), context, HexColor(AppColors.information));
       });
     }else{
       await pr.hide();
-      ToastBuilder().showToast(AppLocalizations.of(context).translate('corrupted_file_error'), context, HexColor(AppColors.information));
+      ToastBuilder().showToast(AppLocalizations.of(context)!.translate('corrupted_file_error'), context, HexColor(AppColors.information));
     }
   }
-  void addImage(String mediaUrl,String mediaThumbnailUrl, String mediaType) {
+  void addImage(String? mediaUrl,String? mediaThumbnailUrl, String mediaType) {
     setState(() {
       mediaList.add(MediaDetails(mediaType: mediaType, mediaUrl: mediaUrl,mediaThumbnailUrl: mediaThumbnailUrl));
     });
@@ -659,10 +666,10 @@ class TricycleAttachmentsState extends State<TricycleAttachments> {
         await UploadFile(
             baseUrl: Config.BASE_URL,
             context: context,
-            token: prefs.getString("token"),
+            token: prefs!.getString("token"),
       contextId: '',
       contextType: CONTEXTTYPE_ENUM.FEED.type,
-      ownerId: prefs.getInt(Strings.userId).toString(),
+      ownerId: prefs!.getInt(Strings.userId).toString(),
       ownerType: OWNERTYPE_ENUM.PERSON.type,
       onProgressCallback: (int value){
 
@@ -678,7 +685,7 @@ class TricycleAttachmentsState extends State<TricycleAttachments> {
     print(value);
     var imageResponse = ImageUpdateResponse.fromJson(value);
     print(jsonEncode(imageResponse));
-    addImage(imageResponse.rows.fileUrl, imageResponse.rows.fileThumbnailUrl, "image");
+    addImage(imageResponse.rows!.fileUrl, imageResponse.rows!.fileThumbnailUrl, "image");
     }).catchError((onError) async {
     print(onError.toString());
     });

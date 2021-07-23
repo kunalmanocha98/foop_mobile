@@ -1,70 +1,48 @@
-import 'dart:convert';
-import 'dart:developer';
-import 'dart:io';
-import 'dart:ui';
 
-import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/components/postcard.dart';
-import 'package:oho_works_app/components/postcardactionbuttons.dart';
-import 'package:oho_works_app/components/postcardheader.dart';
-import 'package:oho_works_app/components/postcardmedia.dart';
 import 'package:oho_works_app/models/post/postlist.dart';
-import 'package:oho_works_app/ui/imgevideoFullScreenViewPage.dart';
-import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
-import 'package:oho_works_app/utils/colors.dart';
-import 'package:oho_works_app/utils/hexColors.dart';
-import 'package:oho_works_app/utils/utility_class.dart';
-import 'package:delta_markdown/delta_markdown.dart' hide Document;
 import 'package:flutter/material.dart';
-import 'package:flutter_quill/models/documents/document.dart';
-import 'package:flutter_quill/widgets/controller.dart';
-import 'package:flutter_tts/flutter_tts.dart';
 
-import 'package:html/parser.dart';
-import 'package:markdown/markdown.dart' hide Document,Text;
-import 'package:path_provider/path_provider.dart';
-import 'package:quill_delta/quill_delta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'PostCardFooter.dart';
 
 // ignore: must_be_immutable
 class TricyclePostCardStateLess extends StatelessWidget {
   PostListItem cardData;
-  Function sharecallBack;
-  Function download;
-  Function(bool) bookmarkCallback;
-  Function commentCallback;
-  Function ratingCallback;
-  Function onAnswerClickCallback;
-  SharedPreferences preferences;
-  Function(bool) onFollowCallback;
-  Function hidePostCallback;
-  Function deletePostCallback;
+  Function? sharecallBack;
+  Function? download;
+  Function(bool)? bookmarkCallback;
+  Function? commentCallback;
+  Function? ratingCallback;
+  Function? onAnswerClickCallback;
+  SharedPreferences? preferences;
+  Function(bool)? onFollowCallback;
+  Function? hidePostCallback;
+  Function? deletePostCallback;
   Function onVoteCallback;
-  bool isDetailPage;
-  Function onBackPressed;
-  bool isBackButtonVisible;
-  bool isTitleVisible;
-  bool isNewsPage;
-  bool isFilterPage;
-  Function onTalkCallback;
-  Function onSubmitAnswer;
+  bool? isDetailPage;
+  Function? onBackPressed;
+  bool? isBackButtonVisible;
+  bool? isTitleVisible;
+  bool? isNewsPage;
+  bool? isFilterPage;
+  Function? onTalkCallback;
+  Function? onSubmitAnswer;
 
   bool isPostHeaderVisible;
   bool isPostActionVisible;
 
   bool horizontalMediaList;
-  bool isTranslateVisible;
-  Function translateCallback;
-  Function textToSpeechCallback;
-  bool isTextToSpeechVisible;
+  bool? isTranslateVisible;
+  Function? translateCallback;
+  Function? textToSpeechCallback;
+  bool? isTextToSpeechVisible;
   bool isLearningPage;
-  final String searchHighlightWord;
+  final String? searchHighlightWord;
 
   TricyclePostCardStateLess(
-      {Key key,
-        @required this.cardData,
+      {Key? key,
+        required this.cardData,
         this.sharecallBack,
         this.download,
         this.bookmarkCallback,
@@ -80,7 +58,7 @@ class TricyclePostCardStateLess extends StatelessWidget {
         this.isFilterPage,
         this.isLearningPage = false,
         this.onTalkCallback,
-        @required this.onVoteCallback,
+        required this.onVoteCallback,
         this.isBackButtonVisible,
         this.isTitleVisible,
         this.onSubmitAnswer,

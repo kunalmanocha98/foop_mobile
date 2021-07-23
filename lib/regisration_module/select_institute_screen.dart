@@ -42,17 +42,17 @@ class SelectInstitute extends StatefulWidget {
   int id;
   String studentType;
   String from;
-  bool isInstituteSelectedAlready;
-  RegisterUserAs registerUserAs;
+  bool? isInstituteSelectedAlready;
+  RegisterUserAs? registerUserAs;
 
   SelectInstitute(
-      {Key key,
-      @required this.type,
-      @required this.id,
-      @required this.from,
+      {Key? key,
+      required this.type,
+      required this.id,
+      required this.from,
         this.registerUserAs,
       this.isInstituteSelectedAlready,
-      @required this.studentType})
+      required this.studentType})
       : super(key: key);
 
   _SelectInstitute createState() =>
@@ -61,37 +61,37 @@ class SelectInstitute extends StatefulWidget {
 
 class _SelectInstitute extends State<SelectInstitute>
     with SingleTickerProviderStateMixin {
-  bool isInstituteSelectedAlready;
-  String studentType;
-  String from;
+  bool? isInstituteSelectedAlready;
+  String? studentType;
+  String? from;
   bool isUploadImageActive = false;
-  SharedPreferences prefs;
-  int userId;
-  String selectSchoolUrl;
+  SharedPreferences? prefs;
+  int? userId;
+  String? selectSchoolUrl;
   bool isHaveCode = false;
   Color disabledColor = HexColor(AppColors.appColorGrey500);
-  ScrollController _scrollController;
-  String selectedSchool;
-  String selectedSchoolDec;
+  ScrollController? _scrollController;
+  String? selectedSchool;
+  String? selectedSchoolDec;
   String pageTitle = "";
-  String imageUrl;
+  String? imageUrl;
   int instPageNumber = 1;
   String SearchVal = "";
   final _debouncer = Debouncer(100);
-  CupertinoDatePicker cupertinoDatePicker;
+  CupertinoDatePicker? cupertinoDatePicker;
   var color1 = HexColor(AppColors.appMainColor);
   bool _enabled = false;
   bool _enabledInstitute = true;
   bool ifNoInstituteFound = false;
   var color2 = HexColor(AppColors.appColorWhite);
-  int id;
+  int? id;
   var color3 = HexColor(AppColors.appColorWhite);
   var isCheckedColor = HexColor(AppColors.appColorWhite);
-  TabController _tabController;
+  TabController? _tabController;
   Map<String, bool> mapRules = Map();
-  List<PersonItem> listRoles = [];
-  List<InstituteItem> listInstitute = [];
-  String type;
+  List<PersonItem>? listRoles = [];
+  List<InstituteItem>? listInstitute = [];
+  String? type;
   var isClassesSelected = HexColor(AppColors.appColorWhite);
   var isSubjectSelected = HexColor(AppColors.appColorWhite);
   var isRoleSelected = false;
@@ -101,14 +101,14 @@ class _SelectInstitute extends State<SelectInstitute>
   var isInstituteSelected = false;
   List<Subjects> listOfSubjects = [];
   List<InstituteClass> listOfClasses = [];
-  List<int> personTypeList = [];
-  List<int> institutionRolesList = [];
+  List<int?> personTypeList = [];
+  List<int?> institutionRolesList = [];
   List<int> teachingClasses = [];
   List<int> teachingSubjects = [];
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   _SelectInstitute(String type, int id, String studentType, String from,
-      bool isInstituteSelectedAlready) {
+      bool? isInstituteSelectedAlready) {
     this.type = type;
     this.id = id;
     this.studentType = studentType;
@@ -117,7 +117,7 @@ class _SelectInstitute extends State<SelectInstitute>
   }
 
   List<TabMaker> list = [];
-  int instituteId;
+  int? instituteId;
 
   int _currentPosition = 0;
 
@@ -125,14 +125,14 @@ class _SelectInstitute extends State<SelectInstitute>
     prefs = await SharedPreferences.getInstance();
     if (from == "created institute") {
       _currentPosition == 1;
-      selectedSchool = prefs.getString(Strings.registeredInstituteName);
-      selectSchoolUrl = prefs.getString(Strings.registeredInstituteImage);
-      instituteId = prefs.getInt("createdSchoolId");
+      selectedSchool = prefs!.getString(Strings.registeredInstituteName);
+      selectSchoolUrl = prefs!.getString(Strings.registeredInstituteImage);
+      instituteId = prefs!.getInt("createdSchoolId");
       isInstituteSelected = true;
       getRoles(null, instituteId);
     }
 
-    if(widget.registerUserAs!=null && widget.registerUserAs.institutionId!=null)
+    if(widget.registerUserAs!=null && widget.registerUserAs!.institutionId!=null)
       {
         getAdditionDetails();
 
@@ -146,12 +146,12 @@ class _SelectInstitute extends State<SelectInstitute>
     _tabController = TabController(vsync: this, length: 2);
     if (from != "created institute") getListOfInstitutes(" ");
     getPersonProfile();
-    WidgetsBinding.instance.addPostFrameCallback((_) => setSharedPreferences());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => setSharedPreferences());
   }
 
   @override
   void dispose() {
-    _tabController.dispose();
+    _tabController!.dispose();
     super.dispose();
   }
 
@@ -176,9 +176,10 @@ class _SelectInstitute extends State<SelectInstitute>
         }
       }
     });
+    return new Future(() => false);
   }
 
-  BuildContext sctx;
+  late BuildContext sctx;
 
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
@@ -187,14 +188,14 @@ class _SelectInstitute extends State<SelectInstitute>
 
     list = [];
     list.add(TabMaker(
-      tabName: AppLocalizations.of(context).translate('select_institute'),
+      tabName: AppLocalizations.of(context)!.translate('select_institute'),
       statelessWidget: Container(
         margin: const EdgeInsets.only(bottom: 65),
         child: NotificationListener<ScrollNotification>(
             // ignore: missing_return
-            onNotification: (ScrollNotification scrollInfo) {
+            onNotification: (ScrollNotification? scrollInfo) {
               if (!isLoading &&
-                  scrollInfo.metrics.pixels ==
+                  scrollInfo!.metrics.pixels ==
                       scrollInfo.metrics.maxScrollExtent) {
                 setState(() {
                   isLoading = true;
@@ -204,12 +205,13 @@ class _SelectInstitute extends State<SelectInstitute>
                     load.name = "";
                     load.description = "";
                     load.isSelected = false;
-                    listInstitute.add(load);
+                    listInstitute!.add(load);
                   }
                 });
                 if (!isSearching) getListOfInstitutes(" ");
               }
-            },
+              return true;
+            } ,
             child: Stack(
               children: <Widget>[
                 Visibility(
@@ -224,7 +226,7 @@ class _SelectInstitute extends State<SelectInstitute>
                         controller: _scrollController,
                         padding: EdgeInsets.only(
                             left: 8, right: 8, bottom: 80, top: 8),
-                        itemCount: listInstitute.length,
+                        itemCount: listInstitute!.length,
                         itemBuilder: (BuildContext context, int index) {
                           return GestureDetector(
                             child: Column(
@@ -243,7 +245,7 @@ class _SelectInstitute extends State<SelectInstitute>
                                       child: Container(
                                         margin: const EdgeInsets.all(16),
                                         child: Text(
-                                          AppLocalizations.of(context)
+                                          AppLocalizations.of(context)!
                                               .translate(
                                                   "select_right_institute"),
                                           textAlign: TextAlign.center,
@@ -256,7 +258,7 @@ class _SelectInstitute extends State<SelectInstitute>
                                       ),
                                     )),
                                 Visibility(
-                                    visible: listInstitute[index].isLoading,
+                                    visible: listInstitute![index].isLoading,
                                     child: Container(
                                       width: double.infinity,
                                       child: Align(
@@ -272,7 +274,7 @@ class _SelectInstitute extends State<SelectInstitute>
                                           )),
                                     )),
                                 Visibility(
-                                    visible: !listInstitute[index].isLoading,
+                                    visible: !listInstitute![index].isLoading,
                                     child: Container(
                                       margin: const EdgeInsets.only(),
                                       child: ListTile(
@@ -282,7 +284,7 @@ class _SelectInstitute extends State<SelectInstitute>
                                               height: 52,
                                               child: TricycleAvatar(
                                                 key: UniqueKey(),
-                                                imageUrl: listInstitute[index]
+                                                imageUrl: listInstitute![index]
                                                     .profileImage,
                                                 service_type:
                                                     SERVICE_TYPE.INSTITUTION,
@@ -293,7 +295,7 @@ class _SelectInstitute extends State<SelectInstitute>
                                           title: Align(
                                             alignment: Alignment.centerLeft,
                                             child: Text(
-                                              listInstitute[index].name ?? "",
+                                              listInstitute![index].name ?? "",
                                               style: styleElements
                                                   .subtitle1ThemeScalable(
                                                       context),
@@ -309,11 +311,11 @@ class _SelectInstitute extends State<SelectInstitute>
                                               ),
                                               children: <TextSpan>[
                                                 new TextSpan(
-                                                    text: listInstitute[index]
+                                                    text: listInstitute![index]
                                                                 .institutionAddress !=
                                                             null
-                                                        ? listInstitute[index]
-                                                                .institutionAddress
+                                                        ? listInstitute![index]
+                                                                .institutionAddress!
                                                                 .streetAddress ??
                                                             ""
                                                         : "",
@@ -321,18 +323,18 @@ class _SelectInstitute extends State<SelectInstitute>
                                                         .captionThemeScalable(
                                                             context)),
                                                 new TextSpan(
-                                                    text: (listInstitute[index]
+                                                    text: (listInstitute![index]
                                                                     .isRegistered !=
                                                                 null &&
-                                                            listInstitute[index]
-                                                                .isRegistered &&
-                                                            listInstitute[index]
+                                                            listInstitute![index]
+                                                                .isRegistered! &&
+                                                            listInstitute![index]
                                                                     .isValidated !=
                                                                 null &&
-                                                            listInstitute[index]
-                                                                .isValidated)
+                                                            listInstitute![index]
+                                                                .isValidated!)
                                                         ? AppLocalizations.of(
-                                                                context)
+                                                                context)!
                                                             .translate(
                                                                 "registered")
                                                         : "",
@@ -388,82 +390,81 @@ class _SelectInstitute extends State<SelectInstitute>
                                               Checkbox(
                                                 activeColor:
                                                     HexColor("#F66666"),
-                                                value: listInstitute[index]
+                                                value: listInstitute![index]
                                                     .isSelected,
                                                 onChanged: (val) {
                                                   if (this.mounted) {
                                                     setState(() {
                                                       if (val == true) {
-                                                        if (listInstitute[index]
-                                                            .isValidated) {
+                                                        if (listInstitute![index]
+                                                            .isValidated!) {
                                                           for (int i = 0;
                                                               i <
-                                                                  listInstitute
+                                                                  listInstitute!
                                                                       .length;
                                                               i++) {
                                                             if (i == index) {
                                                               instituteId =
-                                                                  listInstitute[
+                                                                  listInstitute![
                                                                           i]
                                                                       .id;
                                                               isInstituteSelected =
                                                                   true;
-                                                              listInstitute[i]
+                                                              listInstitute![i]
                                                                       .isSelected =
                                                                   true;
                                                               getRoles(null,
                                                                   instituteId);
                                                               selectSchoolUrl = Config
                                                                           .BASE_URL +
-                                                                      (listInstitute[i].profileImage !=
+                                                                      (listInstitute![i].profileImage !=
                                                                               null
-                                                                          ? listInstitute[i]
-                                                                              .profileImage
-                                                                          : "") ??
-                                                                  "";
+                                                                          ? listInstitute![i]
+                                                                              .profileImage!
+                                                                          : "");
                                                               selectedSchool =
-                                                                  listInstitute[
+                                                                  listInstitute![
                                                                               i]
                                                                           .name ??
                                                                       "";
-                                                              listInstitute[i]
+                                                              listInstitute![i]
                                                                       .name ??
                                                                   "";
-                                                              selectedSchoolDec = listInstitute[
+                                                              selectedSchoolDec = listInstitute![
                                                                               i]
                                                                           .institutionAddress !=
                                                                       null
-                                                                  ? listInstitute[
+                                                                  ? listInstitute![
                                                                               i]
-                                                                          .institutionAddress
+                                                                          .institutionAddress!
                                                                           .streetAddress ??
                                                                       ""
                                                                   : "";
                                                             } else
-                                                              listInstitute[i]
+                                                              listInstitute![i]
                                                                       .isSelected =
                                                                   false;
                                                           }
                                                         } else {
-                                                          prefs.setString(
+                                                          prefs!.setString(
                                                               Strings
                                                                   .registeredInstituteName,
-                                                              listInstitute[
+                                                              listInstitute![
                                                                           index]
                                                                       .name ??
                                                                   "");
-                                                          prefs.setString(
+                                                          prefs!.setString(
                                                               Strings
                                                                   .registeredInstituteImage,
-                                                              listInstitute[
+                                                              listInstitute![
                                                                           index]
                                                                       .profileImage ??
                                                                   "");
-                                                          prefs.setInt(
+                                                          prefs!.setInt(
                                                               "createdSchoolId",
-                                                              listInstitute[
+                                                              listInstitute![
                                                                       index]
-                                                                  .id);
+                                                                  .id!);
                                                           showDialog(
                                                               barrierDismissible:
                                                                   false,
@@ -471,7 +472,7 @@ class _SelectInstitute extends State<SelectInstitute>
                                                               builder: (BuildContext
                                                                       context) =>
                                                                   NonValidatedDialog(
-                                                                      listInstitute[
+                                                                      listInstitute![
                                                                               index]
                                                                           .id));
                                                         }
@@ -479,7 +480,7 @@ class _SelectInstitute extends State<SelectInstitute>
                                                         instituteId = null;
                                                         isInstituteSelected =
                                                             false;
-                                                        listInstitute[index]
+                                                        listInstitute![index]
                                                             .isSelected = false;
                                                         selectedSchool = null;
                                                         selectedSchoolDec =
@@ -503,7 +504,7 @@ class _SelectInstitute extends State<SelectInstitute>
     ));
 
     list.add(TabMaker(
-      tabName: AppLocalizations.of(context).translate('select_role_p'),
+      tabName: AppLocalizations.of(context)!.translate('select_role_p'),
       statelessWidget: Container(
         margin: const EdgeInsets.only(bottom: 65),
         child: NotificationListener<ScrollNotification>(
@@ -518,7 +519,7 @@ class _SelectInstitute extends State<SelectInstitute>
                     controller: _scrollController,
                     padding:
                         EdgeInsets.only(left: 8, right: 8, bottom: 80, top: 8),
-                    itemCount: listRoles.length,
+                    itemCount: listRoles!.length,
                     itemBuilder: (BuildContext context, int index) {
                       return GestureDetector(
                         child: Column(
@@ -535,7 +536,7 @@ class _SelectInstitute extends State<SelectInstitute>
                                   child: Container(
                                     margin: const EdgeInsets.all(16),
                                     child: Text(
-                                      AppLocalizations.of(context)
+                                      AppLocalizations.of(context)!
                                           .translate("primary_role"),
                                       textAlign: TextAlign.center,
                                       style: styleElements
@@ -585,14 +586,14 @@ class _SelectInstitute extends State<SelectInstitute>
                             if (from == "created institute")
                               Visibility(
 //                                    visible: !listInstitute[index].isLoading,
-                                  child: (listRoles[index].personTypeId == 2 ||
-                                          listRoles[index].personTypeId == 3)
+                                  child: (listRoles![index].personTypeId == 2 ||
+                                          listRoles![index].personTypeId == 3)
                                       ? ListTile(
                                           tileColor: HexColor(AppColors.listBg),
                                           title: Align(
                                             alignment: Alignment.centerLeft,
                                             child: Text(
-                                              listRoles[index].personTypeName ??
+                                              listRoles![index].personTypeName ??
                                                   "",
                                               style: styleElements
                                                   .subtitle1ThemeScalable(
@@ -603,7 +604,7 @@ class _SelectInstitute extends State<SelectInstitute>
                                           subtitle: Align(
                                             alignment: Alignment.centerLeft,
                                             child: Text(
-                                              listRoles[index]
+                                              listRoles![index]
                                                       .personTypeDescription ??
                                                   "",
                                               style: styleElements
@@ -615,29 +616,29 @@ class _SelectInstitute extends State<SelectInstitute>
                                           trailing: Checkbox(
                                             activeColor: HexColor(
                                                 AppColors.appMainColor),
-                                            value: listRoles[index].isSelected,
+                                            value: listRoles![index].isSelected,
                                             onChanged: (val) {
                                               if (this.mounted) {
                                                 setState(() {
                                                   if (val == true) {
                                                     for (int i = 0;
-                                                        i < listRoles.length;
+                                                        i < listRoles!.length;
                                                         i++) {
                                                       if (i == index) {
                                                         isRoleSelected = true;
-                                                        listRoles[i]
+                                                        listRoles![i]
                                                             .isSelected = true;
-                                                        type = listRoles[i]
+                                                        type = listRoles![i]
                                                             .personTypeName;
-                                                        id = listRoles[i]
+                                                        id = listRoles![i]
                                                             .personTypeId;
                                                       } else
-                                                        listRoles[i]
+                                                        listRoles![i]
                                                             .isSelected = false;
                                                     }
                                                   } else {
                                                     isRoleSelected = false;
-                                                    listRoles[index]
+                                                    listRoles![index]
                                                         .isSelected = false;
                                                   }
                                                 });
@@ -653,7 +654,7 @@ class _SelectInstitute extends State<SelectInstitute>
                                       title: Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                          listRoles[index].personTypeName ?? "",
+                                          listRoles![index].personTypeName ?? "",
                                           style: styleElements
                                               .subtitle1ThemeScalable(context),
                                           textAlign: TextAlign.left,
@@ -662,7 +663,7 @@ class _SelectInstitute extends State<SelectInstitute>
                                       subtitle: Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                          listRoles[index]
+                                          listRoles![index]
                                                   .personTypeDescription ??
                                               "",
                                           style: styleElements
@@ -673,29 +674,29 @@ class _SelectInstitute extends State<SelectInstitute>
                                       trailing: Checkbox(
                                         activeColor:
                                             HexColor(AppColors.appMainColor),
-                                        value: listRoles[index].isSelected,
+                                        value: listRoles![index].isSelected,
                                         onChanged: (val) {
                                           if (this.mounted) {
                                             setState(() {
                                               if (val == true) {
                                                 for (int i = 0;
-                                                    i < listRoles.length;
+                                                    i < listRoles!.length;
                                                     i++) {
                                                   if (i == index) {
                                                     isRoleSelected = true;
-                                                    listRoles[i].isSelected =
+                                                    listRoles![i].isSelected =
                                                         true;
-                                                    type = listRoles[i]
+                                                    type = listRoles![i]
                                                         .personTypeName;
-                                                    id = listRoles[i]
+                                                    id = listRoles![i]
                                                         .personTypeId;
                                                   } else
-                                                    listRoles[i].isSelected =
+                                                    listRoles![i].isSelected =
                                                         false;
                                                 }
                                               } else {
                                                 isRoleSelected = false;
-                                                listRoles[index].isSelected =
+                                                listRoles![index].isSelected =
                                                     false;
                                               }
                                             });
@@ -712,7 +713,7 @@ class _SelectInstitute extends State<SelectInstitute>
       ),
     ));
 
-    pageTitle = AppLocalizations.of(context).translate('select_institute');
+    pageTitle = AppLocalizations.of(context)!.translate('select_institute');
 
     return new WillPopScope(
         onWillPop: _onBackPressed,
@@ -766,7 +767,7 @@ class _SelectInstitute extends State<SelectInstitute>
                                                             if (index == 0) {
                                                               setState(() {
                                                                 pageTitle = AppLocalizations.of(
-                                                                        context)
+                                                                        context)!
                                                                     .translate(
                                                                         "institute");
                                                                 _currentPosition =
@@ -785,7 +786,7 @@ class _SelectInstitute extends State<SelectInstitute>
                                                               } else {
                                                                 ToastBuilder().showSnackBar(
                                                                     AppLocalizations.of(
-                                                                            context)
+                                                                            context)!
                                                                         .translate(
                                                                             "select_Institute"),
                                                                     sctx,
@@ -883,7 +884,7 @@ class _SelectInstitute extends State<SelectInstitute>
                                                     });
                                                   });
                                                 },
-                                                hintText: AppLocalizations.of(context).translate('search'),
+                                                hintText: AppLocalizations.of(context)!.translate('search'),
                                                 progressIndicator:
                                                 isSearching && !isCallComplete,
                                             isFilterVisible: false,
@@ -928,7 +929,7 @@ class _SelectInstitute extends State<SelectInstitute>
                                                                   .all(16),
                                                           child: Text(
                                                             AppLocalizations.of(
-                                                                    context)
+                                                                    context)!
                                                                 .translate(
                                                                     'skip_this_now'),
                                                             style: styleElements
@@ -955,13 +956,13 @@ class _SelectInstitute extends State<SelectInstitute>
                                                             if (_currentPosition ==
                                                                 0) {
                                                               if (isInstituteSelected) {
-                                                                widget.registerUserAs.institutionId = instituteId;
+                                                                widget.registerUserAs!.institutionId = instituteId;
                                                                 getAdditionDetails();
 
                                                               } else {
                                                                 ToastBuilder().showSnackBar(
                                                                     AppLocalizations.of(
-                                                                            context)
+                                                                            context)!
                                                                         .translate(
                                                                             "select_Institute"),
                                                                     sctx,
@@ -980,7 +981,7 @@ class _SelectInstitute extends State<SelectInstitute>
                                                               } else {
                                                                 ToastBuilder().showSnackBar(
                                                                     AppLocalizations.of(
-                                                                            context)
+                                                                            context)!
                                                                         .translate(
                                                                             "select_role"),
                                                                     sctx,
@@ -993,7 +994,7 @@ class _SelectInstitute extends State<SelectInstitute>
                                                           color: Colors.white,
                                                           child: Text(
                                                               AppLocalizations.of(
-                                                                      context)
+                                                                      context)!
                                                                   .translate(
                                                                       "next"),
                                                               style: styleElements
@@ -1035,8 +1036,8 @@ class _SelectInstitute extends State<SelectInstitute>
           child: Card(
             child: AcademicInformationPage(
               registerUserAs: widget.registerUserAs,
-              callBack: (RegisterUserAs registerUserdata  ){
-                registerUserdata.isDefaultInstitution=false;
+              callBack: (RegisterUserAs? registerUserdata  ){
+                registerUserdata!.isDefaultInstitution=false;
                 Navigator.of(
                     ctx)
                     .pop({
@@ -1062,8 +1063,8 @@ class _SelectInstitute extends State<SelectInstitute>
     personTypeList.add(id);
     payload.isDefaultInstitution = isDefaultInstitution;
     payload.personTypeList = personTypeList;
-    for (var item in listRoles) {
-      if (item.isSelected) {
+    for (var item in listRoles!) {
+      if (item.isSelected!) {
         institutionRolesList.add(item.personTypeId);
       }
     }
@@ -1077,7 +1078,7 @@ class _SelectInstitute extends State<SelectInstitute>
 
   }
 
-  void getRoles(String searchValue, int instituteId) async {
+  void getRoles(String? searchValue, int? instituteId) async {
     _enabled = true;
     final body = jsonEncode({
       "institution_id": instituteId,
@@ -1089,8 +1090,8 @@ class _SelectInstitute extends State<SelectInstitute>
         setState(() {
           _enabled = false;
           listRoles = data.rows;
-          for (int i = 0; i < listRoles.length; i++) {
-            listRoles[i].isSelected = false;
+          for (int i = 0; i < listRoles!.length; i++) {
+            listRoles![i].isSelected = false;
           }
 
           if (from == "created institute") {
@@ -1106,7 +1107,7 @@ class _SelectInstitute extends State<SelectInstitute>
   }
 
   _scrollToTop() {
-    _scrollController.animateTo(_scrollController.position.minScrollExtent,
+    _scrollController!.animateTo(_scrollController!.position.minScrollExtent,
         duration: Duration(milliseconds: 1000), curve: Curves.easeIn);
   }
 
@@ -1123,25 +1124,25 @@ class _SelectInstitute extends State<SelectInstitute>
         if (data != null && data.statusCode == Strings.success_code) {
           isLoading = false;
           _enabledInstitute = false;
-          if (data.rows != null && data.rows.isNotEmpty) {
-            for (int i = 0; i < data.rows.length; i++) {
+          if (data.rows != null && data.rows!.isNotEmpty) {
+            for (int i = 0; i < data.rows!.length; i++) {
               // already selected institute mark red
               if (instituteId != null) {
-                if (data.rows[i].id == instituteId)
-                  data.rows[i].isSelected = true;
+                if (data.rows![i].id == instituteId)
+                  data.rows![i].isSelected = true;
                 else
-                  data.rows[i].isSelected = false;
+                  data.rows![i].isSelected = false;
               } else {
-                data.rows[i].isSelected = false;
+                data.rows![i].isSelected = false;
               }
             }
             if (isSearching) {
               listInstitute = data.rows;
             } else {
-              if (listInstitute.length > 0)
-                listInstitute.removeAt(listInstitute.length - 1);
+              if (listInstitute!.length > 0)
+                listInstitute!.removeAt(listInstitute!.length - 1);
               instPageNumber = instPageNumber + 1;
-              listInstitute = listInstitute + data.rows;
+              listInstitute = listInstitute! + data.rows!;
             }
             setState(() {
               ifNoInstituteFound = false;
@@ -1170,9 +1171,9 @@ class _SelectInstitute extends State<SelectInstitute>
                     ));*/
               }
             } else {
-              if (listInstitute != null && listInstitute.length > 0)
-                listInstitute.removeAt(listInstitute.length - 1);
-              if (listInstitute.length == 0) {
+              if (listInstitute != null && listInstitute!.length > 0)
+                listInstitute!.removeAt(listInstitute!.length - 1);
+              if (listInstitute!.length == 0) {
                 ifNoInstituteFound = true;
                 showModalBottomSheet<void>(
                   context: context,
@@ -1202,8 +1203,8 @@ class _SelectInstitute extends State<SelectInstitute>
             setState(() {});
           }
         } else {
-          if (listInstitute.length > 0)
-            listInstitute.removeAt(listInstitute.length - 1);
+          if (listInstitute!.length > 0)
+            listInstitute!.removeAt(listInstitute!.length - 1);
           setState(() {});
         }
       } else {
@@ -1243,7 +1244,7 @@ class _SelectInstitute extends State<SelectInstitute>
                               color: HexColor(AppColors.appColorBlack85),
                             ),
                             Text(
-                                AppLocalizations.of(context)
+                                AppLocalizations.of(context)!
                                     .translate("search_again"),
                                 style: styleElements
                                     .bodyText2ThemeScalable(context)
@@ -1260,7 +1261,7 @@ class _SelectInstitute extends State<SelectInstitute>
                       padding: const EdgeInsets.only(left:60.0),
                       child: Container(
                         child: Text(
-                          AppLocalizations.of(context).translate("sorry"),
+                          AppLocalizations.of(context)!.translate("sorry"),
                           style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -1272,7 +1273,7 @@ class _SelectInstitute extends State<SelectInstitute>
           Container(
             margin: const EdgeInsets.all(16),
             child: Text(
-              AppLocalizations.of(context).translate("if_no_inst_found"),
+              AppLocalizations.of(context)!.translate("if_no_inst_found"),
               textAlign: TextAlign.center,
               style: styleElements
                   .captionThemeScalable(context)
@@ -1284,7 +1285,7 @@ class _SelectInstitute extends State<SelectInstitute>
             child: Container(
               margin: const EdgeInsets.only(left: 16, right: 16, bottom: 16,top: 20),
               child: WhiteLargeButton(
-                name: AppLocalizations.of(context)
+                name: AppLocalizations.of(context)!
                     .translate("register__institute"),
                 offsetX: 70.66,
                 offsetY: 12.93,
@@ -1303,7 +1304,7 @@ class _SelectInstitute extends State<SelectInstitute>
           ),
           Container(
             margin: const EdgeInsets.only(bottom: 16),
-            child: Text(AppLocalizations.of(context).translate('or'),
+            child: Text(AppLocalizations.of(context)!.translate('or'),
                 textAlign: TextAlign.center,
                 style: styleElements.captionThemeScalable(context)),
           ),
@@ -1312,7 +1313,7 @@ class _SelectInstitute extends State<SelectInstitute>
             child: Container(
               margin: const EdgeInsets.only(left: 16, right: 16, bottom: 60),
               child: WhiteLargeButton(
-                name: AppLocalizations.of(context)
+                name: AppLocalizations.of(context)!
                     .translate("join_tricycle_institute"),
                 offsetX: 70.66,
                 offsetY: 12.93,
@@ -1346,10 +1347,10 @@ class _SelectInstitute extends State<SelectInstitute>
           setState(() {
             var data = PersonalProfile.fromJson(value);
             if (data != null && data.statusCode == 'S10001') {
-              Persondata persondata = data.rows;
+              Persondata? persondata = data.rows;
               DataSaveUtils().saveUserData(prefs, persondata);
-              if (from == "welcome" && isInstituteSelectedAlready)
-                prefs.setBool("isProfileCreated", false);
+              if (from == "welcome" && isInstituteSelectedAlready!)
+                prefs!.setBool("isProfileCreated", false);
             }
           });
         }
@@ -1366,11 +1367,11 @@ class _SelectInstitute extends State<SelectInstitute>
       if (value != null) {
         var data = CodeVerification.fromJson(value);
         if (data != null && data.statusCode == "S10001") {
-          if (data.rows.isValid) {
+          if (data.rows!.isValid!) {
             proceed(true,false);
           } else {
             ToastBuilder().showSnackBar(
-                AppLocalizations.of(context).translate("codeV"),
+                AppLocalizations.of(context)!.translate("codeV"),
                 sctx,
                 HexColor(AppColors.information));
           }
@@ -1382,7 +1383,7 @@ class _SelectInstitute extends State<SelectInstitute>
 
 // ignore: must_be_immutable
 class NoInstitutePage extends StatelessWidget {
-  TextStyleElements styleElements;
+  TextStyleElements? styleElements;
 
   @override
   Widget build(BuildContext context) {
@@ -1399,7 +1400,7 @@ class NoInstitutePage extends StatelessWidget {
                     color: HexColor(AppColors.appColorBackground)),
                 child: Center(
                     child: EmptyWidget(
-                        AppLocalizations.of(context).translate("no_data")))),
+                        AppLocalizations.of(context)!.translate("no_data")))),
           )),
     );
   }
@@ -1408,8 +1409,8 @@ class NoInstitutePage extends StatelessWidget {
 }
 
 class TabMaker {
-  String tabName;
-  Widget statelessWidget;
+  String? tabName;
+  Widget? statelessWidget;
 
   TabMaker({this.tabName, this.statelessWidget});
 }

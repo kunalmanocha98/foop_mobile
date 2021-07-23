@@ -22,26 +22,26 @@ import 'dialogs/ratingcarddialog.dart';
 
 // ignore: must_be_immutable
 class CommentItemCard extends StatefulWidget {
-  NotesListItem data;
-  TextStyleElements styleElements;
-  BuildContext context;
-  Function ratingCallBack;
+  NotesListItem? data;
+  TextStyleElements? styleElements;
+  BuildContext? context;
+  Function? ratingCallBack;
   bool isAnswer;
-  Color color;
+  Color? color;
   bool isAssignment;
-  double rating;
-  String reviewNote;
-  AnswerOtherDetails answerOtherDetails;
-  String answerStatus;
-  int postId;
-  DateTime assignmentDate;
-  String assignmentTitle;
-  String maxMarks;
-  Function refreshCallback;
+  double? rating;
+  String? reviewNote;
+  AnswerOtherDetails? answerOtherDetails;
+  String? answerStatus;
+  int? postId;
+  DateTime? assignmentDate;
+  String? assignmentTitle;
+  String? maxMarks;
+  Function? refreshCallback;
   bool isGiveMarksVisible;
 
-  CommentItemCard({Key key,
-    @required this.data,
+  CommentItemCard({Key? key,
+    required this.data,
     this.styleElements,
     this.ratingCallBack,
     this.color,
@@ -71,13 +71,13 @@ class CommentItemCard extends StatefulWidget {
 }
 
 class CommentItemCardState extends State<CommentItemCard> {
-  NotesListItem data;
-  TextStyleElements styleElements;
-  Function ratingCallBack;
-  bool isAnswer;
-  Color color;
+  NotesListItem? data;
+  TextStyleElements? styleElements;
+  Function? ratingCallBack;
+  bool? isAnswer;
+  Color? color;
 
-  CommentItemCardState({@required this.data,
+  CommentItemCardState({required this.data,
     this.styleElements,
     this.ratingCallBack,
     this.color,
@@ -91,14 +91,14 @@ class CommentItemCardState extends State<CommentItemCard> {
         [
           PopupMenuItem(
             value: 1,
-            child: Text(AppLocalizations.of(context).translate('report_abuse')),
+            child: Text(AppLocalizations.of(context)!.translate('report_abuse')),
           ),
         ],
         onSelected: (value) {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) =>
                   ReportAbuse(
-                    contextId: data.note_id,
+                    contextId: data!.note_id,
                     contextType: CONTEXTTYPE_ENUM.COMMENT.type,
                   )));
           // Navigator.push(
@@ -128,7 +128,7 @@ class CommentItemCardState extends State<CommentItemCard> {
               children: [
                 TricycleAvatar(
                   size: 24,
-                  imageUrl: data.notesCreatedByProfile,
+                  imageUrl: data!.notesCreatedByProfile,
                   resolution_type: RESOLUTION_TYPE.R64,
                   service_type: SERVICE_TYPE.PERSON,
                 ),
@@ -136,23 +136,23 @@ class CommentItemCardState extends State<CommentItemCard> {
                   direction: Axis.vertical,
                   children: [
                     Padding(
-                      padding: (isAnswer != null && isAnswer)
+                      padding: (isAnswer != null && isAnswer!)
                           ? EdgeInsets.only(left: 4, right: 4)
                           : EdgeInsets.only(left: 4, right: 4, top: 14),
                       child: Text(
-                        data.notesCreatedByName ??= "Name",
-                        style: styleElements
+                        data!.notesCreatedByName ??= "Name",
+                        style: styleElements!
                             .subtitle2ThemeScalable(context)
                             .copyWith(fontWeight: FontWeight.bold),
                       ),
                     ),
-                    (isAnswer != null && isAnswer)
+                    (isAnswer != null && isAnswer!)
                         ? Container()
                         : Padding(
                       padding: EdgeInsets.only(left: 4.0, top: 4),
                       child: RatingBar(
-                        initialRating: double.parse(data.postRate != null
-                            ? data.postRate.toString()
+                        initialRating: double.parse(data!.postRate != null
+                            ? data!.postRate.toString()
                             : "0"),
                         minRating: 0,
                         direction: Axis.horizontal,
@@ -172,12 +172,12 @@ class CommentItemCardState extends State<CommentItemCard> {
                             full: Icon(
                               Icons.star,
                               color: HexColor(AppColors.appMainColor),
-                            )),
+                            )), onRatingUpdate: (double value) {  },
                         // itemBuilder: (context, _) => Icon(
                         //   Icons.star,
                         //   color: HexColor(AppColors.appMainColor),
                         // ),
-                        onRatingUpdate: null,
+
                       ),
                     ),
                   ],
@@ -185,19 +185,19 @@ class CommentItemCardState extends State<CommentItemCard> {
                 Padding(
                   padding: EdgeInsets.only(top: 4, left: 12, right: 8),
                   child: Text(
-                    (isAnswer != null && isAnswer)
+                    (isAnswer != null && isAnswer!)
                         ? Utility().getDateFormat(
                         "dd MMM yyyy,hh:mm",
-                        data.createdDate != null
+                        data!.createdDate != null
                             ? DateTime.fromMillisecondsSinceEpoch(
-                            int.parse(data.createdDate))
+                            int.parse(data!.createdDate!))
                             : DateTime.now())
                         : Utility().getDateFormat(
                         "dd MMM yyyy,hh:mm",
-                        data.createdDate != null
-                            ? DateTime.parse(data.createdDate)
+                        data!.createdDate != null
+                            ? DateTime.parse(data!.createdDate!)
                             : DateTime.now()),
-                    style: styleElements
+                    style: styleElements!
                         .captionThemeScalable(context)
                         .copyWith(fontSize: 10),
                   ),
@@ -214,11 +214,11 @@ class CommentItemCardState extends State<CommentItemCard> {
                 // _simplePopup(),
               ],
             ),
-            (isAnswer) ?
+            isAnswer! ?
             TricycleHtmlViewer(
               isNewsPage: false,
               isDetailPage: true,
-              sourceString: data.noteContent,
+              sourceString: data!.noteContent,
             )
             // Html(data: data.noteContent, shrinkWrap: true, style: {
             //   "body": Style(
@@ -228,21 +228,21 @@ class CommentItemCardState extends State<CommentItemCard> {
                 : Padding(
               padding: EdgeInsets.only(top: 12, bottom: 2),
               child: Text(
-                data.noteContent ??= "content",
+                data!.noteContent ??= "content",
                 maxLines: 4,
                 overflow: TextOverflow.ellipsis,
-                style: styleElements.subtitle2ThemeScalable(context),
+                style: styleElements!.subtitle2ThemeScalable(context),
               ),
             ),
             Visibility(
-              visible: !(isAnswer != null && isAnswer),
+              visible: !(isAnswer != null && isAnswer!),
               child: Row(
                 children: [
                   Text(
-                    data.commRateCount != null
-                        ? data.commRateCount.toString()
+                    data!.commRateCount != null
+                        ? data!.commRateCount.toString()
                         : "0",
-                    style: styleElements.captionThemeScalable(context).copyWith(
+                    style: styleElements!.captionThemeScalable(context).copyWith(
                         color: HexColor(AppColors.appMainColor),
                         fontWeight: FontWeight.bold),
                   ),
@@ -254,13 +254,13 @@ class CommentItemCardState extends State<CommentItemCard> {
                           barrierDismissible: true,
                           builder: (BuildContext context) =>
                               RatingCardDialog(
-                                contextId: int.parse(data.noteCreatedById),
-                                contexType: data.noteCreatedByType,
-                                subjectId: data.note_id,
+                                contextId: int.parse(data!.noteCreatedById!),
+                                contexType: data!.noteCreatedByType,
+                                subjectId: data!.note_id,
                                 subjectType: 'comment',
                               )).then((value) {
                         if (value) {
-                          ratingCallBack();
+                          ratingCallBack!();
                           // setState(() {
                           //   data.commRateCount = data.commRateCount+1;
                           // });
@@ -299,15 +299,15 @@ class CommentItemCardState extends State<CommentItemCard> {
                 children: [
                   SizedBox(height: 8,),
                   Visibility(
-                    visible: (widget.answerOtherDetails!=null && widget.answerOtherDetails.mediaDetails!=null && widget.answerOtherDetails.mediaDetails.length>0),
+                    visible: (widget.answerOtherDetails!=null && widget.answerOtherDetails!.mediaDetails!=null && widget.answerOtherDetails!.mediaDetails!.length>0),
                     child: Container(
                       height: 50,
                       child: ListView.builder(
                         padding: EdgeInsets.only(bottom: 8),
                         shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
-                        itemCount: (widget.answerOtherDetails!=null && widget.answerOtherDetails.mediaDetails!=null)?
-                        widget.answerOtherDetails.mediaDetails.length:0,
+                        itemCount: (widget.answerOtherDetails!=null && widget.answerOtherDetails!.mediaDetails!=null)?
+                        widget.answerOtherDetails!.mediaDetails!.length:0,
                         itemBuilder: (BuildContext context, int index) {
                           return Container(
                             margin: EdgeInsets.only(left: 4,right: 4),
@@ -316,7 +316,7 @@ class CommentItemCardState extends State<CommentItemCard> {
                                 // TricycleDownloadButtonState.requestDownloadFromOutSide(widget.answerOtherDetails.mediaDetails[index].mediaUrl);
                               },
                               child: Chip(
-                                label: Text(getFileName(widget.answerOtherDetails.mediaDetails[index].mediaUrl)),
+                                label: Text(getFileName(widget.answerOtherDetails!.mediaDetails![index].mediaUrl)),
                                 padding: EdgeInsets.only(left: 8,right: 8,top: 8,bottom: 8),
                               ),
                             ),
@@ -328,7 +328,7 @@ class CommentItemCardState extends State<CommentItemCard> {
                   Row(children: [
                     Text(
                       "${widget.rating}",
-                      style: styleElements.captionThemeScalable(context)
+                      style: styleElements!.captionThemeScalable(context)
                           .copyWith(
                           color: HexColor(AppColors.appMainColor),
                           fontWeight: FontWeight.bold),
@@ -340,8 +340,8 @@ class CommentItemCardState extends State<CommentItemCard> {
                     ),
                     SizedBox(width: 8,),
                     Text(
-                      "Marks- ${(widget.answerOtherDetails!=null && widget.answerOtherDetails.marks!=null)?widget.answerOtherDetails.marks:"0"}/${widget.maxMarks}",
-                      style: styleElements.captionThemeScalable(context)
+                      "Marks- ${(widget.answerOtherDetails!=null && widget.answerOtherDetails!.marks!=null)?widget.answerOtherDetails!.marks:"0"}/${widget.maxMarks}",
+                      style: styleElements!.captionThemeScalable(context)
                           .copyWith(
                           color: HexColor(AppColors.appMainColor),
                           fontWeight: FontWeight.bold),
@@ -353,14 +353,14 @@ class CommentItemCardState extends State<CommentItemCard> {
                         onPressed: () {   Navigator.push(context, MaterialPageRoute(builder: (
                             BuildContext context) {
                           return AddReviewPage(isAssignment: true,
-                            ratingType:data.noteCreatedByType,
-                            id:int.parse(data.noteCreatedById),
-                            name: data.notesCreatedByName,
-                            imageUrl:Utility().getUrlForImage(data.notesCreatedByProfile , RESOLUTION_TYPE.R64, SERVICE_TYPE.PERSON),
-                            answerDetails: data.noteContent,
+                            ratingType:data!.noteCreatedByType,
+                            id:int.parse(data!.noteCreatedById!),
+                            name: data!.notesCreatedByName,
+                            imageUrl:Utility().getUrlForImage(data!.notesCreatedByProfile , RESOLUTION_TYPE.R64, SERVICE_TYPE.PERSON),
+                            answerDetails: data!.noteContent,
                             answerOtherDetails: widget.answerOtherDetails,
                             answerStatus: widget.answerStatus,
-                            answerId: data.note_id,
+                            answerId: data!.note_id,
                             postId: widget.postId,
                             data: CommonCardData(),
                             assignmentDate: widget.assignmentDate,
@@ -369,11 +369,11 @@ class CommentItemCardState extends State<CommentItemCard> {
                             callback: (){},
                           );
                         })).then((value) {
-                          widget.refreshCallback();
+                          widget.refreshCallback!();
                         }); },
                         child: Text(
-                          AppLocalizations.of(context).translate('give_marks'),
-                          style: styleElements.captionThemeScalable(context)
+                          AppLocalizations.of(context)!.translate('give_marks'),
+                          style: styleElements!.captionThemeScalable(context)
                               .copyWith(
                               color: HexColor(AppColors.appMainColor),
                               fontWeight: FontWeight.bold),
@@ -386,19 +386,19 @@ class CommentItemCardState extends State<CommentItemCard> {
 
                   Visibility(
                     visible: widget.reviewNote != null &&
-                        widget.reviewNote.isNotEmpty,
+                        widget.reviewNote!.isNotEmpty,
                     child: Text(
-                      AppLocalizations.of(context).translate('review_note'),
-                      style: styleElements
+                      AppLocalizations.of(context)!.translate('review_note'),
+                      style: styleElements!
                           .subtitle1ThemeScalable(context)
                           .copyWith(fontWeight: FontWeight.bold),
                     ),
                   ),
                   Visibility(
                     visible: widget.reviewNote != null &&
-                        widget.reviewNote.isNotEmpty,
+                        widget.reviewNote!.isNotEmpty,
                     child: Text(widget.reviewNote ?? "",
-                      style: styleElements.bodyText2ThemeScalable(context),
+                      style: styleElements!.bodyText2ThemeScalable(context),
                     ),
                   ),
                   SizedBox(height: 8,),
@@ -411,7 +411,7 @@ class CommentItemCardState extends State<CommentItemCard> {
         ));
   }
 
-  String getFileName(String mediaUrl) {
+  String getFileName(String? mediaUrl) {
     if(mediaUrl!=null && mediaUrl.isNotEmpty){
       var s = mediaUrl.split('/');
       return s[s.length - 1];

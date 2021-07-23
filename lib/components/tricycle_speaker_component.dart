@@ -7,6 +7,7 @@ import 'package:oho_works_app/utils/colors.dart';
 import 'package:oho_works_app/utils/hexColors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:lottie/lottie.dart';
 
 /*// ignore: library_prefixes
@@ -14,23 +15,27 @@ import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
 // ignore: library_prefixes
 import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;*/
 class TricycleSpeakerComponent extends StatelessWidget{
-  final String imageUrl;
-  final double size;
-  final String name;
-  final String designation;
+  final String? imageUrl;
+  final double? size;
+  final String? name;
+  final String? designation;
   final bool speaking;
-  final bool isSpeaking;
+  final bool? isSpeaking;
   final bool isModerator;
   final bool isAudience;
-  final Function(bool ,int) videoClickCallBack;
-  final bool isMute;
-  final int isVideoOn;
-  final int userId;
-  final int participantId;
-  TricycleSpeakerComponent({this.videoClickCallBack,this.userId,this.participantId,this.imageUrl,this.size,this.name,this.isVideoOn,this.designation,this.speaking = false,this.isModerator = false,this.isAudience = false,this.isMute,this.isSpeaking});
+  final Function(bool ,int)? videoClickCallBack;
+ final RTCVideoRenderer? renderer;
+  final bool? isMute;
+  final int? isVideoOn;
+  final int? userId;
+  final int? participantId;
+  TricycleSpeakerComponent({this.renderer,this.videoClickCallBack,this.userId,this.participantId,this.imageUrl,this.size,this.name,this.isVideoOn,this.designation,this.speaking = false,this.isModerator = false,this.isAudience = false,this.isMute,this.isSpeaking});
   @override
   Widget build(BuildContext context) {
-    double newSize=size-4;
+
+
+
+    double newSize=size!-4;
     final TextStyleElements styleElements = TextStyleElements(context);
     return Container(
       child: Center(
@@ -45,11 +50,11 @@ class TricycleSpeakerComponent extends StatelessWidget{
                  child: SizedBox(
                  height: newSize,
                  width: newSize,
-                 child:/*isVideoOn==1? _renderLocalPreview(userId==participantId,participantId):*/
+                 child:isVideoOn==1? _renderLocalPreview(userId==participantId,participantId!):
                  Stack(
                    children: [
                      Visibility(
-                       visible: isSpeaking!=null &&isSpeaking,
+                       visible: isSpeaking!=null &&isSpeaking!,
                          child:  Lottie.asset(
                            'assets/voice.json',
                            width: size,
@@ -78,7 +83,7 @@ class TricycleSpeakerComponent extends StatelessWidget{
                        ),
                      ),
                      Visibility(
-                       visible: isAudience ? !isAudience : isMute,
+                       visible: isAudience ? !isAudience : isMute!,
                        child: Align(
                          alignment: Alignment.bottomRight,
                          child: Padding(
@@ -92,7 +97,7 @@ class TricycleSpeakerComponent extends StatelessWidget{
                                    border: Border.all(color: HexColor(AppColors.appMainColor,),width: 0.5),
                                    color: HexColor(AppColors.appColorWhite), shape: BoxShape.circle),
                                child: Icon(
-                                 isMute? Icons.mic_off_rounded:Icons.mic_none_outlined,
+                                 isMute!? Icons.mic_off_rounded:Icons.mic_none_outlined,
                                  size: newSize>100?24:18,
                                  color: HexColor(AppColors.appMainColor),
                                ),
@@ -116,7 +121,7 @@ class TricycleSpeakerComponent extends StatelessWidget{
                   ):Container(),
                   Flexible(
                     child: Text(
-                      name,
+                      name!,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                       style:  styleElements.subtitle2ThemeScalable(context).copyWith(
@@ -136,13 +141,12 @@ class TricycleSpeakerComponent extends StatelessWidget{
   }
   // Generate local preview
   // ignore: missing_return
-/*
   Widget _renderLocalPreview(bool isLocalVideo,int id) {
     return
         InkWell(
           onTap: (){
 
-            videoClickCallBack(isLocalVideo,id);
+            videoClickCallBack!(isLocalVideo,id);
           },
           child: Align(
             alignment: Alignment.center,
@@ -151,14 +155,14 @@ class TricycleSpeakerComponent extends StatelessWidget{
               child: Container(
                   height: 150,
                   width: 150,
-                  child:isLocalVideo? RtcLocalView.SurfaceView():RtcRemoteView.SurfaceView(uid: id)),
-            ),
+                  color: HexColor(AppColors.appColorBlack85),
+                  child:isLocalVideo ? SizedBox.expand(child: Center(child: RTCVideoView(renderer!, mirror: true,objectFit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover))):Center(child: RTCVideoView(renderer!, mirror: false,objectFit: RTCVideoViewObjectFit.RTCVideoViewObjectFitCover)),
+            )
           ),
-        );
+        ));
 
 
   }
-*/
 
 
 }

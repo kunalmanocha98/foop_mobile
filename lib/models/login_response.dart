@@ -1,7 +1,7 @@
 class LoginResponse {
-  String statusCode;
-  String message;
-  Data rows;
+  String? statusCode;
+  String? message;
+  Data? rows;
 
   LoginResponse({this.statusCode, this.message, this.rows});
 
@@ -16,15 +16,15 @@ class LoginResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  String expiry;
-  String token;
+  String? expiry;
+  String? token;
 
   Data({this.expiry, this.token});
 

@@ -33,17 +33,17 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPage extends State<SettingsPage> {
-  TextStyleElements styleElements;
-  SharedPreferences prefs = locator<SharedPreferences>();
+  late TextStyleElements styleElements;
+  SharedPreferences? prefs = locator<SharedPreferences>();
   @override
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
-    var data = Persondata.fromJson(jsonDecode(prefs.getString(Strings.basicData)));
+    var data = Persondata.fromJson(jsonDecode(prefs!.getString(Strings.basicData)!));
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: TricycleAppBar().getCustomAppBar(context,
-            appBarTitle: AppLocalizations.of(context).translate("settings"),
+            appBarTitle: AppLocalizations.of(context)!.translate("settings"),
             onBackButtonPress: () {
           Navigator.pop(context);
         }),
@@ -67,7 +67,7 @@ class _SettingsPage extends State<SettingsPage> {
                         padding: EdgeInsets.only(top: 8, bottom: 8, left: 8),
                         child: ListTile(
                           title: Text(
-                            AppLocalizations.of(context)
+                            AppLocalizations.of(context)!
                                 .translate("account_settings"),
                             style:
                                 styleElements.subtitle1ThemeScalable(context),
@@ -90,7 +90,7 @@ class _SettingsPage extends State<SettingsPage> {
                       padding: EdgeInsets.only(top: 8, bottom: 8, left: 8),
                       child: ListTile(
                         title: Text(
-                          AppLocalizations.of(context)
+                          AppLocalizations.of(context)!
                               .translate("change_password"),
                           style: styleElements.subtitle1ThemeScalable(context),
                         ),
@@ -113,7 +113,7 @@ class _SettingsPage extends State<SettingsPage> {
                       padding: EdgeInsets.only(top: 8, bottom: 8, left: 8),
                       child: ListTile(
                         title: Text(
-                          AppLocalizations.of(context)
+                          AppLocalizations.of(context)!
                               .translate("privacy_settings"),
                           style: styleElements.subtitle1ThemeScalable(context),
                         ),
@@ -136,7 +136,7 @@ class _SettingsPage extends State<SettingsPage> {
                       padding: EdgeInsets.only(top: 8, bottom: 8, left: 8),
                       child: ListTile(
                         title: Text(
-                            AppLocalizations.of(context)
+                            AppLocalizations.of(context)!
                                 .translate("blocked_user"),
                             style:
                                 styleElements.subtitle1ThemeScalable(context)),
@@ -145,7 +145,7 @@ class _SettingsPage extends State<SettingsPage> {
                   ),
                 ),
                 Visibility(
-                  visible: data.permissions.any((element) {return element.roleCode == 'ADMIN';}),
+                  visible: data.permissions!.any((element) {return element.roleCode == 'ADMIN';}),
                   child: InkWell(
                     onTap: () {
                       Navigator.push(
@@ -161,7 +161,7 @@ class _SettingsPage extends State<SettingsPage> {
                         padding: EdgeInsets.only(top: 8, bottom: 8, left: 8),
                         child: ListTile(
                           title: Text(
-                              AppLocalizations.of(context)
+                              AppLocalizations.of(context)!
                                   .translate("institute_admins"),
                               style: styleElements.subtitle1ThemeScalable(context)),
                         ),
@@ -184,8 +184,8 @@ class AccountSettings extends StatefulWidget {
 }
 
 class _AccountSettings extends State<AccountSettings> {
-  SettingsView settingsView;
-  SharedPreferences prefs;
+  SettingsView? settingsView;
+  late SharedPreferences prefs;
   bool isLoading = false;
 
   @override
@@ -196,7 +196,7 @@ class _AccountSettings extends State<AccountSettings> {
 
   Future<void> setPrefs() async {
     prefs = await SharedPreferences.getInstance();
-    WidgetsBinding.instance.addPostFrameCallback((_) => fetchSettings());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => fetchSettings());
   }
 
   String setLanguage(List<LanguageItem> contentLanguage) {
@@ -231,7 +231,7 @@ class _AccountSettings extends State<AccountSettings> {
           });
         } else {
           ToastBuilder().showToast(
-              data.message, context, HexColor(AppColors.information));
+              data.message!, context, HexColor(AppColors.information));
           Navigator.pop(context);
         }
       }
@@ -263,7 +263,7 @@ class _AccountSettings extends State<AccountSettings> {
     });
   }
 
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   @override
   Widget build(BuildContext context) {
@@ -272,7 +272,7 @@ class _AccountSettings extends State<AccountSettings> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: TricycleAppBar().getCustomAppBar(context,
-          appBarTitle: AppLocalizations.of(context)
+          appBarTitle: AppLocalizations.of(context)!
               .translate("account_settings"), onBackButtonPress: () {
         Navigator.pop(context);
       }),
@@ -288,7 +288,7 @@ class _AccountSettings extends State<AccountSettings> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => UpdateLanguagePage(
-                                        true, settingsView.rows.id,false)))
+                                        true, settingsView!.rows!.id,false)))
                             .then((value) => refresh());
                       },
                       child: Card(
@@ -297,13 +297,13 @@ class _AccountSettings extends State<AccountSettings> {
                         child: ListTile(
                           title: Text(
                             settingsView != null
-                                ? settingsView.rows.language.languageNameLocal
+                                ? settingsView!.rows!.language!.languageNameLocal!
                                 : "",
                             style:
                                 styleElements.subtitle1ThemeScalable(context),
                           ),
                           subtitle: Text(
-                            AppLocalizations.of(context)
+                            AppLocalizations.of(context)!
                                 .translate("tricycle_lang_des"),
                             style: styleElements.captionThemeScalable(context),
                           ),
@@ -316,7 +316,7 @@ class _AccountSettings extends State<AccountSettings> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => UpdateLanguagePage(
-                                        false, settingsView.rows.id,false)))
+                                        false, settingsView!.rows!.id,false)))
                             .then((value) => refresh());
                       },
                       child: Card(
@@ -325,13 +325,13 @@ class _AccountSettings extends State<AccountSettings> {
                         child: ListTile(
                           title: Text(
                             settingsView != null
-                                ? setLanguage(settingsView.rows.contentLanguage)
+                                ? setLanguage(settingsView!.rows!.contentLanguage!)
                                 : "",
                             style:
                                 styleElements.subtitle1ThemeScalable(context),
                           ),
                           subtitle: Text(
-                            AppLocalizations.of(context)
+                            AppLocalizations.of(context)!
                                 .translate("content_lang_des"),
                             style: styleElements.captionThemeScalable(context),
                           ),
@@ -345,7 +345,7 @@ class _AccountSettings extends State<AccountSettings> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => UpdateLanguagePage(
-                                        true, settingsView.rows.id,true)))
+                                        true, settingsView!.rows!.id,true)))
                             .then((value) => refresh());
                       },
                       child: Card(
@@ -353,17 +353,17 @@ class _AccountSettings extends State<AccountSettings> {
                         margin: EdgeInsets.only(left: 4, right: 4, bottom: 1),
                         child: ListTile(
                           title: Text(
-                            settingsView != null && settingsView.rows!=null &&
-                                    settingsView.rows.transLateLanguage != null && settingsView.rows.transLateLanguage.name!=null
-                                ? settingsView
-                                    .rows.transLateLanguage.name
-                                : AppLocalizations.of(context)
+                            settingsView != null && settingsView!.rows!=null &&
+                                    settingsView!.rows!.transLateLanguage != null && settingsView!.rows!.transLateLanguage!.name!=null
+                                ? settingsView!
+                                    .rows!.transLateLanguage!.name!
+                                : AppLocalizations.of(context)!
                                     .translate("select_translation_language"),
                             style:
                                 styleElements.subtitle1ThemeScalable(context),
                           ),
                           subtitle: Text(
-                            AppLocalizations.of(context)
+                            AppLocalizations.of(context)!
                                 .translate("translation_language"),
                             style: styleElements.captionThemeScalable(context),
                           ),
@@ -377,7 +377,7 @@ class _AccountSettings extends State<AccountSettings> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => DateSelectionPage(
-                                        settingsView.rows.id)))
+                                        settingsView!.rows!.id)))
                             .then((value) => refresh());
                       },
                       child: Card(
@@ -386,13 +386,13 @@ class _AccountSettings extends State<AccountSettings> {
                         child: ListTile(
                           title: Text(
                             settingsView != null
-                                ? settingsView.rows.dateFormat
+                                ? settingsView!.rows!.dateFormat!
                                 : "",
                             style:
                                 styleElements.subtitle1ThemeScalable(context),
                           ),
                           subtitle: Text(
-                            AppLocalizations.of(context)
+                            AppLocalizations.of(context)!
                                 .translate("date_format"),
                             style: styleElements.captionThemeScalable(context),
                           ),
@@ -405,7 +405,7 @@ class _AccountSettings extends State<AccountSettings> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => TimeSelectionPage(
-                                        settingsView.rows.id)))
+                                        settingsView!.rows!.id)))
                             .then((value) => refresh());
                       },
                       child: Card(
@@ -414,13 +414,13 @@ class _AccountSettings extends State<AccountSettings> {
                         child: ListTile(
                           title: Text(
                             settingsView != null
-                                ? settingsView.rows.timeFormat
+                                ? settingsView!.rows!.timeFormat!
                                 : "",
                             style:
                                 styleElements.subtitle1ThemeScalable(context),
                           ),
                           subtitle: Text(
-                            AppLocalizations.of(context)
+                            AppLocalizations.of(context)!
                                 .translate("time_format"),
                             style: styleElements.captionThemeScalable(context),
                           ),
@@ -433,7 +433,7 @@ class _AccountSettings extends State<AccountSettings> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => AddEditEmailPhonesPage(
-                                    settingsView.rows.emailContactList,
+                                    settingsView!.rows!.emailContactList,
                                     true))).then((value) => refresh());
                       },
                       child: Card(
@@ -441,13 +441,13 @@ class _AccountSettings extends State<AccountSettings> {
                         margin: EdgeInsets.only(left: 4, right: 4, bottom: 1),
                         child: ListTile(
                           title: Text(
-                            AppLocalizations.of(context)
+                            AppLocalizations.of(context)!
                                 .translate("email_addresses"),
                             style:
                                 styleElements.subtitle1ThemeScalable(context),
                           ),
                           subtitle: Text(
-                            AppLocalizations.of(context)
+                            AppLocalizations.of(context)!
                                 .translate("add_remove_email"),
                             style: styleElements.captionThemeScalable(context),
                           ),
@@ -460,7 +460,7 @@ class _AccountSettings extends State<AccountSettings> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => AddEditEmailPhonesPage(
-                                    settingsView.rows.mobileContactList,
+                                    settingsView!.rows!.mobileContactList,
                                     false))).then((value) => refresh());
                       },
                       child: Card(
@@ -468,13 +468,13 @@ class _AccountSettings extends State<AccountSettings> {
                         margin: EdgeInsets.only(left: 4, right: 4, bottom: 1),
                         child: ListTile(
                           title: Text(
-                            AppLocalizations.of(context)
+                            AppLocalizations.of(context)!
                                 .translate("phone_numbers"),
                             style:
                                 styleElements.subtitle1ThemeScalable(context),
                           ),
                           subtitle: Text(
-                            AppLocalizations.of(context)
+                            AppLocalizations.of(context)!
                                 .translate("add_remove_mobile"),
                             style: styleElements.captionThemeScalable(context),
                           ),
@@ -531,8 +531,8 @@ class PrivacySettings extends StatefulWidget {
 }
 
 class _PrivacySettings extends State<PrivacySettings> {
-  PrivacySettingsView settingsView;
-  SharedPreferences prefs;
+  PrivacySettingsView? settingsView;
+  late SharedPreferences prefs;
   bool isLoading = false;
 
   @override
@@ -544,7 +544,7 @@ class _PrivacySettings extends State<PrivacySettings> {
 
   Future<void> setPrefs() async {
     prefs = await SharedPreferences.getInstance();
-    WidgetsBinding.instance.addPostFrameCallback((_) => fetchSettings());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => fetchSettings());
   }
 
   String setTitle(List<DictionaryListItem> dictionaryList) {
@@ -607,7 +607,7 @@ class _PrivacySettings extends State<PrivacySettings> {
     });
   }
 
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   @override
   Widget build(BuildContext context) {
@@ -615,7 +615,7 @@ class _PrivacySettings extends State<PrivacySettings> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: TricycleAppBar().getCustomAppBar(context,
-          appBarTitle: AppLocalizations.of(context)
+          appBarTitle: AppLocalizations.of(context)!
               .translate("privacy_settings"), onBackButtonPress: () {
         Navigator.pop(context);
       }),
@@ -631,27 +631,27 @@ class _PrivacySettings extends State<PrivacySettings> {
                       child: InkWell(
                         onTap: () {
                           if (settingsView != null &&
-                              settingsView.rows != null) {
+                              settingsView!.rows != null) {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => PrivacySettingsPage(
                                         DictionaryType
                                             .rating_visible_to.name,
-                                        settingsView.rows
+                                        settingsView!.rows!
                                             .id))).then((value) => refresh());
                           }
                         },
                         child: ListTile(
                           title: Text(
                             settingsView != null
-                                ? setTitle(settingsView.rows.ratingVisibleTo)
+                                ? setTitle(settingsView!.rows!.ratingVisibleTo!)
                                 : "",
                             style:
                                 styleElements.subtitle1ThemeScalable(context),
                           ),
                           subtitle: Text(
-                            AppLocalizations.of(context)
+                            AppLocalizations.of(context)!
                                 .translate("who_can_see_rating"),
                             style: styleElements.captionThemeScalable(context),
                           ),
@@ -669,19 +669,19 @@ class _PrivacySettings extends State<PrivacySettings> {
                                       builder: (context) => PrivacySettingsPage(
                                           DictionaryType
                                               .rating_by.name,
-                                          settingsView.rows.id)))
+                                          settingsView!.rows!.id)))
                               .then((value) => refresh());
                         },
                         child: ListTile(
                           title: Text(
                             settingsView != null
-                                ? setTitle(settingsView.rows.ratingBy)
+                                ? setTitle(settingsView!.rows!.ratingBy!)
                                 : "",
                             style:
                                 styleElements.subtitle1ThemeScalable(context),
                           ),
                           subtitle: Text(
-                            AppLocalizations.of(context)
+                            AppLocalizations.of(context)!
                                 .translate("who_can_rate"),
                             style: styleElements.captionThemeScalable(context),
                           ),
@@ -698,19 +698,19 @@ class _PrivacySettings extends State<PrivacySettings> {
                               MaterialPageRoute(
                                   builder: (context) => PrivacySettingsPage(
                                       DictionaryType.profile_visible_to.name,
-                                      settingsView.rows
+                                      settingsView!.rows!
                                           .id))).then((value) => refresh());
                         },
                         child: ListTile(
                           title: Text(
                             settingsView != null
-                                ? setTitle(settingsView.rows.profileVisibleTo)
+                                ? setTitle(settingsView!.rows!.profileVisibleTo!)
                                 : "",
                             style:
                                 styleElements.subtitle1ThemeScalable(context),
                           ),
                           subtitle: Text(
-                            AppLocalizations.of(context)
+                            AppLocalizations.of(context)!
                                 .translate("who_can_view_profile"),
                             style: styleElements.captionThemeScalable(context),
                           ),

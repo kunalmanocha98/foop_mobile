@@ -27,8 +27,8 @@ class PreloadingViewDilog extends StatelessWidget {
   }
 
   PreloadingViewDilog({
-    Key key,
-    @required this.url,
+    Key? key,
+    required this.url,
   }) : super(key: key);
 
   Widget build(BuildContext context) {
@@ -55,7 +55,7 @@ class PreloadingViewDilog extends StatelessWidget {
                            children: [
                              Container(
                                margin: const EdgeInsets.only(left:16,bottom: 16, top: 20,right: 16),
-                               child: Text(AppLocalizations.of(context).translate('loading'),
+                               child: Text(AppLocalizations.of(context)!.translate('loading'),
                                  textAlign: TextAlign.center,
                                ),
                              ),
@@ -75,7 +75,7 @@ class PreloadingViewDilog extends StatelessWidget {
                              scrollDirection: Axis.vertical,
                              padding: EdgeInsets.all(8.0),
                              children: [CheckboxListTile(
-                               title: Text(AppLocalizations.of(context).translate('pls_wait'),
+                               title: Text(AppLocalizations.of(context)!.translate('pls_wait'),
 
                                ),
                                value: false,
@@ -83,7 +83,7 @@ class PreloadingViewDilog extends StatelessWidget {
                                },
                              ),
                                CheckboxListTile(
-                                 title: Text(AppLocalizations.of(context).translate('pls_wait'),
+                                 title: Text(AppLocalizations.of(context)!.translate('pls_wait'),
 
                                  ),
                                  value: false,
@@ -139,7 +139,7 @@ class PreloadingViewDilog extends StatelessWidget {
                              margin:
                              const EdgeInsets.only(right: 30, top: 16, bottom: 16),
                              child: Text(
-                               AppLocalizations.of(context).translate('cancel'),
+                               AppLocalizations.of(context)!.translate('cancel'),
                              ),
                            ),
                          ),
@@ -157,7 +157,7 @@ class PreloadingViewDilog extends StatelessWidget {
                                margin: const EdgeInsets.only(
                                    left: 30, top: 16, bottom: 16),
                                child: Text(
-                                 AppLocalizations.of(context).translate('submit'),
+                                 AppLocalizations.of(context)!.translate('submit'),
                                ),
                              ))
                        ],

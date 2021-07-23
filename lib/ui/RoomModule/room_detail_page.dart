@@ -31,13 +31,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../postcreatepage.dart';
 
 class RoomDetailPage extends StatefulWidget {
-  final RoomListItem value;
-  final int id;
-  final int instituteId;
-  final int ownerId;
-  final String userType;
-  final String ownerType;
-  final String nameOfRoom;
+  final RoomListItem? value;
+  final int? id;
+  final int? instituteId;
+  final int? ownerId;
+  final String? userType;
+  final String? ownerType;
+  final String? nameOfRoom;
 
   RoomDetailPage(this.value, this.ownerId, this.ownerType, this.userType,
       this.instituteId, this.id, this.nameOfRoom);
@@ -57,17 +57,17 @@ class _RoomDetailPage extends State<RoomDetailPage>
     with SingleTickerProviderStateMixin {
   List<CustomTabMaker> list = [];
   int _currentPosition = 0;
-  TabController _tabController;
-  TextStyleElements styleElements;
-  SharedPreferences prefs;
-  bool hasData;
-  RoomListItem value;
-  int id;
-  int instituteId;
-  int ownerId;
-  String userType;
-  String ownerType;
-  String nameOfRoom;
+  late TabController _tabController;
+  TextStyleElements? styleElements;
+  SharedPreferences? prefs;
+  late bool hasData;
+  RoomListItem? value;
+  int? id;
+  int? instituteId;
+  int? ownerId;
+  String? userType;
+  String? ownerType;
+  String? nameOfRoom;
   int initialIndex = 0;
 
   _RoomDetailPage(
@@ -78,9 +78,9 @@ class _RoomDetailPage extends State<RoomDetailPage>
         this.instituteId,
         this.id,
         this.nameOfRoom});
-
+  GlobalKey<ChatHistoryPageState> ch = GlobalKey();
   GlobalKey<SelectedFeedPageState> selectedFeedListKey = GlobalKey();
-  SocketService socketService = locator<SocketService>();
+  SocketService? socketService = locator<SocketService>();
 
   @override
   void initState() {
@@ -88,7 +88,7 @@ class _RoomDetailPage extends State<RoomDetailPage>
     initialIndex = value != null ? 0 : 1;
     _currentPosition = value != null ? 0 : 1;
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => loadPages());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => loadPages());
   }
 
   onPositionChange() {
@@ -111,13 +111,13 @@ class _RoomDetailPage extends State<RoomDetailPage>
             postOwnerTypeId: ownerId,
             postOwnerType: userType,
             isRoomPost: true,
-            roomId: value.id,
+            roomId: value!.id,
           ),
-          tabName: AppLocalizations.of(context).translate('timeline')));
+          tabName: AppLocalizations.of(context)!.translate('timeline')));
       list.add(CustomTabMaker(
           statelessWidget: RoomAboutPage(
               value, ownerId, ownerType, userType, instituteId, id, nameOfRoom),
-          tabName: AppLocalizations.of(context).translate('about')));
+          tabName: AppLocalizations.of(context)!.translate('about')));
       Future(() {
         setState(() {
           _tabController = TabController(vsync: this, length: list.length);
@@ -140,15 +140,15 @@ class _RoomDetailPage extends State<RoomDetailPage>
         if (res.rows != null) {
           value = res.rows;
           hasData = true;
-          ownerId ??= prefs.getInt("userId");
-          instituteId ??= prefs.getInt(Strings.instituteId);
-          ownerType ??= prefs.getString("ownerType");
-          userType ??= prefs.getString("ownerType");
+          ownerId ??= prefs!.getInt("userId");
+          instituteId ??= prefs!.getInt(Strings.instituteId);
+          ownerType ??= prefs!.getString("ownerType");
+          userType ??= prefs!.getString("ownerType");
           loadPages();
         }
       } else {
         ToastBuilder().showToast(
-            AppLocalizations.of(context).translate('no_data_found_room'),
+            AppLocalizations.of(context)!.translate('no_data_found_room'),
             context,
             HexColor(AppColors.failure));
       }
@@ -166,8 +166,8 @@ class _RoomDetailPage extends State<RoomDetailPage>
               // appBarTitle: AppLocalizations.of(context)
               //     .translate("room_details"),
               appBarTitle: hasData
-                  ? value.roomName
-                  : AppLocalizations.of(context).translate('room_details'),
+                  ? value!.roomName
+                  : AppLocalizations.of(context)!.translate('room_details'),
               onBackButtonPress: () {
                 Navigator.pop(context);
               }),
@@ -195,7 +195,7 @@ class _RoomDetailPage extends State<RoomDetailPage>
                       Center(child: list[index].statelessWidget),
                   onPositionChange: (index) {
                     setState(() {
-                      _currentPosition = index;
+                      _currentPosition = index!;
                     });
                   },
                   onScroll: (position) => print('$position'),
@@ -210,21 +210,21 @@ class _RoomDetailPage extends State<RoomDetailPage>
                               return CreateEventPage(
                                 type: 'talk',
                                 standardEventId: 5,
-                                ownerId: value.id,
-                                ownerImage: value.roomProfileImageUrl,
-                                ownerName: value.roomName,
+                                ownerId: value!.id,
+                                ownerImage: value!.roomProfileImageUrl,
+                                ownerName: value!.roomName,
                                 ownerType: 'room',
                                 roomItem: value,
                               );
                             }));
                       },
                       createButtonClick: (){
-                        if (prefs.getBool(Strings.isVerified) != null &&
-                            prefs.getBool(Strings.isVerified)) {
+                        if (prefs!.getBool(Strings.isVerified) != null &&
+                            prefs!.getBool(Strings.isVerified)!) {
                           _showModalSelectorSheet(context);
                         } else {
                           ToastBuilder().showSnackBar(
-                              AppLocalizations.of(context)
+                              AppLocalizations.of(context)!
                                   .translate("only_verirfied"),
                               context,
                               HexColor(AppColors.information));
@@ -234,11 +234,13 @@ class _RoomDetailPage extends State<RoomDetailPage>
                             context,
                             MaterialPageRoute(
                                 builder: (context) => new ChatHistoryPage(
+                                  key:ch,
                                     roomListItem: value,
                                     conversationItem: null,
                                     connectionItem: null,
+                                    isVisible: true,
                                     type:"normal",
-                                    socket: socketService.getSocket(),
+                                    socket: socketService!.getSocket(),
                                     callBack: (){},
                                     callBackNew: (){})));
                       },
@@ -263,12 +265,12 @@ class _RoomDetailPage extends State<RoomDetailPage>
           allowedMsg: "",
           isAllowed: true,
           isSelected: true,
-          recipientTypeReferenceId: value.id,
+          recipientTypeReferenceId: value!.id,
           recipientTypeDescription: "",
-          recipientType: value.roomName,
+          recipientType: value!.roomName,
           recipientTypeCode: ROOM_TYPES_HELPER().roomTypeNamebasedonType(
               ROOM_TYPES_HELPER()
-                  .getRoomTypeBasedOnRoomTypeCode(value.roomType)),
+                  .getRoomTypeBasedOnRoomTypeCode(value!.roomType)),
         );
         return CreateNewBottomSheet(
           isRoomsVisible: false,
@@ -284,7 +286,7 @@ class _RoomDetailPage extends State<RoomDetailPage>
                 .then((value) {
               if (value != null) {
                 if (_tabController.index == 0) {
-                  selectedFeedListKey.currentState.refresh();
+                  selectedFeedListKey.currentState!.refresh();
                 }
               }
             });
@@ -301,9 +303,9 @@ class _RoomDetailsButtonWidget extends StatelessWidget {
   final Function chatButtonClick;
 
   _RoomDetailsButtonWidget({
-    @required this.talkButtonClick,
-    @required this.createButtonClick,
-    @required this.chatButtonClick,
+    required this.talkButtonClick,
+    required this.createButtonClick,
+    required this.chatButtonClick,
   });
 
   @override
@@ -328,7 +330,7 @@ class _RoomDetailsButtonWidget extends StatelessWidget {
                   size: 30,
                   color: HexColor(AppColors.appColorWhite),
                 ),
-                onPressed: talkButtonClick,
+                onPressed: talkButtonClick as void Function()?,
               ),
               SizedBox(width: 16,),
               IconButton(
@@ -337,7 +339,7 @@ class _RoomDetailsButtonWidget extends StatelessWidget {
                   size: 30,
                   color: HexColor(AppColors.appColorWhite),
                 ),
-                onPressed: createButtonClick,
+                onPressed: createButtonClick as void Function()?,
               ),
               SizedBox(width: 16,),
               IconButton(
@@ -346,7 +348,7 @@ class _RoomDetailsButtonWidget extends StatelessWidget {
                   size: 30,
                   color: HexColor(AppColors.appColorWhite),
                 ),
-                onPressed: chatButtonClick,
+                onPressed: chatButtonClick as void Function()?,
               )
             ],
           ),

@@ -21,7 +21,7 @@ class RoomsPage extends StatefulWidget {
   final bool hideTabs;
   final bool isSwipeDisabled;
   RoomsPage({
-    Key key,
+    Key? key,
     this.currentPosition=0,this.hideAppBar=false,this.hideTabs=false,this.isSwipeDisabled=false})    : super(key: key);
   @override
   RoomsPageState createState() => RoomsPageState(currentPosition: currentPosition);
@@ -29,23 +29,23 @@ class RoomsPage extends StatefulWidget {
 
 class RoomsPageState extends State<RoomsPage> with SingleTickerProviderStateMixin {
   List<CustomTabMaker> list = [];
-  int currentPosition = 0;
-  TabController _tabController;
-  TextStyleElements styleElements;
+  int? currentPosition = 0;
+  late TabController _tabController;
+  TextStyleElements? styleElements;
   GlobalKey<AllRoomsListingState> allroomsKey = GlobalKey();
   GlobalKey<PublicRoomsListingState> publicroomsKey = GlobalKey();
   GlobalKey<PrivateRoomsListingState> privateroomsKey = GlobalKey();
   GlobalKey<SocialRoomsListingState> socialroomsKey = GlobalKey();
   GlobalKey<CampusRoomsListingState> campusroomsKey = GlobalKey();
-  SharedPreferences prefs;
-  BuildContext sctx;
+  late SharedPreferences prefs;
+  late BuildContext sctx;
 
   RoomsPageState({this.currentPosition});
   @override
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) => loadPages());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => loadPages());
   }
   void setSharedPreferences() async {
     prefs = await SharedPreferences.getInstance();
@@ -71,7 +71,7 @@ class RoomsPageState extends State<RoomsPage> with SingleTickerProviderStateMixi
             prefs.getString("ownerType"),
             prefs.getString("ownerType"),
             null),
-        tabName: AppLocalizations.of(context).translate('all')));
+        tabName: AppLocalizations.of(context)!.translate('all')));
     list.add(CustomTabMaker(
         statelessWidget: PrivateRoomsListing(
             privateroomsKey,
@@ -80,7 +80,7 @@ class RoomsPageState extends State<RoomsPage> with SingleTickerProviderStateMixi
             prefs.getInt("userId"),
             prefs.getString("ownerType"),
             prefs.getString("ownerType")),
-        tabName: AppLocalizations.of(context).translate('private')));
+        tabName: AppLocalizations.of(context)!.translate('private')));
     list.add(CustomTabMaker(
         statelessWidget: PublicRoomsListing(
             publicroomsKey,
@@ -89,7 +89,7 @@ class RoomsPageState extends State<RoomsPage> with SingleTickerProviderStateMixi
             prefs.getInt("userId"),
             prefs.getString("ownerType"),
             prefs.getString("ownerType")),
-        tabName: AppLocalizations.of(context).translate('public')));
+        tabName: AppLocalizations.of(context)!.translate('public')));
 
     list.add(CustomTabMaker(
       statelessWidget: SocialRoomsListing(
@@ -99,7 +99,7 @@ class RoomsPageState extends State<RoomsPage> with SingleTickerProviderStateMixi
           prefs.getInt("userId"),
           prefs.getString("ownerType"),
           prefs.getString("ownerType"),null),
-        tabName: AppLocalizations.of(context).translate('social')));
+        tabName: AppLocalizations.of(context)!.translate('social')));
 
     list.add(CustomTabMaker(
         statelessWidget: CampusRoomsListing(
@@ -109,7 +109,7 @@ class RoomsPageState extends State<RoomsPage> with SingleTickerProviderStateMixi
             prefs.getInt("userId"),
             prefs.getString("ownerType"),
             prefs.getString("ownerType"),null),
-        tabName: AppLocalizations.of(context).translate('campus')));
+        tabName: AppLocalizations.of(context)!.translate('campus')));
 
     setState(() {
       _tabController = TabController(vsync: this, length: list.length);
@@ -129,15 +129,15 @@ class RoomsPageState extends State<RoomsPage> with SingleTickerProviderStateMixi
   void refresh()
   {
     if (_tabController.index == 0) {
-      allroomsKey.currentState.refresh();
+      allroomsKey.currentState!.refresh();
     } else if (_tabController.index == 1) {
-      publicroomsKey.currentState.refresh();
+      publicroomsKey.currentState!.refresh();
     } else if (_tabController.index ==2){
-      privateroomsKey.currentState.refresh();
+      privateroomsKey.currentState!.refresh();
     }else if (_tabController.index ==3){
-      socialroomsKey.currentState.refresh();
+      socialroomsKey.currentState!.refresh();
     }else{
-      campusroomsKey.currentState.refresh();
+      campusroomsKey.currentState!.refresh();
     }
   }
   @override
@@ -188,35 +188,35 @@ class RoomsPageState extends State<RoomsPage> with SingleTickerProviderStateMixi
           resizeToAvoidBottomInset: false,
           appBar:
           TricycleAppBar().getCustomAppBar(context,
-              appBarTitle: AppLocalizations.of(context).translate("rooms"),
+              appBarTitle: AppLocalizations.of(context)!.translate("rooms"),
               onBackButtonPress: () {
                 Navigator.pop(context);
               }, actions: [
                 GestureDetector(
                   onTap: () {
 
-                    if(prefs.getBool(Strings.isVerified)!=null&&prefs.getBool(Strings.isVerified))
+                    if(prefs.getBool(Strings.isVerified)!=null&&prefs.getBool(Strings.isVerified)!)
                     {  Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => CreateRoomPage(value: null,isEdit: false,callback:(){})))
                         .then((value) {
                       if (_tabController.index == 0) {
-                        allroomsKey.currentState.refresh();
+                        allroomsKey.currentState!.refresh();
                       } else if (_tabController.index == 1) {
-                        publicroomsKey.currentState.refresh();
+                        publicroomsKey.currentState!.refresh();
                       } else if (_tabController.index ==2){
-                        privateroomsKey.currentState.refresh();
+                        privateroomsKey.currentState!.refresh();
                       }else if (_tabController.index ==3){
-                        socialroomsKey.currentState.refresh();
+                        socialroomsKey.currentState!.refresh();
                       }else{
-                        campusroomsKey.currentState.refresh();
+                        campusroomsKey.currentState!.refresh();
                       }
                     });}
                     else
                     {
                       ToastBuilder().showSnackBar(
-                          AppLocalizations.of(context).translate("only_verirfied"), sctx, HexColor(AppColors.information));
+                          AppLocalizations.of(context)!.translate("only_verirfied"), sctx, HexColor(AppColors.information));
                     }
 
 

@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 
 class TricycleRouteSlideRight extends PageRouteBuilder {
-  final Widget page;
+  final Widget? page;
   TricycleRouteSlideRight({this.page})
       : super(
     pageBuilder: (
@@ -10,7 +10,7 @@ class TricycleRouteSlideRight extends PageRouteBuilder {
         Animation<double> animation,
         Animation<double> secondaryAnimation,
         ) =>
-    page,
+    page!,
     transitionsBuilder: (
         BuildContext context,
         Animation<double> animation,
@@ -29,7 +29,7 @@ class TricycleRouteSlideRight extends PageRouteBuilder {
 
 
 class TricycleRouteSlideBottom extends PageRouteBuilder {
-  final Widget page;
+  final Widget? page;
   TricycleRouteSlideBottom({this.page})
       : super(
     pageBuilder: (
@@ -37,7 +37,7 @@ class TricycleRouteSlideBottom extends PageRouteBuilder {
         Animation<double> animation,
         Animation<double> secondaryAnimation,
         ) =>
-    page,
+    page!,
     transitionsBuilder: (
         BuildContext context,
         Animation<double> animation,
@@ -58,7 +58,7 @@ class TricycleRouteSlideBottom extends PageRouteBuilder {
 }
 
 class TricycleRouteScale extends PageRouteBuilder {
-  final Widget page;
+  final Widget? page;
   TricycleRouteScale({this.page})
       : super(
     pageBuilder: (
@@ -66,7 +66,7 @@ class TricycleRouteScale extends PageRouteBuilder {
         Animation<double> animation,
         Animation<double> secondaryAnimation,
         ) =>
-    page,
+    page!,
     transitionsBuilder: (
         BuildContext context,
         Animation<double> animation,
@@ -90,7 +90,7 @@ class TricycleRouteScale extends PageRouteBuilder {
 
 
 class TricycleRouteRotation extends PageRouteBuilder {
-  final Widget page;
+  final Widget? page;
   TricycleRouteRotation({this.page})
       : super(
     pageBuilder: (
@@ -98,7 +98,7 @@ class TricycleRouteRotation extends PageRouteBuilder {
         Animation<double> animation,
         Animation<double> secondaryAnimation,
         ) =>
-    page,
+    page!,
     transitionDuration: Duration(seconds: 1),
     transitionsBuilder: (
         BuildContext context,
@@ -123,7 +123,7 @@ class TricycleRouteRotation extends PageRouteBuilder {
 
 
 class TricycleRouteSize extends PageRouteBuilder {
-  final Widget page;
+  final Widget? page;
   TricycleRouteSize({this.page})
       : super(
     pageBuilder: (
@@ -131,7 +131,7 @@ class TricycleRouteSize extends PageRouteBuilder {
         Animation<double> animation,
         Animation<double> secondaryAnimation,
         ) =>
-    page,
+    page!,
     transitionsBuilder: (
         BuildContext context,
         Animation<double> animation,
@@ -149,7 +149,7 @@ class TricycleRouteSize extends PageRouteBuilder {
 
 
 class TricycleRouteFade extends PageRouteBuilder {
-  final Widget page;
+  final Widget? page;
   TricycleRouteFade({this.page})
       : super(
     pageBuilder: (
@@ -157,7 +157,7 @@ class TricycleRouteFade extends PageRouteBuilder {
         Animation<double> animation,
         Animation<double> secondaryAnimation,
         ) =>
-    page,
+    page!,
     transitionsBuilder: (
         BuildContext context,
         Animation<double> animation,
@@ -173,8 +173,8 @@ class TricycleRouteFade extends PageRouteBuilder {
 
 
 class TricycleRouteEnterExit extends PageRouteBuilder {
-  final Widget enterPage;
-  final Widget exitPage;
+  final Widget? enterPage;
+  final Widget? exitPage;
   TricycleRouteEnterExit({this.exitPage, this.enterPage})
       : super(
     pageBuilder: (
@@ -182,7 +182,7 @@ class TricycleRouteEnterExit extends PageRouteBuilder {
         Animation<double> animation,
         Animation<double> secondaryAnimation,
         ) =>
-    enterPage,
+    enterPage!,
     transitionsBuilder: (
         BuildContext context,
         Animation<double> animation,
@@ -213,7 +213,7 @@ class TricycleRouteEnterExit extends PageRouteBuilder {
 
 
 class TricycleRouteScaleRotate extends PageRouteBuilder {
-  final Widget page;
+  final Widget? page;
   TricycleRouteScaleRotate({this.page})
       : super(
     pageBuilder: (
@@ -221,7 +221,7 @@ class TricycleRouteScaleRotate extends PageRouteBuilder {
         Animation<double> animation,
         Animation<double> secondaryAnimation,
         ) =>
-    page,
+    page!,
     transitionDuration: Duration(seconds: 1),
     transitionsBuilder: (
         BuildContext context,

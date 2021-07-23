@@ -5,6 +5,7 @@ import 'package:oho_works_app/components/tricycle_buttons.dart';
 import 'package:oho_works_app/conversationPage/base_response.dart';
 import 'package:oho_works_app/mixins/editProfileMixin.dart';
 import 'package:oho_works_app/models/country_code_response.dart';
+import 'package:oho_works_app/models/drop_down_global.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
@@ -18,12 +19,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 // ignore: must_be_immutable
 
 class AddEmailDilog extends StatefulWidget {
-  final Null Function() callBack;
-  final Null Function() callBackCancel;
-  final bool isEmail;
+  final Null Function()? callBack;
+  final Null Function()? callBackCancel;
+  final bool? isEmail;
 
   const AddEmailDilog(
-      {Key key, this.callBack, this.callBackCancel, this.isEmail})
+      {Key? key, this.callBack, this.callBackCancel, this.isEmail})
       : super(key: key);
 
   @override
@@ -32,16 +33,16 @@ class AddEmailDilog extends StatefulWidget {
 }
 
 class _AddEmzailDilog extends State<AddEmailDilog> {
-  Null Function() callBack;
-  Null Function() callBackCancel;
-  BuildContext context;
-  TextStyleElements tsE;
-  bool isEmail;
+  Null Function()? callBack;
+  Null Function()? callBackCancel;
+ late BuildContext context;
+  late TextStyleElements tsE;
+  bool? isEmail;
   final emailController = TextEditingController();
   final mobileController = TextEditingController();
   final passwordTextController = TextEditingController();
-  var countryCodeList = [];
-  String cCode;
+  List<dynamic>? countryCodeList = [];
+  String? cCode;
 
   bool isLoading=false;
   _AddEmzailDilog(this.callBack, this.callBackCancel, this.isEmail);
@@ -49,7 +50,7 @@ class _AddEmzailDilog extends State<AddEmailDilog> {
   @override
   // ignore: must_call_super
   void initState() {
-    if (!isEmail) getCounrtyCode();
+    if (!isEmail!) getCounrtyCode();
   }
 
   @override
@@ -71,7 +72,7 @@ class _AddEmzailDilog extends State<AddEmailDilog> {
         ],
         decoration: InputDecoration(
             contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-            hintText: AppLocalizations.of(context).translate('enter_email'),
+            hintText: AppLocalizations.of(context)!.translate('enter_email'),
             hintStyle: tsE.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)).copyWith(
               color: HexColor(AppColors.appColorBlack35)
             ),
@@ -88,7 +89,7 @@ class _AddEmzailDilog extends State<AddEmailDilog> {
               ),
             )),
         validator: EditProfileMixins().validateEmail,
-        onSaved: (String value) {},
+        onSaved: (String? value) {},
       ),
     );
     final passwordField = Form(
@@ -98,11 +99,11 @@ class _AddEmzailDilog extends State<AddEmailDilog> {
           color: HexColor(AppColors.appColorBlack65)
       ),
       onChanged: (v) {},
-      onSaved: (String value) {},
+      onSaved: (String? value) {},
       controller: passwordTextController,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-          hintText: AppLocalizations.of(context).translate('password'),
+          hintText: AppLocalizations.of(context)!.translate('password'),
           hintStyle: tsE.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
           prefixIcon: Padding(
               padding: EdgeInsets.all(0.0.h),
@@ -128,39 +129,39 @@ class _AddEmzailDilog extends State<AddEmailDilog> {
       scrollPadding: EdgeInsets.all(20.0.w),
       decoration: InputDecoration(
         contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-        hintText: AppLocalizations.of(context).translate('enter_mobile'),
+        hintText: AppLocalizations.of(context)!.translate('enter_mobile'),
         hintStyle: tsE.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)).copyWith(color: HexColor(AppColors.appColorBlack35)),
         border: InputBorder.none,
       ),
     );
     List<DropdownMenuItem> countryCodes = [];
     _getCountryCodes() {
-      for (int i = 0; i < countryCodeList.length; i++) {
+      for (int i = 0; i < countryCodeList!.length; i++) {
         countryCodes.add(DropdownMenuItem(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
-                countryCodeList[i].flagIconUrl ?? "",
+                countryCodeList![i].flagIconUrl ?? "",
                 style: tsE.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 4.0, right: 4.0),
                 child: Text(
-                  countryCodeList[i].dialCode,
+                  countryCodeList![i].dialCode,
                   style: tsE.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
                 ),
               ),
             ],
           ),
-          value: countryCodeList[i].dialCode,
+          value: countryCodeList![i].dialCode,
         ));
       }
       return countryCodes;
     }
 
-    final codes = DropdownButtonFormField(
+    final codes = DropdownButtonFormField<dynamic>(
       value: null,
       isExpanded: true,
       decoration: InputDecoration(
@@ -170,13 +171,15 @@ class _AddEmzailDilog extends State<AddEmailDilog> {
       hint: Padding(
           padding: const EdgeInsets.only(left: 0),
           child: Text(
-            cCode ?? AppLocalizations.of(context).translate("code"),
+            cCode ?? AppLocalizations.of(context)!.translate("code"),
             style: tsE.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
           )),
       items: _getCountryCodes(),
       onChanged: (value) {
+
+        value as DropdownMenuItem;
         setState(() {
-          cCode = value ?? cCode;
+          cCode = (value) as String?;
         });
       },
     );
@@ -189,13 +192,13 @@ class _AddEmzailDilog extends State<AddEmailDilog> {
               padding:
                   EdgeInsets.only(top: 16, bottom: 30, left: 16, right: 16),
               child: Text(
-                isEmail
-                    ? AppLocalizations.of(context).translate('add_email')
-                    : AppLocalizations.of(context).translate('add_mobile'),
+                isEmail!
+                    ? AppLocalizations.of(context)!.translate('add_email')
+                    : AppLocalizations.of(context)!.translate('add_mobile'),
                 style: tsE.headline6ThemeScalable(context),
               )),
           Visibility(
-            visible: !isEmail,
+            visible: !isEmail!,
             child: Column(
               children: [
                 Row(
@@ -244,7 +247,7 @@ class _AddEmzailDilog extends State<AddEmailDilog> {
             ),
           ),
           Visibility(
-            visible: isEmail,
+            visible: isEmail!,
             child: Padding(
               padding: EdgeInsets.only(top: 2, bottom: 2, left: 16, right: 16),
               child: emailField,
@@ -262,11 +265,11 @@ class _AddEmzailDilog extends State<AddEmailDilog> {
                 TricycleTextButton(
                   onPressed: () {
                     Navigator.pop(context);
-                    callBackCancel();
+                    callBackCancel!();
                   },
                   shape: StadiumBorder(),
                   child: Text(
-                    AppLocalizations.of(context).translate('cancel'),
+                    AppLocalizations.of(context)!.translate('cancel'),
                     style: tsE
                         .bodyText2ThemeScalable(context)
                         .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -276,7 +279,7 @@ class _AddEmzailDilog extends State<AddEmailDilog> {
                   children: [
                     TricycleTextButton(
                       onPressed: () {
-                        if (isEmail
+                        if (isEmail!
                             ? emailController.text.trim().isNotEmpty &&
                                 EditProfileMixins()
                                         .validateEmail(emailController.text) ==
@@ -293,16 +296,16 @@ class _AddEmzailDilog extends State<AddEmailDilog> {
                           else
                             {
                               ToastBuilder().showToast(
-                                  AppLocalizations.of(context).translate("login_password_empty"),
+                                  AppLocalizations.of(context)!.translate("login_password_empty"),
                                   context,HexColor(AppColors.information));
                             }
 
                         } else {
                           ToastBuilder().showToast(
-                              isEmail
-                                  ? AppLocalizations.of(context)
+                              isEmail!
+                                  ? AppLocalizations.of(context)!
                                       .translate("email_required")
-                                  : AppLocalizations.of(context)
+                                  : AppLocalizations.of(context)!
                                       .translate("enter_mobile"),
                               context,
                               HexColor(AppColors.information));
@@ -310,7 +313,7 @@ class _AddEmzailDilog extends State<AddEmailDilog> {
                       },
                       shape: StadiumBorder(),
                       child: Text(
-                        AppLocalizations.of(context).translate('submit'),
+                        AppLocalizations.of(context)!.translate('submit'),
                         style: tsE
                             .bodyText2ThemeScalable(context)
                             .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -341,9 +344,9 @@ class _AddEmzailDilog extends State<AddEmailDilog> {
       isLoading=true;
     });
     final body = jsonEncode({
-      "contact_type": isEmail ? "email" : "mobile",
-      "country_code": !isEmail ? cCode : "",
-      "contact_detail": isEmail
+      "contact_type": isEmail! ? "email" : "mobile",
+      "country_code": !isEmail! ? cCode : "",
+      "contact_detail": isEmail!
           ? emailController.text.toString()
           : mobileController.text.toString(),
       "password": passwordTextController.text.toString()
@@ -358,7 +361,7 @@ class _AddEmzailDilog extends State<AddEmailDilog> {
        isLoading=false;
      });
      Navigator.pop(context);
-     callBack();
+     callBack!();
    }
  else
    {
@@ -372,7 +375,7 @@ class _AddEmzailDilog extends State<AddEmailDilog> {
     })
         .catchError((onError) {
       Navigator.pop(context);
-      callBack();
+      callBack!();
       setState(() {
         isLoading=false;
       });

@@ -21,16 +21,16 @@ class MenuUserBalanceCard extends StatefulWidget{
 }
 
 class MenuUserBalanceCardState extends State<MenuUserBalanceCard>{
-  SharedPreferences prefs;
-  String currentBalance="0";
-  String currentBalanceCash="0";
-  TextStyleElements styleElements;
+  late SharedPreferences prefs;
+  String? currentBalance="0";
+  String? currentBalanceCash="0";
+  late TextStyleElements styleElements;
 
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => fetchData());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => fetchData());
   }
 
   void fetchData() async{
@@ -57,10 +57,10 @@ class MenuUserBalanceCardState extends State<MenuUserBalanceCard>{
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Image.asset('assets/appimages/coins.png',width: 20,height: 20,),
-                    Text(Utility().getCompatNumber(double.parse(currentBalance)),style: styleElements.subtitle1ThemeScalable(context),),
+                    Text(Utility().getCompatNumber(double.parse(currentBalance!)),style: styleElements.subtitle1ThemeScalable(context),),
                   ],
                 ),
-                Text(AppLocalizations.of(context).translate('tricycle_coins'))
+                Text(AppLocalizations.of(context)!.translate('tricycle_coins'))
               ],
             ),
           ),
@@ -75,8 +75,8 @@ class MenuUserBalanceCardState extends State<MenuUserBalanceCard>{
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(AppLocalizations.of(context).translate('ruppe_symbol')+Utility().getCompatNumber(double.parse(currentBalanceCash)),style: styleElements.subtitle1ThemeScalable(context),),
-                Text(AppLocalizations.of(context).translate('cash_rewards'))
+                Text(AppLocalizations.of(context)!.translate('ruppe_symbol')+Utility().getCompatNumber(double.parse(currentBalanceCash!)),style: styleElements.subtitle1ThemeScalable(context),),
+                Text(AppLocalizations.of(context)!.translate('cash_rewards'))
               ],
             ),
           )
@@ -99,7 +99,7 @@ class MenuUserBalanceCardState extends State<MenuUserBalanceCard>{
       if (res.statusCode == Strings.success_code) {
         Future((){
           setState(() {
-            currentBalance = res.rows.currentBalance;
+            currentBalance = res.rows!.currentBalance;
           });
         });
       }
@@ -118,7 +118,7 @@ class MenuUserBalanceCardState extends State<MenuUserBalanceCard>{
       if (res.statusCode == Strings.success_code) {
         Future((){
           setState(() {
-            currentBalanceCash = res.rows.currentBalance;
+            currentBalanceCash = res.rows!.currentBalance;
           });
         });
       }

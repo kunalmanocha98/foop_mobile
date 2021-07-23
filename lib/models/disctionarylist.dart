@@ -1,7 +1,7 @@
 class DictionaryListResponse {
-  String statusCode;
-  String message;
-  List<DictionaryListItem> rows;
+  String? statusCode;
+  String? message;
+  List<DictionaryListItem>? rows;
 
   DictionaryListResponse({this.statusCode, this.message, this.rows});
 
@@ -11,7 +11,7 @@ class DictionaryListResponse {
     if (json['rows'] != null) {
       rows = [];//DictionaryListItem>();
       json['rows'].forEach((v) {
-        rows.add(new DictionaryListItem.fromJson(v));
+        rows!.add(new DictionaryListItem.fromJson(v));
       });
     }
   }
@@ -21,17 +21,17 @@ class DictionaryListResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class DictionaryListItem {
-  int id;
-  String code;
-  String description;
-  bool isSelected = false;
+  int? id;
+  String? code;
+  String? description;
+  bool? isSelected = false;
 
   DictionaryListItem({this.id, this.code, this.description, this.isSelected});
 

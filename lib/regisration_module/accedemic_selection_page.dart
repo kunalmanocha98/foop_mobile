@@ -22,7 +22,7 @@ import '../main.dart';
 // ignore: must_be_immutable
 class SelectAcademic extends StatefulWidget {
   bool isSignUp = false;
-  int instituteId;
+  int? instituteId;
 
   _SelectAcademic createState() => _SelectAcademic(instituteId);
 
@@ -30,23 +30,23 @@ class SelectAcademic extends StatefulWidget {
 }
 
 class _SelectAcademic extends State<SelectAcademic> {
-  int instituteId;
+  int? instituteId;
 
   _SelectAcademic(this.instituteId);
 bool isCalling=false;
 
-  bool isSignUp;
+  bool? isSignUp;
   bool isCalled = false;
-  SharedPreferences prefs;
-  List<AccedemicItem> listAccedemic = [];
+  SharedPreferences? prefs;
+  List<AccedemicItem>? listAccedemic = [];
   List<AccedemicItem> selectYear = [];
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   @override
   initState() {
     super.initState();
     application.onLocaleChanged = onLocaleChange;
-    WidgetsBinding.instance.addPostFrameCallback((_) => getList(""));
+    WidgetsBinding.instance!.addPostFrameCallback((_) => getList(""));
   }
 
   void onLocaleChange(Locale locale) {
@@ -71,7 +71,7 @@ bool isCalling=false;
         resizeToAvoidBottomInset: false,
         backgroundColor: HexColor(AppColors.appColorBackground),
         appBar: TricycleAppBar().getCustomAppBarWithSearch(context,
-            appBarTitle: AppLocalizations.of(context).translate('select_academic_header'), onBackButtonPress: () {
+            appBarTitle: AppLocalizations.of(context)!.translate('select_academic_header'), onBackButtonPress: () {
           Navigator.pop(context);
         }, onSearchValueChanged: (value) {
           setState(() {
@@ -86,19 +86,19 @@ bool isCalling=false;
               margin: const EdgeInsets.only(bottom: 70),
               child: TricycleListCard(
                 child: ListView.builder(
-                    itemCount: listAccedemic.length,
+                    itemCount: listAccedemic!.length,
                     itemBuilder: (BuildContext context, int index) {
                       return CheckboxListTile(
-                        title: Text(listAccedemic[index].yearName),
-                        value: listAccedemic[index].isSelected,
+                        title: Text(listAccedemic![index].yearName!),
+                        value: listAccedemic![index].isSelected,
                         onChanged: (val) {
                           if (this.mounted) {
                             setState(() {
-                              for (int i = 0; i < listAccedemic.length; i++) {
+                              for (int i = 0; i < listAccedemic!.length; i++) {
                                 if (index == i) {
-                                  listAccedemic[index].isSelected = val;
+                                  listAccedemic![index].isSelected = val;
                                 } else {
-                                  listAccedemic[i].isSelected = false;
+                                  listAccedemic![i].isSelected = false;
                                 }
                               }
                             });
@@ -125,8 +125,8 @@ bool isCalling=false;
                               borderRadius: BorderRadius.circular(18.0),
                               side: BorderSide(color: HexColor(AppColors.appMainColor))),
                           onPressed: () {
-                            for (var item in listAccedemic) {
-                              if (item.isSelected) {
+                            for (var item in listAccedemic!) {
+                              if (item.isSelected!) {
                                 Navigator.of(context).pop({
                                   'result': item.yearName,
                                   "id": item.id.toString()
@@ -136,7 +136,7 @@ bool isCalling=false;
                           },
                           color: HexColor(AppColors.appColorWhite),
                           child: Text(
-                              AppLocalizations.of(context).translate("next"),
+                              AppLocalizations.of(context)!.translate("next"),
                               style: styleElements
                                   .buttonThemeScalable(context)
                                   .copyWith(
@@ -171,7 +171,7 @@ bool isCalling=false;
           isCalling=false;
         });
         var data = AccedemicList.fromJson(value);
-        if (data.statusCode == Strings.success_code && data.rows.length > 0) {
+        if (data.statusCode == Strings.success_code && data.rows!.length > 0) {
           if (this.mounted) {
             setState(() {
               isSearching = false;
@@ -181,11 +181,11 @@ bool isCalling=false;
               final DateTime now = DateTime.now();
               var currentYear = formatter.format(now);
               var nextYear = (int.parse(currentYear) + 1).toString();
-              for (int i = 0; i < listAccedemic.length; i++) {
-                if (listAccedemic[i].yearName.contains(nextYear))
-                  listAccedemic[i].isSelected = true;
+              for (int i = 0; i < listAccedemic!.length; i++) {
+                if (listAccedemic![i].yearName!.contains(nextYear))
+                  listAccedemic![i].isSelected = true;
                 else
-                  listAccedemic[i].isSelected = false;
+                  listAccedemic![i].isSelected = false;
               }
             });
           }

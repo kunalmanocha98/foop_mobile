@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class NoDataFoundPage extends StatelessWidget {
    NoDataFoundPage(
-      {Key key,
+      {Key? key,
       this.image,
       this.type,
       this.startGradientColor,
@@ -15,13 +15,13 @@ class NoDataFoundPage extends StatelessWidget {
       this.desc})
       : super(key: key);
 
-  final String image;
+  final String? image;
   final type;
-  final Color startGradientColor;
-  final Color endGradientColor;
-  final String subText;
-  final String desc;
-  TextStyleElements styleElements;
+  final Color? startGradientColor;
+  final Color? endGradientColor;
+  final String? subText;
+  final String? desc;
+  late TextStyleElements styleElements;
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class NoDataFoundPage extends StatelessWidget {
                         left: 16, bottom: 12, top: 12, right: 16),
                     alignment: Alignment(0, -0.76),
                     child: Text(
-                      desc,
+                      desc!,
                       style: styleElements.headline5ThemeScalable(context),
                     ),
                   ),

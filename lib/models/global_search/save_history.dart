@@ -1,12 +1,12 @@
 class SaveHistoryRequest {
-  String searchVal;
-  String entityType;
-  String searchPage;
-  int personId;
-  int institutionId;
-  String searchType;
-  int pageNumber;
-  int pageSize;
+  String? searchVal;
+  String? entityType;
+  String? searchPage;
+  int? personId;
+  int? institutionId;
+  String? searchType;
+  int? pageNumber;
+  int? pageSize;
   dynamic entityDetails;
 
   SaveHistoryRequest(
@@ -53,13 +53,13 @@ class SaveHistoryRequest {
 }
 
 class EntityDetails {
-  int id;
-  String avatar;
-  String title;
-  String subtitle1;
-  String subtitle2;
-  String link;
-  bool isFollowed;
+  int? id;
+  String? avatar;
+  String? title;
+  String? subtitle1;
+  String? subtitle2;
+  String? link;
+  bool? isFollowed;
 
   EntityDetails(
       {this.id,
@@ -94,9 +94,9 @@ class EntityDetails {
 }
 
 class SaveHistoryResponse {
-  String statusCode;
-  String message;
-  int total;
+  String? statusCode;
+  String? message;
+  int? total;
 
   SaveHistoryResponse({this.statusCode, this.message, this.total});
 

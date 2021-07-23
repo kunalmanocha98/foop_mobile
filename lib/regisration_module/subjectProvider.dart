@@ -10,23 +10,23 @@ import 'package:flutter/material.dart';
 
 class SubjectsProvider extends ChangeNotifier {
   int _pageNumber = 1;
-  List<SubjectItems> _listConversations;
+  List<SubjectItems>? _listConversations;
 
-  Future<void> reload(String searchVal,int instituteId,BuildContext context) async {
+  Future<void> reload(String? searchVal,int? instituteId,BuildContext context) async {
     _listConversations = <SubjectItems>[];
     _pageNumber = 1;
     await getConversations(_pageNumber,searchVal,instituteId,context);
   }
 
-  Future<void> search(String searchVal,int instituteId,BuildContext context) async {
+  Future<void> search(String? searchVal,int? instituteId,BuildContext context) async {
     _listConversations = <SubjectItems>[];
     _pageNumber = 1;
     await getConversations(_pageNumber,searchVal,instituteId,context);
   }
-  Future<void> getMore(String searchVal,int instituteId,BuildContext context) async {
+  Future<void> getMore(String? searchVal,int? instituteId,BuildContext context) async {
     await getConversations(_pageNumber,searchVal,instituteId,context);
   }
-  List<SubjectItems> getConversationList() {
+  List<SubjectItems>? getConversationList() {
     return _listConversations;
   }
 
@@ -36,7 +36,7 @@ class SubjectsProvider extends ChangeNotifier {
 
     notifyListeners();
   }
-  Future<void> getConversations(int page,String searchVal,int instituteId,BuildContext context) async {
+  Future<void> getConversations(int page,String? searchVal,int? instituteId,BuildContext context) async {
     _listConversations ??= <SubjectItems>[];
     int pageNumber = page;
     final body = jsonEncode({
@@ -52,10 +52,10 @@ class SubjectsProvider extends ChangeNotifier {
       if (v != null) {
         var data = SubjectResponse.fromJson(v);
         if (data != null && data.statusCode == Strings.success_code) {
-          if (data.rows.isNotEmpty) {
+          if (data.rows!.isNotEmpty) {
             pageNumber++;
             _pageNumber = pageNumber;
-            _listConversations.addAll(data.rows);
+            _listConversations!.addAll(data.rows!);
             notifyListeners();
 
           }
@@ -64,15 +64,15 @@ class SubjectsProvider extends ChangeNotifier {
     }).catchError((onError) {});
   }
   updateItem(Subjects pr, String degreeType, bool isSelected,bool isTeacher) {
-    for (int i = 0; i < _listConversations.length; i++) {
-      for (int j = 0; j < _listConversations[i].subjects.length; j++) {
-        if (pr.subjectCode == _listConversations[i].subjects[j].subjectCode) {
-          _listConversations[i].subjects[j].isSelected = isSelected;
+    for (int i = 0; i < _listConversations!.length; i++) {
+      for (int j = 0; j < _listConversations![i].subjects!.length; j++) {
+        if (pr.subjectCode == _listConversations![i].subjects![j].subjectCode) {
+          _listConversations![i].subjects![j].isSelected = isSelected;
         }
         else
         {
           if(!isTeacher)
-            _listConversations[i].subjects[j].isSelected = false;
+            _listConversations![i].subjects![j].isSelected = false;
         }
 
       }

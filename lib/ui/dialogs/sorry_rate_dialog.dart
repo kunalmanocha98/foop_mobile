@@ -20,13 +20,13 @@ class SorryRateDialog extends StatelessWidget{
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(AppLocalizations.of(context).translate('sorry'),
+            Text(AppLocalizations.of(context)!.translate('sorry'),
             style: styleElements.headline6ThemeScalable(context).copyWith(
               color: HexColor(AppColors.appColorBlack85),
               fontWeight: FontWeight.bold
             ),),
             SizedBox(height: 24,),
-            Text(AppLocalizations.of(context).translate('sorry_rate',arguments: {"minute":"3"}),
+            Text(AppLocalizations.of(context)!.translate('sorry_rate',arguments: {"minute":"3"}),
             textAlign: TextAlign.center,
             style: styleElements.subtitle1ThemeScalable(context),),
             SizedBox(height: 12,),
@@ -38,7 +38,7 @@ class SorryRateDialog extends StatelessWidget{
                   onPressed: (){
                     Navigator.pop(context);
                   },
-                    child: Text(AppLocalizations.of(context).translate('ok').toUpperCase(),style:
+                    child: Text(AppLocalizations.of(context)!.translate('ok').toUpperCase(),style:
                       styleElements.captionThemeScalable(context).copyWith(
                         color: HexColor(AppColors.appMainColor)
                       ),)

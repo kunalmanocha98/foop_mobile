@@ -1,7 +1,7 @@
 class PurchaseCouponRequest {
-  String allCouponsId;
-  String personId;
-  String purchaseDatetime;
+  String? allCouponsId;
+  String? personId;
+  String? purchaseDatetime;
 
   PurchaseCouponRequest(
       {this.allCouponsId, this.personId, this.purchaseDatetime});
@@ -22,8 +22,8 @@ class PurchaseCouponRequest {
 }
 
 class PurchaseCouponResponse {
-  String statusCode;
-  String message;
+  String? statusCode;
+  String? message;
   dynamic rows;
 
   PurchaseCouponResponse({this.statusCode, this.message, this.rows});

@@ -1,8 +1,8 @@
 class DropDownCommon {
-  String statusCode;
-  String message;
-  List<DropDownItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<DropDownItem>? rows;
+  int? total;
 
   DropDownCommon({this.statusCode, this.message, this.rows, this.total});
 
@@ -12,7 +12,7 @@ class DropDownCommon {
     if (json['rows'] != null) {
       rows = [];//DropDownItem>();
       json['rows'].forEach((v) {
-        rows.add(new DropDownItem.fromJson(v));
+        rows!.add(new DropDownItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -23,7 +23,7 @@ class DropDownCommon {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -31,11 +31,11 @@ class DropDownCommon {
 }
 
 class DropDownItem {
-  int id;
-  int facilityTypeId;
-  String code;
-  String description;
-  int dictionaryType;
+  int? id;
+  int? facilityTypeId;
+  String? code;
+  String? description;
+  int? dictionaryType;
 
   DropDownItem({this.id, this.code, this.description, this.dictionaryType});
 

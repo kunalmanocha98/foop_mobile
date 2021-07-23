@@ -7,25 +7,24 @@ import 'package:oho_works_app/utils/colors.dart';
 import 'package:oho_works_app/utils/hexColors.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 // ignore: library_prefixes
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 // ignore: must_be_immutable
 class AppBarWithProfile extends StatelessWidget with PreferredSizeWidget {
   final double appBarHeight = 56.0;
-  String imageUrl;
-  String title;
-  int notificationCount;
-  Null Function() callBack;
-  bool isHomepage;
-  Function backButtonPress;
-  bool isNotificationVisible;
-  bool centerTitle;
+  String? imageUrl;
+  String? title;
+  int? notificationCount;
+  Null Function()? callBack;
+  bool? isHomepage;
+  Function? backButtonPress;
+  bool? isNotificationVisible;
+  bool? centerTitle;
 
   @override
   get preferredSize => Size.fromHeight(appBarHeight);
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   @override
   Widget build(BuildContext context) {
@@ -41,9 +40,9 @@ class AppBarWithProfile extends StatelessWidget with PreferredSizeWidget {
             title: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
-                (isHomepage != null && !isHomepage)
+                (isHomepage != null && !isHomepage!)
                     ? InkWell(
-                  onTap: backButtonPress,
+                  onTap: backButtonPress as void Function()?,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -79,7 +78,7 @@ class AppBarWithProfile extends StatelessWidget with PreferredSizeWidget {
                               currentPosition: 1,
                               type: null,
                               callback: () {
-                                callBack();
+                                callBack!();
                               },
                             )));
                   },
@@ -96,7 +95,7 @@ class AppBarWithProfile extends StatelessWidget with PreferredSizeWidget {
                   ),
                 ),
                 Text(
-                  title,
+                  title!,
                   style: styleElements.headline6ThemeScalable(context).copyWith(
                       fontWeight: FontWeight.w600, color: HexColor(AppColors.appColorBlack85)),
                   textAlign: TextAlign.center,
@@ -106,7 +105,7 @@ class AppBarWithProfile extends StatelessWidget with PreferredSizeWidget {
                   children: [
                     Visibility(
                       visible: (isNotificationVisible != null &&
-                          isNotificationVisible),
+                          isNotificationVisible!),
                       child: Container(
                         child: Stack(
                           children: <Widget>[
@@ -118,7 +117,7 @@ class AppBarWithProfile extends StatelessWidget with PreferredSizeWidget {
                                 ),
                                 onPressed: () async {
 
-                                  callBack();
+                                  callBack!();
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
@@ -145,7 +144,7 @@ class AppBarWithProfile extends StatelessWidget with PreferredSizeWidget {
                                   ),
                                   child: Center(
                                     child: Text(
-                                      notificationCount.toString() ?? "",
+                                      notificationCount.toString(),
                                       style: TextStyle(
                                           color: HexColor(AppColors.appColorWhite),
                                           fontSize: 12,
@@ -192,7 +191,7 @@ class AppBarWithProfile extends StatelessWidget with PreferredSizeWidget {
   }
 
   AppBarWithProfile(
-      {Key key,
+      {Key? key,
         this.imageUrl,
         this.title,
         this.notificationCount,
@@ -206,18 +205,18 @@ class AppBarWithProfile extends StatelessWidget with PreferredSizeWidget {
 // ignore: must_be_immutable
 class AppBarWithProfileNew extends StatelessWidget with PreferredSizeWidget {
   final double appBarHeight = 56.0;
-  String imageUrl;
-  String title;
-  IO.Socket socket;
-  int notificationCount;
-  Null Function() callBack;
-  bool isHomepage;
-  Function backButtonPress;
-  bool isNotificationVisible;
-  bool centerTitle;
-  List<Widget> actions;
+  String? imageUrl;
+  String? title;
+  IO.Socket? socket;
+  int? notificationCount;
+  Null Function()? callBack;
+  bool? isHomepage;
+  Function? backButtonPress;
+  bool? isNotificationVisible;
+  bool? centerTitle;
+  List<Widget>? actions;
   AppBarWithProfileNew(
-      {Key key,
+      {Key? key,
         this.imageUrl,
         this.title,
         this.notificationCount,
@@ -232,7 +231,7 @@ class AppBarWithProfileNew extends StatelessWidget with PreferredSizeWidget {
 
   @override
   get preferredSize => Size.fromHeight(appBarHeight);
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   @override
   Widget build(BuildContext context) {
@@ -254,7 +253,7 @@ class AppBarWithProfileNew extends StatelessWidget with PreferredSizeWidget {
                   children: [
                     Image(width: 30,height: 30,image: AssetImage('assets/appimages/logo.png'),),
                     SizedBox(width: 4,),
-                    Text(title, style: styleElements.headline6ThemeScalable(context).copyWith(
+                    Text(title!, style: styleElements.headline6ThemeScalable(context).copyWith(
                           fontWeight: FontWeight.w600, color: HexColor(AppColors.appColorBlack85),fontSize: 24),
                       textAlign: TextAlign.center,
                     ),
@@ -442,15 +441,15 @@ class AppBarWithProfileNew extends StatelessWidget with PreferredSizeWidget {
 class AppBarWithOnlyTitle extends StatelessWidget with PreferredSizeWidget
 {
   final double appBarHeight = 56.0;
-  String title;
+  String? title;
   bool isBackButtonVisible;
-  Function backButtonCallback;
+  Function? backButtonCallback;
 
 
   @override
   get preferredSize => Size.fromHeight(appBarHeight);
-  TextStyleElements styleElements;
-  List<Widget> actions;
+  late TextStyleElements styleElements;
+  List<Widget>? actions;
 
   @override
   Widget build(BuildContext context) {
@@ -474,7 +473,7 @@ class AppBarWithOnlyTitle extends StatelessWidget with PreferredSizeWidget
                 Visibility(
                   visible:isBackButtonVisible,
                   child: InkWell(
-                    onTap: backButtonCallback,
+                    onTap: backButtonCallback as void Function()?,
                     child: Padding(
                       padding:  EdgeInsets.only(right:8.0,left: 8),
                       child: Icon(
@@ -487,7 +486,7 @@ class AppBarWithOnlyTitle extends StatelessWidget with PreferredSizeWidget
                 ),
                 Image(width: 30,height: 30,image: AssetImage('assets/appimages/logo.png'),),
                 SizedBox(width: 4,),
-                Text(title, style: styleElements.headline6ThemeScalable(context).copyWith(
+                Text(title!, style: styleElements.headline6ThemeScalable(context).copyWith(
                     fontWeight: FontWeight.w600, color: HexColor(AppColors.appColorBlack85),fontSize: 24),
                   textAlign: TextAlign.center,
                 ),
@@ -509,7 +508,7 @@ class AppBarWithOnlyTitle extends StatelessWidget with PreferredSizeWidget
   }
 
   AppBarWithOnlyTitle(
-      {Key key,
+      {Key? key,
         this.title,
         this.actions,
         this.isBackButtonVisible= false,

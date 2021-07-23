@@ -20,16 +20,16 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ChapterDetailPage extends StatefulWidget {
-  final   PostListItem item;
+  final   PostListItem? item;
 
-  const ChapterDetailPage({Key key, this.item}) : super(key: key);
+  const ChapterDetailPage({Key? key, this.item}) : super(key: key);
   @override
   ChapterDetailPageState createState() => ChapterDetailPageState();
 }
 
 class ChapterDetailPageState extends State<ChapterDetailPage> {
-  SharedPreferences prefs = locator<SharedPreferences>();
-  TextStyleElements styleElements;
+  SharedPreferences? prefs = locator<SharedPreferences>();
+  late TextStyleElements styleElements;
   @override
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
@@ -78,14 +78,14 @@ class ChapterDetailPageState extends State<ChapterDetailPage> {
               ),
               Padding(
                 padding:  EdgeInsets.only(top:8.0),
-                child: Text(widget.item.chapterItem!=null ?widget.item.chapterItem.chapterName:"",
+                child: Text(widget.item!.chapterItem!=null ?widget.item!.chapterItem!.chapterName!:"",
                 style: styleElements.headline6ThemeScalable(context).
                   copyWith(color: HexColor(AppColors.appColorBlack85,),
                 fontWeight: FontWeight.bold),),
               ),
               Padding(
                 padding:  EdgeInsets.only(top:8.0,left:8,right:8,bottom: 4),
-                child: Text(widget.item.lessonListItem!=null?widget.item.lessonListItem.lessonName:"",
+                child: Text(widget.item!.lessonListItem!=null?widget.item!.lessonListItem!.lessonName!:"",
                 style: styleElements.subtitle1ThemeScalable(context).
                   copyWith(fontWeight: FontWeight.bold),),
               ),
@@ -152,9 +152,9 @@ class ChapterDetailPageState extends State<ChapterDetailPage> {
                   )
                 ],
               ),
-              Text(widget.item.lessonTopic!=null?widget.item.lessonTopic.topic.topicName:"",
+              Text(widget.item!.lessonTopic!=null?widget.item!.lessonTopic!.topic!.topicName!:"",
               style:styleElements.bodyText2ThemeScalable(context)),
-              Text(widget.item.classesList!=null && widget.item.classesList.isNotEmpty ?widget.item.classesList[0].className:"",
+              Text(widget.item!.classesList!=null && widget.item!.classesList!.isNotEmpty ?widget.item!.classesList![0].className!:"",
               style: styleElements.bodyText2ThemeScalable(context),),
               Container(
                 margin: EdgeInsets.only(top:12,bottom: 12,left: 12,right: 12),
@@ -255,8 +255,8 @@ class ChapterDetailPageState extends State<ChapterDetailPage> {
               Padding(
                 padding: EdgeInsets.only(top:8),
                 child: TricycleUserImageList(
-                  listOfImages: List<String>.generate(8,(int index){
-                    return prefs.getString(Strings.profileImage);
+                  listOfImages: List<String?>.generate(8,(int index){
+                    return prefs!.getString(Strings.profileImage);
                   }),
                 ),
               ),
@@ -288,7 +288,7 @@ class ChapterDetailPageState extends State<ChapterDetailPage> {
                             builder: (BuildContext context) {
                               return UserProfileCards(
                                 userType: 'person',
-                                userId:prefs.getInt(Strings.userId),
+                                userId:prefs!.getInt(Strings.userId),
                                 callback: () {},
                                 currentPosition: 2,
                                 type: 'learning',
@@ -309,23 +309,23 @@ class ChapterDetailPageState extends State<ChapterDetailPage> {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (BuildContext context) {
                               return CreateLessonsPage(
-                                chapterId: widget.item.chapterItem.id,
-                                chapterName: widget.item.chapterItem.chapterName,
+                                chapterId: widget.item!.chapterItem!.id,
+                                chapterName: widget.item!.chapterItem!.chapterName,
                                 isEdit:false,
                                 createLessonData: PostCreatePayload(
-                                    postId:widget.item.postId ,
-                                    id:widget.item.postId,
+                                    postId:widget.item!.postId ,
+                                    id:widget.item!.postId,
                                     postStatus: "posted",
                                     contentMeta:ContentMetaCreate(),
-                                    chapterItem: widget.item.chapterItem,
-                                    lessonTopic: widget.item.lessonTopic,
-                                    lessonListItem: widget.item.lessonListItem,
-                                    affiliatedList: widget.item.affiliatedList,
-                                    classesList: widget.item.classesList,
-                                    disciplineList: widget.item.disciplineList,
-                                    learnerItem: widget.item.learnerItem,
-                                    programmesList: widget.item.programmesList,
-                                    subjectsList: widget.item.subjectsList),
+                                    chapterItem: widget.item!.chapterItem,
+                                    lessonTopic: widget.item!.lessonTopic,
+                                    lessonListItem: widget.item!.lessonListItem,
+                                    affiliatedList: widget.item!.affiliatedList,
+                                    classesList: widget.item!.classesList,
+                                    disciplineList: widget.item!.disciplineList,
+                                    learnerItem: widget.item!.learnerItem,
+                                    programmesList: widget.item!.programmesList,
+                                    subjectsList: widget.item!.subjectsList),
                               );
                             }));
                       },
@@ -347,8 +347,8 @@ class ChapterDetailPageState extends State<ChapterDetailPage> {
   }
 
   bool getIsFollowing() {
-    bool isFollowed;
-    for (var i in widget.item.postContent.header.action) {
+    bool? isFollowed;
+    for (var i in widget.item!.postContent!.header!.action!) {
       if (i.type == 'is_followed') {
         isFollowed = i.value;
         break;
@@ -361,17 +361,17 @@ class ChapterDetailPageState extends State<ChapterDetailPage> {
         context: context,
         builder: (BuildContext context) {
           return AudioPostDialog(
-              title: widget.item.postContent.content.contentMeta.title,
+              title: widget.item!.postContent!.content!.contentMeta!.title,
               okCallback: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (BuildContext context) {
                       return CreateEventPage(
                         type: 'talk',
                         standardEventId: 5,
-                        title: widget.item
-                            .postContent
-                            .content
-                            .contentMeta
+                        title: widget.item!
+                            .postContent!
+                            .content!
+                            .contentMeta!
                             .title,
                       );
                     }));

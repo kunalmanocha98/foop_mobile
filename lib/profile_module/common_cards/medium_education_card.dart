@@ -11,10 +11,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 // ignore: must_be_immutable
 class MediumEducationcard extends StatelessWidget {
   final CommonCardData data;
-  final String instId;
-  int id;
-  String personType;
-  TextStyleElements styleElements;
+  final String? instId;
+  int? id;
+  String? personType;
+  TextStyleElements? styleElements;
   Size displaySize(BuildContext context) {
     debugPrint('Size = ' + MediaQuery.of(context).size.toString());
     return MediaQuery.of(context).size;
@@ -30,8 +30,8 @@ class MediumEducationcard extends StatelessWidget {
     return displaySize(context).width;
   }
 
-  MediumEducationcard({Key key, @required this.data,this.styleElements,this.instId,this.id,this.personType}) : super(key: key);
-  List<SubRow> list = [];
+  MediumEducationcard({Key? key, required this.data,this.styleElements,this.instId,this.id,this.personType}) : super(key: key);
+  List<SubRow>? list = [];
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
     list=data.subRow;
@@ -49,7 +49,7 @@ class MediumEducationcard extends StatelessWidget {
                         padding: const EdgeInsets.only(left: 16, right: 16,top:12,bottom:12),
                         child: Text(
                           data.title ?? "",
-                          style: styleElements.headline6ThemeScalable(context).copyWith(fontWeight: FontWeight.bold,color: HexColor(AppColors.appColorBlack85)),
+                          style: styleElements!.headline6ThemeScalable(context).copyWith(fontWeight: FontWeight.bold,color: HexColor(AppColors.appColorBlack85)),
                           textAlign: TextAlign.left,
                         ),
                       )),
@@ -70,7 +70,7 @@ class MediumEducationcard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Visibility(
-                        visible: list!=null && list.length>0,
+                        visible: list!=null && list!.length>0,
                         child: Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,8 +80,8 @@ class MediumEducationcard extends StatelessWidget {
                               child: Container(
                                 margin: const EdgeInsets.only(left: 16, top: 20),
                                 child: Text(
-                                  list!=null && list.length>0 ? list[0].textOne ??= "":"",
-                                  style: styleElements.subtitle2ThemeScalable(context),
+                                  list!=null && list!.length>0 ? list![0].textOne ??= "":"",
+                                  style: styleElements!.subtitle2ThemeScalable(context),
                                   textAlign: TextAlign.left,
                                 ),
                               )),
@@ -93,8 +93,8 @@ class MediumEducationcard extends StatelessWidget {
                                   margin: const EdgeInsets.only(
                                       left: 16, top: 8, right: 16),
                                   child: Text(
-                                    list!=null && list.length>0 ?   list[0].textTwo ??= "":"",
-                                    style: styleElements.bodyText1ThemeScalable(context).copyWith(fontWeight: FontWeight.w600),
+                                    list!=null && list!.length>0 ?   list![0].textTwo ??= "":"",
+                                    style: styleElements!.bodyText1ThemeScalable(context).copyWith(fontWeight: FontWeight.w600),
                                     textAlign: TextAlign.left,
                                   ),
                                 )),
@@ -106,7 +106,7 @@ class MediumEducationcard extends StatelessWidget {
 
 
                     Visibility(
-                        visible: list!=null && list.length>1,
+                        visible: list!=null && list!.length>1,
                         child:  Expanded(
                       child:
                       Container(
@@ -120,8 +120,8 @@ class MediumEducationcard extends StatelessWidget {
                                   margin: const EdgeInsets.only(
                                       left: 20, top: 20, right: 20),
                                   child: Text(
-                                    (list!=null && list.length>1) ? list[1].textOne ??= "":"",
-                                    style: styleElements.subtitle2ThemeScalable(context),
+                                    (list!=null && list!.length>1) ? list![1].textOne ??= "":"",
+                                    style: styleElements!.subtitle2ThemeScalable(context),
                                     textAlign: TextAlign.right,
                                   ),
                                 )),
@@ -133,8 +133,8 @@ class MediumEducationcard extends StatelessWidget {
                                     margin: const EdgeInsets.only(
                                         left: 20, top: 8, right: 20),
                                     child: Text(
-                                      (list!=null && list.length>1) ?  list[1].textTwo ??= "":"",
-                                      style: styleElements.bodyText1ThemeScalable(context).copyWith(fontWeight: FontWeight.w600),
+                                      (list!=null && list!.length>1) ?  list![1].textTwo ??= "":"",
+                                      style: styleElements!.bodyText1ThemeScalable(context).copyWith(fontWeight: FontWeight.w600),
                                       textAlign: TextAlign.left,
                                     ),
                                   )),
@@ -179,8 +179,8 @@ class MediumEducationcard extends StatelessWidget {
                       visible: data.isShowMore ??= false,
                       child: Align(
                         alignment: Alignment.bottomRight,
-                        child: Text(AppLocalizations.of(context).translate('see_more'),
-                          style: styleElements.subtitle2ThemeScalable(context),
+                        child: Text(AppLocalizations.of(context)!.translate('see_more'),
+                          style: styleElements!.subtitle2ThemeScalable(context),
                           textAlign: TextAlign.center,
                         ),
                       ),

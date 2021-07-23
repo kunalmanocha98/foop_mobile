@@ -1,11 +1,11 @@
 class PollVotesListRequest {
-  int postId;
-  String option;
-  int optionSequence;
-  String objectType;
-  int objectId;
-  int pageSize;
-  int pageNumber;
+  int? postId;
+  String? option;
+  int? optionSequence;
+  String? objectType;
+  int? objectId;
+  int? pageSize;
+  int? pageNumber;
 
   PollVotesListRequest(
       {this.postId,
@@ -40,10 +40,10 @@ class PollVotesListRequest {
 }
 
 class PollVotesListResponse {
-  String statusCode;
-  String message;
-  List<VotesListItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<VotesListItem>? rows;
+  int? total;
 
   PollVotesListResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -53,7 +53,7 @@ class PollVotesListResponse {
     if (json['rows'] != null) {
       rows = [];//VotesListItem>();
       json['rows'].forEach((v) {
-        rows.add(new VotesListItem.fromJson(v));
+        rows!.add(new VotesListItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -64,7 +64,7 @@ class PollVotesListResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -72,12 +72,12 @@ class PollVotesListResponse {
 }
 
 class VotesListItem {
-  String name;
-  String profileImage;
-  String subtitle;
-  bool isObjectFollowing;
-  int id;
-  String type;
+  String? name;
+  String? profileImage;
+  String? subtitle;
+  bool? isObjectFollowing;
+  int? id;
+  String? type;
 
   VotesListItem({this.name, this.profileImage, this.subtitle, this.isObjectFollowing,this.id,this.type});
 

@@ -1,10 +1,10 @@
 import 'package:oho_works_app/models/campus_talk/participant_list.dart';
 
 class NewParticipant {
-  String statusCode;
-  String message;
-  ParticipantListItem rows;
-  int total;
+  String? statusCode;
+  String? message;
+  ParticipantListItem? rows;
+  int? total;
 
   NewParticipant({this.statusCode, this.message, this.rows, this.total});
 
@@ -20,7 +20,7 @@ class NewParticipant {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     data['total'] = this.total;
     return data;

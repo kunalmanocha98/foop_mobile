@@ -16,16 +16,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 // ignore: must_be_immutable
 class ParentCard extends StatelessWidget {
   final CommonCardData data;
-  BuildContext context;
-  List<SubRow> listSubItems = [];
-  TextStyleElements styleElements;
-  bool isProfile;
-  String instituteId;
-  Null Function() callbackPicker;
-  int id;
-  String personType;
-  String ownerType;
-  int ownerId;
+  BuildContext? context;
+  List<SubRow>? listSubItems = [];
+  late TextStyleElements styleElements;
+  bool? isProfile;
+  String? instituteId;
+  Null Function()? callbackPicker;
+  int? id;
+  String? personType;
+  String? ownerType;
+  int? ownerId;
 
   Size displaySize(BuildContext context) {
     debugPrint('Size = ' + MediaQuery.of(context).size.toString());
@@ -43,8 +43,8 @@ class ParentCard extends StatelessWidget {
   }
 
   ParentCard({
-    Key key,
-    @required this.data,
+    Key? key,
+    required this.data,
     this.instituteId,
     this.isProfile,
     this.id,
@@ -100,12 +100,12 @@ class ParentCard extends StatelessWidget {
             ),
           ),
         ),
-        listSubItems.isNotEmpty && listSubItems != null
+        listSubItems!.isNotEmpty && listSubItems != null
             ? ListView.builder(
                 shrinkWrap: true,
                 padding: const EdgeInsets.all(0.0),
                 physics: NeverScrollableScrollPhysics(),
-                itemCount: listSubItems.length,
+                itemCount: listSubItems!.length,
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
@@ -113,10 +113,10 @@ class ParentCard extends StatelessWidget {
                           context,
                           MaterialPageRoute(
                               builder: (context) => UserProfileCards(
-                                userType: int.parse(listSubItems[index].childId) == ownerId
+                                userType: int.parse(listSubItems![index].childId!) == ownerId
                                     ? "person"
                                     : "thirdPerson",
-                                userId: int.parse(listSubItems[index].childId)!= ownerId ?int.parse(listSubItems[index].childId) : null,
+                                userId: int.parse(listSubItems![index].childId!)!= ownerId ?int.parse(listSubItems![index].childId!) : null,
                                 callback: () {
 
                                 },
@@ -144,10 +144,10 @@ class ParentCard extends StatelessWidget {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) => UserProfileCards(
-                                            userType: int.parse(listSubItems[index].childId) == ownerId
+                                            userType: int.parse(listSubItems![index].childId!) == ownerId
                                                 ? "person"
                                                 : "thirdPerson",
-                                            userId: int.parse(listSubItems[index].childId)!= ownerId ?int.parse(listSubItems[index].childId) : null,
+                                            userId: int.parse(listSubItems![index].childId!)!= ownerId ?int.parse(listSubItems![index].childId!) : null,
                                             callback: () {
 
                                             },
@@ -166,7 +166,7 @@ class ParentCard extends StatelessWidget {
                                           placeholder:
                                               'assets/appimages/userplaceholder.jpg',
                                           image:
-                                              listSubItems[index].urlOne ??
+                                              listSubItems![index].urlOne ??
                                                   "",
                                         ),
                                       ),
@@ -183,7 +183,7 @@ class ParentCard extends StatelessWidget {
                                         Align(
                                           alignment: Alignment.topLeft,
                                           child: Text(
-                                            listSubItems[index].textOne ??=
+                                            listSubItems![index].textOne ??=
                                                 "",
                                             style: styleElements
                                                 .subtitle2ThemeScalable(
@@ -197,7 +197,7 @@ class ParentCard extends StatelessWidget {
                                             child: Align(
                                           alignment: Alignment.topLeft,
                                           child: Text(
-                                            listSubItems[index].textThree ??
+                                            listSubItems![index].textThree ??
                                                 "",
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
@@ -222,19 +222,19 @@ class ParentCard extends StatelessWidget {
                                   actionByObjectId: ownerId,
                                   actionOnObjectType: "person",
                                   actionOnObjectId: int.parse(
-                                      listSubItems[index].childId),
-                                  engageFlag: listSubItems[index].isFollow2
-                                      ? AppLocalizations.of(context)
+                                      listSubItems![index].childId!),
+                                  engageFlag: listSubItems![index].isFollow2!
+                                      ? AppLocalizations.of(context)!
                                           .translate('following')
-                                      : AppLocalizations.of(context)
+                                      : AppLocalizations.of(context)!
                                           .translate('follow'),
-                                  actionFlag: listSubItems[index].isFollow2
+                                  actionFlag: listSubItems![index].isFollow2!
                                       ? "U"
                                       : "F",
                                   actionDetails: [],
                                   personName: "",
                                   callback: (isCallSuccess) {
-                                    callbackPicker();
+                                    callbackPicker!();
                                   },
                                 ),
                               )
@@ -271,7 +271,7 @@ class ParentCard extends StatelessWidget {
                           ),
                         ));
                     if (result != null && result['result'] == "update") {
-                      callbackPicker();
+                      callbackPicker!();
                     }
                   },
                   child: Container(
@@ -281,7 +281,7 @@ class ParentCard extends StatelessWidget {
                       /*visible: data.isShowMore ??= false,*/
                       child: Align(
                         alignment: Alignment.bottomRight,
-                        child: Text(AppLocalizations.of(context).translate('see_more'),
+                        child: Text(AppLocalizations.of(context)!.translate('see_more'),
                           style:
                               styleElements.subtitle2ThemeScalable(context),
                           textAlign: TextAlign.center,

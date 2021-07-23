@@ -12,8 +12,8 @@ const double CAMERA_BEARING = 30;
 
 class MapPage extends StatefulWidget {
   final LatLng SOURCE_LOCATION;
-  final double lat;
-  final double long;
+  final double? lat;
+  final double? long;
 
   @override
   State<StatefulWidget> createState() =>
@@ -27,13 +27,13 @@ class MapPage extends StatefulWidget {
 }
 
 class MapPageState extends State<MapPage> {
-  final double lat;
-  final double long;
+  final double? lat;
+  final double? long;
   LatLng SOURCE_LOCATION;
-  CameraPosition initialLocation;
+  CameraPosition? initialLocation;
   Completer<GoogleMapController> _controller = Completer();
   Set<Marker> _markers = {};
-  BitmapDescriptor sourceIcon;
+  late BitmapDescriptor sourceIcon;
 
   @override
   initState() {
@@ -70,7 +70,7 @@ class MapPageState extends State<MapPage> {
                   tiltGesturesEnabled: false,
                   markers: _markers,
                   mapType: MapType.terrain,
-                  initialCameraPosition: initialLocation,
+                  initialCameraPosition: initialLocation!,
                   onMapCreated: onMapCreated)
               : Container(),
           Align(

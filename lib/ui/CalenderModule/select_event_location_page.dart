@@ -12,23 +12,23 @@ import 'package:oho_works_app/utils/toast_builder.dart';
 import 'package:flutter/material.dart';
 
 class SelectEventLocationPage extends StatefulWidget {
-  final List<EventLocation> eventLocation;
-  final Function refreshCallBack;
+  final List<EventLocation>? eventLocation;
+  final Function? refreshCallBack;
   SelectEventLocationPage({this.eventLocation,this.refreshCallBack});
   @override
   SelectEventLocationPageState createState() => SelectEventLocationPageState();
 }
 
 class SelectEventLocationPageState extends State<SelectEventLocationPage> {
-  TextStyleElements styleElements;
-  String onlineDetails;
-  EventLocation offlineLocation;
+  late TextStyleElements styleElements;
+  String? onlineDetails;
+  EventLocation? offlineLocation;
   GlobalKey<FormState> formKey =GlobalKey();
 
-  String getOnlineDetails(){
-    if(widget.eventLocation!=null && widget.eventLocation.length > 0) {
-      var onlineDetails = widget.eventLocation.firstWhere((element) { return element.type == 'online';});
-      var offline = widget.eventLocation.firstWhere((element) { return element.type == 'offline';});
+  String? getOnlineDetails(){
+    if(widget.eventLocation!=null && widget.eventLocation!.length > 0) {
+      var onlineDetails = widget.eventLocation!.firstWhere((element) { return element.type == 'online';});
+      var offline = widget.eventLocation!.firstWhere((element) { return element.type == 'offline';});
       if(offline!=null){
         offlineLocation = offline;
       }
@@ -37,17 +37,17 @@ class SelectEventLocationPageState extends State<SelectEventLocationPage> {
       return null;
     }
   }
-  String getOfflineDetails(){
-    if(widget.eventLocation!=null && widget.eventLocation.length > 0) {
-      var offline = widget.eventLocation.firstWhere((element) { return element.type == 'offline';});
+  String? getOfflineDetails(){
+    if(widget.eventLocation!=null && widget.eventLocation!.length > 0) {
+      var offline = widget.eventLocation!.firstWhere((element) { return element.type == 'offline';});
       if(offline!=null){
         offlineLocation = offline;
-        return offlineLocation.address.address;
+        return offlineLocation!.address!.address;
       }else{
         return 'Location';
       }
     }else if(offlineLocation!=null){
-      return offlineLocation.address.address;
+      return offlineLocation!.address!.address;
     }else{
       return 'Location';
     }
@@ -70,7 +70,7 @@ class SelectEventLocationPageState extends State<SelectEventLocationPage> {
         });
       },
       contentPadding: EdgeInsets.all(0),
-      title: Text(getOfflineDetails(),
+      title: Text(getOfflineDetails()!,
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
         style: styleElements.subtitle1ThemeScalable(context),),
@@ -104,7 +104,7 @@ class SelectEventLocationPageState extends State<SelectEventLocationPage> {
                   direction: Axis.horizontal,
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
-                    Text(AppLocalizations.of(context).translate('next'),
+                    Text(AppLocalizations.of(context)!.translate('next'),
                       style: styleElements
                           .subtitle2ThemeScalable(context)
                           .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -115,7 +115,7 @@ class SelectEventLocationPageState extends State<SelectEventLocationPage> {
                 ),
                 shape: CircleBorder(),
               ),],
-              appBarTitle: AppLocalizations.of(context).translate('select_location'),
+              appBarTitle: AppLocalizations.of(context)!.translate('select_location'),
               onBackButtonPress: () {
                 Navigator.pop(context);
               }),
@@ -139,7 +139,7 @@ class SelectEventLocationPageState extends State<SelectEventLocationPage> {
           ),
         ));
   }
-  Widget getEventDetailCard(String title,Widget child,{EdgeInsets padding}){
+  Widget getEventDetailCard(String title,Widget child,{EdgeInsets? padding}){
     return Container(
         child:Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,9 +156,9 @@ class SelectEventLocationPageState extends State<SelectEventLocationPage> {
   }
 
   void updateLanguage() {
-    formKey.currentState.save();
-    if(offlineLocation!=null || onlineDetails.isNotEmpty) {
-      List<EventLocation> list = [];
+    formKey.currentState!.save();
+    if(offlineLocation!=null || onlineDetails!.isNotEmpty) {
+      List<EventLocation?> list = [];
       list.add(EventLocation(
           other: onlineDetails,
           type: 'online'

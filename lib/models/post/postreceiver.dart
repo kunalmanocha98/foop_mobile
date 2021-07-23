@@ -1,10 +1,10 @@
 class PostReceiverRequest {
-  String searchVal;
-  int pageSize;
-  int pageNumber;
-  String type;
-  int institutionId;
-  String postType;
+  String? searchVal;
+  int? pageSize;
+  int? pageNumber;
+  String? type;
+  int? institutionId;
+  String? postType;
 
   PostReceiverRequest(
       {this.searchVal,
@@ -37,10 +37,10 @@ class PostReceiverRequest {
 
 
 class PostReceiverResponse {
-  String statusCode;
-  String message;
-  List<PostReceiverListItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<PostReceiverListItem?>? rows;
+  int? total;
 
   PostReceiverResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -50,7 +50,7 @@ class PostReceiverResponse {
     if (json['rows'] != null) {
       rows = [];//PostReceiverListItem>();
       json['rows'].forEach((v) {
-        rows.add(new PostReceiverListItem.fromJson(v));
+        rows!.add(new PostReceiverListItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -61,7 +61,7 @@ class PostReceiverResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v!.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -69,14 +69,14 @@ class PostReceiverResponse {
 }
 
 class PostReceiverListItem {
-  String recipientTypeCode;
-  String recipientTypeDescription;
-  String recipientType;
-  int recipientTypeReferenceId;
-  bool isSelected;
-  bool isAllowed;
-  String allowedMsg;
-  String recipientImage;
+  String? recipientTypeCode;
+  String? recipientTypeDescription;
+  String? recipientType;
+  int? recipientTypeReferenceId;
+  bool? isSelected;
+  bool? isAllowed;
+  String? allowedMsg;
+  String? recipientImage;
 
   PostReceiverListItem(
       {this.recipientTypeCode,

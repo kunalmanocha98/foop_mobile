@@ -25,9 +25,9 @@ M – Removed
 class GenericCommentReviewFeedback {
   GenericCommentReviewFeedback(this.ctx, this.body);
 
-  BuildContext ctx;
+  BuildContext? ctx;
   String body;
-  Null Function() callback;
+  Null Function()? callback;
 
   Future<bool> apiCreateRatings() async {
     print(body);
@@ -93,6 +93,7 @@ class GenericCommentReviewFeedback {
 
       return false;
     });
+    return false;
   }
 
   void userButtonCLick(isCallSuccess) {

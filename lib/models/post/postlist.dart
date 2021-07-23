@@ -8,24 +8,24 @@ import 'package:oho_works_app/models/Rooms/roomlistmodels.dart';
 import 'package:oho_works_app/models/post/postcreate.dart';
 
 class PostListRequest {
-  int personId;
-  int pageSize;
-  int pageNumber;
-  String postRecipientStatus;
-  bool isOwnPost;
-  String type;
-  String postOwnerType;
-  int postOwnerTypeId;
-  String postType;
-  List<String> postSubTypes;
-  bool isBookmarked;
-  bool isRoomPost;
-  int roomId;
-  int eventId;
-  bool isEventPost;
-  int excludeNRecords;
-  bool isReceived;
-  String postStatus;
+  int? personId;
+  int? pageSize;
+  int? pageNumber;
+  String? postRecipientStatus;
+  bool? isOwnPost;
+  String? type;
+  String? postOwnerType;
+  int? postOwnerTypeId;
+  String? postType;
+  List<String?>? postSubTypes;
+  bool? isBookmarked;
+  bool? isRoomPost;
+  int? roomId;
+  int? eventId;
+  bool? isEventPost;
+  int? excludeNRecords;
+  bool? isReceived;
+  String? postStatus;
   PostListRequest(
       {this.personId,
         this.pageSize,
@@ -93,10 +93,10 @@ class PostListRequest {
 
 
 class PostListResponse {
-  String statusCode;
-  String message;
-  List<PostListItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<PostListItem>? rows;
+  int? total;
 
   PostListResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -107,7 +107,7 @@ class PostListResponse {
     if (json['rows'] != null) {
       rows = [];//PostListItem>();
       json['rows'].forEach((v) {
-        rows.add(new PostListItem.fromJson(v));
+        rows!.add(new PostListItem.fromJson(v));
       });
     }
   }
@@ -118,7 +118,7 @@ class PostListResponse {
     data['message'] = this.message;
     data['total'] = this.total;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -126,34 +126,34 @@ class PostListResponse {
 
 class PostListItem {
 
-  String languageCode;
-  String postType;
-  int postDatetime;
-  int postId;
-  int postTypeReferenceId;
-  int postOwnerTypeId;
-  String postOwnerType;
-  bool isVoted;
-  bool isBookmarked;
-  PostContent postContent;
-  List<String>  postSubTypes;
-  String sourceLink;
-  int prevId;
-  int nextId;
-  String lessonType;
-  LessonTopic lessonTopic;
-  List<LearnerListItem> learnerItem;
-  List<Affiliation> affiliatedList ;
-  List<Programme> programmesList ;
-  List<Classes> classesList ;
-  List<Subjects> subjectsList ;
-  List<Discipline> disciplineList;
-  ChapterItem chapterItem;
-  LessonListItem lessonListItem;
-  String coverImage;
-  LessonReadDetails lessonReadDetails;
-  List<MembersList> membersList;
-  Color bookcovercolor;
+  String? languageCode;
+  String? postType;
+  int? postDatetime;
+  int? postId;
+  int? postTypeReferenceId;
+  int? postOwnerTypeId;
+  String? postOwnerType;
+  bool? isVoted;
+  bool? isBookmarked;
+  PostContent? postContent;
+  List<String>?  postSubTypes;
+  String? sourceLink;
+  int? prevId;
+  int? nextId;
+  String? lessonType;
+  LessonTopic? lessonTopic;
+  List<LearnerListItem>? learnerItem;
+  List<Affiliation>? affiliatedList ;
+  List<Programme>? programmesList ;
+  List<Classes>? classesList ;
+  List<Subjects>? subjectsList ;
+  List<Discipline>? disciplineList;
+  ChapterItem? chapterItem;
+  LessonListItem? lessonListItem;
+  String? coverImage;
+  LessonReadDetails? lessonReadDetails;
+  List<MembersList>? membersList;
+  Color? bookcovercolor;
 
 
 
@@ -204,7 +204,7 @@ class PostListItem {
     nextId = json['next_id'];
     if (json['members_list'] != null) {
       membersList = [];//MembersList>();
-      json['members_list'].forEach((v) {membersList.add(new MembersList.fromJson(v));});
+      json['members_list'].forEach((v) {membersList!.add(new MembersList.fromJson(v));});
     }
     lessonReadDetails = json['lesson_read_details'] != null
         ? new LessonReadDetails.fromJson(json['lesson_read_details'])
@@ -215,7 +215,7 @@ class PostListItem {
     if (json['learner_category'] != null) {
       learnerItem = [];//LearnerListItem>();
       json['learner_category'].forEach((v) {
-        learnerItem.add(new LearnerListItem.fromJson(v));
+        learnerItem!.add(new LearnerListItem.fromJson(v));
       });
     };
     lessonTopic = json['lesson_topic'] != null
@@ -228,33 +228,33 @@ class PostListItem {
     if (json['discipline'] != null) {
       disciplineList = [];//Discipline>();
       json['discipline'].forEach((v) {
-        disciplineList.add(new Discipline.fromJson(v));
+        disciplineList!.add(new Discipline.fromJson(v));
       });
     }
 
     if (json['subjects'] != null) {
       subjectsList = [];//Subjects>();
       json['subjects'].forEach((v) {
-        subjectsList.add(new Subjects.fromJson(v));
+        subjectsList!.add(new Subjects.fromJson(v));
       });
     }
     if (json['classes'] != null) {
       classesList = [];//Classes>();
       json['classes'].forEach((v) {
-        classesList.add(new Classes.fromJson(v));
+        classesList!.add(new Classes.fromJson(v));
       });
     }
     if (json['programme'] != null) {
       programmesList = [];//Programme>();
       json['programme'].forEach((v) {
-        programmesList.add(new Programme.fromJson(v));
+        programmesList!.add(new Programme.fromJson(v));
       });
     }
 
     if (json['affiliation'] != null) {
       affiliatedList = [];//Affiliation>();
       json['affiliation'].forEach((v) {
-        affiliatedList.add(new Affiliation.fromJson(v));
+        affiliatedList!.add(new Affiliation.fromJson(v));
       });
     }
     lessonType = json['lesson_type'];
@@ -276,13 +276,13 @@ class PostListItem {
     data['prev_id'] = this.prevId;
     data['next_id'] = this.nextId;
     if (this.postContent != null) {
-      data['post_content'] = this.postContent.toJson();
+      data['post_content'] = this.postContent!.toJson();
     }
     if (this.lessonReadDetails != null) {
-      data['lesson_read_details'] = this.lessonReadDetails.toJson();
+      data['lesson_read_details'] = this.lessonReadDetails!.toJson();
     }
     if (this.membersList != null) {
-      data['members_list'] = this.membersList.map((v) => v.toJson()).toList();
+      data['members_list'] = this.membersList!.map((v) => v.toJson()).toList();
     }
     data['post_sub_types'] = this.postSubTypes;
     data['source_link'] = this.sourceLink;
@@ -301,10 +301,10 @@ class PostListItem {
   }
 }
 class LessonReadDetails {
-  int percentage;
-  int totalLessons;
-  List<LessonDetails> lessonDetails;
-  int totalReadLessons;
+  int? percentage;
+  int? totalLessons;
+  List<LessonDetails>? lessonDetails;
+  int? totalReadLessons;
 
   LessonReadDetails(
       {this.percentage,
@@ -318,7 +318,7 @@ class LessonReadDetails {
     if (json['lesson_details'] != null) {
       lessonDetails = [];//LessonDetails>();
       json['lesson_details'].forEach((v) {
-        lessonDetails.add(new LessonDetails.fromJson(v));
+        lessonDetails!.add(new LessonDetails.fromJson(v));
       });
     }
     totalReadLessons = json['total_read_lessons'];
@@ -330,7 +330,7 @@ class LessonReadDetails {
     data['total_lessons'] = this.totalLessons;
     if (this.lessonDetails != null) {
       data['lesson_details'] =
-          this.lessonDetails.map((v) => v.toJson()).toList();
+          this.lessonDetails!.map((v) => v.toJson()).toList();
     }
     data['total_read_lessons'] = this.totalReadLessons;
     return data;
@@ -338,12 +338,12 @@ class LessonReadDetails {
 }
 
 class LessonDetails {
-  int id;
-  int chapterId;
-  String lessonName;
-  int referenceId;
-  String referenceType;
-  String postRecipientStatus;
+  int? id;
+  int? chapterId;
+  String? lessonName;
+  int? referenceId;
+  String? referenceType;
+  String? postRecipientStatus;
 
   LessonDetails(
       {this.id,
@@ -375,12 +375,12 @@ class LessonDetails {
 }
 
 class PostContent {
-  List<String> extra;
-  Footer footer;
-  Header header;
-  Content content;
-  Statistics statistics;
-  Specifications specifications;
+  List<String>? extra;
+  Footer? footer;
+  Header? header;
+  Content? content;
+  Statistics? statistics;
+  Specifications? specifications;
 
   PostContent(
       {this.extra,
@@ -410,27 +410,27 @@ class PostContent {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['extra'] = this.extra;
     if (this.footer != null) {
-      data['footer'] = this.footer.toJson();
+      data['footer'] = this.footer!.toJson();
     }
     if (this.header != null) {
-      data['header'] = this.header.toJson();
+      data['header'] = this.header!.toJson();
     }
     if (this.content != null) {
-      data['content'] = this.content.toJson();
+      data['content'] = this.content!.toJson();
     }
     if (this.statistics != null) {
-      data['statistics'] = this.statistics.toJson();
+      data['statistics'] = this.statistics!.toJson();
     }
     if (this.specifications != null) {
-      data['specifications'] = this.specifications.toJson();
+      data['specifications'] = this.specifications!.toJson();
     }
     return data;
   }
 }
 
 class Footer {
-  List<String> action;
-  String lastComment;
+  List<String>? action;
+  String? lastComment;
 
   Footer({this.action, this.lastComment});
 
@@ -448,14 +448,14 @@ class Footer {
 }
 
 class Header {
-  List<String> extra;
-  String title;
-  List<Action> action;
-  String avatar;
-  String layout;
-  String subtitle1;
+  List<String>? extra;
+  String? title;
+  List<Action>? action;
+  String? avatar;
+  String? layout;
+  String? subtitle1;
   Null subtitle2;
-  bool isVerified;
+  bool? isVerified;
 
   Header(
       {this.extra,
@@ -473,7 +473,7 @@ class Header {
     if (json['action'] != null) {
       action = [];//Action>();
       json['action'].forEach((v) {
-        action.add(new Action.fromJson(v));
+        action!.add(new Action.fromJson(v));
       });
     }
     avatar = json['avatar'];
@@ -489,7 +489,7 @@ class Header {
     data['extra'] = this.extra;
     data['title'] = this.title;
     if (this.action != null) {
-      data['action'] = this.action.map((v) => v.toJson()).toList();
+      data['action'] = this.action!.map((v) => v.toJson()).toList();
     }
     data['is_verified'] = this.isVerified;
     data['avatar'] = this.avatar;
@@ -501,8 +501,8 @@ class Header {
 }
 
 class Action {
-  String type;
-  bool value;
+  String? type;
+  bool? value;
 
   Action({this.type, this.value});
 
@@ -520,11 +520,11 @@ class Action {
 }
 
 class Content {
-  List<Media> media;
-  ContentMeta contentMeta;
-  String typeHeading;
-  List<dynamic> keywords;
-  List<dynamic> mentions;
+  List<Media>? media;
+  ContentMeta? contentMeta;
+  String? typeHeading;
+  List<dynamic>? keywords;
+  List<dynamic>? mentions;
   Content({this.media, this.contentMeta});
 
   Content.fromJson(Map<String, dynamic> json) {
@@ -534,7 +534,7 @@ class Content {
     if (json['media'] != null) {
       media = [];//Media>();
       json['media'].forEach((v) {
-        media.add(new Media.fromJson(v));
+        media!.add(new Media.fromJson(v));
       });
     }
     contentMeta = json['content_meta'] != null
@@ -548,20 +548,20 @@ class Content {
     data['mentions'] =mentions;
     data['type_heading'] = typeHeading;
     if (this.media != null) {
-      data['media'] = this.media.map((v) => v.toJson()).toList();
+      data['media'] = this.media!.map((v) => v.toJson()).toList();
     }
     if (this.contentMeta != null) {
-      data['content_meta'] = this.contentMeta.toJson();
+      data['content_meta'] = this.contentMeta!.toJson();
     }
     return data;
   }
 }
 class OtherImageUrls {
-  String s64dp;
-  String s128dp;
-  String s256dp;
-  String s512dp;
-  String original;
+  String? s64dp;
+  String? s128dp;
+  String? s256dp;
+  String? s512dp;
+  String? original;
 
   OtherImageUrls(
       {this.s64dp, this.s128dp, this.s256dp, this.s512dp, this.original});
@@ -585,11 +585,11 @@ class OtherImageUrls {
   }
 }
 class Media {
-  String fileType;
-  String mediaType;
-  String mediaUrl;
-  String mediaThumbnailUrl;
-  OtherImageUrls otherImageUrls;
+  String? fileType;
+  String? mediaType;
+  String? mediaUrl;
+  String? mediaThumbnailUrl;
+  OtherImageUrls? otherImageUrls;
   Media({this.mediaType, this.mediaUrl});
 
   Media.fromJson(Map<String, dynamic> json) {
@@ -609,18 +609,18 @@ class Media {
     data['media_url'] = this.mediaUrl;
     data['media_thumbnail_url'] = this.mediaThumbnailUrl;
     if (this.otherImageUrls != null) {
-      data['other_image_urls'] = this.otherImageUrls.toJson();
+      data['other_image_urls'] = this.otherImageUrls!.toJson();
     }
     return data;
   }
 }
 
 class ContentMeta {
-  String meta;
-  String title;
-  String subtitle1;
-  String subtitle2;
-  OtherPollRequest others;
+  String? meta;
+  String? title;
+  String? subtitle1;
+  String? subtitle2;
+  OtherPollRequest? others;
 
   ContentMeta({this.meta, this.title, this.subtitle1, this.subtitle2,this.others});
 
@@ -641,15 +641,15 @@ class ContentMeta {
     data['subtitle1'] = this.subtitle1;
     data['subtitle2'] = this.subtitle2;
     if (this.others != null) {
-      data['others'] = this.others.toJson();
+      data['others'] = this.others!.toJson();
     }
     return data;
   }
 }
 
 class Statistics {
-  int starRating;
-  int commentCount;
+  int? starRating;
+  int? commentCount;
 
   Statistics({this.starRating, this.commentCount});
 
@@ -667,10 +667,10 @@ class Statistics {
 }
 
 class Specifications {
-  int size;
-  int width;
-  int height;
-  String color;
+  int? size;
+  int? width;
+  int? height;
+  String? color;
 
   Specifications({this.size, this.width, this.height,this.color});
 

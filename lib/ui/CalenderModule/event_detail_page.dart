@@ -25,10 +25,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'event_language_page.dart';
 
 class EventDetailPage extends StatefulWidget {
-  final String type;
-  final EventCreateRequest payload;
-  final RoomListItem roomItem;
-  final  Function refreshCallBack;
+  final String? type;
+  final EventCreateRequest? payload;
+  final RoomListItem? roomItem;
+  final  Function? refreshCallBack;
   EventDetailPage({this.type,this.payload,this.roomItem,this.refreshCallBack});
   @override
   EventDetailPageState createState() => EventDetailPageState(type:type,payload: payload);
@@ -37,26 +37,26 @@ class EventDetailPage extends StatefulWidget {
 class EventDetailPageState extends State<EventDetailPage> {
   static const String EVENT_CREATE = "event_create";
   bool isOnline= false;
-  final String type;
-  EventCreateRequest payload;
+  final String? type;
+  EventCreateRequest? payload;
   EventDetailPageState({this.type,this.payload});
-  TextStyleElements styleElements;
-  String description;
+  late TextStyleElements styleElements;
+  String? description;
   List<EventLocation> eventLocation = [];
   GlobalKey<FormState> formKey = GlobalKey();
   List<String> _selectedLanguage = [];
-  AudioSocketService audioSocketService = locator<AudioSocketService>();
-  SharedPreferences prefs = locator<SharedPreferences>();
+  AudioSocketService? audioSocketService = locator<AudioSocketService>();
+  SharedPreferences? prefs = locator<SharedPreferences>();
   GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
 
 
-  String getTitle(){
+  String? getTitle(){
     if(eventLocation.length>0){
       var location = eventLocation.firstWhere((element){
         return element.type == 'offline';
       });
       if(location!=null){
-        return location.address.address;
+        return location.address!.address;
       }else{
         return 'Location';
       }
@@ -83,7 +83,7 @@ class EventDetailPageState extends State<EventDetailPage> {
           });
         },
         contentPadding: EdgeInsets.all(0),
-        title: Text(getTitle(),style: styleElements.subtitle1ThemeScalable(context),),
+        title: Text(getTitle()!,style: styleElements.subtitle1ThemeScalable(context),),
         trailing: Icon(Icons.arrow_forward_ios, color: HexColor(AppColors.appColorBlack35),
           size: 20,),
 
@@ -131,7 +131,7 @@ class EventDetailPageState extends State<EventDetailPage> {
     return SafeArea(
         child: Scaffold(
           appBar: TricycleAppBar().getCustomAppBar(context,
-              appBarTitle: AppLocalizations.of(context).translate('event_details'),
+              appBarTitle: AppLocalizations.of(context)!.translate('event_details'),
               onBackButtonPress: () {
                 Navigator.pop(context);
               },
@@ -153,7 +153,7 @@ class EventDetailPageState extends State<EventDetailPage> {
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
                     Text(
-                      AppLocalizations.of(context).translate('next'),
+                      AppLocalizations.of(context)!.translate('next'),
                       style: styleElements
                           .subtitle2ThemeScalable(context)
                           .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -197,7 +197,7 @@ class EventDetailPageState extends State<EventDetailPage> {
           ),
         ));
   }
-  Widget getEventDetailCard(String title,Widget child,{EdgeInsets padding}){
+  Widget getEventDetailCard(String title,Widget child,{EdgeInsets? padding}){
     return Container(
         child:Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -222,15 +222,15 @@ class EventDetailPageState extends State<EventDetailPage> {
   );
 
   void updatePayload() {
-    progressButtonKey.currentState.show();
-    formKey.currentState.save();
+    progressButtonKey.currentState!.show();
+    formKey.currentState!.save();
     if(type == 'talk' || eventLocation.length>0){
-      progressButtonKey.currentState.hide();
-      payload.eventLocation = eventLocation;
-      payload.eventDescription = description;
-      payload.eventLanguages = _selectedLanguage;
+      progressButtonKey.currentState!.hide();
+      payload!.eventLocation = eventLocation;
+      payload!.eventDescription = description;
+      payload!.eventLanguages = _selectedLanguage;
       Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-        return HostListPage(privacyType: payload.eventPrivacyType,isReceiverList: true,payload: payload,roomItem: widget.roomItem,refreshCallBack:widget.refreshCallBack);
+        return HostListPage(privacyType: payload!.eventPrivacyType,isReceiverList: true,payload: payload,roomItem: widget.roomItem,refreshCallBack:widget.refreshCallBack);
       })).then((value){
         if(value!=null){
           Map<String,dynamic> map = value;
@@ -241,48 +241,48 @@ class EventDetailPageState extends State<EventDetailPage> {
         }
       });
     }else{
-      progressButtonKey.currentState.hide();
-      ToastBuilder().showToast(AppLocalizations.of(context).translate('please_select_location'), context, HexColor(AppColors.information));
+      progressButtonKey.currentState!.hide();
+      ToastBuilder().showToast(AppLocalizations.of(context)!.translate('please_select_location'), context, HexColor(AppColors.information));
     }
   }
 
   void createEvent() async{
     // FocusScope.of(context).requestFocus(FocusNode());
-    progressButtonKey.currentState.show();
-    formKey.currentState.save();
+    progressButtonKey.currentState!.show();
+    formKey.currentState!.save();
     if(type == 'talk' || eventLocation.length>0) {
-      payload.eventLocation = eventLocation;
-      payload.eventDescription = description;
-      payload.eventLanguages = _selectedLanguage;
-      payload.recipientType = ['person'];
-      payload.recipientDetails = List<RecipientDetails>.generate(0, (index) {
+      payload!.eventLocation = eventLocation;
+      payload!.eventDescription = description;
+      payload!.eventLanguages = _selectedLanguage;
+      payload!.recipientType = ['person'];
+      payload!.recipientDetails = List<RecipientDetails>.generate(0, (index) {
         return RecipientDetails();
       });
       Calls().call(jsonEncode(payload), context, Config.CREATE_EVENT).then((
           value) {
-        progressButtonKey.currentState.hide();
+        progressButtonKey.currentState!.hide();
         var res = CreateEventResponse.fromJson(value);
         if (res.statusCode == Strings.success_code) {
-          ToastBuilder().showToast(AppLocalizations.of(context).translate(
+          ToastBuilder().showToast(AppLocalizations.of(context)!.translate(
               'event_created_successfully')
               , context, HexColor(AppColors.information));
-          emitCreatePayload(res.rows.id);
+          emitCreatePayload(res.rows!.id);
           Navigator.pop(context, true);
         }
       }).catchError((onError) {
         print(onError);
-        progressButtonKey.currentState.hide();
+        progressButtonKey.currentState!.hide();
       });
     }else{
-      progressButtonKey.currentState.hide();
-      ToastBuilder().showToast(AppLocalizations.of(context).translate('please_select_location'), context, HexColor(AppColors.information));
+      progressButtonKey.currentState!.hide();
+      ToastBuilder().showToast(AppLocalizations.of(context)!.translate('please_select_location'), context, HexColor(AppColors.information));
     }
   }
 
-  void emitCreatePayload(int eventId) {
+  void emitCreatePayload(int? eventId) {
     JoinEventPayload payload  = JoinEventPayload();
-    payload.personId = prefs.getInt(Strings.userId);
+    payload.personId = prefs!.getInt(Strings.userId);
     payload.eventId = eventId;
-    audioSocketService.getSocket().emit(EVENT_CREATE,payload);
+    audioSocketService!.getSocket()!.emit(EVENT_CREATE,payload);
   }
 }

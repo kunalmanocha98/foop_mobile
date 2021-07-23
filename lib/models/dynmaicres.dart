@@ -1,6 +1,6 @@
 class DynamicResponse {
-  String statusCode;
-  String message;
+  String? statusCode;
+  String? message;
   dynamic rows;
 
   DynamicResponse({this.statusCode, this.message, this.rows});

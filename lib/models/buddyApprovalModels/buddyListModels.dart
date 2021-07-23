@@ -1,9 +1,9 @@
 class RequestListRequest {
-  int institutionId;
-  int pageNumber;
-  int pageSize;
-  String searchVal;
-  int approvedByPersonId;
+  int? institutionId;
+  int? pageNumber;
+  int? pageSize;
+  String? searchVal;
+  int? approvedByPersonId;
 
   RequestListRequest(
       {this.institutionId,
@@ -32,10 +32,10 @@ class RequestListRequest {
 }
 
 class RequestListResponse {
-  String statusCode;
-  String message;
-  List<RequestListItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<RequestListItem>? rows;
+  int? total;
 
   RequestListResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -45,7 +45,7 @@ class RequestListResponse {
     if (json['rows'] != null) {
       rows = [];//RequestListItem>();
       json['rows'].forEach((v) {
-        rows.add(new RequestListItem.fromJson(v));
+        rows!.add(new RequestListItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -56,7 +56,7 @@ class RequestListResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -64,17 +64,17 @@ class RequestListResponse {
 }
 
 class RequestListItem {
-  int institutionUserId;
-  int personId;
-  int institutionId;
-  String firstName;
-  String lastName;
-  String email;
-  String mobile;
-  String profileImage;
-  String assignmentStatus;
-  String personType;
-  String className;
+  int? institutionUserId;
+  int? personId;
+  int? institutionId;
+  String? firstName;
+  String? lastName;
+  String? email;
+  String? mobile;
+  String? profileImage;
+  String? assignmentStatus;
+  String? personType;
+  String? className;
 
 
   RequestListItem(

@@ -13,7 +13,7 @@ class UnfollowUserDialog extends StatefulWidget {
 }
 
 class _UnfollowUserDialog extends State<UnfollowUserDialog> {
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class _UnfollowUserDialog extends State<UnfollowUserDialog> {
                 child: Container(
                   margin: const EdgeInsets.only(bottom: 16, top: 16),
                   child: Text(
-                    AppLocalizations.of(context)
+                    AppLocalizations.of(context)!
                         .translate("unfollow_user_title"),
                     style: styleElements.headline5ThemeScalable(context),
                   ),
@@ -49,7 +49,7 @@ class _UnfollowUserDialog extends State<UnfollowUserDialog> {
                 child: Container(
                   margin: const EdgeInsets.all(16),
                   child: Text(
-                    AppLocalizations.of(context).translate("unfollow_user_des"),
+                    AppLocalizations.of(context)!.translate("unfollow_user_des"),
                     style: styleElements.bodyText1ThemeScalable(context),
                   ),
                 )),
@@ -64,7 +64,7 @@ class _UnfollowUserDialog extends State<UnfollowUserDialog> {
                         side: BorderSide(color: HexColor(AppColors.appMainColor))),
                     onPressed: () {},
                     color: HexColor(AppColors.appColorWhite),
-                    child: Text(AppLocalizations.of(context).translate('cancel'),
+                    child: Text(AppLocalizations.of(context)!.translate('cancel'),
                       style: styleElements.subtitle1ThemeScalable(context).copyWith(
                         color: HexColor(AppColors.appMainColor),
                       ),
@@ -80,7 +80,7 @@ class _UnfollowUserDialog extends State<UnfollowUserDialog> {
                     onPressed: () {},
                     color: HexColor(AppColors.appMainColor),
                     child: Text(
-                      AppLocalizations.of(context).translate('ok'),
+                      AppLocalizations.of(context)!.translate('ok'),
                       style: styleElements.subtitle1ThemeScalable(context).copyWith(
                         color: HexColor(AppColors.appColorWhite),
                       ),

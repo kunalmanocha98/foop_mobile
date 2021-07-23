@@ -10,14 +10,14 @@ class LogOutApi {
   NetworkUtil _netUtil = new NetworkUtil();
 
   final JsonDecoder _decoder = new JsonDecoder();
-  SharedPreferences prefs;
+  late SharedPreferences prefs;
 
   Future<dynamic> logOut(BuildContext context,String deviceInfo) async {
     prefs = await SharedPreferences.getInstance();
     print('token===========' + ('Token' + " " + deviceInfo));
     var headers = {
       "Content-Type": 'application/json',
-      "Authorization": ('Token' + " " + prefs.getString("token")),
+      "Authorization": ('Token' + " " + prefs.getString("token")!),
       "devicedetails": deviceInfo,
     };
     final _url = Config.LOGOUT_API;

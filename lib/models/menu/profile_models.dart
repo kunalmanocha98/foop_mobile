@@ -1,8 +1,8 @@
 class ProfileCardResponse {
-  String statusCode;
-  String message;
+  String? statusCode;
+  String? message;
   Null rows;
-  int total;
+  int? total;
 
   ProfileCardResponse({this.statusCode, this.message, this.rows, this.total});
 

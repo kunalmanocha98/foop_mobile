@@ -1,8 +1,8 @@
 class StaffListRequest {
-  int institutionId;
-  String searchVal;
-  int pageNumber;
-  int pageSize;
+  int? institutionId;
+  String? searchVal;
+  int? pageNumber;
+  int? pageSize;
 
   StaffListRequest(
       {this.institutionId, this.searchVal, this.pageNumber, this.pageSize});
@@ -25,10 +25,10 @@ class StaffListRequest {
 }
 
 class StaffListResponse {
-  String statusCode;
-  String message;
-  List<StaffListMember> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<StaffListMember>? rows;
+  int? total;
 
   StaffListResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -38,7 +38,7 @@ class StaffListResponse {
     if (json['rows'] != null) {
       rows =  [];
       json['rows'].forEach((v) {
-        rows.add(new StaffListMember.fromJson(v));
+        rows!.add(new StaffListMember.fromJson(v));
       });
     }
     total = json['total'];
@@ -49,7 +49,7 @@ class StaffListResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -57,12 +57,12 @@ class StaffListResponse {
 }
 
 class StaffListMember {
-  int id;
-  int institutionId;
-  String institutionName;
-  String personName;
-  int personId;
-  String profileImage;
+  int? id;
+  int? institutionId;
+  String? institutionName;
+  String? personName;
+  int? personId;
+  String? profileImage;
 
   StaffListMember(
       {this.id,
@@ -94,10 +94,10 @@ class StaffListMember {
 }
 
 class AssignRoleResponse {
-  String statusCode;
-  String message;
+  String? statusCode;
+  String? message;
   dynamic rows;
-  int total;
+  int? total;
 
   AssignRoleResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -119,10 +119,10 @@ class AssignRoleResponse {
 }
 
 class Rows {
-  int institutionId;
-  int personId;
-  int roleId;
-  int id;
+  int? institutionId;
+  int? personId;
+  int? roleId;
+  int? id;
 
   Rows({this.institutionId, this.personId, this.roleId, this.id});
 

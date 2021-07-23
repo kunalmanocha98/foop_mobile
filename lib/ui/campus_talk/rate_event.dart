@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class RateEventDilog extends StatelessWidget{
-  final Null Function() callBack;
-  final Null Function() callBackCancel;
+  final Null Function()? callBack;
+  final Null Function()? callBackCancel;
   RateEventDilog({this.callBack,this.callBackCancel});
   @override
   Widget build(BuildContext context) {
@@ -20,14 +20,14 @@ class RateEventDilog extends StatelessWidget{
         children: [
           Padding(
               padding: EdgeInsets.only(top: 16,bottom: 16,left:16,right: 16),
-              child: Text(AppLocalizations.of(context).translate('rate_event'),style: styleElements.headline6ThemeScalable(context),)),
+              child: Text(AppLocalizations.of(context)!.translate('rate_event'),style: styleElements.headline6ThemeScalable(context),)),
           Padding(
               padding: EdgeInsets.only(top: 16,bottom: 16,left:16,right: 16),
-              child: Text(AppLocalizations.of(context).translate('pl_rate'),style: styleElements.subtitle1ThemeScalable(context),)),
+              child: Text(AppLocalizations.of(context)!.translate('pl_rate'),style: styleElements.subtitle1ThemeScalable(context),)),
           Padding(
             padding: const EdgeInsets.only(top:24.0),
             child: Center(
-              child: Text(AppLocalizations.of(context).translate('rate'),style: styleElements.bodyText2ThemeScalable(context).copyWith(
+              child: Text(AppLocalizations.of(context)!.translate('rate'),style: styleElements.bodyText2ThemeScalable(context).copyWith(
                   color: HexColor(AppColors.appMainColor)
               ),),
             ),
@@ -69,14 +69,14 @@ class RateEventDilog extends StatelessWidget{
                     Container(
                       margin: const EdgeInsets.only(left: 40),
                       child: Text(
-                        AppLocalizations.of(context).translate('rate_average'),
+                        AppLocalizations.of(context)!.translate('rate_average'),
                         style: styleElements.captionThemeScalable(context),
                       ),
                     ),
                     Container(
                       margin: const EdgeInsets.only(right: 40),
                       child: Text(
-                        AppLocalizations.of(context).translate('excellent'),
+                        AppLocalizations.of(context)!.translate('excellent'),
                         style: styleElements.captionThemeScalable(context),
                       ),
                     )
@@ -93,10 +93,10 @@ class RateEventDilog extends StatelessWidget{
                 TricycleTextButton(
                   onPressed: (){
                     Navigator.pop(context);
-                    callBackCancel();
+                    callBackCancel!();
                   },
                   shape: StadiumBorder(),
-                  child: Text(AppLocalizations.of(context).translate('cancel'),style: styleElements.bodyText2ThemeScalable(context).copyWith(
+                  child: Text(AppLocalizations.of(context)!.translate('cancel'),style: styleElements.bodyText2ThemeScalable(context).copyWith(
                       color: HexColor(AppColors.appMainColor)
                   ),),
                 ),
@@ -104,10 +104,10 @@ class RateEventDilog extends StatelessWidget{
                   onPressed: (){
 
                     Navigator.pop(context);
-                    callBack();
+                    callBack!();
                   },
                   shape: StadiumBorder(),
-                  child: Text(AppLocalizations.of(context).translate('rate'),style: styleElements.bodyText2ThemeScalable(context).copyWith(
+                  child: Text(AppLocalizations.of(context)!.translate('rate'),style: styleElements.bodyText2ThemeScalable(context).copyWith(
                       color: HexColor(AppColors.appMainColor)
                   ),),
                 )

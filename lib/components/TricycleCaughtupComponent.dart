@@ -7,17 +7,17 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class TricycleCaughtUpComponent extends StatefulWidget{
-  String title, actionTitle;
-  final Function onClick;
+  String? title, actionTitle;
+  final Function? onClick;
   TricycleCaughtUpComponent({this.onClick,this.title,this.actionTitle});
 
   @override
   TricycleCaughtUpComponentState createState() => TricycleCaughtUpComponentState(onClick: onClick,title: title,actionTitle: actionTitle);
 }
 class TricycleCaughtUpComponentState extends State<TricycleCaughtUpComponent>{
-  Function onClick;
-  TextStyleElements styleElements;
-  String title, actionTitle;
+  Function? onClick;
+  late TextStyleElements styleElements;
+  String? title, actionTitle;
   TricycleCaughtUpComponentState({this.onClick,this.title,this.actionTitle});
 
   @override

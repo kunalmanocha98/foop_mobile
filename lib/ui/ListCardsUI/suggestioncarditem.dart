@@ -12,8 +12,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 // ignore: must_be_immutable
 class SuggestionItemCard extends StatelessWidget {
   SubRow data;
-  TextStyleElements styleElements;
-  SuggestionItemCard({Key key, @required this.data,this.styleElements}) : super(key: key);
+  TextStyleElements? styleElements;
+  SuggestionItemCard({Key? key, required this.data,this.styleElements}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class SuggestionItemCard extends StatelessWidget {
                   decoration: BoxDecoration(
                     shape: BoxShape.rectangle,
                     image: DecorationImage(
-                        fit: BoxFit.fill, image: CachedNetworkImageProvider(data.urlOne)),
+                        fit: BoxFit.fill, image: CachedNetworkImageProvider(data.urlOne!)),
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(6.0.w),
                         topRight: Radius.circular(6.0.w)),
@@ -56,7 +56,7 @@ class SuggestionItemCard extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.left,
-                          style: styleElements.subtitle1ThemeScalable(context),
+                          style: styleElements!.subtitle1ThemeScalable(context),
                         ),
                       ),
                     ),
@@ -65,10 +65,10 @@ class SuggestionItemCard extends StatelessWidget {
                         child: Padding(
                             padding: EdgeInsets.only(
                                 top: 0.h, bottom: 4.h, left: 8.w, right: 4.w),
-                            child: Text(data.textTwo,
+                            child: Text(data.textTwo!,
                                 overflow: TextOverflow.ellipsis,
                                 textAlign: TextAlign.left,
-                                style: styleElements.bodyText2ThemeScalable(context)))),
+                                style: styleElements!.bodyText2ThemeScalable(context)))),
                     Align(
                         alignment: Alignment.bottomCenter,
                         child: TricycleElevatedButton(
@@ -77,9 +77,9 @@ class SuggestionItemCard extends StatelessWidget {
                               side: BorderSide(color: HexColor(AppColors.appMainColor))),
                           onPressed: () {},
                           color: HexColor(AppColors.appMainColor),
-                          child: Text(AppLocalizations.of(context).translate('follow'),
+                          child: Text(AppLocalizations.of(context)!.translate('follow'),
                             style:
-                            styleElements.captionThemeScalable(context).copyWith(fontWeight: FontWeight.bold,color: HexColor(AppColors.appColorWhite)),
+                            styleElements!.captionThemeScalable(context).copyWith(fontWeight: FontWeight.bold,color: HexColor(AppColors.appColorWhite)),
                           ),
                         ))
                   ],

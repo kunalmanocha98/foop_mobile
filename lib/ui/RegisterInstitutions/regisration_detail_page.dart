@@ -25,7 +25,7 @@ class RegisInstruction extends StatelessWidget{
             ListView(
               children: [
                 TricycleEarnCard(
-                  title: AppLocalizations.of(context).translate('register'),
+                  title: AppLocalizations.of(context)!.translate('register'),
                   imageUrl: "",
                   coinsValue: "100",
                   moneyVal: "1000",
@@ -38,11 +38,11 @@ class RegisInstruction extends StatelessWidget{
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(AppLocalizations.of(context).translate('instruct_to_reg'),
+                      Text(AppLocalizations.of(context)!.translate('instruct_to_reg'),
                         style: styleElements.headline6ThemeScalable(context).copyWith(
                             fontWeight: FontWeight.bold
                         ),),
-                      Text(AppLocalizations.of(context).translate("regis_requirement"),
+                      Text(AppLocalizations.of(context)!.translate("regis_requirement"),
                         style: styleElements.bodyText1ThemeScalable(context),),
 
                     ],
@@ -88,7 +88,7 @@ class RegisInstruction extends StatelessWidget{
                                         .white,
                                     child: Text(
                                         AppLocalizations.of(
-                                            context)
+                                            context)!
                                             .translate(
                                             "next"),
                                         style: styleElements
@@ -128,7 +128,7 @@ class RegisInstruction extends StatelessWidget{
                                         .white,
                                     child: Text(
                                         AppLocalizations.of(
-                                            context)
+                                            context)!
                                             .translate(
                                             "next"),
                                         style: styleElements

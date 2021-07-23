@@ -1,8 +1,8 @@
 class LearnerCategoryListResponse {
-  String statusCode;
-  String message;
-  List<LearnerListItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<LearnerListItem>? rows;
+  int? total;
 
   LearnerCategoryListResponse(
       {this.statusCode, this.message, this.rows, this.total});
@@ -13,7 +13,7 @@ class LearnerCategoryListResponse {
     if (json['rows'] != null) {
       rows = [];//LearnerListItem>();
       json['rows'].forEach((v) {
-        rows.add(new LearnerListItem.fromJson(v));
+        rows!.add(new LearnerListItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -24,7 +24,7 @@ class LearnerCategoryListResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -32,15 +32,15 @@ class LearnerCategoryListResponse {
 }
 
 class LearnerListItem {
-  String learnerCategoryCode;
-  String learnerCategoryName;
-  String learnerCategoryDescription;
-  String imageUrl;
-  String ageGroupStart;
-  String ageGroupEnd;
-  bool isSelected;
-  int learnerCategoryId;
-  String learnerCategoryType;
+  String? learnerCategoryCode;
+  String? learnerCategoryName;
+  String? learnerCategoryDescription;
+  String? imageUrl;
+  String? ageGroupStart;
+  String? ageGroupEnd;
+  bool? isSelected;
+  int? learnerCategoryId;
+  String? learnerCategoryType;
 
   LearnerListItem(
       {this.learnerCategoryCode,

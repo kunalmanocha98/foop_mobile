@@ -32,11 +32,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class PhotoPreviewScreen extends StatefulWidget {
-  RegisterUserAs registerUserAs;
-  String from;
+  RegisterUserAs? registerUserAs;
+  String? from;
   PhotoPreviewScreen({
-    Key key,
-    @required this.registerUserAs,
+    Key? key,
+    required this.registerUserAs,
     this.from
   }) : super(key: key);
 
@@ -49,16 +49,16 @@ var imageChild;
 
 class _PhotoPreviewScreenState extends State<PhotoPreviewScreen> {
   var imageFile;
-  String type;
-  int id;
-  RegisterUserAs registerUserAs;
-  String imageUrl;
-  String studentType;
-  String from;
-  SharedPreferences prefs;
-  BuildContext context;
-  File imagePath;
-  String selectPath;
+  String? type;
+  int? id;
+  RegisterUserAs? registerUserAs;
+  String? imageUrl;
+  String? studentType;
+  String? from;
+  SharedPreferences? prefs;
+ late  BuildContext context;
+  File? imagePath;
+  String? selectPath;
 
   _PhotoPreviewScreenState(this.registerUserAs,this.from);
 
@@ -85,14 +85,14 @@ class _PhotoPreviewScreenState extends State<PhotoPreviewScreen> {
 
   void setSharedPreferences() async {
     prefs = await SharedPreferences.getInstance();
-    if (prefs != null && prefs.getString("profileImagePath") != null) {
+    if (prefs != null && prefs!.getString("profileImagePath") != null) {
       setState(() {
-        selectPath = prefs.getString("profileImagePath");
+        selectPath = prefs!.getString("profileImagePath");
       });
     }
-    if (prefs != null && prefs.getString(Strings.profileImage) != null && prefs.getBool("isProfileCreated")) {
+    if (prefs != null && prefs!.getString(Strings.profileImage) != null && prefs!.getBool("isProfileCreated")!) {
       setState(() {
-        imageUrl = prefs.getString(Strings.profileImage);
+        imageUrl = prefs!.getString(Strings.profileImage);
       });
     }
 
@@ -101,7 +101,7 @@ class _PhotoPreviewScreenState extends State<PhotoPreviewScreen> {
   }
 
   _profilePicker(String type) async {
-    File pickedFile;
+    File? pickedFile;
     var pr = ToastBuilder().setProgressDialogWithPercent(context,'Uploading Image...');
     if (type == "Gallery")
       pickedFile = await ImagePickerAndCropperUtil().pickImage(context);
@@ -130,10 +130,10 @@ class _PhotoPreviewScreenState extends State<PhotoPreviewScreen> {
           await UploadFile(
               baseUrl: Config.BASE_URL,
               context: context,
-              token: prefs.getString("token"),
-              contextId: prefs.getInt("userId").toString(),
+              token: prefs!.getString("token"),
+              contextId: prefs!.getInt("userId").toString(),
               contextType: CONTEXTTYPE_ENUM.PROFILE.type,
-              ownerId: prefs.getInt("userId").toString(),
+              ownerId: prefs!.getInt("userId").toString(),
               ownerType: OWNERTYPE_ENUM.PERSON.type,
               file: croppedFile,
               subContextId: "",
@@ -147,7 +147,7 @@ class _PhotoPreviewScreenState extends State<PhotoPreviewScreen> {
               .then((value) async {
             await  pr.hide();
             var imageResponse = ImageUpdateResponse.fromJson(value);
-            updateImage(imageResponse.rows.fileUrl, OWNERTYPE.person.type,
+            updateImage(imageResponse.rows!.fileUrl, OWNERTYPE.person.type,
                 IMAGETYPE.profile.type);
           }).catchError((onError) async {
             await pr.hide();
@@ -165,11 +165,11 @@ class _PhotoPreviewScreenState extends State<PhotoPreviewScreen> {
     }
   }
 
-  updateImage(String url, String ownerType, String imageType) async {
+  updateImage(String? url, String ownerType, String imageType) async {
     ImageUpdateRequest request = ImageUpdateRequest();
     request.imagePath = url;
     request.imageType = imageType;
-    request.ownerId = prefs.getInt("userId");
+    request.ownerId = prefs!.getInt("userId");
     request.ownerType = ownerType;
     var data = jsonEncode(request);
     Calls().call(data, context, Config.IMAGEUPDATE).then((value) async {
@@ -178,8 +178,8 @@ class _PhotoPreviewScreenState extends State<PhotoPreviewScreen> {
       if (resposne.statusCode == Strings.success_code) {
         setState(() {
           imageUrl = url;
-          prefs.setString("profileImagePath", imagePath.path);
-          prefs.setString("imageUrl", imageUrl);
+          prefs!.setString("profileImagePath", imagePath!.path);
+          prefs!.setString("imageUrl", imageUrl!);
         });
       }
     });
@@ -188,10 +188,11 @@ class _PhotoPreviewScreenState extends State<PhotoPreviewScreen> {
   // ignore: missing_return
   Future<bool> _onBackPressed() {
     Navigator.of(context).pop({'result': imageUrl});
+    return new Future(() => false);
   }
 
-  TextStyleElements styleElements;
-  BuildContext sctx;
+  late TextStyleElements styleElements;
+  BuildContext? sctx;
 
   @override
   Widget build(BuildContext context) {
@@ -204,7 +205,7 @@ class _PhotoPreviewScreenState extends State<PhotoPreviewScreen> {
     if (imagePath != null) {
       imageChild = Container(
         child: new FittedBox(
-          child: new Image.file(imagePath),
+          child: new Image.file(imagePath!),
           fit: BoxFit.fill,
         ),
       );
@@ -215,7 +216,7 @@ class _PhotoPreviewScreenState extends State<PhotoPreviewScreen> {
         child: new FittedBox(
           child: Container(
             child:  CachedNetworkImage(
-              imageUrl:Config.BASE_URL+ imageUrl,
+              imageUrl:Config.BASE_URL+ imageUrl!,
 
               fit: BoxFit.fill,
             ),
@@ -253,7 +254,7 @@ class _PhotoPreviewScreenState extends State<PhotoPreviewScreen> {
               resizeToAvoidBottomInset: false,
               backgroundColor: HexColor(AppColors.appColorBackground),
               appBar: TricycleAppBar().getCustomAppBar(context,
-                  appBarTitle: AppLocalizations.of(context).translate('upload_image'), onBackButtonPress: () {
+                  appBarTitle: AppLocalizations.of(context)!.translate('upload_image'), onBackButtonPress: () {
                     _onBackPressed();
                   }),
               body: new Builder(builder: (BuildContext context) {
@@ -282,7 +283,7 @@ class _PhotoPreviewScreenState extends State<PhotoPreviewScreen> {
                                 margin: const EdgeInsets.only(
                                     left: 16.0, right: 16.0, top: 5),
                                 child: Text(
-                                  AppLocalizations.of(context)
+                                  AppLocalizations.of(context)!
                                       .translate("upload_image_content"),
                                   style: styleElements
                                       .subtitle1ThemeScalable(context),
@@ -295,7 +296,7 @@ class _PhotoPreviewScreenState extends State<PhotoPreviewScreen> {
                                 margin: const EdgeInsets.only(
                                     left: 16.0, right: 16.0, top: 5),
                                 child: Text(
-                                  AppLocalizations.of(context)
+                                  AppLocalizations.of(context)!
                                       .translate("upload_image_content2"),
                                   style: styleElements
                                       .subtitle2ThemeScalable(context),
@@ -361,7 +362,7 @@ class _PhotoPreviewScreenState extends State<PhotoPreviewScreen> {
                                         }
                                       } else {
                                         ToastBuilder().showToast(
-                                            AppLocalizations.of(context).translate("upload_image_"),
+                                            AppLocalizations.of(context)!.translate("upload_image_"),
                                             sctx,
                                             HexColor(AppColors.information));
                                       }
@@ -369,7 +370,7 @@ class _PhotoPreviewScreenState extends State<PhotoPreviewScreen> {
                                   },
                                   color: HexColor(AppColors.appColorWhite),
                                   child: Text(
-                                      AppLocalizations.of(context)
+                                      AppLocalizations.of(context)!
                                           .translate('next'),
                                       style: styleElements
                                           .buttonThemeScalable(context)
@@ -391,13 +392,13 @@ class _PhotoPreviewScreenState extends State<PhotoPreviewScreen> {
         builder: (BuildContext context) {
           return AlertDialog(
               title: Text(
-                  AppLocalizations.of(context).translate('from_where_picture')),
+                  AppLocalizations.of(context)!.translate('from_where_picture')),
               content: SingleChildScrollView(
                 child: ListBody(
                   children: <Widget>[
                     GestureDetector(
                       child: Text(
-                          AppLocalizations.of(context).translate('gallery')),
+                          AppLocalizations.of(context)!.translate('gallery')),
                       onTap: () {
                         Navigator.pop(context, null);
                         _profilePicker("Gallery");
@@ -406,7 +407,7 @@ class _PhotoPreviewScreenState extends State<PhotoPreviewScreen> {
                     Padding(padding: EdgeInsets.all(16.0)),
                     GestureDetector(
                       child: Text(
-                          AppLocalizations.of(context).translate('camera')),
+                          AppLocalizations.of(context)!.translate('camera')),
                       onTap: () {
                         Navigator.pop(context, null);
                         _profilePicker("Camera");

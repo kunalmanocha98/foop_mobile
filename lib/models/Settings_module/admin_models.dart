@@ -1,8 +1,8 @@
 class AdminListResponse {
-String statusCode;
-String message;
-List<AdminListItem> rows;
-int total;
+String? statusCode;
+String? message;
+List<AdminListItem>? rows;
+int? total;
 
 AdminListResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -12,7 +12,7 @@ message = json['message'];
 if (json['rows'] != null) {
 rows = [];
 json['rows'].forEach((v) {
-rows.add(new AdminListItem.fromJson(v));
+rows!.add(new AdminListItem.fromJson(v));
 });
 }
 total = json['total'];
@@ -23,7 +23,7 @@ Map<String, dynamic> toJson() {
   data['statusCode'] = this.statusCode;
   data['message'] = this.message;
   if (this.rows != null) {
-    data['rows'] = this.rows.map((v) => v.toJson()).toList();
+    data['rows'] = this.rows!.map((v) => v.toJson()).toList();
   }
   data['total'] = this.total;
   return data;
@@ -31,14 +31,14 @@ Map<String, dynamic> toJson() {
 }
 
 class AdminListItem {
-  int id;
-  int institutionId;
-  String institutionName;
-  String personName;
-  int personId;
-  String profileImage;
-  int roleId;
-  String roleName;
+  int? id;
+  int? institutionId;
+  String? institutionName;
+  String? personName;
+  int? personId;
+  String? profileImage;
+  int? roleId;
+  String? roleName;
 
   AdminListItem(
       {this.id,
@@ -76,10 +76,10 @@ class AdminListItem {
 }
 
 class RemoveAdminResponse {
-  String statusCode;
-  String message;
-  String rows;
-  int total;
+  String? statusCode;
+  String? message;
+  String? rows;
+  int? total;
 
   RemoveAdminResponse({this.statusCode, this.message, this.rows, this.total});
 

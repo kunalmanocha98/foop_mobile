@@ -1,8 +1,8 @@
 class DepartmentResponse {
-  String statusCode;
-  String message;
-  List<DepartmentItems> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<DepartmentItems>? rows;
+  int? total;
 
   DepartmentResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -12,7 +12,7 @@ class DepartmentResponse {
     if (json['rows'] != null) {
       rows = [];//DepartmentItems>();
       json['rows'].forEach((v) {
-        rows.add(new DepartmentItems.fromJson(v));
+        rows!.add(new DepartmentItems.fromJson(v));
       });
     }
     total = json['total'];
@@ -23,7 +23,7 @@ class DepartmentResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -31,8 +31,8 @@ class DepartmentResponse {
 }
 
 class DepartmentItems {
-  String departmentGroup;
-  List<Departments> departments;
+  String? departmentGroup;
+  List<Departments>? departments;
 
   DepartmentItems({this.departmentGroup, this.departments});
 
@@ -41,7 +41,7 @@ class DepartmentItems {
     if (json['departments'] != null) {
       departments = [];//Departments>();
       json['departments'].forEach((v) {
-        departments.add(new Departments.fromJson(v));
+        departments!.add(new Departments.fromJson(v));
       });
     }
   }
@@ -50,18 +50,18 @@ class DepartmentItems {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['department_group'] = this.departmentGroup;
     if (this.departments != null) {
-      data['departments'] = this.departments.map((v) => v.toJson()).toList();
+      data['departments'] = this.departments!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Departments {
-  int id;
-  String departmentName;
-  String departmentCode;
-  String departmentDescription;
-bool isSelected=false;
+  int? id;
+  String? departmentName;
+  String? departmentCode;
+  String? departmentDescription;
+bool? isSelected=false;
   Departments(
       {this.id,
         this.departmentName,

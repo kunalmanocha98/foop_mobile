@@ -7,7 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DialogWaitEvent extends StatelessWidget{
-  final String date;
+  final String? date;
   DialogWaitEvent({this.date});
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ class DialogWaitEvent extends StatelessWidget{
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(AppLocalizations.of(context).translate('wait_to_start'),style:
+            Text(AppLocalizations.of(context)!.translate('wait_to_start'),style:
             styleElements.headline6ThemeScalable(context).copyWith(
                 color: HexColor(AppColors.appColorBlack85),
               fontWeight: FontWeight.bold,
@@ -32,7 +32,7 @@ class DialogWaitEvent extends StatelessWidget{
               text: TextSpan(
                   children: [
                     TextSpan(
-                        text: AppLocalizations.of(context).translate('start_time'),
+                        text: AppLocalizations.of(context)!.translate('start_time'),
                         style: styleElements.subtitle2ThemeScalable(context).copyWith(fontWeight: FontWeight.bold)
                     ),
                     TextSpan(
@@ -47,7 +47,7 @@ class DialogWaitEvent extends StatelessWidget{
               ),
             ),
             SizedBox(height: 16,),
-            Text(AppLocalizations.of(context).translate('wait_to_start_des'),
+            Text(AppLocalizations.of(context)!.translate('wait_to_start_des'),
               textAlign: TextAlign.center,
               style:
               styleElements.subtitle1ThemeScalable(context).copyWith(
@@ -61,7 +61,7 @@ class DialogWaitEvent extends StatelessWidget{
                 TricycleTextButton(
                   shape: RoundedRectangleBorder(),
                     onPressed: (){Navigator.pop(context);},
-                    child: Text(AppLocalizations.of(context).translate('ok'),style: styleElements.captionThemeScalable(context).copyWith(
+                    child: Text(AppLocalizations.of(context)!.translate('ok'),style: styleElements.captionThemeScalable(context).copyWith(
                       color: HexColor(AppColors.appMainColor)
                     ),)
                 )

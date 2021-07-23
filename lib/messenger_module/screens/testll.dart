@@ -1,72 +1,20 @@
 import 'dart:async';
-import 'dart:convert';
-import 'dart:developer';
 import 'dart:ui';
 import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:delta_markdown/delta_markdown.dart';
-import 'package:oho_works_app/api_calls/calls.dart';
-import 'package:oho_works_app/components/CustomPaginator.dart';
-import 'package:oho_works_app/components/appBarWithSearch.dart';
-import 'package:oho_works_app/components/commonComponents.dart';
-import 'package:oho_works_app/components/micro_learning_side_buttons.dart';
-import 'package:oho_works_app/components/postcard.dart';
-import 'package:oho_works_app/components/postcardactionbuttons.dart';
-import 'package:oho_works_app/components/postcardheader.dart';
-import 'package:oho_works_app/components/tricycle_chat_footer.dart';
-import 'package:oho_works_app/e_learning_module/ui/lessons_page.dart';
-import 'package:oho_works_app/enums/create_deeplink.dart';
-import 'package:oho_works_app/enums/paginatorEnums.dart';
-import 'package:oho_works_app/enums/post_enums.dart';
-import 'package:oho_works_app/enums/share_item_type.dart';
-import 'package:oho_works_app/generic_libraries/generic_comment_review_feedback.dart';
-import 'package:oho_works_app/models/post/post_sub_type_list.dart';
-import 'package:oho_works_app/models/post/postcreate.dart';
 import 'package:oho_works_app/models/post/postlist.dart';
-import 'package:oho_works_app/models/post/updaterecipientlist.dart';
-import 'package:oho_works_app/models/post_view_response.dart';
-import 'package:oho_works_app/models/review_rating_comment/noteslistmodel.dart';
-import 'package:oho_works_app/services/get_deeplink_url_service.dart';
-import 'package:oho_works_app/ui/CalenderModule/create_event_page.dart';
-import 'package:oho_works_app/ui/commentItem.dart';
-import 'package:oho_works_app/ui/dialogs/dialog_audio_post.dart';
-import 'package:oho_works_app/ui/dialogs/search_keyword_dialog.dart';
-import 'package:oho_works_app/ui/language_update.dart';
-import 'package:oho_works_app/ui/postModule/CampusNewsListPage.dart';
-import 'package:oho_works_app/ui/postModule/assignments_page.dart';
-import 'package:oho_works_app/ui/postModule/pollsListPage.dart';
-import 'package:oho_works_app/ui/postModule/selectedPostListPage.dart';
-import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
-import 'package:oho_works_app/utils/app_localization.dart';
-import 'package:oho_works_app/utils/colors.dart';
-import 'package:oho_works_app/utils/config.dart';
-import 'package:oho_works_app/utils/hexColors.dart';
-import 'package:oho_works_app/utils/preloadingview.dart';
-import 'package:oho_works_app/utils/strings.dart';
-import 'package:oho_works_app/utils/toast_builder.dart';
-import 'package:oho_works_app/utils/utility_class.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/services.dart';
-import 'package:oho_works_app/components/paginator.dart';
-import 'package:flutter_quill/models/documents/document.dart';
-import 'package:flutter_quill/widgets/controller.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 
-import 'package:html/parser.dart';
-import 'package:lottie/lottie.dart';
-import 'package:markdown/markdown.dart' hide Document,Text;
-import 'package:quill_delta/quill_delta.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../home/locator.dart';
 
 class tts extends StatefulWidget {
 
-  Null Function() callBack;
-  PostListItem postData;
-  int postId;
+  Null Function()? callBack;
+  PostListItem? postData;
+  int? postId;
 
   tts({this.postData, this.postId});
 
@@ -77,16 +25,16 @@ class tts extends StatefulWidget {
 enum TtsState { playing, stopped, paused, continued }
 
 class _MyAppState extends  State<tts> with SingleTickerProviderStateMixin {
-   FlutterTts flutterTts;
-  String language;
-  String engine;
+   late FlutterTts flutterTts;
+  String? language;
+  String? engine;
   double volume = 0.5;
   double pitch = 1.0;
   double rate = 0.5;
-  bool isCurrentLanguageInstalled = false;
+  bool? isCurrentLanguageInstalled = false;
 
-  String _newVoiceText;
-  int _inputLength;
+  String? _newVoiceText;
+  int? _inputLength;
 
   TtsState ttsState = TtsState.stopped;
 
@@ -174,9 +122,9 @@ class _MyAppState extends  State<tts> with SingleTickerProviderStateMixin {
     await flutterTts.setPitch(pitch);
 
     if (_newVoiceText != null) {
-      if (_newVoiceText.isNotEmpty) {
+      if (_newVoiceText!.isNotEmpty) {
         await flutterTts.awaitSpeakCompletion(true);
-        await flutterTts.speak(_newVoiceText);
+        await flutterTts.speak(_newVoiceText!);
       }
     }
   }
@@ -201,13 +149,13 @@ class _MyAppState extends  State<tts> with SingleTickerProviderStateMixin {
     var items = <DropdownMenuItem<String>>[];
     for (dynamic type in engines) {
       items.add(DropdownMenuItem(
-          value: type as String, child: Text(type as String)));
+          value: type as String?, child: Text(type as String)));
     }
     return items;
   }
 
-  void changedEnginesDropDownItem(String selectedEngine) {
-    flutterTts.setEngine(selectedEngine);
+  void changedEnginesDropDownItem(String? selectedEngine) {
+    flutterTts.setEngine(selectedEngine!);
     language = null;
     setState(() {
       engine = selectedEngine;
@@ -219,19 +167,19 @@ class _MyAppState extends  State<tts> with SingleTickerProviderStateMixin {
     var items = <DropdownMenuItem<String>>[];
     for (dynamic type in languages) {
       items.add(DropdownMenuItem(
-          value: type as String, child: Text(type as String)));
+          value: type as String?, child: Text(type as String)));
     }
     return items;
   }
 
-  void changedLanguageDropDownItem(String selectedType) {
+  void changedLanguageDropDownItem(String? selectedType) {
     setState(() {
       language = selectedType;
-      flutterTts.setLanguage(language);
+      flutterTts.setLanguage(language!);
       if (isAndroid) {
         flutterTts
-            .isLanguageInstalled(language)
-            .then((value) => isCurrentLanguageInstalled = (value as bool));
+            .isLanguageInstalled(language!)
+            .then((value) => isCurrentLanguageInstalled = (value as bool?));
       }
     });
   }

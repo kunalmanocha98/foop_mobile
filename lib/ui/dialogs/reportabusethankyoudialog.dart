@@ -34,7 +34,7 @@ class ReportConfirmDialog extends StatelessWidget {
                 child: Container(
                   margin: const EdgeInsets.only(bottom: 16, top: 16),
                   child: Text(
-                    AppLocalizations.of(context)
+                    AppLocalizations.of(context)!
                         .translate("report_abuse_title"),
                     style: styleElements.headline5ThemeScalable(context),
                   ),
@@ -45,7 +45,7 @@ class ReportConfirmDialog extends StatelessWidget {
                   child: Container(
                     margin: const EdgeInsets.all(16),
                     child: Text(
-                      AppLocalizations.of(context).translate("report_abuse_des"),
+                      AppLocalizations.of(context)!.translate("report_abuse_des"),
                       style:styleElements.subtitle2ThemeScalable(context),
                     ),
                   )),
@@ -82,7 +82,7 @@ class ReportConfirmDialog extends StatelessWidget {
                       callBack();
                     },
                     color: HexColor(AppColors.appMainColor),
-                    child: Text(AppLocalizations.of(context).translate('ok'),
+                    child: Text(AppLocalizations.of(context)!.translate('ok'),
                       style:styleElements.captionThemeScalable(context).
                         copyWith(color:HexColor(AppColors.appColorWhite))
                     ),

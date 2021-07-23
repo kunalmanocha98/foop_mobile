@@ -10,8 +10,8 @@ import 'package:oho_works_app/utils/utility_class.dart';
 import 'package:flutter/material.dart';
 
 class EmailCardHeader extends StatefulWidget {
-  final String imageUrl;
-  final EmailListItem emailItem;
+  final String? imageUrl;
+  final EmailListItem? emailItem;
 
   EmailCardHeader({this.imageUrl, this.emailItem});
 
@@ -21,9 +21,9 @@ class EmailCardHeader extends StatefulWidget {
 }
 
 class EmailCardHeaderState extends State<EmailCardHeader> {
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
   bool isExpanded = false;
-  EmailListItem emailItem;
+  EmailListItem? emailItem;
 
   EmailCardHeaderState({this.emailItem});
 
@@ -42,7 +42,7 @@ class EmailCardHeaderState extends State<EmailCardHeader> {
               resolution_type: RESOLUTION_TYPE.R64,
               service_type: SERVICE_TYPE.PERSON,
               imageUrl: widget.imageUrl,
-              name: emailItem.fromValues.name,
+              name: emailItem!.fromValues!.name,
               size: 48,
             ),
           ),
@@ -55,7 +55,7 @@ class EmailCardHeaderState extends State<EmailCardHeader> {
                   children: [
                     Expanded(
                       child: Text(
-                        emailItem.fromValues.name,
+                        emailItem!.fromValues!.name!,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: styleElements
@@ -102,8 +102,8 @@ class EmailCardHeaderState extends State<EmailCardHeader> {
                             ? Utility().getDateFormat(
                                 "dd MMM yyyy",
                                 DateTime.fromMillisecondsSinceEpoch(
-                                    emailItem.date))
-                            : "To: ${emailItem.to[0]}",
+                                    emailItem!.date!))
+                            : "To: ${emailItem!.to![0]}",
                         style: styleElements
                             .captionThemeScalable(context)
                             .copyWith(
@@ -144,20 +144,20 @@ class EmailCardHeaderState extends State<EmailCardHeader> {
     );
   }
 
-  String getTo() {
+  String? getTo() {
     String value = "";
-    if (emailItem.to != null && emailItem.to.length > 0) {
-      value = emailItem.to.join(", ");
+    if (emailItem!.to != null && emailItem!.to!.length > 0) {
+      value = emailItem!.to!.join(", ");
       return value;
     } else {
       return null;
     }
   }
 
-  String getCc() {
+  String? getCc() {
     String value = "";
-    if (emailItem.cc != null && emailItem.cc.length > 0) {
-      for (var item in emailItem.cc) {
+    if (emailItem!.cc != null && emailItem!.cc!.length > 0) {
+      for (var item in emailItem!.cc!) {
         value = value + item + ", ";
       }
       value.substring(0, value.length - 3);
@@ -278,11 +278,11 @@ class EmailCardHeaderState extends State<EmailCardHeader> {
 }
 
 class EmailCardFooter extends StatelessWidget {
-  final Function replyCallback;
-  final Function replyAllCallback;
-  final Function forwardCallback;
-  final Function deleteCallback;
-  final Function bookmarkCallback;
+  final Function? replyCallback;
+  final Function? replyAllCallback;
+  final Function? forwardCallback;
+  final Function? deleteCallback;
+  final Function? bookmarkCallback;
 
   EmailCardFooter(
       {this.replyAllCallback,
@@ -304,7 +304,7 @@ class EmailCardFooter extends StatelessWidget {
                 Icons.reply_outlined,
                 color: HexColor(AppColors.appColorBlack35),
               ),
-              onPressed: replyCallback,
+              onPressed: replyCallback as void Function()?,
             ),
           ),
         ),
@@ -317,7 +317,7 @@ class EmailCardFooter extends StatelessWidget {
                 Icons.reply_all_outlined,
                 color: HexColor(AppColors.appColorBlack35),
               ),
-              onPressed: replyAllCallback,
+              onPressed: replyAllCallback as void Function()?,
             ),
           ),
         ),
@@ -330,7 +330,7 @@ class EmailCardFooter extends StatelessWidget {
                 Icons.forward,
                 color: HexColor(AppColors.appColorBlack35),
               ),
-              onPressed: forwardCallback,
+              onPressed: forwardCallback as void Function()?,
             ),
           ),
         ),
@@ -343,7 +343,7 @@ class EmailCardFooter extends StatelessWidget {
                 Icons.delete_outline_rounded,
                 color: HexColor(AppColors.appColorBlack35),
               ),
-              onPressed: deleteCallback,
+              onPressed: deleteCallback as void Function()?,
             ),
           ),
         ),
@@ -357,7 +357,7 @@ class EmailCardFooter extends StatelessWidget {
                 Icons.bookmark_outline_rounded,
                 color: HexColor(AppColors.appColorBlack35),
               ),
-              onPressed: bookmarkCallback,
+              onPressed: bookmarkCallback as void Function()?,
             ),
           ),
         ),

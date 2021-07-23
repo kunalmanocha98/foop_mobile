@@ -1,8 +1,8 @@
 class FCMPayload {
-  String personId;
-  String applicationType;
-  String machineCode;
-  String fcmId;
+  String? personId;
+  String? applicationType;
+  String? machineCode;
+  String? fcmId;
 
   FCMPayload(
       {this.personId, this.applicationType, this.machineCode, this.fcmId});

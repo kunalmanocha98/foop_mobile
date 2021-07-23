@@ -43,34 +43,34 @@ class StudentsPage extends StatefulWidget {
 class _StudentsPage extends State<StudentsPage>
     with SingleTickerProviderStateMixin {
   RegisterUserAs registerUserAs;
-  int idStudent;
-  String searchValue;
+  int? idStudent;
+  String? searchValue;
 
-  String studentType;
+  String? studentType;
   bool isUploadImageActive = false;
-  SharedPreferences prefs;
-  int userId;
-  int personType;
-  ScrollController _scrollController;
-  String selectedSchool;
-  String selectedSchoolDec;
+  late SharedPreferences prefs;
+  int? userId;
+  int? personType;
+  ScrollController? _scrollController;
+  String? selectedSchool;
+  String? selectedSchoolDec;
   String pageTitle = "";
-  String imageUrl;
+  String? imageUrl;
   int instPageNumber = 1;
   final _debouncer = Debouncer(500);
-  CupertinoDatePicker cupertinoDatePicker;
+  CupertinoDatePicker? cupertinoDatePicker;
   var color1 = HexColor(AppColors.appMainColor);
   bool _enabledInstitute = false;
   bool ifNoInstituteFound = false;
   var color2 = HexColor(AppColors.appColorWhite);
-  int id;
+  int? id;
   var color3 = HexColor(AppColors.appColorWhite);
   var isCheckedColor = HexColor(AppColors.appColorWhite);
-  TabController _tabController;
+  TabController? _tabController;
   Map<String, bool> mapRules = Map();
   List<PersonItem> listRoles = [];
   List<String> personList = [];
-  List<CommonListResponseItem> listInstitute = [];
+  List<CommonListResponseItem>? listInstitute = [];
   String type = "parent";
   var isClassesSelected = HexColor(AppColors.appColorWhite);
   var isSubjectSelected = HexColor(AppColors.appColorWhite);
@@ -85,14 +85,14 @@ class _StudentsPage extends State<StudentsPage>
   List<int> institutionRolesList = [];
   List<int> teachingClasses = [];
   List<int> teachingSubjects = [];
-  TextStyleElements styleElements;
-  bool fromBasicProfileFLow;
-  Null Function() callbackPicker;
+  late TextStyleElements styleElements;
+  bool? fromBasicProfileFLow;
+  Null Function()? callbackPicker;
   GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
   _StudentsPage(this.registerUserAs);
 
   List<TabMaker> list = [];
-  int instituteId;
+  int? instituteId;
 
   int _currentPosition = 0;
 
@@ -126,7 +126,7 @@ class _StudentsPage extends State<StudentsPage>
 
   @override
   void dispose() {
-    _tabController.dispose();
+    _tabController!.dispose();
     super.dispose();
   }
 
@@ -143,6 +143,7 @@ class _StudentsPage extends State<StudentsPage>
         Navigator.of(context).pop(true);
       }
     });
+    return new Future(() => false);
   }
 
   Widget build(BuildContext context) {
@@ -151,7 +152,7 @@ class _StudentsPage extends State<StudentsPage>
 
     list = [];
     list.add(TabMaker(
-      tabName: AppLocalizations.of(context).translate('select_child'),
+      tabName: AppLocalizations.of(context)!.translate('select_child'),
       statelessWidget: Container(
         margin: const EdgeInsets.only(bottom: 65),
         child: NotificationListener<ScrollNotification>(
@@ -167,16 +168,16 @@ class _StudentsPage extends State<StudentsPage>
                     load.isLoading = true;
                     load.title = "";
                     load.isSelected = false;
-                    listInstitute.add(load);
+                    listInstitute!.add(load);
                   }
                 });
                 if (!isSearching) getListOfInstitutes(null);
               }
-            },
+            } as bool Function(ScrollNotification)?,
             child: Stack(
               children: <Widget>[
                 Visibility(
-                    visible: listInstitute.isEmpty,
+                    visible: listInstitute!.isEmpty,
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Container(
@@ -192,7 +193,7 @@ class _StudentsPage extends State<StudentsPage>
                               child: Container(
                                 margin: const EdgeInsets.all(16),
                                 child: Text(
-                                  AppLocalizations.of(context)
+                                  AppLocalizations.of(context)!
                                       .translate("selectChildInstruction"),
                                   textAlign: TextAlign.center,
                                   style: styleElements
@@ -205,19 +206,19 @@ class _StudentsPage extends State<StudentsPage>
                     )),
                 Visibility(
 
-                    child: listInstitute != null && listInstitute.length > 0
+                    child: listInstitute != null && listInstitute!.length > 0
                         ? ListView.builder(
                         controller: _scrollController,
                         padding: EdgeInsets.only(
                             left: 8, right: 8, bottom: 80, top: 8),
-                        itemCount: listInstitute.length,
+                        itemCount: listInstitute!.length,
                         itemBuilder: (BuildContext context, int index) {
                           return GestureDetector(
                             child: Card(
                                 child: Column(
                                   children: <Widget>[
                                     Visibility(
-                                        visible: listInstitute[index].isLoading,
+                                        visible: listInstitute![index].isLoading!,
                                         child: Container(
                                           width: double.infinity,
                                           child: Align(
@@ -235,7 +236,7 @@ class _StudentsPage extends State<StudentsPage>
                                         )),
                                     Visibility(
                                         visible:
-                                        !listInstitute[index].isLoading,
+                                        !listInstitute![index].isLoading!,
                                         child: Container(
                                           margin: const EdgeInsets.only(
                                               top: 8, bottom: 8),
@@ -246,7 +247,7 @@ class _StudentsPage extends State<StudentsPage>
                                                 child: TricycleAvatar(
                                                   size: 52,
                                                   key:UniqueKey(),
-                                                  imageUrl:  listInstitute[index].avatar,
+                                                  imageUrl:  listInstitute![index].avatar,
                                                   service_type: SERVICE_TYPE.PERSON,
                                                   resolution_type: RESOLUTION_TYPE.R64,
                                                 ),
@@ -254,7 +255,7 @@ class _StudentsPage extends State<StudentsPage>
                                               title: Align(
                                                 alignment: Alignment.centerLeft,
                                                 child: Text(
-                                                  listInstitute[index].title ??
+                                                  listInstitute![index].title ??
                                                       "",
                                                   style: styleElements
                                                       .subtitle1ThemeScalable(
@@ -265,7 +266,7 @@ class _StudentsPage extends State<StudentsPage>
                                               trailing: Checkbox(
                                                 activeColor:
                                                 HexColor(AppColors.appMainColor),
-                                                value: listInstitute[index]
+                                                value: listInstitute![index]
                                                     .isSelected,
                                                 onChanged: (val) {
                                                   if (this.mounted) {
@@ -273,24 +274,24 @@ class _StudentsPage extends State<StudentsPage>
                                                       if (val == true) {
                                                         for (int i = 0;
                                                         i <
-                                                            listInstitute
+                                                            listInstitute!
                                                                 .length;
                                                         i++) {
                                                           if (i == index) {
                                                             idStudent =
-                                                                listInstitute[i]
+                                                                listInstitute![i]
                                                                     .id;
 
-                                                            listInstitute[i]
+                                                            listInstitute![i]
                                                                 .isSelected =
                                                             true;
                                                           } else
-                                                            listInstitute[i]
+                                                            listInstitute![i]
                                                                 .isSelected =
                                                             false;
                                                         }
                                                       } else {
-                                                        listInstitute[index]
+                                                        listInstitute![index]
                                                             .isSelected = false;
                                                       }
                                                     });
@@ -306,7 +307,7 @@ class _StudentsPage extends State<StudentsPage>
                         :  Center(
                       child: Visibility(
                         visible: searchValue != null &&
-                            searchValue.isNotEmpty,
+                            searchValue!.isNotEmpty,
                         child: TricycleEmptyWidget(
                           message: "No data found!!",
                         ),
@@ -397,7 +398,7 @@ class _StudentsPage extends State<StudentsPage>
                                                               color: HexColor(AppColors.appColorBlack65)
                                                           ),
                                                           decoration: InputDecoration(
-                                                            hintText: AppLocalizations.of(context).translate('search'),
+                                                            hintText: AppLocalizations.of(context)!.translate('search'),
                                                             border: InputBorder.none,
                                                             hintStyle: styleElements
                                                                 .bodyText2ThemeScalable(
@@ -473,7 +474,7 @@ class _StudentsPage extends State<StudentsPage>
                                                               margin:
                                                               const EdgeInsets
                                                                   .all(16),
-                                                              child: Text(AppLocalizations.of(context).translate('skip_this_now'),
+                                                              child: Text(AppLocalizations.of(context)!.translate('skip_this_now'),
                                                                 style: styleElements
                                                                     .bodyText2ThemeScalable(
                                                                     context)
@@ -533,7 +534,7 @@ class _StudentsPage extends State<StudentsPage>
                                                                           .white,
 
                                                                       child: Text(
-                                                                        AppLocalizations.of(context).translate('next'),
+                                                                        AppLocalizations.of(context)!.translate('next'),
                                                                         style: styleElements
                                                                             .subtitle2ThemeScalable(
                                                                             context)
@@ -556,16 +557,16 @@ class _StudentsPage extends State<StudentsPage>
             )));
   }
 
-  int isItemSelected() {
-    for (var item in listInstitute) {
-      if (item.isSelected) {
+  int? isItemSelected() {
+    for (var item in listInstitute!) {
+      if (item.isSelected!) {
         return item.id;
       }
     }
     return null;
   }
 
-  void register(int userId) async {
+  void register(int? userId) async {
     registerUserAs.dateOfBirth = null;
     registerUserAs.personId = userId;
     print(teachingClasses.toString() +
@@ -574,10 +575,10 @@ class _StudentsPage extends State<StudentsPage>
     final body = jsonEncode(registerUserAs);
     // pr = ToastBuilder().setProgressDialog(context);
 
-    progressButtonKey.currentState.show();
+    progressButtonKey.currentState!.show();
     Calls().call(body, context, Config.REGISTER_USER_AS).then((value) async {
       if (value != null) {
-        progressButtonKey.currentState.hide();
+        progressButtonKey.currentState!.hide();
         var data = RegisterUserAsResponse.fromJson(value);
         print(data.toString());
         if (data.statusCode == "S10001") {
@@ -587,23 +588,23 @@ class _StudentsPage extends State<StudentsPage>
               MaterialPageRoute(
                   builder: (context) => DilaogPage(
                     type: type,
-                    isVerified: data.rows.isVerified,
-                    title: AppLocalizations.of(context).translate('you_are_added_as') + type,
+                    isVerified: data.rows!.isVerified,
+                    title: AppLocalizations.of(context)!.translate('you_are_added_as') + type,
                     subtitle: "",
                   )),
                   (Route<dynamic> route) => false);
         } else
           ToastBuilder().showToast(
-              data.message, context, HexColor(AppColors.information));
+              data.message!, context, HexColor(AppColors.information));
       }
     }).catchError((onError) async {
       ToastBuilder().showToast(
           onError.toString(), context, HexColor(AppColors.information));
-      progressButtonKey.currentState.hide();
+      progressButtonKey.currentState!.hide();
     });
   }
 
-  void getListOfInstitutes(String searchValue) async {
+  void getListOfInstitutes(String? searchValue) async {
     prefs = await SharedPreferences.getInstance();
     final body = jsonEncode({
       "page_number": instPageNumber,
@@ -614,9 +615,9 @@ class _StudentsPage extends State<StudentsPage>
       "searchVal": searchValue,
       "person_type": ["S"],
       "person_id": prefs.getInt("userId").toString(),
-       "class_id": registerUserAs.personClasses[0].classId,
-      "section_id": registerUserAs.personClasses[0]!=null && registerUserAs.personClasses[0].sections!=null &&
-          registerUserAs.personClasses[0].sections.isNotEmpty?registerUserAs.personClasses[0].sections[0]:null
+       "class_id": registerUserAs.personClasses![0].classId,
+      "section_id": registerUserAs.personClasses![0]!=null && registerUserAs.personClasses![0].sections!=null &&
+          registerUserAs.personClasses![0].sections!.isNotEmpty?registerUserAs.personClasses![0].sections![0]:null
     });
     Calls().call(body, context, Config.USER_LIST).then((value) async {
       if (value != null) {
@@ -628,16 +629,16 @@ class _StudentsPage extends State<StudentsPage>
         if (data != null) {
           isLoading = false;
           _enabledInstitute = false;
-          if (data.rows != null && data.rows.isNotEmpty) {
-            for (int i = 0; i < data.rows.length; i++) {
+          if (data.rows != null && data.rows!.isNotEmpty) {
+            for (int i = 0; i < data.rows!.length; i++) {
               // already selected institute mark red
               if (instituteId != null) {
-                if (data.rows[i].id == instituteId)
-                  data.rows[i].isSelected = true;
+                if (data.rows![i].id == instituteId)
+                  data.rows![i].isSelected = true;
                 else
-                  data.rows[i].isSelected = false;
+                  data.rows![i].isSelected = false;
               } else {
-                data.rows[i].isSelected = false;
+                data.rows![i].isSelected = false;
               }
             }
             if (isSearching) {
@@ -646,10 +647,10 @@ class _StudentsPage extends State<StudentsPage>
                 isSearching = false;
               });
             } else {
-              if (listInstitute.length > 0)
-                listInstitute.removeAt(listInstitute.length - 1);
+              if (listInstitute!.length > 0)
+                listInstitute!.removeAt(listInstitute!.length - 1);
               instPageNumber = instPageNumber + 1;
-              listInstitute = listInstitute + data.rows;
+              listInstitute = listInstitute! + data.rows!;
             }
           }
         } else {
@@ -667,8 +668,8 @@ class _StudentsPage extends State<StudentsPage>
 }
 
 class TabMaker {
-  String tabName;
-  Widget statelessWidget;
+  String? tabName;
+  Widget? statelessWidget;
 
   TabMaker({this.tabName, this.statelessWidget});
 }

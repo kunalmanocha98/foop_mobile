@@ -27,11 +27,11 @@ import 'new_program_page.dart';
 
 // ignore: must_be_immutable
 class AcademicInformationPage extends StatefulWidget {
-  bool isInstituteSelectedAlready;
+  bool? isInstituteSelectedAlready;
   bool isEdit;
-  int institutionIdtoDelete;
-  Function (RegisterUserAs)callBack;
-  RegisterUserAs registerUserAs;
+  int? institutionIdtoDelete;
+  Function (RegisterUserAs?)?callBack;
+  RegisterUserAs? registerUserAs;
 
   _AcademicInformationPage createState() => _AcademicInformationPage(isInstituteSelectedAlready);
 
@@ -45,22 +45,22 @@ class AcademicInformationPage extends StatefulWidget {
 
 class _AcademicInformationPage extends State<AcademicInformationPage> {
   List<PersonItem> rows = [];
-  ProgressDialog pr;
-  SharedPreferences prefs;
-  BuildContext context;
+  ProgressDialog? pr;
+  late SharedPreferences prefs;
+  late BuildContext context;
   String type = "";
-  bool isInstituteSelected;
-  TextStyleElements styleElements;
+  bool? isInstituteSelected;
+  late TextStyleElements styleElements;
  
-  int instituteId;
-  bool isInstituteSelectedAlready = false;
+  int? instituteId;
+  bool? isInstituteSelectedAlready = false;
   bool isRoleSelected = true;
   bool showLimited=false;
   bool isProgramSelected = false;
   bool isDepartmentSelected = false;
   bool isClassSelected = false;
   bool isSubjectSelected = false;
-  bool isDepartment = false;
+  bool? isDepartment = false;
   bool isLoading = false;
   bool isSubjectVisible = false;
   bool isStepsCompleted = false;
@@ -76,10 +76,10 @@ class _AcademicInformationPage extends State<AcademicInformationPage> {
 
   setPrefs() async {
     prefs = await SharedPreferences.getInstance();
-    if (isInstituteSelectedAlready != null && isInstituteSelectedAlready) {
+    if (isInstituteSelectedAlready != null && isInstituteSelectedAlready!) {
       instituteId = prefs.getInt("createdSchoolId");
       
-     widget. registerUserAs.institutionId = instituteId;
+     widget. registerUserAs!.institutionId = instituteId;
       setState(() {
         isInstituteSelected = true;
         isRoleSelected = false;
@@ -116,7 +116,7 @@ class _AcademicInformationPage extends State<AcademicInformationPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text("                        "),
-                          Text( AppLocalizations.of(context).translate('update'),
+                          Text( AppLocalizations.of(context)!.translate('update'),
                               style: styleElements
                                   .headline6ThemeScalable(context).copyWith(fontWeight: FontWeight.bold)
                           ),
@@ -130,11 +130,11 @@ class _AcademicInformationPage extends State<AcademicInformationPage> {
                                   BorderSide(color: Colors.redAccent)),
                               onPressed: () {
                                 Navigator.of(context).pop();
-                                widget.callBack(widget.registerUserAs);
+                                widget.callBack!(widget.registerUserAs);
                               },
                               color: Colors.white,
                               child: Text(
-                                  AppLocalizations.of(context)
+                                  AppLocalizations.of(context)!
                                       .translate("proceed"),
                                   style: styleElements
                                       .buttonThemeScalable(context)
@@ -158,7 +158,7 @@ class _AcademicInformationPage extends State<AcademicInformationPage> {
                                         title: Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            AppLocalizations.of(context)
+                                            AppLocalizations.of(context)!
                                                 .translate("program_selection"),
                                             style: styleElements
                                                 .subtitle1ThemeScalable(context),
@@ -168,7 +168,7 @@ class _AcademicInformationPage extends State<AcademicInformationPage> {
                                         subtitle: Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            AppLocalizations.of(context).translate(
+                                            AppLocalizations.of(context)!.translate(
                                                 "select_institute_program"),
                                             style: styleElements
                                                 .bodyText2ThemeScalable(context),
@@ -176,7 +176,7 @@ class _AcademicInformationPage extends State<AcademicInformationPage> {
                                           ),
                                         ),
                                         trailing: Visibility(
-                                          visible: widget.registerUserAs.personPrograms!=null && widget.registerUserAs.personPrograms.isNotEmpty,
+                                          visible: widget.registerUserAs!.personPrograms!=null && widget.registerUserAs!.personPrograms!.isNotEmpty,
                                           child: Icon(
                                             Icons.check_circle,
                                             color: HexColor(AppColors.appColorGreen),
@@ -203,12 +203,12 @@ class _AcademicInformationPage extends State<AcademicInformationPage> {
 
 
                                         widget.registerUserAs = result['registerUserAs'];
-                                        isDepartment = widget.registerUserAs.isDepartment;
+                                        isDepartment = widget.registerUserAs!.isDepartment;
                                         isProgramSelected = true;
                                         isDepartmentSelected = false;
                                         isClassSelected = false;
                                         isSubjectSelected = false;
-                                        if (!isDepartment)
+                                        if (!isDepartment!)
                                           isDepartmentSelected = true;
                                         setState(() {
 print(jsonEncode(widget.registerUserAs));
@@ -220,7 +220,7 @@ print(jsonEncode(widget.registerUserAs));
                               ),
                             ),
                             Visibility(
-                              visible: isDepartment && type != "Other Staff",
+                              visible: isDepartment! && type != "Other Staff",
                               child: GestureDetector(
                                 behavior: HitTestBehavior.translucent,
                                 child: TricycleCard(
@@ -229,7 +229,7 @@ print(jsonEncode(widget.registerUserAs));
                                       title: Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                          AppLocalizations.of(context)
+                                          AppLocalizations.of(context)!
                                               .translate("discipline"),
                                           style: styleElements
                                               .subtitle1ThemeScalable(context),
@@ -239,7 +239,7 @@ print(jsonEncode(widget.registerUserAs));
                                       subtitle: Align(
                                         alignment: Alignment.centerLeft,
                                         child: Text(
-                                          AppLocalizations.of(context).translate(
+                                          AppLocalizations.of(context)!.translate(
                                               "select_institute_discipline"),
                                           style: styleElements
                                               .bodyText2ThemeScalable(context),
@@ -247,7 +247,7 @@ print(jsonEncode(widget.registerUserAs));
                                         ),
                                       ),
                                       trailing: Visibility(
-                                        visible: widget.registerUserAs.personDepartments!=null && widget.registerUserAs.personDepartments.isNotEmpty,
+                                        visible: widget.registerUserAs!.personDepartments!=null && widget.registerUserAs!.personDepartments!.isNotEmpty,
                                         child: Icon(
                                           Icons.check_circle,
                                           color: HexColor(AppColors.appColorGreen),
@@ -266,9 +266,9 @@ print(jsonEncode(widget.registerUserAs));
                                   if (result != null &&
                                       result['registerUser'] != null) {
                                     widget.registerUserAs = result['registerUser'];
-                                    if (widget.registerUserAs.personDepartments != null) {
+                                    if (widget.registerUserAs!.personDepartments != null) {
                                       print(
-                                          jsonEncode(widget.registerUserAs.personDepartments));
+                                          jsonEncode(widget.registerUserAs!.personDepartments));
                                       setState(() {
                                         isDepartmentSelected = true;
                                       });
@@ -278,9 +278,9 @@ print(jsonEncode(widget.registerUserAs));
                               ),
                             ),
                             Opacity(
-                              opacity:widget.registerUserAs.isDepartment!=null && widget.registerUserAs.isDepartment
+                              opacity:widget.registerUserAs!.isDepartment!=null && widget.registerUserAs!.isDepartment!
 
-                                  ||widget.registerUserAs.personPrograms!=null && widget.registerUserAs.personPrograms.isNotEmpty&&widget.registerUserAs.isDepartment!=null && !widget.registerUserAs.isDepartment
+                                  ||widget.registerUserAs!.personPrograms!=null && widget.registerUserAs!.personPrograms!.isNotEmpty&&widget.registerUserAs!.isDepartment!=null && !widget.registerUserAs!.isDepartment!
 
                                   ? 1.0 : 0.25,
                               child: Visibility(
@@ -293,7 +293,7 @@ print(jsonEncode(widget.registerUserAs));
                                         title: Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            AppLocalizations.of(context)
+                                            AppLocalizations.of(context)!
                                                 .translate("classes_subjects"),
                                             style: styleElements
                                                 .subtitle1ThemeScalable(context),
@@ -303,7 +303,7 @@ print(jsonEncode(widget.registerUserAs));
                                         subtitle: Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            AppLocalizations.of(context).translate(
+                                            AppLocalizations.of(context)!.translate(
                                                 "select_institute_class_sec"),
                                             style: styleElements
                                                 .bodyText2ThemeScalable(context),
@@ -311,7 +311,7 @@ print(jsonEncode(widget.registerUserAs));
                                           ),
                                         ),
                                         trailing: Visibility(
-                                          visible: widget.registerUserAs.personClasses!=null && widget.registerUserAs.personClasses.isNotEmpty,
+                                          visible: widget.registerUserAs!.personClasses!=null && widget.registerUserAs!.personClasses!.isNotEmpty,
                                           child: Icon(
                                             Icons.check_circle,
                                             color: HexColor(AppColors.appColorGreen),
@@ -334,7 +334,7 @@ print(jsonEncode(widget.registerUserAs));
                                         widget.registerUserAs = result['registerUser'];
                                         print(jsonEncode(widget.registerUserAs) +
                                             "--------------------------------------------------");
-                                        if (widget.registerUserAs.personClasses != null) {
+                                        if (widget.registerUserAs!.personClasses != null) {
                                           isClassSelected = true;
                                           isStepsCompleted = true;
                                         }
@@ -357,7 +357,7 @@ print(jsonEncode(widget.registerUserAs));
                                         title: Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            AppLocalizations.of(context)
+                                            AppLocalizations.of(context)!
                                                 .translate("subjects"),
                                             style: styleElements
                                                 .subtitle1ThemeScalable(context),
@@ -367,7 +367,7 @@ print(jsonEncode(widget.registerUserAs));
                                         subtitle: Align(
                                           alignment: Alignment.centerLeft,
                                           child: Text(
-                                            AppLocalizations.of(context)
+                                            AppLocalizations.of(context)!
                                                 .translate("select_institute_sub"),
                                             style: styleElements
                                                 .bodyText2ThemeScalable(context),
@@ -397,7 +397,7 @@ print(jsonEncode(widget.registerUserAs));
                                         widget.registerUserAs = result['registerUser'];
                                         print(jsonEncode(widget.registerUserAs) +
                                             "--------------------------------------------------");
-                                        if (widget.registerUserAs.personSubjects != null) {
+                                        if (widget.registerUserAs!.personSubjects != null) {
                                           isSubjectSelected = true;
                                           isStepsCompleted = true;
                                         }
@@ -418,9 +418,9 @@ print(jsonEncode(widget.registerUserAs));
                         child:   TextButton(
                           onPressed: () {
                             Navigator.of(context).pop();
-                            widget.callBack(widget.registerUserAs);
+                            widget.callBack!(widget.registerUserAs);
                           },
-                          child: Text(AppLocalizations.of(context).translate("skip"), ),
+                          child: Text(AppLocalizations.of(context)!.translate("skip"), ),
                         ),
                       )
 
@@ -430,17 +430,17 @@ print(jsonEncode(widget.registerUserAs));
   }
 
   void register() async {
-    widget.registerUserAs.personId = prefs.getInt("userId");
-    widget.registerUserAs.personTypeList[0] == 2
+    widget.registerUserAs!.personId = prefs.getInt("userId");
+    widget.registerUserAs!.personTypeList![0] == 2
         ? type = "teacher"
-        : widget.registerUserAs.personTypeList[0] == 3
+        : widget.registerUserAs!.personTypeList![0] == 3
         ? type = "student"
-        : widget.registerUserAs.personTypeList[0] == 4
+        : widget.registerUserAs!.personTypeList![0] == 4
         ? "parent"
         : "alumni";
 
-    widget.registerUserAs.personSubjects ??= [];
-    widget.registerUserAs.deleted_institution_user_id = widget.institutionIdtoDelete;
+    widget.registerUserAs!.personSubjects ??= [];
+    widget.registerUserAs!.deleted_institution_user_id = widget.institutionIdtoDelete;
     final body = jsonEncode(widget.registerUserAs);
     setState(() {
       isLoading = true;
@@ -462,25 +462,25 @@ print(jsonEncode(widget.registerUserAs));
                 MaterialPageRoute(
                     builder: (context) => DilaogPage(
                         type: type,
-                        isVerified: data.rows.isVerified,
-                        title: AppLocalizations.of(context)
+                        isVerified: data.rows!.isVerified,
+                        title: AppLocalizations.of(context)!
                             .translate('you_are_added_as') +
                             type,
                         subtitle: type == "parent"
-                            ? ((data.rows.studentName != null
-                            ? "of" + data.rows.studentName
+                            ? ((data.rows!.studentName != null
+                            ? "of" + data.rows!.studentName!
                             : "") +
-                            (data.rows.institutionName != null
-                                ? " of " + data.rows.institutionName
+                            (data.rows!.institutionName != null
+                                ? " of " + data.rows!.institutionName!
                                 : ""))
-                            : (data.rows.institutionName != null
-                            ? " of " + data.rows.institutionName
+                            : (data.rows!.institutionName != null
+                            ? " of " + data.rows!.institutionName!
                             : ""))),
                     (Route<dynamic> route) => false);
           }
         } else
           ToastBuilder().showToast(
-              data.message, context, HexColor(AppColors.information));
+              data.message!, context, HexColor(AppColors.information));
       }
     }).catchError((onError) async {
       setState(() {

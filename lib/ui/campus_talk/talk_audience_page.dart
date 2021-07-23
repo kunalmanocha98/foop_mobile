@@ -64,27 +64,27 @@ import 'end_call_dilog.dart';
 import 'invite_user_page.dart';
 
 class TalkAudiencePage extends StatefulWidget {
-  final int eventId;
-  final String authToken;
-  final String participantId;
-  final bool mute;
-  final List<int> participantIds;
-  final Function(int count) countCallBack;
-  final Function(TALKFOOTERENUM role) roleCallback;
-  final Function successCallback;
-  final Function(bool) updateHandRaise;
-  final Function popCallback;
-  final Function(String) conversationCallBack;
-  final Function(bool) muteCallback;
-  final EventListItem eventModel;
-  final Function ratingSuccessCallback;
-  final Function closeMinimizeActions;
-  final bool hideLoader;
-  final TALKFOOTERENUM role;
-  final int startTime;
+  final int? eventId;
+  final String? authToken;
+  final String? participantId;
+  final bool? mute;
+  final List<int>? participantIds;
+  final Function(int? count)? countCallBack;
+  final Function(TALKFOOTERENUM? role)? roleCallback;
+  final Function? successCallback;
+  final Function(bool)? updateHandRaise;
+  final Function? popCallback;
+  final Function(String?)? conversationCallBack;
+  final Function(bool?)? muteCallback;
+  final EventListItem? eventModel;
+  final Function? ratingSuccessCallback;
+  final Function? closeMinimizeActions;
+  final bool? hideLoader;
+  final TALKFOOTERENUM? role;
+  final int? startTime;
 
   TalkAudiencePage(
-      {Key key,
+      {Key? key,
       this.eventId,
       this.mute,
       this.participantId,
@@ -148,39 +148,39 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
   static const String ON_NOTIFICATION = "notification";
 
   // final _debouncer = Debouncer(200);
-  EventBus eventBus = locator<EventBus>();
+  EventBus? eventBus = locator<EventBus>();
   final db = DatabaseHelper.instance;
-  BuildContext sctx;
-  TextStyleElements styleElements;
-  int eventId;
-  String authToken;
-  String token;
-  String channelName;
-  String participantId;
-  bool mute;
+  BuildContext? sctx;
+  late TextStyleElements styleElements;
+  int? eventId;
+  String? authToken;
+  String? token;
+  String? channelName;
+  String? participantId;
+  bool? mute;
   bool isLocalVideo = false;
   bool isFullVideo = false;
-  int videoParticipantId;
-  List<int> participantIds = [];
-  AudioSocketService audioSocketService = locator<AudioSocketService>();
-  final CreateDeeplink createDeeplink = locator<CreateDeeplink>();
-  SharedPreferences prefs = locator<SharedPreferences>();
+  int? videoParticipantId;
+  List<int>? participantIds = [];
+  AudioSocketService? audioSocketService = locator<AudioSocketService>();
+  final CreateDeeplink? createDeeplink = locator<CreateDeeplink>();
+  SharedPreferences? prefs = locator<SharedPreferences>();
   List<ParticipantListItem> listenerList = [];
   List<ParticipantListItem> speakersList = [];
-  ParticipantNotifier _participantNotifier;
+  ParticipantNotifier? _participantNotifier;
   GlobalKey<_SearchParticipantsState> searchPageKey = GlobalKey();
   GlobalKey<_RequestsListSheetState> requestPageKey = GlobalKey();
   GlobalKey<AcceptRejectRequestWidgetState> requestWidgetKey = GlobalKey();
   GlobalKey<TricycleClockTimerWidgetState> timerWidgetKey = GlobalKey();
   GlobalKey<AudioPageLoaderPageState> loaderPageKey = GlobalKey();
 
-  AgoraService engine = locator<AgoraService>();
-  DateTime startTime;
+  AgoraService? engine = locator<AgoraService>();
+  late DateTime startTime;
   bool isSpeaker = false;
   bool isModerator = false;
   bool isShowRequest = true;
   bool isLeft = false;
-  bool hideLoader;
+  bool? hideLoader;
   // int _remoteUid = null;
   // bool _switch = false;
   // bool _joined = false;
@@ -190,8 +190,8 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
   // int _remoteUid = null;
   // bool _switch = false;
 
-  int eventStartTime;
-  Function(String) conversationCallBack;
+  int? eventStartTime;
+  Function(String?)? conversationCallBack;
 
   TalkAudiencePageState(
       {this.eventId,
@@ -214,15 +214,15 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
     }
 
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       _getContactPermission();
     });
   }
 
   void setUpForegourndService() async {
     final androidConfig = FlutterBackgroundAndroidConfig(
-      notificationTitle: widget.eventModel.title,
-      notificationText: widget.eventModel.eventRoleType,
+      notificationTitle: widget.eventModel!.title!,
+      notificationText: widget.eventModel!.eventRoleType!,
       notificationImportance: AndroidNotificationImportance.Default,
       notificationIcon: AndroidResource(
           name: 'ic_launcher',
@@ -232,17 +232,17 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
   }
 
   Future<void> initPlatformState() async {
-    engine.instance().setDefaultAudioRoutetoSpeakerphone(true);
-    engine.instance().enableAudioVolumeIndication(500, 3, false);
-    engine.instance().setEventHandler(RtcEngineEventHandler(
+    engine!.instance()!.setDefaultAudioRoutetoSpeakerphone(true);
+    engine!.instance()!.enableAudioVolumeIndication(500, 3, false);
+    engine!.instance()!.setEventHandler(RtcEngineEventHandler(
             joinChannelSuccess: (String channel, int uid, int elapsed) {
           print(
               'joinChannelSuccess----------------------------------------------------- $channel $uid');
           setState(() {
             // _joined = true;
           });
-          if (uid == int.parse(participantId)) {
-            connectorMuteCall(mute);
+          if (uid == int.parse(participantId!)) {
+            connectorMuteCall(mute!);
           }
         }, userJoined: (int uid, int elapsed) {
           setState(() {
@@ -255,9 +255,9 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
         }, audioVolumeIndication: (List<AudioVolumeInfo> list, int uid) {
           // print('speaking--------------------------------------------------------------------------'+jsonEncode(list));
           if (list != null && list.isNotEmpty && list[0].uid != 0) {
-            _participantNotifier.updateSpeaking(db, list[0].uid, 1);
+            _participantNotifier!.updateSpeaking(db, list[0].uid, 1);
             Future.delayed(const Duration(milliseconds: 2000), () {
-              _participantNotifier.updateSpeakingAll(db);
+              _participantNotifier!.updateSpeakingAll(db);
             });
           }
         }, userOffline: (int uid, UserOfflineReason reason) {
@@ -271,36 +271,36 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
           print("route changed--------------------------------------------" +
               value.toString());
         }));
-    await engine
-        .instance()
-        .joinChannel(token, channelName, null, int.parse(participantId));
+    await engine!
+        .instance()!
+        .joinChannel(token, channelName!, null, int.parse(participantId!));
   }
 
   Future<void> connectorMuteCall(bool isMute) async {
     MicStatusPayload payload = MicStatusPayload();
-    payload.personId = prefs.getInt(Strings.userId);
+    payload.personId = prefs!.getInt(Strings.userId);
     payload.eventId = eventId;
     payload.isSpeakerOn = isMute ? 0 : 1;
     print(jsonEncode(payload) +
         "------------------------------------------------------------------------------" +
         isMute.toString());
-    _participantNotifier.update(
-        db, prefs.getInt(Strings.userId), isMute ? 0 : 1);
-    audioSocketService.getSocket().emit(ON_MIC_STATUS, payload);
-    engine.instance().muteLocalAudioStream(isMute);
+    _participantNotifier!.update(
+        db, prefs!.getInt(Strings.userId), isMute ? 0 : 1);
+    audioSocketService!.getSocket()!.emit(ON_MIC_STATUS, payload);
+    engine!.instance()!.muteLocalAudioStream(isMute);
     // engine.instance().muteRemoteAudioStream(prefs.getInt(Strings.userId), isMute);
   }
 
   Future<void> turnOnOffVideo(bool vid) async {
     if (vid) {
-      await engine.instance().enableVideo();
-      _participantNotifier.updateVideoStatus(
-          db, prefs.getInt(Strings.userId), 1);
+      await engine!.instance()!.enableVideo();
+      _participantNotifier!.updateVideoStatus(
+          db, prefs!.getInt(Strings.userId), 1);
       updateVideoStatus(1);
     } else {
-      await engine.instance().disableVideo();
-      _participantNotifier.updateVideoStatus(
-          db, prefs.getInt(Strings.userId), 0);
+      await engine!.instance()!.disableVideo();
+      _participantNotifier!.updateVideoStatus(
+          db, prefs!.getInt(Strings.userId), 0);
       isLocalVideo = false;
       isFullVideo = false;
       updateVideoStatus(0);
@@ -332,57 +332,57 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
   }
 
   void setUpSocket() async {
-    audioSocketService
-        .getSocket()
+    audioSocketService!
+        .getSocket()!
         .on(ON_CONVERSATION, onChatConversationCreate);
-    audioSocketService.getSocket().on(ON_VIDEO_ON_OFF, onVideoStatusChange);
-    audioSocketService.getSocket().on(ON_GET_PARTICIPANTS, onGetParticipants);
-    audioSocketService.getSocket().on(ON_JOIN_SUCCESS, onJoinSuccess);
-    audioSocketService.getSocket().on(ON_HAND_RAISE_COUNT, onHandRaiseCount);
-    audioSocketService.getSocket().on(ON_MIC_STATUS, onMicStatusChange);
-    audioSocketService.getSocket().on(ON_HANDS_RAISE, onHandRaise);
-    audioSocketService.getSocket().on(ON_JOIN, onJoin);
-    audioSocketService.getSocket().on(ON_LEAVE, onLeave);
-    audioSocketService.getSocket().on(ON_GET_REQUEST, onGetRequest);
-    audioSocketService.getSocket().on(ON_EVENT_ERROR, onError);
-    audioSocketService
-        .getSocket()
+    audioSocketService!.getSocket()!.on(ON_VIDEO_ON_OFF, onVideoStatusChange);
+    audioSocketService!.getSocket()!.on(ON_GET_PARTICIPANTS, onGetParticipants);
+    audioSocketService!.getSocket()!.on(ON_JOIN_SUCCESS, onJoinSuccess);
+    audioSocketService!.getSocket()!.on(ON_HAND_RAISE_COUNT, onHandRaiseCount);
+    audioSocketService!.getSocket()!.on(ON_MIC_STATUS, onMicStatusChange);
+    audioSocketService!.getSocket()!.on(ON_HANDS_RAISE, onHandRaise);
+    audioSocketService!.getSocket()!.on(ON_JOIN, onJoin);
+    audioSocketService!.getSocket()!.on(ON_LEAVE, onLeave);
+    audioSocketService!.getSocket()!.on(ON_GET_REQUEST, onGetRequest);
+    audioSocketService!.getSocket()!.on(ON_EVENT_ERROR, onError);
+    audioSocketService!
+        .getSocket()!
         .on(EMIT_ON_UPDATE_MODERATOR, getUpdatedModerators);
-    audioSocketService.getSocket().on(EMIT_ON_UPDATE_ROLE, getUpdatedUser);
-    audioSocketService.getSocket().on(ON_HAND_RAISE_UPDATE, handRaiseUpdate);
-    audioSocketService.getSocket().on(EMIT_ON_REMOVE, onRemove);
-    audioSocketService.getSocket().on(EMIT_ON_INVITE_USER, getNewSpeaker);
-    audioSocketService.getSocket().on(EMIT_ON_REPORT, getDisruptive);
-    audioSocketService.getSocket().on(ON_EVENT_ENDED, onEventEnded);
-    audioSocketService.getSocket().on(ON_HAND_DOWN, onHandsDown);
-    audioSocketService.getSocket().on(ON_NOTIFICATION, onNotification);
+    audioSocketService!.getSocket()!.on(EMIT_ON_UPDATE_ROLE, getUpdatedUser);
+    audioSocketService!.getSocket()!.on(ON_HAND_RAISE_UPDATE, handRaiseUpdate);
+    audioSocketService!.getSocket()!.on(EMIT_ON_REMOVE, onRemove);
+    audioSocketService!.getSocket()!.on(EMIT_ON_INVITE_USER, getNewSpeaker);
+    audioSocketService!.getSocket()!.on(EMIT_ON_REPORT, getDisruptive);
+    audioSocketService!.getSocket()!.on(ON_EVENT_ENDED, onEventEnded);
+    audioSocketService!.getSocket()!.on(ON_HAND_DOWN, onHandsDown);
+    audioSocketService!.getSocket()!.on(ON_NOTIFICATION, onNotification);
   }
 
   void switchOffSocket() async {
-    audioSocketService
-        .getSocket()
+    audioSocketService!
+        .getSocket()!
         .off(ON_CONVERSATION, onChatConversationCreate);
-    audioSocketService.getSocket().off(ON_VIDEO_ON_OFF, onVideoStatusChange);
-    audioSocketService.getSocket().off(ON_GET_PARTICIPANTS, onGetParticipants);
-    audioSocketService.getSocket().off(ON_JOIN_SUCCESS, onJoinSuccess);
-    audioSocketService.getSocket().off(ON_HAND_RAISE_COUNT, onHandRaiseCount);
-    audioSocketService.getSocket().off(ON_MIC_STATUS, onMicStatusChange);
-    audioSocketService.getSocket().off(ON_HANDS_RAISE, onHandRaise);
-    audioSocketService.getSocket().off(ON_JOIN, onJoin);
-    audioSocketService.getSocket().off(ON_LEAVE, onLeave);
-    audioSocketService.getSocket().off(ON_GET_REQUEST, onGetRequest);
-    audioSocketService.getSocket().off(ON_EVENT_ERROR, onError);
-    audioSocketService
-        .getSocket()
+    audioSocketService!.getSocket()!.off(ON_VIDEO_ON_OFF, onVideoStatusChange);
+    audioSocketService!.getSocket()!.off(ON_GET_PARTICIPANTS, onGetParticipants);
+    audioSocketService!.getSocket()!.off(ON_JOIN_SUCCESS, onJoinSuccess);
+    audioSocketService!.getSocket()!.off(ON_HAND_RAISE_COUNT, onHandRaiseCount);
+    audioSocketService!.getSocket()!.off(ON_MIC_STATUS, onMicStatusChange);
+    audioSocketService!.getSocket()!.off(ON_HANDS_RAISE, onHandRaise);
+    audioSocketService!.getSocket()!.off(ON_JOIN, onJoin);
+    audioSocketService!.getSocket()!.off(ON_LEAVE, onLeave);
+    audioSocketService!.getSocket()!.off(ON_GET_REQUEST, onGetRequest);
+    audioSocketService!.getSocket()!.off(ON_EVENT_ERROR, onError);
+    audioSocketService!
+        .getSocket()!
         .off(EMIT_ON_UPDATE_MODERATOR, getUpdatedModerators);
-    audioSocketService.getSocket().off(EMIT_ON_UPDATE_ROLE, getUpdatedUser);
-    audioSocketService.getSocket().off(ON_HAND_RAISE_UPDATE, handRaiseUpdate);
-    audioSocketService.getSocket().off(EMIT_ON_REMOVE, onRemove);
-    audioSocketService.getSocket().off(EMIT_ON_INVITE_USER, getNewSpeaker);
-    audioSocketService.getSocket().off(EMIT_ON_REPORT, getDisruptive);
-    audioSocketService.getSocket().off(ON_EVENT_ENDED, onEventEnded);
-    audioSocketService.getSocket().off(ON_HAND_DOWN, onHandsDown);
-    audioSocketService.getSocket().off(ON_NOTIFICATION, onNotification);
+    audioSocketService!.getSocket()!.off(EMIT_ON_UPDATE_ROLE, getUpdatedUser);
+    audioSocketService!.getSocket()!.off(ON_HAND_RAISE_UPDATE, handRaiseUpdate);
+    audioSocketService!.getSocket()!.off(EMIT_ON_REMOVE, onRemove);
+    audioSocketService!.getSocket()!.off(EMIT_ON_INVITE_USER, getNewSpeaker);
+    audioSocketService!.getSocket()!.off(EMIT_ON_REPORT, getDisruptive);
+    audioSocketService!.getSocket()!.off(ON_EVENT_ENDED, onEventEnded);
+    audioSocketService!.getSocket()!.off(ON_HAND_DOWN, onHandsDown);
+    audioSocketService!.getSocket()!.off(ON_NOTIFICATION, onNotification);
   }
 
   Widget getHeaders() {
@@ -391,7 +391,7 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
       child: Row(
         children: [
           Text(
-            'Stage - ${_participantNotifier != null && _participantNotifier.getStageParticipants() != null && _participantNotifier.getStageParticipants().isNotEmpty ? _participantNotifier.getStageParticipants().length : "0"} speakers',
+            'Stage - ${_participantNotifier != null && _participantNotifier!.getStageParticipants() != null && _participantNotifier!.getStageParticipants()!.isNotEmpty ? _participantNotifier!.getStageParticipants()!.length : "0"} speakers',
             style: styleElements
                 .captionThemeScalable(context)
                 .copyWith(color: HexColor(AppColors.appColorBlack65)),
@@ -451,7 +451,7 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
                                     child: Row(
                                       children: [
                                         Text(
-                                          'Stage - ${_participantNotifier != null && _participantNotifier.getStageParticipants() != null && _participantNotifier.getStageParticipants().isNotEmpty ? _participantNotifier.getStageParticipants().length : "0"} speakers',
+                                          'Stage - ${_participantNotifier != null && _participantNotifier!.getStageParticipants() != null && _participantNotifier!.getStageParticipants()!.isNotEmpty ? _participantNotifier!.getStageParticipants()!.length : "0"} speakers',
                                           style: styleElements
                                               .captionThemeScalable(context)
                                               .copyWith(
@@ -488,19 +488,19 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
                                   ),
                                 ),
                                 _participantNotifier != null &&
-                                        _participantNotifier
+                                        _participantNotifier!
                                                 .getStageParticipants() !=
                                             null &&
-                                        _participantNotifier
-                                            .getStageParticipants()
+                                        _participantNotifier!
+                                            .getStageParticipants()!
                                             .isNotEmpty
                                     ? SliverPadding(
                                         padding: EdgeInsets.all(12),
                                         sliver:
                                             SliverStaggeredGrid.countBuilder(
                                           crossAxisCount: 24,
-                                          itemCount: _participantNotifier
-                                              .getStageParticipants()
+                                          itemCount: _participantNotifier!
+                                              .getStageParticipants()!
                                               .length,
                                           itemBuilder: (BuildContext context,
                                               int index) {
@@ -516,13 +516,13 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
                                                                 .speaker
                                                             : TALKFOOTERENUM
                                                                 .audience,
-                                                    (_participantNotifier
-                                                                    .getStageParticipants()[
+                                                    (_participantNotifier!
+                                                                    .getStageParticipants()![
                                                                         index]
                                                                     .isModerator !=
                                                                 null &&
-                                                            _participantNotifier
-                                                                    .getStageParticipants()[
+                                                            _participantNotifier!
+                                                                    .getStageParticipants()![
                                                                         index]
                                                                     .isModerator ==
                                                                 1)
@@ -530,25 +530,25 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
                                                             .moderator
                                                         : TALKFOOTERENUM
                                                             .speaker,
-                                                    _participantNotifier
-                                                        .getStageParticipants()[
+                                                    _participantNotifier!
+                                                        .getStageParticipants()![
                                                             index]
                                                         .participantId,
-                                                    _participantNotifier
-                                                        .getStageParticipants()[
+                                                    _participantNotifier!
+                                                        .getStageParticipants()![
                                                             index]
                                                         .participantType,
-                                                    _participantNotifier
-                                                        .getStageParticipants()[
+                                                    _participantNotifier!
+                                                        .getStageParticipants()![
                                                             index]
                                                         .isModerator,
-                                                    _participantNotifier
-                                                        .getStageParticipants()[
+                                                    _participantNotifier!
+                                                        .getStageParticipants()![
                                                             index]
                                                         .isSpeakerOn);
                                               },
-                                              child:( _participantNotifier
-                                                  .getStageParticipants()[
+                                              child:( _participantNotifier!
+                                                  .getStageParticipants()![
                                               index]!=null)? TricycleSpeakerComponent(
                                                 videoClickCallBack:
                                                     (bool _isLocalVideo,
@@ -571,54 +571,54 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
                                                 //     .isVideoOn,
                                                 isVideoOn: 0,
                                                 participantId:
-                                                    _participantNotifier
-                                                        .getStageParticipants()[
+                                                    _participantNotifier!
+                                                        .getStageParticipants()![
                                                             index]
                                                         .participantId,
-                                                userId: prefs
+                                                userId: prefs!
                                                     .getInt(Strings.userId),
-                                                imageUrl: _participantNotifier
-                                                            .getStageParticipants()[
+                                                imageUrl: _participantNotifier!
+                                                            .getStageParticipants()![
                                                                 index]
                                                             .profileImage !=
                                                         null
                                                     ? Config.BASE_URL +
-                                                        _participantNotifier
-                                                            .getStageParticipants()[
+                                                        _participantNotifier!
+                                                            .getStageParticipants()![
                                                                 index]
-                                                            .profileImage
+                                                            .profileImage!
                                                     : "",
-                                                name: _participantNotifier
-                                                    .getStageParticipants()[
+                                                name: _participantNotifier!
+                                                    .getStageParticipants()![
                                                         index]
                                                     .name,
-                                                designation: _participantNotifier
-                                                        .getStageParticipants()[
+                                                designation: _participantNotifier!
+                                                        .getStageParticipants()![
                                                             index]
                                                         .personType ??
                                                     "",
                                                 speaking: index == 0,
-                                                isSpeaking: _participantNotifier
-                                                            .getStageParticipants()[
+                                                isSpeaking: _participantNotifier!
+                                                            .getStageParticipants()![
                                                                 index]
                                                             .isSpeaking ==
                                                         1
                                                     ? true
                                                     : false,
-                                                isMute: _participantNotifier
-                                                            .getStageParticipants()[
+                                                isMute: _participantNotifier!
+                                                            .getStageParticipants()![
                                                                 index]
                                                             .isSpeakerOn ==
                                                         0
                                                     ? true
                                                     : false,
-                                                isModerator: _participantNotifier
-                                                            .getStageParticipants()[
+                                                isModerator: _participantNotifier!
+                                                            .getStageParticipants()![
                                                                 index]
                                                             .isModerator !=
                                                         null &&
-                                                    _participantNotifier
-                                                            .getStageParticipants()[
+                                                    _participantNotifier!
+                                                            .getStageParticipants()![
                                                                 index]
                                                             .isModerator ==
                                                         1,
@@ -645,7 +645,7 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
                                   child: Padding(
                                     padding: const EdgeInsets.all(12.0),
                                     child: Text(
-                                      'Floor - ${_participantNotifier != null && _participantNotifier.getFloorsParticipants() != null && _participantNotifier.getFloorsParticipants().isNotEmpty ? _participantNotifier.getFloorsParticipants().length : "0"} listeners',
+                                      'Floor - ${_participantNotifier != null && _participantNotifier!.getFloorsParticipants() != null && _participantNotifier!.getFloorsParticipants()!.isNotEmpty ? _participantNotifier!.getFloorsParticipants()!.length : "0"} listeners',
                                       style: styleElements
                                           .captionThemeScalable(context)
                                           .copyWith(
@@ -656,11 +656,11 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
                                 ),
                                 SliverFillRemaining(
                                   child: _participantNotifier != null &&
-                                          _participantNotifier
+                                          _participantNotifier!
                                                   .getFloorsParticipants() !=
                                               null &&
-                                          _participantNotifier
-                                              .getFloorsParticipants()
+                                          _participantNotifier!
+                                              .getFloorsParticipants()!
                                               .isNotEmpty
                                       ? Padding(
                                           padding: const EdgeInsets.all(12.0),
@@ -670,19 +670,19 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
                                                     crossAxisCount: 4,
                                                     height: 120),
                                             physics: ClampingScrollPhysics(),
-                                            itemCount: _participantNotifier
-                                                .getFloorsParticipants()
+                                            itemCount: _participantNotifier!
+                                                .getFloorsParticipants()!
                                                 .length,
                                             itemBuilder: (BuildContext context,
                                                 int index) {
                                               return  (index <
-                                                  _participantNotifier
-                                                      .getFloorsParticipants()
+                                                  _participantNotifier!
+                                                      .getFloorsParticipants()!
                                                       .length? GestureDetector(
                                                 onTap: () {
                                                   if (index <
-                                                      _participantNotifier
-                                                          .getFloorsParticipants()
+                                                      _participantNotifier!
+                                                          .getFloorsParticipants()!
                                                           .length) {
                                                     openProfilePage(
                                                         isModerator
@@ -694,16 +694,16 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
                                                                 : TALKFOOTERENUM
                                                                     .audience,
                                                         TALKFOOTERENUM.audience,
-                                                        _participantNotifier
-                                                            .getFloorsParticipants()[
+                                                        _participantNotifier!
+                                                            .getFloorsParticipants()![
                                                                 index]
                                                             .participantId,
-                                                        _participantNotifier
-                                                            .getFloorsParticipants()[
+                                                        _participantNotifier!
+                                                            .getFloorsParticipants()![
                                                                 index]
                                                             .participantType,
-                                                        _participantNotifier
-                                                            .getStageParticipants()[
+                                                        _participantNotifier!
+                                                            .getStageParticipants()![
                                                                 index]
                                                             .isModerator,
                                                         0);
@@ -713,23 +713,23 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
                                                   size: 64,
                                                   isVideoOn: 0,
                                                   participantId:
-                                                      _participantNotifier
-                                                          .getStageParticipants()[
+                                                      _participantNotifier!
+                                                          .getStageParticipants()![
                                                               index]
                                                           .participantId,
-                                                  userId: prefs
+                                                  userId: prefs!
                                                       .getInt(Strings.userId),
                                                   imageUrl: Config.BASE_URL +
-                                                      _participantNotifier
-                                                          .getFloorsParticipants()[
+                                                      _participantNotifier!
+                                                          .getFloorsParticipants()![
                                                               index]
-                                                          .profileImage,
-                                                  name: _participantNotifier
-                                                      .getFloorsParticipants()[
+                                                          .profileImage!,
+                                                  name: _participantNotifier!
+                                                      .getFloorsParticipants()![
                                                           index]
                                                       .name,
-                                                  designation: _participantNotifier
-                                                          .getFloorsParticipants()[
+                                                  designation: _participantNotifier!
+                                                          .getFloorsParticipants()![
                                                               index]
                                                           .personType ??
                                                       "",
@@ -751,14 +751,14 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
                     isCommentVisible: false,
                     isBookMarkVisible: false,
                     isInviteUserVisible:
-                        widget.eventModel.eventPrivacyType == 'public' ||
-                            widget.eventModel.eventPrivacyType == 'campus' ||
+                        widget.eventModel!.eventPrivacyType == 'public' ||
+                            widget.eventModel!.eventPrivacyType == 'campus' ||
                             isModerator,
                     inviteuserCallback: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (BuildContext context) {
                         return InviteTalkParticipants(
-                          privacyType: widget.eventModel.eventPrivacyType,
+                          privacyType: widget.eventModel!.eventPrivacyType,
                           eventId: eventId,
                         );
                       }));
@@ -766,15 +766,15 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
                     ratingFunction: rateEvent,
                     ratingCallback: () {},
                     sharecallBack: () {
-                      createDeeplink.getDeeplink(
+                      createDeeplink!.getDeeplink(
                           SHAREITEMTYPE.DETAIL.type,
-                          prefs.getInt(Strings.userId).toString(),
+                          prefs!.getInt(Strings.userId).toString(),
                           eventId,
                           DEEPLINKTYPE.CALENDAR.type,
                           context);
                     },
                     isShareVisible: true,
-                    isRated: getIsRated(widget.eventModel.header),
+                    isRated: getIsRated(widget.eventModel!.header!),
                   )
                 ],
               ),
@@ -784,7 +784,7 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
               child: AcceptRejectRequestWidget(requestWidgetKey),
             ),
             Visibility(
-              visible: hideLoader == null || !hideLoader,
+              visible: hideLoader == null || !hideLoader!,
               child: AudioPageLoaderPage(
                 key: loaderPageKey,
               ),
@@ -796,8 +796,8 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
   }
 
   bool getIsRated(Header header) {
-    bool isRated;
-    for (var i in header.action) {
+    bool? isRated;
+    for (var i in header.action!) {
       if (i.type == 'is_rated') {
         isRated = i.value;
         break;
@@ -827,8 +827,8 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
         Navigator.pop(context);
       }
     } else {
-      if (hideLoader != null && hideLoader) {
-        widget.roleCallback(widget.role);
+      if (hideLoader != null && hideLoader!) {
+        widget.roleCallback!(widget.role);
         getSpeakers();
         getListeners();
         getRequestsCount();
@@ -844,30 +844,30 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
   }
 
   void openProfilePage(TALKFOOTERENUM firstPerson, TALKFOOTERENUM secondPerson,
-      int id, String type, int isModerator, int isSpeakerOn) {
+      int? id, String? type, int? isModerator, int? isSpeakerOn) {
     Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
       return TalkParticipantProfilePage(
-        userType: id == prefs.getInt(Strings.userId) ? type : 'thirdPerson',
+        userType: id == prefs!.getInt(Strings.userId) ? type : 'thirdPerson',
         userId: id,
         isModerator: isModerator,
         isSpeakerOn: isSpeakerOn,
-        moderatorCallback: (int userId, int isModerator, String type) {
-          updateModerators(isModerator, userId, type);
+        moderatorCallback: (int? userId, int? isModerator, String? type) {
+          updateModerators(isModerator!, userId!, type!);
         },
-        updateRole: (int userId, String role, String userType) {
-          updateRole(userId, role, userType);
+        updateRole: (int? userId, String ?role, String? userType) {
+          updateRole(userId!, role!, userType!);
         },
-        inviteUser: (int userId, String userType) {
-          inviteSpeaker(userId, userType);
+        inviteUser: (int? userId, String? userType) {
+          inviteSpeaker(userId!, userType!);
         },
-        removeUser: (int userId, String userType) {
-          removeUser(userId, userType);
+        removeUser: (int ?userId, String? userType) {
+          removeUser(userId!, userType!);
         },
-        reportUser: (int userId, String userType) {
-          reportUser(userId, userType);
+        reportUser: (int? userId, String ? userType) {
+          reportUser(userId!, userType!);
         },
-        mute: (int userId, String userType) {
-          muteUser(userId, userType);
+        mute: (int ?userId, String? userType) {
+          muteUser(userId!, userType!);
         },
         firstPerson: firstPerson,
         secondPerson: secondPerson,
@@ -887,7 +887,7 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
   }
 
   void handRaiseRequestList() {
-    requestWidgetKey.currentState.hideCard();
+    requestWidgetKey.currentState!.hideCard();
     showModalBottomSheet(
         context: context,
         isScrollControlled: true,
@@ -896,7 +896,7 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
           return _RequestsListSheet(
               key: requestPageKey,
               onUserUpdateCallback: (requestPayload) {
-                requestPayload.personId = prefs.getInt(Strings.userId);
+                requestPayload.personId = prefs!.getInt(Strings.userId);
                 requestPayload.eventId = eventId;
                 updateHandRaise(requestPayload);
               },
@@ -908,10 +908,10 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
 
   void _connect() async {
     print('participantId => ' +
-        widget.participantId +
+        widget.participantId! +
         ', roomId => ' +
         widget.eventId.toString());
-    widget.muteCallback(mute);
+    widget.muteCallback!(mute);
     if (Platform.isAndroid) {
       bool success = await FlutterBackground.enableBackgroundExecution();
       print(
@@ -927,21 +927,20 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
   void handRaise() {
     JoinEventPayload payload = JoinEventPayload();
     payload.eventId = eventId;
-    payload.personId = prefs.getInt(Strings.userId);
+    payload.personId = prefs!.getInt(Strings.userId);
     print('handRaise--------' + payload.toJson().toString());
-    audioSocketService.getSocket().emit(EMIT_HANDS_RAISE, payload);
+    audioSocketService!.getSocket()!.emit(EMIT_HANDS_RAISE, payload);
   }
 
   /// socket.emit method for exit event
   hangUp() async {
     try {
-      engine.instance().leaveChannel();
+      engine!.instance()!.leaveChannel();
       await db.deleteParticipants();
-      _participantNotifier.getOlderMessages(db);
+      _participantNotifier!.getOlderMessages(db);
       print("Hangup.......");
     } catch (e) {
-      print(e +
-          "------------------------------------------------------P_O)O)O)O_");
+
     }
   }
 
@@ -950,9 +949,9 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
     // hangUp();
     JoinEventPayload payload = JoinEventPayload();
     payload.eventId = eventId;
-    payload.personId = prefs.getInt(Strings.userId);
+    payload.personId = prefs!.getInt(Strings.userId);
     print("get Requests-----------" + jsonEncode(payload));
-    audioSocketService.getSocket().emit(EMIT_GET_REQUEST, payload);
+    audioSocketService!.getSocket()!.emit(EMIT_GET_REQUEST, payload);
   }
 
   /// socket.emit method for update moderators
@@ -962,10 +961,10 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
     payload.participantId = userId;
     payload.participantType = type;
     payload.isModerator = isModerator;
-    payload.personId = prefs.getInt(Strings.userId);
+    payload.personId = prefs!.getInt(Strings.userId);
 
     print(jsonEncode(payload));
-    audioSocketService.getSocket().emit(EMIT_ON_UPDATE_MODERATOR, payload);
+    audioSocketService!.getSocket()!.emit(EMIT_ON_UPDATE_MODERATOR, payload);
   }
 
   /// socket.emit method for invite speaker
@@ -974,9 +973,9 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
     payload.eventId = eventId;
     payload.participantId = userId;
     payload.participantType = userType;
-    payload.personId = prefs.getInt(Strings.userId);
+    payload.personId = prefs!.getInt(Strings.userId);
     print(jsonEncode(payload));
-    audioSocketService.getSocket().emit(EMIT_ON_INVITE_USER, payload);
+    audioSocketService!.getSocket()!.emit(EMIT_ON_INVITE_USER, payload);
   }
 
   /// socket.emit method mute user
@@ -987,8 +986,8 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
     payload.isSpeakerOn = 0;
     print(jsonEncode(payload) +
         "------------------------------------------------------------------------------mute user ");
-    _participantNotifier.update(db, userId, 0);
-    audioSocketService.getSocket().emit(ON_MIC_STATUS, payload);
+    _participantNotifier!.update(db, userId, 0);
+    audioSocketService!.getSocket()!.emit(ON_MIC_STATUS, payload);
     // engine.instance().muteRemoteAudioStream(userId, true);
 /*    audioSocketService.getSocket().emit(EMIT_ON_REPORT, payload);*/
   }
@@ -996,11 +995,11 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
   /// socket.emit method mute user
   void updateVideoStatus(int isVideoOn) {
     MicStatusPayload payload = MicStatusPayload();
-    payload.personId = prefs.getInt(Strings.userId);
+    payload.personId = prefs!.getInt(Strings.userId);
     payload.eventId = eventId;
     payload.isVideoOn = isVideoOn;
     print(jsonEncode(payload));
-    audioSocketService.getSocket().emit(ON_VIDEO_ON_OFF, payload);
+    audioSocketService!.getSocket()!.emit(ON_VIDEO_ON_OFF, payload);
   }
 
   /// socket.emit method for invite speaker
@@ -1010,19 +1009,19 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
     payload.eventId = eventId;
     payload.participantId = userId;
     payload.participantType = userType;
-    payload.personId = prefs.getInt(Strings.userId);
+    payload.personId = prefs!.getInt(Strings.userId);
     print(jsonEncode(payload));
-    audioSocketService.getSocket().emit(EMIT_ON_REPORT, payload);
+    audioSocketService!.getSocket()!.emit(EMIT_ON_REPORT, payload);
   }
 
   /// socket.emit method for accept reject speaker
   void acceptRejectSpeaker(bool isAccepted) {
     UpdateModeratorPayload payload = UpdateModeratorPayload();
     payload.eventId = eventId;
-    payload.personId = prefs.getInt(Strings.userId);
+    payload.personId = prefs!.getInt(Strings.userId);
     payload.isAccepted = isAccepted;
     print(jsonEncode(payload) + "accept reject");
-    audioSocketService.getSocket().emit(EMIT_ON_UPDATE_INVITE, payload);
+    audioSocketService!.getSocket()!.emit(EMIT_ON_UPDATE_INVITE, payload);
   }
 
   /// socket.emit method for update role
@@ -1032,9 +1031,9 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
     payload.participantId = userId;
     payload.participantType = userType;
     payload.role = role;
-    payload.personId = prefs.getInt(Strings.userId);
+    payload.personId = prefs!.getInt(Strings.userId);
     print(jsonEncode(payload));
-    audioSocketService.getSocket().emit(EMIT_ON_UPDATE_ROLE, payload);
+    audioSocketService!.getSocket()!.emit(EMIT_ON_UPDATE_ROLE, payload);
   }
 
   /// socket.emit method for update role
@@ -1043,19 +1042,19 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
     payload.eventId = eventId;
     payload.participantId = userId;
     payload.participantType = userType;
-    payload.personId = prefs.getInt(Strings.userId);
+    payload.personId = prefs!.getInt(Strings.userId);
     print(jsonEncode(payload) +
         "removingggggggggggggggggggggggggggggggggggggggggggggggggg");
-    audioSocketService.getSocket().emit(EMIT_ON_REMOVE, payload);
+    audioSocketService!.getSocket()!.emit(EMIT_ON_REMOVE, payload);
   }
 
   /// socket.emit method for remove user
   void onRemove(dynamic data) {
     log(jsonEncode(data) + "received remove");
     var res = NewParticipant.fromJson(data);
-    _participantNotifier.deleteSingleItem(
-        db, res.rows.participantId, res.rows.personType);
-    if (res.rows.participantId == int.parse(participantId)) {
+    _participantNotifier!.deleteSingleItem(
+        db, res.rows!.participantId, res.rows!.personType);
+    if (res.rows!.participantId == int.parse(participantId!)) {
       leave();
     }
   }
@@ -1064,21 +1063,21 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
   void getDisruptive(dynamic data) {
     log(jsonEncode(data) + "received update Disruptive");
     var res = InviteDisruptiveUser.fromJson(data);
-    requestWidgetKey.currentState.update(
+    requestWidgetKey.currentState!.update(
         id: res.participantId,
         message: res.notification ?? "",
-        okButtonText: res.actions != null && res.actions.length > 0
-            ? res.actions[0].actionText ?? ""
+        okButtonText: res.actions != null && res.actions!.length > 0
+            ? res.actions![0].actionText ?? ""
             : "",
-        cancelButtonText: res.actions != null && res.actions.length > 1
-            ? res.actions[1].actionText ?? ""
+        cancelButtonText: res.actions != null && res.actions!.length > 1
+            ? res.actions![1].actionText ?? ""
             : "",
         actionButtonColor: HexColor(AppColors.white_translucent),
         okButtonCallback: () {
-          requestWidgetKey.currentState.hideCard();
+          requestWidgetKey.currentState!.hideCard();
         },
         cancelButtonCallback: () {
-          requestWidgetKey.currentState.hideCard();
+          requestWidgetKey.currentState!.hideCard();
         },
         showCard: true,
         backgroundColor: HexColor(AppColors.appMainColor),
@@ -1091,30 +1090,30 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
     var res = ParticipantListItem.fromJson(data);
     res.isSpeakerOn = 0;
     print('res----------------------------' + jsonEncode(res.toJson()));
-    _participantNotifier.updateRole(
+    _participantNotifier!.updateRole(
         db, res, res.role == EVENT_ROLE_TYPE.listener.type ? "floor" : "stage");
-    if (int.parse(participantId) == res.participantId) {
+    if (int.parse(participantId!) == res.participantId) {
       {
-        widget.roleCallback(res.role == EVENT_ROLE_TYPE.listener.type
+        widget.roleCallback!(res.role == EVENT_ROLE_TYPE.listener.type
             ? TALKFOOTERENUM.audience
             : TALKFOOTERENUM.speaker);
-        if (res.participantId == int.parse(participantId) &&
+        if (res.participantId == int.parse(participantId!) &&
             res.role == EVENT_ROLE_TYPE.listener.type) {
           // setState(() {
           isSpeaker = false;
           isModerator = false;
           connectorMuteCall(true);
-          widget.updateHandRaise(false);
+          widget.updateHandRaise!(false);
         }
         // });
-        if (res.participantId == int.parse(participantId) &&
+        if (res.participantId == int.parse(participantId!) &&
             res.role != EVENT_ROLE_TYPE.listener.type) {
           // setState(() {
           isSpeaker = true;
           isModerator = false;
           connectorMuteCall(true);
-          widget.muteCallback(true);
-          requestWidgetKey.currentState.checkandHide(res.participantId);
+          widget.muteCallback!(true);
+          requestWidgetKey.currentState!.checkandHide(res.participantId);
         }
         // });
       }
@@ -1124,24 +1123,24 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
   void getNewSpeaker(dynamic data) {
     log(jsonEncode(data) + "received speaker invite");
     var res = InviteDisruptiveUser.fromJson(data);
-    if (res.participantId != int.parse(participantId) &&
+    if (res.participantId != int.parse(participantId!) &&
         requestWidgetKey.currentState != null) {
-      requestWidgetKey.currentState.update(
+      requestWidgetKey.currentState!.update(
           id: res.participantId,
           message: res.notification ?? "",
-          okButtonText: res.actions != null && res.actions.length > 0
-              ? res.actions[0].actionText ?? ""
+          okButtonText: res.actions != null && res.actions!.length > 0
+              ? res.actions![0].actionText ?? ""
               : "",
-          cancelButtonText: res.actions != null && res.actions.length > 1
-              ? res.actions[1].actionText ?? ""
+          cancelButtonText: res.actions != null && res.actions!.length > 1
+              ? res.actions![1].actionText ?? ""
               : "",
           okButtonCallback: () {
             acceptRejectSpeaker(true);
-            requestWidgetKey.currentState.hideCard();
+            requestWidgetKey.currentState!.hideCard();
           },
           cancelButtonCallback: () {
             acceptRejectSpeaker(false);
-            requestWidgetKey.currentState.hideCard();
+            requestWidgetKey.currentState!.hideCard();
           },
           showCard: true,
           backgroundColor: HexColor(AppColors.appColorGreen),
@@ -1157,18 +1156,18 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
     log(jsonEncode(data) + "received update moderators");
     var res = ParticipantListItem.fromJson(data);
 
-    if (res.participantId == int.parse(participantId)) {
+    if (res.participantId == int.parse(participantId!)) {
       if (res.isModerator != null && res.isModerator == 1) {
         isModerator = true;
-        widget.roleCallback(TALKFOOTERENUM.moderator);
+        widget.roleCallback!(TALKFOOTERENUM.moderator);
         print("true");
       } else {
         isModerator = false;
-        widget.roleCallback(TALKFOOTERENUM.speaker);
+        widget.roleCallback!(TALKFOOTERENUM.speaker);
         print("false");
       }
     }
-    _participantNotifier.updateModerators(
+    _participantNotifier!.updateModerators(
         db, res.participantId, res.isModerator);
   }
 
@@ -1182,13 +1181,13 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
           barrierColor: HexColor(AppColors.appColorTransparent),
           barrierDismissible: true,
           builder: (BuildContext context) => RatingCardDialog(
-                contextId: widget.eventModel.eventOwnerId,
-                contexType: widget.eventModel.eventOwnerType,
-                subjectId: widget.eventModel.id,
+                contextId: widget.eventModel!.eventOwnerId,
+                contexType: widget.eventModel!.eventOwnerType,
+                subjectId: widget.eventModel!.id,
                 subjectType: 'event',
               )).then((value) {
         Future.delayed(Duration(seconds: 1), () {
-          widget.ratingSuccessCallback();
+          widget.ratingSuccessCallback!();
         });
       });
     } else {
@@ -1205,26 +1204,26 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
     var nowTime = DateTime.now().toUtc();
     int diff =
         nowTime.millisecondsSinceEpoch - startTime.millisecondsSinceEpoch;
-    bool isModerator = await db.getMember(int.parse(participantId));
+    bool isModerator = await db.getMember(int.parse(participantId!));
     List<ParticipantListItem> listModerators = await db.getModerators();
 
     if (getMinutes(diff) >= 3) {
       showDialog(
-          context: sctx,
+          context: sctx!,
           builder: (BuildContext context) {
             return RatingCardDialog(
-              contextId: widget.eventModel.eventOwnerId,
-              contexType: widget.eventModel.eventOwnerType,
-              subjectId: widget.eventModel.id,
+              contextId: widget.eventModel!.eventOwnerId,
+              contexType: widget.eventModel!.eventOwnerType,
+              subjectId: widget.eventModel!.id,
               subjectType: 'event',
             );
           }).then((value) {
         Future.delayed(Duration(seconds: 1), () {
-          widget.ratingSuccessCallback();
+          widget.ratingSuccessCallback!();
         });
         if (isModerator && listModerators.length <= 1)
           showDialog(
-              context: sctx,
+              context: sctx!,
               builder: (BuildContext context) => EndCallDilog(
                   callBack: () {
                     leave();
@@ -1258,9 +1257,9 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
   void leaveOnlyEmit() {
     JoinEventPayload payload = JoinEventPayload();
     payload.eventId = eventId;
-    payload.personId = prefs.getInt(Strings.userId);
+    payload.personId = prefs!.getInt(Strings.userId);
     print('Leave--------' + payload.toJson().toString());
-    audioSocketService.getSocket().emit(EMIT_LEAVE, payload);
+    audioSocketService!.getSocket()!.emit(EMIT_LEAVE, payload);
     print('after Leaving');
   }
 
@@ -1273,24 +1272,24 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
     print(
         "--------------------------------disabled+++++++++++++++---------------------------");
     // hangUp();
-    await engine.instance().leaveChannel();
+    await engine!.instance()!.leaveChannel();
     JoinEventPayload payload = JoinEventPayload();
     payload.eventId = eventId;
-    payload.personId = prefs.getInt(Strings.userId);
+    payload.personId = prefs!.getInt(Strings.userId);
     print('Leave--------' + payload.toJson().toString());
-    audioSocketService.getSocket().emit(EMIT_LEAVE, payload);
+    audioSocketService!.getSocket()!.emit(EMIT_LEAVE, payload);
     print('after Leaving');
-    prefs.remove(Strings.current_event);
+    prefs!.remove(Strings.current_event);
     try {
       await db.deleteParticipants();
-      _participantNotifier.getOlderMessages(db);
+      _participantNotifier!.getOlderMessages(db);
+    // ignore: empty_catches
     } catch (e) {
-      print(e +
-          "------------------------------------------------------P_O)O)O)O_");
+
     }
     if (!isLeft) {
       isLeft = true;
-      widget.popCallback();
+      widget.popCallback!();
     }
   }
 
@@ -1298,9 +1297,9 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
   void joinEvent() {
     JoinEventPayload payload = JoinEventPayload();
     payload.eventId = eventId;
-    payload.personId = prefs.getInt(Strings.userId);
+    payload.personId = prefs!.getInt(Strings.userId);
     print('join--------' + payload.toJson().toString());
-    audioSocketService.getSocket().emit(EMIT_JOIN, payload);
+    audioSocketService!.getSocket()!.emit(EMIT_JOIN, payload);
     print('after join');
   }
 
@@ -1309,15 +1308,15 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
     print(participantIds.toString());
     GetMemberEventPayload model = GetMemberEventPayload();
     model.eventId = eventId;
-    model.personId = prefs.getInt(Strings.userId);
+    model.personId = prefs!.getInt(Strings.userId);
     model.listType = 'floor';
     print('get_speakers--------' + jsonEncode(model));
-    audioSocketService.getSocket().emit(EMIT_GET_PARTICIPANTS, model);
+    audioSocketService!.getSocket()!.emit(EMIT_GET_PARTICIPANTS, model);
     print('after emitting');
 
     Future.delayed(Duration(seconds: 3), () {
       if (loaderPageKey.currentState != null) {
-        loaderPageKey.currentState.hideLoader();
+        loaderPageKey.currentState!.hideLoader();
       }
     });
   }
@@ -1327,24 +1326,24 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
     print(participantIds.toString());
     GetMemberEventPayload model = GetMemberEventPayload();
     model.eventId = eventId;
-    model.personId = prefs.getInt(Strings.userId);
+    model.personId = prefs!.getInt(Strings.userId);
     model.listType = 'stage';
     print('get_speakers--------' + model.toJson().toString());
     print('get is connected' +
-        audioSocketService.getSocket().connected.toString());
-    audioSocketService.getSocket().emit(EMIT_GET_PARTICIPANTS, model);
+        audioSocketService!.getSocket()!.connected.toString());
+    audioSocketService!.getSocket()!.emit(EMIT_GET_PARTICIPANTS, model);
     print('after emitting');
   }
 
-  searchCallback(String searchVal) {
+  searchCallback(String? searchVal) {
     print(participantIds.toString());
     GetMemberEventPayload model = GetMemberEventPayload();
     model.eventId = eventId;
-    model.personId = prefs.getInt(Strings.userId);
+    model.personId = prefs!.getInt(Strings.userId);
     model.searchValue = searchVal;
     model.listType = null;
     print('get all --------' + model.toJson().toString());
-    audioSocketService.getSocket().emit(EMIT_GET_PARTICIPANTS, model);
+    audioSocketService!.getSocket()!.emit(EMIT_GET_PARTICIPANTS, model);
   }
 
   /// socket.on method for on_error
@@ -1352,7 +1351,7 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
     log("Error-----------" + data.toString());
     var res = JoinEventResponse.fromJson(data);
     ToastBuilder()
-        .showSnackBar(res.message ?? "", sctx, HexColor(AppColors.information));
+        .showSnackBar(res.message ?? "", sctx!, HexColor(AppColors.information));
     return data;
   }
 
@@ -1371,26 +1370,26 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
     log(jsonEncode(data) +
         "===============================================================+++++++++++++++++++++++++");
     var res = ParticipantListResponse.fromJson(data);
-    if (res.rows.listType != null) {
+    if (res.rows!.listType != null) {
       Future(() {
-        if (res.rows.membersList != null && res.rows.membersList.isNotEmpty) {
-          if (res.rows.membersList.any((element) {
+        if (res.rows!.membersList != null && res.rows!.membersList!.isNotEmpty) {
+          if (res.rows!.membersList!.any((element) {
             return element.participantId.toString() == participantId;
           })) {
-            var index = res.rows.membersList.indexWhere((element) {
+            var index = res.rows!.membersList!.indexWhere((element) {
               return element.participantId.toString() == participantId;
             });
-            res.rows.membersList[index].isSpeakerOn = mute ? 0 : 1;
-            isModerator = res.rows.membersList[index].isModerator == 1;
-            isSpeaker = res.rows.membersList[index].role == 'speaker';
+            res.rows!.membersList![index].isSpeakerOn = mute! ? 0 : 1;
+            isModerator = res.rows!.membersList![index].isModerator == 1;
+            isSpeaker = res.rows!.membersList![index].role == 'speaker';
           }
-          _participantNotifier.saveData(
-              db, res.rows.membersList, res.rows.listType);
+          _participantNotifier!.saveData(
+              db, res.rows!.membersList!, res.rows!.listType);
         }
       });
     } else {
-      if (searchPageKey.currentState.mounted) {
-        searchPageKey.currentState.addValues(res.rows.membersList);
+      if (searchPageKey.currentState!.mounted) {
+        searchPageKey.currentState!.addValues(res.rows!.membersList);
       }
     }
   }
@@ -1400,7 +1399,7 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
     log("new conversation------------------------------------------------------------------------------------------------" +
         jsonEncode(data));
     var res = NewConversationEvent.fromJson(data);
-    if (conversationCallBack != null) conversationCallBack(res.conversationId);
+    if (conversationCallBack != null) conversationCallBack!(res.conversationId);
   }
 
   /// socket.on method for join_success
@@ -1409,48 +1408,48 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
         data.toString());
     var res = JoinEventResponse.fromJson(data);
     if (res.statusCode == Strings.success_code) {
-      prefs.setInt(Strings.current_event, eventId);
-      token = res.rows.token ?? null;
-      channelName = res.rows.channelName ?? null;
-      isModerator = res.rows.isModerator != null && res.rows.isModerator == 1;
-      isSpeaker = !isModerator ? res.rows.role == 'speaker' : false;
-      widget.roleCallback(isModerator
+      prefs!.setInt(Strings.current_event, eventId!);
+      token = res.rows!.token ?? null;
+      channelName = res.rows!.channelName ?? null;
+      isModerator = res.rows!.isModerator != null && res.rows!.isModerator == 1;
+      isSpeaker = !isModerator ? res.rows!.role == 'speaker' : false;
+      widget.roleCallback!(isModerator
           ? TALKFOOTERENUM.moderator
           : isSpeaker
               ? TALKFOOTERENUM.speaker
               : TALKFOOTERENUM.audience);
-      widget.successCallback();
-      conversationCallBack(res.rows.conversationId);
+      widget.successCallback!();
+      conversationCallBack!(res.rows!.conversationId);
       _connect();
       getSpeakers();
       getListeners();
       getRequestsCount();
 
 
-      this.eventStartTime = res.rows.startTime;
+      this.eventStartTime = res.rows!.startTime;
       log("JoinSuccess------------------------------------------------------------------------------------------------" +
-          res.rows.startTime.toString());
+          res.rows!.startTime.toString());
       Future.delayed(Duration(seconds: 1), () {
-        timerWidgetKey.currentState.startTimer(
-            DateTime.fromMillisecondsSinceEpoch(res.rows.startTime));
+        timerWidgetKey.currentState!.startTimer(
+            DateTime.fromMillisecondsSinceEpoch(res.rows!.startTime!));
       });
       if (res != null) {
-        var participant = ParticipantListItem.fromJson(res.rows.toJson());
-        _participantNotifier.saveSingleItem(db, participant,
-            res.rows.role == EVENT_ROLE_TYPE.listener.type ? "floor" : "stage");
+        var participant = ParticipantListItem.fromJson(res.rows!.toJson());
+        _participantNotifier!.saveSingleItem(db, participant,
+            res.rows!.role == EVENT_ROLE_TYPE.listener.type ? "floor" : "stage");
       }
     } else {
       ToastBuilder()
-          .showSnackBar(res.message, sctx, HexColor(AppColors.information));
+          .showSnackBar(res.message!, sctx!, HexColor(AppColors.information));
     }
   }
 
   void getRequestsCount() async {
     JoinEventPayload payload = JoinEventPayload();
     payload.eventId = eventId;
-    payload.personId = prefs.getInt(Strings.userId);
+    payload.personId = prefs!.getInt(Strings.userId);
     print('get_request count--------' + payload.toJson().toString());
-    audioSocketService.getSocket().emit(EMIT_HAND_RAISE_COUNT, payload);
+    audioSocketService!.getSocket()!.emit(EMIT_HAND_RAISE_COUNT, payload);
     print('after sending request for hand raise count');
   }
 
@@ -1460,9 +1459,9 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
     var res = JoinEventResponse.fromJson(data);
     if (res.statusCode == Strings.success_code) {
       if (res.total != null) {
-        widget.countCallBack(res.total);
+        widget.countCallBack!(res.total);
       } else {
-        widget.countCallBack(0);
+        widget.countCallBack!(0);
       }
     }
   }
@@ -1474,14 +1473,14 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
         "-------------------------------------------");
     var res = ParticipantListItem.fromJson(data);
     if (res != null && res.participantId != null && res.isSpeakerOn != null)
-      _participantNotifier.update(db, res.participantId, res.isSpeakerOn);
+      _participantNotifier!.update(db, res.participantId, res.isSpeakerOn);
 
-    if (res.participantId == int.parse(participantId)) {
+    if (res.participantId == int.parse(participantId!)) {
       log(jsonEncode(data) + "-------------------------------------------");
-      engine
-          .instance()
+      engine!
+          .instance()!
           .muteLocalAudioStream(res.isSpeakerOn == 1 ? false : true);
-      widget.muteCallback(res.isSpeakerOn == 1 ? false : true);
+      widget.muteCallback!(res.isSpeakerOn == 1 ? false : true);
     }
   }
 
@@ -1492,13 +1491,13 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
       isShowRequest = false;
       print("on hand Raised" + data.toString());
       var res = OnHandRaiseResponse.fromJson(data);
-      requestWidgetKey.currentState.update(
+      requestWidgetKey.currentState!.update(
           id: res.participantId,
           message: res.notification ?? "",
-          okButtonText: res.actions.firstWhere((element) {
+          okButtonText: res.actions!.firstWhere((element) {
             return element.actionCode == 'A';
           }).actionText,
-          cancelButtonText: res.actions.firstWhere((element) {
+          cancelButtonText: res.actions!.firstWhere((element) {
             return element.actionCode == 'R';
           }).actionText,
           okButtonCallback: () {
@@ -1508,8 +1507,8 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
                 participantType: res.participantType,
                 role: 'speaker',
                 eventId: eventId,
-                personId: prefs.getInt(Strings.userId)));
-            requestWidgetKey.currentState.hideCard();
+                personId: prefs!.getInt(Strings.userId)));
+            requestWidgetKey.currentState!.hideCard();
           },
           cancelButtonCallback: () {
             updateHandRaise(UpdateHandRaiseRequest(
@@ -1518,8 +1517,8 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
                 participantType: res.participantType,
                 role: 'speaker',
                 eventId: eventId,
-                personId: prefs.getInt(Strings.userId)));
-            requestWidgetKey.currentState.hideCard();
+                personId: prefs!.getInt(Strings.userId)));
+            requestWidgetKey.currentState!.hideCard();
           },
           showCard: true,
           backgroundColor: HexColor(AppColors.appColorGreen),
@@ -1533,10 +1532,10 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
     print(jsonEncode(data) +
         "user joinedddddddddddddddddddddddddddddddddddddddddddddddddddd");
     var res = NewParticipant.fromJson(data);
-    res.rows.isSpeakerOn = 0;
+    res.rows!.isSpeakerOn = 0;
     if (res != null)
-      _participantNotifier.saveSingleItem(db, res.rows,
-          res.rows.role == EVENT_ROLE_TYPE.listener.type ? "floor" : "stage");
+      _participantNotifier!.saveSingleItem(db, res.rows!,
+          res.rows!.role == EVENT_ROLE_TYPE.listener.type ? "floor" : "stage");
   }
 
   /// socket.on method for leave
@@ -1544,8 +1543,8 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
     print(jsonEncode(data));
     var res = NewParticipant.fromJson(data);
     if (res != null)
-      _participantNotifier.deleteSingleItem(
-          db, res.rows.participantId, "floor");
+      _participantNotifier!.deleteSingleItem(
+          db, res.rows!.participantId, "floor");
   }
 
   /// socket.on method for get_request
@@ -1553,8 +1552,8 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
     print("getRequest--" + jsonEncode(data));
     var res = RequestListResponse.fromJson(data);
     if (requestPageKey.currentState != null &&
-        requestPageKey.currentState.mounted) {
-      requestPageKey.currentState.addValues(res.rows);
+        requestPageKey.currentState!.mounted) {
+      requestPageKey.currentState!.addValues(res.rows);
     }
   }
 
@@ -1571,7 +1570,7 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
         "onhandRaiseUpdate------------------------------------------------------------------------" +
             jsonEncode(data));
     var res = UpdateHandRaiseResponse.fromJson(data);
-    if (res.isAccepted) {
+    if (res.isAccepted!) {
       // await _participantNotifier.deleteSingleItem(
       //     db, res.participantId, 'floor');
       var item = ParticipantListItem(
@@ -1584,27 +1583,27 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
         isModerator: 0,
         name: res.name,
       );
-      await _participantNotifier.updateRole(db, item, 'stage');
-      await _participantNotifier.updateModerators(
+      await _participantNotifier!.updateRole(db, item, 'stage');
+      await _participantNotifier!.updateModerators(
           db, item.participantId, item.isModerator);
       // await _participantNotifier.saveSingleItem(db, item, 'stage');
-      if (int.parse(participantId) == res.participantId) {
-        widget.roleCallback(TALKFOOTERENUM.speaker);
-        widget.muteCallback(true);
+      if (int.parse(participantId!) == res.participantId) {
+        widget.roleCallback!(TALKFOOTERENUM.speaker);
+        widget.muteCallback!(true);
         connectorMuteCall(true);
       }
     } else {
-      if (int.parse(participantId) == res.participantId) {
+      if (int.parse(participantId!) == res.participantId) {
         ToastBuilder()
-            .showSnackBar('Rejected', sctx, HexColor(AppColors.information));
-        widget.updateHandRaise(false);
+            .showSnackBar('Rejected', sctx!, HexColor(AppColors.information));
+        widget.updateHandRaise!(false);
       }
     }
   }
 
   updateHandRaise(UpdateHandRaiseRequest requestPayload) {
     print("hand Raise update Request " + jsonEncode(requestPayload));
-    audioSocketService.getSocket().emit(EMIT_HAND_RAISE_UPDATE, requestPayload);
+    audioSocketService!.getSocket()!.emit(EMIT_HAND_RAISE_UPDATE, requestPayload);
     getRequestsCount();
   }
 
@@ -1613,17 +1612,17 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
         'Event ended called+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
     var res = EventListItem.fromJson(data);
     if (res.id == eventId) {
-      widget.closeMinimizeActions();
-      _participantNotifier.deleteSingleItem(
+      widget.closeMinimizeActions!();
+      _participantNotifier!.deleteSingleItem(
           db,
-          int.parse(participantId),
+          int.parse(participantId!),
           isModerator
               ? 'stage'
               : isSpeaker
                   ? 'stage'
                   : 'floor');
       ToastBuilder().showToast(
-          AppLocalizations.of(sctx).translate('event_ended'),
+          AppLocalizations.of(sctx!)!.translate('event_ended'),
           sctx,
           HexColor(AppColors.information));
       leave();
@@ -1633,14 +1632,14 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
   void handDown() {
     JoinEventPayload payload = JoinEventPayload();
     payload.eventId = eventId;
-    payload.personId = prefs.getInt(Strings.userId);
+    payload.personId = prefs!.getInt(Strings.userId);
     print('hand down--------' + payload.toJson().toString());
-    audioSocketService.getSocket().emit(EMIT_HAND_DOWN, payload);
+    audioSocketService!.getSocket()!.emit(EMIT_HAND_DOWN, payload);
   }
 
   onHandsDown(data) {
     print('on hands down-------------------' + jsonEncode(data));
-    requestWidgetKey.currentState.hideCard();
+    requestWidgetKey.currentState!.hideCard();
     getRequestsCount();
     getRequests();
   }
@@ -1649,19 +1648,19 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
     print('on notification-------------------' + jsonEncode(data));
     var res = TalkNotificationResponse.fromJson(data);
     ToastBuilder().showSnackBar(
-        res.notification,
-        sctx,
+        res.notification!,
+        sctx!,
         HexColor(
           res.colorCode ?? AppColors.information,
         ),
         textColor: HexColor(AppColors.appColorWhite));
   }
 
-  int getStartTime() {
+  int? getStartTime() {
     return eventStartTime;
   }
 
-  Widget _fullVideoWidget(bool isLocal, int id) {
+  Widget _fullVideoWidget(bool isLocal, int? id) {
     return Align(
       alignment: Alignment.center,
       child: Stack(
@@ -1669,7 +1668,7 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
           Container(
             child: isLocal
                 ? RtcLocalView.SurfaceView()
-                : RtcRemoteView.SurfaceView(uid: id),
+                : RtcRemoteView.SurfaceView(uid: id!),
           ),
           Align(
             alignment: Alignment.topLeft,
@@ -1696,9 +1695,9 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
 }
 
 class _SearchParticipantsSheet extends StatefulWidget {
-  final Function(String) callback;
+  final Function(String?)? callback;
 
-  _SearchParticipantsSheet({Key key, this.callback}) : super(key: key);
+  _SearchParticipantsSheet({Key? key, this.callback}) : super(key: key);
 
   @override
   _SearchParticipantsState createState() => _SearchParticipantsState();
@@ -1706,20 +1705,20 @@ class _SearchParticipantsSheet extends StatefulWidget {
 
 class _SearchParticipantsState extends State<_SearchParticipantsSheet> {
   List<ParticipantListItem> participantList = [];
-  String SearchVal;
+  String? SearchVal;
 
-  void addValues(List<ParticipantListItem> list) {
+  void addValues(List<ParticipantListItem>? list) {
     setState(() {
       participantList.clear();
-      participantList.addAll(list);
+      participantList.addAll(list!);
     });
   }
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      widget.callback("");
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      widget.callback!("");
     });
   }
 
@@ -1734,7 +1733,7 @@ class _SearchParticipantsState extends State<_SearchParticipantsSheet> {
           Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                AppLocalizations.of(context).translate('search_des'),
+                AppLocalizations.of(context)!.translate('search_des'),
                 style: styleElements
                     .headline6ThemeScalable(context)
                     .copyWith(fontWeight: FontWeight.bold),
@@ -1744,7 +1743,7 @@ class _SearchParticipantsState extends State<_SearchParticipantsSheet> {
             child: SearchBox(
               onvalueChanged: (value) {
                 this.SearchVal = value;
-                widget.callback(SearchVal);
+                widget.callback!(SearchVal);
               },
               hintText: 'Search participants',
             ),
@@ -1769,10 +1768,10 @@ class _SearchParticipantsState extends State<_SearchParticipantsSheet> {
 }
 
 class _RequestsListSheet extends StatefulWidget {
-  final Function callback;
-  final Function(UpdateHandRaiseRequest request) onUserUpdateCallback;
+  final Function? callback;
+  final Function(UpdateHandRaiseRequest request)? onUserUpdateCallback;
 
-  _RequestsListSheet({Key key, this.callback, this.onUserUpdateCallback})
+  _RequestsListSheet({Key? key, this.callback, this.onUserUpdateCallback})
       : super(key: key);
 
   @override
@@ -1782,18 +1781,18 @@ class _RequestsListSheet extends StatefulWidget {
 class _RequestsListSheetState extends State<_RequestsListSheet> {
   List<RequestListItem> participantList = [];
 
-  void addValues(List<RequestListItem> list) {
+  void addValues(List<RequestListItem>? list) {
     setState(() {
       participantList.clear();
-      participantList.addAll(list);
+      participantList.addAll(list!);
     });
   }
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      widget.callback();
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+      widget.callback!();
     });
   }
 
@@ -1807,7 +1806,7 @@ class _RequestsListSheetState extends State<_RequestsListSheet> {
           Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                AppLocalizations.of(context).translate('manage_speaker'),
+                AppLocalizations.of(context)!.translate('manage_speaker'),
                 style: styleElements
                     .headline6ThemeScalable(context)
                     .copyWith(fontWeight: FontWeight.bold),
@@ -1828,7 +1827,7 @@ class _RequestsListSheetState extends State<_RequestsListSheet> {
                             key: UniqueKey(),
                           ),
                           title: Text(
-                            participantList[index].name,
+                            participantList[index].name!,
                             style:
                                 styleElements.subtitle1ThemeScalable(context),
                           ),
@@ -1837,7 +1836,7 @@ class _RequestsListSheetState extends State<_RequestsListSheet> {
                             children: [
                               TricycleTextButton(
                                   onPressed: () {
-                                    widget.onUserUpdateCallback(
+                                    widget.onUserUpdateCallback!(
                                         UpdateHandRaiseRequest(
                                             isAccepted: false,
                                             participantId:
@@ -1871,7 +1870,7 @@ class _RequestsListSheetState extends State<_RequestsListSheet> {
                                   )),
                               TricycleTextButton(
                                   onPressed: () {
-                                    widget.onUserUpdateCallback(
+                                    widget.onUserUpdateCallback!(
                                         UpdateHandRaiseRequest(
                                             isAccepted: true,
                                             participantId:
@@ -1911,7 +1910,7 @@ class _RequestsListSheetState extends State<_RequestsListSheet> {
 }
 
 class AudioPageLoaderPage extends StatefulWidget {
-  AudioPageLoaderPage({Key key}) : super(key: key);
+  AudioPageLoaderPage({Key? key}) : super(key: key);
 
   @override
   AudioPageLoaderPageState createState() => AudioPageLoaderPageState();

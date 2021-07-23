@@ -13,9 +13,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class SelectProfileSheet extends StatefulWidget {
-  SharedPreferences prefs;
-  int selectedId;
-  Function(int id, String type , String imageUrl,String name) clickCallback;
+  SharedPreferences? prefs;
+  int? selectedId;
+  Function(int? id, String? type , String? imageUrl,String? name) clickCallback;
   SelectProfileSheet(this.prefs,this.selectedId,this.clickCallback);
 
   @override
@@ -23,14 +23,14 @@ class SelectProfileSheet extends StatefulWidget {
 }
 
 class SelectProfileSheetState extends State<SelectProfileSheet> {
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
   List<Institutions> profiles = [];
 
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => getChildren());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => getChildren());
   }
 
   @override
@@ -48,7 +48,7 @@ class SelectProfileSheetState extends State<SelectProfileSheet> {
                 alignment: Alignment.topCenter,
                 child: Padding(
                   padding: EdgeInsets.all(16),
-                  child: Text(AppLocalizations.of(context).translate('select_profile'),
+                  child: Text(AppLocalizations.of(context)!.translate('select_profile'),
                     style: styleElements.headline6ThemeScalable(context),
                   ),
                 ),
@@ -76,7 +76,7 @@ class SelectProfileSheetState extends State<SelectProfileSheet> {
                             imageUrl: profiles[index].profileImage,
                           ),
                           title: Text(
-                            profiles[index].name,
+                            profiles[index].name!,
                             style: styleElements.subtitle1ThemeScalable(context),
                           ),
                           trailing: (widget.selectedId==profiles[index].id)?Icon(
@@ -97,23 +97,23 @@ class SelectProfileSheetState extends State<SelectProfileSheet> {
 
   void getChildren() {
     profiles.add(Institutions(
-        name: widget.prefs.getString(Strings.userName),
-        id: widget.prefs.getInt(Strings.userId),
+        name: widget.prefs!.getString(Strings.userName),
+        id: widget.prefs!.getInt(Strings.userId),
         type: 'person',
-        profileImage: widget.prefs.getString(Strings.profileImage)));
+        profileImage: widget.prefs!.getString(Strings.profileImage)));
     for (int i = 0;
-    i < widget.prefs.getStringList(Strings.institutionIdList).length;
+    i < widget.prefs!.getStringList(Strings.institutionIdList)!.length;
     i++) {
-      if (widget.prefs.getStringList(Strings.personTypeList)[i] ==
-          PERSON_TYPE.ADMINISTRATION.type  || widget.prefs.getStringList(Strings.personTypeList)[i] ==
+      if (widget.prefs!.getStringList(Strings.personTypeList)![i] ==
+          PERSON_TYPE.ADMINISTRATION.type  || widget.prefs!.getStringList(Strings.personTypeList)![i] ==
           PERSON_TYPE.TEACHER.type) {
         profiles.add(Institutions(
           id: int.parse(
-              widget.prefs.getStringList(Strings.institutionIdList)[i]),
-          name: widget.prefs.getStringList(Strings.institutionNameList)[i],
+              widget.prefs!.getStringList(Strings.institutionIdList)![i]),
+          name: widget.prefs!.getStringList(Strings.institutionNameList)![i],
           type: 'institution',
-          profileImage: widget.prefs.getStringList(
-              Strings.institutionImageList)[i],
+          profileImage: widget.prefs!.getStringList(
+              Strings.institutionImageList)![i],
         ));
       }
     }

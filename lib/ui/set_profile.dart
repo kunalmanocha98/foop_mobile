@@ -15,21 +15,21 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class Profile extends StatefulWidget {
   String type;
-  int currentPosition;
+  int? currentPosition;
 
-  Profile({Key key, @required this.type}) : super(key: key);
+  Profile({Key? key, required this.type}) : super(key: key);
 
   _SetProfile createState() => _SetProfile();
 }
 
 // ignore: must_be_immutable
 class _SetProfile extends State<Profile> {
-  String type;
+  String? type;
   List<StatelessWidget> listCardsAbout = [];
   List<PersonItem> rows = [];
-  ProgressDialog pr;
+  ProgressDialog? pr;
   List<CommonCardData> listCardData = [];
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   @override
   void initState() {
@@ -46,7 +46,7 @@ class _SetProfile extends State<Profile> {
         backgroundColor: HexColor(AppColors.appColorBackground),
         appBar:
         TricycleAppBar().getCustomAppBarWithSearch(context,
-            appBarTitle: AppLocalizations.of(context).translate("i_am"),
+            appBarTitle: AppLocalizations.of(context)!.translate("i_am"),
             onBackButtonPress: (){},
             onSearchValueChanged: (value) {
 
@@ -59,7 +59,7 @@ class _SetProfile extends State<Profile> {
                     margin: const EdgeInsets.all(16),
                     child: Center(
                       child: Text(
-                        AppLocalizations.of(context).translate("set_role"),
+                        AppLocalizations.of(context)!.translate("set_role"),
                         style: styleElements.bodyText1ThemeScalable(context),
                         textAlign: TextAlign.center,
                       ),
@@ -83,7 +83,7 @@ class _SetProfile extends State<Profile> {
                             child: Container(
                               padding: const EdgeInsets.all(16),
                               child: Center(
-                                child: Text(AppLocalizations.of(context).translate('set_another_role'),
+                                child: Text(AppLocalizations.of(context)!.translate('set_another_role'),
                                   style: styleElements.headline6ThemeScalable(context),
                                   textAlign: TextAlign.center,
                                 ),
@@ -106,9 +106,7 @@ class _SetProfile extends State<Profile> {
                               return listCardsAbout[index];
                             }),
                         // ignore: missing_return
-                        onNotification: (t) {
-                          if (t is ScrollStartNotification) {}
-                        },
+
                       ),
                     ))
               ],

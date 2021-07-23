@@ -1,7 +1,7 @@
 class DateFormat {
-  String statusCode;
-  String message;
-  List<DateFormatItem> rows;
+  String? statusCode;
+  String? message;
+  List<DateFormatItem>? rows;
 
   DateFormat({this.statusCode, this.message, this.rows});
 
@@ -11,7 +11,7 @@ class DateFormat {
     if (json['rows'] != null) {
       rows = [];//DateFormatItem>();
       json['rows'].forEach((v) {
-        rows.add(new DateFormatItem.fromJson(v));
+        rows!.add(new DateFormatItem.fromJson(v));
       });
     }
   }
@@ -21,17 +21,17 @@ class DateFormat {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class DateFormatItem {
-  int id;
-  String code;
-  String format;
-  bool isSelected = false;
+  int? id;
+  String? code;
+  String? format;
+  bool? isSelected = false;
 
   DateFormatItem({this.id, this.code, this.format});
 

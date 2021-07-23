@@ -1,7 +1,7 @@
 class InstituteList {
-  String statusCode;
-  String message;
-  List<InstituteItem> rows;
+  String? statusCode;
+  String? message;
+  List<InstituteItem>? rows;
 
   InstituteList({this.statusCode, this.message, this.rows});
 
@@ -11,7 +11,7 @@ class InstituteList {
     if (json['rows'] != null) {
       rows = [];
       json['rows'].forEach((v) {
-        rows.add(new InstituteItem.fromJson(v));
+        rows!.add(new InstituteItem.fromJson(v));
       });
     }
   }
@@ -21,36 +21,36 @@ class InstituteList {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class InstituteItem {
-  int id;
+  int? id;
   bool isLoading = false;
   bool isSelected = false;
-  bool isRegistered;
-  bool isValidated;
-  String accessCode;
-  String accessUrl;
-  String profileImage;
-  String personType;
-  String institutionType;
-  String code;
-  String description;
-  String name;
-  String shortName;
-  String mission;
-  String vision;
-  String institutionCategory;
-  String yearofEstablishment;
-  int establishmentYear;
-  String history;
-  String tagLine;
-  String quote;
-  InstitutionAddress institutionAddress;
+  bool? isRegistered;
+  bool? isValidated;
+  String? accessCode;
+  String? accessUrl;
+  String? profileImage;
+  String? personType;
+  String? institutionType;
+  String? code;
+  String? description;
+  String? name;
+  String? shortName;
+  String? mission;
+  String? vision;
+  String? institutionCategory;
+  String? yearofEstablishment;
+  int? establishmentYear;
+  String? history;
+  String? tagLine;
+  String? quote;
+  InstitutionAddress? institutionAddress;
 
   InstituteItem(
       {this.id,
@@ -124,26 +124,26 @@ class InstituteItem {
     data['tag_line'] = this.tagLine;
     data['quote'] = this.quote;
     if (this.institutionAddress != null) {
-      data['institution_address'] = this.institutionAddress.toJson();
+      data['institution_address'] = this.institutionAddress!.toJson();
     }
     return data;
   }
 }
 
 class InstitutionAddress {
-  int id;
-  String country;
-  String postalCode;
-  String region;
-  String city;
-  String streetAddress;
-  String subRegion;
-  bool isPrimary;
-  String locality;
-  String longitude;
-  String latitude;
-  String elevation;
-  String addressType;
+  int? id;
+  String? country;
+  String? postalCode;
+  String? region;
+  String? city;
+  String? streetAddress;
+  String? subRegion;
+  bool? isPrimary;
+  String? locality;
+  String? longitude;
+  String? latitude;
+  String? elevation;
+  String? addressType;
 
   InstitutionAddress(
       {this.id,

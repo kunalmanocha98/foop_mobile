@@ -1,8 +1,8 @@
 class NotificationCountResponse {
-  String statusCode;
-  String message;
-  String rows;
-  int total;
+  String? statusCode;
+  String? message;
+  String? rows;
+  int? total;
 
   NotificationCountResponse(
       {this.statusCode, this.message, this.rows, this.total});

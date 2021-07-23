@@ -1,8 +1,8 @@
 class EdufluencerStatusResponse {
-  String statusCode;
-  String message;
-  EdufluencerStatus rows;
-  int total;
+  String? statusCode;
+  String? message;
+  EdufluencerStatus? rows;
+  int? total;
 
   EdufluencerStatusResponse(
       {this.statusCode, this.message, this.rows, this.total});
@@ -19,7 +19,7 @@ class EdufluencerStatusResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     data['total'] = this.total;
     return data;
@@ -27,10 +27,10 @@ class EdufluencerStatusResponse {
 }
 
 class EdufluencerStatus {
-  int id;
-  int myStudentCount;
-  int myEdufluencerTutorCount;
-  bool isEdufluencer;
+  int? id;
+  int? myStudentCount;
+  int? myEdufluencerTutorCount;
+  bool? isEdufluencer;
 
   EdufluencerStatus(
       {this.id,

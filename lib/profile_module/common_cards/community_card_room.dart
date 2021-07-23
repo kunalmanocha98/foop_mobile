@@ -18,16 +18,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 // ignore: must_be_immutable
 class CommunityRoomCard extends StatelessWidget {
   final CommonCardData data;
-  List<Data> listSubItems = [];
+  List<Data>? listSubItems = [];
 
-  TextStyleElements styleElements;
-  BuildContext context;
-  SharedPreferences prefs;
+  late TextStyleElements styleElements;
+  BuildContext? context;
+  SharedPreferences? prefs;
 
 
   CommunityRoomCard(
-      {Key key,
-        @required this.data})
+      {Key? key,
+        required this.data})
       : super(key: key);
 
   @override
@@ -35,7 +35,7 @@ class CommunityRoomCard extends StatelessWidget {
     this.context = context;
     styleElements = TextStyleElements(context);
     listSubItems = data.data;
-    return listSubItems.isNotEmpty
+    return listSubItems!.isNotEmpty
         ? Container(
         child: Column(
           children: <Widget>[
@@ -49,7 +49,7 @@ class CommunityRoomCard extends StatelessWidget {
                           child: Container(
                             padding: const EdgeInsets.only(
                                 left: 16, right: 16, top: 12, bottom: 12),
-                            child: Text(AppLocalizations.of(context).translate('communityroom'),
+                            child: Text(AppLocalizations.of(context)!.translate('communityroom'),
                               style: styleElements
                                   .headline6ThemeScalable(context)
                                   .copyWith(
@@ -77,7 +77,7 @@ class CommunityRoomCard extends StatelessWidget {
                                   /*visible: data.isShowMore ??= false,*/
                                   child: Align(
                                     alignment: Alignment.bottomRight,
-                                    child: Text(AppLocalizations.of(context).translate('see_more'),
+                                    child: Text(AppLocalizations.of(context)!.translate('see_more'),
                                       style: styleElements
                                           .subtitle2ThemeScalable(context)
                                           .copyWith(
@@ -91,11 +91,11 @@ class CommunityRoomCard extends StatelessWidget {
                   ],
                 )),
             Container(
-              height: listSubItems.length>2?520:260,
+              height: listSubItems!.length>2?520:260,
               child: GridView.builder(
                   padding: const EdgeInsets.all(0.0),
                   physics: ClampingScrollPhysics(),
-                  itemCount: listSubItems.length>4?4:listSubItems.length,
+                  itemCount: listSubItems!.length>4?4:listSubItems!.length,
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
                   dragStartBehavior: DragStartBehavior.start,
@@ -104,7 +104,7 @@ class CommunityRoomCard extends StatelessWidget {
                 ),
                   // itemExtent: 0.5.sw,
                   itemBuilder: (context, index) {
-                    var roomData = RoomListItem.fromJson(listSubItems[index].toJson());
+                    var roomData = RoomListItem.fromJson(listSubItems![index].toJson());
                     return GestureDetector(
                       onTap: () async{
                         prefs ??= await SharedPreferences.getInstance();
@@ -112,7 +112,7 @@ class CommunityRoomCard extends StatelessWidget {
                               context,
                               MaterialPageRoute(
                                   builder: (context) => RoomDetailPage(
-                                      roomData,prefs.getInt(Strings.userId),prefs.getString(Strings.ownerType),prefs.getString(Strings.ownerType)=="institution"?"institution":"person",prefs.getInt(Strings.instituteId),roomData.id,null
+                                      roomData,prefs!.getInt(Strings.userId),prefs!.getString(Strings.ownerType),prefs!.getString(Strings.ownerType)=="institution"?"institution":"person",prefs!.getInt(Strings.instituteId),roomData.id,null
                                   )));
                       },
                       child: TricycleRoomCalenderCard(

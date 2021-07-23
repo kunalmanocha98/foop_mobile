@@ -19,12 +19,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class ReviewsPage extends StatefulWidget {
-  String personName;
+  String? personName;
   String type;
-  int id;
-  String ownerType;
-  int ownerId;
-  Null Function() callback;
+  int? id;
+  String? ownerType;
+  int? ownerId;
+  Null Function()? callback;
   ReviewsPage(this.personName, this.type, this.id, this.callback);
 
   @override
@@ -33,16 +33,16 @@ class ReviewsPage extends StatefulWidget {
 }
 
 class _ReviewsPage extends State<ReviewsPage>  with AutomaticKeepAliveClientMixin<ReviewsPage>{
-  String searchVal;
-  String personName;
+  String? searchVal;
+  String? personName;
   String type;
-  int id;
-  String ownerType;
-  int ownerId;
-  Null Function() callback;
+  int? id;
+  String? ownerType;
+  int? ownerId;
+  Null Function()? callback;
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
-  SharedPreferences prefs;
-  TextStyleElements styleElements;
+  SharedPreferences? prefs;
+  TextStyleElements? styleElements;
   @override
   bool get wantKeepAlive => true;
   void setSharedPreferences() async {
@@ -67,7 +67,7 @@ class _ReviewsPage extends State<ReviewsPage>  with AutomaticKeepAliveClientMixi
   }
 
   refresh() {
-    paginatorKey.currentState.changeState(resetState: true);
+    paginatorKey.currentState!.changeState(resetState: true);
   }
 
   @override
@@ -82,7 +82,7 @@ class _ReviewsPage extends State<ReviewsPage>  with AutomaticKeepAliveClientMixi
               SliverToBoxAdapter(
                 child: SearchBox(
                   onvalueChanged: onsearchValueChanged,
-                  hintText: AppLocalizations.of(context).translate('search'),
+                  hintText: AppLocalizations.of(context)!.translate('search'),
                 ),
               )
             ];

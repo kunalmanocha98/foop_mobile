@@ -20,7 +20,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class NewPassword extends StatefulWidget {
   final String email;
-  NewPassword({Key key, @required this.email}) : super(key: key);
+  NewPassword({Key? key, required this.email}) : super(key: key);
   @override
   _NewPassword createState() => new _NewPassword(email);
 }
@@ -28,13 +28,13 @@ class NewPassword extends StatefulWidget {
 class _NewPassword extends State<NewPassword> {
   final userNameTextController = TextEditingController();
   final confirmPasswordController = TextEditingController();
-  BuildContext context;
+ late BuildContext context;
   bool isCalling = false;
   bool _validate = false;
   bool _validate2 = false;
-  SharedPreferences prefs;
-  final String email;
-  TextStyleElements styleElements;
+  SharedPreferences? prefs;
+  late String  email;
+  late TextStyleElements styleElements;
 
   _NewPassword( this.email) ;
 
@@ -58,15 +58,15 @@ class _NewPassword extends State<NewPassword> {
             if (value != null) {
               var data = CommonBasicResponse.fromJson(value);
               if (data.statusCode == Strings.success_code) {
-                ToastBuilder().showSnackBar(data.message, sctx,HexColor(AppColors.success));
+                ToastBuilder().showSnackBar(data.message!, sctx,HexColor(AppColors.success));
                 Navigator.pushNamedAndRemoveUntil(
                     context, "/login", (r) => false);
               } else {
                 if (data.message != null)
-                  ToastBuilder().showSnackBar(data.message, sctx,HexColor(AppColors.information));
+                  ToastBuilder().showSnackBar(data.message!, sctx,HexColor(AppColors.information));
                 else
                   ToastBuilder().showSnackBar(
-                      AppLocalizations.of(context).translate("try_again"),
+                      AppLocalizations.of(context)!.translate("try_again"),
                       sctx,HexColor(AppColors.failure));
               }
             }
@@ -75,25 +75,25 @@ class _NewPassword extends State<NewPassword> {
               isCalling = false;
             });
             ToastBuilder().showSnackBar(
-                AppLocalizations.of(context).translate("try_again"), sctx,HexColor(AppColors.information));
+                AppLocalizations.of(context)!.translate("try_again"), sctx,HexColor(AppColors.information));
           });
         } else
           ToastBuilder().showSnackBar(
-              AppLocalizations.of(context).translate("password_not_matching"),
+              AppLocalizations.of(context)!.translate("password_not_matching"),
               sctx,HexColor(AppColors.information));
       } else
         ToastBuilder().showSnackBar(
-            AppLocalizations.of(context).translate("confirm_password"),
+            AppLocalizations.of(context)!.translate("confirm_password"),
             sctx,HexColor(AppColors.information));
     } else
       {
         print (userNameTextController.text);
         ToastBuilder().showSnackBar(
-            AppLocalizations.of(context).translate("enter_password"), sctx,HexColor(AppColors.information));
+            AppLocalizations.of(context)!.translate("enter_password"), sctx,HexColor(AppColors.information));
       }
 
   }
-BuildContext sctx;
+late BuildContext sctx;
   @override
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
@@ -107,7 +107,7 @@ BuildContext sctx;
               color: HexColor(AppColors.appColorBlack65)
           ),
           validator: EditProfileMixins().validatePassword,
-          onSaved: (String value) {},
+          onSaved: (String? value) {},
           controller: userNameTextController,
           onChanged: (v){
 
@@ -117,8 +117,8 @@ BuildContext sctx;
           },
           decoration: InputDecoration(
               contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-              hintText: AppLocalizations.of(context).translate('enter_new_pass'),
-              errorText:!_validate?AppLocalizations.of(context).translate("min_character"):null,
+              hintText: AppLocalizations.of(context)!.translate('enter_new_pass'),
+              errorText:!_validate?AppLocalizations.of(context)!.translate("min_character"):null,
               hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
               prefixIcon: Padding(
                   padding: EdgeInsets.all(0.0.h),
@@ -140,7 +140,7 @@ BuildContext sctx;
           color: HexColor(AppColors.appColorBlack65)
       ),
       validator: EditProfileMixins().validatePassword,
-      onSaved: (String value) {},
+      onSaved: (String? value) {},
       onChanged: (v){
 
         setState(() {
@@ -150,8 +150,8 @@ BuildContext sctx;
       controller: confirmPasswordController,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-          hintText: AppLocalizations.of(context).translate('password'),
-          errorText:!_validate2?AppLocalizations.of(context).translate("min_character"):null,
+          hintText: AppLocalizations.of(context)!.translate('password'),
+          errorText:!_validate2?AppLocalizations.of(context)!.translate("min_character"):null,
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
           prefixIcon: Padding(
               padding: EdgeInsets.all(0.0.h),
@@ -189,7 +189,7 @@ BuildContext sctx;
               Container(
                 alignment: Alignment(0, -0.4),
                 child: Text(
-                  AppLocalizations.of(context).translate("reset_password"),
+                  AppLocalizations.of(context)!.translate("reset_password"),
                   style:styleElements.headline5ThemeScalable(context),
                 ),
               ),
@@ -214,7 +214,7 @@ BuildContext sctx;
                 child: Container(
                   alignment: Alignment(0, 0.4),
                   child: LargeButton(
-                    name: AppLocalizations.of(context).translate("submit"),
+                    name: AppLocalizations.of(context)!.translate("submit"),
                     offsetX: 109.66,
                     offsetY: 12.93,
                     callback: (){

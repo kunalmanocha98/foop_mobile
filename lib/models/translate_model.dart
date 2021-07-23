@@ -1,5 +1,5 @@
 class TranslateResponse {
-  Data data;
+  Data? data;
 
   TranslateResponse({this.data});
 
@@ -10,14 +10,14 @@ class TranslateResponse {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.data != null) {
-      data['data'] = this.data.toJson();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
 }
 
 class Data {
-  List<Translations> translations;
+  List<Translations>? translations;
 
   Data({this.translations});
 
@@ -25,7 +25,7 @@ class Data {
     if (json['translations'] != null) {
       translations = [];//Translations>();
       json['translations'].forEach((v) {
-        translations.add(new Translations.fromJson(v));
+        translations!.add(new Translations.fromJson(v));
       });
     }
   }
@@ -33,14 +33,14 @@ class Data {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.translations != null) {
-      data['translations'] = this.translations.map((v) => v.toJson()).toList();
+      data['translations'] = this.translations!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Translations {
-  String translatedText;
+  String? translatedText;
 
   Translations({this.translatedText});
 

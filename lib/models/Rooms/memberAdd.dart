@@ -1,8 +1,8 @@
 class MemberAddPayload {
-  int roomId;
-  int roomInstitutionId;
-  bool isAddAllMembers;
-  List<MembersItem> members;
+  int? roomId;
+  int? roomInstitutionId;
+  bool? isAddAllMembers;
+  List<MembersItem>? members;
 
   MemberAddPayload(
       {this.roomId,
@@ -17,7 +17,7 @@ class MemberAddPayload {
     if (json['members'] != null) {
       members = [];//MembersItem>();
       json['members'].forEach((v) {
-        members.add(new MembersItem.fromJson(v));
+        members!.add(new MembersItem.fromJson(v));
       });
     }
   }
@@ -28,19 +28,19 @@ class MemberAddPayload {
     data['room_institution_id'] = this.roomInstitutionId;
     data['is_add_all_members'] = this.isAddAllMembers;
     if (this.members != null) {
-      data['members'] = this.members.map((v) => v.toJson()).toList();
+      data['members'] = this.members!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class MembersItem {
-  int memberId;
-  String memberType;
-  String addMethod;
-  String profileImage;
-  String memberName;
-  String roleType;
+  int? memberId;
+  String? memberType;
+  String? addMethod;
+  String? profileImage;
+  String? memberName;
+  String? roleType;
 
   MembersItem({this.memberId, this.memberType, this.addMethod,this.profileImage,this.memberName,this.roleType});
 

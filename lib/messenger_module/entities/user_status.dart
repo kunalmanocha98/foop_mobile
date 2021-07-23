@@ -1,6 +1,6 @@
 class UserStatusPayload {
-  String personId;
-  bool isOnline;
+  String? personId;
+  bool? isOnline;
 
   UserStatusPayload({this.personId, this.isOnline});
 

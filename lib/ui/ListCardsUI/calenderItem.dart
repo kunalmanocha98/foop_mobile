@@ -9,8 +9,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 // ignore: must_be_immutable
 class CalenderItem extends StatelessWidget {
   SubRow data;
-  TextStyleElements styleElements;
-  CalenderItem({Key key, @required this.data,this.styleElements}) : super(key: key);
+  TextStyleElements? styleElements;
+  CalenderItem({Key? key, required this.data,this.styleElements}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class CalenderItem extends StatelessWidget {
                           padding: EdgeInsets.all(4.h),
                           child: Text(
                             data.textOne ?? "",
-                            style:styleElements.captionThemeScalable(context),
+                            style:styleElements!.captionThemeScalable(context),
                           ),
                         ),
                       ),
@@ -38,8 +38,8 @@ class CalenderItem extends StatelessWidget {
                         child: Padding(
                           padding: EdgeInsets.all(4.h),
                           child: Text(
-                            data.textTwo,
-                            style: styleElements.subtitle1ThemeScalable(context),
+                            data.textTwo!,
+                            style: styleElements!.subtitle1ThemeScalable(context),
                           ),
                         ),
                       ),
@@ -55,8 +55,8 @@ class CalenderItem extends StatelessWidget {
                         child: Padding(
                           padding: EdgeInsets.all(4.h),
                           child: Text(
-                            data.textThree,
-                            style: styleElements.subtitle1ThemeScalable(context),
+                            data.textThree!,
+                            style: styleElements!.subtitle1ThemeScalable(context),
                           ),
                         ),
                       ),
@@ -65,8 +65,8 @@ class CalenderItem extends StatelessWidget {
                           child: Padding(
                             padding: EdgeInsets.all(4.h),
                             child: Text(
-                              data.textFour,
-                              style: styleElements.captionThemeScalable(context),
+                              data.textFour!,
+                              style: styleElements!.captionThemeScalable(context),
                             ),
                           )),
                     ],

@@ -25,12 +25,12 @@ class FollowersFollowingPage extends StatefulWidget {
   Null Function() callback;
 
   FollowersFollowingPage({
-    Key key,
-    @required this.type,
-    @required this.id,
-    @required this.pageTitle,
-    @required this.callback,
-    @required this.currentTab,
+    Key? key,
+    required this.type,
+    required this.id,
+    required this.pageTitle,
+    required this.callback,
+    required this.currentTab,
   }) : super(key: key);
 
   _FollowersFollowingPage createState() =>
@@ -39,13 +39,13 @@ class FollowersFollowingPage extends StatefulWidget {
 
 class _FollowersFollowingPage extends State<FollowersFollowingPage> with SingleTickerProviderStateMixin {
   List<CustomTabMaker> list = [];
-  TabController _tabController;
-  TextStyleElements styleElements;
+  TabController? _tabController;
+  TextStyleElements? styleElements;
   String type;
   int id;
-  SharedPreferences prefs;
-  String ownerType;
-  int ownerId;
+  late SharedPreferences prefs;
+  String? ownerType;
+  int? ownerId;
   int _currentPosition;
   String pageTitle;
   Null Function() callback;
@@ -56,13 +56,13 @@ class _FollowersFollowingPage extends State<FollowersFollowingPage> with SingleT
     super.initState();
 
 
-    WidgetsBinding.instance.addPostFrameCallback((_) => setSharedPreferences());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => setSharedPreferences());
   }
 
   onPositionChange() {
-    if (!_tabController.indexIsChanging && this.mounted) {
+    if (!_tabController!.indexIsChanging && this.mounted) {
       setState(() {
-        _currentPosition = _tabController.index;
+        _currentPosition = _tabController!.index;
       });
     }
   }
@@ -75,13 +75,13 @@ class _FollowersFollowingPage extends State<FollowersFollowingPage> with SingleT
   }
   loadPages() {
     list.add(
-        CustomTabMaker(statelessWidget: FollowersPage(pageTitle,type,id,ownerId,ownerType,callback), tabName: AppLocalizations.of(context).translate('followers')));
+        CustomTabMaker(statelessWidget: FollowersPage(pageTitle,type,id,ownerId,ownerType,callback), tabName: AppLocalizations.of(context)!.translate('followers')));
     list.add(CustomTabMaker(
-        statelessWidget: FollowingPage(pageTitle,type,id,ownerId,ownerType,callback), tabName: AppLocalizations.of(context).translate('following')));
+        statelessWidget: FollowingPage(pageTitle,type,id,ownerId,ownerType,callback), tabName: AppLocalizations.of(context)!.translate('following')));
 
     setState(() {
       _tabController = TabController(vsync: this, length: list.length);
-      _tabController.addListener(onPositionChange);
+      _tabController!.addListener(onPositionChange);
     });
   }
 
@@ -127,7 +127,7 @@ class _FollowersFollowingPage extends State<FollowersFollowingPage> with SingleT
                                 tabName: list[index].tabName,
                                 isActive: index==_currentPosition,
                                 onPressed: (){
-                                  _tabController.animateTo(index);
+                                  _tabController!.animateTo(index);
                                   if (this.mounted) {
                                     setState(() {
                                       _currentPosition = index;

@@ -33,26 +33,26 @@ class _CommentsPage extends State<CommentsPage>
     with SingleTickerProviderStateMixin {
 
   final commentController = TextEditingController();
-  SharedPreferences prefs;
+  SharedPreferences? prefs;
   var pageTitle = "";
   var color1 = HexColor(AppColors.appMainColor);
-  int instituteId;
+  int? instituteId;
   var color2 = HexColor(AppColors.appColorWhite);
   var isSearching = false;
   var color3 = HexColor(AppColors.appColorWhite);
   var isCheckedColor = HexColor(AppColors.appColorWhite);
-  List<CommentsItem> listComments = [];
+  List<CommentsItem>? listComments = [];
   bool _enabled = true;
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) => getComments(null));
+    WidgetsBinding.instance!.addPostFrameCallback((_) => getComments(null));
 
     super.initState();
   }
 
-  void getComments(String searchValue) async {
+  void getComments(String? searchValue) async {
 
 
     final body =
@@ -81,7 +81,7 @@ class _CommentsPage extends State<CommentsPage>
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
     ScreenUtil.init;
-    pageTitle = AppLocalizations.of(context).translate('comments');
+    pageTitle = AppLocalizations.of(context)!.translate('comments');
     return SafeArea(
       child: Scaffold(
         backgroundColor: HexColor(AppColors.appColorBackground),
@@ -114,7 +114,7 @@ class _CommentsPage extends State<CommentsPage>
                                       margin: const EdgeInsets.only(
                                           left: 8, right: 8, top: 24, bottom: 70),
                                       child: Visibility(
-                                        visible: listComments.length > 0,
+                                        visible: listComments!.length > 0,
                                         child: Card(
                                           child: ListView.builder(
                                               padding: EdgeInsets.only(
@@ -122,11 +122,11 @@ class _CommentsPage extends State<CommentsPage>
                                                   right: 8,
                                                   bottom: 8,
                                                   top: 8),
-                                              itemCount: listComments.length,
+                                              itemCount: listComments!.length,
                                               itemBuilder: (BuildContext context,
                                                   int index) {
                                                 return CommentItem(
-                                                    data: listComments[index]);
+                                                    data: listComments![index]);
                                               }),
                                         ),
                                       ))),
@@ -214,7 +214,7 @@ class _CommentsPage extends State<CommentsPage>
                                                 data.noteContent =
                                                     commentController.text;
                                                 data.notesCreatedByName = "savil";
-                                                listComments.add(data);
+                                                listComments!.add(data);
                                                 commentController.clear();
                                               });
                                             },

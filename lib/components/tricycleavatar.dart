@@ -15,27 +15,27 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class TricycleAvatar extends StatefulWidget {
-  double size;
-  String imageUrl;
-  bool withBorder;
-  double borderSize;
-  Color borderColor;
-  SERVICE_TYPE service_type;
-  RESOLUTION_TYPE resolution_type;
+  double? size;
+  String? imageUrl;
+  bool? withBorder;
+  double? borderSize;
+  Color? borderColor;
+  SERVICE_TYPE? service_type;
+  RESOLUTION_TYPE? resolution_type;
   bool isClickable;
-  bool isFullUrl;
+  bool? isFullUrl;
   bool isFromAsset;
-  String placeholderImage;
+  String? placeholderImage;
   bool shouldPrintLog;
   bool withBorderDivider;
-  double borderDividersize;
-  String name;
+  double? borderDividersize;
+  String? name;
 
   TricycleAvatar(
-      {Key key,
+      {Key? key,
         this.size,
         this.borderColor,
-        @required this.imageUrl,
+        required this.imageUrl,
         this.service_type,
         this.resolution_type,
         this.isClickable = true,
@@ -56,8 +56,8 @@ class TricycleAvatar extends StatefulWidget {
 }
 
 class TricycleAvatarState extends State<TricycleAvatar> {
-  double size;
-  String imageUrl;
+  double? size;
+  String? imageUrl;
 
   TricycleAvatarState({this.size, this.imageUrl});
 
@@ -84,10 +84,10 @@ class TricycleAvatarState extends State<TricycleAvatar> {
             }));
       }
           : null,
-      child: (widget.withBorder != null && widget.withBorder)
+      child: (widget.withBorder != null && widget.withBorder!)
           ? Container(
         padding: widget.borderSize != null
-            ? EdgeInsets.all(widget.borderSize)
+            ? EdgeInsets.all(widget.borderSize!)
             : EdgeInsets.all(4),
         decoration: BoxDecoration(
             color: widget.borderColor != null
@@ -96,10 +96,9 @@ class TricycleAvatarState extends State<TricycleAvatar> {
             shape: BoxShape.circle,
             boxShadow: [CommonComponents().getShadowforBox_01_3()]),
         child: Container(
-          padding: (widget.withBorderDivider != null &&
-              widget.withBorderDivider)
+          padding: (widget.withBorderDivider)
               ? widget.borderDividersize != null
-              ? EdgeInsets.all(widget.borderDividersize)
+              ? EdgeInsets.all(widget.borderDividersize!)
               : EdgeInsets.all(2)
               : EdgeInsets.all(0),
           decoration: BoxDecoration(
@@ -115,17 +114,17 @@ class TricycleAvatarState extends State<TricycleAvatar> {
                 color: HexColor(AppColors.appColorWhite),
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                    image: widget.isFromAsset
-                        ? AssetImage(imageUrl)
+                    image: (widget.isFromAsset
+                        ? AssetImage(imageUrl!)
                         : CachedNetworkImageProvider(
-                      widget.isFullUrl
-                          ? imageUrl
+                      widget.isFullUrl!
+                          ? imageUrl!
                           : Utility().getUrlForImage(
                           imageUrl,
                           widget.resolution_type,
                           widget.service_type,
                           shouldprint: widget.shouldPrintLog),
-                    ),
+                    )) as ImageProvider<Object>,
                     fit: BoxFit.cover)),
           ),
         ),
@@ -138,13 +137,13 @@ class TricycleAvatarState extends State<TricycleAvatar> {
         decoration: BoxDecoration(
             shape: BoxShape.circle,
             image: DecorationImage(
-                image: widget.isFromAsset
-                    ? AssetImage(imageUrl)
-                    : CachedNetworkImageProvider(widget.isFullUrl
-                    ? imageUrl
+                image: (widget.isFromAsset
+                    ? AssetImage(imageUrl!)
+                    : CachedNetworkImageProvider(widget.isFullUrl!
+                    ? imageUrl!
                     : Utility().getUrlForImage(imageUrl,
                     widget.resolution_type, widget.service_type,
-                    shouldprint: widget.shouldPrintLog)),
+                    shouldprint: widget.shouldPrintLog))) as ImageProvider<Object>,
                 fit: BoxFit.cover)),
       ),
     );
@@ -160,7 +159,7 @@ class TricycleAvatarState extends State<TricycleAvatar> {
           shape: BoxShape.circle,),
       child: Center(
         child: TricycleAutoSizeText(
-         widget.name[0],
+         widget.name![0],
          style: TextStyleElements(context).headline1ThemeScalable(context).copyWith(
            fontWeight: FontWeight.normal,
            color: HexColor(AppColors.appColorBlack65)

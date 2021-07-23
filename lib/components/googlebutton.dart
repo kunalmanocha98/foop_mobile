@@ -10,12 +10,12 @@ import 'commonComponents.dart';
 // ignore: must_be_immutable
 class Googlebutton extends StatelessWidget {
   Googlebutton({
-    Key key,
-    String name,
-    double offsetX,
-    double offsetY,
+    Key? key,
+    String? name,
+    double? offsetX,
+    double? offsetY,
   }) : super(key: key);
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class Googlebutton extends StatelessWidget {
         Transform.translate(
           offset: Offset(55.96, 11.44),
           child: Text(
-            AppLocalizations.of(context).translate('google_in'),
+            AppLocalizations.of(context)!.translate('google_in'),
             style: styleElements.headline5ThemeScalable(context),
             textAlign: TextAlign.left,
           ),

@@ -28,7 +28,7 @@ import 'dialog_page.dart';
 
 // ignore: must_be_immutable
 class ChildDetailFormPage extends StatefulWidget {
-  RegisterUserAs registerUserAs;
+  RegisterUserAs? registerUserAs;
   @override
   ChildDetailFormPageState createState() => ChildDetailFormPageState(registerUserAs);
 
@@ -36,22 +36,22 @@ class ChildDetailFormPage extends StatefulWidget {
 }
 
 class ChildDetailFormPageState extends State<ChildDetailFormPage> {
-  TextStyleElements styleElements;
-  RegisterUserAs registerUserAs;
-  TextEditingController nameController;
-  TextEditingController enrollmentNumberController;
-  TextEditingController emailController;
-  TextEditingController mobileController;
-  int selectedEpoch;
-  SharedPreferences prefs;
+  late TextStyleElements styleElements;
+  RegisterUserAs? registerUserAs;
+  TextEditingController? nameController;
+  TextEditingController? enrollmentNumberController;
+  TextEditingController? emailController;
+  TextEditingController? mobileController;
+  int? selectedEpoch;
+  late SharedPreferences prefs;
   String selectedDate = 'Date of Birth';
   String gender = "Gender";
   String selectedGender = "Gender";
   var items = ['Male', 'Female', 'Transgender'];
-  String email;
-  String childName;
-  String admissionNumber;
-  String mobileNumber;
+  String? email;
+  String? childName;
+  String? admissionNumber;
+  String? mobileNumber;
   GlobalKey<FormState> formKey = GlobalKey();
   GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
   Future<void> _setPref() async {
@@ -116,7 +116,7 @@ class ChildDetailFormPageState extends State<ChildDetailFormPage> {
                         ),
                         child: Align(
                           alignment: Alignment.centerLeft,
-                          child: Text(selectedGender??=gender,
+                          child: Text(selectedGender,
                             textAlign: TextAlign.left,
                             style:
                             styleElements.subtitle2ThemeScalable(context),
@@ -164,7 +164,7 @@ class ChildDetailFormPageState extends State<ChildDetailFormPage> {
       },
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(8.0, 15.0, 20.0, 4.0),
-          hintText: AppLocalizations.of(context).translate('name_child'),
+          hintText: AppLocalizations.of(context)!.translate('name_child'),
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
           border: UnderlineInputBorder(
             borderSide: BorderSide(
@@ -181,9 +181,9 @@ class ChildDetailFormPageState extends State<ChildDetailFormPage> {
         textCapitalization: TextCapitalization.words,
         onChanged: (text) {
           if (text.length == 1 && text != text.toUpperCase()) {
-            enrollmentNumberController.text = text.toUpperCase();
-            enrollmentNumberController.selection = TextSelection.fromPosition(
-                TextPosition(offset: enrollmentNumberController.text.length));
+            enrollmentNumberController!.text = text.toUpperCase();
+            enrollmentNumberController!.selection = TextSelection.fromPosition(
+                TextPosition(offset: enrollmentNumberController!.text.length));
           }
         },
         validator: CommonMixins().validateTextField,
@@ -193,7 +193,7 @@ class ChildDetailFormPageState extends State<ChildDetailFormPage> {
         decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(8.0, 15.0, 20.0, 4.0),
           hintText:
-          AppLocalizations.of(context).translate("enter_student_number"),
+          AppLocalizations.of(context)!.translate("enter_student_number"),
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
         ));
     final emailField = TextFormField(
@@ -210,14 +210,14 @@ class ChildDetailFormPageState extends State<ChildDetailFormPage> {
       ],
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(8.0, 15.0, 20.0, 15.0),
-          hintText: AppLocalizations.of(context).translate('email_id_child'),
+          hintText: AppLocalizations.of(context)!.translate('email_id_child'),
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
           border: UnderlineInputBorder(
             borderSide: BorderSide(
               width: 0.0,
             ),
           )),
-      onSaved: (String value) {
+      onSaved: (String? value) {
         email = value;
       },
     );
@@ -230,9 +230,9 @@ class ChildDetailFormPageState extends State<ChildDetailFormPage> {
         textCapitalization: TextCapitalization.words,
         onChanged: (text) {
           if (text.length == 1 && text != text.toUpperCase()) {
-            mobileController.text = text.toUpperCase();
-            mobileController.selection = TextSelection.fromPosition(
-                TextPosition(offset: mobileController.text.length));
+            mobileController!.text = text.toUpperCase();
+            mobileController!.selection = TextSelection.fromPosition(
+                TextPosition(offset: mobileController!.text.length));
           }
         },
 
@@ -241,7 +241,7 @@ class ChildDetailFormPageState extends State<ChildDetailFormPage> {
         },
         decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(8.0, 15.0, 20.0, 4.0),
-          hintText: AppLocalizations.of(context).translate("child_mobile"),
+          hintText: AppLocalizations.of(context)!.translate("child_mobile"),
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
         ));
     return SafeArea(
@@ -249,7 +249,7 @@ class ChildDetailFormPageState extends State<ChildDetailFormPage> {
         resizeToAvoidBottomInset: true,
         appBar: TricycleAppBar().getCustomAppBar(
           context,
-          appBarTitle: AppLocalizations.of(context).translate('child_detail'),
+          appBarTitle: AppLocalizations.of(context)!.translate('child_detail'),
           onBackButtonPress: () {
             Navigator.pop(context);
           },
@@ -268,7 +268,7 @@ class ChildDetailFormPageState extends State<ChildDetailFormPage> {
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Text(AppLocalizations.of(context).translate('enter_details_child'),
+                              Text(AppLocalizations.of(context)!.translate('enter_details_child'),
                                 style: styleElements
                                     .headline6ThemeScalable(context),
                               ),
@@ -302,7 +302,7 @@ class ChildDetailFormPageState extends State<ChildDetailFormPage> {
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Text(AppLocalizations.of(context).translate("want_to_invite_child"),
+                                child: Text(AppLocalizations.of(context)!.translate("want_to_invite_child"),
                                   style: styleElements
                                       .bodyText2ThemeScalable(context),
                                 ),
@@ -357,7 +357,7 @@ class ChildDetailFormPageState extends State<ChildDetailFormPage> {
                           shape: RoundedRectangleBorder(),
                           onPressed: () {
                             if (prefs.getString("token") != null) {
-                              if (prefs.getBool("isProfileCreated") != null && prefs.getBool("isProfileCreated"))
+                              if (prefs.getBool("isProfileCreated") != null && prefs.getBool("isProfileCreated")!)
                               {
                                 Navigator.of(context).pushAndRemoveUntil(
                                     MaterialPageRoute(builder: (ctx) => DashboardPage()),
@@ -374,7 +374,7 @@ class ChildDetailFormPageState extends State<ChildDetailFormPage> {
 
                             }
                           },
-                          child: Text(AppLocalizations.of(context).translate('cancel_registration'),
+                          child: Text(AppLocalizations.of(context)!.translate('cancel_registration'),
                             style: styleElements
                                 .captionThemeScalable(context)
                                 .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -387,7 +387,7 @@ class ChildDetailFormPageState extends State<ChildDetailFormPage> {
                               validate();
                             },
                             child: Text(
-                              AppLocalizations.of(context).translate('next'),
+                              AppLocalizations.of(context)!.translate('next'),
                               style: styleElements
                                   .captionThemeScalable(context)
                                   .copyWith(
@@ -406,22 +406,22 @@ class ChildDetailFormPageState extends State<ChildDetailFormPage> {
   }
 
   void validate() {
-    if (formKey.currentState.validate()) {
-      formKey.currentState.save();
+    if (formKey.currentState!.validate()) {
+      formKey.currentState!.save();
       if(selectedEpoch!=null){
         if(selectedGender!=null){
           apiCall();
         }else{
-          ToastBuilder().showToast(AppLocalizations.of(context).translate('gender_required'), context, HexColor(AppColors.information));
+          ToastBuilder().showToast(AppLocalizations.of(context)!.translate('gender_required'), context, HexColor(AppColors.information));
         }
       }else{
-        ToastBuilder().showToast(AppLocalizations.of(context).translate('dob_required'), context, HexColor(AppColors.information));
+        ToastBuilder().showToast(AppLocalizations.of(context)!.translate('dob_required'), context, HexColor(AppColors.information));
       }
     }
   }
 
   void apiCall() async{
-    progressButtonKey.currentState.show();
+    progressButtonKey.currentState!.show();
     ChildDetailRequest payload = ChildDetailRequest();
     payload.email= email;
     payload.mobileNumber = mobileNumber;
@@ -431,25 +431,25 @@ class ChildDetailFormPageState extends State<ChildDetailFormPage> {
     payload.gender = selectedGender;
     payload.phoneNumber = null; //send null
     // todo fill the following details if necessary ask shailender whats mandatory fields
-    payload.allInstitutionId=registerUserAs.institutionId;
-    payload.institutionClassId=registerUserAs.personClasses[0].classId.toString();
-    payload.institutionSectionId=registerUserAs.personClasses[0].sections[0].toString();
+    payload.allInstitutionId=registerUserAs!.institutionId;
+    payload.institutionClassId=registerUserAs!.personClasses![0].classId.toString();
+    payload.institutionSectionId=registerUserAs!.personClasses![0].sections![0].toString();
     payload.invitationId;
     payload.parentAllPersonsId=prefs.getInt(Strings.userId);
     Calls().call(jsonEncode(payload), context, Config.CHILD_DETAIL_CREATE).then((value) {
-      progressButtonKey.currentState.hide();
+      progressButtonKey.currentState!.hide();
       var res = ChildDetailResponse.fromJson(value);
       if(res.statusCode==Strings.success_code){
         register(prefs.getInt(Strings.userId));
       }
     }).catchError((onError){
-      progressButtonKey.currentState.hide();
+      progressButtonKey.currentState!.hide();
     });
 
   }
 
   // ignore: missing_return
-  Widget _showModalBottomSheet(context, type) {
+  Widget ?_showModalBottomSheet(context, type) {
     showModalBottomSheet(
         context: context,
         builder: (BuildContext context) {
@@ -483,16 +483,16 @@ class ChildDetailFormPageState extends State<ChildDetailFormPage> {
       mode: CupertinoDatePickerMode.date,
     );
   }
-  void register(int userId) async {
+  void register(int? userId) async {
     prefs = await SharedPreferences.getInstance();
-    registerUserAs.dateOfBirth = null;
-    registerUserAs.personId = userId;
+    registerUserAs!.dateOfBirth = null;
+    registerUserAs!.personId = userId;
 
     final body = jsonEncode(registerUserAs);
-    progressButtonKey.currentState.show();
+    progressButtonKey.currentState!.show();
     Calls().call(body, context, Config.REGISTER_USER_AS).then((value) async {
       if (value != null) {
-        progressButtonKey.currentState.hide();
+        progressButtonKey.currentState!.hide();
         var data = RegisterUserAsResponse.fromJson(value);
         print(data.toString());
         if (data.statusCode == "S10001") {
@@ -503,21 +503,21 @@ class ChildDetailFormPageState extends State<ChildDetailFormPage> {
               MaterialPageRoute(
                   builder: (context) => DilaogPage(
                     type: "parent",
-                    isVerified: data.rows.isVerified,
-                    title: AppLocalizations.of(context).translate('you_are_added_as') + "parent"??"",
-                    subtitle: data.rows.institutionName != null
-                        ? " at " + data.rows.institutionName
+                    isVerified: data.rows!.isVerified,
+                    title: AppLocalizations.of(context)!.translate('you_are_added_as') + "parent",
+                    subtitle: data.rows!.institutionName != null
+                        ? " at " + data.rows!.institutionName!
                         : "",
                   )),
                   (Route<dynamic> route) => false);
         } else
           ToastBuilder().showToast(
-              data.message, context, HexColor(AppColors.information));
+              data.message!, context, HexColor(AppColors.information));
       }
     }).catchError((onError) async {
       ToastBuilder().showToast(
           onError.toString(), context, HexColor(AppColors.information));
-      progressButtonKey.currentState.hide();
+      progressButtonKey.currentState!.hide();
     });
   }
   ChildDetailFormPageState(this.registerUserAs);

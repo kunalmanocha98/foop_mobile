@@ -6,17 +6,17 @@ import 'package:flutter/services.dart';
 
 class AppLocalizations {
   final Locale locale;
-  String languageCode;
+  String? languageCode;
 
   AppLocalizations(this.locale);
 
   // Helper method to keep the code in the widgets concise
   // Localizations are accessed using an InheritedWidget "of" syntax
-  static AppLocalizations of(BuildContext context) {
+  static AppLocalizations? of(BuildContext context) {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
-  Map<String, String> _localizedStrings;
+  late Map<String, String> _localizedStrings;
 
   Future<bool> load() async {
     // Load the language JSON file from the "lang" folder
@@ -34,7 +34,7 @@ class AppLocalizations {
   static const LocalizationsDelegate<AppLocalizations> delegate =
       _AppLocalizationsDelegate();
 
-  String translate(String key,{Map<String,String> arguments}){
+  String translate(String key,{Map<String,String?>? arguments}){
     String translation = _localizedStrings[key] ?? '';
     if (arguments == null || arguments.length == 0) {
       return translation;

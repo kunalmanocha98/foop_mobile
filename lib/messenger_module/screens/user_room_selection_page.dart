@@ -22,10 +22,10 @@ import 'chat_rooms_page.dart';
 // ignore: must_be_immutable
 class UserRoomSelectionPage extends StatefulWidget {
 
-  IO.Socket socket;
-  bool isForward;
-  Null Function() callBack;
-  Null Function() callBackNew;
+  IO.Socket? socket;
+  bool? isForward;
+  Null Function()? callBack;
+  Null Function()? callBackNew;
   _UserRoomSelectionPage createState() =>
       _UserRoomSelectionPage(socket,isForward,callBack,callBackNew);
 
@@ -34,34 +34,34 @@ class UserRoomSelectionPage extends StatefulWidget {
 
 class _UserRoomSelectionPage extends State<UserRoomSelectionPage> with SingleTickerProviderStateMixin {
   List<CustomTabMaker> list = [];
-  TabController _tabController;
-  Null Function() callBack;
-  TextStyleElements styleElements;
-  String type;
-  int id;
+  late TabController _tabController;
+  Null Function()? callBack;
+  late TextStyleElements styleElements;
+  String? type;
+  int? id;
   List<ConnectionItem> connectionList = [];
-  Null Function() callBackNew;
-  bool isForward;
-  IO.Socket socket;
-  SharedPreferences prefs;
-  String ownerType;
-  int ownerId;
+  Null Function()? callBackNew;
+  bool? isForward;
+  IO.Socket? socket;
+  late SharedPreferences prefs;
+  String? ownerType;
+  int? ownerId;
   int _currentPosition=0;
-  String pageTitle;
-  Null Function() callback;
+  String? pageTitle;
+  Null Function()? callback;
   String title="";
   _UserRoomSelectionPage(this.socket,this.isForward,this.callback,this.callBackNew);
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => setSharedPreferences());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => setSharedPreferences());
   }
 
   onPositionChange() {
     if (!_tabController.indexIsChanging && this.mounted) {
       setState(() {
         _currentPosition = _tabController.index;
-        _currentPosition==0?title=AppLocalizations.of(context).translate("select_user"):title=AppLocalizations.of(context).translate("select_room");
+        _currentPosition==0?title=AppLocalizations.of(context)!.translate("select_user"):title=AppLocalizations.of(context)!.translate("select_room");
         print(_currentPosition.toString()+"050-----------------------------------------------------");
       });
     }
@@ -71,7 +71,7 @@ class _UserRoomSelectionPage extends State<UserRoomSelectionPage> with SingleTic
     prefs = await SharedPreferences.getInstance();
     ownerType=prefs.getString("ownerType");
     ownerId=prefs.getInt("userId");
-    title=AppLocalizations.of(context).translate("select_user");
+    title=AppLocalizations.of(context)!.translate("select_user");
     loadPages();
   }
   loadPages() {
@@ -89,7 +89,7 @@ class _UserRoomSelectionPage extends State<UserRoomSelectionPage> with SingleTic
       else
       {
         ToastBuilder().showToast(
-            AppLocalizations.of(context).translate("max_five"),
+            AppLocalizations.of(context)!.translate("max_five"),
             context,
             HexColor(AppColors.information));
       }
@@ -99,8 +99,8 @@ class _UserRoomSelectionPage extends State<UserRoomSelectionPage> with SingleTic
 
         });
         },
-      removeCallBack: (String id){
-        removeItem(id);
+      removeCallBack: (String? id){
+        removeItem(id!);
         setState(() {
 
         });
@@ -108,7 +108,7 @@ class _UserRoomSelectionPage extends State<UserRoomSelectionPage> with SingleTic
 
 
 
-    ), tabName:AppLocalizations.of(context).translate("user")));
+    ), tabName:AppLocalizations.of(context)!.translate("user")));
     list.add(new CustomTabMaker(statelessWidget: new ChatRoomsPage(type:"Rooms", isForward: isForward,
       socket: socket,
       callBack: callBack,
@@ -120,7 +120,7 @@ class _UserRoomSelectionPage extends State<UserRoomSelectionPage> with SingleTic
         else
         {
           ToastBuilder().showToast(
-              AppLocalizations.of(context).translate("max_five"),
+              AppLocalizations.of(context)!.translate("max_five"),
               context,
               HexColor(AppColors.information));
         }
@@ -133,7 +133,7 @@ class _UserRoomSelectionPage extends State<UserRoomSelectionPage> with SingleTic
         setState(() {
 
         });
-      },),  tabName:AppLocalizations.of(context).translate("rooms")));
+      },),  tabName:AppLocalizations.of(context)!.translate("rooms")));
 
     setState(() {
       _tabController = TabController(vsync: this, length: list.length);
@@ -166,7 +166,7 @@ class _UserRoomSelectionPage extends State<UserRoomSelectionPage> with SingleTic
                 onPressed: () {
                   setState(() {
                     _currentPosition = index;
-                    _currentPosition==0?title=AppLocalizations.of(context).translate("select_user"):title=AppLocalizations.of(context).translate("select_room");
+                    _currentPosition==0?title=AppLocalizations.of(context)!.translate("select_user"):title=AppLocalizations.of(context)!.translate("select_room");
                     print(_currentPosition.toString()+"020-----------------------------------------------------");
                   });
                 },
@@ -177,8 +177,8 @@ class _UserRoomSelectionPage extends State<UserRoomSelectionPage> with SingleTic
                   Center(child: list[index].statelessWidget),
               onPositionChange: (index) {
                 setState(() {
-                  _currentPosition = index;
-                  _currentPosition==0?title=AppLocalizations.of(context).translate("select_user"):title=AppLocalizations.of(context).translate("select_room");
+                  _currentPosition = index!;
+                  _currentPosition==0?title=AppLocalizations.of(context)!.translate("select_user"):title=AppLocalizations.of(context)!.translate("select_room");
                   print(_currentPosition.toString()+"00-----------------------------------------------------");
                 });
               },
@@ -189,7 +189,7 @@ class _UserRoomSelectionPage extends State<UserRoomSelectionPage> with SingleTic
             ),
           ),
             Visibility(
-              visible: isForward,
+              visible: isForward!,
               child: Align(
                   alignment: Alignment.bottomCenter,
                   child: Container(
@@ -229,7 +229,7 @@ class _UserRoomSelectionPage extends State<UserRoomSelectionPage> with SingleTic
                               },
                               color:  HexColor(AppColors.appColorWhite),
                               child: Text(
-                                AppLocalizations.of(context)
+                                AppLocalizations.of(context)!
                                     .translate('next')
                                     .toUpperCase(),
                                 style: styleElements
@@ -255,7 +255,7 @@ class _UserRoomSelectionPage extends State<UserRoomSelectionPage> with SingleTic
     List<ConnectionItem> list=[];
     for(var item in connectionList)
     {
-      if(item.isSelected)
+      if(item.isSelected!)
         list.add(item);
     }
     return list;
@@ -266,8 +266,8 @@ class _UserRoomSelectionPage extends State<UserRoomSelectionPage> with SingleTic
     String selectedNames="";
     for(var item in connectionList)
     {
-      if(item.isSelected)
-        selectedNames=selectedNames+(item.connectionName+",");
+      if(item.isSelected!)
+        selectedNames=selectedNames+(item.connectionName!+",");
     }
     return selectedNames;
 

@@ -7,12 +7,12 @@ import 'commonComponents.dart';
 class TricycleCard extends StatelessWidget{
 
   Widget child;
-  EdgeInsetsGeometry margin;
-  EdgeInsetsGeometry padding;
-  Function onTap;
-  Color color;
+  EdgeInsetsGeometry? margin;
+  EdgeInsetsGeometry? padding;
+  Function? onTap;
+  Color? color;
   double borderRadius= 12.0;
-  TricycleCard({@required this.child,this.margin,this.padding,this.onTap,this.color});
+  TricycleCard({required this.child,this.margin,this.padding,this.onTap,this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class TricycleCard extends StatelessWidget{
         color: color,
         elevation: 0,
         child: InkWell(
-          onTap: onTap,
+          onTap: onTap as void Function()?,
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(borderRadius),
@@ -51,13 +51,13 @@ class TricycleCard extends StatelessWidget{
 // ignore: must_be_immutable
 class TricycleListCard extends StatelessWidget{
   Widget child;
-  EdgeInsetsGeometry margin;
-  EdgeInsetsGeometry padding;
-  Function onTap;
-  Color color;
+  EdgeInsetsGeometry? margin;
+  EdgeInsetsGeometry? padding;
+  Function? onTap;
+  Color? color;
   double borderRadius= 12.0;
-  Clip clip;
-  TricycleListCard({@required this.child,this.margin,this.padding,this.onTap,this.color,this.clip});
+  Clip? clip;
+  TricycleListCard({required this.child,this.margin,this.padding,this.onTap,this.color,this.clip});
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +78,7 @@ class TricycleListCard extends StatelessWidget{
         color: color,
         elevation: 0,
         child: InkWell(
-          onTap: onTap,
+          onTap: onTap as void Function()?,
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(borderRadius),

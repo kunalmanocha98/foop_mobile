@@ -1,7 +1,7 @@
 class ClassesList {
-  String statusCode;
-  String message;
-  List<Classes> rows;
+  String? statusCode;
+  String? message;
+  List<Classes>? rows;
 
   ClassesList({this.statusCode, this.message, this.rows});
 
@@ -11,7 +11,7 @@ class ClassesList {
     if (json['rows'] != null) {
       rows = [];//Classes>();
       json['rows'].forEach((v) {
-        rows.add(new Classes.fromJson(v));
+        rows!.add(new Classes.fromJson(v));
       });
     }
   }
@@ -21,19 +21,19 @@ class ClassesList {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Classes {
-  int id;
-  String className;
-  String classDescription;
-  String classCode;
-  bool hasSections;
-  bool isSelected = false;
+  int? id;
+  String? className;
+  String? classDescription;
+  String? classCode;
+  bool? hasSections;
+  bool? isSelected = false;
   Null section;
   Null classMedium;
   Null classType;

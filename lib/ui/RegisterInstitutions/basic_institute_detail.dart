@@ -32,15 +32,15 @@ class BasicInstituteDetails extends StatefulWidget {
 
 class _BasicInstituteDetails extends State<BasicInstituteDetails>
     with SingleTickerProviderStateMixin {
-  String facebookId;
-  String googleSignInId;
-  String userName;
-  String imageUrl;
+  String? facebookId;
+  String? googleSignInId;
+  String? userName;
+  String? imageUrl;
   var range = <String>[];
   var rangeStudent = <String>[];
 
-  var instituteTypelist = <String>[];
-  var instCategory = <String>[];
+  var instituteTypelist = <String?>[];
+  var instCategory = <String?>[];
   bool isTermAndConditionAccepted = false;
   String email = "";
   bool isGoogleOrFacebookDataReceived = false;
@@ -58,20 +58,20 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
   final lastNameController = TextEditingController();
   final genderController = TextEditingController();
   final descriptionController = TextEditingController();
-  BuildContext context;
-  TextStyleElements styleElements;
+  late BuildContext context;
+  late TextStyleElements styleElements;
 
-  TextStyleElements tsE;
-  String selectInstCategory;
-  String selectInstType;
-  String selectStRange;
-  String selectTecRange;
-  int selectedEpoch;
-  var mapIntType = HashMap<String, String>();
-  var mapCategory = HashMap<String, String>();
-  SharedPreferences prefs;
-  bool isSelect1=false;
-  bool isSelect2=false;
+  late TextStyleElements tsE;
+  String? selectInstCategory;
+  String? selectInstType;
+  String? selectStRange;
+  String? selectTecRange;
+  int? selectedEpoch;
+  var mapIntType = HashMap<String?, String?>();
+  var mapCategory = HashMap<String?, String?>();
+  late SharedPreferences prefs;
+  bool? isSelect1=false;
+  bool? isSelect2=false;
   TextEditingController typeAheadControllerHashTag =TextEditingController();
   List<String> _listOfHashTags = [];
   @override
@@ -96,7 +96,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
       for (int i = 0; i < instituteTypelist.length; i++) {
         instituteType.add(DropdownMenuItem(
           child: Text(
-            instituteTypelist[i],
+            instituteTypelist[i]!,
             style: styleElements.bodyText2ThemeScalable(context),
           ),
           value: instituteTypelist[i],
@@ -109,7 +109,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
       for (int i = 0; i < instCategory.length; i++) {
         relationType.add(DropdownMenuItem(
           child: Text(
-            instCategory[i],
+            instCategory[i]!,
             style: styleElements.bodyText2ThemeScalable(context),
           ),
           value: instCategory[i],
@@ -146,7 +146,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
           disabledBorder: InputBorder.none,
           contentPadding: EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorBlack35)),
-          hintText: AppLocalizations.of(context).translate('write_about_inst')),
+          hintText: AppLocalizations.of(context)!.translate('write_about_inst')),
     );
     tsE = TextStyleElements(context);
 
@@ -163,7 +163,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
       scrollPadding: EdgeInsets.all(20.0.w),
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-          hintText: AppLocalizations.of(context).translate('name_of_institute'),
+          hintText: AppLocalizations.of(context)!.translate('name_of_institute'),
           hintStyle: tsE.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)).copyWith(color: HexColor(AppColors.appColorBlack35)),
 
           border: UnderlineInputBorder(
@@ -215,23 +215,25 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
                       jsonEncode(payload), context, Config.OTHERS_NAME_SCHOOL);
                   if(OthersName
                       .fromJson(res)
-                      .rows.length>0) {
+                      .rows!.length>0) {
                     return OthersName
                         .fromJson(res)
-                        .rows;
+                        .rows!;
                   }else{
                     return null;
                   }
                 }else{
                   return null;
                 }
-              },
-              itemBuilder: (BuildContext context, String itemData) {
+              } as FutureOr<Iterable<String>> Function(String),
+              itemBuilder: ( context,  itemData) {
+                itemData as String;
                 return ListTile(
-                  title: Text(AppLocalizations.of(context).translate('hash')+itemData, style: styleElements.subtitle1ThemeScalable(context),),
+                  title: Text(AppLocalizations.of(context)!.translate('hash')+itemData, style: styleElements.subtitle1ThemeScalable(context),),
                 );
               },
-              onSuggestionSelected: (String suggestion) {
+              onSuggestionSelected: ( suggestion) {
+                suggestion as String;
                 typeAheadControllerHashTag.text ="";
                 setState(() {
                   _listOfHashTags.add(suggestion);
@@ -259,21 +261,21 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
                   ),
                   contentPadding: EdgeInsets.only(top:16,left: 16,right: 16),
                   hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
-                  hintText: AppLocalizations.of(context).translate('other_name'),
+                  hintText: AppLocalizations.of(context)!.translate('other_name'),
                 ),
               ),
             ),
           ],
         )
     );
-    final institute = DropdownButtonFormField(
+    final institute = DropdownButtonFormField<dynamic>(
       value: null,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 2.0.w, 15.0.h)),
       hint: Padding(
         padding: const EdgeInsets.only(left: 0),
         child: Text(
-          selectInstType ?? AppLocalizations.of(context).translate("inst_type"),
+          selectInstType ?? AppLocalizations.of(context)!.translate("inst_type"),
           style: styleElements.bodyText2ThemeScalable(context),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
@@ -281,13 +283,14 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
       ),
       items: _getInstituteType(),
       onChanged: (value) {
+        value as DropdownMenuItem;
         setState(() {
-          selectInstType = value ?? selectInstType;
+          selectInstType = (value) as String?;
         });
         FocusScope.of(context).requestFocus(new FocusNode());
       },
     );
-    final relation = DropdownButtonFormField(
+    final relation = DropdownButtonFormField<dynamic>(
       value: null,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 2.0.w, 15.0.h)),
@@ -295,7 +298,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
         padding: const EdgeInsets.only(left: 0),
         child: Text(
           selectInstCategory ??
-              AppLocalizations.of(context).translate("inst_category"),
+              AppLocalizations.of(context)!.translate("inst_category"),
           style: styleElements.bodyText2ThemeScalable(context),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
@@ -303,8 +306,9 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
       ),
       items: _getRelationtype(),
       onChanged: (value) {
+        value as DropdownMenuItem;
         setState(() {
-          selectInstCategory = value ?? selectInstCategory;
+          selectInstCategory = (value) as String?;
 
         });
         FocusScope.of(context).requestFocus(new FocusNode());
@@ -337,7 +341,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
                                     child: Container(
                                       margin: EdgeInsets.only(
                                           left: 8.w, right: 8.w, bottom: 8.h),
-                                      child: Text(AppLocalizations.of(context).translate('basic'),    style: tsE.headline6ThemeScalable(context).copyWith(fontWeight: FontWeight.bold),),
+                                      child: Text(AppLocalizations.of(context)!.translate('basic'),    style: tsE.headline6ThemeScalable(context).copyWith(fontWeight: FontWeight.bold),),
                                     )),
                                 Align(
                                     alignment: Alignment.center,
@@ -408,7 +412,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
                                           child: Container(
                                             margin: EdgeInsets.only(
                                                 left: 8.w, right: 8.w, bottom: 8.h),
-                                            child: Text(AppLocalizations.of(context)
+                                            child: Text(AppLocalizations.of(context)!
                                                 .translate("inst1")),
                                           )),
                                     ),
@@ -431,7 +435,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
                                           child: Container(
                                             margin: EdgeInsets.only(
                                                 left: 8.w, right: 8.w, bottom: 8.h),
-                                            child: Text(AppLocalizations.of(context)
+                                            child: Text(AppLocalizations.of(context)!
                                                 .translate("inst2")),
                                           )),
                                     ),
@@ -479,7 +483,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
                                                 .white,
                                             child: Text(
                                                 AppLocalizations.of(
-                                                    context)
+                                                    context)!
                                                     .translate(
                                                     "next"),
                                                 style: styleElements
@@ -517,7 +521,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
                                                 .white,
                                             child: Text(
                                                 AppLocalizations.of(
-                                                    context)
+                                                    context)!
                                                     .translate(
                                                     "next"),
                                                 style: styleElements
@@ -543,10 +547,11 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
   // ignore: missing_return
   Future<bool> _onBackPressed() {
     Navigator.of(context).pop(true);
+    return new Future(() => false);
   }
 
   void submit(BuildContext ctx) async {
-    if(isSelect2 && isSelect1){
+    if(isSelect2! && isSelect1!){
       if (instituteNameC.text.trim().isNotEmpty) {
         if (selectInstType !=null) {
           if (selectInstCategory != null) {
@@ -598,7 +603,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
     }
     else
       ToastBuilder().showToast(
-          AppLocalizations.of(context).translate("tick_check_box"),
+          AppLocalizations.of(context)!.translate("tick_check_box"),
           context,
           HexColor(AppColors.information));
   }
@@ -616,7 +621,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
       if (value != null) {
         var data = DropDownCommon.fromJson(value);
 
-        for (var item in data.rows) {
+        for (var item in data.rows!) {
           instituteTypelist.add(item.description);
           mapIntType.putIfAbsent(item.description,() =>item.code);
         }
@@ -638,7 +643,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
     Calls().call(body, context, Config.DROP_DOWN_GLOBAL).then((value) async {
       if (value != null) {
         var data = DropDownCommon.fromJson(value);
-        for (var item in data.rows) {
+        for (var item in data.rows!) {
           instCategory.add(item.description);
           mapCategory.putIfAbsent(item.description,() =>item.code);
         }

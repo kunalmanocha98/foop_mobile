@@ -1,10 +1,10 @@
 class ScratchCardEntity {
-  int allPersonsId;
-  String scratchCardContext;
-  String scratchCardSubContext;
-  int scratchCardContextId;
-  int scratchCardSubContextId;
-  String photoIdUrl;
+  int? allPersonsId;
+  String? scratchCardContext;
+  String? scratchCardSubContext;
+  int? scratchCardContextId;
+  int? scratchCardSubContextId;
+  String? photoIdUrl;
   ScratchCardEntity(
       {this.allPersonsId,
         this.scratchCardContext,

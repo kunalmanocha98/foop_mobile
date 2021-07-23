@@ -1,8 +1,8 @@
 class PersonalProfile {
-  String statusCode;
-  String message;
-  Persondata rows;
-  int total;
+  String? statusCode;
+  String? message;
+  Persondata? rows;
+  int? total;
 
   PersonalProfile({this.statusCode, this.message, this.rows, this.total});
 
@@ -18,7 +18,7 @@ class PersonalProfile {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     data['total'] = this.total;
     return data;
@@ -26,33 +26,33 @@ class PersonalProfile {
 }
 
 class Persondata {
-  UserLocation userLocation;
-  int id;
-  String slug;
-  String userName;
-  String url;
-  int userId;
-  String title;
-  String email;
-  String firstName;
-  String middleName;
-  String lastName;
-  String shortBio;
-  String fullBio;
-  String message;
-  String nickName;
-  String dateOfBirth;
-  String bloodGroup;
-  String dateOfAnniversary;
-  int gender;
-  String mobile;
-  String mobileCountryCode;
-  String profileImage;
-  String coverImage;
-  int institutionId;
-  bool isVerified;
-  List<Institutions> institutions;
-  List<Permissions> permissions;
+  UserLocation? userLocation;
+  int? id;
+  String? slug;
+  String? userName;
+  String? url;
+  int? userId;
+  String? title;
+  String? email;
+  String? firstName;
+  String? middleName;
+  String? lastName;
+  String? shortBio;
+  String? fullBio;
+  String? message;
+  String? nickName;
+  String? dateOfBirth;
+  String? bloodGroup;
+  String? dateOfAnniversary;
+  int? gender;
+  String? mobile;
+  String? mobileCountryCode;
+  String? profileImage;
+  String? coverImage;
+  int? institutionId;
+  bool? isVerified;
+  List<Institutions>? institutions;
+  List<Permissions>? permissions;
   Persondata(
       {this.id,
         this.slug,
@@ -113,14 +113,14 @@ class Persondata {
     if (json['institutions'] != null) {
       institutions = [];//Institutions>();
       json['institutions'].forEach((v) {
-        institutions.add(new Institutions.fromJson(v));
+        institutions!.add(new Institutions.fromJson(v));
       });
     }
 
     if (json['permissions'] != null) {
       permissions = [];//Permissions>();
       json['permissions'].forEach((v) {
-        permissions.add(new Permissions.fromJson(v));
+        permissions!.add(new Permissions.fromJson(v));
       });
     }
   }
@@ -136,7 +136,7 @@ class Persondata {
     data['title'] = this.title;
     data['email'] = this.email;
     if (this.userLocation != null) {
-      data['user_location'] = this.userLocation.toJson();
+      data['user_location'] = this.userLocation!.toJson();
     }
     data['first_name'] = this.firstName;
     data['middle_name'] = this.middleName;
@@ -155,10 +155,10 @@ class Persondata {
     data['cover_image'] = this.coverImage;
     data['institution_id'] = this.institutionId;
     if (this.institutions != null) {
-      data['institutions'] = this.institutions.map((v) => v.toJson()).toList();
+      data['institutions'] = this.institutions!.map((v) => v.toJson()).toList();
     }
     if (this.permissions != null) {
-      data['permissions'] = this.permissions.map((v) => v.toJson()).toList();
+      data['permissions'] = this.permissions!.map((v) => v.toJson()).toList();
     }
 
     return data;
@@ -166,11 +166,11 @@ class Persondata {
 }
 
 class Permissions {
-  int id;
-  String name;
-  String roleCode;
-  String roleName;
-  String profileImage;
+  int? id;
+  String? name;
+  String? roleCode;
+  String? roleName;
+  String? profileImage;
 
   Permissions(
       {this.id, this.name, this.roleCode, this.roleName, this.profileImage});
@@ -194,17 +194,17 @@ class Permissions {
   }
 }
 class UserLocation {
-  String addressType;
-  String country;
-  String elevation;
-  bool isPrimary;
-  String latitude;
-  String longitude;
-  String locality;
-  String postalCode;
-  String region;
-  String streetAddress;
-  String subRegion;
+  String? addressType;
+  String? country;
+  String? elevation;
+  bool? isPrimary;
+  String? latitude;
+  String? longitude;
+  String? locality;
+  String? postalCode;
+  String? region;
+  String? streetAddress;
+  String? subRegion;
 
   UserLocation(
       {this.addressType,
@@ -251,12 +251,12 @@ class UserLocation {
 }
 
 class Institutions {
-  int id;
-  String name;
-  String role;
-  String personType;
-  String profileImage;
-  String type;
+  int? id;
+  String? name;
+  String? role;
+  String? personType;
+  String? profileImage;
+  String? type;
 
   Institutions({this.id, this.name, this.role,this.personType,this.profileImage,this.type});
 

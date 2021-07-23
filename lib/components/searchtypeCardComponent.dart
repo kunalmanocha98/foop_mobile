@@ -18,11 +18,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class SearchTypeCard extends StatefulWidget {
-  String title;
-  List<SearchTypeItem> typeList;
-  SharedPreferences prefs;
-  String type;
-  Function(String) seeMoreCallback;
+  String? title;
+  List<SearchTypeItem>? typeList;
+  SharedPreferences? prefs;
+  String? type;
+  Function(String?)? seeMoreCallback;
   SearchTypeCard({this.typeList, this.title,this.prefs,this.type,this.seeMoreCallback});
 
   SearchTypeCardState createState() =>
@@ -30,12 +30,12 @@ class SearchTypeCard extends StatefulWidget {
 }
 
 class SearchTypeCardState extends State<SearchTypeCard> {
-  List<SearchTypeItem> typeList;
-  String title;
-  TextStyleElements styleElements;
-  SharedPreferences prefs;
-  String type;
-  Function(String) seeMoreCallback;
+  List<SearchTypeItem>? typeList;
+  String? title;
+  late TextStyleElements styleElements;
+  SharedPreferences? prefs;
+  String? type;
+  Function(String?)? seeMoreCallback;
   SearchTypeCardState({this.typeList, this.title,this.prefs,this.type,this.seeMoreCallback});
 
   @override
@@ -66,45 +66,45 @@ class SearchTypeCardState extends State<SearchTypeCard> {
           Container(
             child: ListView.builder(
               shrinkWrap: true,
-              itemCount: typeList.length,
+              itemCount: typeList!.length,
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (BuildContext context, int index) {
                 return TricycleUserListTile(
                   onPressed: (){
-                    saveHistory(typeList[index],type);
+                    saveHistory(typeList![index],type);
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) => UserProfileCards(
-                              userType: type=='person'?( typeList[index].id==prefs.getInt(Strings.userId)?"person":"thirdPerson"):"institution",
-                              userId: typeList[index].id==prefs.getInt(Strings.userId)?null:typeList[index].id,
+                              userType: type=='person'?( typeList![index].id==prefs!.getInt(Strings.userId)?"person":"thirdPerson"):"institution",
+                              userId: typeList![index].id==prefs!.getInt(Strings.userId)?null:typeList![index].id,
                               callback: () {},
                               currentPosition: 1,
                               type:null,
                             )
                         ));
                   },
-                  imageUrl: typeList[index].avatar,
-                  title:typeList[index].title,
-                  subtitle1:typeList[index].subtitle1,
+                  imageUrl: typeList![index].avatar,
+                  title:typeList![index].title,
+                  subtitle1:typeList![index].subtitle1,
                   trailingWidget: Visibility(
-                    visible: !(typeList[index].isFollowing??=false),
+                    visible: !(typeList![index].isFollowing??=false),
                     child: GenericFollowUnfollowButton(
                       isRoundedButton: true,
                       actionByObjectType: 'person',
-                      actionByObjectId: prefs.getInt(Strings.userId),
+                      actionByObjectId: prefs!.getInt(Strings.userId),
                       actionOnObjectType: type,
-                      actionOnObjectId:  typeList[index].id,
-                      engageFlag:  typeList[index].isFollowing
-                          ? AppLocalizations.of(context).translate('following')
-                          : AppLocalizations.of(context).translate('follow'),
-                      actionFlag:  typeList[index].isFollowing ? "U" : "F",
+                      actionOnObjectId:  typeList![index].id,
+                      engageFlag:  typeList![index].isFollowing!
+                          ? AppLocalizations.of(context)!.translate('following')
+                          : AppLocalizations.of(context)!.translate('follow'),
+                      actionFlag:  typeList![index].isFollowing! ? "U" : "F",
                       actionDetails: [],
                       personName: "",
                       callback: (isCallSuccess) {
                         setState(() {
                           if(isCallSuccess)
-                          typeList[index].isFollowing = true;
+                          typeList![index].isFollowing = true;
                         });
                       },
                     ),
@@ -118,14 +118,14 @@ class SearchTypeCardState extends State<SearchTypeCard> {
             child: GestureDetector(
                 behavior: HitTestBehavior.translucent,
                 onTap: ()  {
-                  seeMoreCallback(type);
+                  seeMoreCallback!(type);
                 },
                 child: Container(
                   margin:
                   EdgeInsets.only(right: 20, top: 20, bottom: 20),
                   child: Align(
                     alignment: Alignment.bottomRight,
-                    child:Text(AppLocalizations.of(context).translate('see_more'),
+                    child:Text(AppLocalizations.of(context)!.translate('see_more'),
                       style: styleElements.subtitle2ThemeScalable(context),
                       textAlign: TextAlign.center,
                     ),
@@ -137,13 +137,13 @@ class SearchTypeCardState extends State<SearchTypeCard> {
     );
   }
 
-  void saveHistory(SearchTypeItem typeList, String entityType) {
+  void saveHistory(SearchTypeItem typeList, String? entityType) {
     SaveHistoryRequest payload = SaveHistoryRequest(
       entityType: entityType,
       pageNumber: 1,
       pageSize: 10,
-      institutionId: prefs.getInt(Strings.instituteId),
-      personId: prefs.getInt(Strings.userId),
+      institutionId: prefs!.getInt(Strings.instituteId),
+      personId: prefs!.getInt(Strings.userId),
       searchPage: 'common',
       searchType: 'person',
       entityDetails: jsonDecode(jsonEncode(typeList))

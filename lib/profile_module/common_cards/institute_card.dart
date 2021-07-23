@@ -12,10 +12,10 @@ class InstituteCard extends StatelessWidget {
   String content;
   bool isShowMore;
   bool isIntroCard;
-  bool isContentAvailabel;
-  String subtitle1;
+  bool? isContentAvailabel;
+  String? subtitle1;
   String subtitle2;
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   Size displaySize(BuildContext context) {
     debugPrint('Size = ' + MediaQuery.of(context).size.toString());
@@ -33,14 +33,14 @@ class InstituteCard extends StatelessWidget {
   }
 
   InstituteCard(
-      {Key key,
-      @required this.isShowMore,
-      @required this.isIntroCard,
-      @required this.title,
-      @required this.subtitle,
-      @required this.subtitle1,
-      @required this.subtitle2,
-      @required this.content})
+      {Key? key,
+      required this.isShowMore,
+      required this.isIntroCard,
+      required this.title,
+      required this.subtitle,
+      required this.subtitle1,
+      required this.subtitle2,
+      required this.content})
       : super(key: key);
 
   @override
@@ -119,7 +119,7 @@ class InstituteCard extends StatelessWidget {
                                     onPressed: () {},
                                     color: HexColor(AppColors.appMainColor),
                                     child: Text(
-                                        AppLocalizations.of(context)
+                                        AppLocalizations.of(context)!
                                             .translate('follow')
                                             .toUpperCase(),
                                         style: styleElements.captionThemeScalable(context).copyWith(
@@ -140,7 +140,7 @@ class InstituteCard extends StatelessWidget {
                                     onPressed: () {},
                                     color: HexColor(AppColors.appColorWhite),
                                     child: Text(
-                                        AppLocalizations.of(context)
+                                        AppLocalizations.of(context)!
                                             .translate('share')
                                             .toUpperCase(),
                                         style: styleElements.captionThemeScalable(context).copyWith(
@@ -162,7 +162,7 @@ class InstituteCard extends StatelessWidget {
                             child: Container(
                               margin: const EdgeInsets.all(8),
                               child: Text(
-                                subtitle ??= "",
+                                subtitle,
                                 style: styleElements.bodyText2ThemeScalable(context),
                                 textAlign: TextAlign.center,
                               ),

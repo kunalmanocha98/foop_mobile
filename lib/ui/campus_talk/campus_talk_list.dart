@@ -45,11 +45,11 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CampusTalkListPage extends StatefulWidget {
-  final int eventId;
+  final int? eventId;
 
 
   CampusTalkListPage(
-      {Key key,
+      {Key? key,
        this.eventId,})
       : super(key: key);
   @override
@@ -64,12 +64,12 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
   static const String EMIT_ON_EVENT_RATING = "event_rating";
   static const String ON_EVENT_CREATE = "event_create";
 
-  SharedPreferences prefs = locator<SharedPreferences>();
-  AudioSocketService audioSocketService = locator<AudioSocketService>();
-  SocketService socketService = locator<SocketService>();
+  SharedPreferences? prefs = locator<SharedPreferences>();
+  AudioSocketService? audioSocketService = locator<AudioSocketService>();
+  SocketService? socketService = locator<SocketService>();
 
-  final CreateDeeplink createDeeplink = locator<CreateDeeplink>();
-  TextStyleElements styleElements;
+  final CreateDeeplink? createDeeplink = locator<CreateDeeplink>();
+  late TextStyleElements styleElements;
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
   bool isLoading = true;
   List<EventListItem> confirmedList = [];
@@ -77,20 +77,20 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
   GlobalKey<TalkEventPageState> talk = GlobalKey();
   PAGINATOR_ENUMS pageEnum = PAGINATOR_ENUMS.LOADING;
   int page = 1;
-  int totalItems = 0;
+  int? totalItems = 0;
   bool loadSuggestions = false;
   int i = 0;
-  EventBus eventbus = locator<EventBus>();
+  EventBus? eventbus = locator<EventBus>();
 
-  BuildContext sctx;
+  late BuildContext sctx;
 
 
   CampusTalkPageState();
 
   @override
   void initState() {
-    if(audioSocketService.getSocket().disconnected){
-      audioSocketService.getSocket().connect();
+    if(audioSocketService!.getSocket()!.disconnected){
+      audioSocketService!.getSocket()!.connect();
     }
     _getContactPermission();
     if(Platform.isAndroid) {
@@ -98,7 +98,7 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
     }
     setUpSocket();
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       fetchUpcomingList();
       if(widget.eventId!=null){
         fetchEventDetails();
@@ -118,7 +118,7 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
 
     if (!status.isGranted) {
       final result = await Permission.microphone.request();
-      return result ?? PermissionStatus.denied;
+      return result;
     } else {
       return status;
     }
@@ -126,19 +126,19 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
 
   }
   void setUpSocket(){
-    audioSocketService.getSocket().clearListeners();
-    audioSocketService.getSocket().on(ON_EVENT_LIVE,onEventLive);
-    audioSocketService.getSocket().on(ON_EVENT_ENDED, onEventEnded);
-    audioSocketService.getSocket().on(ON_EVENT_MEMBER_STATUS, onEventMemberStatusChanged);
-    audioSocketService.getSocket().on(EMIT_ON_EVENT_RATING, onEventRating);
-    audioSocketService.getSocket().on(ON_EVENT_CREATE, onEventCreate);
+    audioSocketService!.getSocket()!.clearListeners();
+    audioSocketService!.getSocket()!.on(ON_EVENT_LIVE,onEventLive);
+    audioSocketService!.getSocket()!.on(ON_EVENT_ENDED, onEventEnded);
+    audioSocketService!.getSocket()!.on(ON_EVENT_MEMBER_STATUS, onEventMemberStatusChanged);
+    audioSocketService!.getSocket()!.on(EMIT_ON_EVENT_RATING, onEventRating);
+    audioSocketService!.getSocket()!.on(ON_EVENT_CREATE, onEventCreate);
   }
   void switchOffSocket(){
-    audioSocketService.getSocket().off(ON_EVENT_LIVE,onEventLive);
-    audioSocketService.getSocket().off(ON_EVENT_ENDED, onEventEnded);
-    audioSocketService.getSocket().off(ON_EVENT_MEMBER_STATUS, onEventMemberStatusChanged);
-    audioSocketService.getSocket().off(EMIT_ON_EVENT_RATING, onEventRating);
-    audioSocketService.getSocket().off(ON_EVENT_CREATE, onEventCreate);
+    audioSocketService!.getSocket()!.off(ON_EVENT_LIVE,onEventLive);
+    audioSocketService!.getSocket()!.off(ON_EVENT_ENDED, onEventEnded);
+    audioSocketService!.getSocket()!.off(ON_EVENT_MEMBER_STATUS, onEventMemberStatusChanged);
+    audioSocketService!.getSocket()!.off(EMIT_ON_EVENT_RATING, onEventRating);
+    audioSocketService!.getSocket()!.off(ON_EVENT_CREATE, onEventCreate);
   }
 
 
@@ -168,7 +168,7 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       color: HexColor(AppColors.appColorBackground),
       itemBuilder: (context) => CampusTalkDropMenu(context: context).menuList,
-      onSelected: (value) {
+      onSelected: (dynamic value) {
         switch (value) {
           case 'voice':
             {
@@ -204,7 +204,7 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
     return Scaffold(
 
         appBar: AppBarWithOnlyTitle(
-          title: AppLocalizations.of(context).translate('campus_talk'),
+          title: AppLocalizations.of(context)!.translate('campus_talk'),
           actions: [
             IconButton(
                 icon: Icon(Icons.add,size: 30,),
@@ -256,7 +256,7 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
                               });
                             },
                             child: Text(
-                              AppLocalizations.of(context)
+                              AppLocalizations.of(context)!
                                   .translate('see_more'),
                               style: styleElements
                                   .captionThemeScalable(context)
@@ -289,19 +289,19 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
                               title: confirmedList[index].title,
                               description: confirmedList[index].subtitle,
                               dateVisible: true,
-                              date: DateTime.fromMillisecondsSinceEpoch(confirmedList[index].startTime),
+                              date: DateTime.fromMillisecondsSinceEpoch(confirmedList[index].startTime!),
                               isLive: false,
                               byTitle: ' by ' +
-                                  confirmedList[index].header.title +
+                                  confirmedList[index].header!.title! +
                                   ', ' +
-                                  confirmedList[index].header.subtitle1,
-                              byImage: confirmedList[index].header.avatar,
+                                  confirmedList[index].header!.subtitle1!,
+                              byImage: confirmedList[index].header!.avatar,
                               onlyHeader: false,
                               isShareVisible: true,
                               cardRating:
-                              confirmedList[index].header.rating ??
+                              confirmedList[index].header!.rating ??
                                   0.0,
-                              isRated: getIsRated(confirmedList[index].header),
+                              isRated: getIsRated(confirmedList[index].header!),
                               shareCallback: (){
                                 shareCallback(confirmedList[index].id);
                               },
@@ -344,12 +344,12 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
                                               'dd MMM yyyy HH:mm',
                                               DateTime.fromMillisecondsSinceEpoch(
                                                   confirmedList[index]
-                                                      .startTime)),
+                                                      .startTime!)),
                                           okCallback: () {
                                             Navigator.push(context, TricycleRouteSlideBottom(
                                               page: TalkEventPage(
                                                         key: talk,
-                                                        socket: socketService.getSocket(),
+                                                        socket: socketService!.getSocket(),
                                                         eventModel: confirmedList[index],
                                                         successCallback: refresh,
                                                       )
@@ -382,7 +382,7 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
                                               'dd MMM yyyy HH:mm',
                                               DateTime.fromMillisecondsSinceEpoch(
                                                   confirmedList[index]
-                                                      .startTime)),
+                                                      .startTime!)),
                                         );
                                       });
                                 }
@@ -405,7 +405,7 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
   void initialFutureCall() async {
     prefs ??= await SharedPreferences.getInstance();
     TalkEventListRequest payload = TalkEventListRequest();
-    payload.eventOwnerId = prefs.getInt(Strings.userId);
+    payload.eventOwnerId = prefs!.getInt(Strings.userId);
     payload.eventOwnerType = 'person';
     payload.pageNumber = page;
     payload.pageSize = 10;
@@ -416,7 +416,7 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
     var response = EventListResponse.fromJson(res);
     if (response.statusCode == Strings.success_code) {
       setState(() {
-        liveList.addAll(response.rows);
+        liveList.addAll(response.rows!);
         totalItems = response.total;
         pageEnum = PAGINATOR_ENUMS.SUCCESS;
       });
@@ -427,9 +427,9 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
     }
   }
 
-  int _getItemCount() {
+  int? _getItemCount() {
     if (!loadSuggestions) {
-      if (totalItems > liveList.length) {
+      if (totalItems! > liveList.length) {
         return liveList.length + 1;
       } else {
         loadSuggestions = true;
@@ -437,7 +437,7 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
         return liveList.length + 1;
       }
     } else {
-      if (totalItems > liveList.length) {
+      if (totalItems! > liveList.length) {
         return liveList.length + 1;
       } else {
         return totalItems;
@@ -479,7 +479,7 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
               return CustomPaginator(context).loadingWidgetMaker();
             case ConnectionState.done:
               {
-                liveList.addAll(snapshot.data.rows);
+                liveList.addAll(snapshot.data!.rows!);
                 page++;
                 Future.microtask(() {
                   setState(() {
@@ -499,7 +499,7 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
   Widget emptyListWidgetMaker() {
     return Center(
       child: TricycleEmptyWidgetForAudioList(
-            message: AppLocalizations.of(context).translate('no_audio_events'),
+            message: AppLocalizations.of(context)!.translate('no_audio_events'),
             assetImage: 'assets/appimages/live.png'),
     );
     // );
@@ -512,7 +512,7 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
     prefs ??= await SharedPreferences.getInstance();
     TalkEventListRequest payload = TalkEventListRequest();
     // payload.eventDate= Utility().getDateFormat('yyyy-MM-dd',DateTime.now());
-    payload.eventOwnerId = prefs.getInt(Strings.userId);
+    payload.eventOwnerId = prefs!.getInt(Strings.userId);
     payload.eventOwnerType = 'person';
     payload.pageNumber = page;
     payload.pageSize = 10;
@@ -528,7 +528,7 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
     prefs ??= await SharedPreferences.getInstance();
     TalkEventListRequest payload = TalkEventListRequest();
     // payload.eventDate= Utility().getDateFormat('yyyy-MM-dd',DateTime.now());
-    payload.eventOwnerId = prefs.getInt(Strings.userId);
+    payload.eventOwnerId = prefs!.getInt(Strings.userId);
     payload.eventOwnerType = 'person';
     payload.pageNumber = page;
     payload.pageSize = 10;
@@ -540,7 +540,7 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
     if (response.statusCode == Strings.success_code) {
       if (i == 0) {
         i++;
-        totalItems = totalItems + response.total;
+        totalItems = totalItems! + response.total!;
       }
     }
     return response;
@@ -550,21 +550,21 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
     return TricycleEventCard(
       title: item.title,
       listofImages: item.participantList != null
-          ? List<String>.generate(item.participantList.length, (index) {
-        return item.participantList[index].profileImage;
+          ? List<String?>.generate(item.participantList!.length, (index) {
+        return item.participantList![index].profileImage;
       })
           : null,
       description: item.subtitle,
       dateVisible: true,
       // date: DateTime.parse(item.startTime),
       isLive: true,
-      byTitle: ' by ' + item.header.title + ', ' + item.header.subtitle1,
-      byImage: item.header.avatar,
+      byTitle: ' by ' + item.header!.title! + ', ' + item.header!.subtitle1!,
+      byImage: item.header!.avatar,
       onlyHeader: false,
       isShareVisible: true,
       isRatingVisible: true,
-      cardRating: item.header.rating ?? 0.0,
-      isRated: getIsRated(item.header),
+      cardRating: item.header!.rating ?? 0.0,
+      isRated: getIsRated(item.header!),
       isModerator: item.isModerator!=null && item.isModerator ==1,
       inviteUsersVisible: item.eventPrivacyType == 'public' || item.eventPrivacyType == 'campus' || (item.isModerator!=null && item.isModerator ==1),
       inviteUsersCallback: (){
@@ -594,17 +594,17 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
         // }
       },
       onClickEvent: () {
-        if(prefs.containsKey(Strings.current_event)){
-          if(prefs.getInt(Strings.current_event) == liveList[index].id){
-            eventbus.fire(TalkEventOpen());
+        if(prefs!.containsKey(Strings.current_event)){
+          if(prefs!.getInt(Strings.current_event) == liveList[index].id){
+            eventbus!.fire(TalkEventOpen());
           }else{
-            ToastBuilder().showSnackBar(AppLocalizations.of(sctx).translate('event_warning'), context, HexColor(AppColors.failure));
+            ToastBuilder().showSnackBar(AppLocalizations.of(sctx)!.translate('event_warning'), context, HexColor(AppColors.failure));
           }
         }else {
           Navigator.push(context, TricycleRouteSlideBottom(
               page: TalkEventPage(
                 key: talk,
-                socket: socketService.getSocket(),
+                socket: socketService!.getSocket(),
                 eventModel: liveList[index],
                 successCallback: refresh,
               )
@@ -628,9 +628,9 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
     );
   }
 
-  void shareCallback(int eventId){
-    createDeeplink.getDeeplink(SHAREITEMTYPE.DETAIL.type,
-        prefs.getInt(Strings.userId).toString(),
+  void shareCallback(int? eventId){
+    createDeeplink!.getDeeplink(SHAREITEMTYPE.DETAIL.type,
+        prefs!.getInt(Strings.userId).toString(),
         eventId,
         DEEPLINKTYPE.CALENDAR.type,
         context);
@@ -640,7 +640,7 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
     prefs ??= await SharedPreferences.getInstance();
     TalkEventListRequest payload = TalkEventListRequest();
     // payload.eventDate= Utility().getDateFormat('yyyy-MM-dd',DateTime.now());
-    payload.eventOwnerId = prefs.getInt(Strings.userId);
+    payload.eventOwnerId = prefs!.getInt(Strings.userId);
     payload.eventOwnerType = 'person';
     payload.pageNumber = 1;
     payload.pageSize = 10;
@@ -651,7 +651,7 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
         .then((value) {
       var res = EventListResponse.fromJson(value);
       if (res.statusCode == Strings.success_code) {
-        confirmedList.addAll(res.rows);
+        confirmedList.addAll(res.rows!);
         fetchUpcomingListSuggestions();
       } else {
         fetchUpcomingListSuggestions();
@@ -663,7 +663,7 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
     prefs ??= await SharedPreferences.getInstance();
     TalkEventListRequest payload = TalkEventListRequest();
     // payload.eventDate= Utility().getDateFormat('yyyy-MM-dd',DateTime.now());
-    payload.eventOwnerId = prefs.getInt(Strings.userId);
+    payload.eventOwnerId = prefs!.getInt(Strings.userId);
     payload.eventOwnerType = 'person';
     payload.pageNumber = 1;
     payload.pageSize = 10;
@@ -678,7 +678,7 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
         isLoading = false;
         setState(() {
           if (res.statusCode == Strings.success_code) {
-            confirmedList.addAll(res.rows);
+            confirmedList.addAll(res.rows!);
           }
         });
       });
@@ -693,8 +693,8 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
   }
 
   bool getIsRated(Header header) {
-    bool isRated;
-    for (var i in header.action) {
+    bool? isRated;
+    for (var i in header.action!) {
       if (i.type == 'is_rated') {
         isRated = i.value;
         break;
@@ -703,17 +703,17 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
     return isRated ??= false;
   }
 
-  emitRatingSuccess(int id ) {
+  emitRatingSuccess(int? id ) {
     JoinEventPayload payload = JoinEventPayload();
     payload.eventId = id;
-    payload.personId = prefs.getInt(Strings.userId);
-    audioSocketService.getSocket().emit(EMIT_ON_EVENT_RATING,payload);
+    payload.personId = prefs!.getInt(Strings.userId);
+    audioSocketService!.getSocket()!.emit(EMIT_ON_EVENT_RATING,payload);
   }
 
   onEventRating(data) {
     log("OnEvent--Rated-campus page-----"+ jsonEncode(data));
     var res = EventListItem.fromJson(data);
-    log("OnEvent--Rated-campus page-----"+ res.header.rating.toString());
+    log("OnEvent--Rated-campus page-----"+ res.header!.rating.toString());
     if(confirmedList.any((element){return element.id == res.id;})){
       var index = liveList.indexWhere((element) {return element.id == res.id;});
       confirmedList[index].header = res.header;
@@ -738,13 +738,13 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
       confirmedList.removeAt(index);
       res.isModerator = confirmedItem.isModerator;
       liveList.add(res);
-      totalItems = totalItems +1 ;
+      totalItems = totalItems! +1 ;
       Future.microtask(() {
         setState(() {});
       });
     }else{
       liveList.add(res);
-      totalItems = totalItems +1 ;
+      totalItems = totalItems! +1 ;
       Future.microtask(() {
         setState(() {});
       });
@@ -759,8 +759,8 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
         return element.id == res.id;
       });
       liveList.removeAt(index);
-      totalItems = totalItems - 1;
-      eventbus.fire(TalkEventEnd(id: res.id));
+      totalItems = totalItems! - 1;
+      eventbus!.fire(TalkEventEnd(id: res.id));
       Future.microtask(() {
         setState(() {});
       });
@@ -771,7 +771,7 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
   void newMessage()
   {
     print("event_message-----------------------------------------------step2");
-   talk.currentState.newMessage();
+   talk.currentState!.newMessage();
   }
   onEventMemberStatusChanged(data) {
     log("onMemberStatus Changed------"+ jsonEncode(data));
@@ -784,15 +784,16 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
       Future.microtask(() {
         setState(() {});
       });
+    // ignore: empty_catches
     }catch(onError){
-      log(onError);
+
     }
   }
   onEventCreate(data) {
     log("OnEventCreated------"+ jsonEncode(data));
     var res = EventListItem.fromJson(data);
     if(!confirmedList.any((element){return element.id == res.id;})){
-      if(res.eventOwnerId != prefs.getInt(Strings.userId)) {
+      if(res.eventOwnerId != prefs!.getInt(Strings.userId)) {
         confirmedList.insert(0, res);
         Future.microtask(() {
           setState(() {});
@@ -807,14 +808,14 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
     };
     var res  = await Calls().call(jsonEncode(payload), context, Config.TALK_EVENT_VIEW);
     var response  = EventViewResponse.fromJson(res);
-    if(response.rows.eventStatus == EVENT_STATUS.ACTIVE.status){
+    if(response.rows!.eventStatus == EVENT_STATUS.ACTIVE.status){
       ToastBuilder().showSnackBar('Event has not started yet', sctx, HexColor(AppColors.information));
-    }else if(response.rows.eventStatus == EVENT_STATUS.LIVE.status) {
+    }else if(response.rows!.eventStatus == EVENT_STATUS.LIVE.status) {
 
       Navigator.push(context, TricycleRouteSlideBottom(
           page: TalkEventPage(
             key: talk,
-            socket: socketService.getSocket(),
+            socket: socketService!.getSocket(),
             eventModel: response.rows,
             successCallback: refresh,
           )
@@ -822,7 +823,7 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
         setUpSocket();
         refresh();
       });
-    }else if(response.rows.eventStatus == EVENT_STATUS.ENDED.status) {
+    }else if(response.rows!.eventStatus == EVENT_STATUS.ENDED.status) {
       ToastBuilder().showSnackBar('Event has ended', sctx, HexColor(AppColors.failure));
     }else{
       ToastBuilder().showSnackBar('Event has ended', sctx, HexColor(AppColors.failure));
@@ -837,10 +838,10 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
 }
 
 class CampusTalkDropMenu {
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
   BuildContext context;
 
-  CampusTalkDropMenu({@required this.context}) {
+  CampusTalkDropMenu({required this.context}) {
     styleElements = TextStyleElements(context);
   }
 
@@ -851,7 +852,7 @@ class CampusTalkDropMenu {
         value: '',
         child: Center(
           child: Text(
-            AppLocalizations.of(context).translate('campus_talk'),
+            AppLocalizations.of(context)!.translate('campus_talk'),
             style: styleElements
                 .subtitle1ThemeScalable(context)
                 .copyWith(fontWeight: FontWeight.bold),
@@ -868,8 +869,8 @@ class CampusTalkDropMenu {
     list.add(PopupMenuItem(
         value: 'upcoming',
         child: PostListMenu(context: context).getUiElement(
-            AppLocalizations.of(context).translate('upcoming_talks'),
-            AppLocalizations.of(context).translate('upcoming_talks_des'),
+            AppLocalizations.of(context)!.translate('upcoming_talks'),
+            AppLocalizations.of(context)!.translate('upcoming_talks_des'),
             'assets/appimages/create-articles.png')));
 
     // list.add(PopupMenuItem(
@@ -890,7 +891,7 @@ class CampusTalkDropMenu {
         value: '',
         child: Center(
           child: Text(
-            AppLocalizations.of(context).translate('event'),
+            AppLocalizations.of(context)!.translate('event'),
             style: styleElements
                 .subtitle1ThemeScalable(context)
                 .copyWith(fontWeight: FontWeight.bold),
@@ -900,8 +901,8 @@ class CampusTalkDropMenu {
     list.add(PopupMenuItem(
         value: 'search',
         child: PostListMenu(context: context).getUiElement(
-            AppLocalizations.of(context).translate('search'),
-            AppLocalizations.of(context).translate('search_des'),
+            AppLocalizations.of(context)!.translate('search'),
+            AppLocalizations.of(context)!.translate('search_des'),
             'assets/appimages/general-post.png')));
 
     // list.add(PopupMenuItem(

@@ -3,9 +3,9 @@
 /// page_number : 1
 
 class KeywordListRequest {
-  String  searchVal;
-  int pageSize;
-  int pageNumber;
+  String?  searchVal;
+  int? pageSize;
+  int? pageNumber;
 
   KeywordListRequest({this.searchVal, this.pageSize, this.pageNumber});
 
@@ -26,10 +26,10 @@ class KeywordListRequest {
 
 
 class KeywordListResponse {
-  String statusCode;
-  String message;
-  List<KeywordListItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<KeywordListItem>? rows;
+  int? total;
 
   KeywordListResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -39,7 +39,7 @@ class KeywordListResponse {
     if (json['rows'] != null) {
       rows = [];//KeywordListItem>();
       json['rows'].forEach((v) {
-        rows.add(new KeywordListItem.fromJson(v));
+        rows!.add(new KeywordListItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -50,7 +50,7 @@ class KeywordListResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -58,9 +58,9 @@ class KeywordListResponse {
 }
 
 class KeywordListItem {
-  String id;
-  String keyword;
-  String display;
+  String? id;
+  String? keyword;
+  String? display;
 
   KeywordListItem({this.id, this.keyword,this.display});
 
@@ -80,10 +80,10 @@ class KeywordListItem {
 }
 
 class MentionsListResponse {
-  String statusCode;
-  String message;
-  List<MentionListItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<MentionListItem>? rows;
+  int? total;
 
   MentionsListResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -93,7 +93,7 @@ class MentionsListResponse {
     if (json['rows'] != null) {
       rows = [];//MentionListItem>();
       json['rows'].forEach((v) {
-        rows.add(new MentionListItem.fromJson(v));
+        rows!.add(new MentionListItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -104,7 +104,7 @@ class MentionsListResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -112,11 +112,11 @@ class MentionsListResponse {
 }
 
 class MentionListItem {
-  int id;
-  String fullName;
-  String profileImage;
-  String slug;
-  String type;
+  int? id;
+  String? fullName;
+  String? profileImage;
+  String? slug;
+  String? type;
 
   MentionListItem({this.id, this.fullName, this.profileImage, this.slug, this.type});
 

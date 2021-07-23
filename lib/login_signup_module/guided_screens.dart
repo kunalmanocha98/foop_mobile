@@ -20,9 +20,9 @@ class _OnBoardingState extends State<OnBoarding> {
 
   int currentPageValue = 0;
   int previousPageValue = 0;
-  PageController controller;
+  PageController? controller;
   double _moveBar = 0.0;
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   @override
   void initState() {
@@ -62,28 +62,28 @@ class _OnBoardingState extends State<OnBoarding> {
         screenWidth: screenWidth,
         screenheight: screenheight,
         image: 'assets/appimages/Teacher-pana.png',
-        type: AppLocalizations.of(context).translate("teacher_intro_title"),
+        type: AppLocalizations.of(context)!.translate("teacher_intro_title"),
         subText:
-            AppLocalizations.of(context).translate("teacher_intro_subtitle"),
-        desc: AppLocalizations.of(context).translate("teacher_intro_desc"),
+            AppLocalizations.of(context)!.translate("teacher_intro_subtitle"),
+        desc: AppLocalizations.of(context)!.translate("teacher_intro_desc"),
       ),
       IntroWidget(
         screenWidth: screenWidth,
         screenheight: screenheight,
         image: 'assets/appimages/students1-pana.png',
-        type: AppLocalizations.of(context).translate("student_intro_title"),
+        type: AppLocalizations.of(context)!.translate("student_intro_title"),
         subText:
-            AppLocalizations.of(context).translate("student_intro_subtitle"),
-        desc: AppLocalizations.of(context).translate("student_intro_desc"),
+            AppLocalizations.of(context)!.translate("student_intro_subtitle"),
+        desc: AppLocalizations.of(context)!.translate("student_intro_desc"),
       ),
       IntroWidget(
         screenWidth: screenWidth,
         screenheight: screenheight,
         image: 'assets/appimages/Teacher-pana.png',
-        type: AppLocalizations.of(context).translate("parent_intro_title"),
+        type: AppLocalizations.of(context)!.translate("parent_intro_title"),
         subText:
-            AppLocalizations.of(context).translate("parent_intro_subtitle"),
-        desc: AppLocalizations.of(context).translate("parent_intro_desc"),
+            AppLocalizations.of(context)!.translate("parent_intro_subtitle"),
+        desc: AppLocalizations.of(context)!.translate("parent_intro_desc"),
       )
     ];
 
@@ -124,7 +124,7 @@ class _OnBoardingState extends State<OnBoarding> {
                                 (Route<dynamic> route) => false);
                       },
                       color: HexColor(AppColors.appColorWhite),
-                      child: Text(AppLocalizations.of(context).translate("skip"),
+                      child: Text(AppLocalizations.of(context)!.translate("skip"),
                           style: styleElements.bodyText2ThemeScalable(context).copyWith(color: HexColor(AppColors.appMainColor))),
                     ),
                   ),
@@ -153,13 +153,13 @@ class _OnBoardingState extends State<OnBoarding> {
                                       (Route<dynamic> route) => false);
                             } else {
                               currentPageValue = currentPageValue + 1;
-                              controller.jumpToPage(currentPageValue);
+                              controller!.jumpToPage(currentPageValue);
                             }
                           });
                         },
                         color: HexColor(AppColors.appColorWhite),
                         child: Text(
-                            AppLocalizations.of(context).translate("next"),
+                            AppLocalizations.of(context)!.translate("next"),
                             style: styleElements.bodyText2ThemeScalable(context).copyWith(color: HexColor(AppColors.appMainColor))),
                       ))
                 ],

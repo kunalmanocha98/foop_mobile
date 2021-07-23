@@ -1,8 +1,8 @@
 class DeeplinkResponse {
-  String statusCode;
-  String message;
-  Rows rows;
-  int total;
+  String? statusCode;
+  String? message;
+  Rows? rows;
+  int? total;
 
   DeeplinkResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -18,7 +18,7 @@ class DeeplinkResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     data['total'] = this.total;
     return data;
@@ -26,9 +26,9 @@ class DeeplinkResponse {
 }
 
 class Rows {
-  String uniqueShareUrl;
-  String shortUrl;
-  String shareContentMessage;
+  String? uniqueShareUrl;
+  String? shortUrl;
+  String? shareContentMessage;
 
   Rows({this.uniqueShareUrl, this.shortUrl,this.shareContentMessage});
 

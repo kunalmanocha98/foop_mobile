@@ -24,16 +24,16 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class CreateChapterPage extends StatefulWidget {
-  final PostCreatePayload createLessonData;
+  final PostCreatePayload? createLessonData;
 
-  const CreateChapterPage({Key key, this.createLessonData}) : super(key: key);
+  const CreateChapterPage({Key? key, this.createLessonData}) : super(key: key);
   _CreateChapterPage createState() => _CreateChapterPage();
 }
 
 class _CreateChapterPage extends State<CreateChapterPage> {
-  BuildContext context;
-  TextStyleElements styleElements;
-  String searchVal;
+late   BuildContext context;
+  late TextStyleElements styleElements;
+  String? searchVal;
   GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
   GlobalKey<TricycleProgressButtonState> progressButtonKeyNext = GlobalKey();
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
@@ -44,7 +44,7 @@ class _CreateChapterPage extends State<CreateChapterPage> {
   }
 
   refresh() {
-    paginatorKey.currentState.changeState(resetState: true);
+    paginatorKey.currentState!.changeState(resetState: true);
   }
 
   @override
@@ -57,7 +57,7 @@ class _CreateChapterPage extends State<CreateChapterPage> {
           resizeToAvoidBottomInset: false,
           appBar: TricycleAppBar().getCustomAppBar(
             context,
-            appBarTitle: AppLocalizations.of(context).translate('chapters'),
+            appBarTitle: AppLocalizations.of(context)!.translate('chapters'),
             actions: [
               Padding(
                 padding:
@@ -134,7 +134,7 @@ class _CreateChapterPage extends State<CreateChapterPage> {
           ),
         ),
         onTap: () async {
-          widget.createLessonData.chapterItem=item;
+          widget.createLessonData!.chapterItem=item;
           Navigator.push(
               context,
               MaterialPageRoute(
@@ -160,16 +160,16 @@ class _CreateChapterPage extends State<CreateChapterPage> {
 }
 
 class CommentSheet extends StatefulWidget {
-  final Function chapterCreateCallBack;
+  final Function? chapterCreateCallBack;
 
-  const CommentSheet({Key key, this.chapterCreateCallBack}) : super(key: key);
+  const CommentSheet({Key? key, this.chapterCreateCallBack}) : super(key: key);
 
   @override
   _CommentSheet createState() => _CommentSheet();
 }
 
 class _CommentSheet extends State<CommentSheet> {
-  SharedPreferences prefs = locator<SharedPreferences>();
+  SharedPreferences? prefs = locator<SharedPreferences>();
   final lastNameController = TextEditingController();
 
   @override
@@ -191,7 +191,7 @@ class _CommentSheet extends State<CommentSheet> {
         },
         decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(8.0, 15.0, 20.0, 4.0),
-          hintText: AppLocalizations.of(context).translate('give_chapter_name'),
+          hintText: AppLocalizations.of(context)!.translate('give_chapter_name'),
           hintStyle: styleElements
               .bodyText2ThemeScalable(context)
               .copyWith(color: HexColor(AppColors.appColorBlack35)),
@@ -206,7 +206,7 @@ class _CommentSheet extends State<CommentSheet> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                AppLocalizations.of(context).translate(''),
+                AppLocalizations.of(context)!.translate(''),
                 style: styleElements
                     .headline6ThemeScalable(context)
                     .copyWith(fontWeight: FontWeight.bold),
@@ -215,7 +215,7 @@ class _CommentSheet extends State<CommentSheet> {
             Padding(
               padding: const EdgeInsets.only(top: 20.0),
               child: Text(
-                AppLocalizations.of(context).translate('name_chapter'),
+                AppLocalizations.of(context)!.translate('name_chapter'),
                 style: styleElements
                     .subtitle1ThemeScalable(context)
                     .copyWith(fontWeight: FontWeight.bold),
@@ -231,13 +231,13 @@ class _CommentSheet extends State<CommentSheet> {
                     createChapter(lastNameController.text.toString());
                   else
                     ToastBuilder().showToast(
-                        AppLocalizations.of(context)
+                        AppLocalizations.of(context)!
                             .translate("name_chapter_required"),
                         context,
                         HexColor(AppColors.information));
                 },
                 child: Text(
-                  AppLocalizations.of(context).translate('next'),
+                  AppLocalizations.of(context)!.translate('next'),
                   style: styleElements
                       .subtitle2ThemeScalable(context)
                       .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -254,7 +254,7 @@ class _CommentSheet extends State<CommentSheet> {
           padding: const EdgeInsets.only(
               left: 45.0, right: 45.0, top: 20, bottom: 60),
           child: Text(
-            AppLocalizations.of(context).translate('chapter_dec'),
+            AppLocalizations.of(context)!.translate('chapter_dec'),
             style: styleElements.bodyText1ThemeScalable(context),
           ),
         ),
@@ -271,10 +271,10 @@ class _CommentSheet extends State<CommentSheet> {
     var model = CreateChaptersResponse.fromJson(res);
     if (model.statusCode == Strings.success_code) {
       Navigator.of(context).pop();
-      widget.chapterCreateCallBack();
+      widget.chapterCreateCallBack!();
     } else {
       ToastBuilder().showToast(
-          AppLocalizations.of(context).translate("something_wrong"),
+          AppLocalizations.of(context)!.translate("something_wrong"),
           context,
           HexColor(AppColors.information));
     }

@@ -1,7 +1,7 @@
 class YearsData {
 
-  bool isSelected=false;
-  String yearName;
+  bool? isSelected=false;
+  String? yearName;
 
 
   YearsData({this.yearName,this.isSelected});

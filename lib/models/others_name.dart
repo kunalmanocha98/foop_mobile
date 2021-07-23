@@ -1,8 +1,8 @@
 class OthersName {
-  String statusCode;
-  String message;
-  List<String> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<String>? rows;
+  int? total;
 
   OthersName({this.statusCode, this.message, this.rows, this.total});
 

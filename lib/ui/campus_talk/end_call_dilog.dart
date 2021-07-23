@@ -6,8 +6,8 @@ import 'package:oho_works_app/utils/hexColors.dart';
 import 'package:flutter/material.dart';
 
 class EndCallDilog extends StatelessWidget{
-final Null Function() callBack;
-final Null Function() callBackCancel;
+final Null Function()? callBack;
+final Null Function()? callBackCancel;
   EndCallDilog({this.callBack,this.callBackCancel});
   @override
   Widget build(BuildContext context) {
@@ -19,7 +19,7 @@ final Null Function() callBackCancel;
         children: [
           Padding(
               padding: EdgeInsets.only(top: 16,bottom: 16,left:16,right: 16),
-              child: Text(AppLocalizations.of(context).translate('confirm_end'),style: styleElements.headline6ThemeScalable(context),)),
+              child: Text(AppLocalizations.of(context)!.translate('confirm_end'),style: styleElements.headline6ThemeScalable(context),)),
           Center(
             child: Image(
               width: 48,
@@ -30,7 +30,7 @@ final Null Function() callBackCancel;
           ),
           Padding(
               padding: EdgeInsets.only(top: 16,bottom: 16,left:16,right: 16),
-              child: Text(AppLocalizations.of(context).translate('end_text'),style: styleElements.subtitle1ThemeScalable(context),)),
+              child: Text(AppLocalizations.of(context)!.translate('end_text'),style: styleElements.subtitle1ThemeScalable(context),)),
 
 
           Padding(
@@ -41,10 +41,10 @@ final Null Function() callBackCancel;
                 TricycleTextButton(
                   onPressed: (){
                     Navigator.pop(context);
-                    callBackCancel();
+                    callBackCancel!();
                   },
                   shape: StadiumBorder(),
-                  child: Text(AppLocalizations.of(context).translate('cancel'),style: styleElements.bodyText2ThemeScalable(context).copyWith(
+                  child: Text(AppLocalizations.of(context)!.translate('cancel'),style: styleElements.bodyText2ThemeScalable(context).copyWith(
                       color: HexColor(AppColors.appMainColor)
                   ),),
                 ),
@@ -52,10 +52,10 @@ final Null Function() callBackCancel;
                   onPressed: (){
 
                     Navigator.pop(context);
-                    callBack();
+                    callBack!();
                   },
                   shape: StadiumBorder(),
-                  child: Text(AppLocalizations.of(context).translate('end_now'),style: styleElements.bodyText2ThemeScalable(context).copyWith(
+                  child: Text(AppLocalizations.of(context)!.translate('end_now'),style: styleElements.bodyText2ThemeScalable(context).copyWith(
                       color: HexColor(AppColors.appMainColor)
                   ),),
                 )

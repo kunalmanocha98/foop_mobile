@@ -45,30 +45,31 @@ class _ConnectionsSuggestionPage extends State<ConnectionPage> {
   _ConnectionsSuggestionPage(
       this.type,this.socket,this.isForward,this.callBack);
   IO.Socket socket;
-  String searchVal;
+  String? searchVal;
   String type;
   Null Function() callBack;
-  String ownerType;
-  int ownerId;
+  String? ownerType;
+  int? ownerId;
   bool isForward;
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
-  SharedPreferences prefs;
-  TextStyleElements styleElements;
+  late SharedPreferences prefs;
+  late TextStyleElements styleElements;
   bool get wantKeepAlive => true;
-  PAGINATOR_ENUMS pageEnum_suggestion;
-  PAGINATOR_ENUMS pageEnum_connections;
-  String errorMessage;
+  PAGINATOR_ENUMS? pageEnum_suggestion;
+  PAGINATOR_ENUMS? pageEnum_connections;
+  String? errorMessage;
   List<ConnectionItem> ConnectionsList = [];
   List<ConnectionItem> selectedConnections = [];
   List<Rows> suggestionList = [];
-  int totalConnections = 0;
+  int? totalConnections = 0;
   int pageConnections = 0;
-  int totalSuggestions = 0;
+  int? totalSuggestions = 0;
   int pageSuggetsions = 0;
   var connectionSliverKey = GlobalKey();
   var suggestionsSliverKey = GlobalKey();
   String names="";
-BuildContext ctx;
+  GlobalKey<ChatHistoryPageState> ch = GlobalKey();
+BuildContext? ctx;
   @override
   void initState() {
     super.initState();
@@ -105,7 +106,7 @@ this.ctx=context;
                          padding: const EdgeInsets.only(
                              left: 20.0, top: 8, bottom: 8),
                          child: Text(
-                           AppLocalizations.of(context).translate("suggestions"),
+                           AppLocalizations.of(context)!.translate("suggestions"),
                            style: styleElements
                                .headline6ThemeScalable(context)
                                .copyWith(fontWeight: FontWeight.w600),
@@ -158,7 +159,7 @@ this.ctx=context;
                                  },
                                color:  HexColor(AppColors.appColorWhite),
                                child: Text(
-                                 AppLocalizations.of(context)
+                                 AppLocalizations.of(context)!
                                      .translate('next')
                                      .toUpperCase(),
                                  style: styleElements
@@ -319,7 +320,7 @@ this.ctx=context;
                               actionByObjectId: prefs.getInt("userId"),
                               actionOnObjectType: "person",
                               actionOnObjectId: suggestionList[index].id,
-                              engageFlag: AppLocalizations.of(context)
+                              engageFlag: AppLocalizations.of(context)!
                                   .translate('follow'),
                               actionFlag: "F",
                               actionDetails: [],
@@ -345,7 +346,7 @@ this.ctx=context;
                       return CustomPaginator(context).loadingWidgetMaker();
                     case ConnectionState.done:
                       pageSuggetsions++;
-                      suggestionList.addAll(snapshot.data.rows);
+                      suggestionList.addAll(snapshot.data!.rows!);
                       Future.microtask(() {
                         setState(() {});
                       });
@@ -388,8 +389,10 @@ this.ctx=context;
                         MaterialPageRoute(
                             builder: (ctx) =>
                             new ChatHistoryPage(
+                              key:ch,
                                 type:"normal"
                                 ,
+                                isVisible: true,
                                 conversationItem: null, connectionItem:ConnectionsList[index],socket: socket,callBack:callBack)));
                   },
                   child: Column(
@@ -435,7 +438,7 @@ this.ctx=context;
                               onChanged: (val) {
                                 if (this.mounted) {
                                   setState(() {
-                                    if (val ) {
+                                    if (val! ) {
                                       ConnectionsList[index].isSelected=true;
 
                                       setState(() {
@@ -469,7 +472,7 @@ this.ctx=context;
                       return CustomPaginator(context).loadingWidgetMaker();
                     case ConnectionState.done:
                       pageConnections++;
-                      ConnectionsList.addAll(snapshot.data.rows);
+                      ConnectionsList.addAll(snapshot.data!.rows!);
                       Future.microtask(() {
                         setState(() {});
                       });
@@ -499,8 +502,8 @@ this.ctx=context;
     var response = ConnectionListResponseEntity.fromJson(res);
     totalConnections = response.total;
     if (response.statusCode == Strings.success_code) {
-      if (totalConnections > 0) {
-        ConnectionsList.addAll(response.rows);
+      if (totalConnections! > 0) {
+        ConnectionsList.addAll(response.rows!);
         setState(() {
           pageEnum_connections = PAGINATOR_ENUMS.SUCCESS;
           pageConnections++;
@@ -517,8 +520,8 @@ this.ctx=context;
     }
   }
 
-  int getItemsCountConnections() {
-    if (totalConnections > ConnectionsList.length) {
+  int? getItemsCountConnections() {
+    if (totalConnections! > ConnectionsList.length) {
       return ConnectionsList.length + 1;
     } else {
       return totalConnections;
@@ -532,8 +535,8 @@ this.ctx=context;
     var response = SuggestionData.fromJson(res);
     totalSuggestions = response.total;
     if (response.statusCode == Strings.success_code) {
-      if (response.total > 0) {
-        suggestionList.addAll(response.rows);
+      if (response.total! > 0) {
+        suggestionList.addAll(response.rows!);
         pageSuggetsions = 2;
 
         setState(() {
@@ -551,8 +554,8 @@ this.ctx=context;
     }
   }
 
-  int getItemsCountSuggestions() {
-    if (totalSuggestions > suggestionList.length) {
+  int? getItemsCountSuggestions() {
+    if (totalSuggestions! > suggestionList.length) {
       return suggestionList.length + 1;
     } else {
       return totalSuggestions;
@@ -597,8 +600,8 @@ this.ctx=context;
     String selectedNames="";
     for(var item in ConnectionsList)
       {
-        if(item.isSelected)
-        selectedNames=selectedNames+(item.connectionName+",");
+        if(item.isSelected!)
+        selectedNames=selectedNames+(item.connectionName!+",");
       }
     return selectedNames;
 
@@ -610,7 +613,7 @@ this.ctx=context;
     List<ConnectionItem> list=[];
     for(var item in ConnectionsList)
     {
-      if(item.isSelected)
+      if(item.isSelected!)
         list.add(item);
     }
     return list;

@@ -14,12 +14,12 @@ class SportsExpertiseDialog extends StatefulWidget {
 
 class _SportsExpertiseDialog extends State<SportsExpertiseDialog> {
   List<LanguageItem> list = [];
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => inflateData());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => inflateData());
   }
 
   void inflateData() {
@@ -46,7 +46,7 @@ class _SportsExpertiseDialog extends State<SportsExpertiseDialog> {
                 alignment: Alignment.topCenter,
                 child: Container(
                   margin: const EdgeInsets.only(bottom: 16, top: 16),
-                  child: Text(AppLocalizations.of(context).translate('sports_expertise'),
+                  child: Text(AppLocalizations.of(context)!.translate('sports_expertise'),
                     style: styleElements.headline5ThemeScalable(context),
                   ),
                 )),
@@ -56,10 +56,10 @@ class _SportsExpertiseDialog extends State<SportsExpertiseDialog> {
                 CheckboxListTile(
                   activeColor: HexColor(AppColors.appMainColor),
                   title: Text(
-                      list[0].languageName != null ? list[0].languageName : ""),
+                      list[0].languageName != null ? list[0].languageName! : ""),
                   value:
                       list[0].isSelected != null ? list[0].isSelected : false,
-                  onChanged: (bool value) {
+                  onChanged: (bool? value) {
                     list[0].isSelected = true;
                     setState(() {});
                   },
@@ -67,10 +67,10 @@ class _SportsExpertiseDialog extends State<SportsExpertiseDialog> {
                 CheckboxListTile(
                   activeColor: HexColor(AppColors.appMainColor),
                   title: Text(
-                      list[1].languageName != null ? list[1].languageName : ""),
+                      list[1].languageName != null ? list[1].languageName! : ""),
                   value:
                       list[0].isSelected != null ? list[0].isSelected : false,
-                  onChanged: (bool value) {
+                  onChanged: (bool? value) {
                     list[1].isSelected = true;
                     setState(() {});
                   },
@@ -78,10 +78,10 @@ class _SportsExpertiseDialog extends State<SportsExpertiseDialog> {
                 CheckboxListTile(
                   activeColor: HexColor(AppColors.appMainColor),
                   title: Text(
-                      list[2].languageName != null ? list[2].languageName : ""),
+                      list[2].languageName != null ? list[2].languageName! : ""),
                   value:
                       list[0].isSelected != null ? list[0].isSelected : false,
-                  onChanged: (bool value) {
+                  onChanged: (bool? value) {
                     list[2].isSelected = true;
                     setState(() {});
                   },
@@ -96,7 +96,7 @@ class _SportsExpertiseDialog extends State<SportsExpertiseDialog> {
                     margin: EdgeInsets.all(16),
                     child: Align(
                       alignment: Alignment.topLeft,
-                      child: Text(AppLocalizations.of(context).translate('rate_expertise'),
+                      child: Text(AppLocalizations.of(context)!.translate('rate_expertise'),
                         style: styleElements.subtitle1ThemeScalable(context),
                       ),
                     ),
@@ -133,14 +133,14 @@ class _SportsExpertiseDialog extends State<SportsExpertiseDialog> {
                       Container(
                         margin: const EdgeInsets.only(left: 30),
                         child: Text(
-                          AppLocalizations.of(context).translate('rate_average'),
+                          AppLocalizations.of(context)!.translate('rate_average'),
                           style: styleElements.overlineThemeScalable(context),
                         ),
                       ),
                       Container(
                         margin: const EdgeInsets.only(right: 30),
                         child: Text(
-                          AppLocalizations.of(context).translate('rate_verygood'),
+                          AppLocalizations.of(context)!.translate('rate_verygood'),
                           style: styleElements.overlineThemeScalable(context),
                         ),
                       )
@@ -156,7 +156,7 @@ class _SportsExpertiseDialog extends State<SportsExpertiseDialog> {
                 Container(
                   margin: const EdgeInsets.all(8),
                   child: Text(
-                    AppLocalizations.of(context).translate('cancel'),
+                    AppLocalizations.of(context)!.translate('cancel'),
                     style: styleElements.headline6ThemeScalable(context),
                   ),
                 ),
@@ -167,7 +167,7 @@ class _SportsExpertiseDialog extends State<SportsExpertiseDialog> {
                 Container(
                   margin: const EdgeInsets.all(8),
                   child: Text(
-                    AppLocalizations.of(context).translate('submit'),
+                    AppLocalizations.of(context)!.translate('submit'),
                     style: styleElements.headline6ThemeScalable(context),
                   ),
                 )

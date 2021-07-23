@@ -6,13 +6,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class PostCardMediaList extends StatefulWidget{
-  final List<Media> mediaList;
+  final List<Media>? mediaList;
   PostCardMediaList({this.mediaList});
   @override
   PostCardMediaListState createState() => PostCardMediaListState(mediaList: mediaList);
 }
 class PostCardMediaListState extends State<PostCardMediaList>{
-  final List<Media> mediaList;
+  final List<Media>? mediaList;
   PostCardMediaListState({this.mediaList});
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class PostCardMediaListState extends State<PostCardMediaList>{
       height: 72,
       child: ListView.builder(
         shrinkWrap: true,
-        itemCount: mediaList.length,
+        itemCount: mediaList!.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (BuildContext context, int index) {
           return Container(
@@ -31,7 +31,7 @@ class PostCardMediaListState extends State<PostCardMediaList>{
               borderRadius: BorderRadius.circular(4),
               image: DecorationImage(
                 fit: BoxFit.cover,
-                image: CachedNetworkImageProvider(Utility().getUrlForImage( mediaList[index].mediaUrl, RESOLUTION_TYPE.R256, SERVICE_TYPE.POST),
+                image: CachedNetworkImageProvider(Utility().getUrlForImage( mediaList![index].mediaUrl, RESOLUTION_TYPE.R256, SERVICE_TYPE.POST),
                 maxHeight: 64,maxWidth: 64)
               )
             ),

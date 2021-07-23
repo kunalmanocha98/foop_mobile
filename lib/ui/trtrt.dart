@@ -12,11 +12,11 @@ import 'package:flutter/material.dart';
 class OtpView extends StatefulWidget {
   final String email;
   final String newEmail;
-  final bool isGuestCheckOut;
+  final bool? isGuestCheckOut;
 
   const OtpView({
-    Key key,
-    @required this.email,
+    Key? key,
+    required this.email,
     this.newEmail = "",
     this.isGuestCheckOut,
   }) : super(key: key);
@@ -28,19 +28,19 @@ class OtpView extends StatefulWidget {
 class _OtpViewState extends State<OtpView> with SingleTickerProviderStateMixin {
   // Constants
   final int time = 5;
-  AnimationController _controller;
-  TextStyleElements styleElements;
+  AnimationController? _controller;
+  late TextStyleElements styleElements;
   // Variables
-  Size _screenSize;
-  int _currentDigit;
-  int _firstDigit;
-  int _secondDigit;
-  int _thirdDigit;
-  int _fourthDigit;
+  late Size _screenSize;
+  int? _currentDigit;
+  int? _firstDigit;
+  int? _secondDigit;
+  int? _thirdDigit;
+  int? _fourthDigit;
 
-  Timer timer;
-  int totalTimeInSeconds;
-  bool _hideResendButton;
+  Timer? timer;
+  int? totalTimeInSeconds;
+  late bool _hideResendButton;
 
   String userName = "";
   bool didReadNotifications = false;
@@ -53,7 +53,7 @@ class _OtpViewState extends State<OtpView> with SingleTickerProviderStateMixin {
 
   // Return "Verification Code" label
   get _getVerificationCodeLabel {
-    return Text(AppLocalizations.of(context).translate('verification_code'),
+    return Text(AppLocalizations.of(context)!.translate('verification_code'),
       textAlign: TextAlign.center,
       style: styleElements.headline5ThemeScalable(context),
     );
@@ -61,7 +61,7 @@ class _OtpViewState extends State<OtpView> with SingleTickerProviderStateMixin {
 
   // Return "Email" label
   get _getEmailLabel {
-    return Text(AppLocalizations.of(context).translate('please_enter_otp'),
+    return Text(AppLocalizations.of(context)!.translate('please_enter_otp'),
       textAlign: TextAlign.center,
       style: styleElements.subtitle1ThemeScalable(context),
     );
@@ -131,7 +131,7 @@ class _OtpViewState extends State<OtpView> with SingleTickerProviderStateMixin {
             clearOtp();
             _startCountdown();
           },
-          child: Text(AppLocalizations.of(context).translate('resend_otp'),
+          child: Text(AppLocalizations.of(context)!.translate('resend_otp'),
             style: styleElements.subtitle1ThemeScalable(context),
           )),
     );
@@ -292,14 +292,14 @@ class _OtpViewState extends State<OtpView> with SingleTickerProviderStateMixin {
               });
             }
           });
-    _controller.reverse(
-        from: _controller.value == 0.0 ? 1.0 : _controller.value);
+    _controller!.reverse(
+        from: _controller!.value == 0.0 ? 1.0 : _controller!.value);
     _startCountdown();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller!.dispose();
     super.dispose();
   }
 
@@ -327,7 +327,7 @@ class _OtpViewState extends State<OtpView> with SingleTickerProviderStateMixin {
   }
 
   // Returns "Otp custom text field"
-  Widget _otpTextField(int digit) {
+  Widget _otpTextField(int? digit) {
     return Container(
       width: 35.0,
       height: 45.0,
@@ -347,7 +347,7 @@ class _OtpViewState extends State<OtpView> with SingleTickerProviderStateMixin {
   }
 
   // Returns "Otp keyboard input Button"
-  Widget _otpKeyboardInputButton({String label, VoidCallback onPressed}) {
+  Widget _otpKeyboardInputButton({required String label, VoidCallback? onPressed}) {
     return Material(
       color: HexColor(AppColors.appColorTransparent),
       child: InkWell(
@@ -371,7 +371,7 @@ class _OtpViewState extends State<OtpView> with SingleTickerProviderStateMixin {
   }
 
   // Returns "Otp keyboard action Button"
-  _otpKeyboardActionButton({Widget label, VoidCallback onPressed}) {
+  _otpKeyboardActionButton({Widget? label, VoidCallback? onPressed}) {
     return InkWell(
       onTap: onPressed,
       borderRadius: BorderRadius.circular(40.0),
@@ -407,8 +407,8 @@ class _OtpViewState extends State<OtpView> with SingleTickerProviderStateMixin {
       _hideResendButton = true;
       totalTimeInSeconds = time;
     });
-    _controller.reverse(
-        from: _controller.value == 0.0 ? 1.0 : _controller.value);
+    _controller!.reverse(
+        from: _controller!.value == 0.0 ? 1.0 : _controller!.value);
   }
 
   void clearOtp() {
@@ -422,23 +422,23 @@ class _OtpViewState extends State<OtpView> with SingleTickerProviderStateMixin {
 
 // ignore: must_be_immutable
 class OtpTimer extends StatelessWidget {
-  final AnimationController controller;
+  final AnimationController? controller;
   double fontSize;
   Color timeColor = HexColor(AppColors.appColorBlack);
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   OtpTimer(this.controller, this.fontSize, this.timeColor);
 
   String get timerString {
-    Duration duration = controller.duration * controller.value;
+    Duration duration = controller!.duration! * controller!.value;
     if (duration.inHours > 0) {
       return '${duration.inHours}:${duration.inMinutes % 60}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
     }
     return '${duration.inMinutes % 60}:${(duration.inSeconds % 60).toString().padLeft(2, '0')}';
   }
 
-  Duration get duration {
-    Duration duration = controller.duration;
+  Duration? get duration {
+    Duration? duration = controller!.duration;
     return duration;
   }
 
@@ -446,8 +446,8 @@ class OtpTimer extends StatelessWidget {
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
     return AnimatedBuilder(
-        animation: controller,
-        builder: (BuildContext context, Widget child) {
+        animation: controller!,
+        builder: (BuildContext context, Widget? child) {
           return Text(
             timerString,
             style: styleElements.subtitle2ThemeScalable(context),

@@ -28,9 +28,9 @@ class RecoverPasswords extends StatefulWidget {
 class _RecoverPasswords extends State<RecoverPasswords> {
   final emailController = TextEditingController();
 
-  BuildContext context;
-  SharedPreferences prefs;
-  TextStyleElements styleElements;
+  late BuildContext context;
+  SharedPreferences? prefs;
+  late TextStyleElements styleElements;
   bool isCalling = false;
 
   void recoverPassword() async {
@@ -63,10 +63,10 @@ class _RecoverPasswords extends State<RecoverPasswords> {
           } else {
             if (data.message != null)
               ToastBuilder().showToast(
-                  data.message, context, HexColor(AppColors.information));
+                  data.message!, context, HexColor(AppColors.information));
             else
               ToastBuilder().showToast(
-                  AppLocalizations.of(context).translate("try_again"),
+                  AppLocalizations.of(context)!.translate("try_again"),
                   context,
                   HexColor(AppColors.information));
           }
@@ -76,13 +76,13 @@ class _RecoverPasswords extends State<RecoverPasswords> {
           isCalling = false;
         });
         ToastBuilder().showToast(
-            AppLocalizations.of(context).translate("try_again"),
+            AppLocalizations.of(context)!.translate("try_again"),
             context,
             HexColor(AppColors.information));
       });
     } else
       ToastBuilder().showToast(
-          AppLocalizations.of(context).translate("email_required"),
+          AppLocalizations.of(context)!.translate("email_required"),
           context,
           HexColor(AppColors.information));
   }
@@ -105,7 +105,7 @@ class _RecoverPasswords extends State<RecoverPasswords> {
         textCapitalization: TextCapitalization.none,
         decoration: InputDecoration(
             contentPadding: EdgeInsets.fromLTRB(8.0, 15.0, 8.0, 15.0),
-            hintText: AppLocalizations.of(context).translate('email'),
+            hintText: AppLocalizations.of(context)!.translate('email'),
             hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
             prefixIcon: Padding(
                 padding: EdgeInsets.all(0.0),
@@ -116,7 +116,7 @@ class _RecoverPasswords extends State<RecoverPasswords> {
               ),
             )),
         validator: EditProfileMixins().validateEmail,
-        onSaved: (String value) {},
+        onSaved: (String? value) {},
       ),
     );
     var screenWidth = MediaQuery.of(context).size.width;
@@ -141,7 +141,7 @@ class _RecoverPasswords extends State<RecoverPasswords> {
               Container(
                 alignment: Alignment(0, -0.4),
                 child: Text(
-                  AppLocalizations.of(context).translate("recover_password"),
+                  AppLocalizations.of(context)!.translate("recover_password"),
                   style: styleElements.headline5ThemeScalable(context),
                 ),
               ),
@@ -158,7 +158,7 @@ class _RecoverPasswords extends State<RecoverPasswords> {
                 child: Container(
                   alignment: Alignment(0, 0.4),
                   child: LargeButton(
-                    name: AppLocalizations.of(context).translate("submit"),
+                    name: AppLocalizations.of(context)!.translate("submit"),
                     offsetX: 109.66,
                     offsetY: 12.93,
                     callback: () {

@@ -4,13 +4,13 @@ import 'package:oho_works_app/models/Rooms/roomlistmodels.dart';
 import 'package:flutter/material.dart';
 
 class EventChatScreenPage extends StatefulWidget {
-  final int participantId;
-  final int eventId;
-  final String  eventName;
-  final String eventImage;
-final    String conversationId;
+  final int? participantId;
+  final int? eventId;
+  final String?  eventName;
+  final String? eventImage;
+final    String? conversationId;
   EventChatScreenPage(
-      {Key key,
+      {Key? key,
         this.participantId, this.eventId,this.eventName,this.eventImage,this.conversationId})
       : super(key: key);
   @override
@@ -19,11 +19,11 @@ final    String conversationId;
 }
 
 class EventChatScreenPageState extends State<EventChatScreenPage> {
-  int participantId;
-  int eventId;
-  String  eventName;
-  String eventImage;
-  String conversationId;
+  int? participantId;
+  int? eventId;
+  String?  eventName;
+  String? eventImage;
+  String? conversationId;
   GlobalKey<ChatHistoryPageState> chatPageKey = GlobalKey();
   EventChatScreenPageState({this.participantId, this.eventId,this.eventName,this.eventImage,this.conversationId});
 
@@ -42,11 +42,11 @@ class EventChatScreenPageState extends State<EventChatScreenPage> {
     );
   }
   
-  void refresh(String conversationId)
+  void refresh(String? conversationId)
   {
 
     setState(() {
-      chatPageKey.currentState.refresh(conversationId);
+     // chatPageKey.currentState.refresh(conversationId);
     });
   }
 
@@ -54,7 +54,7 @@ class EventChatScreenPageState extends State<EventChatScreenPage> {
   {
 
     setState(() {
-      chatPageKey.currentState.updateCurrentVisible(isChatVisible);
+     // chatPageKey.currentState.updateCurrentVisible(isChatVisible);
     });
   }
 }

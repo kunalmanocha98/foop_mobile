@@ -6,7 +6,7 @@ import 'package:oho_works_app/utils/utility_class.dart';
 import 'package:flutter/material.dart';
 
 class DateTagPostComponent extends StatelessWidget{
-  final DateTime date;
+  final DateTime? date;
   final bool showTime;
   DateTagPostComponent({this.date,this.showTime =false});
   @override
@@ -29,7 +29,7 @@ class DateTagPostComponent extends StatelessWidget{
             ),
             height: 20,
             child:  Center(
-              child: Text(Utility().getDateFormat('MMM', date).toUpperCase(),
+              child: Text(Utility().getDateFormat('MMM', date!).toUpperCase(),
                 style: styleElements.captionThemeScalable(context).copyWith(
                     fontWeight: FontWeight.bold,
                   color: HexColor(AppColors.appColorWhite)
@@ -41,13 +41,13 @@ class DateTagPostComponent extends StatelessWidget{
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(Utility().getDateFormat('dd', date),
+              Text(Utility().getDateFormat('dd', date!),
                 style: styleElements.subtitle1ThemeScalable(context).copyWith(
                     fontWeight: FontWeight.bold
                 ),),
               Visibility(
                 visible: showTime,
-                child: Text(Utility().getDateFormat('h:mma', date).toUpperCase(),
+                child: Text(Utility().getDateFormat('h:mma', date!).toUpperCase(),
                   style: styleElements.captionThemeScalable(context).copyWith(
                     fontWeight: FontWeight.bold,
                   ),

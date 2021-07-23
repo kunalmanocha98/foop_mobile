@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -26,21 +27,21 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // ignore: must_be_immutable
 class ImagesSeeMore extends StatefulWidget {
-  String type;
-  String userType;
+  String? type;
+  String? userType;
   List<StatelessWidget> listCardsAbout = [];
-  TextStyleElements styleElements;
-  BuildContext context;
-  String instituteId;
-  int ownerId;
-  bool isUserExist;
+  TextStyleElements? styleElements;
+  BuildContext? context;
+  String? instituteId;
+  int? ownerId;
+  bool? isUserExist;
 
   List<CommonCardData> listCardData = [];
-  SharedPreferences prefs;
+  SharedPreferences? prefs;
 
   ImagesSeeMore(
-      {Key key,
-      @required this.type,
+      {Key? key,
+      required this.type,
       this.isUserExist,
       this.ownerId,
       this.instituteId})
@@ -52,19 +53,19 @@ class ImagesSeeMore extends StatefulWidget {
 }
 
 class _ImagesSeeMore extends State<ImagesSeeMore> {
-  String searchVal;
-  String personName;
-  String type;
-  int id;
-  bool isUserExist;
+  String? searchVal;
+  String? personName;
+  String? type;
+  int? id;
+  bool? isUserExist;
 
-  String instituteId;
-  int ownerId;
-  String ownerType;
-  Null Function() callback;
+  String? instituteId;
+  int? ownerId;
+  String? ownerType;
+  Null Function()? callback;
   GlobalKey<PaginatorState> paginatorGlobalKey = GlobalKey();
-  SharedPreferences prefs;
-  TextStyleElements styleElements;
+  late SharedPreferences prefs;
+  late TextStyleElements styleElements;
 
   void setSharedPreferences() async {
     refresh();
@@ -73,7 +74,7 @@ class _ImagesSeeMore extends State<ImagesSeeMore> {
   Future<void> _setPref() async {
     prefs = await SharedPreferences.getInstance();
     if (paginatorGlobalKey.currentState != null) {
-      paginatorGlobalKey.currentState.changeState(
+      paginatorGlobalKey.currentState!.changeState(
         listType: ListType.GRID_VIEW,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
@@ -96,7 +97,7 @@ class _ImagesSeeMore extends State<ImagesSeeMore> {
   }
 
   refresh() {
-    paginatorGlobalKey.currentState.changeState(resetState: true);
+    paginatorGlobalKey.currentState!.changeState(resetState: true);
   }
 
   @override
@@ -119,7 +120,7 @@ class _ImagesSeeMore extends State<ImagesSeeMore> {
                         top: 12.h,
                       ),
                       child: Text(
-                        AppLocalizations.of(context)
+                        AppLocalizations.of(context)!
                             .translate("campus_facilities"),
                         style: styleElements
                             .headline6ThemeScalable(context)
@@ -133,7 +134,7 @@ class _ImagesSeeMore extends State<ImagesSeeMore> {
               ),
               Flexible(
                 child: Visibility(
-                    visible:isUserExist!=null&& isUserExist,
+                    visible:isUserExist!=null&& isUserExist!,
                     child: GestureDetector(
                         behavior: HitTestBehavior.translucent,
                         onTap: () async {
@@ -177,7 +178,7 @@ class _ImagesSeeMore extends State<ImagesSeeMore> {
 
   _addPhoto() async {
     var pr =ToastBuilder().setProgressDialogWithPercent(context,'Uploading Image...');
-    File pickedFile = await ImagePickerAndCropperUtil().pickImage(context);
+    File pickedFile = await (ImagePickerAndCropperUtil().pickImage(context) as FutureOr<File>);
     var croppedFile =
         await ImagePickerAndCropperUtil().cropFile(context, pickedFile);
     if (croppedFile != null) {
@@ -203,7 +204,7 @@ class _ImagesSeeMore extends State<ImagesSeeMore> {
           .uploadFile()
           .then((value) async {
         var imageResponse = ImageUpdateResponse.fromJson(value);
-        var url = imageResponse.rows.fileUrl;
+        var url = imageResponse.rows!.fileUrl;
         print(url);
         await pr.hide();
         var result = await Navigator.push(
@@ -245,7 +246,7 @@ class _ImagesSeeMore extends State<ImagesSeeMore> {
     return Container(
         padding: const EdgeInsets.all(4.0),
         child: CachedNetworkImage(
-          imageUrl:Config.BASE_URL+ value.textOne ?? "",
+          imageUrl:Config.BASE_URL+ value.textOne,
           placeholder: (context, url) => Center(
               child: Image.asset(
             'assets/appimages/image_place.png',

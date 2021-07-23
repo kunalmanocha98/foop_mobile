@@ -1,6 +1,6 @@
 class QuestionnaireListRequest {
-  int approvedPersonId;
-  int approvedPersonInstitutionId;
+  int? approvedPersonId;
+  int? approvedPersonInstitutionId;
 
   QuestionnaireListRequest(
       {this.approvedPersonId, this.approvedPersonInstitutionId});
@@ -19,10 +19,10 @@ class QuestionnaireListRequest {
 }
 
 class QuestionnaireListResponse {
-  String statusCode;
-  String message;
-  List<QuestionsItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<QuestionsItem>? rows;
+  int? total;
 
   QuestionnaireListResponse(
       {this.statusCode, this.message, this.rows, this.total});
@@ -33,7 +33,7 @@ class QuestionnaireListResponse {
     if (json['rows'] != null) {
       rows = [];//QuestionsItem>();
       json['rows'].forEach((v) {
-        rows.add(new QuestionsItem.fromJson(v));
+        rows!.add(new QuestionsItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -44,7 +44,7 @@ class QuestionnaireListResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -52,11 +52,11 @@ class QuestionnaireListResponse {
 }
 
 class QuestionsItem {
-  int id;
-  String question;
-  List<String> questionnaireOptions;
-  int buddyApprovalId;
-  String questionType;
+  int? id;
+  String? question;
+  List<String>? questionnaireOptions;
+  int? buddyApprovalId;
+  String? questionType;
 
   QuestionsItem(
       {this.id,

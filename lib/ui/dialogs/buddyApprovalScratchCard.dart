@@ -8,10 +8,10 @@ import 'package:scratcher/widgets.dart';
 
 
 class BuddyApprovalScratchCard extends StatefulWidget{
-  final String name;
-  final String value;
-  final String type;
-  final Function callback;
+  final String? name;
+  final String? value;
+  final String? type;
+  final Function? callback;
   BuddyApprovalScratchCard({this.name,this.value,this.type,this.callback});
   @override
   _BuddyApprovalScratchCard createState() =>_BuddyApprovalScratchCard();
@@ -19,7 +19,7 @@ class BuddyApprovalScratchCard extends StatefulWidget{
 class _BuddyApprovalScratchCard extends State<BuddyApprovalScratchCard>{
 
   bool isScrached = false;
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
   @override
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
@@ -57,11 +57,11 @@ class _BuddyApprovalScratchCard extends State<BuddyApprovalScratchCard>{
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: Text(widget.value, style: styleElements.headline2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack85),fontWeight: FontWeight.bold),),
+                                      child: Text(widget.value!, style: styleElements.headline2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack85),fontWeight: FontWeight.bold),),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(0.0),
-                                      child: Text(AppLocalizations.of(context).translate('coins'), style: styleElements.headline4ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack65),fontWeight: FontWeight.bold),),
+                                      child: Text(AppLocalizations.of(context)!.translate('coins'), style: styleElements.headline4ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack65),fontWeight: FontWeight.bold),),
                                     )
 
                                   ],
@@ -89,7 +89,7 @@ class _BuddyApprovalScratchCard extends State<BuddyApprovalScratchCard>{
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: Text(AppLocalizations.of(context).translate('scratch_here'), style: styleElements.subtitle1ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorWhite),fontWeight: FontWeight.bold),),
+                                        child: Text(AppLocalizations.of(context)!.translate('scratch_here'), style: styleElements.subtitle1ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorWhite),fontWeight: FontWeight.bold),),
                                       )
                                     ],
                                   ),
@@ -105,7 +105,7 @@ class _BuddyApprovalScratchCard extends State<BuddyApprovalScratchCard>{
                     alignment: Alignment.topCenter,
                     child: Container(
                       margin: const EdgeInsets.only(bottom: 12, top: 30),
-                      child: Text(AppLocalizations.of(context).translate('thank_you_approving'),
+                      child: Text(AppLocalizations.of(context)!.translate('thank_you_approving'),
                         style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold),
                         textAlign: TextAlign.center,
                       ),
@@ -115,7 +115,7 @@ class _BuddyApprovalScratchCard extends State<BuddyApprovalScratchCard>{
                     child: Container(
                       margin: const EdgeInsets.only(bottom: 20),
                       child: Text(
-                       widget.name,
+                       widget.name!,
                         style: styleElements.subtitle2ThemeScalable(context),
                         textAlign: TextAlign.center,
                       ),
@@ -126,7 +126,7 @@ class _BuddyApprovalScratchCard extends State<BuddyApprovalScratchCard>{
                       alignment: Alignment.topCenter,
                       child: Container(
                         margin: const EdgeInsets.only(right: 16,bottom: 20,left:16),
-                        child: Text(AppLocalizations.of(context).translate('approve_message'),
+                        child: Text(AppLocalizations.of(context)!.translate('approve_message'),
                           style: styleElements.subtitle1ThemeScalable(context),
                           textAlign: TextAlign.center,
                         ),
@@ -146,11 +146,11 @@ class _BuddyApprovalScratchCard extends State<BuddyApprovalScratchCard>{
                             side: BorderSide(color: HexColor(AppColors.appMainColor))),
                         onPressed: (){
                           Navigator.pop(context);
-                          widget.callback();
+                          widget.callback!();
                         },
                         color: HexColor(AppColors.appMainColor),
 
-                        child: Text(AppLocalizations.of(context).translate('proceed'),
+                        child: Text(AppLocalizations.of(context)!.translate('proceed'),
                           style: styleElements.subtitle2ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite)),),
                       )),
                 )

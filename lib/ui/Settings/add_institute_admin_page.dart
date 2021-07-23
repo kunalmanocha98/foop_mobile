@@ -20,19 +20,19 @@ import 'institute_admin_list.dart';
 import 'staff_list.dart';
 
 class AddInstituteAdminPage extends StatefulWidget {
-  final int selectedInstituteId;
+  final int? selectedInstituteId;
   AddInstituteAdminPage({this.selectedInstituteId});
   @override
   AddInstituteAdminPageState createState() => AddInstituteAdminPageState();
 }
 
 class AddInstituteAdminPageState extends State<AddInstituteAdminPage> {
-  SharedPreferences prefs = locator<SharedPreferences>();
+  SharedPreferences? prefs = locator<SharedPreferences>();
   String searchVal = "";
   bool isSearching = false;
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
   TextEditingController searchController = TextEditingController();
-  BuildContext sctx;
+  BuildContext? sctx;
 
   @override
   void initState() {
@@ -47,7 +47,7 @@ class AddInstituteAdminPageState extends State<AddInstituteAdminPage> {
         appBar: TricycleAppBar().getCustomAppBarWithSearch(context,
             controller: searchController,
             appBarTitle:
-            AppLocalizations.of(context).translate('add_institute_admin'),
+            AppLocalizations.of(context)!.translate('add_institute_admin'),
             onBackButtonPress: () {
               Navigator.pop(context);
             },
@@ -57,7 +57,7 @@ class AddInstituteAdminPageState extends State<AddInstituteAdminPage> {
                 searchVal = value;
                 isSearching = searchVal.isNotEmpty;
                 if (paginatorKey.currentState != null) {
-                  paginatorKey.currentState.changeState(resetState: true);
+                  paginatorKey.currentState!.changeState(resetState: true);
                 }
               });
             }),
@@ -126,7 +126,7 @@ class AddInstituteAdminPageState extends State<AddInstituteAdminPage> {
                         .showToast(response.rows, sctx, HexColor(AppColors.failure));
                   } else {
                     ToastBuilder().showToast(
-                        AppLocalizations.of(context).translate('add_admin'),
+                        AppLocalizations.of(context)!.translate('add_admin'),
                         sctx,
                         HexColor(AppColors.information));
                     setState(() {
@@ -138,7 +138,7 @@ class AddInstituteAdminPageState extends State<AddInstituteAdminPage> {
               });
             },
             cancelCallback: () {},
-            message: AppLocalizations.of(context).translate('add_admin_message',arguments: {"name":member.personName}),
+            message: AppLocalizations.of(context)!.translate('add_admin_message',arguments: {"name":member.personName}),
           );
         });
 

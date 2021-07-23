@@ -15,18 +15,18 @@ import 'overlaped_circular_images.dart';
 class ClubDetailCard extends StatelessWidget {
   final CommonCardData data;
 
-  String instituteName;
-  String instituteAddress;
-  BuildContext context;
-  bool isProfile;
-  String instituteId;
-  Null Function() callbackPicker;
-  List<SubRow> list = [];
-  TextStyleElements styleElements;
-  int id;
-  String personType;
+  String? instituteName;
+  String? instituteAddress;
+  BuildContext? context;
+  bool? isProfile;
+  String? instituteId;
+  Null Function()? callbackPicker;
+  List<SubRow>? list = [];
+  late TextStyleElements styleElements;
+  int? id;
+  String? personType;
 
-  VoidCallback onSeeMoreClicked;
+  VoidCallback? onSeeMoreClicked;
 
   Size displaySize(BuildContext context) {
     debugPrint('Size = ' + MediaQuery.of(context).size.toString());
@@ -44,15 +44,15 @@ class ClubDetailCard extends StatelessWidget {
   }
 
   ClubDetailCard(
-      {Key key,
-        @required this.data,
+      {Key? key,
+        required this.data,
         this.instituteId,
         this.isProfile,
         this.id,this.personType,
         this.callbackPicker,})
       : super(key: key);
   RandomColor _randomColor = RandomColor();
-  String type;
+  String? type;
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +68,7 @@ class ClubDetailCard extends StatelessWidget {
           shrinkWrap: true,
           padding: const EdgeInsets.all(0.0),
           physics: NeverScrollableScrollPhysics(),
-          itemCount: list.length,
+          itemCount: list!.length,
           itemBuilder: (context, index) {
             return GestureDetector(
               onTap: () {
@@ -114,7 +114,7 @@ class ClubDetailCard extends StatelessWidget {
                                 child: Card(
                                   child: Image(
                                     image: CachedNetworkImageProvider(
-                                        list[index].imageUrl ??
+                                        list![index].imageUrl ??
                                             ""),
                                     fit: BoxFit.contain,
                                     width: 60,
@@ -132,7 +132,7 @@ class ClubDetailCard extends StatelessWidget {
                                       Align(
                                         alignment: Alignment.topLeft,
                                         child: Text(
-                                          list[index].textOne ??=
+                                          list![index].textOne ??=
                                           "",
                                           style: styleElements
                                               .headline6ThemeScalable(
@@ -146,12 +146,12 @@ class ClubDetailCard extends StatelessWidget {
                                           child: Align(
                                             alignment: Alignment.topLeft,
                                             child: Text(
-                                              list[index]
+                                              list![index]
                                                   .chairperson !=
                                                   null
                                                   ? ("Chairperson : " +
-                                                  list[index]
-                                                      .chairperson)
+                                                  list![index]
+                                                      .chairperson!)
                                                   : "",
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
@@ -167,7 +167,7 @@ class ClubDetailCard extends StatelessWidget {
                                         child: Row(
                                           children: <Widget>[
                                             OverlappedImages(
-                                                list[index]
+                                                list![index]
                                                     .images),
                                             Container(
                                               margin:
@@ -175,7 +175,7 @@ class ClubDetailCard extends StatelessWidget {
                                                   left: 16),
                                               child: Flexible(
                                                 child: Text(
-                                                  list[index]
+                                                  list![index]
                                                       .totalCount ??= "",
                                                   style: styleElements
                                                       .captionThemeScalable(

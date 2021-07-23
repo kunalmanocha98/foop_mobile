@@ -24,8 +24,8 @@ class FollowersPage extends StatefulWidget {
   String personName;
   String type;
   int id;
-  String ownerType;
-  int ownerId;
+  String? ownerType;
+  int? ownerId;
   Null Function() callback;
 
   FollowersPage(this.personName, this.type, this.id, this.ownerId,
@@ -38,16 +38,16 @@ class FollowersPage extends StatefulWidget {
 
 class _FollowersPage extends State<FollowersPage>
     with AutomaticKeepAliveClientMixin<FollowersPage> {
-  String searchVal;
-  String personName;
+  String? searchVal;
+  String? personName;
   String type;
   int id;
-  String ownerType;
-  int ownerId;
+  String? ownerType;
+  int? ownerId;
   Null Function() callback;
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
-  SharedPreferences prefs;
-  TextStyleElements styleElements;
+  late SharedPreferences prefs;
+  late TextStyleElements styleElements;
   bool isSuggestionShowed = false;
   bool isFirst = false;
 
@@ -77,7 +77,7 @@ class _FollowersPage extends State<FollowersPage>
 
   refresh() {
     isFirst = false;
-    paginatorKey.currentState.changeState(resetState: true);
+    paginatorKey.currentState!.changeState(resetState: true);
   }
 
   @override
@@ -92,7 +92,7 @@ class _FollowersPage extends State<FollowersPage>
               SliverToBoxAdapter(
                 child: SearchBox(
                   onvalueChanged: onsearchValueChanged,
-                  hintText: AppLocalizations.of(context).translate('search'),
+                  hintText: AppLocalizations.of(context)!.translate('search'),
                 ),
               )
             ];
@@ -127,11 +127,11 @@ class _FollowersPage extends State<FollowersPage>
     return FollowersData.fromJson(res);
   }
 
-  List<FollowersItem> listItemsGetter(FollowersData pageData) {
+  List<FollowersItem>? listItemsGetter(FollowersData? pageData) {
     if (!isFirst) {
-      FollowersItem val;
+      FollowersItem? val;
       try {
-        val = pageData.rows.firstWhere((element) {
+        val = pageData!.rows!.firstWhere((element) {
           return element.suggestedType != null &&
               element.suggestedType == 'suggestion';
         });
@@ -145,7 +145,7 @@ class _FollowersPage extends State<FollowersPage>
         isFirst = false;
       }
     }
-    return pageData.rows;
+    return pageData!.rows;
   }
 
   Widget listItemBuilder(value, int index) {
@@ -160,7 +160,7 @@ class _FollowersPage extends State<FollowersPage>
           visible: item.startingOfSuggestion == "yes",
           child: Padding(
             padding: EdgeInsets.all(10),
-            child: Text(AppLocalizations.of(context).translate("suggestions"),
+            child: Text(AppLocalizations.of(context)!.translate("suggestions"),
                 style: styleElements
                     .headline6ThemeScalable(context)
                     .copyWith(color: HexColor(AppColors.appColorBlack65))),
@@ -205,9 +205,9 @@ class _FollowersPage extends State<FollowersPage>
                       actionOnObjectType: item.listType,
                       actionOnObjectId: item.id,
                       engageFlag: item.isObjectFollowing ?? false
-                          ? AppLocalizations.of(context)
+                          ? AppLocalizations.of(context)!
                           .translate('following')
-                          : AppLocalizations.of(context)
+                          : AppLocalizations.of(context)!
                           .translate('follow'),
                       actionFlag:
                       item.isObjectFollowing ?? false ? "U" : "F",
@@ -233,13 +233,13 @@ class _FollowersPage extends State<FollowersPage>
                     actionOnObjectId: item.id,
                     engageFlag: item.suggestedType != null &&
                         item.suggestedType == "suggestion"
-                        ? AppLocalizations.of(context).translate('follow')
+                        ? AppLocalizations.of(context)!.translate('follow')
                         : id == ownerId
-                        ? AppLocalizations.of(context).translate('remove')
+                        ? AppLocalizations.of(context)!.translate('remove')
                         : item.isObjectFollowing ?? false
-                        ? AppLocalizations.of(context)
+                        ? AppLocalizations.of(context)!
                         .translate('following')
-                        : AppLocalizations.of(context)
+                        : AppLocalizations.of(context)!
                         .translate('follow'),
                     actionFlag: item.suggestedType != null &&
                         item.suggestedType == "suggestion"

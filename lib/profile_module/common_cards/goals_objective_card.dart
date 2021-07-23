@@ -19,13 +19,13 @@ import 'overlaped_circular_images.dart';
 // ignore: must_be_immutable
 class GoalsAndObjectiveCard extends StatelessWidget {
   final CommonCardData data;
-  BuildContext context;
-  TextStyleElements styleElements;
+  late BuildContext context;
+  TextStyleElements? styleElements;
   Widget _simplePopup() => PopupMenuButton<int>(
         itemBuilder: (context) => [
           PopupMenuItem(
             value: 1,
-            child: Text(AppLocalizations.of(context).translate('add_goal')),
+            child: Text(AppLocalizations.of(context)!.translate('add_goal')),
           ),
         ],
         onSelected: (value) {
@@ -60,7 +60,7 @@ class GoalsAndObjectiveCard extends StatelessWidget {
     return displaySize(context).width;
   }
 
-  GoalsAndObjectiveCard({Key key, @required this.data,this.styleElements}) : super(key: key);
+  GoalsAndObjectiveCard({Key? key, required this.data,this.styleElements}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +81,7 @@ class GoalsAndObjectiveCard extends StatelessWidget {
                         padding: const EdgeInsets.only(left: 16, right: 16,top:12,bottom:12),
                         child: Text(
                           data.title ?? "",
-                          style: styleElements.headline6ThemeScalable(context).copyWith(fontWeight: FontWeight.bold,color: HexColor(AppColors.appColorBlack85)),
+                          style: styleElements!.headline6ThemeScalable(context).copyWith(fontWeight: FontWeight.bold,color: HexColor(AppColors.appColorBlack85)),
                           textAlign: TextAlign.left,
                         ),
                       )),
@@ -98,7 +98,7 @@ class GoalsAndObjectiveCard extends StatelessWidget {
               margin: const EdgeInsets.only(left: 20, right: 20, top: 8.0),
               child: Text(
                 data.textOne ??= "",
-                style: styleElements.subtitle2ThemeScalable(context),
+                style: styleElements!.subtitle2ThemeScalable(context),
                 textAlign: TextAlign.left,
               ),
             ),
@@ -119,7 +119,7 @@ class GoalsAndObjectiveCard extends StatelessWidget {
                                     left: 8, right: 8, top: 8.0),
                                 child: Text(
                                   data.textTwo ??= "",
-                                  style: styleElements.subtitle2ThemeScalable(context),
+                                  style: styleElements!.subtitle2ThemeScalable(context),
                                   textAlign: TextAlign.left,
                                 ),
                               ),
@@ -131,7 +131,7 @@ class GoalsAndObjectiveCard extends StatelessWidget {
                                   Container(
                                     child: Text(
                                       data.textThree ??= "",
-                                      style: styleElements.subtitle2ThemeScalable(context),
+                                      style: styleElements!.subtitle2ThemeScalable(context),
                                       textAlign: TextAlign.left,
                                     ),
                                   ),
@@ -184,7 +184,7 @@ class GoalsAndObjectiveCard extends StatelessWidget {
                                   OverlappedImages(null),
                                   Text(
                                     data.textFour ??= "",
-                                    style: styleElements.subtitle2ThemeScalable(context),
+                                    style: styleElements!.subtitle2ThemeScalable(context),
                                     textAlign: TextAlign.left,
                                   )
                                 ],
@@ -203,7 +203,7 @@ class GoalsAndObjectiveCard extends StatelessWidget {
                                       left: 8, right: 8, top: 8.0),
                                   child: Text(
                                     data.textFive ??= "",
-                                    style: styleElements.subtitle2ThemeScalable(context),
+                                    style: styleElements!.subtitle2ThemeScalable(context),
                                     textAlign: TextAlign.left,
                                   ),
                                 ),
@@ -217,7 +217,7 @@ class GoalsAndObjectiveCard extends StatelessWidget {
                                       left: 8, right: 8, top: 8.0),
                                   child: Text(
                                     data.textSix ??= "",
-                                    style: styleElements.subtitle2ThemeScalable(context),
+                                    style: styleElements!.subtitle2ThemeScalable(context),
                                     textAlign: TextAlign.left,
                                   ),
                                 )
@@ -230,7 +230,7 @@ class GoalsAndObjectiveCard extends StatelessWidget {
                   ),
                 ),
                 Visibility(
-                  visible: data.isBlur,
+                  visible: data.isBlur!,
                   child: ClipRect(
                     child: Container(
                       width: displayWidth(context),
@@ -275,8 +275,8 @@ class GoalsAndObjectiveCard extends StatelessWidget {
                     child: Align
                       (
                       alignment:  Alignment.bottomRight,
-                      child: Text(AppLocalizations.of(context).translate('see_more'),
-                        style: styleElements.subtitle2ThemeScalable(context),
+                      child: Text(AppLocalizations.of(context)!.translate('see_more'),
+                        style: styleElements!.subtitle2ThemeScalable(context),
                         textAlign: TextAlign.center,
                       ),
                     ),

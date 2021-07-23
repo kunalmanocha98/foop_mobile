@@ -1,8 +1,8 @@
 class RoomMemberListResponse {
-  String statusCode;
-  String message;
-  List<RoomMemberListItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<RoomMemberListItem>? rows;
+  int? total;
 
   RoomMemberListResponse(
       {this.statusCode, this.message, this.rows, this.total});
@@ -13,7 +13,7 @@ class RoomMemberListResponse {
     if (json['rows'] != null) {
       rows = [];//RoomMemberListItem>();
       json['rows'].forEach((v) {
-        rows.add(new RoomMemberListItem.fromJson(v));
+        rows!.add(new RoomMemberListItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -24,7 +24,7 @@ class RoomMemberListResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -32,16 +32,16 @@ class RoomMemberListResponse {
 }
 
 class RoomMemberListItem {
-  String memberType;
-  int memberId;
-  String memberRoleType;
-  String membershipStatus;
-  String firstName;
-  String lastName;
-  String profileImage;
-  bool isFollower;
-  bool isFollowing;
-  String institutionRole;
+  String? memberType;
+  int? memberId;
+  String? memberRoleType;
+  String? membershipStatus;
+  String? firstName;
+  String? lastName;
+  String? profileImage;
+  bool? isFollower;
+  bool? isFollowing;
+  String? institutionRole;
 
   RoomMemberListItem(
       {this.memberType,

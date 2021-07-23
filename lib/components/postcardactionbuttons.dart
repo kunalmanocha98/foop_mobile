@@ -22,49 +22,49 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class PostCardActionButtons extends StatefulWidget {
-  Statistics stats;
-  Function sharecallBack;
-  Function(bool) bookmarkCallback;
-  Function commentCallback;
-  Function ratingCallback;
-  SharedPreferences prefs;
-  bool isBookMarked;
-  int postId;
-  Function bookMarkCallBack;
-  bool isRated;
-  bool isDocument;
-  bool isDarkTheme;
-  int ownerId;
-  String ownerType;
-  String mediaUrl;
+  Statistics? stats;
+  Function? sharecallBack;
+  Function(bool?)? bookmarkCallback;
+  Function? commentCallback;
+  Function? ratingCallback;
+  SharedPreferences? prefs;
+  bool? isBookMarked;
+  int? postId;
+  Function? bookMarkCallBack;
+  bool? isRated;
+  bool? isDocument;
+  bool? isDarkTheme;
+  int? ownerId;
+  String? ownerType;
+  String? mediaUrl;
   bool isCommentVisible;
   bool isBookMarkVisible;
   bool isShareVisible;
-  int subjectId;
-  String subjectType;
-  Color backgroundColor;
+  int? subjectId;
+  String? subjectType;
+  Color? backgroundColor;
   bool isInviteUserVisible;
-  Function inviteuserCallback;
+  Function? inviteuserCallback;
   bool rateCountShow;
-  Function ratingFunction;
+  Function? ratingFunction;
   bool applyTimeCheck;
-  DateTime startTime;
-  int minimumMinutes;
-  int totalMinutes;
-  Widget actionButton;
+  DateTime? startTime;
+  int? minimumMinutes;
+  int? totalMinutes;
+  Widget? actionButton;
   bool isRatingVisible;
   bool isTalkIconVisible;
-  Function talkCallback;
-  Function translateCallback;
-  bool isTranslateVisible;
-  Function textToSpeechCallback;
-  bool isTextToSpeechVisible;
-  bool isBellAvailable;
-  bool isBellPressed;
+  Function? talkCallback;
+  Function? translateCallback;
+  bool? isTranslateVisible;
+  Function? textToSpeechCallback;
+  bool? isTextToSpeechVisible;
+  bool? isBellAvailable;
+  bool? isBellPressed;
 
   // GlobalKey<TricycleDownloadButtonState> downloadButtonKey;
-  List<Media> media;
-  Function bellIconCallBack;
+  List<Media>? media;
+  Function? bellIconCallBack;
 
 
   PostCardActionButtons(
@@ -134,26 +134,26 @@ class PostCardActionButtons extends StatefulWidget {
 }
 
 class PostCardActionButtonsState extends State<PostCardActionButtons> {
-  TextStyleElements styleElements;
-  Statistics stats;
-  Function sharecallBack;
-  String mediaUrl;
-  Function(bool) bookmarkCallback;
-  Function commentCallback;
-  Function ratingCallback;
-  bool isRated;
-  bool isDocument;
-  bool isDarkTheme;
-  SharedPreferences prefs;
-  bool isBookMarked;
+  late TextStyleElements styleElements;
+  Statistics? stats;
+  Function? sharecallBack;
+  String? mediaUrl;
+  Function(bool?)? bookmarkCallback;
+  Function? commentCallback;
+  Function? ratingCallback;
+  bool? isRated;
+  bool? isDocument;
+  bool? isDarkTheme;
+  SharedPreferences? prefs;
+  bool? isBookMarked;
 
-  int postId;
+  int? postId;
   int counter = 0;
-  String ownerType;
-  int ownerId;
+  String? ownerType;
+  int? ownerId;
 
   // GlobalKey<TricycleDownloadButtonState> downloadButtonKey;
-  List<Media> media;
+  List<Media>? media;
   ButtonTapManager buttonTapManager = ButtonTapManager();
 
   PostCardActionButtonsState(
@@ -191,8 +191,8 @@ class PostCardActionButtonsState extends State<PostCardActionButtons> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Visibility(
-            visible: ((stats.starRating ?? 0) > 0 ||
-                    (stats.commentCount ?? 0) > 0) &&
+            visible: ((stats!.starRating ?? 0) > 0 ||
+                    (stats!.commentCount ?? 0) > 0) &&
                 widget.rateCountShow,
             child: GestureDetector(
               onTap: () {
@@ -201,7 +201,7 @@ class PostCardActionButtonsState extends State<PostCardActionButtons> {
                     MaterialPageRoute(
                         builder: (context) => RatersPage(
                             id: postId,
-                            name: prefs.getString(Strings.userName),
+                            name: prefs!.getString(Strings.userName),
                             ratingId: 0,
                             imageUrl: "",
                             ratingType: 'post',
@@ -215,12 +215,12 @@ class PostCardActionButtonsState extends State<PostCardActionButtons> {
                 child: RichText(
                   text: TextSpan(children: [
                     TextSpan(
-                        text: (stats.starRating).toString(),
+                        text: (stats!.starRating).toString(),
                         style: styleElements
                             .captionThemeScalable(context)
                             .copyWith(
                                 fontWeight: FontWeight.bold,
-                                color: isDarkTheme
+                                color: isDarkTheme!
                                     ? HexColor(AppColors.appColorWhite)
                                     : HexColor(AppColors.appColorBlack35))),
                     TextSpan(
@@ -228,17 +228,17 @@ class PostCardActionButtonsState extends State<PostCardActionButtons> {
                         style: styleElements
                             .captionThemeScalable(context)
                             .copyWith(
-                                color: isDarkTheme
+                                color: isDarkTheme!
                                     ? HexColor(AppColors.appColorWhite)
                                     : HexColor(AppColors.appColorBlack35))),
                     widget.isCommentVisible
                         ? TextSpan(
-                            text: stats.commentCount.toString(),
+                            text: stats!.commentCount.toString(),
                             style: styleElements
                                 .captionThemeScalable(context)
                                 .copyWith(
                                     fontWeight: FontWeight.bold,
-                                    color: isDarkTheme
+                                    color: isDarkTheme!
                                         ? HexColor(AppColors.appColorWhite)
                                         : HexColor(AppColors.appColorBlack35)))
                         : WidgetSpan(child: Container()),
@@ -248,7 +248,7 @@ class PostCardActionButtonsState extends State<PostCardActionButtons> {
                             style: styleElements
                                 .captionThemeScalable(context)
                                 .copyWith(
-                                    color: isDarkTheme
+                                    color: isDarkTheme!
                                         ? HexColor(AppColors.appColorWhite)
                                         : HexColor(AppColors.appColorBlack35)))
                         : WidgetSpan(child: Container()),
@@ -264,24 +264,24 @@ class PostCardActionButtonsState extends State<PostCardActionButtons> {
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 2.0),
                   child: IconButton(
-                    icon: (isRated != null && isRated)
+                    icon: (isRated != null && isRated!)
                         ? Icon(
                             Icons.star,
                             color: HexColor(AppColors.appMainColor),
                           )
                         : Icon(
                             Icons.star_border_outlined,
-                            color: isDarkTheme
+                            color: isDarkTheme!
                                 ? HexColor(AppColors.appColorWhite)
                                 : HexColor(AppColors.appColorBlack35),
                           ),
                     onPressed: widget.ratingFunction != null
-                        ? widget.ratingFunction
+                        ? widget.ratingFunction as void Function()?
                         : () {
                             if (widget.applyTimeCheck) {
                               if (Utility().getTotalMinutes(
-                                      widget.totalMinutes, widget.startTime) >=
-                                  widget.minimumMinutes) {
+                                      widget.totalMinutes!, widget.startTime!) >=
+                                  widget.minimumMinutes!) {
                                 showDialog(
                                     context: context,
                                     barrierColor:
@@ -297,13 +297,13 @@ class PostCardActionButtonsState extends State<PostCardActionButtons> {
                                         )).then((value) {
                                   if (value) {
                                     setState(() {
-                                      if (!isRated) {
-                                        if (stats.starRating != null)
-                                          stats.starRating =
-                                              stats.starRating + 1;
+                                      if (!isRated!) {
+                                        if (stats!.starRating != null)
+                                          stats!.starRating =
+                                              stats!.starRating! + 1;
                                       }
                                       isRated = true;
-                                      ratingCallback();
+                                      ratingCallback!();
                                     });
                                   }
                                 });
@@ -330,12 +330,12 @@ class PostCardActionButtonsState extends State<PostCardActionButtons> {
                                       )).then((value) {
                                 if (value) {
                                   setState(() {
-                                    if (!isRated) {
-                                      if (stats.starRating != null)
-                                        stats.starRating = stats.starRating + 1;
+                                    if (!isRated!) {
+                                      if (stats!.starRating != null)
+                                        stats!.starRating = stats!.starRating! + 1;
                                     }
                                     isRated = true;
-                                    ratingCallback();
+                                    ratingCallback!();
                                   });
                                 }
                               });
@@ -353,11 +353,11 @@ class PostCardActionButtonsState extends State<PostCardActionButtons> {
                   child: IconButton(
                     icon: Icon(
                       Icons.chat_bubble_outline,
-                      color: isDarkTheme
+                      color: isDarkTheme!
                           ? HexColor(AppColors.appColorWhite)
                           : HexColor(AppColors.appColorBlack35),
                     ),
-                    onPressed: commentCallback,
+                    onPressed: commentCallback as void Function()?,
                   ),
                 ),
               ),
@@ -368,11 +368,11 @@ class PostCardActionButtonsState extends State<PostCardActionButtons> {
                   child: IconButton(
                     icon: Icon(
                       Icons.share_outlined,
-                      color: isDarkTheme
+                      color: isDarkTheme!
                           ? HexColor(AppColors.appColorWhite)
                           : HexColor(AppColors.appColorBlack35),
                     ),
-                    onPressed: sharecallBack,
+                    onPressed: sharecallBack as void Function()?,
                   ),
                 ),
               ),
@@ -390,11 +390,11 @@ class PostCardActionButtonsState extends State<PostCardActionButtons> {
                   child: IconButton(
                     icon: Icon(
                       Icons.mic_none_rounded,
-                      color: isDarkTheme
+                      color: isDarkTheme!
                           ? HexColor(AppColors.appColorWhite)
                           : HexColor(AppColors.appColorBlack35),
                     ),
-                    onPressed: widget.talkCallback,
+                    onPressed: widget.talkCallback as void Function()?,
                   ),
                 ),
               ),
@@ -404,11 +404,11 @@ class PostCardActionButtonsState extends State<PostCardActionButtons> {
                 child: IconButton(
                   icon: Icon(
                     Icons.multitrack_audio_rounded,
-                    color: isDarkTheme
+                    color: isDarkTheme!
                         ? HexColor(AppColors.appColorWhite)
                         : HexColor(AppColors.appColorBlack35),
                   ),
-                  onPressed: widget.textToSpeechCallback,
+                  onPressed: widget.textToSpeechCallback as void Function()?,
                 ),
               ),
               Visibility(
@@ -416,11 +416,11 @@ class PostCardActionButtonsState extends State<PostCardActionButtons> {
                 child: IconButton(
                   icon: Icon(
                     Icons.translate,
-                    color: isDarkTheme
+                    color: isDarkTheme!
                         ? HexColor(AppColors.appColorWhite)
                         : HexColor(AppColors.appColorBlack35),
                   ),
-                  onPressed: widget.translateCallback,
+                  onPressed: widget.translateCallback as void Function()?,
                 ),
               ),
 
@@ -428,25 +428,25 @@ class PostCardActionButtonsState extends State<PostCardActionButtons> {
               // ):Container(),
               // TricycleDownloadButton(listOfLinks: ["https://www.tricycle.life/logo.png"],key: UniqueKey(),),
               widget.actionButton != null
-                  ? widget.actionButton
+                  ? widget.actionButton!
                   : Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Visibility(
-                          visible: widget.isBellAvailable!=null && widget.isBellAvailable,
+                          visible: widget.isBellAvailable!=null && widget.isBellAvailable!,
                           child: Padding(
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 2.0),
                             child: IconButton(
                                 icon: (widget.isBellPressed != null &&
-                                        widget.isBellPressed)
+                                        widget.isBellPressed!)
                                     ? Icon(
                                         Icons.alarm,
                                         color: HexColor(AppColors.appMainColor),
                                       )
                                     : Icon(
                                         Icons.alarm,
-                                        color: isDarkTheme
+                                        color: isDarkTheme!
                                             ? HexColor(AppColors.appColorWhite)
                                             : HexColor(
                                                 AppColors.appColorBlack35),
@@ -473,14 +473,14 @@ class PostCardActionButtonsState extends State<PostCardActionButtons> {
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 2.0),
                             child: IconButton(
-                                icon: (isBookMarked != null && isBookMarked)
+                                icon: (isBookMarked != null && isBookMarked!)
                                     ? Icon(
                                         Icons.bookmark,
                                         color: HexColor(AppColors.appMainColor),
                                       )
                                     : Icon(
                                         Icons.bookmark_border_outlined,
-                                        color: isDarkTheme
+                                        color: isDarkTheme!
                                             ? HexColor(AppColors.appColorWhite)
                                             : HexColor(
                                                 AppColors.appColorBlack35),
@@ -506,7 +506,7 @@ class PostCardActionButtonsState extends State<PostCardActionButtons> {
                                 onPressed: () {
                                   if (!buttonTapManager.buttonState) {
                                     buttonTapManager.buttonPressed();
-                                    widget.inviteuserCallback();
+                                    widget.inviteuserCallback!();
                                   }
                                 }),
                           ),
@@ -524,7 +524,7 @@ class PostCardActionButtonsState extends State<PostCardActionButtons> {
     PostRecipientUpdatePayload payload = PostRecipientUpdatePayload();
     payload.postId = postId;
     payload.postRecipientStatus = null;
-    payload.isBookmarked = isBookMarked != null ? !isBookMarked : false;
+    payload.isBookmarked = isBookMarked != null ? !isBookMarked! : false;
     var body = jsonEncode(payload);
     Calls().call(body, context, Config.UPDATE_RECIPIENT_LIST).then((value) {
       // PostCreateResponse res = PostCreateResponse.fromJson(value);
@@ -542,31 +542,31 @@ class PostCardActionButtonsState extends State<PostCardActionButtons> {
 
     setState(() {
       if (isBookMarked != null) {
-        isBookMarked = !isBookMarked;
+        isBookMarked = !isBookMarked!;
       } else {
         isBookMarked = true;
       }
     });
-    bookmarkCallback(isBookMarked);
+    bookmarkCallback!(isBookMarked);
   }
 
-  setReminder(int id) async {
+  setReminder(int? id) async {
     var body = jsonEncode({"event_id": id});
 
     Calls().call(body, context, Config.SET_REMINDER_CALENDAR).then((value) {
       var res = BaseResponses.fromJson(value);
       if (res.statusCode == Strings.success_code) {
         setState(() {
-          if (widget.bellIconCallBack != null) widget.bellIconCallBack();
+          if (widget.bellIconCallBack != null) widget.bellIconCallBack!();
           if (widget.isBellPressed != null) {
-            widget.isBellPressed = !widget.isBellPressed;
+            widget.isBellPressed = !widget.isBellPressed!;
           } else {
             widget.isBellPressed = true;
           }
         });
       } else {
         ToastBuilder().showToast(
-            AppLocalizations.of(context).translate("something_wrong"),
+            AppLocalizations.of(context)!.translate("something_wrong"),
             context,
             HexColor(AppColors.information));
       }

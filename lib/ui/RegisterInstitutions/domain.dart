@@ -22,7 +22,7 @@ import 'models/basic_response.dart';
 
 // ignore: must_be_immutable
 class DomainPage extends StatefulWidget {
-  int instId;
+  int? instId;
   @override
   _DomainPage createState() =>
       new _DomainPage(instId);
@@ -32,11 +32,11 @@ class DomainPage extends StatefulWidget {
 
 class _DomainPage extends State<DomainPage>
     with SingleTickerProviderStateMixin {
-  String facebookId;
-  String googleSignInId;
-  String userName;
-  String imageUrl;
-  int instId;
+  String? facebookId;
+  String? googleSignInId;
+  String? userName;
+  String? imageUrl;
+  late int? instId;
   var range = <String>[];
   var rangeStudent = <String>[];
 
@@ -59,20 +59,20 @@ class _DomainPage extends State<DomainPage>
   final lastNameController = TextEditingController();
   final genderController = TextEditingController();
   final addController = TextEditingController();
-  BuildContext context;
-  TextStyleElements styleElements;
+ late BuildContext context;
+  late TextStyleElements styleElements;
 
 
-  String selectState;
+  String? selectState;
 
-  String selectCountry;
+  String? selectCountry;
 
-  String selectStRange;
+  String? selectStRange;
 
-  String selectTecRange;
-  int selectedEpoch;
+  String? selectTecRange;
+  int? selectedEpoch;
 
-  SharedPreferences prefs;
+  late SharedPreferences prefs;
 
 
   @override
@@ -99,11 +99,11 @@ class _DomainPage extends State<DomainPage>
           style: styleElements.subtitle1ThemeScalable(context).copyWith(
               color: HexColor(AppColors.appColorBlack65)
           ),
-          onSaved: (String value) {},
+          onSaved: (String? value) {},
           controller: domainController,
           decoration: InputDecoration(
               contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-              hintText: AppLocalizations.of(context).translate('default_email_domain'),
+              hintText: AppLocalizations.of(context)!.translate('default_email_domain'),
               hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
               border: UnderlineInputBorder(
                 borderSide: BorderSide(
@@ -121,7 +121,7 @@ class _DomainPage extends State<DomainPage>
           child: Scaffold(
             // resizeToAvoidBottomInset: false,
               appBar: TricycleAppBar().getCustomAppBar(context,
-                  appBarTitle: AppLocalizations.of(context).translate('register_institute'),
+                  appBarTitle: AppLocalizations.of(context)!.translate('register_institute'),
                   isIconVisible:false,
                   actions: [
 
@@ -148,7 +148,7 @@ class _DomainPage extends State<DomainPage>
                         },
                         child: Row(
                           children: [
-                            Text(AppLocalizations.of(context).translate('next'), style:styleElements.subtitle2ThemeScalable(context).copyWith(color: HexColor(AppColors.appMainColor)),),
+                            Text(AppLocalizations.of(context)!.translate('next'), style:styleElements.subtitle2ThemeScalable(context).copyWith(color: HexColor(AppColors.appMainColor)),),
                             Visibility(
                               visible: isLoading,
                               child: Padding(
@@ -188,7 +188,7 @@ class _DomainPage extends State<DomainPage>
                                   child: Container(
                                     margin: EdgeInsets.only(
                                         left: 8.w, right: 8.w, bottom: 8.h),
-                                    child: Text(AppLocalizations.of(context).translate('default_domain'),
+                                    child: Text(AppLocalizations.of(context)!.translate('default_domain'),
                                       style: styleElements
                                           .headline6ThemeScalable(context)
                                           .copyWith(fontWeight: FontWeight.bold),
@@ -200,7 +200,7 @@ class _DomainPage extends State<DomainPage>
                                     margin: EdgeInsets.only(
                                         left: 8.w, right: 8.w, bottom: 8.h),
                                     child: Text(
-                                      AppLocalizations.of(context).translate("domain"),
+                                      AppLocalizations.of(context)!.translate("domain"),
                                         style: styleElements
                                         .bodyText2ThemeScalable(context)
                                         .copyWith(color: HexColor(AppColors.appColorBlack85)),
@@ -249,7 +249,7 @@ class _DomainPage extends State<DomainPage>
                                           onPressed: () async {},
                                           color: HexColor(AppColors.appColorWhite),
                                           child: Text(
-                                              AppLocalizations.of(context)
+                                              AppLocalizations.of(context)!
                                                   .translate("next"),
                                               style: styleElements
                                                   .buttonThemeScalable(context)
@@ -271,7 +271,7 @@ class _DomainPage extends State<DomainPage>
 
   // ignore: missing_return
   Future<bool> _onBackPressed() {
-
+    return new Future(() => false);
   }
 
   void submit() async {

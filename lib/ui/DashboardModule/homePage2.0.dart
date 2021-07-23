@@ -39,38 +39,38 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 
 class HomePage2 extends StatefulWidget {
-  final Null Function(String) newMessageCallBack;
+  final Null Function(String)? newMessageCallBack;
   @override
   _HomePage2 createState() => _HomePage2(newMessageCallBack);
 
   HomePage2({this.newMessageCallBack});
 }
 class _HomePage2 extends State<HomePage2> {
-  BuildContext context;
-  TextStyleElements styleElements;
-  int notificationCount;
-  IO.Socket socket;
-  int personId;
-  Null Function(String) newMessageCallBack;
-  String personType;
-  String profileImage;
+ late  BuildContext context;
+  late TextStyleElements styleElements;
+  int? notificationCount;
+  IO.Socket? socket;
+  int? personId;
+  late Null Function(String)? newMessageCallBack;
+  String? personType;
+  String? profileImage;
   bool isLoading = true;
-  int totalPostToExclude = 0;
-  Persondata persondata;
-  AudioSocketService audioSocketService = locator<AudioSocketService>();
+  int? totalPostToExclude = 0;
+  Persondata? persondata;
+  AudioSocketService? audioSocketService = locator<AudioSocketService>();
 
   _HomePage2(this.newMessageCallBack);
 
   // bool _hasPermission;
-  SharedPreferences prefs;
+  SharedPreferences? prefs;
   var list = [];
   final dbHelper = DatabaseHelper.instance;
 
   bool isNotUploading = false;
 
-  ProgressDialog pr;
+  ProgressDialog? pr;
   List<StatelessWidget> listData = [];
-  List<CommonCardData> listCards = [];
+  List<CommonCardData>? listCards = [];
 
   GlobalKey<PostListState> postListKey = GlobalKey();
 
@@ -82,11 +82,11 @@ class _HomePage2 extends State<HomePage2> {
 
     prefs = await SharedPreferences.getInstance();
     print("fcm============================================" +
-        prefs.getString("fcmId"));
-    if(prefs.getString("ownerType")!=null && prefs.getInt("userId")!=null)
+        prefs!.getString("fcmId")!);
+    if(prefs!.getString("ownerType")!=null && prefs!.getInt("userId")!=null)
     {
-      personId=prefs.getInt("userId");
-      personType=prefs.getString("ownerType");
+      personId=prefs!.getInt("userId");
+      personType=prefs!.getString("ownerType");
       getUserData(context);
       // getPersonProfile(context, false);
     }
@@ -100,7 +100,7 @@ class _HomePage2 extends State<HomePage2> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => setSharedPreferences());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => setSharedPreferences());
     Utility().refreshList(context);
   }
 
@@ -114,7 +114,7 @@ class _HomePage2 extends State<HomePage2> {
         if (res.rows != null) {
           if (this.mounted)
             setState(() {
-              notificationCount = int.parse(res.rows);
+              notificationCount = int.parse(res.rows!);
             });
         }
       } else {}
@@ -140,8 +140,8 @@ class _HomePage2 extends State<HomePage2> {
             if (d != null && d.statusCode == 'S10001') {
               if (d.rows != null) {
                 listCards = d.rows;
-                if (listCards != null && listCards.length > 0) {
-                  for (var item in listCards) {
+                if (listCards != null && listCards!.length > 0) {
+                  for (var item in listCards!) {
                     if (item != null) {
                       var widget = GetAllCards().getCardHome(
                           null,
@@ -150,14 +150,14 @@ class _HomePage2 extends State<HomePage2> {
                           null,
                           item,
                           null,
-                          prefs.getString(Strings.personType),
+                          prefs!.getString(Strings.personType),
                           null,
                           personType,
                           personId, callBck: () {
                         getUserData(context);
                       });
 
-                      if (widget != null) listData.add(widget);
+                      if (widget != null) listData.add(widget as StatelessWidget);
                     }
                   }
                 }
@@ -192,10 +192,10 @@ class _HomePage2 extends State<HomePage2> {
           // getPersonProfile(context, true);
         },
         imageUrl: Utility().getUrlForImage(
-            prefs != null ? prefs.getString(Strings.profileImage) : "",
+            prefs != null ? prefs!.getString(Strings.profileImage) : "",
             RESOLUTION_TYPE.R64,
             SERVICE_TYPE.PERSON),
-        title: AppLocalizations.of(context).translate('app_name'),
+        title: AppLocalizations.of(context)!.translate('app_name'),
         notificationCount: notificationCount,
       ),
 
@@ -214,15 +214,14 @@ class _HomePage2 extends State<HomePage2> {
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               Text(
-                                AppLocalizations.of(context)
+                                AppLocalizations.of(context)!
                                     .translate("welcome_name") +
                                     " " +
                                     (prefs != null
-                                        ? prefs.getString(
+                                        ? prefs!.getString(
                                         Strings.firstName) ??
                                         ""
-                                        : "") ??
-                                    " ",
+                                        : ""),
                                 style: styleElements
                                     .headline6ThemeScalable(context)
                                     .copyWith(
@@ -232,7 +231,7 @@ class _HomePage2 extends State<HomePage2> {
                                 textAlign: TextAlign.left,
                               ),
                               Text(
-                                AppLocalizations.of(context)
+                                AppLocalizations.of(context)!
                                     .translate("have_nice_day"),
                                 style:
                                 styleElements.subtitle2ThemeScalable(context),
@@ -281,14 +280,14 @@ class _HomePage2 extends State<HomePage2> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       color: HexColor(AppColors.appColorBackground),
       itemBuilder: (context) => PostListMenu(context: context).menuList,
-      onSelected: (value) {
+      onSelected: (dynamic value) {
         switch (value) {
           case 'notice':
             {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => SelectedFeedListPage(
                     isFromProfile: false,
-                    appBarTitle: AppLocalizations.of(context)
+                    appBarTitle: AppLocalizations.of(context)!
                         .translate('notice_board'),
                     postRecipientStatus:
                     POST_RECIPIENT_STATUS.UNREAD.status,
@@ -302,7 +301,7 @@ class _HomePage2 extends State<HomePage2> {
                   builder: (context) => SelectedFeedListPage(
                     isFromProfile: false,
                     isBookMarked: true,
-                    appBarTitle: AppLocalizations.of(context)
+                    appBarTitle: AppLocalizations.of(context)!
                         .translate('bookmarked_posts'),
                     postRecipientStatus:
                     POST_RECIPIENT_STATUS.UNREAD.status,
@@ -321,7 +320,7 @@ class _HomePage2 extends State<HomePage2> {
                   builder: (context) => SelectedFeedListPage(
                     isFromProfile: false,
                     appBarTitle:
-                    AppLocalizations.of(context).translate('article'),
+                    AppLocalizations.of(context)!.translate('article'),
                     postRecipientStatus:
                     POST_RECIPIENT_STATUS.UNREAD.status,
                     postType: POST_TYPE.BLOG.status,
@@ -333,7 +332,7 @@ class _HomePage2 extends State<HomePage2> {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => SelectedFeedListPage(
                     isFromProfile: false,
-                    appBarTitle: AppLocalizations.of(context)
+                    appBarTitle: AppLocalizations.of(context)!
                         .translate('ask_expert'),
                     postRecipientStatus:
                     POST_RECIPIENT_STATUS.UNREAD.status,
@@ -365,7 +364,7 @@ class _HomePage2 extends State<HomePage2> {
                   builder: (context) => SelectedFeedListPage(
                     isFromProfile: false,
                     appBarTitle:
-                    AppLocalizations.of(context).translate('general'),
+                    AppLocalizations.of(context)!.translate('general'),
                     postRecipientStatus: POST_RECIPIENT_STATUS.READ.status,
                   )));
               break;
@@ -376,7 +375,7 @@ class _HomePage2 extends State<HomePage2> {
                   builder: (context) => SelectedFeedListPage(
                     isFromProfile: false,
                     appBarTitle:
-                    AppLocalizations.of(context).translate('notice'),
+                    AppLocalizations.of(context)!.translate('notice'),
                     postRecipientStatus:
                     POST_RECIPIENT_STATUS.UNREAD.status,
                     postType: POST_TYPE.NOTICE.status,
@@ -392,7 +391,7 @@ class _HomePage2 extends State<HomePage2> {
   void getListContacts() async {
     list = await dbHelper.getContacts();
     if (list.isNotEmpty && !isNotUploading) {
-      uploadContacts(list);
+      uploadContacts(list as List<UserContact>);
     }
   }
 
@@ -421,7 +420,7 @@ class _HomePage2 extends State<HomePage2> {
       syncContactsEntity.contactNickName = item.name ?? "";
       syncContactsEntity.contactFirstName = item.firstName ?? "";
       syncContactsEntity.contactLastName = item.lastName ?? "";
-      syncContactsEntity.addressBookOwnerId = prefs.getInt("userId").toString();
+      syncContactsEntity.addressBookOwnerId = prefs!.getInt("userId").toString();
       syncContactsEntity.addressBookOwnerType = "person";
       syncContactsEntity.contactAddMethod = "";
       syncContactsEntity.contactAddressLine01 = "";
@@ -459,7 +458,7 @@ class _HomePage2 extends State<HomePage2> {
 
 
   Future<void> _askPermissions() async {
-    PermissionStatus permissionStatus;
+    PermissionStatus? permissionStatus;
     if (permissionStatus != PermissionStatus.granted) {
       try {
         permissionStatus = await _getContactPermission();
@@ -467,8 +466,9 @@ class _HomePage2 extends State<HomePage2> {
         } else {
           getContacts();
         }
+      // ignore: empty_catches
       } catch (e) {
-        print(e.error);
+
       }
     }
   }
@@ -477,7 +477,7 @@ class _HomePage2 extends State<HomePage2> {
     final status = await Permission.contacts.status;
     if (!status.isGranted) {
       final result = await Permission.contacts.request();
-      return result ?? PermissionStatus.denied;
+      return result;
     } else {
       return status;
     }
@@ -485,7 +485,7 @@ class _HomePage2 extends State<HomePage2> {
 
 
   void getAlreadySavedContact(UserContact row) async {
-    UserContact data =
+    UserContact? data =
     await dbHelper.getContactUsingMobileNumber(row.mobileNumber);
 
     if (data != null) {
@@ -522,13 +522,13 @@ class _HomePage2 extends State<HomePage2> {
       var mob = "";
 
       if (contact.phones.toList().isNotEmpty) {
-        mob = contact.phones.toList()[0].value.toString() ?? "";
+        mob = contact.phones.toList()[0].value.toString();
         var row = UserContact();
         row.name = contact.displayName ?? "";
         row.firstName = contact.givenName ?? "";
         row.lastName = contact.familyName ?? "";
         if (contact.emails.toList().isNotEmpty)
-          row.email = contact.emails.toList()[0].value.toString() ?? "";
+          row.email = contact.emails.toList()[0].value.toString();
         row.mobileNumber = mob;
         row.isSync = 0;
         getAlreadySavedContact(row);

@@ -1,12 +1,12 @@
 class InviteDisruptiveUser {
-  String name;
-  String profileImage;
-  String personType;
-  String role;
-  String participantType;
-  int participantId;
-  String notification;
-  List<Actions> actions;
+  String? name;
+  String? profileImage;
+  String? personType;
+  String? role;
+  String? participantType;
+  int? participantId;
+  String? notification;
+  List<Actions>? actions;
 
   InviteDisruptiveUser(
       {this.name,
@@ -29,7 +29,7 @@ class InviteDisruptiveUser {
     if (json['actions'] != null) {
       actions = [];//Actions>();
       json['actions'].forEach((v) {
-        actions.add(new Actions.fromJson(v));
+        actions!.add(new Actions.fromJson(v));
       });
     }
   }
@@ -44,15 +44,15 @@ class InviteDisruptiveUser {
     data['participant_id'] = this.participantId;
     data['notification'] = this.notification;
     if (this.actions != null) {
-      data['actions'] = this.actions.map((v) => v.toJson()).toList();
+      data['actions'] = this.actions!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Actions {
-  String actionCode;
-  String actionText;
+  String? actionCode;
+  String? actionText;
 
   Actions({this.actionCode, this.actionText});
 

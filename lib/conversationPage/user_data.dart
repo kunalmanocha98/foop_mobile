@@ -5,10 +5,10 @@ UserModel userModelFromJson(String str) => UserModel.fromJson(json.decode(str));
 String userModelToJson(UserModel data) => json.encode(data.toJson());
 
 class UserModel {
-  String name;
-  String job;
-  String id;
-  DateTime createdAt;
+  String? name;
+  String? job;
+  String? id;
+  DateTime? createdAt;
 
   UserModel({
     this.name,
@@ -28,6 +28,6 @@ class UserModel {
         "name": name,
         "job": job,
         "id": id,
-        "createdAt": createdAt.toIso8601String(),
+        "createdAt": createdAt!.toIso8601String(),
       };
 }

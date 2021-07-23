@@ -13,23 +13,23 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 class ConversationNotifier extends ChangeNotifier {
   int _pageNumber = 1;
   // bool _hasMorePokemon = true;
-  List<ConversationItemDb> _listConversations;
+  List<ConversationItemDb>? _listConversations;
   // bool _loading = false;
 
-  Future<void> reload(DatabaseHelper db, int userId, int instituteId,
-      BuildContext context, IO.Socket socket) async {
+  Future<void> reload(DatabaseHelper db, int? userId, int? instituteId,
+      BuildContext context, IO.Socket? socket) async {
     _listConversations = <ConversationItemDb>[];
     _pageNumber = 1;
     await getConversations(_pageNumber, db, userId, instituteId, context,socket);
   }
 
-  Future<void> getMore(DatabaseHelper db, int userId, int instituteId,
-      BuildContext context,IO.Socket socket) async {
+  Future<void> getMore(DatabaseHelper db, int? userId, int? instituteId,
+      BuildContext context,IO.Socket? socket) async {
     // _loading = true;
     await getConversations(_pageNumber, db, userId, instituteId, context,socket);
     // _loading = false;
   }
-  List<ConversationItemDb> getConversationList() {
+  List<ConversationItemDb>? getConversationList() {
     return _listConversations;
   }
   Future<void> getOlderConversations(DatabaseHelper db) async {
@@ -52,8 +52,8 @@ class ConversationNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> getConversations(int page, DatabaseHelper db, int userId,
-      int instituteId, BuildContext context, IO.Socket socket) async {
+  Future<void> getConversations(int page, DatabaseHelper db, int? userId,
+      int? instituteId, BuildContext context, IO.Socket? socket) async {
     _listConversations ??= <ConversationItemDb>[];
     int pageNumber = page;
     ConversationListPayload conversationListPayload = ConversationListPayload();
@@ -71,12 +71,12 @@ class ConversationNotifier extends ChangeNotifier {
       if (v != null) {
         var data = ConversationListResponse.fromJson(v);
         if (data != null && data.statusCode == Strings.success_code) {
-          if (data.rows.isNotEmpty) {
-            if (_pageNumber == 1) _listConversations.clear();
+          if (data.rows!.isNotEmpty) {
+            if (_pageNumber == 1) _listConversations!.clear();
             pageNumber++;
             _pageNumber = pageNumber;
-            for (var item in data.rows) {
-              _listConversations.add(getDbItem(item));
+            for (var item in data.rows!) {
+              _listConversations!.add(getDbItem(item));
               await saveData(item, db);
             }
            notifyListeners();
@@ -113,8 +113,8 @@ class ConversationNotifier extends ChangeNotifier {
     conversationItemDb.conversationOwnerType=conversationItem.conversationOwnerType;
     conversationItemDb.conversationOwnerId=conversationItem.conversationOwnerId;
   conversationItemDb.mcId=conversationItem.mcId;
-  conversationItemDb.isGroupConversation=conversationItem.isGroupConversation?1:0;
-    conversationItemDb.isRoomAvailable=conversationItem.isRoomAvailable?1:0;
+  conversationItemDb.isGroupConversation=conversationItem.isGroupConversation!?1:0;
+    conversationItemDb.isRoomAvailable=conversationItem.isRoomAvailable!?1:0;
     conversationItemDb.conversationId=conversationItem.conversationId;
     conversationItemDb.conversationWithType=conversationItem.conversationWithType;
     conversationItemDb.conversationWithTypeId=conversationItem.conversationWithTypeId;

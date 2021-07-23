@@ -25,56 +25,56 @@ import 'package:oho_works_app/utils/strings.dart';
 import 'package:agora_rtc_engine/rtc_engine.dart';
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
+import 'package:nexge_video_conference/nexge_rtc.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class TricycleBottomSelector extends StatefulWidget {
-  final Function(int) onItemTapped;
-  final int currentIndex;
-  final int chatCount;
-  TricycleBottomSelector({Key key,this.onItemTapped, this.currentIndex,this.chatCount}):super(key: key);
+  final Function(int)? onItemTapped;
+  final int? currentIndex;
+  final int? chatCount;
+  TricycleBottomSelector({Key? key,this.onItemTapped, this.currentIndex,this.chatCount}):super(key: key);
 
   @override
   TricycleBottomSelectorState createState() => TricycleBottomSelectorState();
 }
 
 class TricycleBottomSelectorState extends State<TricycleBottomSelector> {
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
   bool playbackOptionVisible = false;
-  ParticipantNotifier _participantNotifier;
+  late ParticipantNotifier _participantNotifier;
   final db = DatabaseHelper.instance;
-  EventListItem eventModel;
+  EventListItem? eventModel;
 
-  EventBus eventbus = locator<EventBus>();
-  AudioSocketService audioSocketService = locator<AudioSocketService>();
-  SharedPreferences prefs = locator<SharedPreferences>();
-  EventBus eventBus = locator<EventBus>();
-  final CreateDeeplink createDeeplink = locator<CreateDeeplink>();
-  RtcEngine engine;
-  TALKFOOTERENUM role;
-  int startTime;
+  EventBus? eventbus = locator<EventBus>();
+  AudioSocketService? audioSocketService = locator<AudioSocketService>();
+  SharedPreferences? prefs = locator<SharedPreferences>();
+  EventBus? eventBus = locator<EventBus>();
+  final CreateDeeplink? createDeeplink = locator<CreateDeeplink>();
+
+  TALKFOOTERENUM? role;
+  int? startTime;
   @override
   void initState() {
     super.initState();
-    eventBus.on<TalkEventData>().listen((event) {
+    eventBus!.on<TalkEventData>().listen((event) {
       this.role = event.role;
-      this.engine=event.engine;
       this.startTime = event.startTime;
       print("bottom selector"+startTime.toString());
-      if(event.showPlayback) {
+      if(event.showPlayback!) {
         showPlayback(event.model);
       }else{
         hidePlayback();
       }
     });
-    eventbus.on<TalkEventEnd>().listen((event) {
-      if(eventModel!=null && eventModel.id == event.id){
+    eventbus!.on<TalkEventEnd>().listen((event) {
+      if(eventModel!=null && eventModel!.id == event.id){
         hangUp();
         hidePlayback();
       }
     });
 
-    eventbus.on<TalkEventOpen>().listen((event) {
+    eventbus!.on<TalkEventOpen>().listen((event) {
       Navigator.push(context, TricycleRouteSlideBottom(
           page:  TalkEventPage(
             eventModel: eventModel,
@@ -95,11 +95,11 @@ class TricycleBottomSelectorState extends State<TricycleBottomSelector> {
 
   void endConf(){
     JoinEventPayload payload = JoinEventPayload();
-    payload.eventId = eventModel.id;
-    payload.personId = prefs.getInt(Strings.userId);
+    payload.eventId = eventModel!.id;
+    payload.personId = prefs!.getInt(Strings.userId);
     print('Leave--------' + payload.toJson().toString());
-    audioSocketService.getSocket().emit('leave', payload);
-    prefs.remove(Strings.current_event);
+    audioSocketService!.getSocket()!.emit('leave', payload);
+    prefs!.remove(Strings.current_event);
     hangUp();
 
   }
@@ -107,11 +107,11 @@ class TricycleBottomSelectorState extends State<TricycleBottomSelector> {
     try {
       await db.deleteParticipants();
       _participantNotifier.getOlderMessages(db);
-      if(engine!=null)
-      engine.leaveChannel();
+      await NexgeRTC.leave();
       print("Hangup.......");
+    // ignore: empty_catches
     } catch (e) {
-      print(e + "------------------------------------------------------P_O)O)O)O_");
+
     }
 
     clearData();
@@ -174,7 +174,7 @@ class TricycleBottomSelectorState extends State<TricycleBottomSelector> {
                     TricycleAvatar(
                       size: 36,
                       key: UniqueKey(),
-                      imageUrl: eventModel!=null ? eventModel.header.avatar:"",
+                      imageUrl: eventModel!=null ? eventModel!.header!.avatar:"",
                       isFullUrl: false,
                       service_type: SERVICE_TYPE.PERSON,
                       resolution_type: RESOLUTION_TYPE.R64,
@@ -183,7 +183,7 @@ class TricycleBottomSelectorState extends State<TricycleBottomSelector> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 8.0),
                           child: Text(
-                            eventModel!=null?eventModel.title:"",
+                            eventModel!=null?eventModel!.title!:"",
                             style: styleElements.subtitle1ThemeScalable(context).copyWith(
                               fontWeight: FontWeight.bold
                             ),
@@ -207,8 +207,8 @@ class TricycleBottomSelectorState extends State<TricycleBottomSelector> {
                           Navigator.push(context, MaterialPageRoute(
                               builder: (BuildContext context) {
                                 return InviteTalkParticipants(
-                                  eventId: eventModel.id,
-                                  privacyType: eventModel.eventPrivacyType,
+                                  eventId: eventModel!.id,
+                                  privacyType: eventModel!.eventPrivacyType,
                                 );
                               }
                           ));
@@ -246,7 +246,7 @@ class TricycleBottomSelectorState extends State<TricycleBottomSelector> {
                         ],
                       ),
                       onTap: () {
-                        widget.onItemTapped(0);
+                        widget.onItemTapped!(0);
                       }),
                 ),
               ),
@@ -275,7 +275,7 @@ class TricycleBottomSelectorState extends State<TricycleBottomSelector> {
                         ],
                       ),
                       onTap: () {
-                        widget.onItemTapped(1);
+                        widget.onItemTapped!(1);
                       }),
                 ),
               ),
@@ -303,7 +303,7 @@ class TricycleBottomSelectorState extends State<TricycleBottomSelector> {
                         ],
                       ),
                       onTap: () {
-                        widget.onItemTapped(2);
+                        widget.onItemTapped!(2);
                       }),
                 )
 
@@ -354,7 +354,7 @@ class TricycleBottomSelectorState extends State<TricycleBottomSelector> {
                 width: 70,
                 margin:EdgeInsets.only(right: 0,top:0,bottom:4),
                 child: InkWell(
-                  onTap: (){ widget.onItemTapped(3);},
+                  onTap: (){ widget.onItemTapped!(3);},
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -390,7 +390,7 @@ class TricycleBottomSelectorState extends State<TricycleBottomSelector> {
                                   minHeight: 18,
                                 ),
                                 child: Center(
-                                  child: Text(widget.chatCount.toString()??"",
+                                  child: Text(widget.chatCount.toString(),
                                     style: TextStyle(
                                         color: HexColor(AppColors.appColorWhite),
                                         fontSize: 14,
@@ -403,7 +403,7 @@ class TricycleBottomSelectorState extends State<TricycleBottomSelector> {
                           )
                         ],
                       ),
-                      Text(AppLocalizations.of(context).translate("lessons"),style: styleElements.captionThemeScalable(context).copyWith(
+                      Text(AppLocalizations.of(context)!.translate("lessons"),style: styleElements.captionThemeScalable(context).copyWith(
                           color: widget.currentIndex == 3
                               ? HexColor(AppColors.appMainColor)
                               : HexColor(AppColors.appColorBlack)
@@ -430,7 +430,7 @@ class TricycleBottomSelectorState extends State<TricycleBottomSelector> {
                                 : HexColor(AppColors.appColorBlack)
                                 .withOpacity(0.5),
                           ),
-                          Text(AppLocalizations.of(context).translate("circle"),
+                          Text(AppLocalizations.of(context)!.translate("circle"),
 
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
@@ -443,7 +443,7 @@ class TricycleBottomSelectorState extends State<TricycleBottomSelector> {
                         ],
                       ),
                       onTap: () {
-                        widget.onItemTapped(4);
+                        widget.onItemTapped!(4);
                       }),
                 ),
               ),
@@ -455,7 +455,7 @@ class TricycleBottomSelectorState extends State<TricycleBottomSelector> {
     );
   }
 
-  void showPlayback(EventListItem model) {
+  void showPlayback(EventListItem? model) {
     setState(() {
       this.eventModel = model;
       playbackOptionVisible = true;
@@ -471,9 +471,9 @@ class TricycleBottomSelectorState extends State<TricycleBottomSelector> {
   }
 
   void shareEvent() {
-    createDeeplink.getDeeplink(SHAREITEMTYPE.DETAIL.type,
-        prefs.getInt(Strings.userId).toString(),
-        eventModel.id,
+    createDeeplink!.getDeeplink(SHAREITEMTYPE.DETAIL.type,
+        prefs!.getInt(Strings.userId).toString(),
+        eventModel!.id,
         DEEPLINKTYPE.CALENDAR.type,
         context);
   }

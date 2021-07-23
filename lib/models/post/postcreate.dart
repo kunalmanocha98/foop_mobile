@@ -4,39 +4,39 @@ import 'package:oho_works_app/e_learning_module/model/learner_list_response.dart
 import 'package:oho_works_app/e_learning_module/ui/lesson_list_response.dart';
 
 class PostCreatePayload {
-  int postId;
-  int id;
-  int originalPsPostMainId;
-  String postOwnerType;
-  int postOwnerTypeId;
-  int postCreatedById;
-  int postInstitutionId;
-  String postType;
-  String postCategory;
-  String postStatus;
-  List<String> postRecipientType;
-  int postTypeReferenceId;
-  ContentMetaCreate contentMeta;
-  List<MediaDetails> mediaDetails;
-  List<PostRecipientDetailItem> postRecipientDetails;
-  List<String> postKeywords;
-  List<String> postMentions;
-  List<String>  postSubTypes;
-  String sourceLink;
-  String postColor;
+  int? postId;
+  int? id;
+  int? originalPsPostMainId;
+  String? postOwnerType;
+  int? postOwnerTypeId;
+  int? postCreatedById;
+  int? postInstitutionId;
+  String? postType;
+  String? postCategory;
+  String? postStatus;
+  List<String?>? postRecipientType;
+  int? postTypeReferenceId;
+  ContentMetaCreate? contentMeta;
+  List<MediaDetails>? mediaDetails;
+  List<PostRecipientDetailItem>? postRecipientDetails;
+  List<String?>? postKeywords;
+  List<String>? postMentions;
+  List<String?>?  postSubTypes;
+  String? sourceLink;
+  String? postColor;
   //=============================lesson data
-  String coverImage;
-  String lessonType;
-  LessonTopic lessonTopic;
-  List<LearnerListItem> learnerItem;
-  List<Affiliation> affiliatedList ;
-  List<Programme> programmesList ;
-  List<Classes> classesList ;
-  List<Subjects> subjectsList ;
-  List<Discipline> disciplineList;
-  ChapterItem chapterItem;
-  LessonListItem lessonListItem;
-  List<PostCreatePayload> listOfLessons;
+  String? coverImage;
+  String? lessonType;
+  LessonTopic? lessonTopic;
+  List<LearnerListItem>? learnerItem;
+  List<Affiliation>? affiliatedList ;
+  List<Programme>? programmesList ;
+  List<Classes>? classesList ;
+  List<Subjects>? subjectsList ;
+  List<Discipline>? disciplineList;
+  ChapterItem? chapterItem;
+  LessonListItem? lessonListItem;
+  List<PostCreatePayload>? listOfLessons;
 
   PostCreatePayload(
       {
@@ -77,7 +77,7 @@ class PostCreatePayload {
     if (json['learner_category'] != null) {
       learnerItem = [];//LearnerListItem>();
       json['learner_category'].forEach((v) {
-        learnerItem.add(new LearnerListItem.fromJson(v));
+        learnerItem!.add(new LearnerListItem.fromJson(v));
       });
     };
     lessonTopic = json['lesson_topic'] != null
@@ -91,33 +91,33 @@ class PostCreatePayload {
     if (json['discipline'] != null) {
       disciplineList = [];//Discipline>();
       json['discipline'].forEach((v) {
-        disciplineList.add(new Discipline.fromJson(v));
+        disciplineList!.add(new Discipline.fromJson(v));
       });
     }
 
     if (json['subjects'] != null) {
       subjectsList = [];//Subjects>();
       json['subjects'].forEach((v) {
-        subjectsList.add(new Subjects.fromJson(v));
+        subjectsList!.add(new Subjects.fromJson(v));
       });
     }
     if (json['classes'] != null) {
       classesList = [];//Classes>();
       json['classes'].forEach((v) {
-        classesList.add(new Classes.fromJson(v));
+        classesList!.add(new Classes.fromJson(v));
       });
     }
     if (json['programme'] != null) {
       programmesList = [];//Programme>();
       json['programme'].forEach((v) {
-        programmesList.add(new Programme.fromJson(v));
+        programmesList!.add(new Programme.fromJson(v));
       });
     }
 
     if (json['affiliation'] != null) {
       affiliatedList = [];//Affiliation>();
       json['affiliation'].forEach((v) {
-        affiliatedList.add(new Affiliation.fromJson(v));
+        affiliatedList!.add(new Affiliation.fromJson(v));
       });
     }
     lessonType = json['lesson_type'];
@@ -143,7 +143,7 @@ class PostCreatePayload {
     if (json['media_details'] != null) {
       mediaDetails = [];//MediaDetails>();
       json['media_details'].forEach((v) {
-        mediaDetails.add(new MediaDetails.fromJson(v));
+        mediaDetails!.add(new MediaDetails.fromJson(v));
       });
     }
     postKeywords =json['post_keywords']!=null? json['post_keywords'].cast<String>():null;
@@ -179,10 +179,10 @@ class PostCreatePayload {
     data['cover_image'] = this.coverImage;
     data['post_recipient_details'] = this.postRecipientDetails;
     if (this.contentMeta != null) {
-      data['content_meta'] = this.contentMeta.toJson();
+      data['content_meta'] = this.contentMeta!.toJson();
     }
     if (this.mediaDetails != null) {
-      data['media_details'] = this.mediaDetails.map((v) => v.toJson()).toList();
+      data['media_details'] = this.mediaDetails!.map((v) => v.toJson()).toList();
     }
     data['post_keywords'] = this.postKeywords;
     data['post_mentions'] = this.postMentions;
@@ -193,9 +193,9 @@ class PostCreatePayload {
 }
 
 class Affiliation {
-  int id;
-  String organizationCode;
-  String organizationName;
+  int? id;
+  String? organizationCode;
+  String? organizationName;
 
   Affiliation({this.id, this.organizationCode, this.organizationName});
 
@@ -215,9 +215,9 @@ class Affiliation {
 }
 
 class Programme {
-  int id;
-  String programCode;
-  String programName;
+  int? id;
+  String? programCode;
+  String? programName;
 
   Programme({this.id, this.programCode, this.programName});
 
@@ -237,9 +237,9 @@ class Programme {
 }
 
 class Discipline {
-  int id;
-  String departmentCode;
-  String departmentName;
+  int? id;
+  String? departmentCode;
+  String? departmentName;
 
   Discipline({this.id, this.departmentCode, this.departmentName});
 
@@ -259,9 +259,9 @@ class Discipline {
 }
 
 class Classes {
-  int id;
-  String classCode;
-  String className;
+  int? id;
+  String? classCode;
+  String? className;
 
   Classes({this.id, this.classCode, this.className});
 
@@ -280,9 +280,9 @@ class Classes {
   }
 }
 class Subjects {
-int id;
-String subjectCode;
-String subjectName;
+int? id;
+String? subjectCode;
+String? subjectName;
 
 Subjects({this.id, this.subjectCode, this.subjectName});
 
@@ -303,11 +303,11 @@ Map<String, dynamic> toJson() {
 
 
 class ContentMetaCreate {
-  String title;
-  String subtitle1;
-  String subtitle2;
-  String meta;
-  OtherPollRequest others;
+  String? title;
+  String? subtitle1;
+  String? subtitle2;
+  String? meta;
+  OtherPollRequest? others;
 
   ContentMetaCreate({this.title, this.subtitle1, this.subtitle2, this.meta, this.others});
 
@@ -328,20 +328,20 @@ class ContentMetaCreate {
     data['subtitle2'] = this.subtitle2;
     data['meta'] = this.meta;
     if (this.others != null) {
-      data['others'] = this.others.toJson();
+      data['others'] = this.others!.toJson();
     }
     return data;
   }
 }
 
 class OtherPollRequest {
-  int pollStart;
-  int pollEnd;
-  int totalResponses;
-  List<Options> options;
-  int submissionDateTime ;
-  int maxMarks;
-  List<String> subjects;
+  int? pollStart;
+  int? pollEnd;
+  int? totalResponses;
+  List<Options>? options;
+  int? submissionDateTime ;
+  int? maxMarks;
+  List<String?>? subjects;
 
 
   OtherPollRequest(
@@ -357,7 +357,7 @@ class OtherPollRequest {
     if (json['options'] != null) {
       options = [];//Options>();
       json['options'].forEach((v) {
-        options.add(new Options.fromJson(v));
+        options!.add(new Options.fromJson(v));
       });
     }
   }
@@ -371,17 +371,17 @@ class OtherPollRequest {
     data['max_marks'] = this.maxMarks;
     data['subjects'] = this.subjects;
     if (this.options != null) {
-      data['options'] = this.options.map((v) => v.toJson()).toList();
+      data['options'] = this.options!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Options {
-  String option;
-  int optionSequence;
-  int numberSelected;
-  int percentage;
+  String? option;
+  int? optionSequence;
+  int? numberSelected;
+  int? percentage;
 
   Options(
       {this.option, this.optionSequence, this.numberSelected, this.percentage});
@@ -404,9 +404,9 @@ class Options {
 }
 
 class MediaDetails {
-  String mediaType;
-  String mediaUrl;
-  String mediaThumbnailUrl;
+  String? mediaType;
+  String? mediaUrl;
+  String? mediaThumbnailUrl;
 
   MediaDetails({this.mediaType, this.mediaUrl,this.mediaThumbnailUrl});
 
@@ -424,8 +424,8 @@ class MediaDetails {
 }
 
 class PostRecipientDetailItem {
-  String type;
-  int id;
+  String? type;
+  int? id;
 
   PostRecipientDetailItem({this.type, this.id});
 
@@ -443,10 +443,10 @@ class PostRecipientDetailItem {
 }
 
 class PostCreateResponse {
-  String statusCode;
-  String message;
-  PostResponseModel rows;
-  int total;
+  String? statusCode;
+  String? message;
+  PostResponseModel? rows;
+  int? total;
 
   PostCreateResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -462,7 +462,7 @@ class PostCreateResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if(this.rows!=null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     data['total'] = this.total;
     return data;
@@ -470,7 +470,7 @@ class PostCreateResponse {
 }
 
 class PostResponseModel{
-  int id;
+  int? id;
   PostResponseModel({this.id});
   PostResponseModel.fromJson(Map<String,dynamic> json){
     id= json['id'];

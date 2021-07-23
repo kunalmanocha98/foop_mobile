@@ -16,17 +16,17 @@ import 'academic_details_selection_pages.dart';
 
 // ignore: must_be_immutable
 class AcademicDetailspage extends StatefulWidget {
-final PostCreatePayload createLessonData;
+final PostCreatePayload? createLessonData;
 
-  const AcademicDetailspage({Key key, this.createLessonData}) : super(key: key);
+  const AcademicDetailspage({Key? key, this.createLessonData}) : super(key: key);
   _AcademicDetailspage createState() => _AcademicDetailspage();
 
 
 }
 
 class _AcademicDetailspage extends State<AcademicDetailspage> {
-  BuildContext context;
-  TextStyleElements styleElements;
+  late BuildContext context;
+  late TextStyleElements styleElements;
   GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
   GlobalKey<TricycleProgressButtonState> progressButtonKeyNext = GlobalKey();
   List<AcademicDetailSelectionItem> affiliatedList = [];
@@ -57,22 +57,22 @@ class _AcademicDetailspage extends State<AcademicDetailspage> {
                 padding: const EdgeInsets.only(top:16.0,left: 16.0,right: 16.0),
                 child: InkWell(
                   onTap: (){
-                    if(widget.createLessonData.affiliatedList!=null &&widget.createLessonData.programmesList!=null&& widget.createLessonData.disciplineList!=null&&
-                    widget.createLessonData.classesList!=null && widget.createLessonData.subjectsList!=null)
+                    if(widget.createLessonData!.affiliatedList!=null &&widget.createLessonData!.programmesList!=null&& widget.createLessonData!.disciplineList!=null&&
+                    widget.createLessonData!.classesList!=null && widget.createLessonData!.subjectsList!=null)
                     {
                       { Navigator.pop(context, widget.createLessonData);}
                     }
                     else
                     {
                       ToastBuilder().showToast(
-                          AppLocalizations.of(context)
+                          AppLocalizations.of(context)!
                               .translate("topic_group"),
                           context,
                           HexColor(AppColors.information));
                     }
                   },
                   child: Text(
-                    AppLocalizations.of(context).translate('next'),
+                    AppLocalizations.of(context)!.translate('next'),
                     style: styleElements
                         .subtitle2ThemeScalable(context)
                         .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -141,7 +141,7 @@ class _AcademicDetailspage extends State<AcademicDetailspage> {
                                     setState(() {
                                       if(value!=null){
                                         affiliatedList = value;
-                                        widget.createLessonData.affiliatedList=value;
+                                        widget.createLessonData!.affiliatedList=value;
                                       }
                                     });
                               });
@@ -195,7 +195,7 @@ class _AcademicDetailspage extends State<AcademicDetailspage> {
                                 setState(() {
                                   if(value!=null){
                                     programmesList = value;
-                                    widget.createLessonData.programmesList=value;
+                                    widget.createLessonData!.programmesList=value;
                                   }
                                 });
                               });
@@ -249,7 +249,7 @@ class _AcademicDetailspage extends State<AcademicDetailspage> {
                                 setState(() {
                                   if(value!=null){
                                     disciplineList = value;
-                                    widget.createLessonData.disciplineList=value;
+                                    widget.createLessonData!.disciplineList=value;
                                   }
                                 });
                               });
@@ -305,7 +305,7 @@ class _AcademicDetailspage extends State<AcademicDetailspage> {
                                   setState(() {
                                     if(value!=null){
                                       classesList = value;
-                                      widget.createLessonData.classesList=value;
+                                      widget.createLessonData!.classesList=value;
                                     }
                                   });
                                 });
@@ -360,7 +360,7 @@ class _AcademicDetailspage extends State<AcademicDetailspage> {
                                 setState(() {
                                   if(value!=null){
                                     subjectsList = value;
-                                    widget.createLessonData.subjectsList=value;
+                                    widget.createLessonData!.subjectsList=value;
                                   }
                                 });
                               });

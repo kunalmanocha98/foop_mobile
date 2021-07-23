@@ -25,8 +25,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class BasicInfo extends StatefulWidget {
-  Persondata personData;
-  final Null Function() callbackPicker;
+  Persondata? personData;
+  final Null Function()? callbackPicker;
 
   _BasicInfo createState() => _BasicInfo(personData, callbackPicker);
 
@@ -38,9 +38,9 @@ class _BasicInfo extends State<BasicInfo>
   final formKey = GlobalKey<FormState>();
   GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
   GlobalKey<TricycleProgressButtonState> progressButtonKeyNext = GlobalKey();
-  SharedPreferences prefs;
-  Null Function() callback;
-  TextStyleElements styleElements;
+  SharedPreferences? prefs;
+  Null Function()? callback;
+  late TextStyleElements styleElements;
   final emailController = TextEditingController();
   final userNameController = TextEditingController();
   final bioController = TextEditingController();
@@ -52,13 +52,13 @@ class _BasicInfo extends State<BasicInfo>
   final secondCon = TextEditingController();
   String bioCharacterLength = "0";
   String quotesCharacterLength = "0";
-  String email, biog, quotes;
-  BuildContext context;
+  String? email, biog, quotes;
+ late BuildContext context;
   String selectedDoA = 'Date of Anniversary';
   String selectedDate = 'Date of Birth';
   String selectedGender = "Gender*";
   String selectedBGroup = "Blood Group";
-  int selectedEpoch;
+  int? selectedEpoch;
   var items = ['Male', 'Female', 'Transgender'];
   var itemsBG = ['A+', 'A-', 'B+', ' B-', ' O+', 'O-', 'AB+', ' AB-'];
   Map<String, String> mpGroup = {
@@ -103,7 +103,7 @@ class _BasicInfo extends State<BasicInfo>
       keyboardType: TextInputType.multiline,
       maxLines: null,
       validator: validateBioName,
-      onSaved: (String value) {
+      onSaved: (String? value) {
         biog = value;
       },
       onChanged: (text) {
@@ -280,7 +280,7 @@ class _BasicInfo extends State<BasicInfo>
       textCapitalization: TextCapitalization.words,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: AppLocalizations.of(context).translate('second_name'),
+          hintText: AppLocalizations.of(context)!.translate('second_name'),
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
           border: UnderlineInputBorder(
             borderSide: BorderSide(
@@ -310,7 +310,7 @@ class _BasicInfo extends State<BasicInfo>
       },
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(8.0, 15.0, 20.0, 4.0),
-          hintText: AppLocalizations.of(context).translate('first_name'),
+          hintText: AppLocalizations.of(context)!.translate('first_name'),
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorBlack35)),
           border: UnderlineInputBorder(
             borderSide: BorderSide(
@@ -340,7 +340,7 @@ class _BasicInfo extends State<BasicInfo>
         },
         decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(8.0, 15.0, 20.0, 4.0),
-          hintText: AppLocalizations.of(context).translate('last_name'),
+          hintText: AppLocalizations.of(context)!.translate('last_name'),
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorBlack35)),
         ));
     final userName = TextField(
@@ -360,7 +360,7 @@ class _BasicInfo extends State<BasicInfo>
         },
         decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(8.0, 15.0, 20.0, 4.0),
-          hintText: AppLocalizations.of(context).translate('user_name'),
+          hintText: AppLocalizations.of(context)!.translate('user_name'),
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorBlack35)),
         ));
     final bGroup = Stack(
@@ -436,7 +436,7 @@ class _BasicInfo extends State<BasicInfo>
                                     margin: const EdgeInsets.only(
                                         left: 20, top: 20),
                                     child: Text(
-                                      AppLocalizations.of(context)
+                                      AppLocalizations.of(context)!
                                           .translate("basic"),
                                       style: styleElements
                                           .subtitle1ThemeScalable(context),
@@ -542,7 +542,7 @@ class _BasicInfo extends State<BasicInfo>
                                     margin: const EdgeInsets.only(
                                         left: 20, top: 20),
                                     child: Text(
-                                      AppLocalizations.of(context)
+                                      AppLocalizations.of(context)!
                                           .translate("bio"),
                                       style: styleElements
                                           .subtitle1ThemeScalable(context),
@@ -559,7 +559,7 @@ class _BasicInfo extends State<BasicInfo>
                             margin: const EdgeInsets.only(
                                 left: 16, right: 8, top: 8.0),
                             child: Text(
-                              AppLocalizations.of(context)
+                              AppLocalizations.of(context)!
                                   .translate("write_about_you"),
                               style:
                                   styleElements.captionThemeScalable(context),
@@ -685,21 +685,21 @@ class _BasicInfo extends State<BasicInfo>
                                   _profileUpdate("save");
                                 else
                                   ToastBuilder().showToast(
-                                      AppLocalizations.of(context)
+                                      AppLocalizations.of(context)!
                                           .translate("gender_required"),
                                       context,HexColor(AppColors.information));
                               }
 
                             else
                               ToastBuilder().showToast(
-                                  AppLocalizations.of(context)
+                                  AppLocalizations.of(context)!
                                       .translate("first_name_required"),
                                   context,HexColor(AppColors.information));
 
                           },
                           color: HexColor(AppColors.appColorWhite),
                           child: Text(
-      AppLocalizations.of(context)
+      AppLocalizations.of(context)!
           .translate('save_exit')
           .toUpperCase(),
                             style: styleElements
@@ -725,12 +725,12 @@ class _BasicInfo extends State<BasicInfo>
                               _profileUpdate("next");
                             else
                               ToastBuilder().showToast(
-                                  AppLocalizations.of(context)
+                                  AppLocalizations.of(context)!
                                       .translate("first_name_required"),
                                   context,HexColor(AppColors.information)); },
                           color: HexColor(AppColors.appColorWhite),
                           child: Text(
-                            AppLocalizations.of(context)
+                            AppLocalizations.of(context)!
                                 .translate('next')
                                 .toUpperCase(),
                             style: styleElements
@@ -769,28 +769,28 @@ class _BasicInfo extends State<BasicInfo>
 
   setData() {
     if (personData != null) {
-      if (personData.firstName != null)
-        firstNameController.text = personData.firstName ?? "";
-      if (personData.lastName != null)
-        lastNameController.text = personData.lastName ?? "";
-      if (personData.email != null)
-        emailController.text = personData.email ?? "";
-      if (personData.userName != null)
-        userNameController.text = personData.userName ?? "";
+      if (personData!.firstName != null)
+        firstNameController.text = personData!.firstName ?? "";
+      if (personData!.lastName != null)
+        lastNameController.text = personData!.lastName ?? "";
+      if (personData!.email != null)
+        emailController.text = personData!.email ?? "";
+      if (personData!.userName != null)
+        userNameController.text = personData!.userName ?? "";
 
-      if (personData.dateOfBirth != null)
-        selectedDate = personData.dateOfBirth ?? "";
-      if (personData.dateOfAnniversary != null)
-        selectedDoA = personData.dateOfAnniversary ?? "";
-      if (personData.gender != null)
-        selectedGender = personData.gender == 1
+      if (personData!.dateOfBirth != null)
+        selectedDate = personData!.dateOfBirth ?? "";
+      if (personData!.dateOfAnniversary != null)
+        selectedDoA = personData!.dateOfAnniversary ?? "";
+      if (personData!.gender != null)
+        selectedGender = personData!.gender == 1
             ? 'Male'
-            : personData.gender == 2
+            : personData!.gender == 2
                 ? 'Female'
-                : personData.gender == 3 ? 'Transgender' : "Gender*";
-      if (personData.fullBio != null) {
-        bioController.text = personData.fullBio ?? "";
-        bioCharacterLength = personData.fullBio.length.toString();
+                : personData!.gender == 3 ? 'Transgender' : "Gender*";
+      if (personData!.fullBio != null) {
+        bioController.text = personData!.fullBio ?? "";
+        bioCharacterLength = personData!.fullBio!.length.toString();
       }
 
       // if (personData.message != null) {
@@ -798,10 +798,10 @@ class _BasicInfo extends State<BasicInfo>
       //   quotesCharacterLength = personData.message.length.toString();
       // }
 
-      if (personData.middleName != null)
-        secondCon.text = personData.middleName ?? "";
-      if (personData.bloodGroup != null)
-        selectedBGroup = mpGroupRev[personData.bloodGroup] ?? "";
+      if (personData!.middleName != null)
+        secondCon.text = personData!.middleName ?? "";
+      if (personData!.bloodGroup != null)
+        selectedBGroup = mpGroupRev[personData!.bloodGroup!] ?? "";
     }
   }
 
@@ -813,17 +813,17 @@ class _BasicInfo extends State<BasicInfo>
     payload.userName =
     (userNameController.text != null && userNameController.text != "")
         ? userNameController.text
-        : personData.userName;
+        : personData!.userName;
 
     payload.firstName =
         (firstNameController.text != null && firstNameController.text != "")
             ? firstNameController.text
-            : personData.firstName;
+            : personData!.firstName;
     payload.secondName =
-        (secondCon.text != null) ? secondCon.text : personData.middleName;
+        (secondCon.text != null) ? secondCon.text : personData!.middleName;
     payload.lastName = (lastNameController.text != null)
         ? lastNameController.text
-        : personData.lastName;
+        : personData!.lastName;
     if (selectedGender == 'Male') {
       payload.gender = 1;
     } else if (selectedGender == 'Female') {
@@ -831,40 +831,40 @@ class _BasicInfo extends State<BasicInfo>
     } else if (selectedGender == 'Transgender') {
       payload.gender = 3;
     } else {
-      payload.gender = personData.gender;
+      payload.gender = personData!.gender;
     }
     payload.dateOfBirth =
         (selectedDate != null && selectedDate != "Date of Anniversary")
             ? selectedDate
-            : personData.dateOfBirth;
+            : personData!.dateOfBirth;
     payload.dateOfAnniversary =
         (selectedDoA != null && selectedDoA != "Date of Anniversary")
             ? selectedDoA
-            : personData.dateOfAnniversary;
+            : personData!.dateOfAnniversary;
     payload.bloodGroup = mpGroup[selectedBGroup] != null
         ? mpGroup[selectedBGroup]
-        : personData.bloodGroup;
+        : personData!.bloodGroup;
     payload.bio =
-        (bioController.text != null) ? bioController.text : personData.fullBio;
-    payload.slug = personData.slug;
+        (bioController.text != null) ? bioController.text : personData!.fullBio;
+    payload.slug = personData!.slug;
     // payload.quote = (quotesController.text != null)
     //     ? quotesController.text
     //     : personData.message;
     var data = jsonEncode(payload);
     if(action=="save")
-    progressButtonKey.currentState.show();
+    progressButtonKey.currentState!.show();
     else
-    progressButtonKeyNext.currentState.show();
+    progressButtonKeyNext.currentState!.show();
     Calls().call(data, context, Config.PROFILEEDIT).then((value) async {
       DynamicResponse resposne = DynamicResponse.fromJson(value);
       if (resposne.statusCode == Strings.success_code) {
         if(action=="save")
-          progressButtonKey.currentState.hide();
+          progressButtonKey.currentState!.hide();
         else
-          progressButtonKeyNext.currentState.hide();
+          progressButtonKeyNext.currentState!.hide();
         if (action == "save") {
           print("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
-          callbackPicker();
+          callbackPicker!();
           Navigator.pop(context);
         }
         else {
@@ -875,28 +875,28 @@ class _BasicInfo extends State<BasicInfo>
                       EditEducation(null, true, true, callbackPicker)));
         if(result!=null && result['result']=="success")
         {
-          callbackPicker();
+          callbackPicker!();
           Navigator.pop(context);
         }
         }
       } else {
         if(action=="save")
-          progressButtonKey.currentState.hide();
+          progressButtonKey.currentState!.hide();
         else
-          progressButtonKeyNext.currentState.hide();
-        ToastBuilder().showToast(resposne.message, context,HexColor(AppColors.information));
+          progressButtonKeyNext.currentState!.hide();
+        ToastBuilder().showToast(resposne.message!, context,HexColor(AppColors.information));
       }
     }).catchError((onError) async {
       if(action=="save")
-        progressButtonKey.currentState.hide();
+        progressButtonKey.currentState!.hide();
       else
-        progressButtonKeyNext.currentState.hide();
+        progressButtonKeyNext.currentState!.hide();
       ToastBuilder().showToast(onError.toString(), context,HexColor(AppColors.information));
     });
   }
 
-  Persondata personData;
-  Null Function() callbackPicker;
+  Persondata? personData;
+  Null Function()? callbackPicker;
 
   _BasicInfo(this.personData, this.callbackPicker);
 
@@ -907,10 +907,10 @@ class _BasicInfo extends State<BasicInfo>
     else
       newDate = new DateTime.now();
 
-    final DateTime picked = await showDatePicker(
+    final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: newDate,
-        builder: (BuildContext context, Widget child) {
+        builder: (BuildContext context, Widget? child) {
           return Theme(
             data: ThemeData.light().copyWith(
               primaryColor: HexColor(AppColors.appColorBlack),
@@ -925,7 +925,7 @@ class _BasicInfo extends State<BasicInfo>
                   textTheme: ButtonTextTheme.primary
               ),
             ),
-            child: child,
+            child: child!,
           );
         },
         firstDate: DateTime(1900),

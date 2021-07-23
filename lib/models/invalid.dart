@@ -1,5 +1,5 @@
 class InvalidToken {
-  String detail;
+  String? detail;
 
   InvalidToken({this.detail});
 

@@ -1,7 +1,7 @@
 class VerifyRequestModel {
-  int id;
-  int buddyApprovalId;
-  String questionResponse;
+  int? id;
+  int? buddyApprovalId;
+  String? questionResponse;
 
   VerifyRequestModel({this.id, this.buddyApprovalId, this.questionResponse});
 
@@ -21,10 +21,10 @@ class VerifyRequestModel {
 }
 
 class VerifyResponseModel {
-  String statusCode;
-  String message;
-  VerifyResponseRow rows;
-  int total;
+  String? statusCode;
+  String? message;
+  VerifyResponseRow? rows;
+  int? total;
 
   VerifyResponseModel({this.statusCode, this.message, this.rows, this.total});
 
@@ -40,7 +40,7 @@ class VerifyResponseModel {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     data['total'] = this.total;
     return data;
@@ -48,9 +48,9 @@ class VerifyResponseModel {
 }
 
 class VerifyResponseRow {
-  String personName;
-  String institutionName;
-  String role;
+  String? personName;
+  String? institutionName;
+  String? role;
 
   VerifyResponseRow({this.personName, this.institutionName, this.role});
 

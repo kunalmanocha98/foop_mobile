@@ -22,32 +22,32 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class ReportAbuse extends StatefulWidget {
-  int contextId;
+  int? contextId;
   String contextType;
-  ReportAbuse({@required this.contextId, @required this.contextType});
+  ReportAbuse({required this.contextId, required this.contextType});
 
   @override
   _ReportAbuse createState() => _ReportAbuse(contextId: contextId,contextType: contextType);
 }
 
 class _ReportAbuse extends State<ReportAbuse> {
-  int contextId;
+  int? contextId;
   String contextType;
-  SharedPreferences prefs;
+  late SharedPreferences prefs;
   GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
-  _ReportAbuse({@required this.contextId, @required this.contextType});
-  List<CommonCardData> listAbuses = [];
+  _ReportAbuse({required this.contextId, required this.contextType});
+  List<CommonCardData>? listAbuses = [];
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => fetchList());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => fetchList());
   }
 
   void fetchList() async {
     var res = await rootBundle.loadString('assets/reportabuselist.json');
     final Map parsed = json.decode(res);
-    listAbuses = BaseResponses.fromJson(parsed).rows;
+    listAbuses = BaseResponses.fromJson(parsed as Map<String, dynamic>).rows;
     print("0-------------------------------------------------------------------");
     Future((){
       setState(() {});
@@ -69,7 +69,7 @@ class _ReportAbuse extends State<ReportAbuse> {
 
     Calls().call(data, context, Config.CREATEABUSE).then((value) async {
       setState(() {
-        listAbuses[index].isVerified=false;
+        listAbuses![index].isVerified=false;
       });
 
 
@@ -83,12 +83,12 @@ class _ReportAbuse extends State<ReportAbuse> {
       }
     }).catchError((onError) async {
       setState(() {
-        listAbuses[index].isVerified=false;
+        listAbuses![index].isVerified=false;
       });
       print(onError.toString());
     });
   }
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
   @override
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
@@ -97,7 +97,7 @@ class _ReportAbuse extends State<ReportAbuse> {
         resizeToAvoidBottomInset: false,
         appBar: TricycleAppBar().getCustomAppBar(
             context,
-            appBarTitle: AppLocalizations.of(context).translate('report_content'),
+            appBarTitle: AppLocalizations.of(context)!.translate('report_content'),
             onBackButtonPress: (){Navigator.pop(context);}),
         body: Column(
           children: [
@@ -105,7 +105,7 @@ class _ReportAbuse extends State<ReportAbuse> {
               margin: EdgeInsets.only(left: 16),
               child: ListTile(
                 title: Text(
-                  AppLocalizations.of(context).translate("why_report"),
+                  AppLocalizations.of(context)!.translate("why_report"),
                   style: styleElements.subtitle1ThemeScalable(context).copyWith(
                     fontWeight: FontWeight.w900
                   ),
@@ -115,7 +115,7 @@ class _ReportAbuse extends State<ReportAbuse> {
             Expanded(
                 child:ListView.builder(
                     padding: EdgeInsets.only(top: 4, left: 8, right: 8, bottom: 4),
-                    itemCount: listAbuses.length,
+                    itemCount: listAbuses!.length,
                     itemBuilder: (BuildContext context, int index) {
                       return
 
@@ -125,13 +125,13 @@ class _ReportAbuse extends State<ReportAbuse> {
                           onTap: () async {
 
                             print("0-------------------------------------------------------------------");
-                            _reportAbuse(listAbuses[index],index);
+                            _reportAbuse(listAbuses![index],index);
                             setState(() {
-                              listAbuses[index].isVerified=true;
+                              listAbuses![index].isVerified=true;
                             });
                           },
                           child: ListTile(
-                            title: Text(listAbuses[index].title),
+                            title: Text(listAbuses![index].title!),
                             leading: SizedBox(
                               height: 52,
                               width: 52,
@@ -148,7 +148,7 @@ class _ReportAbuse extends State<ReportAbuse> {
                               ),
                             ),
                             trailing: Visibility(
-                              visible: listAbuses[index].isVerified!=null&&listAbuses[index].isVerified,
+                              visible: listAbuses![index].isVerified!=null&&listAbuses![index].isVerified!,
                               child: SizedBox(
                                 height: 20,
                                 width: 20,

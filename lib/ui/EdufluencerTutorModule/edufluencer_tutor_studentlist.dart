@@ -18,9 +18,9 @@ import 'package:oho_works_app/components/paginator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class EdufluencerTutorStudents extends StatefulWidget {
-  final edufluencer_type type;
-  final String listType;
-  final bool isEdufluencer;
+  final edufluencer_type? type;
+  final String? listType;
+  final bool? isEdufluencer;
 
   EdufluencerTutorStudents({this.type,this.listType,this.isEdufluencer});
 
@@ -29,9 +29,9 @@ class EdufluencerTutorStudents extends StatefulWidget {
 }
 
 class EdufluencerTutorStudentsState extends State<EdufluencerTutorStudents> {
-  BuildContext sctx;
-  TextStyleElements styleElements;
-  SharedPreferences prefs = locator<SharedPreferences>();
+  BuildContext? sctx;
+  TextStyleElements? styleElements;
+  SharedPreferences? prefs = locator<SharedPreferences>();
 
   @override
   Widget build(BuildContext context) {
@@ -85,7 +85,7 @@ class EdufluencerTutorStudentsState extends State<EdufluencerTutorStudents> {
       followButtonCallback: () {
         GenericFollowUnfollowButtonState().followUnfollowBlock(
             "person",
-            prefs.getInt(Strings.userId),
+            prefs!.getInt(Strings.userId),
             'person',
             item.personId,
             "F",
@@ -100,8 +100,8 @@ class EdufluencerTutorStudentsState extends State<EdufluencerTutorStudents> {
         showDialog(
           context: context,
           builder: (BuildContext context) {
-            return EdufluencerTutorDialog(userId: prefs.getInt(Strings.userId).toString(),
-                userName: prefs.getString(Strings.userName));
+            return EdufluencerTutorDialog(userId: prefs!.getInt(Strings.userId).toString(),
+                userName: prefs!.getString(Strings.userName));
           },
         );
       },

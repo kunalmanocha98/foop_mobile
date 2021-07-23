@@ -12,8 +12,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class QrCodePage extends StatelessWidget {
-  final String qrCodeData;
-  final SharedPreferences prefs = locator<SharedPreferences>();
+  final String? qrCodeData;
+  final SharedPreferences? prefs = locator<SharedPreferences>();
 
   QrCodePage({this.qrCodeData});
 
@@ -23,8 +23,8 @@ class QrCodePage extends StatelessWidget {
     String roleName = '';
     String instituteName = '';
     try {
-      roleName = prefs.getStringList(Strings.roleTypeList)[0];
-      instituteName = prefs.getStringList(Strings.institutionNameList)[0];
+      roleName = prefs!.getStringList(Strings.roleTypeList)![0];
+      instituteName = prefs!.getStringList(Strings.institutionNameList)![0];
     } catch (onError) {
       print(onError);
     }
@@ -53,7 +53,7 @@ class QrCodePage extends StatelessWidget {
                         height: 80,
                       ),
                       TricycleAvatar(
-                        imageUrl: prefs.getString(Strings.profileImage),
+                        imageUrl: prefs!.getString(Strings.profileImage),
                         service_type: SERVICE_TYPE.PERSON,
                         resolution_type: RESOLUTION_TYPE.R256,
                         size: 120,
@@ -63,7 +63,7 @@ class QrCodePage extends StatelessWidget {
                         borderColor: HexColor(AppColors.appColorWhite),
                       ),
                       Text(
-                        prefs.getString(Strings.userName),
+                        prefs!.getString(Strings.userName)!,
                         style: styleElements
                             .headline6ThemeScalable(context)
                             .copyWith(fontWeight: FontWeight.bold),
@@ -81,7 +81,7 @@ class QrCodePage extends StatelessWidget {
                         barcode: Barcode.qrCode(
                           errorCorrectLevel: BarcodeQRCorrectionLevel.high,
                         ),
-                        data: qrCodeData,
+                        data: qrCodeData!,
                         width: 200,
                         height: 200,
                       ),
@@ -89,14 +89,14 @@ class QrCodePage extends StatelessWidget {
                         height: 8,
                       ),
                       Text(
-                        qrCodeData,
+                        qrCodeData!,
                         style: styleElements.bodyText1ThemeScalable(context),
                       ),
                       SizedBox(
                         height: 8,
                       ),
                       Text(
-                        AppLocalizations.of(context).translate('show_this_scanner'),
+                        AppLocalizations.of(context)!.translate('show_this_scanner'),
                         style: styleElements.subtitle2ThemeScalable(context),
                       ),
                     ],
@@ -105,7 +105,7 @@ class QrCodePage extends StatelessWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        AppLocalizations.of(context).translate('powered_by'),
+                        AppLocalizations.of(context)!.translate('powered_by'),
                         style: styleElements.subtitle2ThemeScalable(context),
                       ),
                       Row(
@@ -121,7 +121,7 @@ class QrCodePage extends StatelessWidget {
                             width: 4,
                           ),
                           Text(
-                            AppLocalizations.of(context).translate('app_name'),
+                            AppLocalizations.of(context)!.translate('app_name'),
                             style: styleElements.headline6ThemeScalable(context).copyWith(
                                 fontWeight: FontWeight.w600,
                                 color: HexColor(AppColors.appColorBlack85),
@@ -131,7 +131,7 @@ class QrCodePage extends StatelessWidget {
                         ],
                       ),
                       Text(
-                        AppLocalizations.of(context).translate('logo_slogan'),
+                        AppLocalizations.of(context)!.translate('logo_slogan'),
                         style: styleElements.subtitle2ThemeScalable(context),
                       ),
                     ],

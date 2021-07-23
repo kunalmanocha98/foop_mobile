@@ -22,25 +22,25 @@ import 'following_suggestions.dart';
 class NetworkPage extends StatefulWidget {
 
 bool hideTabs;
-  String type;
-  int id;
+  String? type;
+  int? id;
   int currentTab;
-  String pageTitle;
+  String? pageTitle;
   Null Function() callback;
-  String imageUrl;
+  String? imageUrl;
   final bool hideAppBar;
-  final bool isSwipeDisabled;
+  final bool? isSwipeDisabled;
   NetworkPage({
-    Key key,
+    Key? key,
     this.hideAppBar=false,
-    @required this.type,
-    @required this.id,
+    required this.type,
+    required this.id,
     this.hideTabs=false,
     this.isSwipeDisabled,
-    @required this.pageTitle,
-    @required this.callback,
-    @required this.currentTab,
-    @required this.imageUrl
+    required this.pageTitle,
+    required this.callback,
+    required this.currentTab,
+    required this.imageUrl
   }) : super(key: key);
 
   NetworkPageState createState() =>
@@ -49,17 +49,17 @@ bool hideTabs;
 
 class NetworkPageState extends State<NetworkPage> with SingleTickerProviderStateMixin {
   List<CustomTabMaker> list = [];
-  TabController _tabController;
-  TextStyleElements styleElements;
-  String type;
-  int id;
-  SharedPreferences prefs;
-  String ownerType;
-  int ownerId;
+  late TabController _tabController;
+  TextStyleElements? styleElements;
+  String? type;
+  int? id;
+  late SharedPreferences prefs;
+  String? ownerType;
+  int? ownerId;
   int _currentPosition=0;
-  String pageTitle;
+  String? pageTitle;
   Null Function() callback;
-  String imageUrl;
+  String? imageUrl;
 
 
   NetworkPageState(this.type, this.id,this.pageTitle, this.callback, this._currentPosition,this.imageUrl);
@@ -67,7 +67,7 @@ class NetworkPageState extends State<NetworkPage> with SingleTickerProviderState
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => setSharedPreferences());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => setSharedPreferences());
   }
 
   onPositionChange() {
@@ -86,13 +86,13 @@ class NetworkPageState extends State<NetworkPage> with SingleTickerProviderState
   }
   loadPages() {
 
-    list.add(CustomTabMaker(statelessWidget: AllTabsNetwork(pageTitle,type,id,ownerId,ownerType,callback), tabName: AppLocalizations.of(context).translate('all')));
-    list.add(CustomTabMaker(statelessWidget: FollowingSuggestionsPage(pageTitle,type,id,ownerId,ownerType,callback), tabName: AppLocalizations.of(context).translate('following')));
-    list.add(CustomTabMaker(statelessWidget: FollowersSuggestionsPage(pageTitle,type,id,ownerId,ownerType,callback), tabName: AppLocalizations.of(context).translate('followers')));
-    list.add(new CustomTabMaker(statelessWidget: new CommonListingPageNetwork("T"), tabName: AppLocalizations.of(context).translate('teachers')));
-  /*  list.add(new CustomTabMaker(statelessWidget: new CommonListingPageNetwork("P"), tabName: AppLocalizations.of(context).translate('parents')));
-    list.add(new CustomTabMaker(statelessWidget: new CommonListingPageNetwork("S"), tabName: AppLocalizations.of(context).translate('student')));
-    list.add(new CustomTabMaker(statelessWidget:new  CommonListingPageNetwork("L"), tabName: AppLocalizations.of(context).translate('alumni')));*/
+    list.add(CustomTabMaker(statelessWidget: AllTabsNetwork(pageTitle,type,id,ownerId,ownerType,callback), tabName: AppLocalizations.of(context)!.translate('all')));
+    list.add(CustomTabMaker(statelessWidget: FollowingSuggestionsPage(pageTitle,type,id,ownerId,ownerType,callback), tabName: AppLocalizations.of(context)!.translate('following')));
+    list.add(CustomTabMaker(statelessWidget: FollowersSuggestionsPage(pageTitle,type,id,ownerId,ownerType,callback), tabName: AppLocalizations.of(context)!.translate('followers')));
+    list.add(new CustomTabMaker(statelessWidget: new CommonListingPageNetwork("T"), tabName: AppLocalizations.of(context)!.translate('teachers')));
+    list.add(new CustomTabMaker(statelessWidget: new CommonListingPageNetwork("P"), tabName: AppLocalizations.of(context)!.translate('parents')));
+    list.add(new CustomTabMaker(statelessWidget: new CommonListingPageNetwork("S"), tabName: AppLocalizations.of(context)!.translate('student')));
+    list.add(new CustomTabMaker(statelessWidget:new  CommonListingPageNetwork("L"), tabName: AppLocalizations.of(context)!.translate('alumni')));
     setState(() {
       _tabController = TabController(vsync: this, length: list.length);
       _tabController.addListener(onPositionChange);
@@ -138,7 +138,7 @@ class NetworkPageState extends State<NetworkPage> with SingleTickerProviderState
                 Center(child: list[index].statelessWidget),
             onPositionChange: (index) {
               setState(() {
-                _currentPosition = index;
+                _currentPosition = index!;
               });
             },
             onScroll: (position) => print('$position'),
@@ -151,7 +151,7 @@ class NetworkPageState extends State<NetworkPage> with SingleTickerProviderState
         backgroundColor: HexColor(AppColors.appColorBackground),
         appBar:  AppBarWithProfile(
               imageUrl:imageUrl,
-              title: getPageTitle()+"'s "+AppLocalizations.of(context).translate('network'),
+              title: getPageTitle()+"'s "+AppLocalizations.of(context)!.translate('network'),
               isHomepage: false,
               backButtonPress: (){
                 Navigator.pop(context);
@@ -177,7 +177,7 @@ class NetworkPageState extends State<NetworkPage> with SingleTickerProviderState
                 Center(child: list[index].statelessWidget),
             onPositionChange: (index) {
               setState(() {
-                _currentPosition = index;
+                _currentPosition = index!;
               });
             },
             onScroll: (position) => print('$position'),
@@ -188,7 +188,7 @@ class NetworkPageState extends State<NetworkPage> with SingleTickerProviderState
   }
 
   String getPageTitle(){
-    var vals= pageTitle.split(' ');
+    var vals= pageTitle!.split(' ');
     if(vals.length>0)
       return vals[0];
     else

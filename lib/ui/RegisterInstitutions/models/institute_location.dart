@@ -1,11 +1,11 @@
 class InstituteLocationDetail {
-  int institutionId;
-  String address;
-  String country;
-  String state;
-  String city;
-  String area;
-  String postalCode;
+  int? institutionId;
+  String? address;
+  String? country;
+  String? state;
+  String? city;
+  String? area;
+  String? postalCode;
 
   InstituteLocationDetail(
       {this.institutionId,

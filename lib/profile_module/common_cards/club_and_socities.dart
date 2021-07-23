@@ -20,14 +20,14 @@ import 'overlaped_circular_images.dart';
 // ignore: must_be_immutable
 class ClubAndSocities extends StatelessWidget {
   final CommonCardData data;
-  BuildContext context;
-  List<SubRow> listSubItems = [];
-  TextStyleElements styleElements;
-  bool isProfile;
-  String instituteId;
-  Null Function() callbackPicker;
-  int id;
-  String personType;
+  BuildContext? context;
+  List<SubRow>? listSubItems = [];
+  late TextStyleElements styleElements;
+  bool? isProfile;
+  String? instituteId;
+  Null Function()? callbackPicker;
+  int? id;
+  String? personType;
 
 
 
@@ -47,8 +47,8 @@ class ClubAndSocities extends StatelessWidget {
   }
 
   ClubAndSocities({
-    Key key,
-    @required this.data,
+    Key? key,
+    required this.data,
     this.instituteId,
     this.isProfile,
     this.id,
@@ -67,7 +67,7 @@ class ClubAndSocities extends StatelessWidget {
           child: Column(
         children: <Widget>[
           Visibility(
-              visible: isProfile,
+              visible: isProfile!,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -91,11 +91,11 @@ class ClubAndSocities extends StatelessWidget {
                   ),
                 ],
               )),
-      listSubItems!=null && listSubItems.length>0?      ListView.builder(
+      listSubItems!=null && listSubItems!.length>0?      ListView.builder(
               shrinkWrap: true,
               padding: const EdgeInsets.all(0.0),
               physics: NeverScrollableScrollPhysics(),
-              itemCount: listSubItems.length,
+              itemCount: listSubItems!.length,
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
@@ -140,7 +140,7 @@ class ClubAndSocities extends StatelessWidget {
                                     width: 60,
                                     child: Card(
                                       child: CachedNetworkImage(
-                                        imageUrl: listSubItems[index].imageUrl??='',
+                                        imageUrl: listSubItems![index].imageUrl??='',
                                         fit: BoxFit.cover,
                                         width: 60,
                                         height: 60,
@@ -157,7 +157,7 @@ class ClubAndSocities extends StatelessWidget {
                                           Align(
                                             alignment: Alignment.topLeft,
                                             child: Text(
-                                              listSubItems[index].textOne ??=
+                                              listSubItems![index].textOne ??=
                                                   "",
                                               style: styleElements
                                                   .headline6ThemeScalable(
@@ -171,12 +171,12 @@ class ClubAndSocities extends StatelessWidget {
                                               child: Align(
                                             alignment: Alignment.topLeft,
                                             child: Text(
-                                              listSubItems[index]
+                                              listSubItems![index]
                                                           .chairperson !=
                                                       null
                                                   ? ("Chairperson : " +
-                                                      listSubItems[index]
-                                                          .chairperson)
+                                                      listSubItems![index]
+                                                          .chairperson!)
                                                   : "",
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
@@ -192,7 +192,7 @@ class ClubAndSocities extends StatelessWidget {
                                             child: Row(
                                               children: <Widget>[
                                                 OverlappedImages(
-                                                    listSubItems[index]
+                                                    listSubItems![index]
                                                         .images),
                                                 Container(
                                                   margin:
@@ -200,7 +200,7 @@ class ClubAndSocities extends StatelessWidget {
                                                           left: 16),
                                                   child: Flexible(
                                                     child: Text(
-                                                      listSubItems[index]
+                                                      listSubItems![index]
                                                           .totalCount ??= "",
                                                       style: styleElements
                                                           .captionThemeScalable(
@@ -234,7 +234,7 @@ class ClubAndSocities extends StatelessWidget {
         ),
         child: CustomPaginator(context).emptyListWidgetMaker(null)),
           Visibility(
-              visible: isProfile,
+              visible: isProfile!,
               child: Align(
                 alignment: Alignment.topRight,
                 child: GestureDetector(
@@ -250,7 +250,7 @@ class ClubAndSocities extends StatelessWidget {
                             ),
                           ));
                       if (result != null && result['result'] == "update") {
-                        callbackPicker();
+                        callbackPicker!();
                       }
                     },
                     child: Container(
@@ -259,7 +259,7 @@ class ClubAndSocities extends StatelessWidget {
                         /*visible: data.isShowMore ??= false,*/
                         child: Align(
                           alignment: Alignment.bottomRight,
-                          child: Text(AppLocalizations.of(context).translate('see_more'),
+                          child: Text(AppLocalizations.of(context)!.translate('see_more'),
                             style:
                                 styleElements.subtitle2ThemeScalable(context),
                             textAlign: TextAlign.center,

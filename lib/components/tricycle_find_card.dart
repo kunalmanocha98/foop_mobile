@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'customcard.dart';
 
 class TricycleFindCard extends StatelessWidget {
-  final String title;
-  final String subtitle;
-  final Widget image;
-  final Color color;
-  final Color titleColor;
-  final Color subtitleColor;
+  final String? title;
+  final String? subtitle;
+  final Widget? image;
+  final Color? color;
+  final Color? titleColor;
+  final Color? subtitleColor;
 
   TricycleFindCard({
     this.title,
@@ -34,7 +34,7 @@ class TricycleFindCard extends StatelessWidget {
               children: [
                 Flexible(
                   child: Text(
-                    title,
+                    title!,
                     style: styleElements.headline5ThemeScalable(context).copyWith(
                       color: titleColor
                     ),
@@ -43,7 +43,7 @@ class TricycleFindCard extends StatelessWidget {
                 SizedBox(height: 8,),
                 Flexible(
                     child: Text(
-                  subtitle,
+                  subtitle!,
                   style: styleElements.subtitle2ThemeScalable(context).copyWith(
                     color: subtitleColor
                   ),
@@ -54,7 +54,7 @@ class TricycleFindCard extends StatelessWidget {
           Expanded(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [image],
+              children: [image!],
             ),
           )
         ],

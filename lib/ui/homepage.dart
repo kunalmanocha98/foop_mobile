@@ -50,44 +50,60 @@ import 'Notification/notification_page.dart';
 
 
 class HomePage extends StatefulWidget {
-  final Null Function(String) newMessageCallBack;
+  final Null Function(String?)? newMessageCallBack;
   @override
   HomePageState createState() => HomePageState(newMessageCallBack);
 
-  HomePage({Key key ,this.newMessageCallBack}):super(key:key);
+  HomePage({Key? key ,this.newMessageCallBack}):super(key:key);
 }
 class HomePageState extends State<HomePage> with WidgetsBindingObserver{
-  BuildContext context;
-  TextStyleElements styleElements;
+ late  BuildContext context;
+  TextStyleElements? styleElements;
   int notificationCount=0;
-  int chatCount=0;
-  IO.Socket socket;
-  int personId;
-  Null Function(String) newMessageCallBack;
-  String personType;
-  String profileImage;
+  int? chatCount=0;
+  IO.Socket? socket;
+  int? personId;
+  late Null Function(String)? newMessageCallBack;
+  String? personType;
+  String? profileImage;
   bool isLoading = true;
   bool isPostsLoading = true;
-  int totalPostToExclude = 0;
-  Persondata persondata;
-  AudioSocketService audioSocketService = locator<AudioSocketService>();
+  int? totalPostToExclude = 0;
+  Persondata? persondata;
+  AudioSocketService? audioSocketService = locator<AudioSocketService>();
   HomePageState(this.newMessageCallBack);
   // bool _hasPermission;
-  SharedPreferences prefs;
+  SharedPreferences? prefs;
   var list = [];
   final dbHelper = DatabaseHelper.instance;
   bool isNotUploading = false;
-  final PushNotificationService pushNotificationService = locator<PushNotificationService>();
-  final SharedDataService sharedDataService = locator<SharedDataService>();
+  final PushNotificationService? pushNotificationService = locator<PushNotificationService>();
+  final SharedDataService? sharedDataService = locator<SharedDataService>();
 
-  ProgressDialog pr;
+  ProgressDialog? pr;
   List<StatelessWidget> listData = [];
-  List<CommonCardData> listCards = [];
-  EventBus eventBus = locator<EventBus>();
+  List<CommonCardData>? listCards = [];
+  EventBus? eventBus = locator<EventBus>();
   GlobalKey<PostListState> postListKey = GlobalKey();
 
 
   void setSharedPreferences() async {
+    Utility().refreshList(context);
+    pushNotificationService!.initialise(
+        callback: () {
+          getNotificationCount();
+        },
+        callbackMessenger: (String? type) {
+
+          if (type == "messenger") getCount();
+          if (type == "eventmessenger") {
+            getCount();
+            widget.newMessageCallBack!(type);
+          }
+
+
+        },
+        context: context);
     Utility().refreshList(context);
     _askPermissions();
     getListContacts();
@@ -95,11 +111,11 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver{
     prefs = await SharedPreferences.getInstance();
     getCount();
     print("fcm============================================" +
-        prefs.getString("fcmId"));
-    if(prefs.getString("ownerType")!=null && prefs.getInt("userId")!=null)
+        prefs!.getString("fcmId")!);
+    if(prefs!.getString("ownerType")!=null && prefs!.getInt("userId")!=null)
     {
-      personId=prefs.getInt("userId");
-      personType=prefs.getString("ownerType");
+      personId=prefs!.getInt("userId");
+      personType=prefs!.getString("ownerType");
       getUserData(context);
       getNotificationCount();
     }
@@ -139,32 +155,18 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver{
   @override
   void initState() {
     super.initState();
-    pushNotificationService.initialise(
-        callback: () {
-          getNotificationCount();
-        },
-        callbackMessenger: (String type) {
 
-          if (type == "messenger") getCount();
-          if (type == "eventmessenger") {
-            getCount();
-            widget.newMessageCallBack(type);
-          }
-
-
-        },
-        context: context);
-    WidgetsBinding.instance.addObserver(this);
-    WidgetsBinding.instance.addPostFrameCallback((_) => setSharedPreferences());
-    eventBus.on<NewMessage>().listen((event) {
+    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance!.addPostFrameCallback((_) => setSharedPreferences());
+    eventBus!.on<NewMessage>().listen((event) {
       print("messsafggeeee=======================================");
       getCount();
     });
-    eventBus.on<MakeCountZero>().listen((event) {
+    eventBus!.on<MakeCountZero>().listen((event) {
       print("messsafggeeee=======================================");
       getCount();
     });
-    Utility().refreshList(context);
+
   }
 
   void getNotificationCount() async {
@@ -177,8 +179,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver{
         if (res.rows != null) {
           if (this.mounted)
             setState(() {
-              print(int.parse(res.rows).toString()+"====================================================================================");
-              notificationCount = int.parse(res.rows);
+              print(int.parse(res.rows!).toString()+"====================================================================================");
+              notificationCount = int.parse(res.rows!);
             });
         }
       } else {}
@@ -189,7 +191,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver{
   void getCount() async {
     GetUnreadCount unreadCount = GetUnreadCount();
 
-    unreadCount.conversationOwnerId = prefs.getInt(Strings.userId).toString();
+    unreadCount.conversationOwnerId = prefs!.getInt(Strings.userId).toString();
     unreadCount.conversationOwnerType = "person";
     Calls()
         .call(
@@ -222,8 +224,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver{
             if (d != null && d.statusCode == 'S10001') {
               if (d.rows != null) {
                 listCards = d.rows;
-                if (listCards != null && listCards.length > 0) {
-                  for (var item in listCards) {
+                if (listCards != null && listCards!.length > 0) {
+                  for (var item in listCards!) {
                     if (item != null) {
                       var widget = GetAllCards().getCardHome(
                           null,
@@ -232,13 +234,13 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver{
                           null,
                           item,
                           null,
-                          prefs.getString(Strings.personType),
+                          prefs!.getString(Strings.personType),
                           null,
                           personType,
                           personId, callBck: () {
                         getUserData(context);
                       });
-                      if (widget != null) listData.add(widget);
+                      if (widget != null) listData.add(widget as StatelessWidget);
                     }
                   }
                 }
@@ -276,10 +278,10 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver{
             // getPersonProfile(context, true);
           },
           imageUrl: Utility().getUrlForImage(
-              prefs != null ? prefs.getString(Strings.profileImage) : "",
+              prefs != null ? prefs!.getString(Strings.profileImage) : "",
               RESOLUTION_TYPE.R64,
               SERVICE_TYPE.PERSON),
-          title: AppLocalizations.of(context).translate('campus_feed'),
+          title: AppLocalizations.of(context)!.translate('campus_feed'),
           notificationCount: notificationCount,
           actions: [
             InkWell(
@@ -327,7 +329,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver{
                               ),
                               child: Center(
                                 child: Text(
-                                  chatCount!=null?chatCount.toString() ?? "":"0",
+                                  chatCount!=null?chatCount.toString():"0",
                                   style: TextStyle(
                                       color: HexColor(AppColors.appColorWhite),
                                       fontSize: 12,
@@ -418,7 +420,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver{
                               ),
                               child: Center(
                                 child: Text(
-                                  notificationCount!=null?notificationCount.toString() ?? "":"0",
+                                  // ignore: unnecessary_null_comparison
+                                  notificationCount!=null?notificationCount.toString():"0",
                                   style: TextStyle(
                                       color: HexColor(AppColors.appColorWhite),
                                       fontSize: 12,
@@ -478,7 +481,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver{
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       color: HexColor(AppColors.appColorBackground),
       itemBuilder: (context) => PostListMenu(context: context).menuList,
-      onSelected: (value) {
+      onSelected: (dynamic value) {
         switch (value) {
           case 'notice':
             {
@@ -486,7 +489,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver{
                   builder: (context) => SelectedFeedListPage(
                     isFromProfile: false,
                     callBack: (){refresh();},
-                    appBarTitle: AppLocalizations.of(context)
+                    appBarTitle: AppLocalizations.of(context)!
                         .translate('notice_board'),
                     postRecipientStatus:
                     POST_RECIPIENT_STATUS.UNREAD.status,
@@ -501,7 +504,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver{
                     isFromProfile: false,
                     isBookMarked: true,
                     callBack: (){refresh();},
-                    appBarTitle: AppLocalizations.of(context)
+                    appBarTitle: AppLocalizations.of(context)!
                         .translate('bookmarked_posts'),
                     postRecipientStatus:
                     POST_RECIPIENT_STATUS.UNREAD.status,
@@ -521,7 +524,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver{
                     isFromProfile: false,
                     callBack: (){refresh();},
                     appBarTitle:
-                    AppLocalizations.of(context).translate('article'),
+                    AppLocalizations.of(context)!.translate('article'),
                     postRecipientStatus:
                     POST_RECIPIENT_STATUS.UNREAD.status,
                     postType: POST_TYPE.BLOG.status,
@@ -553,7 +556,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver{
                   builder: (context) => SelectedFeedListPage(
                     isFromProfile: false,
                     callBack: (){refresh();},
-                    appBarTitle: AppLocalizations.of(context)
+                    appBarTitle: AppLocalizations.of(context)!
                         .translate('ask_expert'),
                     postRecipientStatus:
                     POST_RECIPIENT_STATUS.UNREAD.status,
@@ -588,7 +591,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver{
                     isFromProfile: false,
                     callBack: (){refresh();},
                     appBarTitle:
-                    AppLocalizations.of(context).translate('general'),
+                    AppLocalizations.of(context)!.translate('general'),
                     postRecipientStatus: POST_RECIPIENT_STATUS.READ.status,
                   )));
               break;
@@ -600,7 +603,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver{
                     isFromProfile: false,
                     callBack: (){refresh();},
                     appBarTitle:
-                    AppLocalizations.of(context).translate('notice'),
+                    AppLocalizations.of(context)!.translate('notice'),
                     postRecipientStatus:
                     POST_RECIPIENT_STATUS.UNREAD.status,
                     postType: POST_TYPE.NOTICE.status,
@@ -616,7 +619,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver{
   void getListContacts() async {
     list = await dbHelper.getContacts();
     if (list.isNotEmpty && !isNotUploading) {
-      uploadContacts(list);
+      uploadContacts(list as List<UserContact>);
     }
   }
 
@@ -645,7 +648,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver{
       syncContactsEntity.contactNickName = item.name ?? "";
       syncContactsEntity.contactFirstName = item.firstName ?? "";
       syncContactsEntity.contactLastName = item.lastName ?? "";
-      syncContactsEntity.addressBookOwnerId = prefs.getInt("userId").toString();
+      syncContactsEntity.addressBookOwnerId = prefs!.getInt("userId").toString();
       syncContactsEntity.addressBookOwnerType = "person";
       syncContactsEntity.contactAddMethod = "";
       syncContactsEntity.contactAddressLine01 = "";
@@ -683,7 +686,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver{
 
 
   Future<void> _askPermissions() async {
-    PermissionStatus permissionStatus;
+    PermissionStatus? permissionStatus;
     if (permissionStatus != PermissionStatus.granted) {
       try {
         permissionStatus = await _getContactPermission();
@@ -691,8 +694,9 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver{
         } else {
           getContacts();
         }
+      // ignore: empty_catches
       } catch (e) {
-        print(e.error);
+
       }
     }
   }
@@ -701,7 +705,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver{
     final status = await Permission.contacts.status;
     if (!status.isGranted) {
       final result = await Permission.contacts.request();
-      return result ?? PermissionStatus.denied;
+      return result;
     } else {
       return status;
     }
@@ -709,7 +713,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver{
 
 
   void getAlreadySavedContact(UserContact row) async {
-    UserContact data =
+    UserContact? data =
     await dbHelper.getContactUsingMobileNumber(row.mobileNumber);
 
     if (data != null) {
@@ -746,13 +750,13 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver{
       var mob = "";
 
       if (contact.phones.toList().isNotEmpty) {
-        mob = contact.phones.toList()[0].value.toString() ?? "";
+        mob = contact.phones.toList()[0].value.toString();
         var row = UserContact();
         row.name = contact.displayName ?? "";
         row.firstName = contact.givenName ?? "";
         row.lastName = contact.familyName ?? "";
         if (contact.emails.toList().isNotEmpty)
-          row.email = contact.emails.toList()[0].value.toString() ?? "";
+          row.email = contact.emails.toList()[0].value.toString();
         row.mobileNumber = mob;
         row.isSync = 0;
         getAlreadySavedContact(row);
@@ -764,16 +768,17 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver{
 
     print("refreshing -------------------------------");
     Future.microtask((){
+      if(this.mounted)
       setState(() {
         listData.clear();
-        listCards.clear();
+        listCards!.clear();
         isLoading = true;
         isPostsLoading = true;
       });
     });
     getUserData(context);
     if(postListKey.currentState!=null)
-    postListKey.currentState.refresh();
+    postListKey.currentState!.refresh();
   }
 
 

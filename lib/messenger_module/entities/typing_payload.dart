@@ -1,7 +1,7 @@
 class TypingPayload {
-  String conversationId;
-  String personId;
-  bool isTyping;
+  String? conversationId;
+  String? personId;
+  bool? isTyping;
 
   TypingPayload({this.conversationId, this.personId, this.isTyping});
 

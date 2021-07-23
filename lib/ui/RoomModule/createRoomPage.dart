@@ -35,12 +35,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class CreateRoomPage extends StatefulWidget {
-  final  RoomListItem value;
+  final  RoomListItem? value;
   final  bool isEdit;
-  final Null Function() callback;
+  final Null Function()? callback;
 
   const CreateRoomPage( {
-    Key key,
+    Key? key,
     this.value, this.isEdit=false,this.callback
   }) : super(key: key);
   @override
@@ -48,19 +48,19 @@ class CreateRoomPage extends StatefulWidget {
 }
 
 class _CreateRoomPage extends State<CreateRoomPage> with CommonMixins {
-  RoomListItem value;
+  RoomListItem? value;
   bool isEdit;
-  SharedPreferences prefs;
-  String _imageUrl;
-  String _thumbnailUrl;
-  final Null Function() callback;
+  late SharedPreferences prefs;
+  String? _imageUrl;
+  String? _thumbnailUrl;
+  final Null Function()? callback;
   GlobalKey<SelectRoomTopicWidgetState> roomTopicKey = GlobalKey();
   GlobalKey<RoomPrivacyTypeWidgetState> roomPrivacyKey  = GlobalKey();
 
   final formKey = GlobalKey<FormState>();
-  String roomName;
-  String description;
-  TextStyleElements styleElements;
+  String? roomName;
+  String? description;
+  late TextStyleElements styleElements;
   bool isRoomCreated = false;
 
   void setSharedPreferences() async {
@@ -73,8 +73,8 @@ class _CreateRoomPage extends State<CreateRoomPage> with CommonMixins {
   void initState() {
     super.initState();
     if(isEdit){
-      if(value!=null  && value.roomProfileImageUrl!=null){
-        _imageUrl = value.roomProfileImageUrl;
+      if(value!=null  && value!.roomProfileImageUrl!=null){
+        _imageUrl = value!.roomProfileImageUrl;
       }
     }
   }
@@ -101,7 +101,7 @@ class _CreateRoomPage extends State<CreateRoomPage> with CommonMixins {
                         text: TextSpan(
                             children: [
                               TextSpan(
-                                  text: AppLocalizations.of(context).translate('select_privacy_type'),
+                                  text: AppLocalizations.of(context)!.translate('select_privacy_type'),
                                   style:  styleElements.bodyText2ThemeScalable(context)
                               ),
                               WidgetSpan(child: SizedBox(width: 8,)),
@@ -115,7 +115,7 @@ class _CreateRoomPage extends State<CreateRoomPage> with CommonMixins {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: RoomPrivacyTypeWidget(key: roomPrivacyKey,selectedValue:isEdit?value.roomPrivacyType:""),
+                    child: RoomPrivacyTypeWidget(key: roomPrivacyKey,selectedValue:isEdit?value!.roomPrivacyType:""),
                   ),
                   Padding(
                       padding: EdgeInsets.only(top:4),
@@ -124,13 +124,13 @@ class _CreateRoomPage extends State<CreateRoomPage> with CommonMixins {
                   Padding(
                     padding:
                     EdgeInsets.only(top: 8, bottom: 8, left: 24, right: 24),
-                    child: Text(AppLocalizations.of(context).translate('select_topics'),
+                    child: Text(AppLocalizations.of(context)!.translate('select_topics'),
                       style: styleElements.bodyText2ThemeScalable(context),
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: SelectRoomTopicWidget(roomTopicKey,isCard: false,preSelected: isEdit?value.roomTopics:null,),
+                    child: SelectRoomTopicWidget(roomTopicKey,isCard: false,preSelected: isEdit?value!.roomTopics:null,),
                   ),
                   Padding(
                       padding: EdgeInsets.only(top:8,bottom: 8),
@@ -152,15 +152,15 @@ class _CreateRoomPage extends State<CreateRoomPage> with CommonMixins {
                               decoration: BoxDecoration(
                                   color: HexColor(AppColors.appColorBackground),
                                   image: DecorationImage(
-                                      image: isEdit?CachedNetworkImageProvider(value.roomProfileImageUrl!=null?Config.BASE_URL+value.roomProfileImageUrl:""):_thumbnailUrl!=null?CachedNetworkImageProvider(Config.BASE_URL+_thumbnailUrl):AssetImage('assets/appimages/grey_bg.png')
+                                      image: isEdit?CachedNetworkImageProvider(value!.roomProfileImageUrl!=null?Config.BASE_URL+value!.roomProfileImageUrl!:""):(_thumbnailUrl!=null?CachedNetworkImageProvider(Config.BASE_URL+_thumbnailUrl!):AssetImage('assets/appimages/grey_bg.png')) as ImageProvider<Object>
                                   )
                               ),
-                              child: isEdit?value.roomProfileImageUrl!=null?Text(''):Center(
+                              child: isEdit?value!.roomProfileImageUrl!=null?Text(''):Center(
                                 child: Column(
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Icon(Icons.image_outlined),
-                                    Text(AppLocalizations.of(context).translate('add_room_image'),textAlign: TextAlign.center,)
+                                    Text(AppLocalizations.of(context)!.translate('add_room_image'),textAlign: TextAlign.center,)
                                   ],
                                 ),
                               ):_imageUrl!=null?Text(''):Center(
@@ -168,7 +168,7 @@ class _CreateRoomPage extends State<CreateRoomPage> with CommonMixins {
                                   mainAxisSize: MainAxisSize.min,
                                   children: [
                                     Icon(Icons.image_outlined),
-                                    Text(AppLocalizations.of(context).translate('add_room_image'),textAlign: TextAlign.center,)
+                                    Text(AppLocalizations.of(context)!.translate('add_room_image'),textAlign: TextAlign.center,)
                                   ],
                                 ),
                               )
@@ -179,7 +179,7 @@ class _CreateRoomPage extends State<CreateRoomPage> with CommonMixins {
                         child: Container(
                           padding: EdgeInsets.only(right:16),
                           child: TextFormField(
-                            initialValue: isEdit ? value.roomName : "",
+                            initialValue: isEdit ? value!.roomName : "",
                             validator: validateTextField,
                             style: styleElements.subtitle1ThemeScalable(context).copyWith(
                                 color: HexColor(AppColors.appColorBlack65)
@@ -214,7 +214,7 @@ class _CreateRoomPage extends State<CreateRoomPage> with CommonMixins {
                                   borderSide: BorderSide(color: HexColor(AppColors.appColorBlack35))
                               ),
                               contentPadding:EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 15.0),
-                              hintText:AppLocalizations.of(context).translate('name_room'),
+                              hintText:AppLocalizations.of(context)!.translate('name_room'),
                               hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
                             ),
                           ),
@@ -227,7 +227,7 @@ class _CreateRoomPage extends State<CreateRoomPage> with CommonMixins {
                         top: 12, bottom: 16, left: 16, right: 16),
                     child: Container(
                       child: TextFormField(
-                        initialValue: isEdit ? value.roomDescription : "",
+                        initialValue: isEdit ? value!.roomDescription : "",
                         keyboardType: TextInputType.multiline,
                         textCapitalization: TextCapitalization.sentences,
                         style: styleElements.subtitle1ThemeScalable(context).copyWith(
@@ -317,7 +317,7 @@ class _CreateRoomPage extends State<CreateRoomPage> with CommonMixins {
                     crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
                       Text(
-                        AppLocalizations.of(context).translate('next'),
+                        AppLocalizations.of(context)!.translate('next'),
                         style: styleElements
                             .subtitle2ThemeScalable(context)
                             .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -330,8 +330,8 @@ class _CreateRoomPage extends State<CreateRoomPage> with CommonMixins {
                 ),
               ],
               appBarTitle:  isEdit
-                  ? AppLocalizations.of(context).translate("update_room")
-                  : AppLocalizations.of(context).translate("create_room"),
+                  ? AppLocalizations.of(context)!.translate("update_room")
+                  : AppLocalizations.of(context)!.translate("create_room"),
               onBackButtonPress: (){  Navigator.pop(context);}),
           body: Form(
             key: formKey,
@@ -342,13 +342,13 @@ class _CreateRoomPage extends State<CreateRoomPage> with CommonMixins {
   }
 
   Future<void> createRoom() async {
-    if (formKey.currentState.validate()) {
-      if (roomPrivacyKey.currentState.selectedTypeCode!=null && roomPrivacyKey.currentState.selectedTypeCode.isNotEmpty) {
-        formKey.currentState.save();
+    if (formKey.currentState!.validate()) {
+      if (roomPrivacyKey.currentState!.selectedTypeCode!=null && roomPrivacyKey.currentState!.selectedTypeCode!.isNotEmpty) {
+        formKey.currentState!.save();
 
         CreateRoomPayload payload = CreateRoomPayload();
-        payload.roomPrivacyType = roomPrivacyKey.currentState.selectedTypeCode;
-        payload.roomTopics = roomTopicKey.currentState.getSelectedList();
+        payload.roomPrivacyType = roomPrivacyKey.currentState!.selectedTypeCode;
+        payload.roomTopics = roomTopicKey.currentState!.getSelectedList();
         payload.roomStatus = "A";
         payload.isSharable= true;
         payload.roomType = ROOM_TYPE.COMMUNITYROOM.type;
@@ -367,18 +367,18 @@ class _CreateRoomPage extends State<CreateRoomPage> with CommonMixins {
           if (res.statusCode == Strings.success_code) {
             ToastBuilder().showToast("Successfully Created", context,HexColor(AppColors.information));
             isRoomCreated = true;
-            this.value = RoomListItem(id:res.rows.id);
+            this.value = RoomListItem(id:res.rows!.id);
             Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => SelectMembersPage(roomId: res.rows.id, selectedRoomType: roomPrivacyKey.currentState.selectedTypeCode,callback:callback)))
+                    builder: (context) => SelectMembersPage(roomId: res.rows!.id, selectedRoomType: roomPrivacyKey.currentState!.selectedTypeCode,callback:callback)))
                 .then((value) {
               if (value == Strings.success_code) {
                 Navigator.pop(context,Strings.success_code);
               }
             });
           } else {
-            ToastBuilder().showToast(res.message, context,HexColor(AppColors.information));
+            ToastBuilder().showToast(res.message!, context,HexColor(AppColors.information));
           }
         }).catchError((onError) {
           print(onError);
@@ -390,12 +390,12 @@ class _CreateRoomPage extends State<CreateRoomPage> with CommonMixins {
   }
 
   Future<void> updatRoom() async {
-    if (formKey.currentState.validate()) {
-      if (roomPrivacyKey.currentState.selectedTypeCode!=null && roomPrivacyKey.currentState.selectedTypeCode.isNotEmpty) {
-        formKey.currentState.save();
+    if (formKey.currentState!.validate()) {
+      if (roomPrivacyKey.currentState!.selectedTypeCode!=null && roomPrivacyKey.currentState!.selectedTypeCode!.isNotEmpty) {
+        formKey.currentState!.save();
         CreateRoomPayload payload = CreateRoomPayload();
-        payload.roomPrivacyType = roomPrivacyKey.currentState.selectedTypeCode;
-        payload.roomTopics = roomTopicKey.currentState.getSelectedList();
+        payload.roomPrivacyType = roomPrivacyKey.currentState!.selectedTypeCode;
+        payload.roomTopics = roomTopicKey.currentState!.getSelectedList();
         payload.isSharable= true;
         payload.roomStatus = "A";
         payload.roomDescription = description;
@@ -406,22 +406,22 @@ class _CreateRoomPage extends State<CreateRoomPage> with CommonMixins {
         payload.roomOwnerType = "institution";
         payload.roomCreatedByType = "person";
         payload.institutionId = prefs.getInt(Strings.instituteId);
-        payload.id = value.id;
+        payload.id = value!.id;
         payload.roomProfileImageUrl = _imageUrl;
         var body = jsonEncode(payload);
         Calls().call(body, context, Config.UPDATEROOM).then((value) async {
           var res = CreateRoomResponse.fromJson(value);
           if (res.statusCode == Strings.success_code) {
             ToastBuilder().showToast("Successfully Updated", context,HexColor(AppColors.information));
-            this.value.roomStatus ='A';
-            this.value.roomDescription= description;
-            this.value.roomName = roomName;
-            this.value.roomProfileImageUrl = _imageUrl;
+            this.value!.roomStatus ='A';
+            this.value!.roomDescription= description;
+            this.value!.roomName = roomName;
+            this.value!.roomProfileImageUrl = _imageUrl;
             if(!isEdit && isRoomCreated){
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => SelectMembersPage(roomId: res.rows.id, selectedRoomType: roomPrivacyKey.currentState.selectedTypeCode,callback:callback)))
+                      builder: (context) => SelectMembersPage(roomId: res.rows!.id, selectedRoomType: roomPrivacyKey.currentState!.selectedTypeCode,callback:callback)))
                   .then((value) {
                 if (value == Strings.success_code) {
                   Navigator.pop(context,Strings.success_code);
@@ -431,7 +431,7 @@ class _CreateRoomPage extends State<CreateRoomPage> with CommonMixins {
               Navigator.pop(context);
             }
           } else {
-            ToastBuilder().showToast(res.message, context,HexColor(AppColors.information));
+            ToastBuilder().showToast(res.message!, context,HexColor(AppColors.information));
           }
         }).catchError((onError) {
           print(onError);
@@ -447,7 +447,7 @@ class _CreateRoomPage extends State<CreateRoomPage> with CommonMixins {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-              title: Text(AppLocalizations.of(context).translate('select_an_option')
+              title: Text(AppLocalizations.of(context)!.translate('select_an_option')
                 // AppLocalizations.of(context).translate('from_where_picture')
               ),
               content: SingleChildScrollView(
@@ -455,7 +455,7 @@ class _CreateRoomPage extends State<CreateRoomPage> with CommonMixins {
                   children: <Widget>[
                     GestureDetector(
                       child: Text(
-                          AppLocalizations.of(context).translate('gallery')),
+                          AppLocalizations.of(context)!.translate('gallery')),
                       onTap: () {
                         Navigator.pop(context, null);
                         // if(type == 'image') {
@@ -469,7 +469,7 @@ class _CreateRoomPage extends State<CreateRoomPage> with CommonMixins {
                     Padding(padding: EdgeInsets.all(16.0)),
                     GestureDetector(
                       child: Text(
-                          AppLocalizations.of(context).translate('camera')),
+                          AppLocalizations.of(context)!.translate('camera')),
                       onTap: () {
                         Navigator.pop(context, null);
                         // if(type == 'image') {
@@ -486,7 +486,7 @@ class _CreateRoomPage extends State<CreateRoomPage> with CommonMixins {
         });
   }
   void imagePicker(String type) async {
-    File pickedFile;
+    File? pickedFile;
     var pr = ToastBuilder().setProgressDialogWithPercent(context,'Uploading Image...');
     prefs = await SharedPreferences.getInstance();
     if(type=="gallery"){
@@ -496,7 +496,7 @@ class _CreateRoomPage extends State<CreateRoomPage> with CommonMixins {
     }
     // File pickedFile = await ImagePickerAndCropperUtil().pickImage(context);
     var croppedFile = await ImagePickerAndCropperUtil().cropFile(
-        context, pickedFile);
+        context, pickedFile!);
     if (croppedFile != null) {
       await pr.show();
       var contentType = ImagePickerAndCropperUtil().getMimeandContentType(
@@ -522,9 +522,9 @@ class _CreateRoomPage extends State<CreateRoomPage> with CommonMixins {
         await pr.hide();
         var imageResponse = ImageUpdateResponse.fromJson(value);
         setState(() {
-          _imageUrl = imageResponse.rows.fileUrl;
-          _thumbnailUrl = imageResponse.rows.fileThumbnailUrl;
-          if(isEdit) this.value.roomProfileImageUrl=imageResponse.rows.fileThumbnailUrl;
+          _imageUrl = imageResponse.rows!.fileUrl;
+          _thumbnailUrl = imageResponse.rows!.fileThumbnailUrl;
+          if(isEdit) this.value!.roomProfileImageUrl=imageResponse.rows!.fileThumbnailUrl;
         });
         await pr.hide();
       }).catchError((onError) async {

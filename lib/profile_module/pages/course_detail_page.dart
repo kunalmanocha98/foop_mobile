@@ -23,7 +23,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class CourseDetailPage extends StatefulWidget {
   String id;
 
-  CourseDetailPage({Key key, @required this.id}) : super(key: key);
+  CourseDetailPage({Key? key, required this.id}) : super(key: key);
 
   _CourseDetailPage createState() => _CourseDetailPage();
 }
@@ -31,11 +31,11 @@ class CourseDetailPage extends StatefulWidget {
 class _CourseDetailPage extends State<CourseDetailPage>
     with SingleTickerProviderStateMixin {
 
-  SharedPreferences prefs;
-  List<CoursesItem> listSubjects = [];
+  SharedPreferences? prefs;
+  List<CoursesItem>? listSubjects = [];
   var isSearching = false;
   RandomColor _randomColor = RandomColor();
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   @override
   void initState() {
@@ -102,8 +102,8 @@ class _CourseDetailPage extends State<CourseDetailPage>
                         children: <Widget>[
                           InstituteCard(
                             title: "",
-                            subtitle: AppLocalizations.of(context).translate('academics'),
-                            subtitle1: AppLocalizations.of(context).translate('courses'),
+                            subtitle: AppLocalizations.of(context)!.translate('academics'),
+                            subtitle1: AppLocalizations.of(context)!.translate('courses'),
                             isShowMore: true,
                             isIntroCard: true,
                             subtitle2: "Himachal Pradesh",
@@ -135,7 +135,7 @@ class _CourseDetailPage extends State<CourseDetailPage>
                           physics: BouncingScrollPhysics(),
                           crossAxisCount: 2,
                           childAspectRatio: 0.9,
-                          children: listSubjects.map((CoursesItem data) {
+                          children: listSubjects!.map((CoursesItem data) {
                             return GestureDetector(
                                 onTap: () {
                                   Navigator.push(
@@ -268,7 +268,7 @@ class _CourseDetailPage extends State<CourseDetailPage>
     );
   }
 
-  void getCourses(String searchValue) async {
+  void getCourses(String? searchValue) async {
 
     final body = jsonEncode({
       "institution_id": 2,

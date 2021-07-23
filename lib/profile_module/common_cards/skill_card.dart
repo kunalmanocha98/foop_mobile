@@ -15,14 +15,14 @@ import 'overlaped_circular_images.dart';
 // ignore: must_be_immutable
 class SkillsCard extends StatelessWidget {
   final CommonCardData data;
-  BuildContext context;
-  TextStyleElements styleElements;
+  late BuildContext context;
+  TextStyleElements? styleElements;
   Widget _simplePopup() => PopupMenuButton<int>(
         itemBuilder: (context) => [
           PopupMenuItem(
             value: 1,
             child:
-                Text(AppLocalizations.of(context).translate('add_new_skills')),
+                Text(AppLocalizations.of(context)!.translate('add_new_skills')),
           ),
         ],
         onSelected: (value) {
@@ -54,7 +54,7 @@ class SkillsCard extends StatelessWidget {
     return displaySize(context).width;
   }
 
-  SkillsCard({Key key, @required this.data,this.styleElements}) : super(key: key);
+  SkillsCard({Key? key, required this.data,this.styleElements}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -65,14 +65,14 @@ class SkillsCard extends StatelessWidget {
         showDialog(
             context: context,
             builder: (BuildContext context) =>
-                RateDialog(type: "", title: AppLocalizations.of(context).translate('rate_skill'), subtitle: ""));
+                RateDialog(type: "", title: AppLocalizations.of(context)!.translate('rate_skill'), subtitle: ""));
       },
       child: TricycleListCard(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Visibility(
-              visible: data.title ?? "" != null,
+              visible: data.title as bool? ?? "" != null,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -83,7 +83,7 @@ class SkillsCard extends StatelessWidget {
                           padding: const EdgeInsets.only(left: 16, right: 16,top:12,bottom:12),
                           child: Text(
                             data.title ?? "",
-                            style: styleElements.headline5ThemeScalable(context),
+                            style: styleElements!.headline5ThemeScalable(context),
                             textAlign: TextAlign.left,
                           ),
                         )),
@@ -103,7 +103,7 @@ class SkillsCard extends StatelessWidget {
                     left: 16, right: 16, top: 16, bottom: 6),
                 child: Text(
                   data.textOne ?? "",
-                  style: styleElements.subtitle1ThemeScalable(context),
+                  style: styleElements!.subtitle1ThemeScalable(context),
                   textAlign: TextAlign.left,
                 ),
               ),
@@ -114,7 +114,7 @@ class SkillsCard extends StatelessWidget {
                 children: <Widget>[
                   Container(
                     child: Text("",
-                      style: styleElements.bodyText2ThemeScalable(context),
+                      style: styleElements!.bodyText2ThemeScalable(context),
                       textAlign: TextAlign.left,
                     ),
                   ),
@@ -154,7 +154,7 @@ class SkillsCard extends StatelessWidget {
                 children: <Widget>[
                   OverlappedImages(null),
                   Text("",
-                    style: styleElements.bodyText1ThemeScalable(context),
+                    style: styleElements!.bodyText1ThemeScalable(context),
                     textAlign: TextAlign.left,
                   )
                 ],

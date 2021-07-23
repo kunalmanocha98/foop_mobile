@@ -1,12 +1,12 @@
 class ConversationListPayload {
-  String conversationOwnerType;
-  String conversationOwnerId;
-  String conversationWithName;
+  String? conversationOwnerType;
+  String? conversationOwnerId;
+  String? conversationWithName;
 
-  String institutionId;
-  String personId;
-  int pageNumber;
-  int pageSize;
+  String? institutionId;
+  String? personId;
+  int? pageNumber;
+  int? pageSize;
   ConversationListPayload(
       {this.conversationOwnerType,
         this.conversationOwnerId,

@@ -18,15 +18,15 @@ import 'overlaped_circular_images.dart';
 // ignore: must_be_immutable
 class LanguageCardDetailPage extends StatelessWidget {
   final CommonCardData data;
-  int id;
-  String personType;
-  String userName;
-  String instituteName;
-  String instituteAddress;
-  BuildContext context;
-  Null Function() callbackPicker;
-  List<SubRow> list = [];
-  TextStyleElements styleElements;
+  int? id;
+  String? personType;
+  String? userName;
+  String? instituteName;
+  String? instituteAddress;
+  BuildContext? context;
+  Null Function()? callbackPicker;
+  List<SubRow>? list = [];
+  TextStyleElements? styleElements;
 
   VoidCallback onSeeMoreClicked;
 
@@ -46,16 +46,16 @@ class LanguageCardDetailPage extends StatelessWidget {
   }
 
   LanguageCardDetailPage(
-      {Key key,
-      @required this.data,
-      @required this.onSeeMoreClicked,
+      {Key? key,
+      required this.data,
+      required this.onSeeMoreClicked,
       this.styleElements,
       this.userName,
       this.personType,
       this.id,
       this.callbackPicker})
       : super(key: key);
-  String type;
+  String? type;
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +70,7 @@ class LanguageCardDetailPage extends StatelessWidget {
       child: ListView.builder(
         physics: BouncingScrollPhysics(),
         padding: const EdgeInsets.all(0.0),
-        itemCount: list.length,
+        itemCount: list!.length,
         shrinkWrap: true,
         itemBuilder: (context, position) {
           return GestureDetector(
@@ -80,12 +80,12 @@ class LanguageCardDetailPage extends StatelessWidget {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) => DeleteClass(
-                      id: list[position].id.toString(),
+                      id: list![position].id.toString(),
                       categoryType:
                       data.title == "Language" ? "language" : "skill",
-                      instId: list[position].allInstitutionsId.toString(),
+                      instId: list![position].allInstitutionsId.toString(),
                       callbackPicker: () {
-                        callbackPicker();
+                        callbackPicker!();
                       },
                       subtitle: null,
                       title: null,
@@ -95,43 +95,43 @@ class LanguageCardDetailPage extends StatelessWidget {
             },
             onTap: () {
 
-              if (list[position].isUserAuthorized == "Yes" &&
+              if (list![position].isUserAuthorized == "Yes" &&
                   (personType == "person" || personType == "thirdPerson")) {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) =>
                         SelectLanguageProficiencyDialogue(
                           personId: id,
-                          title2: AppLocalizations.of(context)
+                          title2: AppLocalizations.of(context)!
                               .translate("what_want_to_be"),
                           title: personType == "person"
-                              ? AppLocalizations.of(context)
+                              ? AppLocalizations.of(context)!
                               .translate("my_proficiency")
                               : ("Endorse " +
-                              userName.split(' ')[0] +
+                              userName!.split(' ')[0] +
                               "'s " +
-                              AppLocalizations.of(context)
+                              AppLocalizations.of(context)!
                                   .translate("proficiency")),
                           subtitle: personType == "person"
-                              ? AppLocalizations.of(context)
+                              ? AppLocalizations.of(context)!
                               .translate("rate_experties")
-                              : AppLocalizations.of(context)
+                              : AppLocalizations.of(context)!
                               .translate("rate_expert"),
                           categoryType: type,
-                          id1: list[position]
+                          id1: list![position]
                               .standardExpertiseCategoryTypeId
                               .toString(),
-                          starRatingsId: list[position].starRatingId,
-                          id2: list[position]
+                          starRatingsId: list![position].starRatingId,
+                          id2: list![position]
                               .standardExpertiseCategoryId
                               .toString(),
-                          id3: list[position].standardExpertiseCategoryTypeId,
-                          starRatings: list[position].rattingStar.toDouble(),
-                          instId: list[position].institutionId,
-                          itemId: int.parse(list[position].id),
+                          id3: list![position].standardExpertiseCategoryTypeId,
+                          starRatings: list![position].rattingStar!.toDouble(),
+                          instId: list![position].institutionId,
+                          itemId: int.parse(list![position].id!),
 
                           callbackPicker: () {
-                            callbackPicker();
+                            callbackPicker!();
                           },
                           type: null,
                         ));
@@ -140,7 +140,7 @@ class LanguageCardDetailPage extends StatelessWidget {
               { {
                 ToastBuilder().showToast(
                     AppLocalizations.of(
-                        context)
+                        context)!
                         .translate(
                         "not_authorized"),
                     context,HexColor(AppColors.information));
@@ -163,11 +163,10 @@ class LanguageCardDetailPage extends StatelessWidget {
                                   alignment: Alignment.topLeft,
                                   child: Container(
                                     child: Text(
-                                      Utility().toCamelCase(list[position]
+                                      Utility().toCamelCase(list![position]
                                           .standardExpertiseCategoryTypes ??
-                                          "") ??
-                                          "",
-                                      style: styleElements
+                                          ""),
+                                      style: styleElements!
                                           .bodyText1ThemeScalable(context)
                                           .copyWith(fontWeight: FontWeight.w600),
                                       textAlign: TextAlign.left,
@@ -186,13 +185,13 @@ class LanguageCardDetailPage extends StatelessWidget {
                                           children: <Widget>[
                                             Container(
                                               child: Text(
-                                                list[position].avgRating != null
-                                                    ? list[position]
-                                                    .avgRating
+                                                list![position].avgRating != null
+                                                    ? list![position]
+                                                    .avgRating!
                                                     .toStringAsFixed(2)
                                                     .toString()
                                                     : "",
-                                                style: styleElements
+                                                style: styleElements!
                                                     .captionThemeScalable(context)
                                                     .copyWith(
                                                     color: HexColor(AppColors.appColorBlack35)),
@@ -202,25 +201,25 @@ class LanguageCardDetailPage extends StatelessWidget {
                                             Align(
                                               alignment: Alignment.center,
                                               child: RatingBar(
-                                                initialRating: list[position]
+                                                initialRating: list![position]
                                                     .avgRating !=
                                                     null
-                                                    ? double.parse(list[position]
-                                                    .avgRating
+                                                    ? double.parse(list![position]
+                                                    .avgRating!
                                                     .toStringAsFixed(2))
                                                     : 0,
-                                                minRating: list[position]
+                                                minRating: list![position]
                                                     .avgRating !=
                                                     null
-                                                    ? double.parse(list[position]
-                                                    .avgRating
+                                                    ? double.parse(list![position]
+                                                    .avgRating!
                                                     .toStringAsFixed(2))
                                                     : 0,
-                                                maxRating: list[position]
+                                                maxRating: list![position]
                                                     .avgRating !=
                                                     null
-                                                    ? double.parse(list[position]
-                                                    .avgRating
+                                                    ? double.parse(list![position]
+                                                    .avgRating!
                                                     .toStringAsFixed(2))
                                                     : 0,
                                                 direction: Axis.horizontal,
@@ -258,19 +257,19 @@ class LanguageCardDetailPage extends StatelessWidget {
                                 Container(
                                   padding: EdgeInsets.only(top: 2.h),
                                   child: Text(
-                                    list[position].abilites != null &&
-                                        list[position].abilites.isNotEmpty
-                                        ? getExpertise(list[position].abilites)
+                                    list![position].abilites != null &&
+                                        list![position].abilites!.isNotEmpty
+                                        ? getExpertise(list![position].abilites!)
                                         : "",
-                                    style: styleElements
+                                    style: styleElements!
                                         .subtitle2ThemeScalable(context)
                                         .copyWith(color: HexColor(AppColors.appColorBlack65)),
                                     textAlign: TextAlign.left,
                                   ),
                                 ),
                                 Visibility(
-                                  visible: list[position].totalCount != null &&
-                                      list[position].totalCount != "",
+                                  visible: list![position].totalCount != null &&
+                                      list![position].totalCount != "",
                                   child: Container(
                                     padding: EdgeInsets.only(
                                       top: 2.h,
@@ -279,15 +278,15 @@ class LanguageCardDetailPage extends StatelessWidget {
                                       children: <Widget>[
                                         Flexible(
                                             child: OverlappedImages(
-                                                list[position].images)),
+                                                list![position].images)),
                                         Expanded(
                                           child: Padding(
                                             padding:
                                             const EdgeInsets.only(left: 4),
                                             child: Text(
-                                              list[position].totalCount ?? "",
+                                              list![position].totalCount ?? "",
                                               overflow: TextOverflow.ellipsis,
-                                              style: styleElements
+                                              style: styleElements!
                                                   .captionThemeScalable(context)
                                                   .copyWith(
                                                   color: HexColor(AppColors.appColorBlack35)),

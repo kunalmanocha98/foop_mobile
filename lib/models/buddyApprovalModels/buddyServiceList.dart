@@ -1,6 +1,6 @@
 class BuddyServiceListRequest {
-  String ownerType;
-  int ownerId;
+  String? ownerType;
+  int? ownerId;
 
   BuddyServiceListRequest({this.ownerType, this.ownerId});
 
@@ -18,10 +18,10 @@ class BuddyServiceListRequest {
 }
 
 class BuddyServiceListResponse {
-  String statusCode;
-  String message;
-  List<BuddyServiceListItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<BuddyServiceListItem>? rows;
+  int? total;
 
   BuddyServiceListResponse(
       {this.statusCode, this.message, this.rows, this.total});
@@ -32,7 +32,7 @@ class BuddyServiceListResponse {
     if (json['rows'] != null) {
       rows = [];//BuddyServiceListItem>();
       json['rows'].forEach((v) {
-        rows.add(new BuddyServiceListItem.fromJson(v));
+        rows!.add(new BuddyServiceListItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -43,7 +43,7 @@ class BuddyServiceListResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -51,15 +51,15 @@ class BuddyServiceListResponse {
 }
 
 class BuddyServiceListItem {
-  String cardName;
-  String moneyVal;
-  String imageUrl;
-  String quote;
-  String quote2;
+  String? cardName;
+  String? moneyVal;
+  String? imageUrl;
+  String? quote;
+  String? quote2;
   Null quote3;
-  String heading;
+  String? heading;
   Null heading2;
-  String coins;
+  String? coins;
 
   BuddyServiceListItem(
       {this.cardName,

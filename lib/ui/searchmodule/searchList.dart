@@ -17,11 +17,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class SearchTypeListPage extends StatefulWidget {
-  String searchVal;
-  String type;
-  String subType;
+  String? searchVal;
+  String? type;
+  String? subType;
 
-  SearchTypeListPage({Key key, this.searchVal, this.type,this.subType}) : super(key: key);
+  SearchTypeListPage({Key? key, this.searchVal, this.type,this.subType}) : super(key: key);
 
   @override
   SearchTypeListState createState() =>
@@ -29,10 +29,10 @@ class SearchTypeListPage extends StatefulWidget {
 }
 
 class SearchTypeListState extends State<SearchTypeListPage> {
-  String searchVal;
-  String type;
-  SharedPreferences prefs;
-  TextStyleElements styleElements;
+  String? searchVal;
+  String? type;
+  SharedPreferences? prefs;
+  TextStyleElements? styleElements;
 
   SearchTypeListState({this.searchVal, this.type});
 
@@ -61,9 +61,9 @@ class SearchTypeListState extends State<SearchTypeListPage> {
   Future<GlobalSearchResponse> fetchlist(int page) async {
     prefs ??= await SharedPreferences.getInstance();
     GlobalSearchRequest payload = GlobalSearchRequest();
-    payload.institutionId = prefs.getInt(Strings.instituteId);
+    payload.institutionId = prefs!.getInt(Strings.instituteId);
     payload.searchType = 'person';
-    payload.personId = prefs.getInt(Strings.userId);
+    payload.personId = prefs!.getInt(Strings.userId);
     payload.searchPage = 'common';
     payload.searchVal = searchVal;
     payload.entityType = type;
@@ -74,13 +74,13 @@ class SearchTypeListState extends State<SearchTypeListPage> {
     return GlobalSearchResponse.fromJson(res);
   }
 
-  List<SearchTypeItem> listItemsGetter(GlobalSearchResponse pageData) {
+  List<SearchTypeItem>? listItemsGetter(GlobalSearchResponse? pageData) {
     if (type == 'person') {
-      personList.addAll(pageData.rows.person);
-      return pageData.rows.person;
+      personList.addAll(pageData!.rows!.person!);
+      return pageData.rows!.person;
     } else {
-      institutionList.addAll(pageData.rows.institution);
-      return pageData.rows.institution;
+      institutionList.addAll(pageData!.rows!.institution!);
+      return pageData.rows!.institution;
     }
   }
 
@@ -97,12 +97,12 @@ class SearchTypeListState extends State<SearchTypeListPage> {
             MaterialPageRoute(
                 builder: (context) => UserProfileCards(
                       userType: type == 'person'
-                          ? (item.id == prefs.getInt("userId")
+                          ? (item.id == prefs!.getInt("userId")
                               ? "person"
                               : "thirdPerson")
                           : "institution",
                       userId:
-                          item.id == prefs.getInt("userId") ? null : item.id,
+                          item.id == prefs!.getInt("userId") ? null : item.id,
                       callback: () {},
                       currentPosition: 1,
                       type: null,
@@ -113,18 +113,18 @@ class SearchTypeListState extends State<SearchTypeListPage> {
         title: itemData.title,
         subtitle1: itemData.subtitle1,
         trailingWidget: Visibility(
-          visible: !item.isFollowing && prefs.getInt("userId") != item.id,
+          visible: !item.isFollowing! && prefs!.getInt("userId") != item.id,
           child: GenericFollowUnfollowButton(
-            actionByObjectType: prefs.getString("ownerType"),
-            actionByObjectId: prefs.getInt("userId"),
+            actionByObjectType: prefs!.getString("ownerType"),
+            actionByObjectId: prefs!.getInt("userId"),
             actionOnObjectType: type,
             actionOnObjectId: item.id,
-            engageFlag: AppLocalizations.of(context).translate('follow'),
+            engageFlag: AppLocalizations.of(context)!.translate('follow'),
             actionFlag: "F",
             actionDetails: [],
             personName: item.title ?? "",
             callback: (isCallSuccess) {
-              print(type +
+              print(type! +
                   "-------------------------------------------------------------++++++++++++++++++++++++++++++++++++++");
               if (type == 'person') {
                 personList[index].isFollowing = true;
@@ -145,6 +145,6 @@ class SearchTypeListState extends State<SearchTypeListPage> {
   }
 
   void refresh() {
-    paginatorKey.currentState.changeState(resetState: true);
+    paginatorKey.currentState!.changeState(resetState: true);
   }
 }

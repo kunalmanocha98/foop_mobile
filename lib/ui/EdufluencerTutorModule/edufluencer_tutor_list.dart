@@ -20,7 +20,7 @@ import 'all_edufluencer_tutor_list.dart';
 import 'edufluencer_tutor_studentlist.dart';
 
 class EdufluencerTutorList extends StatefulWidget {
-  final edufluencer_type type;
+  final edufluencer_type? type;
   EdufluencerTutorList({this.type});
   @override
   _EdufluencerTutorList createState() => _EdufluencerTutorList();
@@ -30,16 +30,16 @@ class _EdufluencerTutorList extends State<EdufluencerTutorList>
     with SingleTickerProviderStateMixin {
   List<CustomTabMaker> list = [];
   int currentPosition = 0;
-  TabController _tabController;
-  TextStyleElements styleElements;
-  SharedPreferences prefs = locator<SharedPreferences>();
-  BuildContext sctx;
-  EdufluencerStatus status;
+  late TabController _tabController;
+  TextStyleElements? styleElements;
+  SharedPreferences? prefs = locator<SharedPreferences>();
+  BuildContext? sctx;
+  EdufluencerStatus? status;
   bool isLoading = true;
 
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => fetchStatus());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => fetchStatus());
   }
 
   fetchStatus() async{
@@ -76,24 +76,24 @@ class _EdufluencerTutorList extends State<EdufluencerTutorList>
 
   loadPages() async {
     list.add(CustomTabMaker(
-        statelessWidget: AllEdufluencerAndTutors(type: widget.type,listType: 'all',isEdufluencer: status.isEdufluencer,),
-        tabName: AppLocalizations.of(context).translate('all')));
+        statelessWidget: AllEdufluencerAndTutors(type: widget.type,listType: 'all',isEdufluencer: status!.isEdufluencer,),
+        tabName: AppLocalizations.of(context)!.translate('all')));
 
-    if(status.myEdufluencerTutorCount>0 && widget.type == edufluencer_type.E) {
+    if(status!.myEdufluencerTutorCount!>0 && widget.type == edufluencer_type.E) {
       list.add(CustomTabMaker(
-          statelessWidget: AllEdufluencerAndTutors(type: widget.type,listType: 'my',isEdufluencer: status.isEdufluencer),
-          tabName: AppLocalizations.of(context).translate('my_edufluencer')));
+          statelessWidget: AllEdufluencerAndTutors(type: widget.type,listType: 'my',isEdufluencer: status!.isEdufluencer),
+          tabName: AppLocalizations.of(context)!.translate('my_edufluencer')));
     }
-    if(status.myEdufluencerTutorCount>0 && widget.type == edufluencer_type.T) {
+    if(status!.myEdufluencerTutorCount!>0 && widget.type == edufluencer_type.T) {
       list.add(CustomTabMaker(
-          statelessWidget: AllEdufluencerAndTutors(type: widget.type, listType: 'my',isEdufluencer: status.isEdufluencer),
-          tabName: AppLocalizations.of(context).translate('my_tutors')));
+          statelessWidget: AllEdufluencerAndTutors(type: widget.type, listType: 'my',isEdufluencer: status!.isEdufluencer),
+          tabName: AppLocalizations.of(context)!.translate('my_tutors')));
     }
 
-    if(status.isEdufluencer && status.myStudentCount>0){
+    if(status!.isEdufluencer! && status!.myStudentCount!>0){
       list.add(CustomTabMaker(
           statelessWidget: EdufluencerTutorStudents(type: widget.type, listType: 'my',),
-          tabName: AppLocalizations.of(context).translate('my_students')));
+          tabName: AppLocalizations.of(context)!.translate('my_students')));
     }
     setState(() {
       _tabController = TabController(vsync: this, length: list.length);
@@ -105,7 +105,7 @@ class _EdufluencerTutorList extends State<EdufluencerTutorList>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: TricycleAppBar().getCustomAppBar(context,
-          appBarTitle: AppLocalizations.of(context).translate(widget.type == edufluencer_type.E ?'edufluencer':"tutor"),
+          appBarTitle: AppLocalizations.of(context)!.translate(widget.type == edufluencer_type.E ?'edufluencer':"tutor"),
           onBackButtonPress: () {
             Navigator.pop(context);
           }),
@@ -138,7 +138,7 @@ class _EdufluencerTutorList extends State<EdufluencerTutorList>
                     Center(child: list[index].statelessWidget),
                 onPositionChange: (index) {
                   setState(() {
-                    currentPosition = index;
+                    currentPosition = index!;
                   });
                 },
                 onScroll: (position) => print('$position'),

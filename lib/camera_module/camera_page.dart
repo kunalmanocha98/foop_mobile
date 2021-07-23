@@ -14,9 +14,9 @@ class Camera extends StatefulWidget {
   final String type;
 
   const Camera({
-    Key key,
-    @required this.type,
-    @required this.cameras,
+    Key? key,
+    required this.type,
+    required this.cameras,
   }) : super(key: key);
 
   @override
@@ -24,8 +24,8 @@ class Camera extends StatefulWidget {
 }
 
 class CameraState extends State<Camera> {
-  CameraController _controller;
-  Future<void> _initializeControllerFuture;
+  CameraController? _controller;
+  Future<void>? _initializeControllerFuture;
 bool _toggleCamera =false;
   @override
   void initState() {
@@ -35,12 +35,12 @@ bool _toggleCamera =false;
       ResolutionPreset.low,
     );
 
-    _initializeControllerFuture = _controller.initialize();
+    _initializeControllerFuture = _controller!.initialize();
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller!.dispose();
     super.dispose();
   }
 
@@ -51,7 +51,7 @@ bool _toggleCamera =false;
         future: _initializeControllerFuture,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            return Stack(children: [CameraPreview(_controller),Align(
+            return Stack(children: [CameraPreview(_controller!),Align(
               alignment: Alignment.bottomCenter,
               child:  Padding(
                 padding: const EdgeInsets.only(bottom:50.0),
@@ -72,7 +72,7 @@ bool _toggleCamera =false;
                           print(e);
                         }
                       },
-                      child: Text(AppLocalizations.of(context).translate('cancel'),
+                      child: Text(AppLocalizations.of(context)!.translate('cancel'),
                       style: TextStyle(
                       fontSize: 20,
                       color: HexColor(AppColors.appColorWhite),
@@ -92,11 +92,11 @@ bool _toggleCamera =false;
 
                           if(widget.type=="camera")
                             {
-                              var path = await _controller.takePicture();
+                              var path = await _controller!.takePicture();
                               Navigator.of(context).pop({'result': path.path});
                             }
                           else{
-                            await _controller.startVideoRecording();
+                            await _controller!.startVideoRecording();
                           }
 
                         } catch (e) {
@@ -148,18 +148,18 @@ bool _toggleCamera =false;
 
 
   void onCameraSelected(CameraDescription cameraDescription) async {
-    if (_controller != null) await _controller.dispose();
+    if (_controller != null) await _controller!.dispose();
     _controller = CameraController(cameraDescription, ResolutionPreset.low);
 
-    _controller.addListener(() {
+    _controller!.addListener(() {
       if (mounted) setState(() {});
-      if (_controller.value.hasError) {
+      if (_controller!.value.hasError) {
 
       }
     });
 
     try {
-      await _controller.initialize();
+      await _controller!.initialize();
     } on CameraException catch (e) {
       print(e);
     }

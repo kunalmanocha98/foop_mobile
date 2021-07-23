@@ -196,7 +196,7 @@ final GlobalKey<NavigatorState> navigatorKey = new GlobalKey<NavigatorState>();
 
 class MainApp extends StatefulWidget {
   static void setLocale(BuildContext context, Locale locale) {
-    MyApp state = context.findAncestorStateOfType<MyApp>();
+    MyApp state = context.findAncestorStateOfType<MyApp>()!;
     state.setLocale(locale);
   }
 
@@ -205,15 +205,15 @@ class MainApp extends StatefulWidget {
 
 // ignore: must_be_immutable
 class MyApp extends State<MainApp> {
-  SharedPreferences prefs;
-  BuildContext context;
-  Locale _locale;
+  SharedPreferences? prefs;
+  late BuildContext context;
+  Locale? _locale;
 
   // FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
-  final DynamicLinkService dynamicLinkService = locator<DynamicLinkService>();
+  final DynamicLinkService? dynamicLinkService = locator<DynamicLinkService>();
   @override
   // ignore: missing_return
-  Future<void> initState() {
+   initState() {
     super.initState();
     setSharedPreferences();
     if(Platform.isIOS) {
@@ -276,13 +276,13 @@ class MyApp extends State<MainApp> {
       BackgroundFetch.finish(taskId);
     }
   }
-
+  GlobalKey<ChatHistoryPageState> ch = GlobalKey();
   @override
   Widget build(BuildContext context) {
     this.context = context;
     // debugPaintSizeEnabled = true;
     //  Firebase.initializeApp();
-
+    GlobalKey<ChatHistoryPageState> ch = GlobalKey();
     SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
         statusBarColor: HexColor(AppColors.appColorTransparent),
         statusBarBrightness: Brightness.dark,
@@ -291,7 +291,7 @@ class MyApp extends State<MainApp> {
 
     return MaterialApp(
       builder: (context, widget) => ResponsiveWrapper.builder(
-        BouncingScrollWrapper.builder(context, widget),
+        BouncingScrollWrapper.builder(context, widget!),
         maxWidth: 1200,
         minWidth: 450,
         defaultScale: true,
@@ -318,19 +318,19 @@ class MyApp extends State<MainApp> {
         primaryColorLight: appColor[300],
         textButtonTheme: TextButtonThemeData(
             style: TextButton.styleFrom(
-              shape: StadiumBorder(side: BorderSide(color: appColor[500])),
+              shape: StadiumBorder(side: BorderSide(color: appColor[500]!)),
               primary: HexColor(AppColors.appMainColor),
             )
         ),
         elevatedButtonTheme:  ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(
-              shape:StadiumBorder(side: BorderSide(color: appColor[500])),
+              shape:StadiumBorder(side: BorderSide(color: appColor[500]!)),
               primary: HexColor(AppColors.appMainColor),
             )
         ),
         outlinedButtonTheme: OutlinedButtonThemeData(
             style: OutlinedButton.styleFrom(
-              shape:StadiumBorder(side: BorderSide(color: appColor[500])),
+              shape:StadiumBorder(side: BorderSide(color: appColor[500]!)),
               primary: HexColor(AppColors.appMainColor),
             )
         ),
@@ -426,7 +426,7 @@ class MyApp extends State<MainApp> {
       localeResolutionCallback: (locale, supportedLocales) {
         // Check if the current device locale is supported
         for (var supportedLocale in supportedLocales) {
-          if (supportedLocale.languageCode == locale.languageCode &&
+          if (supportedLocale.languageCode == locale!.languageCode &&
               supportedLocale.countryCode == locale.countryCode) {
             return supportedLocale;
           }
@@ -459,8 +459,8 @@ class MyApp extends State<MainApp> {
 
     prefs = await SharedPreferences.getInstance();
     if (prefs != null) {
-      if (_locale == null && prefs.getString('language_code') != "" && prefs.getString('country_code')!=null) {
-        setLocale(Locale(prefs.getString('language_code'), prefs.getString('country_code')));
+      if (_locale == null && prefs!.getString('language_code') != "" && prefs!.getString('country_code')!=null) {
+        setLocale(Locale(prefs!.getString('language_code')!, prefs!.getString('country_code')));
       }
     }
   }
@@ -471,7 +471,7 @@ class MyApp extends State<MainApp> {
       Widget screen;
 
 
-      DeepLinkingPayload deepLinkingPayload = settings.arguments;
+      DeepLinkingPayload? deepLinkingPayload = settings.arguments as DeepLinkingPayload?;
       // if(deepLinkingPayload==null){
       //   return null;
       // }
@@ -489,7 +489,7 @@ class MyApp extends State<MainApp> {
           screen = SignUpPage();
           break;
         case ConversationScreen:
-          screen = ChatListsPage(conversationId: deepLinkingPayload.id,);
+          screen = ChatListsPage(conversationId: deepLinkingPayload!.id,);
           break;
         case OtpVerification:
           screen = Verification(
@@ -521,22 +521,22 @@ class MyApp extends State<MainApp> {
           break;
 
         case chatHistoryPage:
-          screen = ChatHistoryPage(type:deepLinkingPayload.type,personId: deepLinkingPayload.id, );
+          screen = ChatHistoryPage(key:ch,type:deepLinkingPayload!.type,personId: deepLinkingPayload.id,   isVisible: true,);
           break;
         case Profile:
           screen = UserProfileCards(
             type: "",
             currentPosition: 1,
-            userId: prefs.getInt("userId") != null &&
-                    prefs.getInt("userId") != deepLinkingPayload.userId
+            userId: prefs!.getInt("userId") != null &&
+                    prefs!.getInt("userId") != deepLinkingPayload!.userId
                 ? deepLinkingPayload.userId
                 : null,
-            userType: prefs.getInt("userId") != null &&
-                    prefs.getInt("userId") != deepLinkingPayload.userId
+            userType: prefs!.getInt("userId") != null &&
+                    prefs!.getInt("userId") != deepLinkingPayload!.userId
                 ? (deepLinkingPayload.userType == "person"
                     ? "thirdPerson"
                     : deepLinkingPayload.userType)
-                : prefs.getString("ownerType"),
+                : prefs!.getString("ownerType"),
           );
           break;
         case PostDetailPage:
@@ -547,7 +547,7 @@ class MyApp extends State<MainApp> {
         case buddyApproval:
           screen = ApprovalDetailsPage(
             data: RequestListItem(
-              personId: deepLinkingPayload.personId,
+              personId: deepLinkingPayload!.personId,
               profileImage: deepLinkingPayload.profileImage,
               institutionId: deepLinkingPayload.institutionId,
               institutionUserId: deepLinkingPayload.institutionUserId
@@ -555,10 +555,10 @@ class MyApp extends State<MainApp> {
           );
           break;
         case roomDetail:
-          screen = RoomDetailPage(null,null,null,null,null,deepLinkingPayload.postId,deepLinkingPayload.userType);
+          screen = RoomDetailPage(null,null,null,null,null,deepLinkingPayload!.postId,deepLinkingPayload.userType);
           break;
         case eventDetail:
-          screen = CampusTalkListPage( eventId: deepLinkingPayload.postId,);
+          screen = CampusTalkListPage( eventId: deepLinkingPayload!.postId,);
           break;
 
         case LoginSignUP:
@@ -583,18 +583,18 @@ Future<void> fcmMessageHandler(route, navigatorKey, context) async {
 class MessageBean {
   MessageBean({this.itemId});
 
-  final String itemId;
+  final String? itemId;
 
   StreamController<MessageBean> _controller =
       StreamController<MessageBean>.broadcast();
 
   Stream<MessageBean> get onChanged => _controller.stream;
 
-  String _status;
+  String? _status;
 
-  String get status => _status;
+  String? get status => _status;
 
-  set status(String value) {
+  set status(String? value) {
     _status = value;
     _controller.add(this);
   }

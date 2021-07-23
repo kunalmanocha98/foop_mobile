@@ -30,17 +30,17 @@ class InviteTeachersClassMates extends StatefulWidget {
 }
 
 class _InviteTeachersClassMates extends State<InviteTeachersClassMates> {
-  TextStyleElements styleElements;
-  ProgressDialog pr;
-  Persondata rows;
+  late TextStyleElements styleElements;
+  ProgressDialog? pr;
+  Persondata? rows;
   var followers = 0;
   var following = 0;
   var roomsCount = 0;
   var postCount = 0;
   bool cb1 = false, cb2 = false;
   List<String> list = [];
-  int selectedRadio;
-  SharedPreferences prefs;
+  int? selectedRadio;
+  late SharedPreferences prefs;
   List<InvitationRecipientList> invitationRecipientList = [];
 
 
@@ -60,7 +60,7 @@ class _InviteTeachersClassMates extends State<InviteTeachersClassMates> {
 
     return Scaffold(
       appBar: TricycleAppBar().getCustomAppBar(context,
-          appBarTitle: AppLocalizations.of(context).translate("invite_teacher"),
+          appBarTitle: AppLocalizations.of(context)!.translate("invite_teacher"),
           onBackButtonPress: () {
         Navigator.pop(context);
       }),
@@ -88,14 +88,14 @@ class _InviteTeachersClassMates extends State<InviteTeachersClassMates> {
                           ),
                           Container(
                               child: Text(
-                            AppLocalizations.of(context)
+                            AppLocalizations.of(context)!
                                 .translate("invite_calssmates_friends"),
                             style:
                                 styleElements.headline6ThemeScalable(context),
                           )),
                           Container(
                               child: Text(
-                            AppLocalizations.of(context)
+                            AppLocalizations.of(context)!
                                 .translate("earn_coins"),
                             style: styleElements
                                 .headline6ThemeScalable(context)
@@ -179,7 +179,7 @@ class _InviteTeachersClassMates extends State<InviteTeachersClassMates> {
                             uploadData(payload);
                           } else {
                             ToastBuilder().showToast(
-                                AppLocalizations.of(context)
+                                AppLocalizations.of(context)!
                                     .translate("minimum_data_enter"),
                                 context,
                                 HexColor(AppColors.success));
@@ -187,7 +187,7 @@ class _InviteTeachersClassMates extends State<InviteTeachersClassMates> {
                           ;
                         },
                         color: HexColor(AppColors.appColorWhite),
-                        child: Text(AppLocalizations.of(context).translate('invite'),
+                        child: Text(AppLocalizations.of(context)!.translate('invite'),
                           style: styleElements
                               .subtitle2ThemeScalable(context)
                               .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -224,7 +224,7 @@ class _InviteTeachersClassMates extends State<InviteTeachersClassMates> {
       return false;
     }
     // ignore: deprecated_member_use
-    return double.parse(s, (e) => null) != null;
+    return double.parse(s, ((e) => null) as double Function(String)?) != null;
   }
 
   void uploadData(InviteUserPayload payload) async {
@@ -252,7 +252,7 @@ class _InviteTeachersClassMates extends State<InviteTeachersClassMates> {
 class AddNewField extends StatefulWidget {
   final String data;
   final String hint;
-  final Null Function(String data) callBck;
+  final Null Function(String data)? callBck;
 
   AddNewField(this.data,this.hint, {this.callBck}) ;
 
@@ -261,10 +261,10 @@ class AddNewField extends StatefulWidget {
 }
 
 class _AddNewField extends State<AddNewField> {
-  TextEditingController _nameController;
+  TextEditingController? _nameController;
   final String data;
   final String hint;
-  final Null Function(String data) callBck;
+  final Null Function(String data)? callBck;
 
   @override
   void initState() {
@@ -274,7 +274,7 @@ class _AddNewField extends State<AddNewField> {
 
   @override
   void dispose() {
-    _nameController.dispose();
+    _nameController!.dispose();
     super.dispose();
   }
 
@@ -288,14 +288,14 @@ class _AddNewField extends State<AddNewField> {
             color: HexColor(AppColors.appColorBlack65)
         ),
         onChanged: (v) {
-          callBck(v);
+          callBck!(v);
         },
         decoration: InputDecoration(
-            hintText: AppLocalizations.of(context).translate('email_phone'),
+            hintText: AppLocalizations.of(context)!.translate('email_phone'),
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35))
         ),
         validator: (data) {
-          if (data.trim().isEmpty) return hint;
+          if (data!.trim().isEmpty) return hint;
           return null;
         },
       ),

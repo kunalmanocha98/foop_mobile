@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 class ExitConfirmationDialog extends StatefulWidget {
   Function(bool isSuccess) callback;
 
-  ExitConfirmationDialog({@required this.callback});
+  ExitConfirmationDialog({required this.callback});
 
   @override
   _ExitConfirmationDialog createState() =>
@@ -19,8 +19,8 @@ class ExitConfirmationDialog extends StatefulWidget {
 
 class _ExitConfirmationDialog extends State<ExitConfirmationDialog> {
   Function(bool isSuccess) callback;
-  TextStyleElements styleElements;
-  _ExitConfirmationDialog({@required this.callback});
+  late TextStyleElements styleElements;
+  _ExitConfirmationDialog({required this.callback});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class _ExitConfirmationDialog extends State<ExitConfirmationDialog> {
             padding: const EdgeInsets.only(
                 top: 16.0, bottom: 8.0, left: 16, right: 16),
             child: Text(
-              AppLocalizations.of(context).translate("want_exit"),
+              AppLocalizations.of(context)!.translate("want_exit"),
               style: styleElements.subtitle1ThemeScalable(context),
             ),
           ),
@@ -52,7 +52,7 @@ class _ExitConfirmationDialog extends State<ExitConfirmationDialog> {
                   },
                   color: HexColor(AppColors.appColorWhite),
                   child: Text(
-                    AppLocalizations.of(context).translate('cancel'),
+                    AppLocalizations.of(context)!.translate('cancel'),
                     style:styleElements.captionThemeScalable(context).
                     copyWith(fontWeight: FontWeight.bold,
                     color: HexColor(AppColors.appMainColor)),
@@ -71,7 +71,7 @@ class _ExitConfirmationDialog extends State<ExitConfirmationDialog> {
                   },
                   color: HexColor(AppColors.appMainColor),
                   child: Text(
-                    AppLocalizations.of(context).translate('exit'),
+                    AppLocalizations.of(context)!.translate('exit'),
                     style: styleElements.captionThemeScalable(context).
                     copyWith(fontWeight: FontWeight.bold,
                     color:HexColor(AppColors.appColorWhite)),

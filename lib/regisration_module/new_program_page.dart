@@ -24,9 +24,9 @@ import 'accedemic_selection_page.dart';
 
 // ignore: must_be_immutable
 class SelectProgramNew extends StatefulWidget {
-  RegisterUserAs registerUserAs;
+  RegisterUserAs? registerUserAs;
   int instituteId;
-  int personType;
+  int? personType;
   bool isVerified;
   bool isAddClass;
 
@@ -39,30 +39,30 @@ class SelectProgramNew extends StatefulWidget {
 
 class _SelectProgramNew extends State<SelectProgramNew>
     with SingleTickerProviderStateMixin {
-  String searchVal;
-  String personName;
-  String type;
-  int id;
-  String ownerType;
-  int ownerId;
-  int instituteId;
-  RegisterUserAs registerUserAs;
-  int personType;
+  String? searchVal;
+  String? personName;
+  String? type;
+  int? id;
+  String? ownerType;
+  int? ownerId;
+  int? instituteId;
+  RegisterUserAs? registerUserAs;
+  int? personType;
   bool isVerified;
   bool isAddClass;
-  String accedamicId;
-  Null Function() callback;
+  String? accedamicId;
+  Null Function()? callback;
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
   GlobalKey<PaginatorState> paginatorKeyChat = GlobalKey();
-  SharedPreferences prefs;
-  TextStyleElements styleElements;
+  late SharedPreferences prefs;
+  late TextStyleElements styleElements;
   List<CustomTabMaker> list = [];
 
-  String pageTitle;
-  ProgramNotifier chatNotifier;
-  BuildContext ctx;
+  String? pageTitle;
+  ProgramNotifier? chatNotifier;
+  BuildContext? ctx;
   bool isAlreadySent = false;
-  String acedemicYear;
+  String? acedemicYear;
   List<ProgramDataItem> listSelectedPrograms = [];
   List<Programs> _listSelectedPrograms = [];
 
@@ -70,11 +70,11 @@ class _SelectProgramNew extends State<SelectProgramNew>
     prefs = await SharedPreferences.getInstance();
     setState(() {
       ownerId = prefs.getInt(Strings.userId);
-      instituteId = registerUserAs.institutionId;
+      instituteId = registerUserAs!.institutionId;
     });
     ProgramNotifier notifier =
         Provider.of<ProgramNotifier>(context, listen: false);
-    if (searchVal != null && searchVal.isNotEmpty)
+    if (searchVal != null && searchVal!.isNotEmpty)
       notifier.search(searchVal, instituteId, context, _listSelectedPrograms);
     else
       notifier.reload(searchVal, instituteId, context,  _listSelectedPrograms);
@@ -84,12 +84,12 @@ class _SelectProgramNew extends State<SelectProgramNew>
   void initState() {
     super.initState();
     if (registerUserAs != null) {
-      acedemicYear = registerUserAs.academicYear;
-      instituteId = registerUserAs.institutionId;
-      if(registerUserAs.personTypeList!=null && registerUserAs.personTypeList.isNotEmpty)
-      personType = registerUserAs.personTypeList[0];
+      acedemicYear = registerUserAs!.academicYear;
+      instituteId = registerUserAs!.institutionId;
+      if(registerUserAs!.personTypeList!=null && registerUserAs!.personTypeList!.isNotEmpty)
+      personType = registerUserAs!.personTypeList![0];
     }
-    WidgetsBinding.instance.addPostFrameCallback((_) => _setPref());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => _setPref());
   }
 
   void onsearchValueChanged(String text) {
@@ -97,10 +97,10 @@ class _SelectProgramNew extends State<SelectProgramNew>
       searchVal = text;
     });
     if (text.isNotEmpty)
-      chatNotifier.search(
+      chatNotifier!.search(
           text, instituteId, context,  _listSelectedPrograms);
     else
-      chatNotifier.reload(
+      chatNotifier!.reload(
           text, instituteId, context, _listSelectedPrograms);
   }
 
@@ -111,15 +111,16 @@ class _SelectProgramNew extends State<SelectProgramNew>
     this.ctx = context;
     return WillPopScope(
       // ignore: missing_return
-      onWillPop: () async {
+      onWillPop: ()  {
         Navigator.pop(context);
+        return new Future(() => false);
       },
       child: SafeArea(
         child: Scaffold(
             appBar: TricycleAppBar().getCustomAppBar(
               context,
-              appBarTitle: AppLocalizations.of(context)
-                  .translate('select_program_title'),
+              appBarTitle: AppLocalizations.of(context)!
+                  .translate('select_programme'),
               onBackButtonPress: () async {
                 Navigator.pop(context);
               },
@@ -132,7 +133,7 @@ class _SelectProgramNew extends State<SelectProgramNew>
                       child: SearchBox(
                         onvalueChanged: onsearchValueChanged,
                         hintText:
-                            AppLocalizations.of(context).translate('search'),
+                            AppLocalizations.of(context)!.translate('search'),
                       ),
                     ),
                     SliverToBoxAdapter(
@@ -151,7 +152,7 @@ class _SelectProgramNew extends State<SelectProgramNew>
                                   accedamicId = result['result'];
                                   if (acedemicYear != null &&
                                       registerUserAs != null)
-                                    registerUserAs.academicYear = acedemicYear;
+                                    registerUserAs!.academicYear = acedemicYear;
                                 });
                               }
                             },
@@ -192,11 +193,11 @@ class _SelectProgramNew extends State<SelectProgramNew>
                                                   child: Text(
                                                     acedemicYear != null
                                                         ? AppLocalizations.of(
-                                                                context)
+                                                                context)!
                                                             .translate(
                                                                 'selected_academic_year')
                                                         : AppLocalizations.of(
-                                                                context)
+                                                                context)!
                                                             .translate(
                                                                 'select_academic_year'),
                                                     style: styleElements
@@ -239,15 +240,15 @@ class _SelectProgramNew extends State<SelectProgramNew>
                             margin: const EdgeInsets.all(16),
                             child: Text(
                               personType == 3
-                                  ? AppLocalizations.of(context)
+                                  ? AppLocalizations.of(context)!
                                       .translate("program_quote")
                                   : personType == 4
-                                      ? AppLocalizations.of(context)
+                                      ? AppLocalizations.of(context)!
                                           .translate("program_quote_parent")
                                       : personType == 5
-                                          ? AppLocalizations.of(context)
+                                          ? AppLocalizations.of(context)!
                                               .translate("program_quote_alumni")
-                                          : AppLocalizations.of(context)
+                                          : AppLocalizations.of(context)!
                                               .translate(
                                                   "program_quote_teacher"),
                               textAlign: TextAlign.center,
@@ -266,13 +267,13 @@ class _SelectProgramNew extends State<SelectProgramNew>
                     Container(
                       margin: const EdgeInsets.only(bottom: 62),
                       child: chatNotifier != null &&
-                              chatNotifier.getConversationList() != null &&
-                              chatNotifier.getConversationList().isNotEmpty
+                              chatNotifier!.getConversationList() != null &&
+                              chatNotifier!.getConversationList()!.isNotEmpty
                           ? NotificationListener<ScrollNotification>(
                               onNotification: (ScrollNotification scrollInfo) {
                                 if (scrollInfo is ScrollEndNotification &&
                                     scrollInfo.metrics.extentAfter == 0) {
-                                  chatNotifier.getMore(searchVal, instituteId,
+                                  chatNotifier!.getMore(searchVal, instituteId,
                                       context, _listSelectedPrograms);
                                   return true;
                                 }
@@ -282,10 +283,10 @@ class _SelectProgramNew extends State<SelectProgramNew>
                               ListView.builder(
                                   padding: EdgeInsets.all(0.0),
                                   physics: BouncingScrollPhysics(),
-                                  itemCount: chatNotifier.getConversationList().length,
+                                  itemCount: chatNotifier!.getConversationList()!.length,
                                   itemBuilder: (context, index) {
-                                    return listItemBuilder(chatNotifier.getConversationList()[index].programs,
-                                        chatNotifier.getConversationList()[index].degreeType);
+                                    return listItemBuilder(chatNotifier!.getConversationList()![index].programs!,
+                                        chatNotifier!.getConversationList()![index].degreeType!);
                                   }),
 
 
@@ -332,7 +333,7 @@ class _SelectProgramNew extends State<SelectProgramNew>
                                     child: Padding(
                                   padding: const EdgeInsets.all(20.0),
                                   child: TricycleEmptyWidget(
-                                    message: AppLocalizations.of(context)
+                                    message: AppLocalizations.of(context)!
                                         .translate('no_conversation'),
                                   ),
                                 )
@@ -361,23 +362,23 @@ class _SelectProgramNew extends State<SelectProgramNew>
                                   onPressed: () async {
                                     try {
                                       if (acedemicYear != null) {
-                                                                            List<int> ids = getIds();
+                                                                            List<int?> ids = getIds();
 
                                                                             if (ids.length > 0) {
-                                                                              registerUserAs.isDepartment =
+                                                                              registerUserAs!.isDepartment =
                                                                                   await isHigherSecondary();
-                                                                              registerUserAs.personPrograms = ids;
+                                                                              registerUserAs!.personPrograms = ids;
                                                                               Navigator.of(context).pop({'registerUserAs': registerUserAs});
                                                                             } else {
                                                                               ToastBuilder().showToast(
-                                                                                  AppLocalizations.of(context)
+                                                                                  AppLocalizations.of(context)!
                                                                                       .translate("select_program"),
                                                                                   context,
                                                                                   HexColor(AppColors.information));
                                                                             }
                                                                           } else {
                                                                             ToastBuilder().showToast(
-                                                                                AppLocalizations.of(context)
+                                                                                AppLocalizations.of(context)!
                                                                                     .translate("select_academic"),
                                                                                 context,
                                                                                 HexColor(AppColors.information));
@@ -392,9 +393,9 @@ class _SelectProgramNew extends State<SelectProgramNew>
                                   },
                                   color: HexColor(AppColors.appColorWhite),
                                   child: Text(
-                                    AppLocalizations.of(context)
+                                    AppLocalizations.of(context)!
                                         .translate('next')
-                                        .toUpperCase(),
+                                        ,
                                     style: styleElements
                                         .subtitle2ThemeScalable(context)
                                         .copyWith(
@@ -422,13 +423,13 @@ class _SelectProgramNew extends State<SelectProgramNew>
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
-        if (programs.isSelected) {
-          chatNotifier.updateItem(
+        if (programs.isSelected!) {
+          chatNotifier!.updateItem(
               programs, degreeType, false, personType == 2 ? true : false);
           removeSelected(programs.id);
         } else {
           if (personType != 2) _listSelectedPrograms.clear();
-          chatNotifier.updateItem(programs, degreeType, true, personType == 2 ? true : false);
+          chatNotifier!.updateItem(programs, degreeType, true, personType == 2 ? true : false);
           _listSelectedPrograms.add(programs);
           setState(() {
 
@@ -437,14 +438,14 @@ class _SelectProgramNew extends State<SelectProgramNew>
       },
       child: Chip(
           elevation: 2.0,
-          backgroundColor: programs.isSelected
+          backgroundColor: programs.isSelected!
               ? HexColor(AppColors.appMainColor)
               : HexColor(AppColors.appColorWhite),
           label: Padding(
             padding: const EdgeInsets.all(4.0),
             child: Text(programs.programName ?? "",
                 style: styleElements.subtitle2ThemeScalable(context).copyWith(
-                    color: programs.isSelected
+                    color: programs.isSelected!
                         ? HexColor(AppColors.appColorWhite)
                         : HexColor(AppColors.appColorBlack65))),
           )),
@@ -474,7 +475,7 @@ class _SelectProgramNew extends State<SelectProgramNew>
     );
   }
 
-  removeSelected(int id) {
+  removeSelected(int? id) {
     for (var i = 0; i < _listSelectedPrograms.length; i++) {
       if (id == _listSelectedPrograms[i].id) {
         _listSelectedPrograms.removeAt(i);
@@ -484,7 +485,7 @@ class _SelectProgramNew extends State<SelectProgramNew>
   }
 
   getIds() {
-    List<int> list = [];
+    List<int?> list = [];
     for (var i = 0; i < _listSelectedPrograms.length; i++) {
       list.add(_listSelectedPrograms[i].id);
     }

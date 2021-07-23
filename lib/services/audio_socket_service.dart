@@ -4,7 +4,7 @@ import 'package:oho_works_app/utils/config.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class AudioSocketService {
-  IO.Socket socket;
+  IO.Socket? socket;
   AudioSocketService(){
     print('in the constructor');
     setupConnection();
@@ -18,21 +18,21 @@ class AudioSocketService {
       'autoConnect': true,
     });
     // socket.connect();
-    socket.onConnect((_) {
+    socket!.onConnect((_) {
       print("connected+++++++++++++++++++++++++++++++++++Audio++++++++++++++++++++++++++++++++++++");
       return socket;
     });
-    socket.onDisconnect((_) {
+    socket!.onDisconnect((_) {
       print(
           "disconnected++++++++++++++++++++++++++++++++Audio++++++++++++++++++++++++++++++++++++++++++");
     });
-    socket.onError((_) {
+    socket!.onError((_) {
       print(
           "errrorr+++++++++++++++++++++++++++++++++++Audio++++++++++++++++++++++++++++++++++++++++++");
     });
   }
 
-  IO.Socket getSocket() {
+  IO.Socket? getSocket() {
     return socket;
   }
 }

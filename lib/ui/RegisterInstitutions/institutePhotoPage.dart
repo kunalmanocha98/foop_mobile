@@ -33,8 +33,8 @@ class InstitutePhotoPage extends StatefulWidget {
   BasicData basicData;
 
   InstitutePhotoPage({
-    Key key,
-    @required this.basicData,
+    Key? key,
+    required this.basicData,
   }) : super(key: key);
 
   @override
@@ -45,16 +45,16 @@ var imageChild;
 
 class _InstitutePhotoPageState extends State<InstitutePhotoPage> {
   var imageFile;
-  String type;
-  int id;
-  BasicData basicData;
-  String imageUrl;
-  String studentType;
+  String? type;
+  int? id;
+  late BasicData basicData;
+  String? imageUrl;
+  String? studentType;
 
-  SharedPreferences prefs;
-  BuildContext context;
-  File imagePath;
-  String selectPath;
+  late SharedPreferences prefs;
+ late BuildContext context;
+  late File imagePath;
+  String? selectPath;
   bool isLoading=false;
   _InstitutePhotoPageState(this.basicData);
 
@@ -85,7 +85,7 @@ class _InstitutePhotoPageState extends State<InstitutePhotoPage> {
   }
 
   _profilePicker(String type) async {
-    File pickedFile;
+    File? pickedFile;
     var pr = ToastBuilder()
         .setProgressDialogWithPercent(context, 'Uploading Image...');
     if (type == "Gallery")
@@ -131,7 +131,7 @@ class _InstitutePhotoPageState extends State<InstitutePhotoPage> {
             .then((value) async {
           await pr.hide();
           var imageResponse = ImageUpdateResponse.fromJson(value);
-          updateImage(imageResponse.rows.fileUrl, OWNERTYPE.person.type,
+          updateImage(imageResponse.rows!.fileUrl, OWNERTYPE.person.type,
               IMAGETYPE.profile.type);
         }).catchError((onError) async {
           await pr.hide();
@@ -141,7 +141,7 @@ class _InstitutePhotoPageState extends State<InstitutePhotoPage> {
     }
   }
 
-  updateImage(String url, String ownerType, String imageType) async {
+  updateImage(String? url, String ownerType, String imageType) async {
     setState(() {
       imageUrl = url;
       prefs.setString("instImage", imagePath.path);
@@ -151,10 +151,11 @@ class _InstitutePhotoPageState extends State<InstitutePhotoPage> {
   // ignore: missing_return
   Future<bool> _onBackPressed() {
     Navigator.of(context).pop({'result': imageUrl});
+    return new Future(() => false);
   }
 
-  TextStyleElements styleElements;
-  BuildContext sctx;
+  late TextStyleElements styleElements;
+  BuildContext? sctx;
 
   @override
   Widget build(BuildContext context) {
@@ -195,7 +196,7 @@ class _InstitutePhotoPageState extends State<InstitutePhotoPage> {
               resizeToAvoidBottomInset: false,
               backgroundColor: HexColor(AppColors.appColorBackground),
               appBar: TricycleAppBar().getCustomAppBar(context,
-                  appBarTitle: AppLocalizations.of(context).translate('upload_logo'),
+                  appBarTitle: AppLocalizations.of(context)!.translate('upload_logo'),
                   actions: [
 
                     Padding(
@@ -208,7 +209,7 @@ class _InstitutePhotoPageState extends State<InstitutePhotoPage> {
                         },
                         child: Row(
                           children: [
-                            Text(AppLocalizations.of(context).translate('next'), style:styleElements.subtitle2ThemeScalable(context).copyWith(color: HexColor(AppColors.appMainColor)),),
+                            Text(AppLocalizations.of(context)!.translate('next'), style:styleElements.subtitle2ThemeScalable(context).copyWith(color: HexColor(AppColors.appMainColor)),),
 
                           ],
                         ),
@@ -251,7 +252,7 @@ class _InstitutePhotoPageState extends State<InstitutePhotoPage> {
                                 margin: const EdgeInsets.only(
                                     left: 16.0, right: 16.0, top: 5),
                                 child: Text(
-                                  AppLocalizations.of(context)
+                                  AppLocalizations.of(context)!
                                       .translate("institute_image_upload_content"),
                                   style: styleElements
                                       .subtitle1ThemeScalable(context),
@@ -319,13 +320,13 @@ class _InstitutePhotoPageState extends State<InstitutePhotoPage> {
         if (resposne.statusCode == Strings.success_code) {
           prefs.setString(Strings.registeredInstituteName, basicData.name??"");
           prefs.setString(Strings.registeredInstituteImage, imageUrl??"");
-          prefs.setInt("createdSchoolId", resposne.rows.institutionId);
+          prefs.setInt("createdSchoolId", resposne.rows!.institutionId!);
           prefs.setString("create_institute", "Domain");
 
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => DomainPage(resposne.rows.institutionId),
+                builder: (context) => DomainPage(resposne.rows!.institutionId),
               ));
         }
       }
@@ -344,13 +345,13 @@ print(onError.toString());
         builder: (BuildContext context) {
           return AlertDialog(
               title: Text(
-                  AppLocalizations.of(context).translate('from_where_picture')),
+                  AppLocalizations.of(context)!.translate('from_where_picture')),
               content: SingleChildScrollView(
                 child: ListBody(
                   children: <Widget>[
                     GestureDetector(
                       child: Text(
-                          AppLocalizations.of(context).translate('gallery')),
+                          AppLocalizations.of(context)!.translate('gallery')),
                       onTap: () {
                         FocusScope.of(context).requestFocus(new FocusNode());
                         Navigator.pop(context, null);
@@ -360,7 +361,7 @@ print(onError.toString());
                     Padding(padding: EdgeInsets.all(16.0)),
                     GestureDetector(
                       child: Text(
-                          AppLocalizations.of(context).translate('camera')),
+                          AppLocalizations.of(context)!.translate('camera')),
                       onTap: () {
                         FocusScope.of(context).requestFocus(new FocusNode());
                         Navigator.pop(context, null);

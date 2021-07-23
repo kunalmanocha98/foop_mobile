@@ -23,17 +23,17 @@ import 'package:oho_works_app/components/paginator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class InviteTalkParticipants extends StatefulWidget{
-  final String privacyType;
-  final int eventId;
+  final String? privacyType;
+  final int? eventId;
   InviteTalkParticipants({this.privacyType,this.eventId});
   @override
   InviteTalkParticipantsState createState() => InviteTalkParticipantsState();
 }
 
 class InviteTalkParticipantsState extends State<InviteTalkParticipants>{
-  String searchVal;
-  SharedPreferences prefs = locator<SharedPreferences>();
-  TextStyleElements styleElements;
+  String? searchVal;
+  SharedPreferences? prefs = locator<SharedPreferences>();
+  late TextStyleElements styleElements;
   List<MemberListItem> memberItemList = [];
   List<MembersItem> selectedList = [];
   GlobalKey<TricycleProgressButtonState> progressButtonState = GlobalKey();
@@ -42,7 +42,7 @@ class InviteTalkParticipantsState extends State<InviteTalkParticipants>{
 
   void refresh(){
     memberItemList.clear();
-    paginatorKey.currentState.changeState(resetState: true);
+    paginatorKey.currentState!.changeState(resetState: true);
   }
   @override
   Widget build(BuildContext context) {
@@ -55,7 +55,7 @@ class InviteTalkParticipantsState extends State<InviteTalkParticipants>{
                 searchVal = value;
                 refresh();
               },
-              appBarTitle: AppLocalizations.of(context).translate('invite_participants'),
+              appBarTitle: AppLocalizations.of(context)!.translate('invite_participants'),
               onBackButtonPress: () {
                 Navigator.pop(context);
               },
@@ -73,7 +73,7 @@ class InviteTalkParticipantsState extends State<InviteTalkParticipants>{
                     crossAxisAlignment: WrapCrossAlignment.center,
                     children: [
                       Text(
-                        AppLocalizations.of(context).translate('next'),
+                        AppLocalizations.of(context)!.translate('next'),
                         style: styleElements
                             .subtitle2ThemeScalable(context)
                             .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -96,7 +96,7 @@ class InviteTalkParticipantsState extends State<InviteTalkParticipants>{
                 ),
                 child: Padding(
                     padding: EdgeInsets.only(top:16,left: 16,right: 16,bottom: 8),
-                    child:Text(AppLocalizations.of(context).translate('invite_talk_des'),
+                    child:Text(AppLocalizations.of(context)!.translate('invite_talk_des'),
                       style: styleElements.subtitle2ThemeScalable(context).copyWith(fontWeight: FontWeight.w500),
                     )
                   // child: Text('Rooms are groups. You can create rooms to engage with more than one person together. Please click + on the top of the page to create new rooms.',style:
@@ -130,12 +130,12 @@ class InviteTalkParticipantsState extends State<InviteTalkParticipants>{
     payload.pageNumber = page;
     payload.searchVal = searchVal ;
     payload.privacyType = widget.privacyType;
-    payload.personId = prefs.getInt(Strings.userId);
+    payload.personId = prefs!.getInt(Strings.userId);
     var res = await Calls().call(jsonEncode(payload), context, Config.EVENT_MEMBER_SELECT_LIST);
     return MemberListResponse.fromJson(res);
   }
-  List<MemberListItem> listItemsGetter(MemberListResponse response) {
-    memberItemList.addAll(response.rows);
+  List<MemberListItem>? listItemsGetter(MemberListResponse? response) {
+    memberItemList.addAll(response!.rows!);
     if (!isAddAll) {
       for (int i = 0; i < memberItemList.length; i++) {
         for (int j = 0; j < selectedList.length; j++) {
@@ -164,10 +164,10 @@ class InviteTalkParticipantsState extends State<InviteTalkParticipants>{
           imageUrl: value.profileImage,
             title:
               (value.firstName != null && value.lastName != null)
-                  ? value.firstName + " " + value.lastName
+                  ? value.firstName! + " " + value.lastName!
                   : "",
-            subtitle1:value.isFollowing ? "Following" : "",
-            trailingWidget: (value.isSelected != null && value.isSelected)
+            subtitle1:value.isFollowing! ? "Following" : "",
+            trailingWidget: (value.isSelected != null && value.isSelected!)
                 ? Container(
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
@@ -207,7 +207,7 @@ class InviteTalkParticipantsState extends State<InviteTalkParticipants>{
                 setState(() {});
               },
               child: Text(
-                AppLocalizations.of(context).translate('invite'),
+                AppLocalizations.of(context)!.translate('invite'),
                 style: styleElements
                     .captionThemeScalable(context)
                     .copyWith(
@@ -224,10 +224,10 @@ class InviteTalkParticipantsState extends State<InviteTalkParticipants>{
   }
 
   void inviteUsers() async{
-    progressButtonState.currentState.show();
+    progressButtonState.currentState!.show();
     EventCreateRequest payload =EventCreateRequest();
     payload.eventId = widget.eventId;
-    payload.eventOwnerId = prefs.getInt(Strings.userId);
+    payload.eventOwnerId = prefs!.getInt(Strings.userId);
     payload.eventOwnerType = 'person';
     payload.recipientType =['person'];
     payload.recipientDetails =  List<RecipientDetails>.generate(selectedList.length, (index){
@@ -237,11 +237,11 @@ class InviteTalkParticipantsState extends State<InviteTalkParticipants>{
       );
     });
     Calls().call(jsonEncode(payload), context, Config.TALK_EVENT_INVITEE_ADD).then((value){
-      progressButtonState.currentState.hide();
+      progressButtonState.currentState!.hide();
       Navigator.pop(context);
     }).catchError((onError){
       print(onError);
-      progressButtonState.currentState.hide();
+      progressButtonState.currentState!.hide();
       Navigator.pop(context);
     });
   }

@@ -12,9 +12,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 // ignore: must_be_immutable
 class HorizontalScrollCard extends StatelessWidget {
   CommonCardData data;
-  TextStyleElements styleElements;
+  TextStyleElements? styleElements;
 
-  HorizontalScrollCard({Key key, @required this.data, this.styleElements})
+  HorizontalScrollCard({Key? key, required this.data, this.styleElements})
       : super(key: key);
 
 
@@ -36,13 +36,13 @@ class HorizontalScrollCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
-    final List<Widget> imageSliders = data.data.map((item) =>  Container(
+    final List<Widget> imageSliders = data.data!.map((item) =>  Container(
         decoration: BoxDecoration(
             color: HexColor(AppColors.appColorWhite65),
           borderRadius: BorderRadius.circular(12),
           image: DecorationImage(
             fit: BoxFit.fill,
-            image:item.bannerImageUrl!=null?CachedNetworkImageProvider(item.bannerImageUrl):AssetImage('assets/appimages/image_place.png'),
+            image:(item.bannerImageUrl!=null?CachedNetworkImageProvider(item.bannerImageUrl!):AssetImage('assets/appimages/image_place.png')) as ImageProvider<Object>,
           )
         ),
         height: 200,

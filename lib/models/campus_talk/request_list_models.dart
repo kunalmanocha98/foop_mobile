@@ -1,7 +1,7 @@
 class RequestListResponse {
-  String statusCode;
-  String message;
-  List<RequestListItem> rows;
+  String? statusCode;
+  String? message;
+  List<RequestListItem>? rows;
 
   RequestListResponse({this.statusCode, this.message, this.rows});
 
@@ -11,7 +11,7 @@ class RequestListResponse {
     if (json['rows'] != null) {
       rows = [];//RequestListItem>();
       json['rows'].forEach((v) {
-        rows.add(new RequestListItem.fromJson(v));
+        rows!.add(new RequestListItem.fromJson(v));
       });
     }
   }
@@ -21,18 +21,18 @@ class RequestListResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class RequestListItem {
-  int id;
-  String name;
-  String profileImage;
-  String requestedByType;
-  int requestedById;
+  int? id;
+  String? name;
+  String? profileImage;
+  String? requestedByType;
+  int? requestedById;
 
   RequestListItem(
       {this.id,

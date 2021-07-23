@@ -21,8 +21,8 @@ class ChatListPage extends StatefulWidget {
 
 class StateChatList extends State<ChatListPage> {
 
-  SharedPreferences prefs;
-  TextStyleElements styleElements;
+  late SharedPreferences prefs;
+  TextStyleElements? styleElements;
 
   void logout() async {
 
@@ -31,7 +31,7 @@ class StateChatList extends State<ChatListPage> {
       if (value != null) {
         prefs = await SharedPreferences.getInstance();
         var data = CommonBasicResponse.fromJson(value);
-        ToastBuilder().showToast(data.message, context,HexColor(AppColors.information));
+        ToastBuilder().showToast(data.message!, context,HexColor(AppColors.information));
         prefs.clear();
         Navigator.pushNamedAndRemoveUntil(context, "/", (r) => false);
       }
@@ -68,6 +68,7 @@ class StateChatList extends State<ChatListPage> {
       onWillPop: () {
         // ignore: missing_return,
         _onBackPressed();
+        return new Future(() => false);
       },
       child: SafeArea(
         child: Scaffold(
@@ -256,27 +257,27 @@ class StateChatList extends State<ChatListPage> {
           context: context,
           builder: (context) => new AlertDialog(
             title: new Text(
-                AppLocalizations.of(context).translate('are_you_sure')),
+                AppLocalizations.of(context)!.translate('are_you_sure')),
             content: new Text(
-                AppLocalizations.of(context).translate('exit_tricycle')),
+                AppLocalizations.of(context)!.translate('exit_tricycle')),
             actions: <Widget>[
               new GestureDetector(
                 onTap: () => Navigator.of(context).pop(false),
                 child: Text(
-                    AppLocalizations.of(context).translate('no').toUpperCase()),
+                    AppLocalizations.of(context)!.translate('no').toUpperCase()),
               ),
               SizedBox(height: 16),
               new GestureDetector(
                 onTap: () {
                   SystemChannels.platform.invokeMethod('SystemNavigator.pop');
                 },
-                child: Text(AppLocalizations.of(context)
+                child: Text(AppLocalizations.of(context)!
                     .translate('yes')
                     .toUpperCase()),
               ),
             ],
           ),
-        ) ??
-        false;
+        ).then((value) => value as bool) ;
+
   }
 }

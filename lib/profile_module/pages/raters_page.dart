@@ -19,17 +19,17 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class RatersPage extends StatefulWidget {
-  String imageUrl;
-  String name;
-  int id;
+  String? imageUrl;
+  String? name;
+  int? id;
   String ratingType;
-  double previousRating;
-  int ratingId;
-  CommonCardData data;
-  Null Function() callback;
-  int ownerId;
-  String ownerType;
-  RatersPage({Key key, @required this.ratingType, this.id,this.imageUrl,this.name,this.previousRating,this.ratingId,this.data,this.callback,this.ownerType,this.ownerId}) : super(key: key);
+  double? previousRating;
+  int? ratingId;
+  CommonCardData? data;
+  Null Function()? callback;
+  int? ownerId;
+  String? ownerType;
+  RatersPage({Key? key, required this.ratingType, this.id,this.imageUrl,this.name,this.previousRating,this.ratingId,this.data,this.callback,this.ownerType,this.ownerId}) : super(key: key);
   @override
   _RatersPage createState() => _RatersPage(imageUrl,name,id,previousRating,ratingId,ratingType,data,callback);
 
@@ -39,28 +39,28 @@ class RatersPage extends StatefulWidget {
 
 class _RatersPage extends State<RatersPage> with SingleTickerProviderStateMixin {
   List<CustomTabMaker> list = [];
-  TabController _tabController;
-  TextStyleElements styleElements;
-  String type;
-  int id;
-  Null Function() callback;
-  SharedPreferences prefs;
-  String ownerType;
-  int ownerId;
+  late TabController _tabController;
+  TextStyleElements? styleElements;
+  String? type;
+  int? id;
+  Null Function()? callback;
+  late SharedPreferences prefs;
+  String? ownerType;
+  int? ownerId;
   int _currentPosition=0;
-  String pageTitle;
-  String imageUrl;
-  String name;
+  String? pageTitle;
+  String? imageUrl;
+  String? name;
   String ratingType;
-  double previousRating;
-  int ratingId;
-  CommonCardData data;
+  double? previousRating;
+  int? ratingId;
+  CommonCardData? data;
   _RatersPage(this.imageUrl, this.name, this.id,this.previousRating,this.ratingId,this.ratingType,this.data,this.callback);
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => setSharedPreferences());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => setSharedPreferences());
   }
 
   onPositionChange() {
@@ -103,7 +103,7 @@ class _RatersPage extends State<RatersPage> with SingleTickerProviderStateMixin 
         resizeToAvoidBottomInset: true,
         backgroundColor: HexColor(AppColors.appColorBackground),
         appBar: TricycleAppBar().getCustomAppBar(context,
-            appBarTitle: AppLocalizations.of(context).translate('network'),
+            appBarTitle: AppLocalizations.of(context)!.translate('network'),
             onBackButtonPress: () {
               Navigator.pop(context);
 
@@ -127,7 +127,7 @@ class _RatersPage extends State<RatersPage> with SingleTickerProviderStateMixin 
                 Center(child: list[index].statelessWidget),
             onPositionChange: (index) {
               setState(() {
-                _currentPosition = index;
+                _currentPosition = index!;
               });
             },
             onScroll: (position) => print('$position'),

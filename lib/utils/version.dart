@@ -1,8 +1,8 @@
 class Version {
-  int major;
-  int minor;
-  int patch;
-  int versionSum;
+  int? major;
+  int? minor;
+  late int patch;
+  int? versionSum;
   Version(String version){
     var parts = version.split(".");
     this.major = int.parse(parts[0]);

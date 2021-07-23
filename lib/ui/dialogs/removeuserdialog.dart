@@ -13,7 +13,7 @@ class RemoveUserDialog extends StatefulWidget {
 }
 
 class _RemoveUserDialog extends State<RemoveUserDialog> {
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class _RemoveUserDialog extends State<RemoveUserDialog> {
                 child: Container(
                   margin: const EdgeInsets.only(bottom: 16, top: 16),
                   child: Text(
-                    AppLocalizations.of(context).translate("remove_user_title"),
+                    AppLocalizations.of(context)!.translate("remove_user_title"),
                     style: styleElements.headline5ThemeScalable(context),
                   ),
                 )),
@@ -48,7 +48,7 @@ class _RemoveUserDialog extends State<RemoveUserDialog> {
                 child: Container(
                   margin: const EdgeInsets.all(16),
                   child: Text(
-                    AppLocalizations.of(context).translate("remove_user_des"),
+                    AppLocalizations.of(context)!.translate("remove_user_des"),
                     style: styleElements.bodyText1ThemeScalable(context),
                   ),
                 )),
@@ -63,7 +63,7 @@ class _RemoveUserDialog extends State<RemoveUserDialog> {
                         side: BorderSide(color: HexColor(AppColors.appMainColor))),
                     onPressed: () {},
                     color: HexColor(AppColors.appColorWhite),
-                    child: Text(AppLocalizations.of(context).translate('cancel'),
+                    child: Text(AppLocalizations.of(context)!.translate('cancel'),
                       style:styleElements.subtitle1ThemeScalable(context).copyWith(
                         color: HexColor(AppColors.appMainColor)
                       ),
@@ -78,7 +78,7 @@ class _RemoveUserDialog extends State<RemoveUserDialog> {
                         side: BorderSide(color: HexColor(AppColors.appMainColor))),
                     onPressed: () {},
                     color: HexColor(AppColors.appMainColor),
-                    child: Text(AppLocalizations.of(context).translate('ok'),
+                    child: Text(AppLocalizations.of(context)!.translate('ok'),
                       style: styleElements.subtitle1ThemeScalable(context),
                     ),
                   ),

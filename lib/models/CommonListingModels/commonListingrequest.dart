@@ -1,12 +1,12 @@
 class CommonListRequestPayload {
-  String searchVal;
-  List<String> personType;
-  int pageNumber;
-  int pageSize;
-  String requestedByType;
-  String listType;
-  String personId;
-  int institutionId;
+  String? searchVal;
+  List<String>? personType;
+  int? pageNumber;
+  int? pageSize;
+  String? requestedByType;
+  String? listType;
+  String? personId;
+  int? institutionId;
 
   CommonListRequestPayload(
       {this.searchVal,
@@ -44,10 +44,10 @@ class CommonListRequestPayload {
 }
 
 class CommonListResponse {
-  String statusCode;
-  String message;
-  int total;
-  List<CommonListResponseItem> rows;
+  String? statusCode;
+  String? message;
+  int? total;
+  List<CommonListResponseItem>? rows;
 
   CommonListResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -58,7 +58,7 @@ class CommonListResponse {
     if (json['rows'] != null) {
       rows = [];//CommonListResponseItem>();
       json['rows'].forEach((v) {
-        rows.add(new CommonListResponseItem.fromJson(v));
+        rows!.add(new CommonListResponseItem.fromJson(v));
       });
     }
   }
@@ -69,7 +69,7 @@ class CommonListResponse {
     data['message'] = this.message;
     data['total'] = this.total;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
 
     return data;
@@ -77,18 +77,18 @@ class CommonListResponse {
 }
 
 class CommonListResponseItem {
-  int id;
-  String avatar;
-  String title;
-  String institutionName;
-  SubTitle1 subTitle1;
-  SubTitle1 subTitle2;
-  List<String> action;
-  String dateTime;
-  bool isFollower;
-  bool isFollowing;
-  bool isSelected=false;
-  bool isLoading=false;
+  int? id;
+  String? avatar;
+  String? title;
+  String? institutionName;
+  SubTitle1? subTitle1;
+  SubTitle1? subTitle2;
+  List<String>? action;
+  String? dateTime;
+  bool? isFollower;
+  bool? isFollowing;
+  bool? isSelected=false;
+  bool? isLoading=false;
 
   CommonListResponseItem(
       {this.id,
@@ -128,10 +128,10 @@ class CommonListResponseItem {
     data['institution_name']=this.institutionName;
     data['title'] = this.title;
     if (this.subTitle1 != null) {
-      data['sub_title_1'] = this.subTitle1.toJson();
+      data['sub_title_1'] = this.subTitle1!.toJson();
     }
     if (this.subTitle2 != null) {
-      data['sub_title_2'] = this.subTitle2.toJson();
+      data['sub_title_2'] = this.subTitle2!.toJson();
     }
     data['action'] = this.action;
     data['date_time'] = this.dateTime;
@@ -142,12 +142,12 @@ class CommonListResponseItem {
 }
 
 class SubTitle1 {
-  String designation;
-  String location;
-  String status;
-  String networkStatus;
-  String lastMessageLine;
-  String contact;
+  String? designation;
+  String? location;
+  String? status;
+  String? networkStatus;
+  String? lastMessageLine;
+  String? contact;
 
   SubTitle1(
       {this.designation,

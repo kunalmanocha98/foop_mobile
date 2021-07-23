@@ -1,8 +1,8 @@
 class BasicDataForRefral {
-  String statusCode;
-  String message;
-  Rows rows;
-  int total;
+  String? statusCode;
+  String? message;
+  Rows? rows;
+  int? total;
 
   BasicDataForRefral({this.statusCode, this.message, this.rows, this.total});
 
@@ -18,7 +18,7 @@ class BasicDataForRefral {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     data['total'] = this.total;
     return data;
@@ -26,22 +26,22 @@ class BasicDataForRefral {
 }
 
 class Rows {
-  int id;
-  int institutionId;
-  int referredByPersonId;
-  String referredByPersonMobileNumber;
-  String referredByUpiId;
-  String referredDate;
-  int adminStaffPersonId;
-  String referralDate;
-  String referralStatus;
-  String approvedByPersonId;
-  String approvedDate;
-  String firstName;
-  String lastName;
-  String dateOfBirth;
-  String gender;
-  String refferedByImageUrl;
+  int? id;
+  int? institutionId;
+  int? referredByPersonId;
+  String? referredByPersonMobileNumber;
+  String? referredByUpiId;
+  String? referredDate;
+  int? adminStaffPersonId;
+  String? referralDate;
+  String? referralStatus;
+  String? approvedByPersonId;
+  String? approvedDate;
+  String? firstName;
+  String? lastName;
+  String? dateOfBirth;
+  String? gender;
+  String? refferedByImageUrl;
 
   Rows(
       {this.id,

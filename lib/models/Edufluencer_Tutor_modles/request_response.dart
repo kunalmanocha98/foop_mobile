@@ -1,8 +1,8 @@
 class RequestResponse {
-  String statusCode;
-  String message;
+  String? statusCode;
+  String? message;
 
-  int total;
+  int? total;
 
   RequestResponse({this.statusCode, this.message,  this.total});
 

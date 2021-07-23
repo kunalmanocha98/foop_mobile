@@ -21,7 +21,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ClassesMainPage extends StatefulWidget {
   String id;
 
-  ClassesMainPage({Key key, @required this.id}) : super(key: key);
+  ClassesMainPage({Key? key, required this.id}) : super(key: key);
 
   _ClassesMainPage createState() => _ClassesMainPage();
 }
@@ -29,10 +29,10 @@ class ClassesMainPage extends StatefulWidget {
 class _ClassesMainPage extends State<ClassesMainPage>
     with SingleTickerProviderStateMixin {
 
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
-  SharedPreferences prefs;
-  List<CoursesItem> listSubjects = [];
+  SharedPreferences? prefs;
+  List<CoursesItem>? listSubjects = [];
   var isSearching = false;
   RandomColor _randomColor = RandomColor();
 
@@ -145,7 +145,7 @@ class _ClassesMainPage extends State<ClassesMainPage>
                           physics: BouncingScrollPhysics(),
                           crossAxisCount: 2,
                           childAspectRatio: 0.9,
-                          children: listSubjects.map((CoursesItem data) {
+                          children: listSubjects!.map((CoursesItem data) {
                             return GestureDetector(
                                 onTap: () {
                                   Navigator.push(
@@ -278,7 +278,7 @@ class _ClassesMainPage extends State<ClassesMainPage>
     );
   }
 
-  void getCourses(String searchValue) async {
+  void getCourses(String? searchValue) async {
 
     final body = jsonEncode({
       "institution_id": 2,

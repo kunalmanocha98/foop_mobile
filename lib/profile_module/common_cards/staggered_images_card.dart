@@ -18,14 +18,14 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 // ignore: must_be_immutable
 class StaggeredImagesCard extends StatelessWidget {
   final CommonCardData data;
-  List<SubRow> listSubItems = [];
-  BuildContext context;
-  final String instId;
-  TextStyleElements styleElements;
-  Null Function() callbackPicker;
-  int id;
+  List<SubRow>? listSubItems = [];
+  BuildContext? context;
+  final String? instId;
+  TextStyleElements? styleElements;
+  Null Function()? callbackPicker;
+  int? id;
 
-  String personType;
+  String? personType;
   Size displaySize(BuildContext context) {
     debugPrint('Size = ' + MediaQuery.of(context).size.toString());
     return MediaQuery.of(context).size;
@@ -36,7 +36,7 @@ class StaggeredImagesCard extends StatelessWidget {
           PopupMenuItem(
             value: 1,
             child:
-                Text(AppLocalizations.of(context).translate('add_new_subject')),
+                Text(AppLocalizations.of(context)!.translate('add_new_subject')),
           ),
         ],
         onSelected: (value) async {
@@ -60,8 +60,8 @@ class StaggeredImagesCard extends StatelessWidget {
   }
 
   StaggeredImagesCard(
-      {Key key,
-      @required this.data,
+      {Key? key,
+      required this.data,
       this.styleElements,
       this.callbackPicker,
         this.personType,
@@ -89,7 +89,7 @@ class StaggeredImagesCard extends StatelessWidget {
                         left: 16, right: 16, top: 12, bottom: 12),
                     child: Text(
                       data.title ?? "",
-                      style: styleElements
+                      style: styleElements!
                           .headline6ThemeScalable(context)
                           .copyWith(
                               fontWeight: FontWeight.bold,
@@ -115,8 +115,8 @@ class StaggeredImagesCard extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.only(
                   left: 16, right: 16, top: 12, bottom: 12),
-              child: Text(AppLocalizations.of(context).translate('photos'),
-                style: styleElements
+              child: Text(AppLocalizations.of(context)!.translate('photos'),
+                style: styleElements!
                     .subtitle1ThemeScalable(context)
                     .copyWith(
                     fontWeight: FontWeight.bold,
@@ -125,7 +125,7 @@ class StaggeredImagesCard extends StatelessWidget {
               ),
             )),
 
-        listSubItems.isNotEmpty
+        listSubItems!.isNotEmpty
             ? Container(
                 margin: const EdgeInsets.only(left: 12, right: 12, top: 8),
                 child:  StaggeredGridView.count(
@@ -144,12 +144,12 @@ class StaggeredImagesCard extends StatelessWidget {
                     StaggeredTile.count(1, 1)
                   ],
                   children: [
-                    tile(listSubItems.length>0?Config.BASE_URL+listSubItems[0].textOne??"":""),
-                    tile(listSubItems.length>1?Config.BASE_URL+listSubItems[1].textOne??"":""),
-                    tile(listSubItems.length>2?Config.BASE_URL+listSubItems[2].textOne??"":""),
-                    tile(listSubItems.length>3?Config.BASE_URL+listSubItems[3].textOne??"":""),
-                    tile(listSubItems.length>4?Config.BASE_URL+listSubItems[4].textOne??"":""),
-                    tile(listSubItems.length>5?Config.BASE_URL+listSubItems[5].textOne??"":""),
+                    tile(listSubItems!.length>0?Config.BASE_URL+listSubItems![0].textOne!:""),
+                    tile(listSubItems!.length>1?Config.BASE_URL+listSubItems![1].textOne!:""),
+                    tile(listSubItems!.length>2?Config.BASE_URL+listSubItems![2].textOne!:""),
+                    tile(listSubItems!.length>3?Config.BASE_URL+listSubItems![3].textOne!:""),
+                    tile(listSubItems!.length>4?Config.BASE_URL+listSubItems![4].textOne!:""),
+                    tile(listSubItems!.length>5?Config.BASE_URL+listSubItems![5].textOne!:""),
                   ],
                 ))
             : GestureDetector(
@@ -188,11 +188,11 @@ class StaggeredImagesCard extends StatelessWidget {
               child: Container(
                 margin: const EdgeInsets.only(right: 16, bottom: 16,top: 16),
                 child: Visibility(
-                  visible: listSubItems.isNotEmpty,
+                  visible: listSubItems!.isNotEmpty,
                   child: Align(
                     alignment: Alignment.bottomRight,
-                    child:Text(AppLocalizations.of(context).translate('see_more'),
-                      style: styleElements.subtitle2ThemeScalable(context),
+                    child:Text(AppLocalizations.of(context)!.translate('see_more'),
+                      style: styleElements!.subtitle2ThemeScalable(context),
                       textAlign: TextAlign.center,
                     ),
                   ),
@@ -214,7 +214,7 @@ return  Card(
     child: Container(
       child:
       CachedNetworkImage(
-        imageUrl: url ?? "",
+        imageUrl: url,
         placeholder: (context, url) => Center(
             child:  Image.asset(
               'assets/appimages/image_place.png',

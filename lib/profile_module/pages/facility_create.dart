@@ -24,13 +24,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class CreateFacilities extends StatefulWidget {
-  String url;
-  String id;
+  String? url;
+  String? id;
 
   CreateFacilities({
-    Key key,
-    @required this.url,
-    @required this.id,
+    Key? key,
+    required this.url,
+    required this.id,
   }) : super(key: key);
   @override
   _CreateFacility createState() => _CreateFacility(
@@ -41,23 +41,23 @@ class CreateFacilities extends StatefulWidget {
 }
 
 class _CreateFacility extends State<CreateFacilities> {
-  String url;
-  String id;
+  String? url;
+  String? id;
   var imageFile;
-  String type;
-  String imageUrl;
-  String studentType;
-  ProgressDialog pr;
-  SharedPreferences prefs;
-  BuildContext context;
-  File imagePath;
-  String selectPath;
-  List<DropDownItem> items = [];
-  int selectedIndTypeId;
-  String selectedIndType;
-  String selectedIndTypeCode;
+  String? type;
+ late String? imageUrl;
+  String? studentType;
+  ProgressDialog? pr;
+  late SharedPreferences prefs;
+ late BuildContext context;
+  File? imagePath;
+  String? selectPath;
+  List<DropDownItem>? items = [];
+  int? selectedIndTypeId;
+  String? selectedIndType;
+  String? selectedIndTypeCode;
   GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
-  _CreateFacility(String url, String id) {
+  _CreateFacility(String? url, String? id) {
     this.imageUrl = url;
     this.id = id;
   }
@@ -80,7 +80,7 @@ class _CreateFacility extends State<CreateFacilities> {
     });
   }
 
-  void createFacility(String desc, String name,int selectedId,String selectedIndTypeCode) async {
+  void createFacility(String desc, String name,int? selectedId,String? selectedIndTypeCode) async {
 
     final body = jsonEncode({
       "institution_id":prefs.getInt("instituteId") ,
@@ -90,10 +90,10 @@ class _CreateFacility extends State<CreateFacilities> {
       "image_url": imageUrl,
       "facility_type_id": selectedId
     });
-    progressButtonKey.currentState.show();
+    progressButtonKey.currentState!.show();
     Calls().call(body, context, Config.CREATE_FACILITY).then((value) async {
       if (value != null) {
-        progressButtonKey.currentState.hide();
+        progressButtonKey.currentState!.hide();
         var data = BlankResponse.fromJson(value);
         if (data != null && data.statusCode == 'S10001') {
           Navigator.of(context).pop({'result': "imageUrl"});
@@ -106,7 +106,7 @@ class _CreateFacility extends State<CreateFacilities> {
 
       }
     }).catchError((onError) async {
-      progressButtonKey.currentState.hide();
+      progressButtonKey.currentState!.hide();
       ToastBuilder().showToast(onError.toString(), context,HexColor(AppColors.information));
     });
   }
@@ -123,11 +123,12 @@ class _CreateFacility extends State<CreateFacilities> {
   }
 
   // ignore: missing_return
-  Future<bool> _onBackPressed() {
+  Future<bool>_onBackPressed() {
     Navigator.of(context).pop({'result': imageUrl});
+    return new Future(() => false);
   }
 
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
   var itemsIndustry = <String>[];
   List<Widget> actions = [];
   final facilityNameCon = TextEditingController();
@@ -153,13 +154,13 @@ class _CreateFacility extends State<CreateFacilities> {
     }
     List<DropdownMenuItem> _genderValues = [];
     _getGenderValues() {
-      for (int i = 0; i < items.length; i++) {
+      for (int i = 0; i < items!.length; i++) {
         _genderValues.add(DropdownMenuItem(
           child: Text(
-            items[i].description,
+            items![i].description!,
             style: styleElements.bodyText2ThemeScalable(context),
           ),
-          value: items[i],
+          value: items![i],
         ));
       }
       return _genderValues;
@@ -185,7 +186,7 @@ class _CreateFacility extends State<CreateFacilities> {
           contentPadding: EdgeInsets.fromLTRB(8.0, 0.0, 20.0, 0.0),
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
           hintText:
-          AppLocalizations.of(context).translate("describe_facility")),
+          AppLocalizations.of(context)!.translate("describe_facility")),
     );
     final facilityName = TextField(
       controller: facilityNameCon,
@@ -196,7 +197,7 @@ class _CreateFacility extends State<CreateFacilities> {
       ),
       textCapitalization: TextCapitalization.words,
       decoration: InputDecoration(
-          hintText: AppLocalizations.of(context).translate('facility_name'),
+          hintText: AppLocalizations.of(context)!.translate('facility_name'),
           hintStyle: styleElements
               .bodyText2ThemeScalable(context)
               .copyWith(fontSize: 14.sp,
@@ -207,15 +208,19 @@ class _CreateFacility extends State<CreateFacilities> {
             ),
           )),
     );
-    final facType = DropdownButtonFormField(
+    final facType =
+
+
+
+    DropdownButtonFormField<dynamic>(
       value: null,
       hint: Text(
-        selectedIndType??  AppLocalizations.of(context).translate("facility_type"),
+        selectedIndType??  AppLocalizations.of(context)!.translate("facility_type"),
         style: styleElements.bodyText2ThemeScalable(context),
       ),
-      items: items != null && items.isNotEmpty ? _getGenderValues() : null,
-      onChanged: (value) {
-        print(value.facilityTypeId.toString()+"UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
+      items: items != null && items!.isNotEmpty ? _getGenderValues() : null,
+      onChanged: ( value)  async{
+        value as DropDownItem;
         setState(() {
           selectedIndTypeId = value.facilityTypeId ?? selectedIndTypeId;
           selectedIndType = value.description ?? selectedIndType;
@@ -231,7 +236,7 @@ class _CreateFacility extends State<CreateFacilities> {
           child:
           FadeInImage.assetNetwork(
             placeholder: 'assets/appimages/image_place.png',
-            image:Config.BASE_URL + imageUrl ?? "",
+            image:Config.BASE_URL + imageUrl!,
             fit: BoxFit.cover,
           )
 
@@ -258,7 +263,7 @@ class _CreateFacility extends State<CreateFacilities> {
               resizeToAvoidBottomInset: true,
               backgroundColor: HexColor(AppColors.appColorBackground),
               appBar: TricycleAppBar().getCustomAppBar(context,
-                  appBarTitle: AppLocalizations.of(context).translate('create'),
+                  appBarTitle: AppLocalizations.of(context)!.translate('create'),
                   actions: actions, onBackButtonPress: () {
                     _onBackPressed();
                   }),
@@ -288,7 +293,7 @@ class _CreateFacility extends State<CreateFacilities> {
                               Padding(
                                 padding: const EdgeInsets.only(
                                     left: 8.0, right: 8.0, top: 8.0),
-                                child: Text(AppLocalizations.of(context).translate('facility_name'),
+                                child: Text(AppLocalizations.of(context)!.translate('facility_name'),
                                   style: styleElements
                                       .bodyText2ThemeScalable(context)
                                       .copyWith(
@@ -320,7 +325,7 @@ class _CreateFacility extends State<CreateFacilities> {
                                 padding: const EdgeInsets.only(
                                     left: 8.0, right: 8.0, top: 8.0),
                                 child: Text(
-                                  AppLocalizations.of(context)
+                                  AppLocalizations.of(context)!
                                       .translate("facility_type"),
                                   style: styleElements
                                       .bodyText2ThemeScalable(context)
@@ -352,7 +357,7 @@ class _CreateFacility extends State<CreateFacilities> {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  AppLocalizations.of(context)
+                                  AppLocalizations.of(context)!
                                       .translate("description"),
                                   style: styleElements
                                       .bodyText2ThemeScalable(context)
@@ -423,7 +428,7 @@ class _CreateFacility extends State<CreateFacilities> {
                                               createFacility(descriptionController.text, facilityNameCon.text,selectedIndTypeId,selectedIndTypeCode);
                                             },
                                             color: HexColor(AppColors.appColorWhite),
-                                            child: Text(AppLocalizations.of(context).translate('next'),
+                                            child: Text(AppLocalizations.of(context)!.translate('next'),
                                               style: styleElements
                                                   .subtitle2ThemeScalable(context)
                                                   .copyWith(

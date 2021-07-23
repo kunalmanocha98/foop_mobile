@@ -42,13 +42,13 @@ class LoginPage extends StatefulWidget {
 
 // ignore: must_be_immutable
 class StateLoginPage extends State<LoginPage> {
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
   final emailController = TextEditingController();
   final passwordTextController = TextEditingController();
-  BuildContext context;
-  BuildContext sctx;
+  late BuildContext context;
+  late BuildContext sctx;
 
-  SharedPreferences prefs;
+  SharedPreferences? prefs;
   bool isCalling = false;
 
   @override
@@ -56,10 +56,10 @@ class StateLoginPage extends State<LoginPage> {
     super.initState();
   }
 
-  static Future<List<String>> getDeviceDetails(SharedPreferences prefs) async {
-    String deviceName;
-    String deviceVersion;
-    String identifier;
+  static Future<List<String?>> getDeviceDetails(SharedPreferences? prefs) async {
+    String? deviceName;
+    String? deviceVersion;
+    String? identifier;
     DeviceInfo deviceInfo;
     final DeviceInfoPlugin deviceInfoPlugin = new DeviceInfoPlugin();
     try {
@@ -68,7 +68,7 @@ class StateLoginPage extends State<LoginPage> {
         var build = await deviceInfoPlugin.androidInfo;
         deviceName = build.model;
         deviceVersion = build.version.toString();
-        prefs.setString('UUID', build.androidId); //UUID for Android
+        prefs!.setString('UUID', build.androidId); //UUID for Android
         deviceInfo.machineCode = build.androidId;
         deviceInfo.deviceInfo = build.device;
         deviceInfo.deviceType = "android";
@@ -90,7 +90,7 @@ class StateLoginPage extends State<LoginPage> {
         deviceInfo.osVersion = data.systemVersion.toString();
         deviceInfo.applicationType = "flutter ios";
         var dataIos = jsonEncode(deviceInfo);
-        prefs.setString("DeviceInfo", dataIos);
+        prefs!.setString("DeviceInfo", dataIos);
       }
     } on PlatformException {
       print('Failed to get platform version');
@@ -102,25 +102,25 @@ class StateLoginPage extends State<LoginPage> {
 
   void login() async {
     DeviceInfo deviceInfo = DeviceInfo();
-    if (prefs.getString("DeviceInfo") != null) {
-      Map<String, dynamic> map = json.decode(prefs.getString("DeviceInfo") ?? "");
+    if (prefs!.getString("DeviceInfo") != null) {
+      Map<String, dynamic> map = json.decode(prefs!.getString("DeviceInfo") ?? "");
       deviceInfo = DeviceInfo.fromJson(map);
     }
 
-    if (prefs.getDouble("lat") != null && deviceInfo != null)
+    if (prefs!.getDouble("lat") != null && deviceInfo != null)
       deviceInfo.gpsInfo = "Latitude :" +
-          prefs.getDouble("lat").toString() +
+          prefs!.getDouble("lat").toString() +
           ", Longitude : " +
-          prefs.getDouble("longi").toString();
+          prefs!.getDouble("longi").toString();
 
     if (Platform.isAndroid &&
-        prefs.getString("fcmId") != null &&
+        prefs!.getString("fcmId") != null &&
         deviceInfo != null)
-      deviceInfo.fcmId = prefs.getString("fcmId");
+      deviceInfo.fcmId = prefs!.getString("fcmId");
     else {
       deviceInfo.deviceType = "ios";
-      if (prefs.getString("fcmId") != null)
-        deviceInfo.fcmId = prefs.getString("fcmId");
+      if (prefs!.getString("fcmId") != null)
+        deviceInfo.fcmId = prefs!.getString("fcmId");
       deviceInfo.applicationType = "flutter ios";
     }
 
@@ -141,16 +141,16 @@ class StateLoginPage extends State<LoginPage> {
             var data = LoginResponse.fromJson(value);
             if (data.statusCode == Strings.success_code) {
               print('printing success message ');
-              if (data.rows.expiry != null)
-                await prefs.setString('expiry', data.rows.expiry ?? "");
-              if (data.rows.token != null) {
-                await prefs.setString('token', data.rows.token ?? "");
+              if (data.rows!.expiry != null)
+                await prefs!.setString('expiry', data.rows!.expiry ?? "");
+              if (data.rows!.token != null) {
+                await prefs!.setString('token', data.rows!.token ?? "");
                 getPersonProfile(context);
               }
             } else {
               if (data.message != null) {
                 ToastBuilder().showSnackBar(
-                    data.message, sctx, HexColor(AppColors.information));
+                    data.message!, sctx, HexColor(AppColors.information));
               }
             }
           }
@@ -164,12 +164,12 @@ class StateLoginPage extends State<LoginPage> {
         });
       } else
         ToastBuilder().showSnackBar(
-            AppLocalizations.of(context).translate("login_password_empty"),
+            AppLocalizations.of(context)!.translate("login_password_empty"),
             sctx,
             HexColor(AppColors.information));
     } else
       ToastBuilder().showSnackBar(
-          AppLocalizations.of(context).translate("login_username_empty"),
+          AppLocalizations.of(context)!.translate("login_username_empty"),
           sctx,
           HexColor(AppColors.information));
   }
@@ -179,7 +179,7 @@ class StateLoginPage extends State<LoginPage> {
     // _getCurrentLocation();
     FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
     _firebaseMessaging.getToken().then((token) {
-      prefs.setString("fcmId", token);
+      prefs!.setString("fcmId", token!);
       getDeviceDetails(prefs);
     });
   }
@@ -231,7 +231,7 @@ class StateLoginPage extends State<LoginPage> {
         ],
         decoration: InputDecoration(
             contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-            hintText: AppLocalizations.of(context).translate('email'),
+            hintText: AppLocalizations.of(context)!.translate('email'),
             hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(
                 color: HexColor(AppColors.appColorBlack35)
             ),
@@ -248,7 +248,7 @@ class StateLoginPage extends State<LoginPage> {
               ),
             )),
         validator: EditProfileMixins().validateEmail,
-        onSaved: (String value) {},
+        onSaved: (String? value) {},
       ),
     );
     final passwordField = TextField(
@@ -293,7 +293,7 @@ class StateLoginPage extends State<LoginPage> {
                               height: 72.h, width: 72.h)),
                       Container(
                         child: Text(
-                          AppLocalizations.of(context).translate("sign_in"),
+                          AppLocalizations.of(context)!.translate("sign_in"),
                           style: styleElements.headline5ThemeScalable(context),
                         ),
                       ),
@@ -330,7 +330,7 @@ class StateLoginPage extends State<LoginPage> {
                               padding: EdgeInsets.only(
                                   top: 8.h, bottom: 16.h, right: 32.w),
                               child: Text(
-                                AppLocalizations.of(context)
+                                AppLocalizations.of(context)!
                                     .translate("forgot_pass"),
                                 style: styleElements
                                     .subtitle2ThemeScalable(context)
@@ -350,7 +350,7 @@ class StateLoginPage extends State<LoginPage> {
                                     padding: const EdgeInsets.all(16.0),
                                     child: Center(
                                       child: Text(
-                                        AppLocalizations.of(context)
+                                        AppLocalizations.of(context)!
                                             .translate("log_in"),
                                         style: styleElements
                                             .subtitle2ThemeScalable(context)
@@ -413,20 +413,20 @@ class StateLoginPage extends State<LoginPage> {
               setState(() {
                 isCalling = false;
               });
-              Persondata persondata = data.rows;
+              Persondata? persondata = data.rows;
               DataSaveUtils().saveUserData(prefs, persondata);
-              if(data.rows.firstName !=null && data.rows.firstName.isNotEmpty) {
-                if (data.rows.institutions != null &&
-                    data.rows.institutions.isNotEmpty &&
-                    isProfileCreated(data.rows.institutions)) {
-                  prefs.setBool("isProfileCreated", true);
-                  prefs.setBool("isProfileUpdated", true);
+              if(data.rows!.firstName !=null && data.rows!.firstName!.isNotEmpty) {
+                if (data.rows!.institutions != null &&
+                    data.rows!.institutions!.isNotEmpty &&
+                    isProfileCreated(data.rows!.institutions!)) {
+                  prefs!.setBool("isProfileCreated", true);
+                  prefs!.setBool("isProfileUpdated", true);
                   Navigator.of(context).pushAndRemoveUntil(
                       MaterialPageRoute(builder: (context) => DashboardPage()),
                           (Route<dynamic> route) => false);
                 }
                 else {
-                  if (data.rows.firstName != null)
+                  if (data.rows!.firstName != null)
                     Navigator.of(context).pushAndRemoveUntil(
                         MaterialPageRoute(
                             builder: (context) => WelComeScreen()),

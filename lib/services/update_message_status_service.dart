@@ -8,9 +8,9 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 class UpdateMessageStatusService {
   // final NavigationService _navigationService = locator<NavigationService>();
 
-  void updateMessagesStatus(DatabaseHelper db, String conversationId,
+  void updateMessagesStatus(DatabaseHelper db,bool isVisible, String conversationId,
       String userId, IO.Socket socket,String messageToId,String messageWithType) async {
-    List<MessagePayloadDatabase> listMessages =
+    List<MessagePayloadDatabase>? listMessages =
         await db.getMessages(conversationId);
 
     if (listMessages != null && listMessages.length > 0) {

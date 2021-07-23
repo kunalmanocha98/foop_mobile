@@ -8,13 +8,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 // ignore: must_be_immutable
 class Component51 extends StatefulWidget {
   Component51({
-    Key key,
+    Key? key,
     this.name,
-    @required this.callback,
-    double offsetX,
-    double offsetY,
+    required this.callback,
+    double? offsetX,
+    double? offsetY,
   }) : super(key: key);
-  final String name;
+  final String? name;
   Function callback;
 
   @override
@@ -23,8 +23,8 @@ class Component51 extends StatefulWidget {
 
 class _Component51State extends State<Component51> {
   Function callback;
-  _Component51State({@required this.callback});
-  TextStyleElements styleElements;
+  _Component51State({required this.callback});
+  late TextStyleElements styleElements;
   @override
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
@@ -42,7 +42,7 @@ class _Component51State extends State<Component51> {
             color: HexColor(AppColors.appColorWhite),
             child: Center(
               child: Text(
-                this.widget.name,
+                this.widget.name!,
                 style:
                 styleElements.subtitle2ThemeScalable(context)
                     .copyWith(color: HexColor(AppColors.appMainColor), fontSize: 14.sp),

@@ -13,14 +13,14 @@ import 'package:flutter/material.dart';
 class CustomPaginator {
 
   BuildContext context;
-  List<dynamic> listItemsGetter(dynamic response) {
+  List<dynamic>? listItemsGetter(dynamic response) {
     return response.rows;
   }
-  List<dynamic> listItemsGetterPhotos(dynamic response) {
+  List<dynamic>? listItemsGetterPhotos(dynamic response) {
     return response.rows[0].subRow;
   }
-  List<Persons> getPersons(FollowersListItemEntity response) {
-    return response.rows!=null ?response.rows.persons:null;
+  List<Persons>? getPersons(FollowersListItemEntity response) {
+    return response.rows!=null ?response.rows!.persons:null;
   }
   Widget loadingWidgetMaker() {
     return Container(
@@ -57,7 +57,7 @@ class CustomPaginator {
         TricycleElevatedButton(
           onPressed: retryListener,
           color: HexColor(AppColors.appColorWhite),
-          child: Text(AppLocalizations.of(context).translate('retry'),style: TextStyleElements(context).buttonThemeScalable(context).copyWith(color: HexColor(AppColors.appMainColor)),),
+          child: Text(AppLocalizations.of(context)!.translate('retry'),style: TextStyleElements(context).buttonThemeScalable(context).copyWith(color: HexColor(AppColors.appMainColor)),),
         )
       ],
     );
@@ -69,10 +69,10 @@ class CustomPaginator {
     );
   }
 
-  Widget emptyListWidgetMaker(dynamic response,{String message,String assetImage}) {
+  Widget emptyListWidgetMaker(dynamic response,{String? message,String? assetImage}) {
     return Center(
       child: TricycleEmptyWidget(
-          message: message!=null?message:AppLocalizations.of(context)
+          message: message!=null?message:AppLocalizations.of(context)!
               .translate('no_data'),
         assetImage: assetImage,
 
@@ -80,7 +80,7 @@ class CustomPaginator {
     );
   }
 
-  int totalPagesGetter(dynamic response) {
+  int? totalPagesGetter(dynamic response) {
     return response.total;
   }
 

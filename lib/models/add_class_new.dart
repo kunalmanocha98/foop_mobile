@@ -1,17 +1,17 @@
 class AddClassNew {
-  int personId;
-  String id;
-  String institutionId;
-  String personType;
-  String institutionCourse;
-  List<String> institutionSubject;
-  String institutionAcademicYearId;
-  String standardExpertiseCategoryId;
-  String institutionClassId;
-  List<String> abilities;
-  List<String> goals;
-  int givenById;
-int sectionId;
+  int? personId;
+  String? id;
+  String? institutionId;
+  String? personType;
+  String? institutionCourse;
+  List<String>? institutionSubject;
+  String? institutionAcademicYearId;
+  String? standardExpertiseCategoryId;
+  String? institutionClassId;
+  List<String?>? abilities;
+  List<String?>? goals;
+  int? givenById;
+int? sectionId;
   AddClassNew(
       {this.personId,
         this.institutionId,

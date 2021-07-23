@@ -1,16 +1,16 @@
 class RegisterUserPayload {
-  String fbId;
-  String googleId;
-  String firstName;
-  String lastName;
-  String email;
-  String password;
-  int mobile;
-  int gender;
-  String dob;
-  int token;
-  String reason;
-String mobileCountryCode;
+  String? fbId;
+  String? googleId;
+  String? firstName;
+  String? lastName;
+  String? email;
+  String? password;
+  int? mobile;
+  int? gender;
+  String? dob;
+  int? token;
+  String? reason;
+String? mobileCountryCode;
   RegisterUserPayload(
       {this.firstName,
       this.lastName,

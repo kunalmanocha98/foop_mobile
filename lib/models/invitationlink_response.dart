@@ -1,8 +1,8 @@
 class InvitationResponse {
-  String statusCode;
-  String message;
-  Rows rows;
-  int total;
+  String? statusCode;
+  String? message;
+  Rows? rows;
+  int? total;
 
   InvitationResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -18,7 +18,7 @@ class InvitationResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     data['total'] = this.total;
     return data;
@@ -26,9 +26,9 @@ class InvitationResponse {
 }
 
 class Rows {
-  String invitationCode;
-  String invitationLink;
-  String invitationText;
+  String? invitationCode;
+  String? invitationLink;
+  String? invitationText;
   Rows({this.invitationCode, this.invitationLink});
 
   Rows.fromJson(Map<String, dynamic> json) {

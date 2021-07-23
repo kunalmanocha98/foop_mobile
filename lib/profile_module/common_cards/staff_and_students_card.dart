@@ -8,7 +8,7 @@ import 'overlaped_circular_images.dart';
 // ignore: must_be_immutable
 class StaffAndStudentsCard extends StatelessWidget {
   final CommonCardData data;
-  TextStyleElements styleElements;
+  TextStyleElements? styleElements;
   Size displaySize(BuildContext context) {
     debugPrint('Size = ' + MediaQuery.of(context).size.toString());
     return MediaQuery.of(context).size;
@@ -24,7 +24,7 @@ class StaffAndStudentsCard extends StatelessWidget {
     return displaySize(context).width;
   }
 
-  StaffAndStudentsCard({Key key, @required this.data,this.styleElements}) : super(key: key);
+  StaffAndStudentsCard({Key? key, required this.data,this.styleElements}) : super(key: key);
 
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
@@ -41,7 +41,7 @@ class StaffAndStudentsCard extends StatelessWidget {
                     padding: const EdgeInsets.only(left: 16, right: 16,top:12,bottom:12),
                     child: Text(
                       data.title ?? "Staffs",
-                      style: styleElements.headline5ThemeScalable(context),
+                      style: styleElements!.headline5ThemeScalable(context),
                       textAlign: TextAlign.left,
                     ),
                   )),
@@ -73,7 +73,7 @@ class StaffAndStudentsCard extends StatelessWidget {
                         margin: const EdgeInsets.only(left: 16, top: 20),
                         child: Text(
                           data.textOne ??= "Staffs",
-                          style: styleElements.subtitle2ThemeScalable(context),
+                          style: styleElements!.subtitle2ThemeScalable(context),
                           textAlign: TextAlign.left,
                         ),
                       )),
@@ -84,7 +84,7 @@ class StaffAndStudentsCard extends StatelessWidget {
                             left: 16, top: 8, right: 16),
                         child: Text(
                           data.textTwo ??= "234",
-                          style: styleElements.bodyText1ThemeScalable(context).copyWith(fontWeight: FontWeight.w600),
+                          style: styleElements!.bodyText1ThemeScalable(context).copyWith(fontWeight: FontWeight.w600),
                           textAlign: TextAlign.left,
                         ),
                       )),
@@ -101,7 +101,7 @@ class StaffAndStudentsCard extends StatelessWidget {
                             left: 20, top: 20, right: 20),
                         child: Text(
                           data.textThree ??= "Student-Staff Ratio",
-                          style: styleElements.subtitle2ThemeScalable(context),
+                          style: styleElements!.subtitle2ThemeScalable(context),
                           textAlign: TextAlign.right,
                         ),
                       )),
@@ -112,7 +112,7 @@ class StaffAndStudentsCard extends StatelessWidget {
                             left: 20, top: 8, right: 20),
                         child: Text(
                           data.textFour ??= "26",
-                          style: styleElements.bodyText1ThemeScalable(context).copyWith(fontWeight: FontWeight.w600),
+                          style: styleElements!.bodyText1ThemeScalable(context).copyWith(fontWeight: FontWeight.w600),
                           textAlign: TextAlign.right,
                         ),
                       )),
@@ -136,7 +136,7 @@ class StaffAndStudentsCard extends StatelessWidget {
                     alignment: Alignment.topRight,
                     child: Text(
                       data.textFive ??= "2 techer 7 students",
-                      style: styleElements.subtitle2ThemeScalable(context),
+                      style: styleElements!.subtitle2ThemeScalable(context),
                       textAlign: TextAlign.left,
                     ),
                   )),
@@ -154,8 +154,8 @@ class StaffAndStudentsCard extends StatelessWidget {
               child: Align
                 (
                 alignment:  Alignment.bottomRight,
-                child:Text(AppLocalizations.of(context).translate('see_more'),
-                  style: styleElements.subtitle2ThemeScalable(context),
+                child:Text(AppLocalizations.of(context)!.translate('see_more'),
+                  style: styleElements!.subtitle2ThemeScalable(context),
                   textAlign: TextAlign.center,
                 ),
               ),

@@ -27,16 +27,16 @@ class BlockedUsersList extends StatefulWidget {
 }
 
 class _BlockedUsersList extends State<BlockedUsersList> {
-  String searchVal;
-  String personName;
-  String type;
-  int id;
-  String ownerType;
-  int ownerId;
-  Null Function() callback;
+  String? searchVal;
+  String? personName;
+  String? type;
+  int? id;
+  String? ownerType;
+  int? ownerId;
+  Null Function()? callback;
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
-  SharedPreferences prefs;
-  TextStyleElements styleElements;
+  late SharedPreferences prefs;
+  late TextStyleElements styleElements;
 
   void setSharedPreferences() async {
     refresh();
@@ -62,7 +62,7 @@ class _BlockedUsersList extends State<BlockedUsersList> {
   }
 
   refresh() {
-    paginatorKey.currentState.changeState(resetState: true);
+    paginatorKey.currentState!.changeState(resetState: true);
   }
 
 
@@ -75,9 +75,9 @@ class _BlockedUsersList extends State<BlockedUsersList> {
         resizeToAvoidBottomInset: true,
         backgroundColor: HexColor(AppColors.appColorBackground),
         appBar: TricycleAppBar().getCustomAppBar(context,
-            appBarTitle: AppLocalizations.of(context)
+            appBarTitle: AppLocalizations.of(context)!
                 .translate('blocked_users'), onBackButtonPress: () {
-              if (callback != null) callback();
+              if (callback != null) callback!();
               Navigator.pop(context);
             }),
         body: Container(
@@ -87,7 +87,7 @@ class _BlockedUsersList extends State<BlockedUsersList> {
                   SliverToBoxAdapter(
                     child: SearchBox(
                       onvalueChanged: onsearchValueChanged,
-                      hintText: AppLocalizations.of(context).translate('search'),
+                      hintText: AppLocalizations.of(context)!.translate('search'),
                     ),
                   )
                 ];
@@ -98,7 +98,7 @@ class _BlockedUsersList extends State<BlockedUsersList> {
                     margin: EdgeInsets.all(16),
                     child: ListTile(
                       title: Text(
-                        AppLocalizations.of(context).translate("blocked_user_des"),
+                        AppLocalizations.of(context)!.translate("blocked_user_des"),
                         style: styleElements
                             .bodyText2ThemeScalable(context)
                             .copyWith(fontSize: 12),
@@ -162,7 +162,7 @@ class _BlockedUsersList extends State<BlockedUsersList> {
                       : "institution",
                   userId: item.id != ownerId ? item.id : null,
                   callback: () {
-                    callback();
+                    callback!();
                   },
                   currentPosition: 1,
                   type: null,
@@ -188,7 +188,7 @@ class _BlockedUsersList extends State<BlockedUsersList> {
                                   : "institution",
                               userId: item.id != ownerId ? item.id : null,
                               callback: () {
-                                callback();
+                                callback!();
                               },
                               currentPosition: 1,
                               type: null,
@@ -236,7 +236,7 @@ class _BlockedUsersList extends State<BlockedUsersList> {
                       actionOnObjectType: item.listType,
                       actionOnObjectId: item.id,
                       engageFlag:
-                      AppLocalizations.of(context).translate('unblock'),
+                      AppLocalizations.of(context)!.translate('unblock'),
                       actionFlag: "N",
                       actionDetails: [],
                       personName: item.name ?? "",

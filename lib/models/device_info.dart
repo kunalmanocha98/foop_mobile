@@ -1,18 +1,18 @@
 class DeviceInfo {
-  String fcmId;
-  String deviceInfo;
-  String deviceType;
-  String deviceVendor;
-  String macId;
-  String browserType;
-  String browserVersion;
-  String osType;
-  String osVersion;
-  String manufacturer;
-  String location;
-  String gpsInfo;
-  String machineCode;
-  String applicationType;
+  String? fcmId;
+  String? deviceInfo;
+  String? deviceType;
+  String? deviceVendor;
+  String? macId;
+  String? browserType;
+  String? browserVersion;
+  String? osType;
+  String? osVersion;
+  String? manufacturer;
+  String? location;
+  String? gpsInfo;
+  String? machineCode;
+  String? applicationType;
 
   DeviceInfo(
       {this.fcmId,

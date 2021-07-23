@@ -1,8 +1,8 @@
 class GlobalCategoryList {
-  String statusCode;
-  String message;
-  List<Categoryies> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<Categoryies>? rows;
+  int? total;
 
   GlobalCategoryList({this.statusCode, this.message, this.rows, this.total});
 
@@ -12,7 +12,7 @@ class GlobalCategoryList {
     if (json['rows'] != null) {
       rows = [];//Categoryies>();
       json['rows'].forEach((v) {
-        rows.add(new Categoryies.fromJson(v));
+        rows!.add(new Categoryies.fromJson(v));
       });
     }
     total = json['total'];
@@ -23,7 +23,7 @@ class GlobalCategoryList {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -31,11 +31,11 @@ class GlobalCategoryList {
 }
 
 class Categoryies {
-  int id;
-  int standardExpertiseCategory;
-  int standardExpertiseCategoryTypes;
-  String expertiseAbilityCode;
-  String isSelected;
+  int? id;
+  int? standardExpertiseCategory;
+  int? standardExpertiseCategoryTypes;
+  String? expertiseAbilityCode;
+  String? isSelected;
 
   Categoryies(
       {this.id,

@@ -32,16 +32,16 @@ import 'chat_history_page.dart';
 
 // ignore: must_be_immutable
 class ChatRoomsPage extends StatefulWidget {
-  String type;
-  IO.Socket socket;
-  bool isForward;
-  Null Function() callBackNew;
-  Null Function() callBack;
-  Null Function(ConnectionItem) addConnectionCallBack;
-  Null Function(String) removeCallBack;
+  String? type;
+  IO.Socket? socket;
+  bool? isForward;
+  Null Function()? callBackNew;
+  Null Function()? callBack;
+  Null Function(ConnectionItem)? addConnectionCallBack;
+  Null Function(String)? removeCallBack;
 
   ChatRoomsPage(
-      {Key key,
+      {Key? key,
       this.type,
       this.socket,
       this.isForward,
@@ -57,19 +57,20 @@ class ChatRoomsPage extends StatefulWidget {
 }
 
 class _ChatRoomsPage extends State<ChatRoomsPage> {
-  bool isForward;
-  Null Function() callBackNew;
-  Null Function() callBack;
-  int ownerId;
-  String type;
-  IO.Socket socket;
-  String searchVal;
-  Null Function() callback;
+  bool? isForward;
+  Null Function()? callBackNew;
+  Null Function()? callBack;
+  int? ownerId;
+  String? type;
+  GlobalKey<ChatHistoryPageState> ch = GlobalKey();
+  IO.Socket? socket;
+  String? searchVal;
+  Null Function()? callback;
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
-  SharedPreferences prefs;
-  TextStyleElements styleElements;
-  Null Function(ConnectionItem) addConnectionCallBack;
-  Null Function(String) removeCallBack;
+  SharedPreferences? prefs;
+  TextStyleElements? styleElements;
+  Null Function(ConnectionItem)? addConnectionCallBack;
+  Null Function(String)? removeCallBack;
 
   void setSharedPreferences() async {
     refresh();
@@ -77,7 +78,7 @@ class _ChatRoomsPage extends State<ChatRoomsPage> {
 
   void setPref() async {
     prefs ??= await SharedPreferences.getInstance();
-    ownerId = prefs.getInt(Strings.userId);
+    ownerId = prefs!.getInt(Strings.userId);
     setState(() {});
   }
 
@@ -94,8 +95,8 @@ class _ChatRoomsPage extends State<ChatRoomsPage> {
   }
 
   refresh() {
-    paginatorKey.currentState.changeState(resetState: true);
-    if (callback != null) callback();
+    paginatorKey.currentState!.changeState(resetState: true);
+    if (callback != null) callback!();
   }
 
   @override
@@ -109,7 +110,7 @@ class _ChatRoomsPage extends State<ChatRoomsPage> {
           SliverToBoxAdapter(
             child: SearchBox(
               onvalueChanged: onsearchValueChanged,
-              hintText: AppLocalizations.of(context).translate('search'),
+              hintText: AppLocalizations.of(context)!.translate('search'),
             ),
           ),
         ];
@@ -133,16 +134,16 @@ class _ChatRoomsPage extends State<ChatRoomsPage> {
     prefs ??= await SharedPreferences.getInstance();
     RoomListPayload payload = RoomListPayload();
     payload.isPrivate = null;
-    payload.roomInstitutionId = prefs.getInt(Strings.instituteId);
-    payload.memberId = prefs.getInt(Strings.userId);
+    payload.roomInstitutionId = prefs!.getInt(Strings.instituteId);
+    payload.memberId = prefs!.getInt(Strings.userId);
     payload.memberType = "person";
     payload.pageSize = 20;
     payload.requestedByType = "person";
-    payload.requestedById = prefs.getInt(Strings.userId);
+    payload.requestedById = prefs!.getInt(Strings.userId);
     payload.isOwn = true;
     payload.pageNumber = page;
     payload.searchVal = searchVal;
-    payload.institutionId = prefs.getInt(Strings.instituteId);
+    payload.institutionId = prefs!.getInt(Strings.instituteId);
     var data = jsonEncode(payload);
     var value = await Calls().call(data, context, Config.ROOMS_LIST);
     return RoomListResponse.fromJson(value);
@@ -156,35 +157,37 @@ class _ChatRoomsPage extends State<ChatRoomsPage> {
       child: InkWell(
           onTap: () {
             if (value.membershipStatus == 'A') {
-              if (isForward==null || !isForward) {
+              if (isForward==null || !isForward!) {
                 Navigator.pop(context);
                 Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => new ChatHistoryPage(
+                          key: ch,
                             roomListItem: value,
                             conversationItem: null,
                             connectionItem: null,
                             socket: socket,
                             type:"normal",
+                            isVisible: true,
                             callBack: callback,
                             callBackNew: callBackNew)));
               }
               else
                 {
                   ConnectionItem connectionItem=ConnectionItem();
-                  connectionItem.connectionOwnerId = prefs.getInt(Strings.userId).toString();
+                  connectionItem.connectionOwnerId = prefs!.getInt(Strings.userId).toString();
                   connectionItem.connectionOwnerType = "person";
                   connectionItem.connectionCategory = "group";
                   connectionItem.allRoomsId = value.id;
                   connectionItem.isGroupConversation = true;
                   connectionItem.isSelected=true;
                   connectionItem.connectionName=value.roomName;
-                  addConnectionCallBack(connectionItem);
+                  addConnectionCallBack!(connectionItem);
                 }
             } else {
               ToastBuilder().showToast(
-                  AppLocalizations.of(context).translate("join_to_chat"),
+                  AppLocalizations.of(context)!.translate("join_to_chat"),
                   context,
                   HexColor(AppColors.success));
             }
@@ -227,11 +230,11 @@ class _ChatRoomsPage extends State<ChatRoomsPage> {
                           joingroup(value);
                         }).joinButton
                 : Visibility(
-                    visible: !value.isRequestedByMember,
+                    visible: !value.isRequestedByMember!,
                     child: RoomButtons(
                         context: context,
                         onPressed: () {
-                          if (!value.isRequestedByMember) {
+                          if (!value.isRequestedByMember!) {
                             joingroup(value);
                           }
                         }).joinButton),
@@ -242,7 +245,7 @@ class _ChatRoomsPage extends State<ChatRoomsPage> {
   void exitRoom(RoomListItem value) {
     MembershipRoleStatusPayload payload = MembershipRoleStatusPayload();
     payload.roomId = value.id;
-    payload.memberId = prefs.getInt(Strings.userId);
+    payload.memberId = prefs!.getInt(Strings.userId);
     payload.memberType = "person";
     payload.action = MEMBERSHIP_ROLE.remove.type;
     var body = jsonEncode(payload);
@@ -261,12 +264,12 @@ class _ChatRoomsPage extends State<ChatRoomsPage> {
   void joingroup(RoomListItem value) {
     MemberAddPayload payload = MemberAddPayload();
     payload.roomId = value.id;
-    payload.roomInstitutionId = prefs.getInt(Strings.instituteId);
+    payload.roomInstitutionId = prefs!.getInt(Strings.instituteId);
     payload.isAddAllMembers = false;
     List<MembersItem> list = [];
     MembersItem item = MembersItem();
     item.memberType = "person";
-    item.memberId = prefs.getInt(Strings.userId);
+    item.memberId = prefs!.getInt(Strings.userId);
     item.addMethod = MEMBER_ADD_METHOD.JOIN.type;
     list.add(item);
     payload.members = list;

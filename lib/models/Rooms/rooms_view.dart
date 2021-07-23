@@ -1,7 +1,7 @@
 import 'package:oho_works_app/models/Rooms/roomlistmodels.dart';
 
 class RoomViewRequest {
-  int id;
+  int? id;
 
   RoomViewRequest({this.id});
 
@@ -17,10 +17,10 @@ class RoomViewRequest {
 }
 
 class RoomViewResponse {
-  String statusCode;
-  String message;
-  RoomListItem rows;
-  int total;
+  String? statusCode;
+  String? message;
+  RoomListItem? rows;
+  int? total;
 
   RoomViewResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -36,7 +36,7 @@ class RoomViewResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     data['total'] = this.total;
     return data;

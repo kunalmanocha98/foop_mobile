@@ -23,11 +23,11 @@ import '../postrecieverlistpage.dart';
 // ignore: must_be_immutable
 class CampusNewsHelperPages extends StatefulWidget {
   final CAMPUS_NEWS_TYPE campus_news_type;
-  List<PostSubTypeListItem> selectedList;
-  PostCreatePayload postCreatePayload;
-  PostReceiverListItem selectedReceiverData;
-  Function callBack;
-  CampusNewsHelperPages(this.campus_news_type,{this.selectedList,this.postCreatePayload,@required this.selectedReceiverData,this.callBack});
+  List<PostSubTypeListItem>? selectedList;
+  PostCreatePayload? postCreatePayload;
+  PostReceiverListItem? selectedReceiverData;
+  Function? callBack;
+  CampusNewsHelperPages(this.campus_news_type,{this.selectedList,this.postCreatePayload,required this.selectedReceiverData,this.callBack});
 
   @override
   _CampusNewsHelperPages createState() => _CampusNewsHelperPages(list: selectedList);
@@ -39,13 +39,13 @@ enum CAMPUS_NEWS_TYPE {
 }
 
 class _CampusNewsHelperPages extends State<CampusNewsHelperPages> {
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
   List<PostSubTypeListItem> postSubTypeList =[];
-  List<PostSubTypeListItem> selectedList;
-  bool confirmation_first= false;
-  bool confirmation_second = false;
+  List<PostSubTypeListItem>? selectedList;
+  bool? confirmation_first= false;
+  bool? confirmation_second = false;
 
-  _CampusNewsHelperPages({List<PostSubTypeListItem> list}){
+  _CampusNewsHelperPages({List<PostSubTypeListItem>? list}){
     if(list==null){
       selectedList = [];
     }else{
@@ -64,7 +64,7 @@ class _CampusNewsHelperPages extends State<CampusNewsHelperPages> {
                 TricycleTextButton(
                 onPressed:() {
                   if(widget.campus_news_type==CAMPUS_NEWS_TYPE.assure) {
-                    if(confirmation_first && confirmation_second) {
+                    if(confirmation_first! && confirmation_second!) {
                       Navigator.of(context)
                           .push(MaterialPageRoute(
                           builder: (context) =>
@@ -80,10 +80,10 @@ class _CampusNewsHelperPages extends State<CampusNewsHelperPages> {
                       ToastBuilder().showToast('You need to approve the terms', context, HexColor(AppColors.information));
                     }
                   }else if(widget.campus_news_type==CAMPUS_NEWS_TYPE.topics){
-                    if(selectedList!=null && selectedList.length>0){
+                    if(selectedList!=null && selectedList!.length>0){
                       Navigator.pop(context,selectedList);
                     }else{
-                      ToastBuilder().showToast(AppLocalizations.of(context).translate('please_select_atleast'),
+                      ToastBuilder().showToast(AppLocalizations.of(context)!.translate('please_select_atleast'),
                           context,
                           HexColor(AppColors.information));
                     }
@@ -93,7 +93,7 @@ class _CampusNewsHelperPages extends State<CampusNewsHelperPages> {
                   direction: Axis.horizontal,
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: (widget.campus_news_type==CAMPUS_NEWS_TYPE.assure)?[
-                    Text( AppLocalizations.of(context).translate('next'),
+                    Text( AppLocalizations.of(context)!.translate('next'),
                       style: styleElements
                           .subtitle2ThemeScalable(context)
                           .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -102,7 +102,7 @@ class _CampusNewsHelperPages extends State<CampusNewsHelperPages> {
                         color: HexColor(AppColors.appMainColor))
                   ]:
                   [
-                    Text( AppLocalizations.of(context).translate('submit'),
+                    Text( AppLocalizations.of(context)!.translate('submit'),
                       style: styleElements
                           .subtitle2ThemeScalable(context)
                           .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -123,11 +123,11 @@ class _CampusNewsHelperPages extends State<CampusNewsHelperPages> {
 
   String getAppBarTitle() {
     if (widget.campus_news_type == CAMPUS_NEWS_TYPE.assure) {
-      return AppLocalizations.of(context).translate('assurance');
+      return AppLocalizations.of(context)!.translate('assurance');
     } else if (widget.campus_news_type == CAMPUS_NEWS_TYPE.topics) {
-      return AppLocalizations.of(context).translate('select_topics');
+      return AppLocalizations.of(context)!.translate('select_topics');
     } else {
-      return AppLocalizations.of(context).translate('help');
+      return AppLocalizations.of(context)!.translate('help');
     }
   }
 
@@ -149,7 +149,7 @@ class _CampusNewsHelperPages extends State<CampusNewsHelperPages> {
           mainAxisAlignment: MainAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(AppLocalizations.of(context).translate('confirmation'),
+            Text(AppLocalizations.of(context)!.translate('confirmation'),
               style: styleElements.subtitle1ThemeScalable(context).copyWith(
                   fontWeight: FontWeight.w600
               ),),
@@ -167,7 +167,7 @@ class _CampusNewsHelperPages extends State<CampusNewsHelperPages> {
                 Expanded(
                   child: Padding(
                     padding: EdgeInsets.only(top: 8.0),
-                    child: Text(AppLocalizations.of(context).translate('news_agree_1')),
+                    child: Text(AppLocalizations.of(context)!.translate('news_agree_1')),
                   ),
                 )
               ],
@@ -186,7 +186,7 @@ class _CampusNewsHelperPages extends State<CampusNewsHelperPages> {
                 Expanded(
                   child: Padding(
                     padding: EdgeInsets.only(top: 8.0),
-                    child: Text(AppLocalizations.of(context).translate('news_agree_2')),
+                    child: Text(AppLocalizations.of(context)!.translate('news_agree_2')),
                   ),
                 )
               ],
@@ -203,18 +203,18 @@ class _CampusNewsHelperPages extends State<CampusNewsHelperPages> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text(AppLocalizations.of(context).translate('news_from_other_sources'),
+          Text(AppLocalizations.of(context)!.translate('news_from_other_sources'),
             style: styleElements.subtitle1ThemeScalable(context).copyWith(
                 fontWeight: FontWeight.bold),),
           SizedBox(height: 8,),
-          Text(AppLocalizations.of(context).translate('news_other_des'),
+          Text(AppLocalizations.of(context)!.translate('news_other_des'),
             style: styleElements.bodyText2ThemeScalable(context),),
           SizedBox(height: 12,),
-          Text(AppLocalizations.of(context).translate('copyright_violation'),
+          Text(AppLocalizations.of(context)!.translate('copyright_violation'),
             style: styleElements.subtitle1ThemeScalable(context).copyWith(
                 fontWeight: FontWeight.bold),),
           SizedBox(height: 8,),
-          Text(AppLocalizations.of(context).translate('copyright_des'),
+          Text(AppLocalizations.of(context)!.translate('copyright_des'),
             style: styleElements.bodyText2ThemeScalable(context),),
         ],
       ),
@@ -243,16 +243,16 @@ class _CampusNewsHelperPages extends State<CampusNewsHelperPages> {
     return PostSubTypeListResponse.fromJson(value);
   }
 
-  List<PostSubTypeListItem> listItemsGetter(PostSubTypeListResponse pageData) {
-    var itr = pageData.rows.where((element){
-      return selectedList.any((element1){
+  List<PostSubTypeListItem>? listItemsGetter(PostSubTypeListResponse? pageData) {
+    var itr = pageData!.rows!.where((element){
+      return selectedList!.any((element1){
         return element1.postSubTypeName == element.postSubTypeName;
       });
     });
     itr.forEach((element) {
       element.isSelected = true;
     });
-    postSubTypeList.addAll(pageData.rows);
+    postSubTypeList.addAll(pageData.rows!);
     return pageData.rows;
   }
 
@@ -264,8 +264,8 @@ class _CampusNewsHelperPages extends State<CampusNewsHelperPages> {
       imageUrl:Config.BASE_URL+imageurl ,
       isFullImageUrl: true,
       trailingWidget: Checkbox(
-        onChanged: (bool value) {
-          changeSelection(value,item,index);
+        onChanged: (bool? value) {
+          changeSelection(value!,item,index);
         },
         value: item.isSelected??=false,
       ),
@@ -276,12 +276,12 @@ class _CampusNewsHelperPages extends State<CampusNewsHelperPages> {
   void changeSelection(bool value,PostSubTypeListItem item,int index) {
     if(value){
       setState(() {
-        selectedList.add(item);
+        selectedList!.add(item);
         postSubTypeList[index].isSelected = value;
       });
     }else{
       setState(() {
-        selectedList.removeWhere((element){
+        selectedList!.removeWhere((element){
           return element.postSubTypeName==item.postSubTypeName;
         });
         postSubTypeList[index].isSelected = value;

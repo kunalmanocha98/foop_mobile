@@ -1,9 +1,9 @@
 class ConnectionListResponseEntity {
-  String statusCode;
-  String message;
+  String? statusCode;
+  String? message;
 
-  List<ConnectionItem> rows;
-  int total;
+  List<ConnectionItem>? rows;
+  int? total;
 
   ConnectionListResponseEntity(
       {this.statusCode, this.message, this.rows, this.total});
@@ -15,7 +15,7 @@ class ConnectionListResponseEntity {
     if (json['rows'] != null) {
       rows = [];//ConnectionItem>();
       json['rows'].forEach((v) {
-        rows.add(new ConnectionItem.fromJson(v));
+        rows!.add(new ConnectionItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -27,7 +27,7 @@ class ConnectionListResponseEntity {
 
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -35,20 +35,20 @@ class ConnectionListResponseEntity {
 }
 
 class ConnectionItem {
-  bool isGroupConversation;
-  bool isSelected = false;
-  String connectionId;
-  String connectionOwnerType;
-  String connectionOwnerId;
-  String connectionName;
-  String connectionType;
-  String connectionMobile;
-  String connectionEmail;
-  String connectionSubTitle;
-  String connectionProfileThumbnailUrl;
-  String connectionCategory;
-  int allRoomsId;
-  int eventId;
+  bool? isGroupConversation;
+  bool? isSelected = false;
+  String? connectionId;
+  String? connectionOwnerType;
+  String? connectionOwnerId;
+  String? connectionName;
+  String? connectionType;
+  String? connectionMobile;
+  String? connectionEmail;
+  String? connectionSubTitle;
+  String? connectionProfileThumbnailUrl;
+  String? connectionCategory;
+  int? allRoomsId;
+  int? eventId;
 
   ConnectionItem(
       {this.allRoomsId,

@@ -10,11 +10,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class TricycleRequestCard extends StatefulWidget {
-  final String buttonTitle;
-  final Function onButtonClickCallback;
-  final String imageUrl;
-  final bool isContentVisible;
-  final bool isDetailPage;
+  final String? buttonTitle;
+  final Function? onButtonClickCallback;
+  final String? imageUrl;
+  final bool? isContentVisible;
+  final bool? isDetailPage;
 
   TricycleRequestCard(
       {this.buttonTitle,
@@ -29,7 +29,7 @@ class TricycleRequestCard extends StatefulWidget {
 }
 
 class TricycleRequestCardState extends State<TricycleRequestCard> {
-  bool isContentVisible;
+  bool? isContentVisible;
 
   TricycleRequestCardState({this.isContentVisible});
 
@@ -40,7 +40,7 @@ class TricycleRequestCardState extends State<TricycleRequestCard> {
     return TricycleCard(
       padding: EdgeInsets.all(0),
       margin: EdgeInsets.only(left: 8,right: 8,top: 8,bottom: 8),
-      onTap: (isContentVisible!=null && !isContentVisible)?null:widget.onButtonClickCallback,
+      onTap: (isContentVisible!=null && !isContentVisible!)?null:widget.onButtonClickCallback,
       // shape: RoundedRectangleBorder(
       //   borderRadius: BorderRadius.circular(6.0),
       // ),
@@ -50,7 +50,7 @@ class TricycleRequestCardState extends State<TricycleRequestCard> {
           mainAxisSize: MainAxisSize.min,
           children: [
             AspectRatio(
-              aspectRatio: (widget.isDetailPage!=null && widget.isDetailPage)?4/3:1,
+              aspectRatio: (widget.isDetailPage!=null && widget.isDetailPage!)?4/3:1,
               child: Container(
                 decoration: BoxDecoration(
                   shape: BoxShape.rectangle,
@@ -88,7 +88,7 @@ class TricycleRequestCardState extends State<TricycleRequestCard> {
                       TricycleElevatedButton(
                         onPressed: widget.onButtonClickCallback,
                         child: Text(
-                          widget.buttonTitle,
+                          widget.buttonTitle!,
                           style: styleElements
                               .buttonThemeScalable(context)
                               .copyWith(color: HexColor(AppColors.appColorWhite)),

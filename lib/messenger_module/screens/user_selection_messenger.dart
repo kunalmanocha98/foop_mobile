@@ -23,16 +23,16 @@ import 'chat_history_page.dart';
 
 // ignore: must_be_immutable
 class UserSelectionPageMessenger extends StatefulWidget {
-  IO.Socket socket;
-  String type;
-  bool isForward;
-  Null Function() callBackNew;
-  Null Function() callBack;
-  Null Function(ConnectionItem) addConnectionCallBack;
-  Null Function(String) removeCallBack;
+  IO.Socket? socket;
+  String? type;
+  bool? isForward;
+  Null Function()? callBackNew;
+  Null Function()? callBack;
+  Null Function(ConnectionItem)? addConnectionCallBack;
+  Null Function(String?)? removeCallBack;
 
   UserSelectionPageMessenger(
-      {Key key,
+      {Key? key,
         this.type, this.socket, this.isForward, this.callBack, this.callBackNew,this.addConnectionCallBack,this.removeCallBack})
       : super(key: key);
   @override
@@ -42,20 +42,21 @@ class UserSelectionPageMessenger extends StatefulWidget {
 
 class _UserSelectionPageMessenger extends State<UserSelectionPageMessenger>
     with AutomaticKeepAliveClientMixin<UserSelectionPageMessenger> {
-  IO.Socket socket;
-  String type;
-  bool isForward;
-  Null Function() callBack;
-  int ownerId;
-  String searchVal;
-  Null Function() callback;
+  IO.Socket? socket;
+  String? type;
+  bool? isForward;
+  Null Function()? callBack;
+  int? ownerId;
+  String? searchVal;
+  Null Function()? callback;
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
-  SharedPreferences prefs;
-  TextStyleElements styleElements;
+  late SharedPreferences prefs;
+  late TextStyleElements styleElements;
   List<ConnectionItem> connectionList = [];
   List<ConnectionItem> selectedConnections = [];
-  Null Function(ConnectionItem) addConnectionCallBack;
-  Null Function(String) removeCallBack;
+  Null Function(ConnectionItem)? addConnectionCallBack;
+  Null Function(String?)? removeCallBack;
+  GlobalKey<ChatHistoryPageState> ch = GlobalKey();
   @override
   bool get wantKeepAlive => true;
 
@@ -81,7 +82,7 @@ class _UserSelectionPageMessenger extends State<UserSelectionPageMessenger>
   }
 
   refresh() {
-    paginatorKey.currentState.changeState(resetState: true);
+    paginatorKey.currentState!.changeState(resetState: true);
   }
 
   @override
@@ -96,7 +97,7 @@ class _UserSelectionPageMessenger extends State<UserSelectionPageMessenger>
           SliverToBoxAdapter(
             child: SearchBox(
               onvalueChanged: onsearchValueChanged,
-              hintText: AppLocalizations.of(context).translate('search'),
+              hintText: AppLocalizations.of(context)!.translate('search'),
             ),
           ),
         ];
@@ -146,16 +147,18 @@ class _UserSelectionPageMessenger extends State<UserSelectionPageMessenger>
     return GestureDetector(
         behavior: HitTestBehavior.translucent,
         onTap: () {
-          if (!isForward) {
+          if (!isForward!) {
             Navigator.pop(context);
             Navigator.push(
                 context,
                 MaterialPageRoute(
                     builder: (ctx) => new ChatHistoryPage(
+                      key: ch,
                         conversationItem: null,
                         connectionItem: item,
                         socket: socket,
                         type:"normal",
+                        isVisible: true,
                         callBack: callBack,
                         callBackNew: callBackNew)));
           }
@@ -185,21 +188,21 @@ class _UserSelectionPageMessenger extends State<UserSelectionPageMessenger>
                       overflow: TextOverflow.ellipsis,
                       style: styleElements.captionThemeScalable(context))
                   : null,
-              trailing: isForward
+              trailing: isForward!
                   ? Checkbox(
                       activeColor: HexColor(AppColors.appMainColor),
                       value: item.isSelected,
                       onChanged: (val) {
                         if (this.mounted) {
                           setState(() {
-                            if (val) {
+                            if (val!) {
                               item.isSelected = true;
-                              if (isForward) addConnectionCallBack(item);
+                              if (isForward!) addConnectionCallBack!(item);
                               connectionList.add(item);
                               setState(() {});
                             } else {
                               item.isSelected = false;
-                              if (isForward) removeCallBack(item.connectionId);
+                              if (isForward!) removeCallBack!(item.connectionId);
                               // removeItem(item.connectionId);
                               setState(() {});
                             }
@@ -213,7 +216,7 @@ class _UserSelectionPageMessenger extends State<UserSelectionPageMessenger>
         ));
   }
 
-  Null Function() callBackNew;
+  Null Function()? callBackNew;
 
   _UserSelectionPageMessenger(
       this.type, this.socket, this.isForward, this.callBack, this.callBackNew,this.addConnectionCallBack,this.removeCallBack);

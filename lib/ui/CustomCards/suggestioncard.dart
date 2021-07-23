@@ -18,11 +18,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 // ignore: must_be_immutable
 class SuggestionCard extends StatelessWidget {
   CommonCardData data;
-  TextStyleElements styleElements;
-  String ownerType;
-  int ownerId;
-  Null Function() callbackPicker;
-  SuggestionCard({Key key, @required this.data,this.ownerType,this.ownerId,this.callbackPicker}) : super(key: key);
+  late TextStyleElements styleElements;
+  String? ownerType;
+  int? ownerId;
+  Null Function()? callbackPicker;
+  SuggestionCard({Key? key, required this.data,this.ownerType,this.ownerId,this.callbackPicker}) : super(key: key);
   List<Data> items=[];
 
   Size displaySize(BuildContext context) {
@@ -65,7 +65,7 @@ class SuggestionCard extends StatelessWidget {
                                 top: 12.h,
                                 bottom: 12.h),
                             child: Text(
-                             AppLocalizations.of(context).translate("suggestions"),
+                             AppLocalizations.of(context)!.translate("suggestions"),
                               style: styleElements
                                   .headline6ThemeScalable(context)
                                   .copyWith(
@@ -95,7 +95,7 @@ class SuggestionCard extends StatelessWidget {
                                         ));
                                 },
                                 child: Text(
-                                  AppLocalizations.of(context).translate('see_more'),
+                                  AppLocalizations.of(context)!.translate('see_more'),
                                   style: styleElements
                                       .subtitle2ThemeScalable(context).copyWith(color: HexColor(AppColors.appMainColor))
                                    ,
@@ -117,7 +117,7 @@ class SuggestionCard extends StatelessWidget {
                           padding: EdgeInsets.all(0.0),
                           scrollDirection: Axis.horizontal,
                           shrinkWrap: true,
-                          itemCount: data.data.length,
+                          itemCount: data.data!.length,
                           itemBuilder:
                               (BuildContext context, int index) {
                             return Container(
@@ -134,10 +134,10 @@ class SuggestionCard extends StatelessWidget {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) => UserProfileCards(
-                                                  userType: data.data[index].suggestedType=="person"?"thirdPerson":data.data[index].suggestedType,
-                                                  userId: data.data[index].id,
+                                                  userType: data.data![index].suggestedType=="person"?"thirdPerson":data.data![index].suggestedType,
+                                                  userId: data.data![index].id,
                                                   callback: () {
-                                                    callbackPicker();
+                                                    callbackPicker!();
                                                   },
                                                   currentPosition: 1,
                                                   type: null,
@@ -149,14 +149,14 @@ class SuggestionCard extends StatelessWidget {
                                         withBorder: true,
                                         resolution_type: RESOLUTION_TYPE.R256,
                                         service_type: SERVICE_TYPE.PERSON,
-                                        imageUrl: data.data[index].avatar,
+                                        imageUrl: data.data![index].avatar,
                                       ),
                                     ),
                                   ),
                                   Padding(
                                     padding: EdgeInsets.only(
                                         top: 2.h, bottom: 0.h, left: 8.w, right: 4.w),
-                                    child: Text(Utility().getFirstName(data.data[index].title),
+                                    child: Text(Utility().getFirstName(data.data![index].title!),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       textAlign: TextAlign.left,
@@ -179,16 +179,16 @@ class SuggestionCard extends StatelessWidget {
                                         actionByObjectType: ownerType,
                                         actionByObjectId: ownerId,
                                         isRoundedButton: false,
-                                        actionOnObjectType: data.data[index].suggestedType,
-                                        actionOnObjectId: data.data[index].id,
-                                        engageFlag: (data.data[index].isFollowed!=null?data.data[index].isFollowed:false)
-                                            ? AppLocalizations.of(context).translate('following')
-                                            : AppLocalizations.of(context).translate('follow'),
-                                        actionFlag: (data.data[index].isFollowed!=null?data.data[index].isFollowed:false) ? "U" : "F",
+                                        actionOnObjectType: data.data![index].suggestedType,
+                                        actionOnObjectId: data.data![index].id,
+                                        engageFlag: (data.data![index].isFollowed!=null?data.data![index].isFollowed:false)!
+                                            ? AppLocalizations.of(context)!.translate('following')
+                                            : AppLocalizations.of(context)!.translate('follow'),
+                                        actionFlag: (data.data![index].isFollowed!=null?data.data![index].isFollowed:false)! ? "U" : "F",
                                         actionDetails: [],
                                         personName: "",
                                         callback: (isCallSuccess) {
-                                          callbackPicker();
+                                          callbackPicker!();
                                         },
                                       ))
                                 ],

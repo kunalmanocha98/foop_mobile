@@ -30,12 +30,12 @@ import 'edit_education.dart';
 
 // ignore: must_be_immutable
 class ExpertiseSelectClass extends StatefulWidget {
-  RegisterUserAs registerUserAs;
-  int instituteId;
-  int personType;
+  RegisterUserAs? registerUserAs;
+  int? instituteId;
+  int? personType;
   bool isAddClass;
   bool fromBasicProfileFLow;
-  Null Function() callbackPicker;
+  Null Function()? callbackPicker;
   ExpertiseSelectClass(
       this.instituteId, this.registerUserAs, this.isAddClass, this.personType,this.callbackPicker,this.fromBasicProfileFLow);
   _SelectClasses createState() => _SelectClasses(instituteId, registerUserAs, personType, isAddClass,callbackPicker);
@@ -44,35 +44,36 @@ class ExpertiseSelectClass extends StatefulWidget {
 class _SelectClasses extends State<ExpertiseSelectClass>
     with SingleTickerProviderStateMixin {
 
-  SharedPreferences prefs;
-  RegisterUserAs registerUserAs;
-  int personType;
-  String classId;
-  String className;
-  String accedamicId;
+  late SharedPreferences prefs;
+  RegisterUserAs? registerUserAs;
+  int? personType;
+  String? classId;
+  String? className;
+  String? accedamicId;
 
   bool isAddClass;
   var pageTitle = "";
   var color1 = HexColor(AppColors.appMainColor);
-  int userId;
+  int? userId;
   var color2 = HexColor(AppColors.appColorWhite);
-  int instituteId;
+  int? instituteId;
   var color3 = HexColor(AppColors.appColorWhite);
   var isCheckedColor = HexColor(AppColors.appColorWhite);
-  List<ClassesItemsExpert> listClasses = [];
+  List<ClassesItemsExpert>? listClasses = [];
   List<ClassesItemsExpert> selectedClasses = [];
   List<PersonClasses> teachingClasses = [];
   var isSearching = false;
   bool _enabled = true;
-  String nextYear;
-  String currentYear;
-  String acedemicYear;
+  late String nextYear;
+  late String currentYear;
+  String? acedemicYear;
   final _debouncer = Debouncer(500);
   String type = "";
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
-  void _onBackPressed() {
+  Future<bool> _onBackPressed() {
     Navigator.of(context).pop(true);
+    return new Future(() => false);
   }
 
   void setSharedPreferences() async {
@@ -86,31 +87,31 @@ class _SelectClasses extends State<ExpertiseSelectClass>
     setSharedPreferences();
     final DateTime now = DateTime.now();
 
-    if (registerUserAs != null && registerUserAs.personTypeList[0] != 5) {
+    if (registerUserAs != null && registerUserAs!.personTypeList![0] != 5) {
       currentYear = formatter.format(now);
       nextYear = (int.parse(currentYear) + 1).toString();
       acedemicYear = currentYear + "-" + nextYear;
-      registerUserAs.academicYear = acedemicYear;
-      personType = registerUserAs.personTypeList[0];
+      registerUserAs!.academicYear = acedemicYear;
+      personType = registerUserAs!.personTypeList![0];
     }
 
     if (registerUserAs != null) {
-      instituteId = registerUserAs.institutionId;
-      personType = registerUserAs.personTypeList[0];
+      instituteId = registerUserAs!.institutionId;
+      personType = registerUserAs!.personTypeList![0];
     }
 
-    WidgetsBinding.instance.addPostFrameCallback((_) => getRoles(null));
+    WidgetsBinding.instance!.addPostFrameCallback((_) => getRoles(null));
     super.initState();
   }
 
-  bool contains(int id) {
+  bool contains(int? id) {
     for (var item in selectedClasses) {
       if (item.id == id) return true;
     }
     return false;
   }
 
-  void getRoles(String searchValue) async {
+  void getRoles(String? searchValue) async {
 
     prefs = await SharedPreferences.getInstance();
     final body = jsonEncode(
@@ -130,19 +131,19 @@ class _SelectClasses extends State<ExpertiseSelectClass>
         var data = ClassesExpertises.fromJson(value);
         setState(() {
           _enabled = false;
-          if (data.rows.length > 0) {
-            if (listClasses.length > 0) {
+          if (data.rows!.length > 0) {
+            if (listClasses!.length > 0) {
               {
-                for (var i = 0; i < data.rows.length; i++) {
-                  if (contains(data.rows[i].id))
-                    data.rows[i].isSelected = true;
+                for (var i = 0; i < data.rows!.length; i++) {
+                  if (contains(data.rows![i].id))
+                    data.rows![i].isSelected = true;
                   else
-                    data.rows[i].isSelected = false;
+                    data.rows![i].isSelected = false;
                 }
               }
             } else {
-              for (var i = 0; i < data.rows.length; i++) {
-                data.rows[i].isSelected = false;
+              for (var i = 0; i < data.rows!.length; i++) {
+                data.rows![i].isSelected = false;
               }
             }
             listClasses = data.rows;
@@ -163,7 +164,7 @@ class _SelectClasses extends State<ExpertiseSelectClass>
   Widget build(BuildContext context) {
     ScreenUtil.init;
 
-    pageTitle = AppLocalizations.of(context).translate("classes");
+    pageTitle = AppLocalizations.of(context)!.translate("classes");
     styleElements = TextStyleElements(context);
     return SafeArea(
         child: Scaffold(
@@ -194,7 +195,7 @@ class _SelectClasses extends State<ExpertiseSelectClass>
                                       });
                                     },
                                     progressIndicator: isSearching,
-                                    hintText: AppLocalizations.of(context).translate('search'),
+                                    hintText: AppLocalizations.of(context)!.translate('search'),
                                   ),
                                 ),
                                 SliverToBoxAdapter(
@@ -213,7 +214,7 @@ class _SelectClasses extends State<ExpertiseSelectClass>
                                               accedamicId = result['result'];
                                               if (acedemicYear != null &&
                                                   registerUserAs != null)
-                                                registerUserAs.academicYear =
+                                                registerUserAs!.academicYear =
                                                     acedemicYear;
                                             });
                                           }
@@ -264,7 +265,7 @@ class _SelectClasses extends State<ExpertiseSelectClass>
                                                                         alignment:
                                                                         Alignment
                                                                             .center,
-                                                                        child: Text(AppLocalizations.of(context).translate('selected_academic_year'),
+                                                                        child: Text(AppLocalizations.of(context)!.translate('selected_academic_year'),
                                                                           style: styleElements
                                                                               .subtitle2ThemeScalable(
                                                                               context),
@@ -315,7 +316,7 @@ class _SelectClasses extends State<ExpertiseSelectClass>
                                     child: ListView.builder(
                                         padding: EdgeInsets.only(
                                             left: 8, right: 8, bottom: 8, top: 8),
-                                        itemCount: listClasses.length,
+                                        itemCount: listClasses!.length,
                                         itemBuilder:
                                             (BuildContext context, int index) {
                                           return GestureDetector(
@@ -343,21 +344,21 @@ class _SelectClasses extends State<ExpertiseSelectClass>
                                                         child: Text(
                                                           personType == 3
                                                               ? AppLocalizations.of(
-                                                              context)
+                                                              context)!
                                                               .translate(
                                                               "student_subj_inf")
                                                               : personType == 4
                                                               ? AppLocalizations
-                                                              .of(context)
+                                                              .of(context)!
                                                               .translate(
                                                               "parent_child_select_class")
                                                               : personType == 5
                                                               ? AppLocalizations.of(
-                                                              context)
+                                                              context)!
                                                               .translate(
                                                               "alumni_select_class")
                                                               : AppLocalizations.of(
-                                                              context)
+                                                              context)!
                                                               .translate(
                                                               "teacher_classes_info"),
                                                           textAlign: TextAlign.center,
@@ -381,8 +382,8 @@ class _SelectClasses extends State<ExpertiseSelectClass>
                                                               alignment: Alignment
                                                                   .centerLeft,
                                                               child: Text(
-                                                                listClasses[index]
-                                                                    .className,
+                                                                listClasses![index]
+                                                                    .className!,
                                                                 style: styleElements
                                                                     .subtitle1ThemeScalable(
                                                                     context),
@@ -404,16 +405,16 @@ class _SelectClasses extends State<ExpertiseSelectClass>
                                                               activeColor:
                                                               HexColor(AppColors.appMainColor),
                                                               value:
-                                                              listClasses[index]
+                                                              listClasses![index]
                                                                   .isSelected,
                                                               onChanged: (val) {
                                                                 if (this.mounted) {
                                                                   setState(() {
                                                                     if (val == true) {
-                                                                      classId = listClasses[index]
+                                                                      classId = listClasses![index]
                                                                           .classId
                                                                           .toString();
-                                                                      className=listClasses[
+                                                                      className=listClasses![
                                                                       index].className;
                                                                       if (personType ==
                                                                           2 &&
@@ -421,11 +422,11 @@ class _SelectClasses extends State<ExpertiseSelectClass>
                                                                         // if role type is teacher
                                                                         // let teachers select multiple classes
                                                                         setState(() {
-                                                                          listClasses[
+                                                                          listClasses![
                                                                           index]
                                                                               .isSelected = true;
                                                                           selectedClasses.add(
-                                                                              listClasses[
+                                                                              listClasses![
                                                                               index]);
                                                                         });
                                                                       } else {
@@ -433,19 +434,19 @@ class _SelectClasses extends State<ExpertiseSelectClass>
                                                                           // other roles can only select one class
                                                                           for (int i =
                                                                           0;
-                                                                          i < listClasses.length;
+                                                                          i < listClasses!.length;
                                                                           i++) {
                                                                             if (i ==
                                                                                 index) {
-                                                                              listClasses[i].isSelected =
+                                                                              listClasses![i].isSelected =
                                                                               true;
                                                                               selectedClasses
-                                                                                  .add(listClasses[index]);
+                                                                                  .add(listClasses![index]);
                                                                             } else {
-                                                                              listClasses[i].isSelected =
+                                                                              listClasses![i].isSelected =
                                                                               false;
                                                                               removeSelected(
-                                                                                  listClasses[i].classId);
+                                                                                  listClasses![i].classId);
                                                                             }
                                                                           }
                                                                         });
@@ -453,11 +454,11 @@ class _SelectClasses extends State<ExpertiseSelectClass>
                                                                     } else {
                                                                       classId = "";
 
-                                                                      listClasses[index]
+                                                                      listClasses![index]
                                                                           .isSelected =
                                                                       false;
                                                                       removeSelected(
-                                                                          listClasses[
+                                                                          listClasses![
                                                                           index]
                                                                               .classId);
                                                                     }
@@ -505,18 +506,18 @@ class _SelectClasses extends State<ExpertiseSelectClass>
                                                       registerUserAs=RegisterUserAs();
                                                       PersonClasses proClass =
                                                       PersonClasses();
-                                                      proClass.classId = int.parse(classId);
+                                                      proClass.classId = int.parse(classId!);
                                                       proClass.className = className;
                                                       teachingClasses.add(proClass);
-                                                      registerUserAs.personClasses=teachingClasses;
-                                                      registerUserAs.academicYear=accedamicId;
-                                                      registerUserAs.institutionId=instituteId;
+                                                      registerUserAs!.personClasses=teachingClasses;
+                                                      registerUserAs!.academicYear=accedamicId;
+                                                      registerUserAs!.institutionId=instituteId;
                                                       if (teachingClasses.isNotEmpty) {
                                                         if (isAddClass) {
                                                           if (classId != null &&
-                                                              classId.isNotEmpty) {
+                                                              classId!.isNotEmpty) {
                                                             if (accedamicId != null &&
-                                                                accedamicId.isNotEmpty) {
+                                                                accedamicId!.isNotEmpty) {
                                                               var result=await   Navigator.push(
                                                                   context,
                                                                   MaterialPageRoute(
@@ -528,7 +529,7 @@ class _SelectClasses extends State<ExpertiseSelectClass>
                                                                             null,
                                                                             false),
                                                                   ));
-                                                              int r=result['result'];
+                                                              int? r=result['result'];
                                                               showDialog(
                                                                   context: context,
                                                                   builder: (BuildContext
@@ -576,7 +577,7 @@ class _SelectClasses extends State<ExpertiseSelectClass>
 
                                                   },
                                                   color: HexColor(AppColors.appColorWhite),
-                                                  child: Text(AppLocalizations.of(context).translate('next'),
+                                                  child: Text(AppLocalizations.of(context)!.translate('next'),
                                                     style: styleElements
                                                         .subtitle2ThemeScalable(context)
                                                         .copyWith(
@@ -602,7 +603,7 @@ class _SelectClasses extends State<ExpertiseSelectClass>
 
 
       if (result != null && result['result'] == "success") {
-        callbackPicker();
+        callbackPicker!();
         Navigator.of(context).pop({'result': "success"});
       }
     }
@@ -611,7 +612,7 @@ class _SelectClasses extends State<ExpertiseSelectClass>
 
 
   }
-  removeSelected(int id) {
+  removeSelected(int? id) {
     for (var i = 0; i < selectedClasses.length; i++) {
       if (id == selectedClasses[i].id) {
         selectedClasses.removeAt(i);
@@ -621,10 +622,10 @@ class _SelectClasses extends State<ExpertiseSelectClass>
   }
 
   void register(int userId) async {
-    registerUserAs.personId = userId;
+    registerUserAs!.personId = userId;
     print(teachingClasses.toString() +
         "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-    registerUserAs.personClasses = teachingClasses;
+    registerUserAs!.personClasses = teachingClasses;
     final body = jsonEncode(registerUserAs);
 
     Calls().call(body, context, Config.REGISTER_USER_AS).then((value) async {
@@ -639,20 +640,20 @@ class _SelectClasses extends State<ExpertiseSelectClass>
               context: context,
               builder: (BuildContext context) => CustomDialogue(
                   type: type,
-                  isVerified:data.rows.isVerified,
-                  title:AppLocalizations.of(context).translate('you_are_added_as')+ "Alumni ",
-                  subtitle: (data.rows.institutionName != null
-                      ? " of " + data.rows.institutionName
+                  isVerified:data.rows!.isVerified,
+                  title:AppLocalizations.of(context)!.translate('you_are_added_as')+ "Alumni ",
+                  subtitle: (data.rows!.institutionName != null
+                      ? " of " + data.rows!.institutionName!
                       : "")));
         } else
-          ToastBuilder().showToast(data.message, context,HexColor(AppColors.information));
+          ToastBuilder().showToast(data.message!, context,HexColor(AppColors.information));
       }
     }).catchError((onError) {
       ToastBuilder().showToast(onError.toString(), context,HexColor(AppColors.information));
 
     });
   }
-  Null Function() callbackPicker;
+  Null Function()? callbackPicker;
   _SelectClasses(
       this.instituteId, this.registerUserAs, this.personType, this.isAddClass,this.callbackPicker);
 }

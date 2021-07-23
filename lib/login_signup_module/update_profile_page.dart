@@ -38,10 +38,10 @@ class UpdateProfilePage extends StatefulWidget {
 
 class _UpdateProfilePage extends State<UpdateProfilePage>
     with SingleTickerProviderStateMixin {
-  String facebookId;
-  String googleSignInId;
-  String userName;
-  String imageUrl;
+  String? facebookId;
+  String? googleSignInId;
+  String? userName;
+  String? imageUrl;
   bool isTermAndConditionAccepted = false;
   String email = "";
   bool isGoogleOrFacebookDataReceived = false;
@@ -51,7 +51,7 @@ class _UpdateProfilePage extends State<UpdateProfilePage>
   double endPos = 1.0;
   bool isCalling = false;
   Curve curve = Curves.elasticOut;
-  String selectedImage;
+  String? selectedImage;
 
   final dobController = TextEditingController();
   final firstNameController = TextEditingController();
@@ -62,19 +62,19 @@ class _UpdateProfilePage extends State<UpdateProfilePage>
   final studentCount = TextEditingController();
   final lastNameController = TextEditingController();
   final genderController = TextEditingController();
-  BuildContext context;
-  BuildContext stx;
-  TextStyleElements styleElements;
+  late BuildContext context;
+  BuildContext? stx;
+  late TextStyleElements styleElements;
 
-  TextStyleElements tsE;
+  TextStyleElements? tsE;
   FocusNode _focus = new FocusNode();
   String selectedDate = 'Date Of Birth*';
-  int selectedGender;
-  int selectedEpoch;
+  int? selectedGender;
+  int? selectedEpoch;
   var items = ['Male', 'Female', 'Transgender'];
-  SharedPreferences prefs;
+  SharedPreferences? prefs;
 
-  String studentType;
+  String? studentType;
 
   @override
   void initState() {
@@ -84,10 +84,10 @@ class _UpdateProfilePage extends State<UpdateProfilePage>
 
   void setSharedPreferences() async {
     prefs = await SharedPreferences.getInstance();
-    prefs.setBool("isProfileUpdated", false);
-    if (prefs != null && prefs.getString("imageUrl") != null) {
+    prefs!.setBool("isProfileUpdated", false);
+    if (prefs != null && prefs!.getString("imageUrl") != null) {
       setState(() {
-        imageUrl = prefs.getString("imageUrl");
+        imageUrl = prefs!.getString("imageUrl");
       });
     }
   }
@@ -105,11 +105,11 @@ class _UpdateProfilePage extends State<UpdateProfilePage>
     // newDate = new DateTime(
     //     DateTime.now().year - 4, DateTime.now().month, DateTime.now().day);
 
-    final DateTime picked = await showDatePicker(
+    final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: DateTime.now(),
         firstDate: DateTime(1900),
-        builder: (BuildContext context, Widget child) {
+        builder: (BuildContext context, Widget? child) {
           return Theme(
             data: ThemeData.light().copyWith(
               primaryColor: HexColor(AppColors.appColorBlack),
@@ -122,7 +122,7 @@ class _UpdateProfilePage extends State<UpdateProfilePage>
               ),
               buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
             ),
-            child: child,
+            child: child!,
           );
         },
         lastDate: DateTime.now());
@@ -204,7 +204,7 @@ class _UpdateProfilePage extends State<UpdateProfilePage>
       },
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-          hintText: AppLocalizations.of(context).translate('first_name'),
+          hintText: AppLocalizations.of(context)!.translate('first_name'),
           hintStyle: styleElements
               .bodyText2ThemeScalable(context)
               .copyWith(fontSize: 14.sp,color: HexColor(AppColors.appColorBlack35)),
@@ -244,7 +244,7 @@ class _UpdateProfilePage extends State<UpdateProfilePage>
         },
         decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-          hintText: AppLocalizations.of(context).translate('last_name'),
+          hintText: AppLocalizations.of(context)!.translate('last_name'),
           hintStyle: styleElements.bodyText2ThemeScalable(context)
               .copyWith(fontSize: 14.sp,
           color: HexColor(AppColors.appColorBlack35)),
@@ -267,7 +267,7 @@ class _UpdateProfilePage extends State<UpdateProfilePage>
                               margin: EdgeInsets.only(bottom: 12.h, top: 50),
                               alignment: Alignment.center,
                               child: Text(
-                                AppLocalizations.of(context)
+                                AppLocalizations.of(context)!
                                     .translate("update_profile"),
                                 style: styleElements
                                     .headline5ThemeScalable(context)
@@ -280,7 +280,7 @@ class _UpdateProfilePage extends State<UpdateProfilePage>
                                 margin: EdgeInsets.all(4.h),
                                 alignment: Alignment.center,
                                 child: Text(
-                                  AppLocalizations.of(context)
+                                  AppLocalizations.of(context)!
                                       .translate("update_profile_text"),
                                   style: styleElements
                                       .bodyText2ThemeScalable(context),
@@ -327,8 +327,7 @@ class _UpdateProfilePage extends State<UpdateProfilePage>
                                                           RESOLUTION_TYPE
                                                               .R128,
                                                           SERVICE_TYPE
-                                                              .PERSON) ??
-                                                          ""),
+                                                              .PERSON)),
                                                   fit: BoxFit.fill),
                                             ),
                                           ),
@@ -379,7 +378,7 @@ class _UpdateProfilePage extends State<UpdateProfilePage>
                                       top: 16.0,
                                       bottom: 8.0),
                                   child: Text(
-                                    AppLocalizations.of(context)
+                                    AppLocalizations.of(context)!
                                         .translate("select_gender"),
                                     style: styleElements
                                         .bodyText2ThemeScalable(context)
@@ -511,7 +510,7 @@ class _UpdateProfilePage extends State<UpdateProfilePage>
                                   margin: EdgeInsets.only(top: 20.h),
                                   alignment: Alignment(0, 0.4),
                                   child: LargeButton(
-                                    name: AppLocalizations.of(context)
+                                    name: AppLocalizations.of(context)!
                                         .translate("proceed"),
                                     offsetX: 96.66.w,
                                     offsetY: 12.93.w,
@@ -520,7 +519,7 @@ class _UpdateProfilePage extends State<UpdateProfilePage>
                                         _profileUpdate();
                                       } else
                                         ToastBuilder().showToast(
-                                            AppLocalizations.of(context)
+                                            AppLocalizations.of(context)!
                                                 .translate("upload_image_"),
                                             context,
                                             HexColor(
@@ -567,13 +566,13 @@ class _UpdateProfilePage extends State<UpdateProfilePage>
                 isCalling = false;
               });
               if (resposne.statusCode == Strings.success_code) {
-                prefs.setBool("isProfileUpdated", true);
+                prefs!.setBool("isProfileUpdated", true);
                 Navigator.of(context).pushAndRemoveUntil(
                     MaterialPageRoute(builder: (ctx) => WelComeScreen()),
                         (Route<dynamic> route) => false);
               } else {
                 ToastBuilder().showToast(
-                    resposne.message, context, HexColor(AppColors.information));
+                    resposne.message!, context, HexColor(AppColors.information));
               }
             }).catchError((onError) async {
               setState(() {
@@ -585,26 +584,26 @@ class _UpdateProfilePage extends State<UpdateProfilePage>
             });
           } else {
             ToastBuilder().showToast(
-                AppLocalizations.of(context).translate("gender_required"),
+                AppLocalizations.of(context)!.translate("gender_required"),
                 context,
                 HexColor(AppColors.information));
           }
         } else {
           ToastBuilder().showSnackBar(
-              AppLocalizations.of(context).translate("dob_required"),
-              stx,
+              AppLocalizations.of(context)!.translate("dob_required"),
+              stx!,
               HexColor(AppColors.information));
         }
       } else {
         ToastBuilder().showSnackBar(
-            AppLocalizations.of(context).translate("last_name_required"),
-            stx,
+            AppLocalizations.of(context)!.translate("last_name_required"),
+            stx!,
             HexColor(AppColors.information));
       }
     } else {
       ToastBuilder().showSnackBar(
-          AppLocalizations.of(context).translate("first_name_required"),
-          stx,
+          AppLocalizations.of(context)!.translate("first_name_required"),
+          stx!,
           HexColor(AppColors.information));
     }
   }
@@ -620,18 +619,18 @@ class _UpdateProfilePage extends State<UpdateProfilePage>
       }
       print(registerUserPayload.toJson().toString());
       DeviceInfo deviceInfo = DeviceInfo();
-      if (prefs.getString("DeviceInfo") != null) {
+      if (prefs!.getString("DeviceInfo") != null) {
         Map<String, dynamic> map =
-        json.decode(prefs.getString("DeviceInfo") ?? "");
+        json.decode(prefs!.getString("DeviceInfo") ?? "");
         deviceInfo = DeviceInfo.fromJson(map);
       }
 
-      if (prefs.getDouble("lat") != null)
+      if (prefs!.getDouble("lat") != null)
         deviceInfo.gpsInfo = "Latitude :" +
-            prefs.getDouble("lat").toString() +
+            prefs!.getDouble("lat").toString() +
             ", Longitude : " +
-            prefs.getDouble("longi").toString();
-      deviceInfo.fcmId = prefs.getString("fcmId");
+            prefs!.getDouble("longi").toString();
+      deviceInfo.fcmId = prefs!.getString("fcmId");
 
       SignUpApi()
           .activate(jsonEncode(registerUserPayload.toJson()), context,
@@ -642,15 +641,15 @@ class _UpdateProfilePage extends State<UpdateProfilePage>
           if (data.statusCode == Strings.success_code) {
             if (data.message != null && data.message != "Invalid OTP") {
               if (data.message != null)
-                await prefs.setString('expiry', data.rows.expiry ?? "");
-              await prefs.setString('token', data.rows.token ?? "");
+                await prefs!.setString('expiry', data.rows!.expiry ?? "");
+              await prefs!.setString('token', data.rows!.token ?? "");
               Navigator.of(context).pushAndRemoveUntil(
                   MaterialPageRoute(builder: (context) => SelectLanguage(true)),
                       (Route<dynamic> route) => false);
             } else {
               if (data.message != null)
                 ToastBuilder().showSnackBar(
-                    data.message, stx, HexColor(AppColors.information));
+                    data.message!, stx!, HexColor(AppColors.information));
             }
           } else {
             setState(() {
@@ -658,11 +657,11 @@ class _UpdateProfilePage extends State<UpdateProfilePage>
             });
             if (data.message != null)
               ToastBuilder().showSnackBar(
-                  data.message, stx, HexColor(AppColors.information));
+                  data.message!, stx!, HexColor(AppColors.information));
             else
               ToastBuilder().showSnackBar(
-                  AppLocalizations.of(context).translate("try_again"),
-                  stx,
+                  AppLocalizations.of(context)!.translate("try_again"),
+                  stx!,
                   HexColor(AppColors.information));
           }
         }
@@ -672,12 +671,12 @@ class _UpdateProfilePage extends State<UpdateProfilePage>
         });
         print(onError.toString());
         ToastBuilder()
-            .showSnackBar(onError.toString(), stx, HexColor(AppColors.failure));
+            .showSnackBar(onError.toString(), stx!, HexColor(AppColors.failure));
       });
     } else {
       ToastBuilder().showSnackBar(
-          AppLocalizations.of(context).translate("enter_token"),
-          stx,
+          AppLocalizations.of(context)!.translate("enter_token"),
+          stx!,
           HexColor(AppColors.information));
     }
   }

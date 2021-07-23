@@ -9,10 +9,10 @@ import 'commonComponents.dart';
 // ignore: must_be_immutable
 class ImaxyzButton extends StatelessWidget {
   ImaxyzButton({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
-  TextStyleElements  styleElements;
+  late TextStyleElements  styleElements;
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +51,7 @@ class ImaxyzButton extends StatelessWidget {
             children: <Widget>[
               Transform.translate(
                 offset: Offset(96.0, 342.33),
-                child: Text(AppLocalizations.of(context).translate('i_am_teacher'),
+                child: Text(AppLocalizations.of(context)!.translate('i_am_teacher'),
                   style:styleElements.headline6ThemeScalable(context),
                   textAlign: TextAlign.left,
                 ),
@@ -59,7 +59,7 @@ class ImaxyzButton extends StatelessWidget {
               Transform.translate(
                 offset: Offset(96.0, 363.0),
                 child: Text(
-                  AppLocalizations.of(context).translate('teaching_non_teaching'),
+                  AppLocalizations.of(context)!.translate('teaching_non_teaching'),
                   style: styleElements.captionThemeScalable(context),
                   textAlign: TextAlign.left,
                 ),

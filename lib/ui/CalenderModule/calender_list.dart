@@ -21,26 +21,26 @@ import 'package:intl/intl.dart';
 
 // ignore: must_be_immutable
 class CalenderListPage extends StatefulWidget {
-  DateTime date;
-  String type;
+  DateTime? date;
+  String? type;
 
-  CalenderListPage({Key key, this.date, this.type}) : super(key: key);
+  CalenderListPage({Key? key, this.date, this.type}) : super(key: key);
 
   @override
   CalenderListPageState createState() => CalenderListPageState(date: date);
 }
 
 class CalenderListPageState extends State<CalenderListPage> {
-  DateTime date;
-  String searchVal;
+  DateTime? date;
+  String? searchVal;
   final DateFormat formatter = DateFormat('MMMM yyyy');
 
   CalenderListPageState({this.date});
 
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
-  SharedPreferences prefs;
+  SharedPreferences? prefs;
   int page = 1;
-  List<EventListItem> list;
+  List<EventListItem>? list;
   bool isEmpty = false;
 
   @override
@@ -52,13 +52,13 @@ class CalenderListPageState extends State<CalenderListPage> {
 
   void refresh() {
     setState(() {
-      list.clear();
+      list!.clear();
       page = 1;
     });
     fetchList();
   }
 
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +68,7 @@ class CalenderListPageState extends State<CalenderListPage> {
           return [
             SliverToBoxAdapter(
               child: SearchBox(
-                hintText: AppLocalizations.of(context).translate('search'),
+                hintText: AppLocalizations.of(context)!.translate('search'),
                 onvalueChanged: (String value) {
                   setState(() {
                     page = 1;
@@ -82,7 +82,7 @@ class CalenderListPageState extends State<CalenderListPage> {
         body: isEmpty
             ? Center(
                 child: TricycleEmptyWidget(
-                message: AppLocalizations.of(context).translate('no_data'),
+                message: AppLocalizations.of(context)!.translate('no_data'),
                 assetImage: null,
               ))
             : NotificationListener<ScrollNotification>(
@@ -94,11 +94,11 @@ class CalenderListPageState extends State<CalenderListPage> {
                   }
                   return false;
                 },
-                child: list.isNotEmpty
-                    ? GroupedListView<dynamic, String>(
-                        elements: list,
+                child: list!.isNotEmpty
+                    ? GroupedListView<dynamic, String?>(
+                        elements: list!,
                         groupBy: (element) => element.eventDate,
-                        groupSeparatorBuilder: (String groupByValue) => Align(
+                        groupSeparatorBuilder: (String? groupByValue) => Align(
                           alignment: Alignment.topLeft,
                           child: Padding(
                             padding: const EdgeInsets.all(2.0),
@@ -109,7 +109,7 @@ class CalenderListPageState extends State<CalenderListPage> {
                                   top: 4.0,
                                   bottom: 4.0),
                               child: Text(
-                                Utility().getDateFormat('dd MMM yyyy', DateTime.parse(groupByValue)),
+                                Utility().getDateFormat('dd MMM yyyy', DateTime.parse(groupByValue!)),
                                 style: styleElements
                                     .subtitle1ThemeScalable(context)
                                     .copyWith(fontWeight: FontWeight.bold),
@@ -141,8 +141,8 @@ class CalenderListPageState extends State<CalenderListPage> {
     prefs ??= await SharedPreferences.getInstance();
     CalenderEventListRequest payload = CalenderEventListRequest();
     payload.eventDate =
-        date != null ? Utility().getDateFormat('yyyy-MM-dd', date) : null;
-    payload.eventOwnerId = prefs.getInt(Strings.userId);
+        date != null ? Utility().getDateFormat('yyyy-MM-dd', date!) : null;
+    payload.eventOwnerId = prefs!.getInt(Strings.userId);
     payload.eventOwnerType = 'person';
     payload.searchVal = searchVal;
     payload.pageNumber = page;
@@ -151,11 +151,11 @@ class CalenderListPageState extends State<CalenderListPage> {
     var res = await Calls()
         .call(jsonEncode(payload), context, Config.CALENDERS_EVENT_LIST);
     if (EventListResponse.fromJson(res).statusCode == Strings.success_code) {
-      if (EventListResponse.fromJson(res).rows.isNotEmpty) {
+      if (EventListResponse.fromJson(res).rows!.isNotEmpty) {
         setState(() {
           page = page + 1;
           list = [list, EventListResponse.fromJson(res).rows]
-              .expand((x) => x)
+              .expand((x) => x!)
               .toList();
         });
       } else {
@@ -174,7 +174,7 @@ class CalenderListPageState extends State<CalenderListPage> {
     EventListItem item = itemData;
     return TricycleEventCard(
       title: item.title,
-      byImage: item.header.avatar,
+      byImage: item.header!.avatar,
       description: item.subtitle,
       subjectId: item.id,
       dateVisible: true,
@@ -185,18 +185,18 @@ class CalenderListPageState extends State<CalenderListPage> {
         });
       },
       isBellAvailable: true,
-      date: DateTime.fromMillisecondsSinceEpoch(item.startTime),
-      byTitle: ' by ' + item.header.title + ', ' + item.header.subtitle1,
-      cardRating: item.header.rating ?? 0.0,
+      date: DateTime.fromMillisecondsSinceEpoch(item.startTime!),
+      byTitle: ' by ' + item.header!.title! + ', ' + item.header!.subtitle1!,
+      cardRating: item.header!.rating ?? 0.0,
     );
   }
 
   Widget emptyListWidgetMaker(EventListResponse pageData) {
     return CustomPaginator(context).emptyListWidgetMaker(pageData,
-        message: AppLocalizations.of(context).translate('no_activities_found'));
+        message: AppLocalizations.of(context)!.translate('no_activities_found'));
   }
 
-  void update({DateTime date, String searchVal}) {
+  void update({DateTime? date, String? searchVal}) {
     this.date = date ?? this.date;
     this.searchVal = searchVal ?? this.searchVal;
     refresh();

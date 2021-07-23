@@ -31,9 +31,9 @@ import 'accedemic_selection_page.dart';
 
 // ignore: must_be_immutable
 class SubjectsPageNew extends StatefulWidget {
-  RegisterUserAs registerUserAs;
+  RegisterUserAs? registerUserAs;
   int instituteId;
-  int personType;
+  int? personType;
   bool isVerified;
   bool isAddClass;
 
@@ -46,42 +46,42 @@ class SubjectsPageNew extends StatefulWidget {
 
 class _SubjectsPageNew extends State<SubjectsPageNew>
     with SingleTickerProviderStateMixin {
-  String searchVal;
-  String personName;
-  String type;
-  int id;
-  String ownerType;
-  int ownerId;
-  int instituteId;
-  RegisterUserAs registerUserAs;
-  int personType;
+  String? searchVal;
+  String? personName;
+  String? type;
+  int? id;
+  String? ownerType;
+  int? ownerId;
+  int? instituteId;
+  RegisterUserAs? registerUserAs;
+  int? personType;
   bool isVerified;
   bool isAddClass;
-  String accedamicId;
-  Null Function() callback;
+  String? accedamicId;
+  Null Function()? callback;
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
   GlobalKey<PaginatorState> paginatorKeyChat = GlobalKey();
-  SharedPreferences prefs;
-  TextStyleElements styleElements;
+  late SharedPreferences prefs;
+  late TextStyleElements styleElements;
 
   List<Subjects> listSelectedSubjects = [];
   List<CustomTabMaker> list = [];
 
-  String pageTitle;
-  SubjectsProvider chatNotifier;
-  BuildContext ctx;
+  String? pageTitle;
+  SubjectsProvider? chatNotifier;
+  BuildContext? ctx;
   bool isAlreadySent = false;
-  String acedemicYear;
+  String? acedemicYear;
 
   Future<void> _setPref() async {
     prefs = await SharedPreferences.getInstance();
     setState(() {
       ownerId = prefs.getInt(Strings.userId);
-      instituteId = registerUserAs.institutionId;
+      instituteId = registerUserAs!.institutionId;
     });
     SubjectsProvider notifier =
     Provider.of<SubjectsProvider>(context, listen: false);
-    if(searchVal!=null && searchVal.isNotEmpty)
+    if(searchVal!=null && searchVal!.isNotEmpty)
       notifier.search(searchVal, instituteId, context);
     else
       notifier.reload(searchVal, instituteId, context);
@@ -91,11 +91,11 @@ class _SubjectsPageNew extends State<SubjectsPageNew>
   void initState() {
     super.initState();
     if (registerUserAs != null) {
-      acedemicYear = registerUserAs.academicYear;
-      instituteId = registerUserAs.institutionId;
-      personType = registerUserAs.personTypeList[0];
+      acedemicYear = registerUserAs!.academicYear;
+      instituteId = registerUserAs!.institutionId;
+      personType = registerUserAs!.personTypeList![0];
     }
-    WidgetsBinding.instance.addPostFrameCallback((_) => _setPref());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => _setPref());
   }
 
   void onsearchValueChanged(String text) {
@@ -104,9 +104,9 @@ class _SubjectsPageNew extends State<SubjectsPageNew>
       searchVal=text;
     });
     if(text.isNotEmpty)
-      chatNotifier.search(text, instituteId, context);
+      chatNotifier!.search(text, instituteId, context);
     else
-      chatNotifier.reload(text, instituteId, context);
+      chatNotifier!.reload(text, instituteId, context);
   }
 
 
@@ -120,13 +120,14 @@ class _SubjectsPageNew extends State<SubjectsPageNew>
       // ignore: missing_return
       onWillPop: () async {
         Navigator.pop(context);
-      },
+        return new Future(() => false);
+      } ,
       child: SafeArea(
         child: Scaffold(
             appBar: TricycleAppBar().getCustomAppBar(
               context,
               appBarTitle:
-              AppLocalizations.of(context).translate('subjects'),
+              AppLocalizations.of(context)!.translate('subjects'),
               onBackButtonPress: () async {
 
                 Navigator.pop(context);
@@ -140,7 +141,7 @@ class _SubjectsPageNew extends State<SubjectsPageNew>
                       child: SearchBox(
                         onvalueChanged: onsearchValueChanged,
                         hintText:
-                        AppLocalizations.of(context).translate('search'),
+                        AppLocalizations.of(context)!.translate('search'),
                       ),
                     ),
                     SliverToBoxAdapter(
@@ -159,7 +160,7 @@ class _SubjectsPageNew extends State<SubjectsPageNew>
                                   accedamicId = result['result'];
                                   if (acedemicYear != null &&
                                       registerUserAs != null)
-                                    registerUserAs.academicYear = acedemicYear;
+                                    registerUserAs!.academicYear = acedemicYear;
                                 });
                               }
                             },
@@ -200,11 +201,11 @@ class _SubjectsPageNew extends State<SubjectsPageNew>
                                                           child: Text(
                                                             acedemicYear != null
                                                                 ? AppLocalizations.of(
-                                                                context)
+                                                                context)!
                                                                 .translate(
                                                                 'selected_academic_year')
                                                                 : AppLocalizations.of(
-                                                                context)
+                                                                context)!
                                                                 .translate(
                                                                 'select_academic_year'),
                                                             style: styleElements
@@ -246,15 +247,15 @@ class _SubjectsPageNew extends State<SubjectsPageNew>
                               child: Container(
                                 margin: const EdgeInsets.all(16),
                                 child: Text(
-                                    registerUserAs.personTypeList[0] ==
+                                    registerUserAs!.personTypeList![0] ==
                                         2
                                         ? AppLocalizations.of(
-                                        context)
+                                        context)!
                                         .translate(
                                         "teacher_sub_info")
-                                        : registerUserAs.personTypeList[0] ==
+                                        : registerUserAs!.personTypeList![0] ==
                                         3
-                                        ? AppLocalizations.of(context).translate(
+                                        ? AppLocalizations.of(context)!.translate(
                                         "student_subj_inf")
                                         : "",
                                     textAlign:
@@ -273,13 +274,13 @@ class _SubjectsPageNew extends State<SubjectsPageNew>
                   children: [Container(
                     margin: const EdgeInsets.only(bottom: 62),
                     child: chatNotifier != null &&
-                        chatNotifier.getConversationList() != null &&
-                        chatNotifier.getConversationList().isNotEmpty
+                        chatNotifier!.getConversationList() != null &&
+                        chatNotifier!.getConversationList()!.isNotEmpty
                         ? NotificationListener<ScrollNotification>(
                       onNotification: (ScrollNotification scrollInfo) {
                         if (scrollInfo is ScrollEndNotification &&
                             scrollInfo.metrics.extentAfter == 0) {
-                          chatNotifier.getMore(
+                          chatNotifier!.getMore(
                               searchVal, instituteId, context);
                           return true;
                         }
@@ -288,10 +289,10 @@ class _SubjectsPageNew extends State<SubjectsPageNew>
                       child:   ListView.builder(
                           padding: EdgeInsets.all(0.0),
                           physics: BouncingScrollPhysics(),
-                          itemCount: chatNotifier.getConversationList().length,
+                          itemCount: chatNotifier!.getConversationList()!.length,
                           itemBuilder: (context, index) {
-                            return listItemBuilder(chatNotifier.getConversationList()[index].subjects,
-                                chatNotifier.getConversationList()[index].subjectCategoryName);
+                            return listItemBuilder(chatNotifier!.getConversationList()![index].subjects!,
+                                chatNotifier!.getConversationList()![index].subjectCategoryName!);
                           }),
                     )
                         : ListView.builder(
@@ -302,8 +303,8 @@ class _SubjectsPageNew extends State<SubjectsPageNew>
                               child: Padding(
                                 padding: const EdgeInsets.all(20.0),
                                 child: TricycleEmptyWidget(
-                                  message: searchVal!=null && searchVal.isNotEmpty?AppLocalizations.of(context)
-                                      .translate('add_new_subject_click'):AppLocalizations.of(context)
+                                  message: searchVal!=null && searchVal!.isNotEmpty?AppLocalizations.of(context)!
+                                      .translate('add_new_subject_click'):AppLocalizations.of(context)!
                                       .translate('no_data'),
                                 ),
                               )
@@ -338,7 +339,7 @@ class _SubjectsPageNew extends State<SubjectsPageNew>
                                     },
                                     color: HexColor(AppColors.appColorWhite),
                                     child: Text(
-                                      AppLocalizations.of(context)
+                                      AppLocalizations.of(context)!
                                           .translate('skip')
                                           .toUpperCase(),
                                       style: styleElements
@@ -358,21 +359,21 @@ class _SubjectsPageNew extends State<SubjectsPageNew>
                                           color: HexColor(AppColors.appMainColor))),
                                   onPressed: () async {
                                     if (acedemicYear != null) {
-                                      if (chatNotifier.getConversationList() != null &&
-                                          chatNotifier.getConversationList().isEmpty &&
-                                          searchVal != null && searchVal.isNotEmpty) {
+                                      if (chatNotifier!.getConversationList() != null &&
+                                          chatNotifier!.getConversationList()!.isEmpty &&
+                                          searchVal != null && searchVal!.isNotEmpty) {
                                         addNewLangSkill(searchVal);
                                       }
                                       else
                                         {
                                           List<int> ids=getIds();;
                                           if (ids.length > 0) {
-                                            registerUserAs.personSubjects = ids;
+                                            registerUserAs!.personSubjects = ids;
                                             Navigator.of(context).pop({
                                               'registerUser': registerUserAs
                                             });
                                           } else {
-                                            registerUserAs.personSubjects=[];
+                                            registerUserAs!.personSubjects=[];
                                             Navigator.of(context).pop({
                                               'registerUser': registerUserAs
                                             });
@@ -382,7 +383,7 @@ class _SubjectsPageNew extends State<SubjectsPageNew>
 
                                     } else {
                                       ToastBuilder().showToast(
-                                          AppLocalizations.of(context)
+                                          AppLocalizations.of(context)!
                                               .translate("select_academic"),
                                           context,
                                           HexColor(AppColors.information));
@@ -390,7 +391,7 @@ class _SubjectsPageNew extends State<SubjectsPageNew>
                                   },
                                   color: HexColor(AppColors.appColorWhite),
                                   child: Text(
-                                    AppLocalizations.of(context)
+                                    AppLocalizations.of(context)!
                                         .translate('next')
                                         .toUpperCase(),
                                     style: styleElements
@@ -415,7 +416,7 @@ class _SubjectsPageNew extends State<SubjectsPageNew>
     );
   }
   getIds() {
-    List<int> list = [];
+    List<int?> list = [];
     for (var i = 0; i < listSelectedSubjects.length; i++) {
       list.add(listSelectedSubjects[i].id);
     }
@@ -429,32 +430,32 @@ class _SubjectsPageNew extends State<SubjectsPageNew>
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
-        if (subject.isSelected) {
-          chatNotifier.updateItem(
+        if (subject.isSelected!) {
+          chatNotifier!.updateItem(
               subject, degreeType, false, true);
           removeSelected(subject.id);
         } else {
-          chatNotifier.updateItem(
+          chatNotifier!.updateItem(
               subject, degreeType, true, true);
           listSelectedSubjects.add(subject);
         }
       },
       child: Chip(
           elevation: 2.0,
-          backgroundColor: subject.isSelected
+          backgroundColor: subject.isSelected!
               ? HexColor(AppColors.appMainColor)
               : HexColor(AppColors.appColorWhite),
           label: Padding(
             padding: const EdgeInsets.all(4.0),
             child: Text(subject.subjectName ?? "",
                 style: styleElements.subtitle2ThemeScalable(context).copyWith(
-                    color: subject.isSelected
+                    color: subject.isSelected!
                         ? HexColor(AppColors.appColorWhite)
                         : HexColor(AppColors.appColorBlack65))),
           )),
     );
   }
-  void addNewLangSkill(String searchValue) async {
+  void addNewLangSkill(String? searchValue) async {
     AddNewSkillLangEntity addNewSkillLangEntity = AddNewSkillLangEntity();
     addNewSkillLangEntity.categoryType = "subject";
     addNewSkillLangEntity.valueCode = searchValue;
@@ -469,7 +470,7 @@ class _SubjectsPageNew extends State<SubjectsPageNew>
 
       var res = AddNewSkillLangResponse.fromJson(value);
       if (res.statusCode == Strings.success_code) {
-        chatNotifier.search(searchVal, instituteId, context);
+        chatNotifier!.search(searchVal, instituteId, context);
       } else {}
     }).catchError((onError) {
       print(onError);
@@ -498,7 +499,7 @@ class _SubjectsPageNew extends State<SubjectsPageNew>
       )
     );
   }
-  removeSelected(int id) {
+  removeSelected(int? id) {
     for (var i = 0; i < listSelectedSubjects.length; i++) {
       if (id == listSelectedSubjects[i].id) {
         listSelectedSubjects.removeAt(i);

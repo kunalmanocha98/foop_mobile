@@ -27,9 +27,9 @@ import 'accedemic_selection_page.dart';
 
 // ignore: must_be_immutable
 class SelectSectionExpertise extends StatefulWidget {
-  RegisterUserAs registerUserAs;
+  RegisterUserAs? registerUserAs;
   int instituteId;
-  int personType;
+  int? personType;
   bool isVerified;
   bool isAddClass;
 
@@ -43,39 +43,40 @@ class SelectSectionExpertise extends StatefulWidget {
 class _SelectSectionExpertise extends State<SelectSectionExpertise>
     with SingleTickerProviderStateMixin {
 
-  SharedPreferences prefs;
-  RegisterUserAs registerUserAs;
+  late SharedPreferences prefs;
+  RegisterUserAs? registerUserAs;
 
-  String sectionId;
-  String accedamicId;
+  String? sectionId;
+  String? accedamicId;
   bool isVerified;
   bool isAddClass;
   var pageTitle = "";
   var color1 = HexColor(AppColors.appMainColor);
-  int userId;
+  int? userId;
   var color2 = HexColor(AppColors.appColorWhite);
-  int instituteId;
+  int? instituteId;
   var color3 = HexColor(AppColors.appColorWhite);
   var isCheckedColor = HexColor(AppColors.appColorWhite);
-  List<Rows> listSections = [];
+  List<Rows>? listSections = [];
   List<Rows> selectedSection = [];
-  List<PersonClasses> teachingClasses = [];
+  List<PersonClasses>? teachingClasses = [];
   var isSearching = false;
   bool _enabled = true;
-  String nextYear;
-  String currentYear;
-  String acedemicYear="";
+  String? nextYear;
+  String? currentYear;
+  String? acedemicYear="";
   final _debouncer = Debouncer(500);
   String type = "";
-  TextStyleElements styleElements;
-  PersonClasses currentSelected;
+  late TextStyleElements styleElements;
+  PersonClasses? currentSelected;
 
-  Animation _animation;
-  AnimationController _controller;
+  late Animation _animation;
+  late AnimationController _controller;
   int currentItem=0;
-BuildContext sctx;
-  void _onBackPressed() {
+late BuildContext sctx;
+  Future<bool> _onBackPressed() {
     Navigator.of(context).pop(true);
+    return new Future(() => false);
   }
 
   @override
@@ -95,14 +96,14 @@ BuildContext sctx;
     _animation = Tween(begin: 0.0, end: 1.0).animate(_controller);
     print(jsonEncode(registerUserAs));
     if (registerUserAs != null) {
-      print(jsonEncode(registerUserAs.personClasses[0]));
-      acedemicYear = registerUserAs.academicYear;
-      instituteId = registerUserAs.institutionId;
-      teachingClasses = registerUserAs.personClasses;
-      if (teachingClasses.isNotEmpty)
+      print(jsonEncode(registerUserAs!.personClasses![0]));
+      acedemicYear = registerUserAs!.academicYear;
+      instituteId = registerUserAs!.institutionId;
+      teachingClasses = registerUserAs!.personClasses;
+      if (teachingClasses!.isNotEmpty)
         {
-          currentSelected = teachingClasses[0];
-          WidgetsBinding.instance.addPostFrameCallback((_) => getRoles(null));
+          currentSelected = teachingClasses![0];
+          WidgetsBinding.instance!.addPostFrameCallback((_) => getRoles(null));
         }
        
     }
@@ -111,20 +112,20 @@ BuildContext sctx;
     super.initState();
   }
 
-  bool contains(int id) {
+  bool contains(int? id) {
     for (var item in selectedSection) {
       if (item.id == id) return true;
     }
     return false;
   }
 
-  void getRoles(String searchValue) async {
+  void getRoles(String? searchValue) async {
 
     final body = jsonEncode({
       "institution_id": instituteId,
       "searchVal": searchValue,
       "page_number": 1,
-      "class_id":currentSelected.classId,
+      "class_id":currentSelected!.classId,
       "page_size": 200
     });
 
@@ -136,19 +137,19 @@ BuildContext sctx;
 
 
         _enabled = false;
-        if (data.rows.length > 0) {
-          if (listSections.length > 0) {
+        if (data.rows!.length > 0) {
+          if (listSections!.length > 0) {
             {
-              for (var i = 0; i < data.rows.length; i++) {
-                if (contains(data.rows[i].id))
-                  data.rows[i].isSelected = true;
+              for (var i = 0; i < data.rows!.length; i++) {
+                if (contains(data.rows![i].id))
+                  data.rows![i].isSelected = true;
                 else
-                  data.rows[i].isSelected = false;
+                  data.rows![i].isSelected = false;
               }
             }
           } else {
-            for (var i = 0; i < data.rows.length; i++) {
-              data.rows[i].isSelected = false;
+            for (var i = 0; i < data.rows!.length; i++) {
+              data.rows![i].isSelected = false;
             }
           }
           listSections = data.rows;
@@ -176,7 +177,7 @@ BuildContext sctx;
   Widget build(BuildContext context) {
     ScreenUtil.init;
 
-    pageTitle = AppLocalizations.of(context).translate("select_section");
+    pageTitle = AppLocalizations.of(context)!.translate("select_section");
     styleElements = TextStyleElements(context);
     return SafeArea(
         child: Scaffold(
@@ -210,13 +211,13 @@ BuildContext sctx;
                                         });
                                       },
                                       progressIndicator: isSearching,
-                                      hintText: AppLocalizations.of(context).translate('search'),
+                                      hintText: AppLocalizations.of(context)!.translate('search'),
                                     ),
                                   ),
                                   SliverToBoxAdapter(
                                     child: AnimatedBuilder(
                                       animation: _controller,
-                                      builder: (BuildContext context, Widget child) {
+                                      builder: (BuildContext context, Widget? child) {
                                         bool isFront = _controller.value < .5;
                                         return InkWell(
                                           onTap: () async {
@@ -233,7 +234,7 @@ BuildContext sctx;
                                                 accedamicId = result['result'];
                                                 if (acedemicYear != null &&
                                                     registerUserAs != null)
-                                                  registerUserAs.academicYear =
+                                                  registerUserAs!.academicYear =
                                                       acedemicYear;
                                               });
                                             }
@@ -271,7 +272,7 @@ BuildContext sctx;
                                                                             .start,
                                                                         children: <
                                                                             Widget>[
-                                                                          Text(AppLocalizations.of(context).translate('current_selection'),
+                                                                          Text(AppLocalizations.of(context)!.translate('current_selection'),
                                                                             style: styleElements
                                                                                 .subtitle2ThemeScalable(
                                                                                 context),
@@ -285,7 +286,7 @@ BuildContext sctx;
                                                                               Alignment
                                                                                   .center,
                                                                               child: Text(
-                                                                                currentSelected!=null?  currentSelected.className??"":"",
+                                                                                currentSelected!=null?  currentSelected!.className??"":"",
                                                                                 style: styleElements
                                                                                     .bodyText1ThemeScalable(
                                                                                     context)
@@ -313,8 +314,7 @@ BuildContext sctx;
                                                                                   Alignment.center,
                                                                                   child:
                                                                                   Text(
-                                                                                    ("( " + acedemicYear + " )") ??
-                                                                                        "",
+                                                                                    ("( " + acedemicYear! + " )"),
                                                                                     style:
                                                                                     styleElements.bodyText2ThemeScalable(context),
                                                                                     textAlign:
@@ -339,7 +339,7 @@ BuildContext sctx;
                                                                               .centerRight,
                                                                           child: Text(
                                                                             AppLocalizations.of(
-                                                                                context)
+                                                                                context)!
                                                                                 .translate(
                                                                                 "change"),
                                                                             style: styleElements
@@ -376,7 +376,7 @@ BuildContext sctx;
                                       child: ListView.builder(
                                           padding: EdgeInsets.only(
                                               left: 8, right: 8, bottom: 8, top: 8),
-                                          itemCount: listSections.length,
+                                          itemCount: listSections!.length,
                                           itemBuilder:
                                               (BuildContext context, int index) {
                                             return GestureDetector(
@@ -403,7 +403,7 @@ BuildContext sctx;
                                                           const EdgeInsets.all(16),
                                                           child: Text(
                                                             AppLocalizations.of(
-                                                                context)
+                                                                context)!
                                                                 .translate(
                                                                 "sec_quote"),
                                                             textAlign: TextAlign.center,
@@ -420,8 +420,8 @@ BuildContext sctx;
                                                       title: Align(
                                                         alignment: Alignment.centerLeft,
                                                         child: Text(
-                                                          listSections[index]
-                                                              .sectionName,
+                                                          listSections![index]
+                                                              .sectionName!,
                                                           style: styleElements
                                                               .subtitle1ThemeScalable(
                                                               context),
@@ -431,39 +431,39 @@ BuildContext sctx;
                                                       trailing: Checkbox(
                                                         activeColor:
                                                         HexColor(AppColors.appMainColor),
-                                                        value: listSections[index]
+                                                        value: listSections![index]
                                                             .isSelected,
                                                         onChanged: (val) {
                                                           if (this.mounted) {
                                                             setState(() {
                                                               if (val == true) {
-                                                                sectionId = listSections[index].id.toString();
+                                                                sectionId = listSections![index].id.toString();
 
                                                                 setState(() {
                                                                   // other roles can only select one class
                                                                   for (int i =
                                                                   0;
-                                                                  i < listSections.length;
+                                                                  i < listSections!.length;
                                                                   i++) {
                                                                     if (i == index) {
-                                                                      listSections[i].isSelected = true;
-                                                                      selectedSection.add(listSections[index]);
+                                                                      listSections![i].isSelected = true;
+                                                                      selectedSection.add(listSections![index]);
                                                                     } else {
-                                                                      listSections[i].isSelected =
+                                                                      listSections![i].isSelected =
                                                                       false;
                                                                       removeSelected(
-                                                                          listSections[i].id);
+                                                                          listSections![i].id);
                                                                     }
                                                                   }
                                                                 });
                                                               } else {
                                                                 sectionId = "";
 
-                                                                listSections[index]
+                                                                listSections![index]
                                                                     .isSelected =
                                                                 false;
                                                                 removeSelected(
-                                                                    listSections[
+                                                                    listSections![
                                                                     index]
                                                                         .id);
                                                                 setState(() {
@@ -501,7 +501,7 @@ BuildContext sctx;
                                                   {
                                                     if(selectedSection.length>0)
                                                     {
-                                                      int i=selectedSection[0].id;
+                                                      int? i=selectedSection[0].id;
                                                       Navigator.of(context).pop({'result': i});
 
                                                     }
@@ -516,7 +516,7 @@ BuildContext sctx;
 
                                                 },
                                                 color: HexColor(AppColors.appColorWhite),
-                                                child: Text(AppLocalizations.of(context).translate('next'),
+                                                child: Text(AppLocalizations.of(context)!.translate('next'),
                                                   style: styleElements
                                                       .subtitle2ThemeScalable(context)
                                                       .copyWith(
@@ -536,7 +536,7 @@ BuildContext sctx;
         ));
   }
 
-  removeSelected(int id) {
+  removeSelected(int? id) {
     for (var i = 0; i < selectedSection.length; i++) {
       if (id == selectedSection[i].id) {
         selectedSection.removeAt(i);
@@ -547,9 +547,9 @@ BuildContext sctx;
 
   void register(int userId) async {
 
-    registerUserAs.personId = userId;
+    registerUserAs!.personId = userId;
 
-    registerUserAs.personClasses = teachingClasses;
+    registerUserAs!.personClasses = teachingClasses;
     final body = jsonEncode(registerUserAs);
 
     Calls().call(body, context, Config.REGISTER_USER_AS).then((value) async {
@@ -564,15 +564,15 @@ BuildContext sctx;
               MaterialPageRoute(
                   builder: (context) => DilaogPage(
                       type: type,
-                      isVerified: data.rows.isVerified,
-                      title: AppLocalizations.of(context).translate('you_are_added_as') + "Alumni ",
-                      subtitle: (data.rows.institutionName != null
-                          ? " of " + data.rows.institutionName
+                      isVerified: data.rows!.isVerified,
+                      title: AppLocalizations.of(context)!.translate('you_are_added_as') + "Alumni ",
+                      subtitle: (data.rows!.institutionName != null
+                          ? " of " + data.rows!.institutionName!
                           : ""))),
                   (Route<dynamic> route) => false);
         } else
           ToastBuilder().showSnackBar(
-              data.message, sctx, HexColor(AppColors.information));
+              data.message!, sctx, HexColor(AppColors.information));
       }
     }).catchError((onError) {
       ToastBuilder().showSnackBar(

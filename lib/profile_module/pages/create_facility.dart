@@ -29,9 +29,9 @@ class CreateFacility extends StatefulWidget {
   String id;
 
   CreateFacility({
-    Key key,
-    @required this.url,
-    @required this.id,
+    Key? key,
+    required this.url,
+    required this.id,
   }) : super(key: key);
 
   @override
@@ -41,24 +41,24 @@ class CreateFacility extends StatefulWidget {
       );
 }
 
-BuildContext context;
+BuildContext? context;
 var imageChild;
 
 class _CreateFacility extends State<CreateFacility> {
   var imageFile;
-  String type;
+  String? type;
   String id;
   String imageUrl;
-  String studentType;
+  String? studentType;
 
-  SharedPreferences prefs;
-  BuildContext context;
-  File imagePath;
-  String selectPath;
-  List<DropDownItem> items = [];
-  int selectedIndTypeId;
-  String selectedIndType;
-  String selectedIndTypeCode;
+  late SharedPreferences prefs;
+ late BuildContext context;
+  File? imagePath;
+  String? selectPath;
+  List<DropDownItem>? items = [];
+  int? selectedIndTypeId;
+  String? selectedIndType;
+  String? selectedIndTypeCode;
 
   Size screenSize(BuildContext context) {
     return MediaQuery.of(context).size;
@@ -94,9 +94,11 @@ class _CreateFacility extends State<CreateFacility> {
   // ignore: missing_return
   Future<bool> _onBackPressed() {
     Navigator.of(context).pop({'result': imageUrl});
+
+    return new Future(() => false);
   }
 
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
   var itemsIndustry = <String>[];
   List<Widget> actions = [];
   final facilityNameCon = TextEditingController();
@@ -116,13 +118,13 @@ class _CreateFacility extends State<CreateFacility> {
 
     List<DropdownMenuItem> _genderValues = [];
     _getGenderValues() {
-      for (int i = 0; i < items.length; i++) {
+      for (int i = 0; i < items!.length; i++) {
         _genderValues.add(DropdownMenuItem(
           child: Text(
-            items[i].description,
+            items![i].description!,
             style: styleElements.bodyText2ThemeScalable(context),
           ),
-          value: items[i],
+          value: items![i],
         ));
       }
       return _genderValues;
@@ -147,7 +149,7 @@ class _CreateFacility extends State<CreateFacility> {
           contentPadding: EdgeInsets.fromLTRB(8.0, 0.0, 20.0, 0.0),
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
           hintText:
-              AppLocalizations.of(context).translate("describe_facility")),
+              AppLocalizations.of(context)!.translate("describe_facility")),
     );
     final facilityName = TextField(
       controller: facilityNameCon,
@@ -158,7 +160,7 @@ class _CreateFacility extends State<CreateFacility> {
       ),
       textCapitalization: TextCapitalization.words,
       decoration: InputDecoration(
-          hintText: AppLocalizations.of(context).translate('facility_name'),
+          hintText: AppLocalizations.of(context)!.translate('facility_name'),
           hintStyle: styleElements
               .bodyText2ThemeScalable(context)
               .copyWith(fontSize: 14.sp,
@@ -169,16 +171,16 @@ class _CreateFacility extends State<CreateFacility> {
             ),
           )),
     );
-    final facType = DropdownButtonFormField(
+    final facType = DropdownButtonFormField<dynamic>(
       value: null,
       hint: Text(
-        selectedIndType??  AppLocalizations.of(context).translate("facility_type"),
+        selectedIndType??  AppLocalizations.of(context)!.translate("facility_type"),
         style: styleElements.bodyText2ThemeScalable(context),
       ),
-      items: items != null && items.isNotEmpty ? _getGenderValues() : null,
+      items: items != null && items!.isNotEmpty ? _getGenderValues() : null,
       onChanged: (value) {
-        print(value.facilityTypeId.toString()+"UUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUUU");
-        setState(() {
+        value as DropDownItem;
+       setState(() {
           selectedIndTypeId = value.facilityTypeId ?? selectedIndTypeId;
           selectedIndType = value.description ?? selectedIndType;
           selectedIndTypeCode=value.code ?? selectedIndTypeCode;
@@ -209,7 +211,7 @@ class _CreateFacility extends State<CreateFacility> {
             resizeToAvoidBottomInset: true,
               backgroundColor: HexColor(AppColors.appColorBackground),
               appBar: TricycleAppBar().getCustomAppBar(context,
-                  appBarTitle: AppLocalizations.of(context).translate('create'),
+                  appBarTitle: AppLocalizations.of(context)!.translate('create'),
                   actions: actions, onBackButtonPress: () {
                 _onBackPressed();
               }),
@@ -239,7 +241,7 @@ class _CreateFacility extends State<CreateFacility> {
                               Padding(
                                 padding: const EdgeInsets.only(
                                     left: 8.0, right: 8.0, top: 8.0),
-                                child: Text(AppLocalizations.of(context).translate('facility_name'),
+                                child: Text(AppLocalizations.of(context)!.translate('facility_name'),
                                   style: styleElements
                                       .bodyText2ThemeScalable(context)
                                       .copyWith(
@@ -271,7 +273,7 @@ class _CreateFacility extends State<CreateFacility> {
                                 padding: const EdgeInsets.only(
                                     left: 8.0, right: 8.0, top: 8.0),
                                 child: Text(
-                                  AppLocalizations.of(context)
+                                  AppLocalizations.of(context)!
                                       .translate("facility_type"),
                                   style: styleElements
                                       .bodyText2ThemeScalable(context)
@@ -303,7 +305,7 @@ class _CreateFacility extends State<CreateFacility> {
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  AppLocalizations.of(context)
+                                  AppLocalizations.of(context)!
                                       .translate("description"),
                                   style: styleElements
                                       .bodyText2ThemeScalable(context)
@@ -351,7 +353,7 @@ class _CreateFacility extends State<CreateFacility> {
     });
   }
 
-  void createFacility(String desc, String name,int selectedId,String selectedIndTypeCode) async {
+  void createFacility(String desc, String name,int? selectedId,String? selectedIndTypeCode) async {
 
     final body = jsonEncode({
       "institution_id": prefs.getInt(Strings.instituteId),
@@ -394,7 +396,7 @@ Widget widget(BuildContext context, TextStyleElements styleElements,
     child: Row(
       children: [
         Text(
-          AppLocalizations.of(context).translate("next"),
+          AppLocalizations.of(context)!.translate("next"),
           style: styleElements.bodyText2ThemeScalable(context).copyWith(
               color: HexColor(AppColors.appMainColor),
               fontSize: 14.sp,
@@ -411,11 +413,11 @@ Widget widget(BuildContext context, TextStyleElements styleElements,
 
 // ignore: must_be_immutable
 class ActionWidget extends StatelessWidget {
-  final VoidCallback onCountSelected;
+  final VoidCallback? onCountSelected;
 
   ActionWidget({this.onCountSelected});
 
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   @override
   Widget build(BuildContext context) {
@@ -423,14 +425,14 @@ class ActionWidget extends StatelessWidget {
     return GestureDetector(
       behavior: HitTestBehavior.translucent,
       onTap: () {
-        onCountSelected();
+        onCountSelected!();
       },
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Row(
           children: [
             Text(
-              AppLocalizations.of(context).translate("next"),
+              AppLocalizations.of(context)!.translate("next"),
               style: styleElements.bodyText2ThemeScalable(context).copyWith(
                   color: HexColor(AppColors.appMainColor),
                   fontSize: 14.sp,

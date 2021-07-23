@@ -24,15 +24,15 @@ import '../postcardDetail.dart';
 // ignore: must_be_immutable
 class NewsCard extends StatelessWidget {
   final CommonCardData data;
-  BuildContext context;
-  List<Data> listSubItems = [];
-  TextStyleElements styleElements;
-  bool isProfile;
-  String instituteId;
-  Null Function() callbackPicker;
-  int id;
-  String personType;
-  String type;
+  late BuildContext context;
+  List<Data>? listSubItems = [];
+  late TextStyleElements styleElements;
+  bool? isProfile;
+  String? instituteId;
+  Null Function()? callbackPicker;
+  int? id;
+  String? personType;
+  String? type;
 
   Size displaySize(BuildContext context) {
     debugPrint('Size = ' + MediaQuery
@@ -55,8 +55,8 @@ class NewsCard extends StatelessWidget {
   }
 
   NewsCard({
-    Key key,
-    @required this.data,
+    Key? key,
+    required this.data,
     this.instituteId,
     this.isProfile,
     this.id,
@@ -122,7 +122,7 @@ class NewsCard extends StatelessWidget {
                               /*visible: data.isShowMore ??= false,*/
                               child: Align(
                                 alignment: Alignment.bottomRight,
-                                child: Text(AppLocalizations.of(context)
+                                child: Text(AppLocalizations.of(context)!
                                     .translate('see_more'),
                                   style: styleElements
                                       .subtitle2ThemeScalable(context)
@@ -141,18 +141,18 @@ class NewsCard extends StatelessWidget {
               shrinkWrap: true,
               padding: const EdgeInsets.only(bottom: 16.0),
               physics: NeverScrollableScrollPhysics(),
-              itemCount: listSubItems.length,
+              itemCount: listSubItems!.length,
               itemBuilder: (context, index) {
                 return GestureDetector(
                     onTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) {
-                            if (data.data[index].postType == 'lesson' ) {
+                            if (data.data![index].postType == 'lesson' ) {
                               return NewNewsAndArticleDetailPage(
-                                postId: data.data[index].postId,);
+                                postId: data.data![index].postId,);
                             } else {
                               return PostCardDetailPage(
-                                postId: data.data[index].postId,);
+                                postId: data.data![index].postId,);
                             }
                           }
                           )
@@ -172,20 +172,20 @@ class NewsCard extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(8),
                                   image: DecorationImage(
                                       fit: BoxFit.cover,
-                                      image: (data.data[index].postContent
-                                          .content.media.isNotEmpty &&
-                                          data.data[index].postContent.content
-                                              .media[0].mediaType ==
+                                      image: ((data.data![index].postContent!
+                                          .content!.media!.isNotEmpty &&
+                                          data.data![index].postContent!.content!
+                                              .media![0].mediaType ==
                                               "image")
                                           ? CachedNetworkImageProvider(
                                         Utility().getUrlForImage(
-                                            data.data[index].postContent.content
-                                                .media[0].mediaUrl,
+                                            data.data![index].postContent!.content!
+                                                .media![0].mediaUrl,
                                             RESOLUTION_TYPE.R64,
                                             SERVICE_TYPE.POST),
                                       )
                                           : AssetImage(
-                                          'assets/appimages/image_place.png')
+                                          'assets/appimages/image_place.png')) as ImageProvider<Object>
                                   )
                               ),
                             ) : Expanded(
@@ -195,8 +195,8 @@ class NewsCard extends StatelessWidget {
                                 child: Align(
                                     alignment: Alignment.topLeft,
                                     child:
-                                    Text(data.data[index].postContent.content
-                                        .contentMeta.title ??
+                                    Text(data.data![index].postContent!.content!
+                                        .contentMeta!.title ??
                                         "",
                                         maxLines: 3,
                                         overflow: TextOverflow.ellipsis,
@@ -230,8 +230,8 @@ class NewsCard extends StatelessWidget {
                                 child: Align(
                                     alignment: Alignment.topLeft,
                                     child:
-                                    Text(data.data[index].postContent.content
-                                        .contentMeta.title ??
+                                    Text(data.data![index].postContent!.content!
+                                        .contentMeta!.title ??
                                         "",
                                         maxLines: 3,
                                         overflow: TextOverflow.ellipsis,
@@ -263,20 +263,20 @@ class NewsCard extends StatelessWidget {
                                   borderRadius: BorderRadius.circular(8),
                                   image: DecorationImage(
                                       fit: BoxFit.cover,
-                                      image: (data.data[index].postContent
-                                          .content.media.isNotEmpty &&
-                                          data.data[index].postContent.content
-                                              .media[0].mediaType ==
+                                      image: ((data.data![index].postContent!
+                                          .content!.media!.isNotEmpty &&
+                                          data.data![index].postContent!.content!
+                                              .media![0].mediaType ==
                                               "image")
                                           ? CachedNetworkImageProvider(
                                         Utility().getUrlForImage(
-                                            data.data[index].postContent.content
-                                                .media[0].mediaUrl,
+                                            data.data![index].postContent!.content!
+                                                .media![0].mediaUrl,
                                             RESOLUTION_TYPE.R64,
                                             SERVICE_TYPE.POST),
                                       )
                                           : AssetImage(
-                                          'assets/appimages/image_place.png')
+                                          'assets/appimages/image_place.png')) as ImageProvider<Object>
                                   )
                               ),
                             ),
@@ -292,9 +292,9 @@ class NewsCard extends StatelessWidget {
 
   String getTitle() {
     if (type == 'news') {
-      return AppLocalizations.of(context).translate('news');
+      return AppLocalizations.of(context)!.translate('news');
     } else {
-      return AppLocalizations.of(context).translate('article');
+      return AppLocalizations.of(context)!.translate('article');
     }
   }
 

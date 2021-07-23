@@ -16,9 +16,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class PollsUserList extends StatefulWidget {
-  int sequence;
-  String option;
-  int postId;
+  int? sequence;
+  String? option;
+  int? postId;
 
   PollsUserList({this.sequence, this.option, this.postId});
 
@@ -28,12 +28,12 @@ class PollsUserList extends StatefulWidget {
 }
 
 class PollsUserListState extends State<PollsUserList> {
-  int sequence;
-  String option;
-  int postId;
-  SharedPreferences preferences;
-  TextStyleElements styleElements;
-  List<VotesListItem> listVotesItem;
+  int? sequence;
+  String? option;
+  int? postId;
+  late SharedPreferences preferences;
+  TextStyleElements? styleElements;
+  List<VotesListItem>? listVotesItem;
 
   PollsUserListState({this.sequence, this.option, this.postId});
 
@@ -53,8 +53,8 @@ class PollsUserListState extends State<PollsUserList> {
     );
   }
 
-  List<VotesListItem> listItemsGetter(PollVotesListResponse pageData) {
-    listVotesItem = pageData.rows;
+  List<VotesListItem>? listItemsGetter(PollVotesListResponse? pageData) {
+    listVotesItem = pageData!.rows;
     return pageData.rows;
   }
 
@@ -80,20 +80,20 @@ class PollsUserListState extends State<PollsUserList> {
         title: item.name,
         subtitle1: item.subtitle,
         trailingWidget: Visibility(
-          visible: !item.isObjectFollowing,
+          visible: !item.isObjectFollowing!,
           child: GenericFollowUnfollowButton(
             actionByObjectType: preferences.getString("ownerType"),
             actionByObjectId: preferences.getInt("userId"),
             actionOnObjectType: item.type,
             actionOnObjectId: item.id,
-            engageFlag: AppLocalizations.of(context).translate('follow'),
+            engageFlag: AppLocalizations.of(context)!.translate('follow'),
             actionFlag: "F",
             actionDetails: [],
             personName: item.name ?? "",
             callback: (isCallSuccess) {
               if (isCallSuccess) {
                 setState(() {
-                  listVotesItem[index].isObjectFollowing = true;
+                  listVotesItem![index].isObjectFollowing = true;
                 });
               }
             },

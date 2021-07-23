@@ -10,21 +10,21 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 class CreateNewEventBottomSheet extends StatefulWidget {
-  final Function(String value,int id) onClickCallback;
+  final Function(String? value,int ?id)? onClickCallback;
   CreateNewEventBottomSheet({this.onClickCallback});
   @override
   _CreateNewEventBottomSheet createState()=> _CreateNewEventBottomSheet(onClickCallback: onClickCallback);
 }
 class _CreateNewEventBottomSheet extends State<CreateNewEventBottomSheet>{
-  final Function(String value,int id ) onClickCallback;
+  final Function(String? value,int? id )? onClickCallback;
   _CreateNewEventBottomSheet({this.onClickCallback});
-  List<CalenderTypeItem> typeList = [];
+  List<CalenderTypeItem>? typeList = [];
 
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => fetchData());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => fetchData());
   }
 
   @override
@@ -42,29 +42,29 @@ class _CreateNewEventBottomSheet extends State<CreateNewEventBottomSheet>{
             Padding(
               padding: EdgeInsets.all(16),
               child: Text(
-                AppLocalizations.of(context).translate('create_new'),
+                AppLocalizations.of(context)!.translate('create_new'),
                 style: styleElements.headline6ThemeScalable(context),
               ),
             ),
             ListView.builder(
-              itemCount: typeList.length,
+              itemCount: typeList!.length,
               shrinkWrap: true,
               itemBuilder: (BuildContext context, int index) {
                 return Padding(
                     padding: EdgeInsets.all(0),
                     child: InkWell(
                       onTap: (){
-                        onClickCallback(typeList[index].eventCode,typeList[index].standardEventsId);
+                        onClickCallback!(typeList![index].eventCode,typeList![index].standardEventsId);
                       },
                       child: ListTile(
                         leading: CachedNetworkImage(
-                          imageUrl: typeList[index].eventDefaultImageUrl ?? '',
+                          imageUrl: typeList![index].eventDefaultImageUrl ?? '',
                           height: 24,
                           width: 24,
                           fit: BoxFit.contain,
                         ),
                         title: Text(
-                          typeList.elementAt(index).eventName,
+                          typeList!.elementAt(index).eventName!,
                           style:
                           styleElements.subtitle1ThemeScalable(context),
                         ),

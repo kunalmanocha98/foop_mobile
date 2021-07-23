@@ -54,19 +54,19 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class PostCreatePage extends StatefulWidget {
-  String type;
-  String question;
-  int postId;
-  SharedPreferences prefs;
-  PostReceiverListItem selectedReceiverData;
-  String text;
-  final PostCreatePayload createLessonData;
-  final String contentData;
+  String? type;
+  String? question;
+  int? postId;
+  SharedPreferences? prefs;
+  PostReceiverListItem? selectedReceiverData;
+  String? text;
+  final PostCreatePayload? createLessonData;
+  final String? contentData;
   final bool isEdit;
-  final Function callBack;
-  final String titleLesson;
-  final String topicName;
-  final List<Media> mediaFromEdit;
+  final Function? callBack;
+  final String? titleLesson;
+  final String? topicName;
+  final List<Media>? mediaFromEdit;
 
   PostCreatePage(
       {this.type,
@@ -94,30 +94,30 @@ class PostCreatePage extends StatefulWidget {
 }
 
 class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
-  String title, subTitle, weblink;
-  TextStyleElements styleElements;
-  String type = 'feed';
-  String text;
+  String? title, subTitle, weblink;
+  late TextStyleElements styleElements;
+  String? type = 'feed';
+  String? text;
   bool isSavingDraft = false;
   final titleController = TextEditingController();
-  SharedPreferences prefs;
+  SharedPreferences? prefs;
   String _selectedColor = AppColors.information;
-  String question;
-  int postId;
-  String questionContent;
+  String? question;
+  int? postId;
+  String? questionContent;
   String urlPreview = "";
 
-  String postOwnerType;
-  String image_url;
+  String? postOwnerType;
+  String? image_url;
   bool isLessonAlreadyAdded = false;
-  int postOwnerTypeId;
+  int? postOwnerTypeId;
   List<String> mentions = [];
   List<String> keywords = [];
   int wordCount = 0;
   int wordLimit = 200;
-  BuildContext ctx;
-  List<PostCreatePayload> lessonsList = [];
-  List<PostCreatePayload> draftedLessonsList = [];
+  BuildContext? ctx;
+  List<PostCreatePayload?> lessonsList = [];
+  List<PostCreatePayload?> draftedLessonsList = [];
   GlobalKey<WordCounterCheckerState> wordCounterKey = GlobalKey();
   int lessonNumber = 1;
 
@@ -148,14 +148,14 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
   int optionsCount = 2;
 
   bool isAssignmentDetails = false;
-  PostCreatePayload detailsPayload;
+  PostCreatePayload? detailsPayload;
 
   Future<void> setPref() async {
     prefs ??= await SharedPreferences.getInstance();
-    image_url = prefs != null && prefs.getString(Strings.profileImage) != null
-        ? prefs.getString(Strings.profileImage)
+    image_url = prefs != null && prefs!.getString(Strings.profileImage) != null
+        ? prefs!.getString(Strings.profileImage)
         : "";
-    postOwnerTypeId = prefs != null ? prefs.getInt(Strings.userId) : null;
+    postOwnerTypeId = prefs != null ? prefs!.getInt(Strings.userId) : null;
     postOwnerType = 'person';
 
     if (widget.isEdit && widget.createLessonData != null) {
@@ -164,14 +164,14 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
   }
 
   getSharedData() async {
-    if (text != null && text.isNotEmpty) {
+    if (text != null && text!.isNotEmpty) {
       _controller.document.insert(0, text);
     }
 
-    if (widget.mediaFromEdit != null && widget.mediaFromEdit.isNotEmpty)
+    if (widget.mediaFromEdit != null && widget.mediaFromEdit!.isNotEmpty)
     {
 
-      await Future.forEach(widget.mediaFromEdit, (item)async{
+      await Future.forEach(widget.mediaFromEdit!, (dynamic item)async{
         MediaDetails mediaDetails = MediaDetails();
         mediaDetails.mediaUrl = item.mediaUrl;
         mediaDetails.mediaType = item.mediaType;
@@ -179,7 +179,7 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
 
         mediaList.add(mediaDetails);
         setState(() {
-          attachmentKey.currentState.mediaList = mediaList;
+          attachmentKey.currentState!.mediaList = mediaList;
         });
       });
 
@@ -198,26 +198,26 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
     _controller.addListener(() {
       var editingValue = _controller.plainTextEditingValue;
       wordCount = Utility().getWordsCountFromRegex(editingValue.text);
-      wordCounterKey.currentState.updateWidget(wordCount);
+      wordCounterKey.currentState!.updateWidget(wordCount);
     });
     if (widget.isEdit) {
 /*      Document doc = Document.fromJson(jsonDecode(widget.contentData));
       _controller = QuillController(
           document: doc, selection: TextSelection.collapsed(offset: 0));*/
-      _controller.document.insert(0, jsonDecode(widget.contentData)[0]['insert']);
+      _controller.document.insert(0, jsonDecode(widget.contentData!)[0]['insert']);
       try {
         title = widget.createLessonData != null &&
-                widget.createLessonData.lessonListItem != null
-            ? widget.createLessonData.lessonListItem.lessonName
+                widget.createLessonData!.lessonListItem != null
+            ? widget.createLessonData!.lessonListItem!.lessonName
             : widget.titleLesson;
 
         print(title);
-        titleController.text = title;
+        titleController.text = title!;
       } catch (e) {
         print(e);
       }
     }
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
       getSharedData();
       if (type != 'blog' && type != 'feed' && type != "lesson") {
         showContentDetailsSheet();
@@ -240,7 +240,7 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
             type: type,
             onColorSelect: (value) {
               setState(() {
-                _selectedColor = value;
+                _selectedColor = value!;
               });
             },
           );
@@ -257,7 +257,7 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
     titleController.clear();
 
     FocusScope.of(context).unfocus();
-    attachmentKey.currentState.mediaList.clear();
+    attachmentKey.currentState!.mediaList.clear();
     _focusNode.unfocus();
     _controller = QuillController.basic();
     setState(() {});
@@ -265,8 +265,9 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
   }
 
   // ignore: missing_return
-  Future<bool> _onBackPressed() {
+  Future<bool>? _onBackPressed() {
     Navigator.pop(context);
+    return new Future(() => false);
   }
 
   @override
@@ -316,7 +317,7 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
                   ),
                   (type == 'answer' || type == 'submit_assign')
                       ? Text(
-                          question,
+                          question!,
                           style: styleElements.subtitle1ThemeScalable(context),
                         )
                       : Row(
@@ -410,11 +411,11 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
             attachmentKey,
             isMentionVisible: type != 'qa' && type != 'poll',
             mentionCallback: (value) {
-              mentions.add(value);
+              mentions.add(value!);
               int length = _controller.plainTextEditingValue.text.length;
               setState(() {
                 _controller.document
-                    .insert(length > 0 ? length - 1 : 0, ' @' + value + ' ');
+                    .insert(length > 0 ? length - 1 : 0, ' @' + value+ ' ');
               });
             },
             hashTagCallback: (value) {
@@ -456,9 +457,9 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
 
                           var delta = _controller.document.toDelta();
 
-                          var mdList=List.of( attachmentKey.currentState.mediaList);
+                          var mdList=List.of( attachmentKey.currentState!.mediaList);
                           String html = jsonEncode(delta.toJson());
-                          if (plainContent.isNotEmpty && title != null && title.isNotEmpty) {
+                          if (plainContent.isNotEmpty && title != null && title!.isNotEmpty) {
                             if (lessonsList.isNotEmpty) {
                              await checkIfLessonAlreadyDrafted(html, title, subTitle,
                                  mdList , true);
@@ -477,7 +478,7 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
                             });
                           } else {
                             ToastBuilder().showToast(
-                                AppLocalizations.of(context)
+                                AppLocalizations.of(context)!
                                     .translate("complete_lessons_collage"),
                                 context,
                                 HexColor(AppColors.information));
@@ -485,7 +486,7 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
                         },
                         color: HexColor(AppColors.appMainColor),
                         child: Text(
-                          AppLocalizations.of(context).translate('add_lesson'),
+                          AppLocalizations.of(context)!.translate('add_lesson'),
                           style: styleElements
                               .subtitle2ThemeScalable(context)
                               .copyWith(
@@ -507,8 +508,8 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
                 : TricycleTextButton(
                     onPressed: () async {
                       if (type == 'notice' || type == 'blog') {
-                        if (formKey.currentState.validate()) {
-                          formKey.currentState.save();
+                        if (formKey.currentState!.validate()) {
+                          formKey.currentState!.save();
                           // Delta _delta = _controller.document.toDelta();
                           // String html =
                           // markdownToHtml(notusMarkdown.encode(_delta).toString());
@@ -519,7 +520,7 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
                           String html = jsonEncode(delta.toJson());
                           if (plainText != null &&
                               plainText.trim().isNotEmpty &&
-                              title.isNotEmpty) {
+                              title!.isNotEmpty) {
                             Navigator.of(context)
                                 .push(MaterialPageRoute(
                                     builder: (context) => PostReceiverListPage(
@@ -528,11 +529,11 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
                                             title,
                                             subTitle,
                                             attachmentKey
-                                                .currentState.mediaList,
+                                                .currentState!.mediaList,
                                           ),
                                       callBack:(){
                                             if(widget.callBack!=null)
-                                              widget.callBack();},
+                                              widget.callBack!();},
                                           selectedReceiverData:
                                               widget.selectedReceiverData,
                                         )))
@@ -542,33 +543,33 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
                               }
                             });
                           } else {
-                            if (title.isEmpty)
+                            if (title!.isEmpty)
                               ToastBuilder().showToast(
-                                  AppLocalizations.of(context)
+                                  AppLocalizations.of(context)!
                                       .translate("add_title"),
                                   context,
                                   HexColor(AppColors.information));
 
                             if (plainText.trim().isEmpty)
                               ToastBuilder().showToast(
-                                  AppLocalizations.of(context)
+                                  AppLocalizations.of(context)!
                                       .translate("add_content"),
                                   context,
                                   HexColor(AppColors.information));
                           }
                         }
                       } else if (type == 'assignment') {
-                        if (formKey.currentState.validate()) {
-                          formKey.currentState.save();
+                        if (formKey.currentState!.validate()) {
+                          formKey.currentState!.save();
                           var plainText =
                               _controller.document.toPlainText().trim();
                           if (plainText != null &&
                               plainText.trim().isNotEmpty &&
-                              title.isNotEmpty) {
+                              title!.isNotEmpty) {
                             if (detailsPayload != null &&
-                                detailsPayload.contentMeta != null &&
-                                detailsPayload.contentMeta.others != null) {
-                              if (attachmentKey.currentState.mediaList.length >
+                                detailsPayload!.contentMeta != null &&
+                                detailsPayload!.contentMeta!.others != null) {
+                              if (attachmentKey.currentState!.mediaList.length >
                                   0) {
                                 var delta = _controller.document.toDelta();
                                 String html = jsonEncode(delta.toJson());
@@ -581,11 +582,11 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
                                                 title,
                                                 subTitle,
                                                 attachmentKey
-                                                    .currentState.mediaList,
+                                                    .currentState!.mediaList,
                                               ),
                                               callBack:(){
                                                 if(widget.callBack!=null)
-                                                  widget.callBack();
+                                                  widget.callBack!();
                                               },
                                               selectedReceiverData:
                                                   widget.selectedReceiverData,
@@ -610,14 +611,14 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
                             }
                           } else {
                             ToastBuilder().showToast(
-                                AppLocalizations.of(context)
+                                AppLocalizations.of(context)!
                                     .translate("add_content"),
                                 context,
                                 HexColor(AppColors.information));
                           }
                         } else {
                           ToastBuilder().showToast(
-                              AppLocalizations.of(context)
+                              AppLocalizations.of(context)!
                                   .translate("add_content"),
                               context,
                               HexColor(AppColors.information));
@@ -637,7 +638,7 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
                           createAnswer(html);
                         } else {
                           ToastBuilder().showToast(
-                              AppLocalizations.of(context)
+                              AppLocalizations.of(context)!
                                   .translate("add_content"),
                               context,
                               HexColor(AppColors.information));
@@ -657,18 +658,18 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
                           createAnswer(html);
                         } else {
                           ToastBuilder().showToast(
-                              AppLocalizations.of(context)
+                              AppLocalizations.of(context)!
                                   .translate("add_content"),
                               context,
                               HexColor(AppColors.information));
                         }
                       } else if (type == 'poll') {
-                        if (formKey.currentState.validate()) {
-                          formKey.currentState.save();
+                        if (formKey.currentState!.validate()) {
+                          formKey.currentState!.save();
                           if (detailsPayload != null &&
-                              detailsPayload.contentMeta.others.pollEnd !=
+                              detailsPayload!.contentMeta!.others!.pollEnd !=
                                   null) {
-                            String html = title;
+                            String? html = title;
                             Navigator.of(context)
                                 .push(MaterialPageRoute(
                                     builder: (context) => PostReceiverListPage(
@@ -677,11 +678,11 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
                                             title,
                                             subTitle,
                                             attachmentKey
-                                                .currentState.mediaList,
+                                                .currentState!.mediaList,
                                           ),
                                       callBack:(){
                                         if(widget.callBack!=null)
-                                          widget.callBack();
+                                          widget.callBack!();
                                       },
                                           selectedReceiverData:
                                               widget.selectedReceiverData,
@@ -698,10 +699,10 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
                           }
                         }
                       } else if (type == 'news') {
-                        if (formKey.currentState.validate()) {
-                          if (attachmentKey.currentState.mediaList.length > 0) {
+                        if (formKey.currentState!.validate()) {
+                          if (attachmentKey.currentState!.mediaList.length > 0) {
                             if (wordCount <= 60) {
-                              formKey.currentState.save();
+                              formKey.currentState!.save();
                               var plainContent =
                                   _controller.document.toPlainText().trim();
                               // final converter = NotusHtmlCodec();
@@ -709,7 +710,7 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
 
                               String html = jsonEncode(delta.toJson());
 
-                              if (title.isNotEmpty) {
+                              if (title!.isNotEmpty) {
                                 Navigator.of(context)
                                     .push(MaterialPageRoute(
                                         builder: (context) =>
@@ -721,7 +722,7 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
                                                 title,
                                                 subTitle,
                                                 attachmentKey
-                                                    .currentState.mediaList,
+                                                    .currentState!.mediaList,
                                               ),
                                               selectedReceiverData:
                                                   widget.selectedReceiverData,
@@ -732,16 +733,16 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
                                   }
                                 });
                               } else {
-                                if (title.isEmpty)
+                                if (title!.isEmpty)
                                   ToastBuilder().showToast(
-                                      AppLocalizations.of(context)
+                                      AppLocalizations.of(context)!
                                           .translate("add_title"),
                                       context,
                                       HexColor(AppColors.information));
 
                                 if (plainContent.trim().isEmpty)
                                   ToastBuilder().showToast(
-                                      AppLocalizations.of(context)
+                                      AppLocalizations.of(context)!
                                           .translate("add_content"),
                                       context,
                                       HexColor(AppColors.information));
@@ -754,15 +755,15 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
                             }
                           } else {
                             ToastBuilder().showToast(
-                                AppLocalizations.of(context)
+                                AppLocalizations.of(context)!
                                     .translate("please_select_atleast_media"),
                                 context,
                                 HexColor(AppColors.information));
                           }
                         }
                       } else if (type == 'qa') {
-                        String html = questionContent;
-                        if (title != null && title.isNotEmpty) {
+                        String? html = questionContent;
+                        if (title != null && title!.isNotEmpty) {
                           Navigator.of(context)
                               .push(MaterialPageRoute(
                                   builder: (context) => PostReceiverListPage(
@@ -770,11 +771,11 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
                                           html,
                                           title,
                                           subTitle,
-                                          attachmentKey.currentState.mediaList,
+                                          attachmentKey.currentState!.mediaList,
                                         ),
                                     callBack:(){
                                       if(widget.callBack!=null)
-                                        widget.callBack();
+                                        widget.callBack!();
                                     },
                                         selectedReceiverData:
                                             widget.selectedReceiverData,
@@ -786,7 +787,7 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
                           });
                         } else {
                           ToastBuilder().showToast(
-                              AppLocalizations.of(context)
+                              AppLocalizations.of(context)!
                                   .translate("add_question"),
                               context,
                               HexColor(AppColors.information));
@@ -796,7 +797,7 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
                             _controller.document.toPlainText().trim();
 
                         var delta = _controller.document.toDelta();
-                        var mdList=List.of( attachmentKey.currentState.mediaList);
+                        var mdList=List.of( attachmentKey.currentState!.mediaList);
                         String html = jsonEncode(delta.toJson());
                         if (plainContent.isNotEmpty) {
                           if (type == "lesson") {
@@ -824,7 +825,7 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
                               }}
                               else {
                                 ToastBuilder().showToast(
-                                    AppLocalizations.of(context)
+                                    AppLocalizations.of(context)!
                                         .translate('minimum_word'),
                                     context,
                                     HexColor(AppColors.information));
@@ -834,7 +835,7 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
                               saveDraftOrUpdate(lessonsList);
                             } else {
                               ToastBuilder().showToast(
-                                  AppLocalizations.of(context)
+                                  AppLocalizations.of(context)!
                                       .translate('add_content'),
                                   context,
                                   HexColor(AppColors.information));
@@ -848,11 +849,11 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
                                             title,
                                             subTitle,
                                             attachmentKey
-                                                .currentState.mediaList,
+                                                .currentState!.mediaList,
                                           ),
                                       callBack:(){
                                         if(widget.callBack!=null)
-                                          widget.callBack();
+                                          widget.callBack!();
                                       },
                                           selectedReceiverData:
                                               widget.selectedReceiverData,
@@ -865,7 +866,7 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
                           }
                         } else {
                           ToastBuilder().showToast(
-                              AppLocalizations.of(context)
+                              AppLocalizations.of(context)!
                                   .translate('add_content'),
                               context,
                               HexColor(AppColors.information));
@@ -878,8 +879,8 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
                       children: [
                         Text(
                           type == 'answer'
-                              ? AppLocalizations.of(context).translate('submit')
-                              : AppLocalizations.of(context).translate('next'),
+                              ? AppLocalizations.of(context)!.translate('submit')
+                              : AppLocalizations.of(context)!.translate('next'),
                           style: styleElements
                               .subtitle2ThemeScalable(context)
                               .copyWith(
@@ -905,30 +906,30 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
     return result;
   }
 
-  Future<void> checkIfLessonAlreadyDrafted(String html, String title,
-      String subTitle, List<MediaDetails> mediaList,bool isAddNewLesson) async {
+  Future<void> checkIfLessonAlreadyDrafted(String html, String? title,
+      String? subTitle, List<MediaDetails> mediaList,bool isAddNewLesson) async {
     if (lessonNumber == lessonsList.length) {
       print(" lesson already added----------------------------");
-      lessonsList[(lessonsList.length - 1)].contentMeta.title = title;
-      if(lessonsList[(lessonsList.length - 1)].lessonListItem!=null)
-      lessonsList[(lessonsList.length - 1)].lessonListItem.lessonName = title;
-      lessonsList[(lessonsList.length - 1)].contentMeta.meta = html;
-      lessonsList[(lessonsList.length - 1)].mediaDetails = mediaList;
-      lessonsList[(lessonsList.length - 1)].postOwnerType = postOwnerType;
-      lessonsList[(lessonsList.length - 1)].postOwnerTypeId = postOwnerTypeId;
-      lessonsList[(lessonsList.length - 1)].postCreatedById =
-          prefs.getInt(Strings.userId);
-      lessonsList[(lessonsList.length - 1)].postInstitutionId =
-          prefs.getInt(Strings.instituteId);
-      lessonsList[(lessonsList.length - 1)].postType = type != null
+      lessonsList[(lessonsList.length - 1)]!.contentMeta!.title = title;
+      if(lessonsList[(lessonsList.length - 1)]!.lessonListItem!=null)
+      lessonsList[(lessonsList.length - 1)]!.lessonListItem!.lessonName = title;
+      lessonsList[(lessonsList.length - 1)]!.contentMeta!.meta = html;
+      lessonsList[(lessonsList.length - 1)]!.mediaDetails = mediaList;
+      lessonsList[(lessonsList.length - 1)]!.postOwnerType = postOwnerType;
+      lessonsList[(lessonsList.length - 1)]!.postOwnerTypeId = postOwnerTypeId;
+      lessonsList[(lessonsList.length - 1)]!.postCreatedById =
+          prefs!.getInt(Strings.userId);
+      lessonsList[(lessonsList.length - 1)]!.postInstitutionId =
+          prefs!.getInt(Strings.instituteId);
+      lessonsList[(lessonsList.length - 1)]!.postType = type != null
           ? type == 'feed'
               ? 'general'
               : type
           : 'general';
-      lessonsList[(lessonsList.length - 1)].postStatus = 'posted';
-      lessonsList[(lessonsList.length - 1)].postCategory = 'normal';
-      lessonsList[(lessonsList.length - 1)].mediaDetails = mediaList;
-      lessonsList[(lessonsList.length - 1)].postMentions = mentions;
+      lessonsList[(lessonsList.length - 1)]!.postStatus = 'posted';
+      lessonsList[(lessonsList.length - 1)]!.postCategory = 'normal';
+      lessonsList[(lessonsList.length - 1)]!.mediaDetails = mediaList;
+      lessonsList[(lessonsList.length - 1)]!.postMentions = mentions;
       if(!isAddNewLesson)
       saveDraftOrUpdate(lessonsList);
     } else {
@@ -939,14 +940,14 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
     }
   }
 
-  Future saveDraftOrUpdate(List<PostCreatePayload> list) async {
+  Future saveDraftOrUpdate(List<PostCreatePayload?> list) async {
     setState(() {
       isSavingDraft = true;
     });
 
     for (int i = 0; i < lessonsList.length; i++) {
       await (saveAsDRaft(
-          lessonsList[i], i == lessonsList.length - 1 ? true : false));
+          lessonsList[i]!, i == lessonsList.length - 1 ? true : false));
     }
   }
 
@@ -959,7 +960,7 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
         .then((value) {
       var res = SaveAsDraftResponse.fromJson(value);
       if (res.statusCode == Strings.success_code) {
-        res.rows.postId = res.rows.id;
+        res.rows!.postId = res.rows!.id;
         setState(() {
           draftedLessonsList.add(res.rows);
           if (isFinalCall) {
@@ -986,14 +987,14 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
                   return CommentSheet(
                       topicName: widget.topicName,
                       chapterItem: widget.createLessonData != null
-                          ? widget.createLessonData.chapterItem
+                          ? widget.createLessonData!.chapterItem
                           : null,
                       lessonListItem: widget.createLessonData != null
-                          ? widget.createLessonData.lessonListItem
+                          ? widget.createLessonData!.lessonListItem
                           : null,
                       chapterCreateCallBack: (lessonsList) {
                         if(widget.callBack!=null)
-                          widget.callBack();
+                          widget.callBack!();
                        Navigator.pop(context);
                       },
                       list: lessonsList,
@@ -1022,10 +1023,10 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
     var value = await UploadFile(
         baseUrl: Config.BASE_URL,
         context: context,
-        token: prefs.getString("token"),
+        token: prefs!.getString("token"),
         contextId: '',
         contextType: CONTEXTTYPE_ENUM.FEED.type,
-        ownerId: prefs.getInt(Strings.userId).toString(),
+        ownerId: prefs!.getInt(Strings.userId).toString(),
         ownerType: OWNERTYPE_ENUM.PERSON.type,
         file: file,
         subContextId: "",
@@ -1037,7 +1038,7 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
         contentType: contentType[0])
         .uploadFile();
     var imageResponse = ImageUpdateResponse.fromJson(value);
-    return Config.BASE_URL+imageResponse.rows.fileThumbnailUrl;
+    return Config.BASE_URL+imageResponse.rows!.fileThumbnailUrl!;
   }
 
   bool _toolbarVisible() {
@@ -1090,7 +1091,7 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
                       .headline6ThemeScalable(context)
                       .copyWith(fontWeight: FontWeight.w600),
                   decoration: InputDecoration(
-                      hintText: AppLocalizations.of(context)
+                      hintText: AppLocalizations.of(context)!
                           .translate('ask_questions'),
                       hintStyle: styleElements
                           .headline6ThemeScalable(context)
@@ -1132,7 +1133,7 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
       height: 200,
       child: Center(
           child: Text(
-              AppLocalizations.of(context).translate('goals_and_objectives'))),
+              AppLocalizations.of(context)!.translate('goals_and_objectives'))),
     );
   }
 
@@ -1173,7 +1174,7 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
                 },
                 decoration: InputDecoration(
                     contentPadding: EdgeInsets.only(left: 8),
-                    hintText: AppLocalizations.of(context)
+                    hintText: AppLocalizations.of(context)!
                         .translate('write_poll_question'),
                     hintStyle: styleElements
                         .headline6ThemeScalable(context)
@@ -1203,7 +1204,7 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
                                     color: HexColor(AppColors.appColorBlack65)),
                             textCapitalization: TextCapitalization.sentences,
                             decoration: InputDecoration(
-                                hintText: AppLocalizations.of(context)
+                                hintText: AppLocalizations.of(context)!
                                         .translate('option') +
                                     '${index + 1}',
                                 hintStyle: styleElements
@@ -1235,7 +1236,7 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
                     addRemoveOption(true);
                   },
                   child: Text(
-                    AppLocalizations.of(context).translate('add_options'),
+                    AppLocalizations.of(context)!.translate('add_options'),
                     style: styleElements
                         .captionThemeScalable(context)
                         .copyWith(color: HexColor(AppColors.appColorWhite)),
@@ -1272,7 +1273,7 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
                     padding: const EdgeInsets.only(left: 16.0),
                     child: Text(
                       name == "lesson"
-                          ? AppLocalizations.of(context).translate(
+                          ? AppLocalizations.of(context)!.translate(
                               'write_title',
                               arguments: {"type": lessonNumber.toString()})
                           : "",
@@ -1298,19 +1299,19 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
                       .copyWith(fontWeight: FontWeight.w600),
                   decoration: InputDecoration(
                       hintText: name == "lesson"
-                          ? AppLocalizations.of(context)
+                          ? AppLocalizations.of(context)!
                               .translate('write_title_name')
                           : name == "news"
-                              ? AppLocalizations.of(context)
+                              ? AppLocalizations.of(context)!
                                   .translate('write_heading_news')
                               : name == "blog"
-                                  ? AppLocalizations.of(context)
+                                  ? AppLocalizations.of(context)!
                                       .translate('write_heading_blog')
                                   : name == "circular"
-                                      ? AppLocalizations.of(context)
+                                      ? AppLocalizations.of(context)!
                                           .translate('write_heading_notice')
                                       :name == "feed"
-                          ? AppLocalizations.of(context)
+                          ? AppLocalizations.of(context)!
                           .translate('write_heading_feed')
                           : "",
                       border: InputBorder.none,
@@ -1540,13 +1541,13 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
   void createAnswer(String html) async {
     prefs ??= await SharedPreferences.getInstance();
     CreateAnswerPayload payload = CreateAnswerPayload();
-    payload.answerById = prefs.get(Strings.userId);
+    payload.answerById = prefs!.get(Strings.userId) as int?;
     payload.answerByType = 'person';
     payload.answerDetails = html;
     payload.postId = postId;
     if (type == 'submit_assign') {
       payload.answerOtherDetails = AnswerOtherDetails(
-          mediaDetails: attachmentKey.currentState.mediaList);
+          mediaDetails: attachmentKey.currentState!.mediaList);
     }
     var value =
         await Calls().call(jsonEncode(payload), context, Config.ANSWER_CREATE);
@@ -1555,11 +1556,11 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
       Navigator.pop(context, true);
     } else {
       ToastBuilder()
-          .showToast(res.message, context, HexColor(AppColors.information));
+          .showToast(res.message!, context, HexColor(AppColors.information));
     }
   }
 
-  PostCreatePayload getPostPayload(String html, String title, String subTitle,
+  PostCreatePayload getPostPayload(String? html, String? title, String? subTitle,
       List<MediaDetails> mediaList) {
 
 
@@ -1576,15 +1577,15 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
         ContentMetaCreate(meta: html, others: getOptions(), title: title);
     payload.postSubTypes = type == 'news'
         ? detailsPayload != null
-            ? detailsPayload.postSubTypes
+            ? detailsPayload!.postSubTypes
             : null
         : null;
     payload.sourceLink =
-        detailsPayload != null ? detailsPayload.sourceLink : null;
+        detailsPayload != null ? detailsPayload!.sourceLink : null;
     payload.postOwnerType = postOwnerType;
     payload.postOwnerTypeId = postOwnerTypeId;
-    payload.postCreatedById = prefs.getInt(Strings.userId);
-    payload.postInstitutionId = prefs.getInt(Strings.instituteId);
+    payload.postCreatedById = prefs!.getInt(Strings.userId);
+    payload.postInstitutionId = prefs!.getInt(Strings.instituteId);
     payload.postType = type != null
         ? type == 'feed'
             ? 'general'
@@ -1594,18 +1595,18 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
     payload.postCategory = 'normal';
     payload.mediaDetails = mediaList;
     payload.postMentions = mentions;
-    payload.postKeywords = attachmentKey.currentState.getListOfTags;
+    payload.postKeywords = attachmentKey.currentState!.getListOfTags;
     if (type == 'notice') {
       payload.postColor = _selectedColor;
     }
     return payload;
   }
 
-  OtherPollRequest getOptions() {
+  OtherPollRequest? getOptions() {
     if (type == 'poll') {
       OtherPollRequest otherRequest = OtherPollRequest();
       otherRequest.pollStart = DateTime.now().millisecondsSinceEpoch;
-      otherRequest.pollEnd = detailsPayload.contentMeta.others.pollEnd;
+      otherRequest.pollEnd = detailsPayload!.contentMeta!.others!.pollEnd;
       List<Options> listOptions = [];
       for (int i = 0; i < optionsCount; i++) {
         listOptions.add(Options(
@@ -1619,7 +1620,7 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
       return otherRequest;
     } else if (type == 'assignment') {
       print('asign');
-      return detailsPayload.contentMeta.others;
+      return detailsPayload!.contentMeta!.others;
     } else {
       return null;
     }
@@ -1634,11 +1635,11 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
       ),
       builder: (context) {
         return SelectProfileSheet(prefs, postOwnerTypeId,
-            (int id, String type, String imageUrl, String name) {
+            (int ?id, String ?type, String? imageUrl, String ?name) {
           postOwnerType = type;
           postOwnerTypeId = id;
           image_url = imageUrl;
-          avatarKey.currentState.refresh(Utility().getUrlForImage(
+          avatarKey.currentState!.refresh(Utility().getUrlForImage(
               imageUrl,
               RESOLUTION_TYPE.R64,
               type == 'person'
@@ -1748,8 +1749,8 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
 }
 
 class PostDetailsSheet extends StatefulWidget {
-  final String type;
-  final Function(String) onColorSelect;
+  final String? type;
+  final Function(String?)? onColorSelect;
 
   PostDetailsSheet({this.type, this.onColorSelect});
 
@@ -1758,17 +1759,17 @@ class PostDetailsSheet extends StatefulWidget {
 }
 
 class PostDetailSheetState extends State<PostDetailsSheet> with CommonMixins {
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
   GlobalKey<SelectNewsTopicWidgetState> topicsKey = GlobalKey();
 
-  String weblink;
+  String? weblink;
   var selectedDate = "Select end date for polls";
   var selectedDateEpoch;
   String _maxMarks = "0";
-  int selectedStartEpoch;
+  int? selectedStartEpoch;
 
   String selectedStartDate = "Submission date";
-  TimeOfDay selectedStartTimeOfDay;
+  TimeOfDay? selectedStartTimeOfDay;
   String selectedStartTime = 'Submission time';
 
   @override
@@ -1801,7 +1802,7 @@ class PostDetailSheetState extends State<PostDetailsSheet> with CommonMixins {
                         if (widget.type == 'news') {
                           payload.sourceLink = weblink;
                           payload.postSubTypes =
-                              topicsKey.currentState.getSelectedList();
+                              topicsKey.currentState!.getSelectedList();
                           Navigator.pop(context, payload);
                         } else if (widget.type == 'poll') {
                           if (selectedDateEpoch != null) {
@@ -1820,18 +1821,18 @@ class PostDetailSheetState extends State<PostDetailsSheet> with CommonMixins {
                                 OtherPollRequest otherRequest =
                                     OtherPollRequest();
                                 var d = DateTime.fromMillisecondsSinceEpoch(
-                                    selectedStartEpoch);
+                                    selectedStartEpoch!);
                                 var sd = DateTime(
                                     d.year,
                                     d.month,
                                     d.day,
-                                    selectedStartTimeOfDay.hour,
-                                    selectedStartTimeOfDay.minute);
+                                    selectedStartTimeOfDay!.hour,
+                                    selectedStartTimeOfDay!.minute);
                                 otherRequest.submissionDateTime =
                                     sd.millisecondsSinceEpoch;
                                 otherRequest.maxMarks = int.parse(_maxMarks);
                                 otherRequest.subjects =
-                                    topicsKey.currentState.getSubjects();
+                                    topicsKey.currentState!.getSubjects();
                                 payload.contentMeta =
                                     ContentMetaCreate(others: otherRequest);
                                 Navigator.pop(context, payload);
@@ -1856,7 +1857,7 @@ class PostDetailSheetState extends State<PostDetailsSheet> with CommonMixins {
                       child: Padding(
                         padding: EdgeInsets.all(8),
                         child: Text(
-                          AppLocalizations.of(context).translate('done'),
+                          AppLocalizations.of(context)!.translate('done'),
                           style: styleElements
                               .captionThemeScalable(context)
                               .copyWith(
@@ -1927,7 +1928,7 @@ class PostDetailSheetState extends State<PostDetailsSheet> with CommonMixins {
                           .subtitle1ThemeScalable(context)
                           .copyWith(fontWeight: FontWeight.w500),
                       decoration: InputDecoration(
-                          hintText: AppLocalizations.of(context)
+                          hintText: AppLocalizations.of(context)!
                               .translate('copy_web_link'),
                           hintStyle: styleElements
                               .bodyText2ThemeScalable(context)
@@ -1999,13 +2000,13 @@ class PostDetailSheetState extends State<PostDetailsSheet> with CommonMixins {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            AppLocalizations.of(context).translate('poll_ins1'),
+            AppLocalizations.of(context)!.translate('poll_ins1'),
             style: styleElements.bodyText2ThemeScalable(context),
           ),
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Text(AppLocalizations.of(context).translate('poll_ins2'),
+          child: Text(AppLocalizations.of(context)!.translate('poll_ins2'),
               style: styleElements.bodyText2ThemeScalable(context)),
         )
       ],
@@ -2018,7 +2019,7 @@ class PostDetailSheetState extends State<PostDetailsSheet> with CommonMixins {
 
   Widget qnA() {
     return TricycleHtmlViewer(
-      sourceString: AppLocalizations.of(context).translate('tips_to_answer'),
+      sourceString: AppLocalizations.of(context)!.translate('tips_to_answer'),
       isDetailPage: false,
       isNewsPage: true,
       isNoticeCard: false,
@@ -2170,7 +2171,7 @@ class PostDetailSheetState extends State<PostDetailsSheet> with CommonMixins {
                 Navigator.pop(context);
               },
                 shape: StadiumBorder(),
-                child: Text(AppLocalizations.of(context).translate('done'),
+                child: Text(AppLocalizations.of(context)!.translate('done'),
                   style: styleElements.captionThemeScalable(context).copyWith(
                   color: HexColor(AppColors.appMainColor)
                 ),),),
@@ -2213,7 +2214,7 @@ class PostDetailSheetState extends State<PostDetailsSheet> with CommonMixins {
   }
 
   Widget getAssignmentPostDetailCard(String title, Widget child,
-      {EdgeInsets padding}) {
+      {EdgeInsets? padding}) {
     return Container(
         margin: EdgeInsets.only(left: 4, right: 4),
         child: Column(
@@ -2234,11 +2235,11 @@ class PostDetailSheetState extends State<PostDetailsSheet> with CommonMixins {
 
     newDate = new DateTime.now();
 
-    final DateTime picked = await showDatePicker(
+    final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: newDate,
         firstDate: newDate,
-        builder: (BuildContext context, Widget child) {
+        builder: (BuildContext context, Widget? child) {
           return Theme(
             data: ThemeData.light().copyWith(
               primaryColor: Colors.black,
@@ -2251,7 +2252,7 @@ class PostDetailSheetState extends State<PostDetailsSheet> with CommonMixins {
               ),
               buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
             ),
-            child: child,
+            child: child!,
           );
         },
         lastDate: DateTime(DateTime.now().year + 100));
@@ -2263,10 +2264,10 @@ class PostDetailSheetState extends State<PostDetailsSheet> with CommonMixins {
   }
 
   Future<void> _selectStartTime(BuildContext context) async {
-    final TimeOfDay picked = await showTimePicker(
+    final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialTime: TimeOfDay.now(),
-      builder: (BuildContext context, Widget child) {
+      builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData.light().copyWith(
             primaryColor: Colors.black,
@@ -2279,7 +2280,7 @@ class PostDetailSheetState extends State<PostDetailsSheet> with CommonMixins {
             ),
             buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
           ),
-          child: child,
+          child: child!,
         );
       },
     );
@@ -2293,15 +2294,15 @@ class PostDetailSheetState extends State<PostDetailsSheet> with CommonMixins {
 }
 
 class CommentSheet extends StatefulWidget {
-  final Function(List<PostCreatePayload> list) chapterCreateCallBack;
-  final List<PostCreatePayload> list;
-  final PostReceiverListItem selectedReceiverData;
-  final ChapterItem chapterItem;
-  final LessonListItem lessonListItem;
-  final String topicName;
+  final Function(List<PostCreatePayload?>? list)? chapterCreateCallBack;
+  final List<PostCreatePayload?>? list;
+  final PostReceiverListItem? selectedReceiverData;
+  final ChapterItem? chapterItem;
+  final LessonListItem? lessonListItem;
+  final String? topicName;
 
   const CommentSheet(
-      {Key key,
+      {Key? key,
       this.chapterCreateCallBack,
       this.list,
       this.topicName,
@@ -2316,20 +2317,20 @@ class CommentSheet extends StatefulWidget {
 }
 
 class _CommentSheet extends State<CommentSheet> {
-  SharedPreferences prefs = locator<SharedPreferences>();
+  SharedPreferences? prefs = locator<SharedPreferences>();
   final lastNameController = TextEditingController();
-  ChapterItem chapterItem;
-  LessonListItem lessonListItem;
+  ChapterItem? chapterItem;
+  LessonListItem? lessonListItem;
 
   _CommentSheet({this.chapterItem, this.lessonListItem});
 
   @override
   void initState() {
     super.initState();
-    isChapterCreatedAlready=chapterItem!=null && chapterItem.chapterName!=null;
-    if (chapterItem != null) lastNameController.text = chapterItem.chapterName;
+    isChapterCreatedAlready=chapterItem!=null && chapterItem!.chapterName!=null;
+    if (chapterItem != null) lastNameController.text = chapterItem!.chapterName!;
   }
-bool isChapterCreatedAlready;
+late bool isChapterCreatedAlready;
   @override
   Widget build(BuildContext context) {
     var styleElements = TextStyleElements(context);
@@ -2345,26 +2346,26 @@ bool isChapterCreatedAlready;
             "list_type": "all"
           });
           var res = await Calls().call(body, context, Config.CHAPTERS_LIST);
-          if (ChaptersResponse.fromJson(res).rows.length > 0) {
-            return ChaptersResponse.fromJson(res).rows;
+          if (ChaptersResponse.fromJson(res).rows!.length > 0) {
+            return ChaptersResponse.fromJson(res).rows!;
           } else {
             return null;
           }
         } else {
           return null;
         }
-      },
+      } as FutureOr<Iterable<ChapterItem>> Function(String),
       itemBuilder: (BuildContext context, ChapterItem itemData) {
         return ListTile(
           title: Text(
-            itemData.chapterName,
+            itemData.chapterName!,
             style: styleElements.subtitle1ThemeScalable(context),
           ),
         );
       },
       onSuggestionSelected: (ChapterItem suggestion) {
-        for (int i = 0; i < widget.list.length; i++) {
-          widget.list[i].chapterItem =suggestion;
+        for (int i = 0; i < widget.list!.length; i++) {
+          widget.list![i]!.chapterItem =suggestion;
         }
         createLessons();
 
@@ -2375,7 +2376,7 @@ bool isChapterCreatedAlready;
         controller: lastNameController,
         decoration:InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(8.0, 15.0, 20.0, 4.0),
-          hintText: AppLocalizations.of(context).translate('give_chapter_name'),
+          hintText: AppLocalizations.of(context)!.translate('give_chapter_name'),
           hintStyle: styleElements
               .bodyText2ThemeScalable(context)
               .copyWith(color: HexColor(AppColors.appColorBlack35)),
@@ -2394,12 +2395,12 @@ bool isChapterCreatedAlready;
                   const EdgeInsets.only(top: 20.0, left: 16.0, right: 16.0),
               child: InkWell(
                 onTap: () async {
-                  if (widget.list.isNotEmpty && widget.list.length == 1)
+                  if (widget.list!.isNotEmpty && widget.list!.length == 1)
                     await createLessons();
                 },
                 child: Text(
-                  (widget.list.isNotEmpty && widget.list.length == 1)
-                      ? AppLocalizations.of(context).translate('skip')
+                  (widget.list!.isNotEmpty && widget.list!.length == 1)
+                      ? AppLocalizations.of(context)!.translate('skip')
                       : "",
                   style: styleElements
                       .subtitle2ThemeScalable(context)
@@ -2410,7 +2411,7 @@ bool isChapterCreatedAlready;
             Padding(
               padding: const EdgeInsets.only(top: 20.0),
               child: Text(
-                AppLocalizations.of(context).translate('name_chapter'),
+                AppLocalizations.of(context)!.translate('name_chapter'),
                 style: styleElements
                     .subtitle1ThemeScalable(context)
                     .copyWith(fontWeight: FontWeight.bold),
@@ -2437,13 +2438,13 @@ bool isChapterCreatedAlready;
                    }
                   else
                     ToastBuilder().showToast(
-                        AppLocalizations.of(context)
+                        AppLocalizations.of(context)!
                             .translate("name_chapter_required"),
                         context,
                         HexColor(AppColors.information));
                 },
                 child: Text(
-                  AppLocalizations.of(context).translate('next'),
+                  AppLocalizations.of(context)!.translate('next'),
                   style: styleElements
                       .subtitle2ThemeScalable(context)
                       .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -2460,7 +2461,7 @@ bool isChapterCreatedAlready;
           padding: const EdgeInsets.only(
               left: 45.0, right: 45.0, top: 20, bottom: 60),
           child: Text(
-            AppLocalizations.of(context).translate('chapter_dec'),
+            AppLocalizations.of(context)!.translate('chapter_dec'),
             style: styleElements.bodyText1ThemeScalable(context),
           ),
         ),
@@ -2479,47 +2480,47 @@ bool isChapterCreatedAlready;
       if (model.statusCode == Strings.success_code) {
 
 setState(() {
-  isChapterCreatedAlready=model.rows!=null && model.rows.chapterName!=null;
+  isChapterCreatedAlready=model.rows!=null && model.rows!.chapterName!=null;
 });
-        for (int i = 0; i < widget.list.length; i++) {
-          widget.list[i].chapterItem = model.rows;
+        for (int i = 0; i < widget.list!.length; i++) {
+          widget.list![i]!.chapterItem = model.rows;
         }
         createLessons();
       } else {
         ToastBuilder().showToast(
-            AppLocalizations.of(context).translate("something_wrong"),
+            AppLocalizations.of(context)!.translate("something_wrong"),
             context,
             HexColor(AppColors.information));
       }
     } else {
-      chapterItem.chapterName = lastNameController.text;
-      for (int i = 0; i < widget.list.length; i++) {
-        widget.list[i].chapterItem = chapterItem;
+      chapterItem!.chapterName = lastNameController.text;
+      for (int i = 0; i < widget.list!.length; i++) {
+        widget.list![i]!.chapterItem = chapterItem;
       }
       createLessons();
     }
   }
 
   Future<void> createLessons() async {
-    var chapterId= widget.list[0].chapterItem != null
-        ? widget.list[0].chapterItem.id
+    var chapterId= widget.list![0]!.chapterItem != null
+        ? widget.list![0]!.chapterItem!.id
         : null;
-var chapter=widget.list[0].chapterItem != null?widget.list[0].chapterItem :null;
-    for (int i = 0; i < widget.list.length; i++) {
-      if (widget.list[i].lessonListItem == null ||
-          widget.list[i].lessonListItem.id == null) {
+var chapter=widget.list![0]!.chapterItem != null?widget.list![0]!.chapterItem :null;
+    for (int i = 0; i < widget.list!.length; i++) {
+      if (widget.list![i]!.lessonListItem == null ||
+          widget.list![i]!.lessonListItem!.id == null) {
         createLesson(
             chapter,
             chapterId,
-            widget.list[i].contentMeta.title ?? "",
-            prefs.getInt(Strings.userId),
+            widget.list![i]!.contentMeta!.title ?? "",
+            prefs!.getInt(Strings.userId),
             i);
       } else {
         /* lessonListItem.lessonName = widget.list[i].contentMeta.title;*/
-        widget.list[i].lessonListItem.lessonName =
-            widget.list[i].contentMeta.title;
+        widget.list![i]!.lessonListItem!.lessonName =
+            widget.list![i]!.contentMeta!.title;
 
-        if (i == widget.list.length - 1) {
+        if (i == widget.list!.length - 1) {
           Navigator.push(
               context,
               MaterialPageRoute(
@@ -2529,7 +2530,7 @@ var chapter=widget.list[0].chapterItem != null?widget.list[0].chapterItem :null;
                   callBack: () {
 
                     Navigator.pop(context);
-                    widget.chapterCreateCallBack(widget.list);
+                    widget.chapterCreateCallBack!(widget.list);
                   },
                   selectedReceiverData:
                   widget.selectedReceiverData,
@@ -2543,7 +2544,7 @@ var chapter=widget.list[0].chapterItem != null?widget.list[0].chapterItem :null;
   }
 
   void createLesson(
-    ChapterItem chapter,  int chapterId, String lessonName, int userId, int index) async {
+    ChapterItem? chapter,  int? chapterId, String lessonName, int? userId, int index) async {
     var body = jsonEncode({
       "lesson_name": lessonName,
       "chapter_id": chapterId,
@@ -2553,10 +2554,10 @@ var chapter=widget.list[0].chapterItem != null?widget.list[0].chapterItem :null;
     var res = await Calls().call(body, context, Config.CREATE_LESSON);
     var model = LessonResponse.fromJson(res);
     if (model.statusCode == Strings.success_code) {
-      widget.list[index].lessonListItem = model.rows;
+      widget.list![index]!.lessonListItem = model.rows;
       if(chapter!=null)
-        widget.list[index].chapterItem=chapter;
-      if (index == widget.list.length - 1) {
+        widget.list![index]!.chapterItem=chapter;
+      if (index == widget.list!.length - 1) {
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -2566,7 +2567,7 @@ var chapter=widget.list[0].chapterItem != null?widget.list[0].chapterItem :null;
                 callBack: () {
 
                   Navigator.pop(context);
-                  widget.chapterCreateCallBack(widget.list);
+                  widget.chapterCreateCallBack!(widget.list);
                 },
                 selectedReceiverData:
                 widget.selectedReceiverData,
@@ -2576,7 +2577,7 @@ var chapter=widget.list[0].chapterItem != null?widget.list[0].chapterItem :null;
       }
     } else {
       ToastBuilder().showToast(
-          AppLocalizations.of(context).translate("something_wrong"),
+          AppLocalizations.of(context)!.translate("something_wrong"),
           context,
           HexColor(AppColors.information));
     }

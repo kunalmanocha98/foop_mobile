@@ -14,8 +14,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class RegisterInstituteInstructions extends StatelessWidget{
-  SharedPreferences prefs;
-  BuddyServiceListItem buddyServiceListItem;
+  SharedPreferences? prefs;
+  BuddyServiceListItem? buddyServiceListItem;
   RegisterInstituteInstructions({this.buddyServiceListItem});
   @override
   Widget build(BuildContext context) {
@@ -30,13 +30,13 @@ class RegisterInstituteInstructions extends StatelessWidget{
           child: Column(
             children: [
               TricycleEarnCard(
-                title: buddyServiceListItem.heading,
-                imageUrl: buddyServiceListItem.imageUrl,
-                coinsValue: buddyServiceListItem.coins,
-                moneyVal: buddyServiceListItem.moneyVal,
+                title: buddyServiceListItem!.heading,
+                imageUrl: buddyServiceListItem!.imageUrl,
+                coinsValue: buddyServiceListItem!.coins,
+                moneyVal: buddyServiceListItem!.moneyVal,
                 quote: '',
                 isClickable: false,
-                type: buddyServiceListItem.cardName,
+                type: buddyServiceListItem!.cardName,
               ),
 
               TricycleCard(
@@ -44,24 +44,24 @@ class RegisterInstituteInstructions extends StatelessWidget{
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(AppLocalizations.of(context).translate('institute_registration'),
+                    Text(AppLocalizations.of(context)!.translate('institute_registration'),
                       style: styleElements.headline6ThemeScalable(context).copyWith(
                         fontWeight: FontWeight.bold
                       ),),
-                    Text(AppLocalizations.of(context).translate('requirement'),
+                    Text(AppLocalizations.of(context)!.translate('requirement'),
                       style: styleElements.subtitle1ThemeScalable(context).copyWith(
                         fontWeight: FontWeight.bold
                       ),),
                     SizedBox(height: 10,),
-                    Text(AppLocalizations.of(context).translate('institute_reg_des'),
+                    Text(AppLocalizations.of(context)!.translate('institute_reg_des'),
                       style: styleElements.bodyText2ThemeScalable(context),),
                     SizedBox(height: 4,),
-                    Text(AppLocalizations.of(context).translate('what_to_do'),
+                    Text(AppLocalizations.of(context)!.translate('what_to_do'),
                       style: styleElements.subtitle1ThemeScalable(context).copyWith(
                         fontWeight: FontWeight.bold
                       ),),
                     SizedBox(height: 10,),
-                    Text(AppLocalizations.of(context).translate('if_you_student'),
+                    Text(AppLocalizations.of(context)!.translate('if_you_student'),
                       style: styleElements.subtitle2ThemeScalable(context).copyWith(fontWeight: FontWeight.bold),),
                     SizedBox(height: 6,),
                     RichText(text: TextSpan(
@@ -100,50 +100,50 @@ class RegisterInstituteInstructions extends StatelessWidget{
                         ]
                     )),
                     SizedBox(height: 10,),
-                    Text(AppLocalizations.of(context).translate('staff_des'),
+                    Text(AppLocalizations.of(context)!.translate('staff_des'),
                       style: styleElements.bodyText2ThemeScalable(context),),
                     SizedBox(height: 10,),
-                    Text(AppLocalizations.of(context).translate('if_you_staff'),
+                    Text(AppLocalizations.of(context)!.translate('if_you_staff'),
                       style: styleElements.subtitle2ThemeScalable(context).copyWith(
                         fontWeight: FontWeight.bold
                       ),),
                     SizedBox(height: 6,),
                     RichText(text: TextSpan(
                         children: [
-                          TextSpan(text: AppLocalizations.of(context).translate('reg_step1'),style: styleElements.subtitle2ThemeScalable(context).copyWith(
+                          TextSpan(text: AppLocalizations.of(context)!.translate('reg_step1'),style: styleElements.subtitle2ThemeScalable(context).copyWith(
                             fontWeight: FontWeight.w600
                           )),
-                          TextSpan(text: AppLocalizations.of(context).translate('reg_step1_des'),style: styleElements.bodyText2ThemeScalable(context)),
+                          TextSpan(text: AppLocalizations.of(context)!.translate('reg_step1_des'),style: styleElements.bodyText2ThemeScalable(context)),
                         ]
                     )),
                     SizedBox(height: 4,),
                     RichText(text: TextSpan(
                         children: [
-                          TextSpan(text: AppLocalizations.of(context).translate('reg_step2'),style: styleElements.subtitle2ThemeScalable(context).copyWith(
+                          TextSpan(text: AppLocalizations.of(context)!.translate('reg_step2'),style: styleElements.subtitle2ThemeScalable(context).copyWith(
                               fontWeight: FontWeight.w600
                           )),
-                          TextSpan(text: AppLocalizations.of(context).translate('reg_step2_des'),style: styleElements.bodyText2ThemeScalable(context)),
+                          TextSpan(text: AppLocalizations.of(context)!.translate('reg_step2_des'),style: styleElements.bodyText2ThemeScalable(context)),
                         ]
                     )),
                     SizedBox(height: 4,),
                     RichText(text: TextSpan(
                         children: [
-                          TextSpan(text: AppLocalizations.of(context).translate('reg_step3'),style: styleElements.subtitle2ThemeScalable(context).copyWith(
+                          TextSpan(text: AppLocalizations.of(context)!.translate('reg_step3'),style: styleElements.subtitle2ThemeScalable(context).copyWith(
                               fontWeight: FontWeight.w600
                           )),
-                          TextSpan(text: AppLocalizations.of(context).translate('upload_details'),style: styleElements.bodyText2ThemeScalable(context)),
+                          TextSpan(text: AppLocalizations.of(context)!.translate('upload_details'),style: styleElements.bodyText2ThemeScalable(context)),
                         ]
                     )),
                     SizedBox(height: 10,),
-                    Text(AppLocalizations.of(context).translate('staff_des'),
+                    Text(AppLocalizations.of(context)!.translate('staff_des'),
                       style: styleElements.bodyText2ThemeScalable(context),),
                     SizedBox(height: 10,),
-                    Text(AppLocalizations.of(context).translate('what_next'),
+                    Text(AppLocalizations.of(context)!.translate('what_next'),
                       style: styleElements.subtitle1ThemeScalable(context).copyWith(
                         fontWeight: FontWeight.w600
                       ),),
                     SizedBox(height: 6,),
-                    Text(AppLocalizations.of(context).translate('upi_des'),
+                    Text(AppLocalizations.of(context)!.translate('upi_des'),
                     style: styleElements.bodyText2ThemeScalable(context),),
                     SizedBox(height: 24,),
                     Row(
@@ -151,7 +151,7 @@ class RegisterInstituteInstructions extends StatelessWidget{
                       children: [
                         TricycleElevatedButton(onPressed: (){
                           Navigator.push(context,MaterialPageRoute(builder: (BuildContext context) => ConfirmDetails(
-                          instId:  prefs.getInt(Strings.instituteId),
+                          instId:  prefs!.getInt(Strings.instituteId),
                            fromPage: 'earn'
                           ))).then((value){
                             if(value){
@@ -161,7 +161,7 @@ class RegisterInstituteInstructions extends StatelessWidget{
                         },
                         child: Padding(
                           padding:  EdgeInsets.only(left:8.0,right: 8.0),
-                          child: Text(AppLocalizations.of(context).translate('fill_details'),style: styleElements.bodyText2ThemeScalable(context).copyWith(
+                          child: Text(AppLocalizations.of(context)!.translate('fill_details'),style: styleElements.bodyText2ThemeScalable(context).copyWith(
                             color: HexColor(AppColors.appColorWhite)
                           ),),
                         ),),

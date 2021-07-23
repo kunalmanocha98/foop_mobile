@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 
 class SharedDataService {
   // final NavigationService _navigationService = locator<NavigationService>();
-  DeepLinkingPayload deepLinkingPayload;
+  DeepLinkingPayload? deepLinkingPayload;
   void handleReceivedData(BuildContext context) async {
  /*   // For sharing images coming from outside the app while the app is in the memory
     // For sharing images coming from outside the app while the app is closed

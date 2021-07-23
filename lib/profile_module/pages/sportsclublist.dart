@@ -23,7 +23,7 @@ class _SportsClubListPage extends State<SportsClubListPage> {
   List<SubRow> listSubItems = [];
   List<CommonCardData> listCardData = [];
   List<StatelessWidget> listCardsAbout = [];
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   @override
   void initState() {
@@ -51,7 +51,7 @@ class _SportsClubListPage extends State<SportsClubListPage> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: TricycleAppBar().getCustomAppBar(context,
-            appBarTitle:AppLocalizations.of(context).translate("sports_fitness"),
+            appBarTitle:AppLocalizations.of(context)!.translate("sports_fitness"),
             onBackButtonPress: (){
           Navigator.pop(context);
             }),
@@ -98,11 +98,11 @@ class _SportsClubListPage extends State<SportsClubListPage> {
                                           gradient: new LinearGradient(
                                               colors: [
                                                 Color(int.parse(
-                                                    (listSubItems[index]
-                                                        .gradientOne))),
+                                                    listSubItems[index]
+                                                        .gradientOne!)),
                                                 Color(int.parse(
-                                                    (listSubItems[index]
-                                                        .gradientTwo))),
+                                                    listSubItems[index]
+                                                        .gradientTwo!)),
                                               ],
                                               begin: const FractionalOffset(
                                                   0.0, 0.0),
@@ -204,7 +204,7 @@ class _SportsClubListPage extends State<SportsClubListPage> {
                                               },
                                               color: HexColor(AppColors.appColorWhite),
                                               child: Text(
-                                                  AppLocalizations.of(context)
+                                                  AppLocalizations.of(context)!
                                                       .translate('add')),
                                             ),
                                           ),

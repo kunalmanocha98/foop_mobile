@@ -22,7 +22,7 @@ class _ClubsAndSocieties extends State<ClubsAndSocieties> {
   List<SubRow> listSubItems = [];
   List<CommonCardData> listCardData = [];
   List<StatelessWidget> listCardsAbout = [];
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   @override
   void initState() {
@@ -50,7 +50,7 @@ class _ClubsAndSocieties extends State<ClubsAndSocieties> {
       child: Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: TricycleAppBar().getCustomAppBar(context,
-              appBarTitle: AppLocalizations.of(context)
+              appBarTitle: AppLocalizations.of(context)!
                   .translate("clubs_socities"), onBackButtonPress: () {
                 Navigator.pop(context);
               }),
@@ -64,7 +64,7 @@ class _ClubsAndSocieties extends State<ClubsAndSocieties> {
                         onvalueChanged: (String value) {
                           setState(() {});
                         },
-                        hintText: AppLocalizations.of(context).translate('search'),
+                        hintText: AppLocalizations.of(context)!.translate('search'),
                         progressIndicator: false,
                       )),
                 ];
@@ -99,10 +99,10 @@ class _ClubsAndSocieties extends State<ClubsAndSocieties> {
                                       decoration: new BoxDecoration(
                                         gradient: new LinearGradient(
                                             colors: [
-                                              Color(int.parse((listSubItems[index]
-                                                  .gradientOne))),
-                                              Color(int.parse((listSubItems[index]
-                                                  .gradientTwo))),
+                                              Color(int.parse(listSubItems[index]
+                                                  .gradientOne!)),
+                                              Color(int.parse(listSubItems[index]
+                                                  .gradientTwo!)),
                                             ],
                                             begin:
                                             const FractionalOffset(0.0, 0.0),
@@ -207,7 +207,7 @@ class _ClubsAndSocieties extends State<ClubsAndSocieties> {
                                           margin: const EdgeInsets.all(16),
                                           child: TricycleElevatedButton(
                                             child: Text(
-                                                AppLocalizations.of(context)
+                                                AppLocalizations.of(context)!
                                                     .translate('join')),
                                             shape: RoundedRectangleBorder(
                                                 borderRadius:

@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class EventPostScreenPage extends StatefulWidget {
-  final int eventId;
-  EventPostScreenPage({Key key,this.eventId}):super(key: key);
+  final int? eventId;
+  EventPostScreenPage({Key? key,this.eventId}):super(key: key);
   @override
   EventPostScreenPageState createState() => EventPostScreenPageState();
 }
 
 class EventPostScreenPageState extends State<EventPostScreenPage> {
-  SharedPreferences prefs = locator<SharedPreferences>();
+  SharedPreferences? prefs = locator<SharedPreferences>();
   GlobalKey<SelectedFeedPageState> postListKey = GlobalKey();
 
   @override
@@ -23,8 +23,8 @@ class EventPostScreenPageState extends State<EventPostScreenPage> {
         appBarTitle: "",
         isOthersPostList: true,
         isFromProfile: true,
-        postOwnerTypeId: prefs.getInt(Strings.userId),
-        postOwnerType: prefs.getString(Strings.ownerType),
+        postOwnerTypeId: prefs!.getInt(Strings.userId),
+        postOwnerType: prefs!.getString(Strings.ownerType),
         isRoomPost: false,
         isEventPost: true,
         eventId: widget.eventId,
@@ -32,6 +32,6 @@ class EventPostScreenPageState extends State<EventPostScreenPage> {
     );
   }
   void refresh() {
-    postListKey.currentState.refresh();
+    postListKey.currentState!.refresh();
   }
 }

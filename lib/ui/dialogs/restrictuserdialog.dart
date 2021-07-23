@@ -14,7 +14,7 @@ class RestrictUser extends StatefulWidget {
 
 class _RestrictUser extends State<RestrictUser> {
   var isChanged = false;
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class _RestrictUser extends State<RestrictUser> {
                 child: Container(
                   margin: const EdgeInsets.only(bottom: 16, top: 16),
                   child: Text(
-                    AppLocalizations.of(context)
+                    AppLocalizations.of(context)!
                         .translate("restrict_user_title"),
                     style: styleElements.headline5ThemeScalable(context),
                   ),
@@ -51,7 +51,7 @@ class _RestrictUser extends State<RestrictUser> {
                   child: Container(
                     margin: const EdgeInsets.all(16),
                     child: Text(
-                      AppLocalizations.of(context)
+                      AppLocalizations.of(context)!
                           .translate("restrict_user_des"),
                       style: styleElements.subtitle2ThemeScalable(context),
                     ),
@@ -88,7 +88,7 @@ class _RestrictUser extends State<RestrictUser> {
                     onPressed: () {},
 
                     color: HexColor(AppColors.appColorWhite),
-                    child: Text(AppLocalizations.of(context).translate('cancel'),
+                    child: Text(AppLocalizations.of(context)!.translate('cancel'),
                       style:styleElements.subtitle1ThemeScalable(context).copyWith(
                         color: HexColor(AppColors.appMainColor),
                       ),
@@ -103,7 +103,7 @@ class _RestrictUser extends State<RestrictUser> {
                         side: BorderSide(color: HexColor(AppColors.appMainColor))),
                     onPressed: () {},
                     color: HexColor(AppColors.appMainColor),
-                    child: Text(AppLocalizations.of(context).translate('ok'),
+                    child: Text(AppLocalizations.of(context)!.translate('ok'),
                       style: styleElements.subtitle1ThemeScalable(context).copyWith(
                         color: HexColor(AppColors.appColorWhite),
                       ),

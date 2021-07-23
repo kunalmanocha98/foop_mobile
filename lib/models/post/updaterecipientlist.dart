@@ -1,7 +1,7 @@
 class PostRecipientUpdatePayload {
-  int postId;
-  String postRecipientStatus;
-  bool isBookmarked;
+  int? postId;
+  String? postRecipientStatus;
+  bool? isBookmarked;
 
   PostRecipientUpdatePayload(
       {this.postId, this.postRecipientStatus, this.isBookmarked});

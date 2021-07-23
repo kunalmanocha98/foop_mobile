@@ -25,7 +25,7 @@ class CouponDetailPage extends StatefulWidget {
   CouponListItem couponData;
   bool showQr;
 
-  CouponDetailPage({@required this.couponData, @required this.showQr});
+  CouponDetailPage({required this.couponData, required this.showQr});
 
   @override
   _CouponDetailPage createState() =>
@@ -34,15 +34,15 @@ class CouponDetailPage extends StatefulWidget {
 
 class _CouponDetailPage extends State<CouponDetailPage> {
   CouponListItem couponData;
-  SharedPreferences prefs;
+  late SharedPreferences prefs;
   // CouponDetailModel item;
   bool showQr;
   List<String> listPoints = [];
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
   GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
 
 
-  _CouponDetailPage({@required this.couponData, @required this.showQr});
+  _CouponDetailPage({required this.couponData, required this.showQr});
 
   // @override
   // void initState() {
@@ -108,8 +108,9 @@ class _CouponDetailPage extends State<CouponDetailPage> {
                       rewardPoints: couponData != null ? couponData.rewardPointsRequired : 0,
                       validTill: Utility().getDateFormat(
                           "dd-MMM-yyyy",
+                          // ignore: unnecessary_null_comparison
                           couponData != null
-                              ? DateTime.parse(couponData.validTill)
+                              ? DateTime.parse(couponData.validTill!)
                               : DateTime.now()),
                       isDividerHide: true,
                       isActive: false,
@@ -119,20 +120,20 @@ class _CouponDetailPage extends State<CouponDetailPage> {
                   Container(
                     margin: EdgeInsets.only(top: 24, left: 48, right: 48),
                     child: Text(
-                      (couponData != null && couponData.couponTermsConditionsHeading != null)
-                          ? couponData.couponTermsConditionsHeading
+                      (couponData.couponTermsConditionsHeading != null)
+                          ? couponData.couponTermsConditionsHeading!
                           : "Terms and Conditions",
                       textAlign: TextAlign.center,
                       style:  styleElements.headline6ThemeScalable(context),
                     ),
                   ),
                   Visibility(
-                    visible: couponData.couponTermsConditionsPoints.length > 0,
+                    visible: couponData.couponTermsConditionsPoints!.length > 0,
                     child: ListView.builder(
                       shrinkWrap: true,
                         padding:
                             EdgeInsets.only(left: 8, right: 8, bottom: 8, top: 8),
-                        itemCount: couponData.couponTermsConditionsPoints.length,
+                        itemCount: couponData.couponTermsConditionsPoints!.length,
                         itemBuilder: (BuildContext context, int index) {
                           return Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -149,7 +150,7 @@ class _CouponDetailPage extends State<CouponDetailPage> {
                               ),
                               Flexible(
                                 child: Text(
-                                  couponData.couponTermsConditionsPoints[index],
+                                  couponData.couponTermsConditionsPoints![index],
                                   style:  styleElements.bodyText2ThemeScalable(context),
                                 ),
                               ),
@@ -194,7 +195,7 @@ class _CouponDetailPage extends State<CouponDetailPage> {
             child:
             BarcodeWidget(
               barcode: Barcode.code128(),
-              data: (couponData != null&&couponData.qrCode!=null) ? couponData.qrCode : "a",
+              data: (couponData != null&&couponData.qrCode!=null) ? couponData.qrCode! : "a",
               height: 90,
               drawText: true,
             )
@@ -222,6 +223,7 @@ class _CouponDetailPage extends State<CouponDetailPage> {
   // }
 
   String getButtonText() {
+    // ignore: unnecessary_null_comparison
     if (couponData != null) {
       String coins = couponData.rewardPointsRequired.toString();
       return "Redeem @$coins coins";
@@ -233,27 +235,27 @@ class _CouponDetailPage extends State<CouponDetailPage> {
 
   void purchaseCoupon() async{
     prefs= await SharedPreferences.getInstance();
-   progressButtonKey.currentState.show();
+   progressButtonKey.currentState!.show();
     PurchaseCouponRequest payload = PurchaseCouponRequest();
     payload.personId = prefs.getInt(Strings.userId).toString();
     payload.allCouponsId = couponData.id.toString();
     payload.purchaseDatetime = DateTime.now().millisecondsSinceEpoch.toString();
     var data = jsonEncode(payload);
     Calls().call(data, context, Config.COUPON_PURCHASE).then((value) async {
-      progressButtonKey.currentState.hide();
+      progressButtonKey.currentState!.hide();
       var res = PurchaseCouponResponse.fromJson(value);
       if (res.statusCode == Strings.success_code) {
         Navigator.pop(context);
-        ToastBuilder().showToast(res.message, context,HexColor(AppColors.information));
+        ToastBuilder().showToast(res.message!, context,HexColor(AppColors.information));
         // setState(() {
         //   showQr = true;
         // });
         // fetchDetails();
       } else {
-        ToastBuilder().showToast(res.message, context,HexColor(AppColors.information));
+        ToastBuilder().showToast(res.message!, context,HexColor(AppColors.information));
       }
     }).catchError((onError) async {
-      progressButtonKey.currentState.hide();
+      progressButtonKey.currentState!.hide();
       print(onError);
     });
   }

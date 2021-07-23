@@ -30,13 +30,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class RoomMembersPage extends StatefulWidget {
-  int roomId;
-  String roleType;
-  int id;
-  int instituteId;
-  int ownerId;
-  String userType;
-  String ownerType;
+  int? roomId;
+  String? roleType;
+  int? id;
+  int? instituteId;
+  int? ownerId;
+  String? userType;
+  String? ownerType;
   RoomMembersPage(this.roomId, this.roleType,this.ownerId,this.ownerType,this.userType,this.instituteId,this.id);
 
   @override
@@ -44,19 +44,19 @@ class RoomMembersPage extends StatefulWidget {
 }
 
 class _RoomMembersPage extends State<RoomMembersPage> {
-  int roomId;
-  String roleType;
-  TextStyleElements styleElements;
-  int id;
-  int instituteId;
-  int ownerId;
-  String userType;
-  String ownerType;
+  int? roomId;
+  String? roleType;
+  late TextStyleElements styleElements;
+  int? id;
+  int? instituteId;
+  int? ownerId;
+  String? userType;
+  String? ownerType;
   _RoomMembersPage(this.roomId, this.roleType,this.ownerId,this.ownerType,this.userType,this.instituteId,this.id);
 
-  String searchVal;
+  String? searchVal;
   GlobalKey<PaginatorState> paginatorGlobalKey = GlobalKey();
-  SharedPreferences prefs;
+  SharedPreferences? prefs;
 
   void setSharedPreferences() async {
     prefs = await SharedPreferences.getInstance();
@@ -64,7 +64,7 @@ class _RoomMembersPage extends State<RoomMembersPage> {
   }
 
   refresh() {
-    paginatorGlobalKey.currentState.changeState(resetState: true);
+    paginatorGlobalKey.currentState!.changeState(resetState: true);
   }
 
   @override
@@ -80,23 +80,23 @@ class _RoomMembersPage extends State<RoomMembersPage> {
           PopupMenuItem(
             enabled: item.memberRoleType != 'A',
             value: 1,
-            child: Text(AppLocalizations.of(context).translate('make_admin')),
+            child: Text(AppLocalizations.of(context)!.translate('make_admin')),
           ),
           PopupMenuItem(
             value: 2,
             child: Text(item.memberId == ownerId
-                ? AppLocalizations.of(context).translate('exit')
-                : AppLocalizations.of(context).translate('remove')),
+                ? AppLocalizations.of(context)!.translate('exit')
+                : AppLocalizations.of(context)!.translate('remove')),
           ),
         ],
         onSelected: (value) {
           if (value == 1) {
             showDialog(context: context,builder: (BuildContext context)=> CommonOkCancelDialog(
-                    (){makeAdmin(item);},AppLocalizations.of(context).translate('make_admin_des',arguments:{"name":item.firstName})
+                    (){makeAdmin(item);},AppLocalizations.of(context)!.translate('make_admin_des',arguments:{"name":item.firstName})
             ));
           } else if (value == 2) {
             showDialog(context: context,builder: (BuildContext context)=> CommonOkCancelDialog(
-              (){removeMember(item);},AppLocalizations.of(context).translate('remove_member',arguments:{"name":item.firstName})
+              (){removeMember(item);},AppLocalizations.of(context)!.translate('remove_member',arguments:{"name":item.firstName})
             ));
           }
         },
@@ -121,7 +121,7 @@ class _RoomMembersPage extends State<RoomMembersPage> {
     return SafeArea(
       child: Scaffold(
         appBar:TricycleAppBar().getCustomAppBar(context,
-            appBarTitle:AppLocalizations.of(context).translate("members"),
+            appBarTitle:AppLocalizations.of(context)!.translate("members"),
             onBackButtonPress: (){
           Navigator.pop(context);
             }),
@@ -134,7 +134,7 @@ class _RoomMembersPage extends State<RoomMembersPage> {
                   SliverToBoxAdapter(
                     child: SearchBox(
                       onvalueChanged: onSearchValueChanged,
-                      hintText: AppLocalizations.of(context).translate('search'),
+                      hintText: AppLocalizations.of(context)!.translate('search'),
                     ),
                   )
                 ];
@@ -244,7 +244,7 @@ class _RoomMembersPage extends State<RoomMembersPage> {
           visible: item.institutionRole!=null,
           child: Flexible(
             child: Text(
-              item.institutionRole,
+              item.institutionRole!,
               style: styleElements.captionThemeScalable(context),
             ),
           )

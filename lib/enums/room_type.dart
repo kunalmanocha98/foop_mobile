@@ -34,7 +34,7 @@ class ROOM_TYPES_HELPER {
     }
   }
 
-  ROOM_TYPE getRoomTypeBasedOnRoomTypeCode(String type_code){
+  ROOM_TYPE getRoomTypeBasedOnRoomTypeCode(String? type_code){
     switch (type_code){
       case "C":{
         return ROOM_TYPE.CLASSROOM;

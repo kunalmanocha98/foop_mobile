@@ -14,13 +14,13 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 
 class DeleteContacts extends StatefulWidget {
-  final Null Function() callBack;
-  final Null Function() callBackCancel;
-  final bool isEmail;
-  final int id;
-  final String contactDetail;
+  final Null Function()? callBack;
+  final Null Function()? callBackCancel;
+  final bool? isEmail;
+  final int? id;
+  final String? contactDetail;
   const DeleteContacts(
-      {Key key, this.callBack, this.callBackCancel, this.isEmail,this.id,this.contactDetail})
+      {Key? key, this.callBack, this.callBackCancel, this.isEmail,this.id,this.contactDetail})
       : super(key: key);
 
   @override
@@ -29,18 +29,18 @@ class DeleteContacts extends StatefulWidget {
 }
 
 class _DeleteContacts extends State<DeleteContacts> {
-  Null Function() callBack;
-  Null Function() callBackCancel;
-  BuildContext context;
-  TextStyleElements tsE;
-  bool isEmail;
-  String contactDetail;
-  int id;
+  Null Function()? callBack;
+  Null Function()? callBackCancel;
+ late  BuildContext context;
+  late TextStyleElements tsE;
+  bool? isEmail;
+  String? contactDetail;
+  int? id;
   final emailController = TextEditingController();
   final mobileController = TextEditingController();
   final passwordTextController = TextEditingController();
-  var countryCodeList = [];
-  String cCode;
+  List<dynamic>? countryCodeList = [];
+  String? cCode;
 
   _DeleteContacts(this.callBack, this.callBackCancel, this.isEmail,this.id,this.contactDetail);
 
@@ -67,9 +67,9 @@ class _DeleteContacts extends State<DeleteContacts> {
                 padding:
                 EdgeInsets.only(top: 16, bottom: 30, left: 16, right: 16),
                 child: Text(
-                  isEmail
-                      ? AppLocalizations.of(context).translate('remove_email')
-                      : AppLocalizations.of(context).translate('remove_mobile'),
+                  isEmail!
+                      ? AppLocalizations.of(context)!.translate('remove_email')
+                      : AppLocalizations.of(context)!.translate('remove_mobile'),
                   style: tsE.headline6ThemeScalable(context),
                 )),
           ),
@@ -77,7 +77,7 @@ class _DeleteContacts extends State<DeleteContacts> {
               padding:
               EdgeInsets.only(top: 2, bottom: 2, left: 16, right: 16),
               child: Text(
-                AppLocalizations.of(context).translate('delete_sure'),
+                AppLocalizations.of(context)!.translate('delete_sure'),
                 style: tsE.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
               )),
           Padding(
@@ -95,11 +95,11 @@ class _DeleteContacts extends State<DeleteContacts> {
                 TricycleTextButton(
                   onPressed: () {
                     Navigator.pop(context);
-                    callBackCancel();
+                    callBackCancel!();
                   },
                   shape: StadiumBorder(),
                   child: Text(
-                    AppLocalizations.of(context).translate('cancel'),
+                    AppLocalizations.of(context)!.translate('cancel'),
                     style: tsE
                         .bodyText2ThemeScalable(context)
                         .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -111,7 +111,7 @@ class _DeleteContacts extends State<DeleteContacts> {
                   },
                   shape: StadiumBorder(),
                   child: Text(
-                    AppLocalizations.of(context).translate('submit'),
+                    AppLocalizations.of(context)!.translate('submit'),
                     style: tsE
                         .bodyText2ThemeScalable(context)
                         .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -132,11 +132,11 @@ class _DeleteContacts extends State<DeleteContacts> {
         .then((value) async {
 
       Navigator.pop(context);
-      callBack();
+      callBack!();
     })
         .catchError((onError) {
       Navigator.pop(context);
-      callBack();
+      callBack!();
       ToastBuilder().showToast(
           onError.toString(), context, HexColor(AppColors.information));
     });

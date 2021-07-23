@@ -1,7 +1,7 @@
 class SubjectList {
-  String statusCode;
-  String message;
-  List<Subjects> rows;
+  String? statusCode;
+  String? message;
+  List<Subjects>? rows;
 
   SubjectList({this.statusCode, this.message, this.rows});
 
@@ -11,7 +11,7 @@ class SubjectList {
     if (json['rows'] != null) {
       rows = [];//Subjects>();
       json['rows'].forEach((v) {
-        rows.add(new Subjects.fromJson(v));
+        rows!.add(new Subjects.fromJson(v));
       });
     }
   }
@@ -21,20 +21,20 @@ class SubjectList {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Subjects {
-  int id;
-  String subjectCode;
-  String subjectName;
+  int? id;
+  String? subjectCode;
+  String? subjectName;
   Null subjectCredits;
-  int isSelected = 0;
-  String subject_category_name;
-  String subjectDescription;
+  int? isSelected = 0;
+  String? subject_category_name;
+  String? subjectDescription;
 
   Subjects(
       {this.id,

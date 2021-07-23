@@ -33,15 +33,15 @@ class _SelectLanguage extends State<SelectLanguage> {
 
   bool isSignUp;
   bool isCalled = false;
-  SharedPreferences prefs;
-  List<LanguageItem> listRules = [];
+  SharedPreferences? prefs;
+  List<LanguageItem>? listRules = [];
 
   @override
   initState() {
     super.initState();
 
     application.onLocaleChanged = onLocaleChange;
-    WidgetsBinding.instance.addPostFrameCallback((_) => getList());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => getList());
   }
 
   void onLocaleChange(Locale locale) {
@@ -49,7 +49,7 @@ class _SelectLanguage extends State<SelectLanguage> {
       setState(() {});
     }
   }
-BuildContext sctx;
+late BuildContext sctx;
   final body = jsonEncode({
     "conversationOwnerId": '1580807502972',
     "conversationOwnerType": 'personal',
@@ -63,7 +63,7 @@ BuildContext sctx;
   void setSharedPreferences() async {
     prefs = await SharedPreferences.getInstance();
   }
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
   Widget build(BuildContext context) {
     setSharedPreferences();
     styleElements = TextStyleElements(context);
@@ -74,7 +74,7 @@ BuildContext sctx;
        backgroundColor: HexColor(AppColors.appColorBackground),
        // AppLocalizations.of(context).translate("language")
        appBar: TricycleAppBar().getCustomAppBar(context,
-           appBarTitle: AppLocalizations.of(context).translate("language"),
+           appBarTitle: AppLocalizations.of(context)!.translate("language"),
            onBackButtonPress: (){_onBackPressed();},
          ),
        body:
@@ -82,39 +82,39 @@ BuildContext sctx;
          this.sctx = context;
          return new   Stack(
            children: <Widget>[
-             listRules!=null && listRules.length!=0 ? ListView.builder(
+             listRules!=null && listRules!.length!=0 ? ListView.builder(
                  padding: EdgeInsets.only(left: 8, right: 8, bottom: 8, top: 8),
-                 itemCount: listRules.length,
+                 itemCount: listRules!.length,
                  itemBuilder: (BuildContext context, int index) {
                    return CheckboxListTile(
                      checkColor: HexColor(AppColors.appColorWhite),
                      activeColor: HexColor(AppColors.appMainColor),
-                     title: Text(listRules[index].languageNameLocal +
+                     title: Text(listRules![index].languageNameLocal! +
                          " (" +
-                         listRules[index].languageName +
+                         listRules![index].languageName! +
                          ")",
 
                          style: styleElements.subtitle1ThemeScalable(context)
                      ),
-                     value: listRules[index].isSelected,
+                     value: listRules![index].isSelected,
                      onChanged: (val) {
                        if (this.mounted) {
                          setState(() {
-                           if (listRules[index].languageName == "Hindi") {
-                             prefs.setString('language_code', "hi");
-                             prefs.setString('country_code', "IN");
+                           if (listRules![index].languageName == "Hindi") {
+                             prefs!.setString('language_code', "hi");
+                             prefs!.setString('country_code', "IN");
                              changeLanguage("hi", "IN");
-                           } else if (listRules[index].languageName == "English") {
-                             prefs.setString('language_code', "en");
-                             prefs.setString('country_code', "US");
+                           } else if (listRules![index].languageName == "English") {
+                             prefs!.setString('language_code', "en");
+                             prefs!.setString('country_code', "US");
                              changeLanguage("en", "US");
                            }
 
-                           for (int i = 0; i < listRules.length; i++) {
+                           for (int i = 0; i < listRules!.length; i++) {
                              if (index == i) {
-                               listRules[index].isSelected = val;
+                               listRules![index].isSelected = val;
                              } else {
-                               listRules[i].isSelected = false;
+                               listRules![i].isSelected = false;
                              }
                            }
                          });
@@ -147,9 +147,9 @@ BuildContext sctx;
                                      .showSnackBar("Please select language", sctx,HexColor(AppColors.information));
                                }
                              } else {
-                               if (prefs.getString("token") != null &&
-                                   prefs.getString("token") != "") {
-                                 prefs.setBool("isProfileCreated",true);
+                               if (prefs!.getString("token") != null &&
+                                   prefs!.getString("token") != "") {
+                                 prefs!.setBool("isProfileCreated",true);
                                  Navigator.of(context).pushAndRemoveUntil(
                                      MaterialPageRoute(
                                          builder: (context) => DashboardPage()),
@@ -164,7 +164,7 @@ BuildContext sctx;
                            },
                            color: HexColor(AppColors.appColorWhite),
                            child: Text(
-                               AppLocalizations.of(context).translate("next"),
+                               AppLocalizations.of(context)!.translate("next"),
                                style: styleElements.buttonThemeScalable(context).copyWith(color: HexColor(AppColors.appMainColor))),
                          ),
                        )),
@@ -180,8 +180,8 @@ BuildContext sctx;
 
   bool getSelectedItem() {
     bool itemSelected = false;
-    for (var item in listRules) {
-      if (item.isSelected) {
+    for (var item in listRules!) {
+      if (item.isSelected!) {
         itemSelected = true;
       }
     }
@@ -192,7 +192,7 @@ BuildContext sctx;
     prefs = await SharedPreferences.getInstance();
 
     if (isSignUp && prefs != null)
-      prefs.setBool("isProfileCreated", false);
+      prefs!.setBool("isProfileCreated", false);
     final body = jsonEncode({});
     Calls().call(body, context, Config.LANGUAGE_LIST).then((value) async {
 
@@ -203,12 +203,12 @@ BuildContext sctx;
         if (this.mounted) {
           setState(() {
             listRules = data.rows;
-            for (int i = 0; i < listRules.length; i++) {
-              if (listRules[i].languageName.isNotEmpty &&
-                  listRules[i].languageName == "English")
-                listRules[i].isSelected = true;
+            for (int i = 0; i < listRules!.length; i++) {
+              if (listRules![i].languageName!.isNotEmpty &&
+                  listRules![i].languageName == "English")
+                listRules![i].isSelected = true;
               else
-                listRules[i].isSelected = false;
+                listRules![i].isSelected = false;
             }
           });
         }
@@ -224,25 +224,24 @@ BuildContext sctx;
           context: context,
           builder: (context) => new AlertDialog(
             title: new Text(
-                AppLocalizations.of(context).translate('are_you_sure')),
+                AppLocalizations.of(context)!.translate('are_you_sure')),
             content: new Text(
-                AppLocalizations.of(context).translate('exit_tricycle')),
+                AppLocalizations.of(context)!.translate('exit_tricycle')),
             actions: <Widget>[
               new GestureDetector(
                 onTap: () => Navigator.of(context).pop(false),
-                child: Text(AppLocalizations.of(context).translate('no')),
+                child: Text(AppLocalizations.of(context)!.translate('no')),
               ),
               SizedBox(height: 16),
               new GestureDetector(
                 onTap: () {
                   SystemChannels.platform.invokeMethod('SystemNavigator.pop');
                 },
-                child: Text(AppLocalizations.of(context).translate('yes')),
+                child: Text(AppLocalizations.of(context)!.translate('yes')),
               ),
             ],
           ),
-        ) ??
-        false;
+        ).then((value) => value as bool);
   }
 
   void changeLanguage(String code, String countryCode) {

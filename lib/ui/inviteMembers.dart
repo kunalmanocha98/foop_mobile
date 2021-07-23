@@ -13,7 +13,7 @@ class InviteMembersPage extends StatefulWidget {
 
 class _InviteMembersPage extends State<InviteMembersPage> {
 
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class _InviteMembersPage extends State<InviteMembersPage> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar:TricycleAppBar().getCustomAppBar(context,
-            appBarTitle:  AppLocalizations.of(context).translate("invite_members"),
+            appBarTitle:  AppLocalizations.of(context)!.translate("invite_members"),
             onBackButtonPress: (){
           Navigator.pop(context);
             }),
@@ -35,7 +35,7 @@ class _InviteMembersPage extends State<InviteMembersPage> {
                   child: Card(
                     elevation: 8,
                     child: ListTile(
-                      title: Text(AppLocalizations.of(context).translate('see_more'),
+                      title: Text(AppLocalizations.of(context)!.translate('see_more'),
                         style: styleElements.subtitle1ThemeScalable(context),
                       ),
                       trailing: Icon(
@@ -48,7 +48,7 @@ class _InviteMembersPage extends State<InviteMembersPage> {
                 ),
                 Padding(
                     padding: EdgeInsets.all(20),
-                    child: Text(AppLocalizations.of(context).translate('invite_member_des'),
+                    child: Text(AppLocalizations.of(context)!.translate('invite_member_des'),
                       style: styleElements.bodyText2ThemeScalable(context),
                     ))
               ],
@@ -75,7 +75,7 @@ class _InviteMembersPage extends State<InviteMembersPage> {
                           },
                           color: HexColor(AppColors.appColorWhite),
                           child: Text(
-                              AppLocalizations.of(context).translate('done'),
+                              AppLocalizations.of(context)!.translate('done'),
                               style: styleElements.bodyText2ThemeScalable(context).copyWith(
                                 color:  HexColor(AppColors.appMainColor),
                               )),

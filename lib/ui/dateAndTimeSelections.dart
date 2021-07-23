@@ -19,7 +19,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class DateSelectionPage extends StatefulWidget {
-  int rowId;
+  int? rowId;
   @override
   _DateSelectionPage createState() => _DateSelectionPage(rowId);
 
@@ -29,14 +29,14 @@ class DateSelectionPage extends StatefulWidget {
 class _DateSelectionPage extends State<DateSelectionPage> {
   List<DateFormatItem> dateList = [];
   SettingsView settingsView = SettingsView();
-  int rowId;
+  int? rowId;
   bool isLoading=false;
-  SharedPreferences prefs;
+  late SharedPreferences prefs;
   GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
   @override
   initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => fetchSettings());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => fetchSettings());
   }
 
   void fetchSettings() async {
@@ -78,7 +78,7 @@ class _DateSelectionPage extends State<DateSelectionPage> {
         var data = DateFormat.fromJson(value);
         if (this.mounted) {
           setState(() {
-            dateList = checkData(data.rows);
+            dateList = checkData(data.rows!);
             for (DateFormatItem item in dateList) {
               item.isSelected ??= false;
             }
@@ -95,14 +95,14 @@ class _DateSelectionPage extends State<DateSelectionPage> {
 
   List<DateFormatItem> checkData(List<DateFormatItem> rows) {
     for (DateFormatItem item in rows) {
-      if (item.format == settingsView.rows.dateFormat) {
+      if (item.format == settingsView.rows!.dateFormat) {
         item.isSelected = true;
       }
     }
     return rows;
   }
 
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
   @override
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
@@ -110,7 +110,7 @@ class _DateSelectionPage extends State<DateSelectionPage> {
       child: Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: TricycleAppBar().getCustomAppBar(context,
-              appBarTitle:  AppLocalizations.of(context).translate("select_date"),
+              appBarTitle:  AppLocalizations.of(context)!.translate("select_date"),
               onBackButtonPress: (){
                 Navigator.pop(context);
               }),
@@ -142,7 +142,7 @@ class _DateSelectionPage extends State<DateSelectionPage> {
                             }
                           },
                           title: Text(
-                            dateList != null ? dateList[index].format : "",
+                            dateList != null ? dateList[index].format! : "",
                             style: styleElements.subtitle1ThemeScalable(context),
                           ),
                         ),
@@ -169,7 +169,7 @@ class _DateSelectionPage extends State<DateSelectionPage> {
                             },
                             color: HexColor(AppColors.appColorWhite),
                             child: Text(
-                                AppLocalizations.of(context)
+                                AppLocalizations.of(context)!
                                     .translate("save_exit"),
                                 style:styleElements.buttonThemeScalable(context)
                                     .copyWith(
@@ -184,16 +184,16 @@ class _DateSelectionPage extends State<DateSelectionPage> {
 
   void updatedateFormat() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    progressButtonKey.currentState.show();
+    progressButtonKey.currentState!.show();
     AccountSettingUpdateRequest model = AccountSettingUpdateRequest();
     model.personId = prefs.getInt("userId");
     model.id = rowId;
     model.dateFormat = getselected();
     var body = jsonEncode(model);
     Calls().call(body, context, Config.UPDATEACCOUNTSETTING).then((value) async {
-      progressButtonKey.currentState.hide();
+      progressButtonKey.currentState!.hide();
       if (value != null) {
-        progressButtonKey.currentState.hide();
+        progressButtonKey.currentState!.hide();
         var data = DynamicResponse.fromJson(value);
         if (data != null && data.rows != null && data.statusCode == 'S10001') {
           ToastBuilder().showToast("Successfully Updated", context,HexColor(AppColors.information));
@@ -202,14 +202,14 @@ class _DateSelectionPage extends State<DateSelectionPage> {
       }
     }).catchError((onError) async {
       ToastBuilder().showToast(onError.toString(), context,HexColor(AppColors.information));
-      progressButtonKey.currentState.hide();
+      progressButtonKey.currentState!.hide();
     });
   }
 
-  String getselected() {
-    String format;
+  String? getselected() {
+    String? format;
     for (DateFormatItem item in dateList) {
-      if (item.isSelected) {
+      if (item.isSelected!) {
         format = item.format;
         break;
       }
@@ -222,7 +222,7 @@ class _DateSelectionPage extends State<DateSelectionPage> {
 
 // ignore: must_be_immutable
 class TimeSelectionPage extends StatefulWidget {
-  int rowId;
+  int? rowId;
   @override
   _TimeSelectionPage createState() => _TimeSelectionPage(rowId);
 
@@ -232,13 +232,13 @@ class TimeSelectionPage extends StatefulWidget {
 class _TimeSelectionPage extends State<TimeSelectionPage> {
   List<DateFormatItem> timeList = [];
   GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
-  SettingsView settingsView;
-  int rowId;
+  late SettingsView settingsView;
+  int? rowId;
   bool isLoading=false;
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => fetchSettings());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => fetchSettings());
   }
 
   void fetchSettings() async {
@@ -279,14 +279,14 @@ class _TimeSelectionPage extends State<TimeSelectionPage> {
 
   List<DateFormatItem> checkData(List<DateFormatItem> rows) {
     for (DateFormatItem item in rows) {
-      if (item.format == settingsView.rows.timeFormat) {
+      if (item.format == settingsView.rows!.timeFormat) {
         item.isSelected = true;
       }
     }
     return rows;
   }
-  TextStyleElements styleElements;
-  SharedPreferences prefs;
+  late TextStyleElements styleElements;
+  late SharedPreferences prefs;
   @override
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
@@ -294,7 +294,7 @@ class _TimeSelectionPage extends State<TimeSelectionPage> {
       child: Scaffold(
           resizeToAvoidBottomInset: false,
           appBar: TricycleAppBar().getCustomAppBar(context,
-              appBarTitle:  AppLocalizations.of(context).translate("select_date"),
+              appBarTitle:  AppLocalizations.of(context)!.translate("select_date"),
               onBackButtonPress: (){
                 Navigator.pop(context);
               }),
@@ -326,7 +326,7 @@ class _TimeSelectionPage extends State<TimeSelectionPage> {
                             }
                           },
                           title: Text(
-                            timeList != null ? timeList[index].code : "",
+                            timeList != null ? timeList[index].code! : "",
                             style: styleElements.subtitle1ThemeScalable(context),
                           ),
                         ),
@@ -353,7 +353,7 @@ class _TimeSelectionPage extends State<TimeSelectionPage> {
                             },
                             color: HexColor(AppColors.appColorWhite),
                             child: Text(
-                                AppLocalizations.of(context)
+                                AppLocalizations.of(context)!
                                     .translate("save_exit"),
                                 style:styleElements.buttonThemeScalable(context)
                                     .copyWith(
@@ -368,16 +368,16 @@ class _TimeSelectionPage extends State<TimeSelectionPage> {
 
   Future<void> updatetimeFormat() async {
     prefs = await SharedPreferences.getInstance();
-    progressButtonKey.currentState.show();
+    progressButtonKey.currentState!.show();
     AccountSettingUpdateRequest model = AccountSettingUpdateRequest();
     model.personId = prefs.getInt("userId");
     model.id = rowId;
     model.timeFormat = getselected();
     var body = jsonEncode(model);
     Calls().call(body, context, Config.UPDATEACCOUNTSETTING).then((value) async {
-      progressButtonKey.currentState.hide();
+      progressButtonKey.currentState!.hide();
       if (value != null) {
-        progressButtonKey.currentState.hide();
+        progressButtonKey.currentState!.hide();
         var data = DynamicResponse.fromJson(value);
         if (data != null && data.rows != null && data.statusCode == 'S10001') {
           ToastBuilder().showToast("Successfully Updated", context,HexColor(AppColors.information));
@@ -386,14 +386,14 @@ class _TimeSelectionPage extends State<TimeSelectionPage> {
       }
     }).catchError((onError) async {
       ToastBuilder().showToast(onError.toString(), context,HexColor(AppColors.information));
-      progressButtonKey.currentState.hide();
+      progressButtonKey.currentState!.hide();
     });
   }
 
-  String getselected() {
-    String format;
+  String? getselected() {
+    String? format;
     for (DateFormatItem item in timeList) {
-      if (item.isSelected) {
+      if (item.isSelected!) {
         format = item.format;
         break;
       }

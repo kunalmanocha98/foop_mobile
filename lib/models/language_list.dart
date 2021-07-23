@@ -1,7 +1,7 @@
 class LanguageList {
-  String statusCode;
-  String message;
-  List<LanguageItem> rows;
+  String? statusCode;
+  String? message;
+  List<LanguageItem>? rows;
 
   LanguageList({this.statusCode, this.message, this.rows});
 
@@ -11,7 +11,7 @@ class LanguageList {
     if (json['rows'] != null) {
       rows = [];//LanguageItem>();
       json['rows'].forEach((v) {
-        rows.add(new LanguageItem.fromJson(v));
+        rows!.add(new LanguageItem.fromJson(v));
       });
     }
   }
@@ -21,17 +21,17 @@ class LanguageList {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 class EmailContactList {
-  int id;
-  String contactDetail;
-  String countryCode;
-  bool isPrimary;
-  bool isVerified;
+  int? id;
+  String? contactDetail;
+  String? countryCode;
+  bool? isPrimary;
+  bool? isVerified;
 
   EmailContactList(
       {this.id,
@@ -59,12 +59,12 @@ class EmailContactList {
   }
 }
 class LanguageItem {
-  int id;
-  String languageCode;
-  String isoCode;
-  String languageName;
-  String languageNameLocal;
-  bool isSelected = false;
+  int? id;
+  String? languageCode;
+  String? isoCode;
+  String? languageName;
+  String? languageNameLocal;
+  bool? isSelected = false;
 
   LanguageItem(
       {this.id,
@@ -93,12 +93,12 @@ class LanguageItem {
   }
 }
 class LanguageItemNew {
-  int id;
-  String languageCode;
-  String isoCode;
-  String languageName;
-  String languageNameLocal;
-  bool isSelected = false;
+  int? id;
+  String? languageCode;
+  String? isoCode;
+  String? languageName;
+  String? languageNameLocal;
+  bool? isSelected = false;
 
   LanguageItemNew(
       {this.id,

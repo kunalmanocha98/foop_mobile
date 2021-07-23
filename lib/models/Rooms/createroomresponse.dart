@@ -1,7 +1,7 @@
 class CreateRoomResponse {
-  String statusCode;
-  String message;
-  CreateRoomModel rows;
+  String? statusCode;
+  String? message;
+  CreateRoomModel? rows;
 
   CreateRoomResponse({this.statusCode, this.message, this.rows});
 
@@ -18,27 +18,27 @@ class CreateRoomResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     return data;
   }
 }
 
 class CreateRoomModel {
-  int institutionId;
-  String roomCreatedByType;
-  int roomCreatedById;
-  String roomOwnerType;
-  int roomOwnerTypeId;
-  String roomName;
-  String roomDescription;
-  bool isPrivate;
-  bool isSharable;
-  String roomType;
-  String roomStatus;
-  int id;
-  String institutionName;
-  int institutionMembersCount;
+  int? institutionId;
+  String? roomCreatedByType;
+  int? roomCreatedById;
+  String? roomOwnerType;
+  int? roomOwnerTypeId;
+  String? roomName;
+  String? roomDescription;
+  bool? isPrivate;
+  bool? isSharable;
+  String? roomType;
+  String? roomStatus;
+  int? id;
+  String? institutionName;
+  int? institutionMembersCount;
 
   CreateRoomModel(
       {this.institutionId,

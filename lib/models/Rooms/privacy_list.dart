@@ -1,7 +1,7 @@
 class RoomPrivacyTypeRequest {
-  int pageNumber;
-  int pageSize;
-  String searchVal;
+  int? pageNumber;
+  int? pageSize;
+  String? searchVal;
 
   RoomPrivacyTypeRequest({this.pageNumber, this.pageSize, this.searchVal});
 
@@ -21,10 +21,10 @@ class RoomPrivacyTypeRequest {
 }
 
 class RoomPrivacyListResponse {
-  String statusCode;
-  String message;
-  List<PrivacyListItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<PrivacyListItem>? rows;
+  int? total;
 
   RoomPrivacyListResponse(
       {this.statusCode, this.message, this.rows, this.total});
@@ -35,7 +35,7 @@ class RoomPrivacyListResponse {
     if (json['rows'] != null) {
       rows = [];//PrivacyListItem>();
       json['rows'].forEach((v) {
-        rows.add(new PrivacyListItem.fromJson(v));
+        rows!.add(new PrivacyListItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -46,7 +46,7 @@ class RoomPrivacyListResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -54,11 +54,11 @@ class RoomPrivacyListResponse {
 }
 
 class PrivacyListItem {
-  String privacyTypeName;
-  String privacyTypeCode;
-  String privacyTypeDescription;
-  String imageUrl;
-  int roomPrivacyTypesId;
+  String? privacyTypeName;
+  String? privacyTypeCode;
+  String? privacyTypeDescription;
+  String? imageUrl;
+  int? roomPrivacyTypesId;
 
   PrivacyListItem(
       {this.privacyTypeName,

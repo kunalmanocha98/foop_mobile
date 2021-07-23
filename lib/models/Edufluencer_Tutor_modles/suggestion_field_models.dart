@@ -1,8 +1,8 @@
 class SubjectListResponse {
-  String statusCode;
-  String message;
-  List<SubjectListItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<SubjectListItem>? rows;
+  int? total;
 
   SubjectListResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -12,7 +12,7 @@ class SubjectListResponse {
     if (json['rows'] != null) {
       rows = [];//SubjectListItem>();
       json['rows'].forEach((v) {
-        rows.add(new SubjectListItem.fromJson(v));
+        rows!.add(new SubjectListItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -23,7 +23,7 @@ class SubjectListResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -31,10 +31,10 @@ class SubjectListResponse {
 }
 
 class SubjectListItem {
-  String subjectName;
-  String subjectCode;
-  String subjectDescription;
-  int subjectId;
+  String? subjectName;
+  String? subjectCode;
+  String? subjectDescription;
+  int? subjectId;
 
   SubjectListItem(
       {this.subjectName,
@@ -62,10 +62,10 @@ class SubjectListItem {
 
 
 class ClassListResponse {
-  String statusCode;
-  String message;
-  List<ClassListItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<ClassListItem>? rows;
+  int? total;
 
   ClassListResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -75,7 +75,7 @@ class ClassListResponse {
     if (json['rows'] != null) {
       rows = [];//ClassListItem>();
       json['rows'].forEach((v) {
-        rows.add(new ClassListItem.fromJson(v));
+        rows!.add(new ClassListItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -86,7 +86,7 @@ class ClassListResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -94,10 +94,10 @@ class ClassListResponse {
 }
 
 class ClassListItem {
-  String className;
-  String classCode;
-  String classDescription;
-  int classId;
+  String? className;
+  String? classCode;
+  String? classDescription;
+  int? classId;
 
   ClassListItem({this.className, this.classCode, this.classDescription, this.classId});
 

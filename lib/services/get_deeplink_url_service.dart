@@ -9,7 +9,7 @@ import 'package:oho_works_app/utils/strings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:share_plus/share_plus.dart';
 class CreateDeeplink {
-  void getDeeplink(String deepLinkType,String ownerId,int userId,String shareType,BuildContext context) async {
+  void getDeeplink(String deepLinkType,String ownerId,int? userId,String shareType,BuildContext context) async {
 
     ProgressDialog progressDialog=ProgressDialog(context);
 
@@ -26,13 +26,13 @@ class CreateDeeplink {
       progressDialog.hide();
       var res = DeeplinkResponse.fromJson(value);
       if (res.statusCode == Strings.success_code) {
-        if(res.rows!=null && res.rows.shortUrl!=null) {
-          if(res.rows.shareContentMessage!=null){
+        if(res.rows!=null && res.rows!.shortUrl!=null) {
+          if(res.rows!.shareContentMessage!=null){
             StringBuffer buffer = StringBuffer();
-            buffer.writeAll([res.rows.shareContentMessage,"\n\n",res.rows.shortUrl]);
+            buffer.writeAll([res.rows!.shareContentMessage,"\n\n",res.rows!.shortUrl]);
             Share.share(buffer.toString());
           }else {
-            Share.share(res.rows.shortUrl);
+            Share.share(res.rows!.shortUrl!);
           }
         }
       } else {

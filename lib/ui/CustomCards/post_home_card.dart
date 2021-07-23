@@ -17,9 +17,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class PostHomeCard extends StatelessWidget {
   final CommonCardData data;
-  final Null Function() callbackPicker;
+  final Null Function()? callbackPicker;
 
-  PostHomeCard({@required this.data, this.callbackPicker});
+  PostHomeCard({required this.data, this.callbackPicker});
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +32,9 @@ class PostHomeCard extends StatelessWidget {
 
 class PostCard extends StatefulWidget {
   final CommonCardData data;
-  final Null Function() callbackPicker;
+  final Null Function()? callbackPicker;
 
-  PostCard({Key key, @required this.data, this.callbackPicker})
+  PostCard({Key? key, required this.data, this.callbackPicker})
       : super(key: key);
 
   @override
@@ -42,13 +42,13 @@ class PostCard extends StatefulWidget {
 }
 
 class _PostHomeCard extends State<PostCard> {
-  TextStyleElements styleElements;
+  TextStyleElements? styleElements;
   List<PostListItem> postList = [];
-  SharedPreferences prefs = locator<SharedPreferences>();
-  final CreateDeeplink createDeeplink = locator<CreateDeeplink>();
+  SharedPreferences? prefs = locator<SharedPreferences>();
+  final CreateDeeplink? createDeeplink = locator<CreateDeeplink>();
 
   _PostHomeCard(CommonCardData data) {
-    for (Data data in data.data) {
+    for (Data data in data.data!) {
       postList.add(PostListItem.fromJson(data.toJson()));
     }
   }
@@ -87,7 +87,7 @@ class _PostHomeCard extends State<PostCard> {
                 sharecallBack: () async {
                   SharedPreferences prefs =
                   await SharedPreferences.getInstance();
-                  createDeeplink.getDeeplink(
+                  createDeeplink!.getDeeplink(
                       SHAREITEMTYPE.DETAIL.type,
                       prefs.getInt("userId").toString(),
                       postList[index].postId,
@@ -95,7 +95,7 @@ class _PostHomeCard extends State<PostCard> {
                       context);
                 },
                 ratingCallback: () {
-                  for (var i in postList[index].postContent.header.action) {
+                  for (var i in postList[index].postContent!.header!.action!) {
                     if (i.type == 'is_rated') {
                       i.value = true;
                     }
@@ -123,7 +123,7 @@ class _PostHomeCard extends State<PostCard> {
                           postList[index].postOwnerTypeId;
                     });
                     for (var i in desiredList) {
-                      for (var j in i.postContent.header.action) {
+                      for (var j in i.postContent!.header!.action!) {
                         if (j.type == 'is_followed') {
                           j.value = isFollow;
                         }
@@ -139,9 +139,9 @@ class _PostHomeCard extends State<PostCard> {
                       builder: (BuildContext context) {
                         return AudioPostDialog(
                             title: postList[index]
-                                .postContent
-                                .content
-                                .contentMeta
+                                .postContent!
+                                .content!
+                                .contentMeta!
                                 .title,
                             okCallback: () {
                               Navigator.push(context, MaterialPageRoute(
@@ -150,9 +150,9 @@ class _PostHomeCard extends State<PostCard> {
                                       type: 'talk',
                                       standardEventId: 5,
                                       title: postList[index]
-                                          .postContent
-                                          .content
-                                          .contentMeta
+                                          .postContent!
+                                          .content!
+                                          .contentMeta!
                                           .title,
                                     );
                                   }));
@@ -165,9 +165,9 @@ class _PostHomeCard extends State<PostCard> {
                       builder: (context) => PostCreatePage(
                         type: 'submit_assign',
                         question: postList[index]
-                            .postContent
-                            .content
-                            .contentMeta
+                            .postContent!
+                            .content!
+                            .contentMeta!
                             .title,
                         postId: postList[index].postId,
                         prefs: prefs,
@@ -186,9 +186,9 @@ class _PostHomeCard extends State<PostCard> {
                       builder: (context) => PostCreatePage(
                         type: 'answer',
                         question: postList[index]
-                            .postContent
-                            .content
-                            .contentMeta
+                            .postContent!
+                            .content!
+                            .contentMeta!
                             .title,
                         postId: postList[index].postId,
                         prefs: prefs,

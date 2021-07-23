@@ -1,10 +1,10 @@
 import 'Rooms/roomlistmodels.dart';
 
 class RoomsDetailData {
-  String statusCode;
-  String message;
-  RoomListItem rows;
-  int total;
+  String? statusCode;
+  String? message;
+  RoomListItem? rows;
+  int? total;
 
   RoomsDetailData({this.statusCode, this.message, this.rows, this.total});
 
@@ -20,7 +20,7 @@ class RoomsDetailData {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     data['total'] = this.total;
     return data;

@@ -1,8 +1,8 @@
 class ConversationListResponse {
-  String statusCode;
-  String message;
-  List<ConversationItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<ConversationItem>? rows;
+  int? total;
 
   ConversationListResponse(
       {this.statusCode, this.message, this.rows, this.total});
@@ -13,7 +13,7 @@ class ConversationListResponse {
     if (json['rows'] != null) {
       rows = <ConversationItem>[];
       json['rows'].forEach((v) {
-        rows.add(new ConversationItem.fromJson(v));
+        rows!.add(new ConversationItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -24,7 +24,7 @@ class ConversationListResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -32,28 +32,28 @@ class ConversationListResponse {
 }
 
 class ConversationItem {
-  int isOnline=0;
-  String sId;
-  String conversationOwnerType;
-  String conversationOwnerId;
-  String mcId;
-  String conversationId;
-  String conversationWithType;
-  String conversationWithTypeId;
-  String conversationWithName;
-  String conversationImageThumbnail;
-  String conversationImage;
-  String conversationName;
-  String lastMessageByType;
-  String lastMessageById;
-  String lastMessageByName;
-  String lastMessage;
-  String lastMessageIcon;
-  int lastMessageTime;
-  bool isGroupConversation;
-  bool isRoomAvailable;
-  String lastMessageUTCTime;
-  int unreadCount;
+  int? isOnline=0;
+  String? sId;
+  String? conversationOwnerType;
+  String? conversationOwnerId;
+  String? mcId;
+  String? conversationId;
+  String? conversationWithType;
+  String? conversationWithTypeId;
+  String? conversationWithName;
+  String? conversationImageThumbnail;
+  String? conversationImage;
+  String? conversationName;
+  String? lastMessageByType;
+  String? lastMessageById;
+  String? lastMessageByName;
+  String? lastMessage;
+  String? lastMessageIcon;
+  int? lastMessageTime;
+  bool? isGroupConversation;
+  bool? isRoomAvailable;
+  String? lastMessageUTCTime;
+  int? unreadCount;
 
   ConversationItem(
       {this.sId,
@@ -133,29 +133,29 @@ this.isRoomAvailable,
   }
 }
 class ConversationItemDb {
-  int isOnline=0;
-  String sId;
-  String conversationOwnerType;
-  String conversationOwnerId;
-  String mcId;
-  String conversationId;
-  String conversationWithType;
-  String conversationWithTypeId;
-  String conversationWithName;
-  String conversationImageThumbnail;
-  String conversationImage;
-  String conversationName;
-  String lastMessageByType;
-  String lastMessageById;
-  String lastMessageByName;
-  String lastMessage;
-  String lastMessageIcon;
-  int lastMessageTime;
-  int isGroupConversation;
-  int isRoomAvailable;
-  String lastMessageUTCTime;
-  int unreadCount;
-  int eventId;
+  int? isOnline=0;
+  String? sId;
+  String? conversationOwnerType;
+  String? conversationOwnerId;
+  String? mcId;
+  String? conversationId;
+  String? conversationWithType;
+  String? conversationWithTypeId;
+  String? conversationWithName;
+  String? conversationImageThumbnail;
+  String? conversationImage;
+  String? conversationName;
+  String? lastMessageByType;
+  String? lastMessageById;
+  String? lastMessageByName;
+  String? lastMessage;
+  String? lastMessageIcon;
+  int? lastMessageTime;
+  int? isGroupConversation;
+  int? isRoomAvailable;
+  String? lastMessageUTCTime;
+  int? unreadCount;
+  int? eventId;
 
   ConversationItemDb(
       {this.sId,

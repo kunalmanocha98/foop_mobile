@@ -1,8 +1,8 @@
 class PostSubTypeListRequest {
-  int pageNumber;
-  int pageSize;
-  String postType;
-  String searchVal;
+  int? pageNumber;
+  int? pageSize;
+  String? postType;
+  String? searchVal;
   PostSubTypeListRequest(
       {this.pageNumber, this.pageSize, this.postType, this.searchVal});
 
@@ -25,10 +25,10 @@ class PostSubTypeListRequest {
 
 
 class PostSubTypeListResponse {
-  String statusCode;
-  String message;
-  List<PostSubTypeListItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<PostSubTypeListItem>? rows;
+  int? total;
 
   PostSubTypeListResponse(
       {this.statusCode, this.message, this.rows, this.total});
@@ -39,7 +39,7 @@ class PostSubTypeListResponse {
     if (json['rows'] != null) {
       rows = [];//PostSubTypeListItem>();
       json['rows'].forEach((v) {
-        rows.add(new PostSubTypeListItem.fromJson(v));
+        rows!.add(new PostSubTypeListItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -50,7 +50,7 @@ class PostSubTypeListResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -58,12 +58,12 @@ class PostSubTypeListResponse {
 }
 
 class PostSubTypeListItem {
-  String postSubTypeName;
-  String postSubTypeCode;
-  String postSubTypeDescription;
-  String imageUrl;
-  int postSubTypesId;
-  bool isSelected;
+  String? postSubTypeName;
+  String? postSubTypeCode;
+  String? postSubTypeDescription;
+  String? imageUrl;
+  int? postSubTypesId;
+  bool? isSelected;
 
   PostSubTypeListItem(
       {this.postSubTypeName,

@@ -26,25 +26,25 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class PostCardHeader extends StatefulWidget {
-  PostListItem postListItem;
-  Function(bool) onFollowCallback;
-  SharedPreferences prefs;
-  Function hidePostCallback;
-  Function deletePostCallback;
-  bool isDarkTheme;
-  bool isFollowing;
-  Function onBackPressed;
-  bool isBackButtonVisible;
-  bool isNewsPage;
-  Function topicsPageCallback;
-  Color color;
+  PostListItem? postListItem;
+  Function(bool)? onFollowCallback;
+  SharedPreferences? prefs;
+  Function? hidePostCallback;
+  Function? deletePostCallback;
+  bool? isDarkTheme;
+  bool? isFollowing;
+  Function? onBackPressed;
+  bool? isBackButtonVisible;
+  bool? isNewsPage;
+  Function? topicsPageCallback;
+  Color? color;
   bool isLesson;
-  Function editCallback;
+  Function? editCallback;
 
 
   PostCardHeader(
-      {Key key,
-        @required this.postListItem,
+      {Key? key,
+        required this.postListItem,
         this.prefs,
         this.onFollowCallback,
         this.hidePostCallback,
@@ -76,21 +76,21 @@ class PostCardHeader extends StatefulWidget {
 }
 
 class PostCardHeaderState extends State<PostCardHeader> {
-  Header headerData;
-  PostListItem postListItem;
-  SharedPreferences prefs;
-  Function(bool) onFollowCallback;
-  Function hidePostCallback;
-  Function deletePostCallback;
-  bool isDarkTheme;
-  Function onBackPressed;
-  bool isBackButtonVisible;
-  bool isFollowing;
-  bool isNewsPage;
-  Function topicsPageCallback;
+  Header? headerData;
+  PostListItem? postListItem;
+  SharedPreferences? prefs;
+  Function(bool)? onFollowCallback;
+  Function? hidePostCallback;
+  Function? deletePostCallback;
+  bool? isDarkTheme;
+  Function? onBackPressed;
+  bool? isBackButtonVisible;
+  bool? isFollowing;
+  bool? isNewsPage;
+  Function? topicsPageCallback;
 
   PostCardHeaderState(
-      {@required this.postListItem,
+      {required this.postListItem,
         this.prefs,
         this.onFollowCallback,
         this.hidePostCallback,
@@ -102,7 +102,7 @@ class PostCardHeaderState extends State<PostCardHeader> {
         this.topicsPageCallback,
         this.isFollowing}) {
     this.headerData =
-    postListItem != null ? postListItem.postContent.header : Header();
+    postListItem != null ? postListItem!.postContent!.header : Header();
     isDarkTheme ??= false;
   }
   void clear() {
@@ -113,17 +113,17 @@ class PostCardHeaderState extends State<PostCardHeader> {
   }
 
   void update(
-      {PostListItem postListItem,
-        SharedPreferences prefs,
-        Function(bool) onFollowCallback,
-        Function hidePostCallback,
-        Function deletePostCallback,
-        bool isDarkTheme,
-        bool isBackButtonVisible,
-        Function onBackPressed,
-        bool isFollowing,
-        bool isNewsPage,
-        Function topicsPageCallback}) {
+      {PostListItem? postListItem,
+        SharedPreferences? prefs,
+        Function(bool)? onFollowCallback,
+        Function? hidePostCallback,
+        Function? deletePostCallback,
+        bool? isDarkTheme,
+        bool? isBackButtonVisible,
+        Function? onBackPressed,
+        bool? isFollowing,
+        bool? isNewsPage,
+        Function? topicsPageCallback}) {
     setState(() {
     this.postListItem = postListItem ?? this.postListItem;
     this.prefs = prefs?? this.prefs;
@@ -134,21 +134,21 @@ class PostCardHeaderState extends State<PostCardHeader> {
     this.isBackButtonVisible = isBackButtonVisible ?? this.isBackButtonVisible;
     this.onBackPressed = onBackPressed ?? this.onBackPressed;
     this.isFollowing = isFollowing ?? this.isFollowing;
-    this.headerData =   postListItem != null ? postListItem.postContent.header : this.headerData;
+    this.headerData =   postListItem != null ? postListItem.postContent!.header : this.headerData;
     this.isNewsPage = isNewsPage ?? this.isNewsPage;
     this.topicsPageCallback = topicsPageCallback ?? this.topicsPageCallback;
 
     });
   }
 
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   Widget _simplePopup() {
     // var name = headerData.title;
     return PopupMenuButton<String>(
       padding: EdgeInsets.only(right: 0),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-      itemBuilder: (context) => getItems(headerData.title),
+      itemBuilder: (context) => getItems(headerData!.title),
       onSelected: (value) {
         switch (value) {
           case 'delete':
@@ -162,7 +162,7 @@ class PostCardHeaderState extends State<PostCardHeader> {
                     return DeleteConfirmationDilog(
                       showCancelButton: true,
                       // note: model.androidNotes,
-                      note: AppLocalizations.of(context).translate("delete_confirmation"),
+                      note: AppLocalizations.of(context)!.translate("delete_confirmation"),
                       cancelButton: () {
                        Navigator.pop(context);
                       },
@@ -176,7 +176,7 @@ class PostCardHeaderState extends State<PostCardHeader> {
             }
           case 'edit':
             {
-              widget.editCallback();
+              widget.editCallback!();
               break;
             }
           case 'hide':
@@ -195,14 +195,14 @@ class PostCardHeaderState extends State<PostCardHeader> {
               break;
             }
           case 'topic':{
-            topicsPageCallback();
+            topicsPageCallback!();
             break;
           }
           case 'report':
             {
               Navigator.of(context).push(MaterialPageRoute(
                   builder: (context) => ReportAbuse(
-                    contextId: postListItem.postId,
+                    contextId: postListItem!.postId,
                     contextType: CONTEXTTYPE_ENUM.FEED.type,
                   )));
               break;
@@ -211,7 +211,7 @@ class PostCardHeaderState extends State<PostCardHeader> {
       },
       icon: Icon(
         Icons.more_vert,
-        color: isDarkTheme ? HexColor(AppColors.appColorWhite) : HexColor(AppColors.appColorBlack65),
+        color: isDarkTheme! ? HexColor(AppColors.appColorWhite) : HexColor(AppColors.appColorBlack65),
       ),
     );
   }
@@ -235,8 +235,8 @@ class PostCardHeaderState extends State<PostCardHeader> {
           Visibility(
             visible: isBackButtonVisible ??= false,
             child: IconButton(
-              onPressed: onBackPressed,
-              icon: isDarkTheme
+              onPressed: onBackPressed as void Function()?,
+              icon: isDarkTheme!
                   ? Icon(
                 Icons.keyboard_backspace_rounded,
                 size: 20,
@@ -256,25 +256,25 @@ class PostCardHeaderState extends State<PostCardHeader> {
               key: UniqueKey(),
               resolution_type: RESOLUTION_TYPE.R64,
               service_type: SERVICE_TYPE.PERSON,
-              imageUrl: headerData!=null?headerData.avatar:"",
+              imageUrl: headerData!=null?headerData!.avatar:"",
               size: 48,
             ),
           ),
           Expanded(
             child: InkWell(
               onTap: () {
-                int ownerId = prefs!=null?prefs.getInt(Strings.userId):0;
+                int? ownerId = prefs!=null?prefs!.getInt(Strings.userId):0;
                 Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => UserProfileCards(
-                          userType: postListItem!=null?postListItem.postOwnerTypeId == ownerId
+                          userType: postListItem!=null?postListItem!.postOwnerTypeId == ownerId
                               ? "person"
-                              : postListItem.postOwnerType == "person"
+                              : postListItem!.postOwnerType == "person"
                               ? "thirdPerson"
                               : "institution":"",
-                          userId: postListItem!=null?postListItem.postOwnerTypeId != ownerId
-                              ? postListItem.postOwnerTypeId
+                          userId: postListItem!=null?postListItem!.postOwnerTypeId != ownerId
+                              ? postListItem!.postOwnerTypeId
                               : null:null,
                           callback: () {},
                           currentPosition: 1,
@@ -293,19 +293,19 @@ class PostCardHeaderState extends State<PostCardHeader> {
                       children: [
                         Flexible(
                           child: Text(
-                            headerData!=null?headerData.title ??= "":"",
+                            headerData!=null?headerData!.title ??= "":"",
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: styleElements
                                 .subtitle1ThemeScalable(context)
                                 .copyWith(
-                                color: isDarkTheme
+                                color: isDarkTheme!
                                     ? HexColor(AppColors.appColorWhite)
                                     : HexColor(AppColors.appColorBlack85)),
                           ),
                         ),
                         Visibility(
-                          visible: postListItem!=null?postListItem.postContent.header.isVerified ??
+                          visible: postListItem!=null?postListItem!.postContent!.header!.isVerified ??
                               false:false,
                           child: Padding(
                             padding: const EdgeInsets.only(top:4.0,left:8,right:8),
@@ -324,7 +324,7 @@ class PostCardHeaderState extends State<PostCardHeader> {
                       ],
                     ),
                     Text(
-                      headerData!=null?headerData.subtitle1 ??= "":"",
+                      headerData!=null?headerData!.subtitle1 ??= "":"",
                       style: styleElements
                           .captionThemeScalable(context)
                           .copyWith(
@@ -340,21 +340,21 @@ class PostCardHeaderState extends State<PostCardHeader> {
             ),
           ),
           Visibility(
-            visible: postListItem!=null? (postListItem.postOwnerTypeId != (prefs!=null?prefs.get(Strings.userId):0) && !(isFollowing ??= false)):false,
+            visible: postListItem!=null? (postListItem!.postOwnerTypeId != (prefs!=null?prefs!.get(Strings.userId):0) && !(isFollowing ??= false)):false,
             child: GenericFollowUnfollowButton(
               actionByObjectType: "person",
-              actionByObjectId: prefs!=null?prefs.getInt(Strings.userId):0,
-              actionOnObjectType: postListItem!=null?postListItem.postOwnerType:"",
-              actionOnObjectId: postListItem!=null?postListItem.postOwnerTypeId:0,
+              actionByObjectId: prefs!=null?prefs!.getInt(Strings.userId):0,
+              actionOnObjectType: postListItem!=null?postListItem!.postOwnerType:"",
+              actionOnObjectId: postListItem!=null?postListItem!.postOwnerTypeId:0,
               engageFlag: "Follow",
               actionFlag: "F",
               isRoundedButton: false,
               actionDetails: [""],
-              personName: prefs!=null?prefs.getString(Strings.userName):"",
+              personName: prefs!=null?prefs!.getString(Strings.userName):"",
               clicked: () {
                 setState(() {
                   isFollowing = true;
-                  onFollowCallback(true);
+                  onFollowCallback!(true);
                 });
               },
               callback: (isCallSuccess) {},
@@ -377,25 +377,25 @@ class PostCardHeaderState extends State<PostCardHeader> {
   void unfollowAction() async {
     GenericFollowUnfollowButtonState().followUnfollowBlock(
         "person",
-        prefs.getInt(Strings.userId),
-        postListItem.postOwnerType,
-        postListItem.postOwnerTypeId,
+        prefs!.getInt(Strings.userId),
+        postListItem!.postOwnerType,
+        postListItem!.postOwnerTypeId,
         "U",
         [""],
             (isSuccess) {},
         context);
     setState(() {
       isFollowing = false;
-      onFollowCallback(false);
+      onFollowCallback!(false);
     });
   }
 
   void blockAction() async {
     GenericFollowUnfollowButtonState().followUnfollowBlock(
         "person",
-        prefs.getInt(Strings.userId),
-        postListItem.postOwnerType,
-        postListItem.postOwnerTypeId,
+        prefs!.getInt(Strings.userId),
+        postListItem!.postOwnerType,
+        postListItem!.postOwnerTypeId,
         "B",
         [""], (isSuccess) {
       if (isSuccess) {}
@@ -404,19 +404,19 @@ class PostCardHeaderState extends State<PostCardHeader> {
 
   void hidepost() {
     PostRecipientUpdatePayload payload = PostRecipientUpdatePayload();
-    payload.postId = postListItem.postId;
+    payload.postId = postListItem!.postId;
     payload.postRecipientStatus = POST_RECIPIENT_STATUS.HIDDEN.status;
     payload.isBookmarked = false;
     var body = jsonEncode(payload);
     Calls().call(body, context, Config.UPDATE_RECIPIENT_LIST).then((value) {
       PostCreateResponse res = PostCreateResponse.fromJson(value);
       if (res.statusCode == Strings.success_code) {
-        hidePostCallback();
+        hidePostCallback!();
    /*     ToastBuilder()
             .showToast(res.message, context, HexColor(AppColors.information));*/
       } else {
         ToastBuilder()
-            .showToast(res.message, context, HexColor(AppColors.information));
+            .showToast(res.message!, context, HexColor(AppColors.information));
       }
     }).catchError((onError) {
       print(onError);
@@ -426,13 +426,13 @@ class PostCardHeaderState extends State<PostCardHeader> {
 
   void deletepost() {
     PostCreatePayload payload = PostCreatePayload();
-    payload.postId = postListItem.postId;
-    payload.id = postListItem.postId;
-    payload.postOwnerType = postListItem.postOwnerType;
-    payload.postOwnerTypeId= postListItem.postOwnerTypeId;
+    payload.postId = postListItem!.postId;
+    payload.id = postListItem!.postId;
+    payload.postOwnerType = postListItem!.postOwnerType;
+    payload.postOwnerTypeId= postListItem!.postOwnerTypeId;
     payload.postStatus = 'deleted';
-    payload.postCreatedById=postListItem.postOwnerTypeId;
-    payload.postType = postListItem.postType;
+    payload.postCreatedById=postListItem!.postOwnerTypeId;
+    payload.postType = postListItem!.postType;
     payload.postCategory="normal";
     payload.postRecipientDetails=[];
     payload.postRecipientType=[];
@@ -440,10 +440,10 @@ class PostCardHeaderState extends State<PostCardHeader> {
     Calls().call(body, context, Config.UPDATE_POST).then((value) {
       PostCreateResponse res = PostCreateResponse.fromJson(value);
       if (res.statusCode == Strings.success_code) {
-        deletePostCallback();
+        deletePostCallback!();
       } else {
         ToastBuilder()
-            .showToast(res.message, context, HexColor(AppColors.information));
+            .showToast(res.message!, context, HexColor(AppColors.information));
       }
     }).catchError((onError) {
       print(onError);
@@ -451,22 +451,22 @@ class PostCardHeaderState extends State<PostCardHeader> {
     // payload.postKeywords = postListItem.postContent.extra;
   }
 
-  List<PopupMenuEntry<String>> getItems(String name) {
+  List<PopupMenuEntry<String>> getItems(String? name) {
     List<PopupMenuEntry<String>> popupmenuList = [];
-    if(isNewsPage!=null && isNewsPage){
+    if(isNewsPage!=null && isNewsPage!){
       popupmenuList.add(
         PopupMenuItem(
           value: 'topic',
-          child: Text(AppLocalizations.of(context).translate('select_topics'),
+          child: Text(AppLocalizations.of(context)!.translate('select_topics'),
           ),
         ),
       );
     }
-    if (postListItem.postOwnerTypeId == (prefs!=null?prefs.getInt(Strings.userId):0)) {
+    if (postListItem!.postOwnerTypeId == (prefs!=null?prefs!.getInt(Strings.userId):0)) {
       popupmenuList.add(
         PopupMenuItem(
           value: 'delete',
-          child: Text(AppLocalizations.of(context).translate('delete_post'),
+          child: Text(AppLocalizations.of(context)!.translate('delete_post'),
           ),
         ),
       );
@@ -474,7 +474,7 @@ class PostCardHeaderState extends State<PostCardHeader> {
         popupmenuList.add(
           PopupMenuItem(
             value: 'edit',
-            child: Text(AppLocalizations.of(context).translate('edit'),
+            child: Text(AppLocalizations.of(context)!.translate('edit'),
             ),
           ),
         );
@@ -483,7 +483,7 @@ class PostCardHeaderState extends State<PostCardHeader> {
       popupmenuList.add(
         PopupMenuItem(
           value: 'hide',
-          child: Text(AppLocalizations.of(context).translate('hide_post'),
+          child: Text(AppLocalizations.of(context)!.translate('hide_post'),
           ),
         ),
       );
@@ -491,7 +491,7 @@ class PostCardHeaderState extends State<PostCardHeader> {
         popupmenuList.add(
           PopupMenuItem(
             value: 'unfollow',
-            child: Text(AppLocalizations.of(context).translate('unfollo')+ " $name",
+            child: Text(AppLocalizations.of(context)!.translate('unfollo')+ " $name",
             ),
           ),
         );
@@ -499,7 +499,7 @@ class PostCardHeaderState extends State<PostCardHeader> {
       popupmenuList.add(
         PopupMenuItem(
           value: 'block',
-          child: Text(AppLocalizations.of(context).translate('block')+ " $name",
+          child: Text(AppLocalizations.of(context)!.translate('block')+ " $name",
           ),
         ),
       );
@@ -507,7 +507,7 @@ class PostCardHeaderState extends State<PostCardHeader> {
       popupmenuList.add(
         PopupMenuItem(
           value: 'report',
-          child: Text(AppLocalizations.of(context).translate('report_content'),
+          child: Text(AppLocalizations.of(context)!.translate('report_content'),
           ),
         ),
       );

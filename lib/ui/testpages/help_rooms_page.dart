@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class HelpRoomsPage extends StatelessWidget{
-TextStyleElements styleElements;
+late TextStyleElements styleElements;
   @override
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
@@ -15,7 +15,7 @@ TextStyleElements styleElements;
         appBar: TricycleAppBar()
             .getCustomAppBar(
             context,
-            appBarTitle: AppLocalizations.of(context).translate('helprooms'),
+            appBarTitle: AppLocalizations.of(context)!.translate('helprooms'),
             onBackButtonPress: (){
               Navigator.pop(context);
             }),
@@ -30,47 +30,47 @@ TextStyleElements styleElements;
                 children: [
                   Padding(
                     padding: EdgeInsets.only(top:4,left:4,right:4),
-                    child: Text(AppLocalizations.of(context).translate('select_privacy_type'),
+                    child: Text(AppLocalizations.of(context)!.translate('select_privacy_type'),
                     style: styleElements.headline6ThemeScalable(context).copyWith(fontWeight: FontWeight.bold),),
                   ),
                   Padding(
                     padding: EdgeInsets.only(top:8,left:4,right:4),
-                    child: Text(AppLocalizations.of(context).translate('private'),
+                    child: Text(AppLocalizations.of(context)!.translate('private'),
                         style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold)),
                   ),
                   Padding(
                     padding:EdgeInsets.only(top:0,left:4,right:4),
-                    child: Text(AppLocalizations.of(context).translate('private_room_des'),
+                    child: Text(AppLocalizations.of(context)!.translate('private_room_des'),
                         style: styleElements.bodyText2ThemeScalable(context)),
                   ),
                   Padding(
                     padding:EdgeInsets.only(top:8,left:4,right:4),
-                    child: Text(AppLocalizations.of(context).translate('campus'),
+                    child: Text(AppLocalizations.of(context)!.translate('campus'),
                         style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold)),
                   ),
                   Padding(
                     padding:EdgeInsets.only(top:0,left:4,right:4),
-                    child: Text(AppLocalizations.of(context).translate('campus_room_des'),
+                    child: Text(AppLocalizations.of(context)!.translate('campus_room_des'),
                         style: styleElements.bodyText2ThemeScalable(context)),
                   ),
                   Padding(
                     padding: EdgeInsets.only(top:8,left:4,right:4),
-                    child: Text(AppLocalizations.of(context).translate('social'),
+                    child: Text(AppLocalizations.of(context)!.translate('social'),
                         style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold)),
                   ),
                   Padding(
                     padding: EdgeInsets.only(top:0,left:4,right:4),
-                    child: Text(AppLocalizations.of(context).translate('social_room_des'),
+                    child: Text(AppLocalizations.of(context)!.translate('social_room_des'),
                         style: styleElements.bodyText2ThemeScalable(context)),
                   ),
                   Padding(
                     padding: EdgeInsets.only(top:8,left:4,right:4),
-                    child: Text(AppLocalizations.of(context).translate('public'),
+                    child: Text(AppLocalizations.of(context)!.translate('public'),
                         style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold)),
                   ),
                   Padding(
                     padding: EdgeInsets.only(top:0,left:4,right:4),
-                    child: Text(AppLocalizations.of(context).translate('public_room_des'),
+                    child: Text(AppLocalizations.of(context)!.translate('public_room_des'),
                         style: styleElements.bodyText2ThemeScalable(context)),
                   ),
                 ],

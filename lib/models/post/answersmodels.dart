@@ -1,13 +1,13 @@
 import 'package:oho_works_app/models/post/postcreate.dart';
 
 class CreateAnswerPayload {
-  int postId;
-  String answerByType;
-  int answerById;
-  String answerDetails;
-  int id;
-  String answerStatus;
-  AnswerOtherDetails answerOtherDetails;
+  int? postId;
+  String? answerByType;
+  int? answerById;
+  String? answerDetails;
+  int? id;
+  String? answerStatus;
+  AnswerOtherDetails? answerOtherDetails;
 
   CreateAnswerPayload(
       {this.postId, this.answerByType, this.answerById, this.answerDetails,this.id,this.answerOtherDetails,this.answerStatus});
@@ -33,15 +33,15 @@ class CreateAnswerPayload {
     data['id'] = this.id;
     data['answer_status'] = this.answerStatus;
     if (this.answerOtherDetails != null) {
-      data['answer_other_details'] = this.answerOtherDetails.toJson();
+      data['answer_other_details'] = this.answerOtherDetails!.toJson();
     }
     return data;
   }
 }
 
 class AnswerOtherDetails {
-  String marks;
-  List<MediaDetails> mediaDetails;
+  String? marks;
+  List<MediaDetails>? mediaDetails;
 
   AnswerOtherDetails({this.mediaDetails, this.marks});
 
@@ -49,7 +49,7 @@ class AnswerOtherDetails {
     if (json['media_urls'] != null) {
       mediaDetails = [];//MediaDetails>();
       json['media_urls'].forEach((v) {
-        mediaDetails.add(new MediaDetails.fromJson(v));
+        mediaDetails!.add(new MediaDetails.fromJson(v));
       });
     }
     marks = json['marks'];
@@ -58,7 +58,7 @@ class AnswerOtherDetails {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.mediaDetails != null) {
-      data['media_urls'] = this.mediaDetails.map((v) => v.toJson()).toList();
+      data['media_urls'] = this.mediaDetails!.map((v) => v.toJson()).toList();
     }
     data['marks'] = this.marks;
     return data;
@@ -66,10 +66,10 @@ class AnswerOtherDetails {
 }
 
 class CreateAnswerResponse {
-  String statusCode;
-  String message;
-  CreateAnswerPayload rows;
-  int total;
+  String? statusCode;
+  String? message;
+  CreateAnswerPayload? rows;
+  int? total;
 
   CreateAnswerResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -85,7 +85,7 @@ class CreateAnswerResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     data['total'] = this.total;
     return data;
@@ -94,9 +94,9 @@ class CreateAnswerResponse {
 
 
 class AnswerListRequest {
-  int postId;
-  int pageNumber;
-  int pageSize;
+  int? postId;
+  int? pageNumber;
+  int? pageSize;
 
   AnswerListRequest({this.postId, this.pageNumber, this.pageSize});
 
@@ -116,10 +116,10 @@ class AnswerListRequest {
 }
 
 class AnswerListResponse {
-  String statusCode;
-  String message;
-  List<AnswersListItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<AnswersListItem>? rows;
+  int? total;
 
   AnswerListResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -129,7 +129,7 @@ class AnswerListResponse {
     if (json['rows'] != null) {
       rows = [];//AnswersListItem>();
       json['rows'].forEach((v) {
-        rows.add(new AnswersListItem.fromJson(v));
+        rows!.add(new AnswersListItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -140,7 +140,7 @@ class AnswerListResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -148,17 +148,17 @@ class AnswerListResponse {
 }
 
 class AnswersListItem {
-  int id;
-  int postId;
-  String answerByType;
-  int answerById;
-  int answerDatetime;
-  String answerDetails;
-  String answerByName;
-  String answerByImageUrl;
-  String answerStatus;
-  RatingDetails ratingDetails;
-  AnswerOtherDetails answerOtherDetails;
+  int? id;
+  int? postId;
+  String? answerByType;
+  int? answerById;
+  int? answerDatetime;
+  String? answerDetails;
+  String? answerByName;
+  String? answerByImageUrl;
+  String? answerStatus;
+  RatingDetails? ratingDetails;
+  AnswerOtherDetails? answerOtherDetails;
 
   AnswersListItem(
       {this.id,
@@ -203,17 +203,17 @@ class AnswersListItem {
     data['answer_by_image_url'] = this.answerByImageUrl;
     data['answer_status'] = this.answerStatus;
     if (this.ratingDetails != null) {
-      data['rating_details'] = this.ratingDetails.toJson();
+      data['rating_details'] = this.ratingDetails!.toJson();
     }
     if (this.answerOtherDetails != null) {
-      data['answer_other_details'] = this.answerOtherDetails.toJson();
+      data['answer_other_details'] = this.answerOtherDetails!.toJson();
     }
     return data;
   }
 }
 class RatingDetails {
-  double rating;
-  String comment;
+  double? rating;
+  String? comment;
 
   RatingDetails({this.rating, this.comment});
 

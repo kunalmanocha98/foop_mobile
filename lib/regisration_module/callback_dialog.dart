@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class CallBackDialog extends StatelessWidget {
 
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
 
   @override
@@ -34,14 +34,14 @@ class CallBackDialog extends StatelessWidget {
                     child: Container(
                       margin: const EdgeInsets.only(bottom: 20, top: 20),
                       child: Text(
-                        AppLocalizations.of(context).translate("sorry"),
+                        AppLocalizations.of(context)!.translate("sorry"),
                         style: styleElements.headline5ThemeScalable(context),
                       ),
                     )),
                 Container(
                   margin: const EdgeInsets.all(16),
                   child: Text(
-                    AppLocalizations.of(context)
+                    AppLocalizations.of(context)!
                         .translate(
                         "if_no_inst_found"),
                     textAlign: TextAlign.center,
@@ -58,7 +58,7 @@ class CallBackDialog extends StatelessWidget {
                     margin: const EdgeInsets.only(
                         left: 16, right: 16, bottom: 16),
                     child: WhiteLargeButton(
-                      name: AppLocalizations.of(context)
+                      name: AppLocalizations.of(context)!
                           .translate("request_callback"),
                       offsetX: 70.66,
                       offsetY: 12.93,
@@ -80,7 +80,7 @@ class CallBackDialog extends StatelessWidget {
                 ),
                 Container(
                   margin: const EdgeInsets.all(16),
-                  child: Text(AppLocalizations.of(context).translate('or'),
+                  child: Text(AppLocalizations.of(context)!.translate('or'),
                       textAlign: TextAlign.center,
                       style: styleElements.captionThemeScalable(context)),
                 ),
@@ -90,7 +90,7 @@ class CallBackDialog extends StatelessWidget {
                     margin: const EdgeInsets.only(
                         left: 16, right: 16, bottom: 30),
                     child: WhiteLargeButton(
-                      name: AppLocalizations.of(context)
+                      name: AppLocalizations.of(context)!
                           .translate("register__institute"),
                       offsetX: 70.66,
                       offsetY: 12.93,
@@ -116,7 +116,7 @@ class CallBackDialog extends StatelessWidget {
                       child: Row(
                         children: [
                           Icon(Icons.keyboard_backspace_outlined,color: HexColor(AppColors.appColorBlack85),),
-                          Text(AppLocalizations.of(context).translate("search_again"),style: styleElements.bodyText2ThemeScalable(context).copyWith(color: HexColor((AppColors.appMainColor))))
+                          Text(AppLocalizations.of(context)!.translate("search_again"),style: styleElements.bodyText2ThemeScalable(context).copyWith(color: HexColor((AppColors.appMainColor))))
 
                         ],
                       ),

@@ -1,7 +1,7 @@
 class FollowersFollowingCountEntity {
-  String statusCode;
-  String message;
-  Rows rows;
+  String? statusCode;
+  String? message;
+  Rows? rows;
 
   FollowersFollowingCountEntity({this.statusCode, this.message, this.rows});
 
@@ -16,18 +16,18 @@ class FollowersFollowingCountEntity {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     return data;
   }
 }
 
 class Rows {
-  int followersCount;
-  int followingCount;
-  int roomsCount;
-  int cycleCount;
-  int postCount;
+  int? followersCount;
+  int? followingCount;
+  int? roomsCount;
+  int? cycleCount;
+  int? postCount;
 
   Rows(
       {this.followersCount,

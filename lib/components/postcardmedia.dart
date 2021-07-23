@@ -23,31 +23,31 @@ import 'package:video_player/video_player.dart';
 import 'CustomPaginator.dart';
 
 // ignore: must_be_immutable
-bool onFullPage;
+bool? onFullPage;
 
 // ignore: must_be_immutable
 class  PostCardMedia extends StatefulWidget {
-  List<Media> mediaList;
-  bool isFilterPage;
+  List<Media>? mediaList;
+  bool? isFilterPage;
   // bool onFullPage;
-  Function onItemClick;
-  Null Function(int position) onPositionChange;
-  int pagePosition;
-  bool isNewsPage;
-  bool isMediaPage;
-  int pageNumber;
-  int ownerId;
-  String ownerType;
-  int totalItems;
+  Function? onItemClick;
+  Null Function(int position)? onPositionChange;
+  int? pagePosition;
+  bool? isNewsPage;
+  bool? isMediaPage;
+  int? pageNumber;
+  int? ownerId;
+  String? ownerType;
+  int? totalItems;
   String link;
-  bool isLocalFile;
+  bool? isLocalFile;
   bool onlyHorizontalList;
-String postType;
-bool isLearningPage;
-bool isFullImageUrl;
+String? postType;
+bool? isLearningPage;
+bool? isFullImageUrl;
   // GlobalKey<TricycleDownloadButtonState> downloadButtonKey;
   PostCardMedia(
-      {@required this.mediaList,
+      {required this.mediaList,
         this.onlyHorizontalList = false,
         // this.downloadButtonKey,
         this.isMediaPage,
@@ -60,7 +60,7 @@ bool isFullImageUrl;
         this.ownerId,
         this.postType,
         this.isFilterPage,
-        bool fullPage,
+        bool? fullPage,
         this.onItemClick,
         this.onPositionChange,
         this.pagePosition,
@@ -83,22 +83,22 @@ bool isFullImageUrl;
 }
 
 class _PostCardMedia extends State<PostCardMedia> {
-  List<Media> mediaList;
-  bool onFullPage;
-  bool isLocalFile;
-  Function onItemClick;
+  List<Media>? mediaList;
+  bool? onFullPage;
+  bool? isLocalFile;
+  Function? onItemClick;
   int _currentIndex = 0;
-  Null Function(int position) onPositionChange;
-  int pagePosition;
-  PageController _controller;
-  int pageNumber;
+  Null Function(int position)? onPositionChange;
+  int? pagePosition;
+  PageController? _controller;
+  int? pageNumber;
 
   // GlobalKey<TricycleDownloadButtonState> downloadButtonKey;
-  int totalItems;
-  TextStyleElements styleElements;
+  int? totalItems;
+  late TextStyleElements styleElements;
 
   _PostCardMedia(
-      {@required this.mediaList,
+      {required this.mediaList,
         // this.downloadButtonKey,
         this.onFullPage,
         this.totalItems,
@@ -110,7 +110,7 @@ class _PostCardMedia extends State<PostCardMedia> {
         this.isLocalFile}) {
     if (mediaList == null) {
       mediaList = [];
-      mediaList.add(Media(mediaType: 'empty', mediaUrl: 'url'));
+      mediaList!.add(Media(mediaType: 'empty', mediaUrl: 'url'));
     }
     _currentIndex = pagePosition ??= 0;
   }
@@ -121,8 +121,8 @@ class _PostCardMedia extends State<PostCardMedia> {
     _controller = PageController(initialPage: pagePosition ??= 0);
   }
 
-  List<T> map<T>(List list, Function handler) {
-    List<T> result = [];
+  List<T?> map<T>(List list, Function handler) {
+    List<T?> result = [];
     for (var i = 0; i < list.length; i++) {
       result.add(handler(i, list[i]));
     }
@@ -134,19 +134,19 @@ class _PostCardMedia extends State<PostCardMedia> {
     styleElements = TextStyleElements(context);
     return widget.onlyHorizontalList
         ? Visibility(
-      visible: widget.onlyHorizontalList &&  mediaList.length>0,
+      visible: widget.onlyHorizontalList &&  mediaList!.length>0,
       child: Container(
         height: 74,
         margin: EdgeInsets.only(top: 16,left: 12,right: 12),
         child: ListView.builder(
           shrinkWrap: true,
-          itemCount: mediaList.length,
+          itemCount: mediaList!.length,
           scrollDirection: Axis.horizontal,
           itemBuilder: (BuildContext context, int index) {
             return GestureDetector(
               onTap: (){
-                onPositionChange(index);
-                onItemClick();
+                onPositionChange!(index);
+                onItemClick!();
               },
               child: Container(
                 margin: EdgeInsets.only(top:8,bottom: 2,left:12,right: 12),
@@ -158,7 +158,7 @@ class _PostCardMedia extends State<PostCardMedia> {
                         fit: BoxFit.cover,
                         image: CachedNetworkImageProvider(
                             Utility().getUrlForImage(
-                                mediaList[index].mediaUrl,
+                                mediaList![index].mediaUrl,
                                 RESOLUTION_TYPE.R128,
                                 SERVICE_TYPE.POST),
                             maxHeight: 64,
@@ -169,29 +169,29 @@ class _PostCardMedia extends State<PostCardMedia> {
         ),
       ),
     )
-        : (mediaList != null && mediaList.length > 0)
+        : (mediaList != null && mediaList!.length > 0)
         ? Container(
       child: GestureDetector(
         onTap: () {
-          if (onFullPage != null && onFullPage) {
+          if (onFullPage != null && onFullPage!) {
           } else {
-            onItemClick();
+            onItemClick!();
           }
         },
         child: AspectRatio(
           aspectRatio:
-          (widget.isNewsPage != null && widget.isNewsPage ||widget.isLearningPage != null && widget.isLearningPage )
+          (widget.isNewsPage != null && widget.isNewsPage! ||widget.isLearningPage != null && widget.isLearningPage! )
               ? 4 / 3
               : 1 / 1,
           child: Stack(
             children: [
-              (widget.isMediaPage != null && widget.isMediaPage)
+              (widget.isMediaPage != null && widget.isMediaPage!)
                   ? PageView.builder(
                 onPageChanged: (pageIndex) {
                   // downloadButtonKey.currentState.changeIndex(pageIndex);
                   setState(() {
                     _currentIndex = pageIndex;
-                    onPositionChange(_currentIndex);
+                    onPositionChange!(_currentIndex);
                   });
                 },
                 itemCount: getItemCount(),
@@ -208,33 +208,33 @@ class _PostCardMedia extends State<PostCardMedia> {
                   // downloadButtonKey.currentState.changeIndex(pageIndex);
                   setState(() {
                     _currentIndex = pageIndex;
-                    onPositionChange(_currentIndex);
+                    onPositionChange!(_currentIndex);
                   });
                 },
 
-                itemCount: mediaList.length,
+                itemCount: mediaList!.length,
                 controller: _controller,
                 // store this controller in a State to save the carousel scroll position
                 // controller: PageController(viewportFraction: 0.8),
                 itemBuilder:
                     (BuildContext context, int itemIndex) {
                   return _buildCarouselItem(
-                      context, itemIndex, mediaList[itemIndex]);
+                      context, itemIndex, mediaList![itemIndex]);
                 },
               ),
-              (widget.isMediaPage != null && widget.isMediaPage)
+              (widget.isMediaPage != null && widget.isMediaPage!)
                   ? Container()
                   : Align(
                 alignment: Alignment.bottomCenter,
                 child: Visibility(
                   visible: (mediaList != null &&
-                      mediaList.length > 1),
-                  child: (onFullPage != null && onFullPage)
+                      mediaList!.length > 1),
+                  child: (onFullPage != null && onFullPage!)
                       ? Container(
                     height: 72,
                     child: ListView.builder(
                       shrinkWrap: true,
-                      itemCount: mediaList.length,
+                      itemCount: mediaList!.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (BuildContext context,
                           int index) {
@@ -242,7 +242,7 @@ class _PostCardMedia extends State<PostCardMedia> {
                           onTap: () {
                             setState(() {
                               _currentIndex = index;
-                              _controller.jumpToPage(
+                              _controller!.jumpToPage(
                                   _currentIndex);
                             });
                           },
@@ -264,7 +264,7 @@ class _PostCardMedia extends State<PostCardMedia> {
                                     fit: BoxFit.cover,
                                     image: CachedNetworkImageProvider(
                                         Utility().getUrlForImage(
-                                            mediaList[index]
+                                            mediaList![index]
                                                 .mediaUrl,
                                             RESOLUTION_TYPE
                                                 .R128,
@@ -279,24 +279,7 @@ class _PostCardMedia extends State<PostCardMedia> {
                   )
                       : Wrap(
                     direction: Axis.horizontal,
-                    children: map<Widget>(mediaList,
-                            (index, url) {
-                          return Container(
-                            width: 6.0,
-                            height: 6.0,
-                            margin: EdgeInsets.symmetric(
-                                vertical: 10.0,
-                                horizontal: 2.0),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: _currentIndex == index
-                                  ? HexColor(
-                                  AppColors.appMainColor)
-                                  : HexColor(AppColors
-                                  .appColorGrey500),
-                            ),
-                          );
-                        }),
+                    children: _generateChildren()
                   ),
                 ),
               ),
@@ -308,7 +291,7 @@ class _PostCardMedia extends State<PostCardMedia> {
               alignment: Alignment.bottomRight,
             child:
 
-              ((widget.postType!=null && widget.postType!='general' && widget.isFilterPage!=null &&   !widget.isFilterPage)?PostTagComponent(
+              ((widget.postType!=null && widget.postType!='general' && widget.isFilterPage!=null &&   !widget.isFilterPage!)?PostTagComponent(
                 type: widget.postType,
               ):Container()))
             ],
@@ -321,14 +304,58 @@ class _PostCardMedia extends State<PostCardMedia> {
         : Container();
   }
 
+
+
+  Widget _generateItem(int index) {
+
+    return   Container(
+      width: 6.0,
+      height: 6.0,
+      margin: EdgeInsets.symmetric(
+          vertical: 10.0,
+          horizontal: 2.0),
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: _currentIndex == index
+            ? HexColor(
+            AppColors.appMainColor)
+            : HexColor(AppColors
+            .appColorGrey500),
+      ),
+    );
+
+  }
+
+
+
+  List<Widget> _generateChildren() {
+
+    List<Widget> items = [];
+
+
+
+    for (int i = 0; i < mediaList!.length; i++) {
+
+      items.add(_generateItem(i));
+
+    }
+
+
+
+    return items;
+
+  }
+
+
+
   Widget getLinkPreview() {
-    if (mediaList != null && mediaList.length > 0) {
+    if (mediaList != null && mediaList!.length > 0) {
       return Container(
         child: TricycleLinkPreview(
           url: widget.link,
-          builder: (InfoBase info) {
-            String title = "";
-            String description = "";
+          builder: (InfoBase? info) {
+            String? title = "";
+            String? description = "";
 
             if (info is WebImageInfo) {
               return Container();
@@ -358,7 +385,7 @@ class _PostCardMedia extends State<PostCardMedia> {
                           fontWeight: FontWeight.w500),
                     ),
                     Text(
-                      title,
+                      title!,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: styleElements
@@ -398,21 +425,21 @@ class _PostCardMedia extends State<PostCardMedia> {
           url: widget.link,
           showMultimedia: true,
           useMultithread: true,
-          builder: (InfoBase info) {
+          builder: (InfoBase? info) {
             if (info == null) return const SizedBox();
             if (info is WebImageInfo) {
               return CachedNetworkImage(
-                imageUrl: info.image,
+                imageUrl: info.image!,
                 fit: BoxFit.contain,
               );
             } else if (info is WebVideoInfo) {
               var videoInfo = info;
               return CachedNetworkImage(
-                imageUrl: videoInfo.image,
+                imageUrl: videoInfo.image!,
                 fit: BoxFit.contain,
               );
             }
-            final WebInfo webInfo = info;
+            final WebInfo webInfo = info as WebInfo;
             print(webInfo.redirectUrl);
             if (!WebAnalyzer.isNotEmpty(webInfo.title)) return const SizedBox();
 
@@ -426,8 +453,8 @@ class _PostCardMedia extends State<PostCardMedia> {
                       child: (webInfo.icon != null || webInfo.image != null)
                           ? CachedNetworkImage(
                         imageUrl: webInfo.image != null
-                            ? webInfo.image
-                            : webInfo.icon,
+                            ? webInfo.image!
+                            : webInfo.icon!,
                         height: 72,
                         width: 72,
                         fit: BoxFit.cover,
@@ -454,7 +481,7 @@ class _PostCardMedia extends State<PostCardMedia> {
                                   fontWeight: FontWeight.w500),
                             ),
                             Text(
-                              webInfo.title,
+                              webInfo.title!,
                               maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: styleElements
@@ -467,7 +494,7 @@ class _PostCardMedia extends State<PostCardMedia> {
                           ],
                         ),
                         subtitle: Text(
-                          webInfo.description,
+                          webInfo.description!,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                           style: styleElements
@@ -505,15 +532,15 @@ class _PostCardMedia extends State<PostCardMedia> {
   }
 
   Widget _getItemBuilder(BuildContext context, int itemIndex) {
-    if (itemIndex < mediaList.length) {
-      if (itemIndex == mediaList.length) {
+    if (itemIndex < mediaList!.length) {
+      if (itemIndex == mediaList!.length) {
         return CustomPaginator(context).loadingWidgetMaker();
       } else {
-        return _buildCarouselItem(context, itemIndex, mediaList[itemIndex]);
+        return _buildCarouselItem(context, itemIndex, mediaList![itemIndex]);
       }
     } else {
       return FutureBuilder(
-        future: fetchMedia(pageNumber + 1),
+        future: fetchMedia(pageNumber! + 1),
         builder: (BuildContext context, AsyncSnapshot<MediaFiles> snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
@@ -521,8 +548,8 @@ class _PostCardMedia extends State<PostCardMedia> {
             case ConnectionState.active:
               return CustomPaginator(context).loadingWidgetMaker();
             case ConnectionState.done:
-              mediaList.addAll(snapshot.data.rows);
-              pageNumber++;
+              mediaList!.addAll(snapshot.data!.rows!);
+              pageNumber=pageNumber!+1;
               Future.microtask(() {
                 setState(() {});
               });
@@ -536,12 +563,12 @@ class _PostCardMedia extends State<PostCardMedia> {
   }
 
   Widget _buildCarouselItem(BuildContext context, int itemIndex, Media media) {
-    if (media.mediaType != null && media.mediaType.contains('image')) {
+    if (media.mediaType != null && media.mediaType!.contains('image')) {
       return Container(
-        child: isLocalFile != null && isLocalFile
-            ? new Image.file(new File(media.mediaUrl))
+        child: isLocalFile != null && isLocalFile!
+            ? new Image.file(new File(media.mediaUrl!))
             : TricycleImageView(
-          url:(widget.isFullImageUrl!=null && widget.isFullImageUrl)?media.mediaUrl:(onFullPage != null && onFullPage)
+          url:(widget.isFullImageUrl!=null && widget.isFullImageUrl!)?media.mediaUrl:(onFullPage != null && onFullPage!)
               ? Utility().getUrlForImage(
               media.mediaUrl, RESOLUTION_TYPE.R512, SERVICE_TYPE.POST)
               : Utility().getUrlForImage(media.mediaUrl,
@@ -558,7 +585,7 @@ class _PostCardMedia extends State<PostCardMedia> {
       //     fit: BoxFit.contain,
       //   ),
       // );
-    } else if (media.mediaType != null && media.mediaType.contains('video')) {
+    } else if (media.mediaType != null && media.mediaType!.contains('video')) {
       return Center(
           child: TricycleVideoView(
               isLocalFile: isLocalFile,
@@ -568,7 +595,7 @@ class _PostCardMedia extends State<PostCardMedia> {
       return Stack(
         children: [
           TricycleImageView(
-            url: (widget.isFullImageUrl!=null && widget.isFullImageUrl)?media.mediaUrl:(onFullPage != null && onFullPage)
+            url: (widget.isFullImageUrl!=null && widget.isFullImageUrl!)?media.mediaUrl:(onFullPage != null && onFullPage!)
                 ? Utility().getUrlForImage(
                 media.mediaUrl, RESOLUTION_TYPE.R512, SERVICE_TYPE.POST,
                 shouldprint: true)
@@ -594,8 +621,8 @@ class _PostCardMedia extends State<PostCardMedia> {
                         width: 16,
                       ),
                       Text(
-                        "${media.mediaType.toUpperCase()} " +
-                            AppLocalizations.of(context)
+                        "${media.mediaType!.toUpperCase()} " +
+                            AppLocalizations.of(context)!
                                 .translate('file_attached'),
                         style: styleElements
                             .captionThemeScalable(context)
@@ -611,7 +638,7 @@ class _PostCardMedia extends State<PostCardMedia> {
       return Container(
         child: Center(
             child: Text(
-              AppLocalizations.of(context).translate('no_media'),
+              AppLocalizations.of(context)!.translate('no_media'),
             )),
         decoration: BoxDecoration(
           color: HexColor(AppColors.appColorGrey500),
@@ -620,9 +647,9 @@ class _PostCardMedia extends State<PostCardMedia> {
     }
   }
 
-  int getItemCount() {
-    if (totalItems > mediaList.length) {
-      return mediaList.length + 1;
+  int? getItemCount() {
+    if (totalItems! > mediaList!.length) {
+      return mediaList!.length + 1;
     } else {
       return totalItems;
     }
@@ -630,8 +657,8 @@ class _PostCardMedia extends State<PostCardMedia> {
 }
 
 class TricycleImageView extends StatefulWidget {
-  final String url;
-  final String path;
+  final String? url;
+  final String? path;
 
   TricycleImageView({this.url, this.path});
 
@@ -647,13 +674,13 @@ class TricycleImageViewState extends State<TricycleImageView> {
     return Container(
       child: Stack(
         children: [
-          (onFullPage != null && onFullPage)
+          (onFullPage != null && onFullPage!)
               ? Container()
               : Container(
             decoration: BoxDecoration(
               image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: CachedNetworkImageProvider(widget.url)),
+                  image: CachedNetworkImageProvider(widget.url!)),
             ),
             child: BackdropFilter(
               filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
@@ -669,7 +696,7 @@ class TricycleImageViewState extends State<TricycleImageView> {
             resetDuration: Duration(milliseconds: 100),
             zoomEnabled: true,
             maxScale: 2,
-            image: new Image.file(File(widget.path)),
+            image: new Image.file(File(widget.path!)),
           )
               : PinchZoom(
             zoomedBackgroundColor:
@@ -678,7 +705,7 @@ class TricycleImageViewState extends State<TricycleImageView> {
             zoomEnabled: true,
             maxScale: 2,
             image: CachedNetworkImage(
-              imageUrl: widget.url,
+              imageUrl: widget.url!,
               fit: BoxFit.contain,
             ),
           ),
@@ -700,9 +727,9 @@ class TricycleImageViewState extends State<TricycleImageView> {
 
 // ignore: must_be_immutable
 class TricycleVideoView extends StatefulWidget {
-  String mediaUrl;
-  bool onFullPage;
-  bool isLocalFile;
+  String? mediaUrl;
+  bool? onFullPage;
+  bool? isLocalFile;
 
   TricycleVideoView({this.mediaUrl, this.onFullPage, this.isLocalFile});
 
@@ -711,13 +738,13 @@ class TricycleVideoView extends StatefulWidget {
 }
 
 class _TricycleVideoView extends State<TricycleVideoView> {
-  String mediaUrl;
-  bool onFullPage;
-  bool isLocalFile;
+  String? mediaUrl;
+  bool? onFullPage;
+  bool? isLocalFile;
 
   _TricycleVideoView({this.mediaUrl, this.onFullPage, this.isLocalFile});
 
-  VideoPlayerController _controller;
+  VideoPlayerController? _controller;
 
   // BetterPlayerController _betterPlayerController;
 
@@ -730,26 +757,26 @@ class _TricycleVideoView extends State<TricycleVideoView> {
     //     BetterPlayerConfiguration(),
     //     betterPlayerDataSource: betterPlayerDataSource);
 
-    _controller = isLocalFile != null && isLocalFile
-        ? VideoPlayerController.file(File(mediaUrl))
-        : VideoPlayerController.network(Config.BASE_URL + mediaUrl);
+    _controller = isLocalFile != null && isLocalFile!
+        ? VideoPlayerController.file(File(mediaUrl!))
+        : VideoPlayerController.network(Config.BASE_URL + mediaUrl!);
 
     // _controller = VideoPlayerController.network(
     //     Config.BASE_URL + mediaUrl);
-    _controller.addListener(() {
+    _controller!.addListener(() {
       setState(() {});
     });
 
-    _controller.setLooping(false);
-    _controller.initialize().then((_) => setState(() {}));
-    if (onFullPage != null && onFullPage) {
-      _controller.play();
+    _controller!.setLooping(false);
+    _controller!.initialize().then((_) => setState(() {}));
+    if (onFullPage != null && onFullPage!) {
+      _controller!.play();
     }
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller!.dispose();
     super.dispose();
   }
 
@@ -778,8 +805,8 @@ class _TricycleVideoView extends State<TricycleVideoView> {
           ),
           Center(
             child: AspectRatio(
-                aspectRatio: _controller.value.aspectRatio,
-                child: VideoPlayer(_controller)
+                aspectRatio: _controller!.value.aspectRatio,
+                child: VideoPlayer(_controller!)
               // :
               //             BetterPlayerListVideoPlayer(BetterPlayerDataSource(
               //               BetterPlayerDataSourceType.NETWORK,Config.BASE_URL+mediaUrl
@@ -790,7 +817,7 @@ class _TricycleVideoView extends State<TricycleVideoView> {
             ),
           ),
           Visibility(
-            visible: (onFullPage == null || !onFullPage),
+            visible: (onFullPage == null || !onFullPage!),
             child: Container(
               color: HexColor(AppColors.primaryTextColor10),
               child: Center(
@@ -803,13 +830,13 @@ class _TricycleVideoView extends State<TricycleVideoView> {
             ),
           ),
           Visibility(
-            visible: (onFullPage != null && onFullPage),
+            visible: (onFullPage != null && onFullPage!),
             child: _ControlsOverlay(controller: _controller),
           ),
           Visibility(
-              visible: (onFullPage != null && onFullPage),
+              visible: (onFullPage != null && onFullPage!),
               child: VideoProgressIndicator(
-                _controller,
+                _controller!,
                 colors: VideoProgressColors(
                     bufferedColor: HexColor(AppColors.appColorWhite),
                     playedColor: HexColor(AppColors.appMainColor),
@@ -823,9 +850,9 @@ class _TricycleVideoView extends State<TricycleVideoView> {
 }
 
 class _ControlsOverlay extends StatelessWidget {
-  const _ControlsOverlay({Key key, this.controller}) : super(key: key);
+  const _ControlsOverlay({Key? key, this.controller}) : super(key: key);
 
-  final VideoPlayerController controller;
+  final VideoPlayerController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -834,7 +861,7 @@ class _ControlsOverlay extends StatelessWidget {
         AnimatedSwitcher(
           duration: Duration(milliseconds: 50),
           reverseDuration: Duration(milliseconds: 200),
-          child: controller.value.isPlaying
+          child: controller!.value.isPlaying
               ? SizedBox.shrink()
               : Container(
             color: HexColor(AppColors.appColorBlack35),
@@ -849,7 +876,7 @@ class _ControlsOverlay extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            controller.value.isPlaying ? controller.pause() : controller.play();
+            controller!.value.isPlaying ? controller!.pause() : controller!.play();
           },
         ),
         // Align(

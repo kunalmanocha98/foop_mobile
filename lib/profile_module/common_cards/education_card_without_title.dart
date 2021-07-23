@@ -13,11 +13,11 @@ import 'package:intl/intl.dart';
 // ignore: must_be_immutable
 class EducationCardWithOutTitle extends StatelessWidget {
   final CommonCardData data;
-  BuildContext context;
-  Null Function() callbackPicker;
-  String personType;
-  int id;
-  String CardType;
+  BuildContext? context;
+  Null Function()? callbackPicker;
+  String? personType;
+  int? id;
+  String? CardType;
 
   Size displaySize(BuildContext context) {
     debugPrint('Size = ' + MediaQuery.of(context).size.toString());
@@ -34,11 +34,11 @@ class EducationCardWithOutTitle extends StatelessWidget {
     return displaySize(context).width;
   }
 
-  TextStyleElements styleElements;
+  TextStyleElements? styleElements;
 
   EducationCardWithOutTitle(
-      {Key key,
-      @required this.data,
+      {Key? key,
+      required this.data,
       this.styleElements,
       this.callbackPicker,
       this.personType,
@@ -72,7 +72,7 @@ class EducationCardWithOutTitle extends StatelessWidget {
                                 left: 8.h, right: 8.h, top: 8.0.h),
                             child: Text(
                               data.textOne ??= "",
-                              style: styleElements
+                              style: styleElements!
                                   .subtitle1ThemeScalable(context)
                                   .copyWith(fontWeight: FontWeight.w600),
                               overflow: TextOverflow.ellipsis,
@@ -89,17 +89,17 @@ class EducationCardWithOutTitle extends StatelessWidget {
                           child: Text(
                             (data.textFive != null && data.textFive != "None"
                                     ? DateFormat('MM/yyyy')
-                                        .format(DateTime.parse(data.textFive))
+                                        .format(DateTime.parse(data.textFive!))
                                     : "  --") +
                                 (data.textSix != null && data.textSix != "None"
                                     ? " to " +
                                         DateFormat('MM/yyyy').format(
-                                            DateTime.parse(data.textSix))
-                                    : data.isCurrent
+                                            DateTime.parse(data.textSix!))
+                                    : data.isCurrent!
                                         ? " to till now"
                                         : ""),
                             style:
-                                styleElements.subtitle2ThemeScalable(context),
+                                styleElements!.subtitle2ThemeScalable(context),
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.left,
                           ),
@@ -112,7 +112,7 @@ class EducationCardWithOutTitle extends StatelessWidget {
                               left: 8.h, right: 8.h, top: 8.0.h),
                           child: Text(
                             data.textThree ??= "",
-                            style: styleElements
+                            style: styleElements!
                                 .subtitle1ThemeScalable(context)
                                 .copyWith(
                                     fontWeight: FontWeight.w600,
@@ -139,7 +139,7 @@ class EducationCardWithOutTitle extends StatelessWidget {
                                     EditEducation(data, false, false, null)));
 
                         if (result != null && result['result'] == "success") {
-                          callbackPicker();
+                          callbackPicker!();
                         }
                       } else {
                         var result = await Navigator.push(
@@ -149,7 +149,7 @@ class EducationCardWithOutTitle extends StatelessWidget {
                                     EditEducation(data, true, false, null)));
 
                         if (result != null && result['result'] == "success") {
-                          callbackPicker();
+                          callbackPicker!();
                         }
                       }
                     },
@@ -172,7 +172,7 @@ class EducationCardWithOutTitle extends StatelessWidget {
             data.textFour != null && data.textFour != "None"
                 ? data.textFour ??= ""
                 : "",
-            style: styleElements.subtitle2ThemeScalable(context),
+            style: styleElements!.subtitle2ThemeScalable(context),
             overflow: TextOverflow.ellipsis,
             maxLines: 3,
             textAlign: TextAlign.left,
@@ -200,8 +200,8 @@ class EducationCardWithOutTitle extends StatelessWidget {
                   visible: data.isShowMore ??= false,
                   child: Align(
                     alignment: Alignment.bottomRight,
-                    child: Text(AppLocalizations.of(context).translate('see_more'),
-                      style: styleElements.subtitle2ThemeScalable(context),
+                    child: Text(AppLocalizations.of(context)!.translate('see_more'),
+                      style: styleElements!.subtitle2ThemeScalable(context),
                       textAlign: TextAlign.center,
                     ),
                   ),

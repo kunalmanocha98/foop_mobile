@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class LiteratureAndCompositions extends StatelessWidget {
   final CommonCardData data;
-  TextStyleElements styleElements;
+  TextStyleElements? styleElements;
   Size displaySize(BuildContext context) {
     debugPrint('Size = ' + MediaQuery.of(context).size.toString());
     return MediaQuery.of(context).size;
@@ -28,7 +28,7 @@ class LiteratureAndCompositions extends StatelessWidget {
     return displaySize(context).width;
   }
 
-  LiteratureAndCompositions({Key key, @required this.data,this.styleElements}) : super(key: key);
+  LiteratureAndCompositions({Key? key, required this.data,this.styleElements}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -45,8 +45,8 @@ class LiteratureAndCompositions extends StatelessWidget {
                   child: Container(
                     padding: const EdgeInsets.only(left: 16, right: 16,top:12,bottom:12),
                     child: Text(
-                      data.title ?? "" ?? "",
-                      style: styleElements.headline5ThemeScalable(context),
+                      data.title ?? "",
+                      style: styleElements!.headline5ThemeScalable(context),
                       textAlign: TextAlign.left,
                     ),
                   )),
@@ -101,7 +101,7 @@ class LiteratureAndCompositions extends StatelessWidget {
                                       left: 8.0, right: 8.0, top: 4.0),
                                   child: Text(
                                     data.textOne ??= "",
-                                    style:styleElements.headline5ThemeScalable(context),
+                                    style:styleElements!.headline5ThemeScalable(context),
                                     textAlign: TextAlign.left,
                                   ),
                                 ),
@@ -113,7 +113,7 @@ class LiteratureAndCompositions extends StatelessWidget {
                                       left: 8.0, right: 8.0, top: 8.0),
                                   child: Text(
                                     data.textTwo ??= "",
-                                    style: styleElements.subtitle1ThemeScalable(context),
+                                    style: styleElements!.subtitle1ThemeScalable(context),
                                     textAlign: TextAlign.left,
                                   ),
                                 ),
@@ -129,7 +129,7 @@ class LiteratureAndCompositions extends StatelessWidget {
                                   child: Text(
                                     data.textThree ??= "",
                                     maxLines: 5,
-                                    style: styleElements.subtitle1ThemeScalable(context),
+                                    style: styleElements!.subtitle1ThemeScalable(context),
                                     textAlign: TextAlign.left,
                                   ),
                                 ),
@@ -172,7 +172,7 @@ class LiteratureAndCompositions extends StatelessWidget {
                                       left: 8.0, right: 8.0, top: 4.0),
                                   child: Text(
                                     data.textFour ??= "",
-                                    style: styleElements.headline5ThemeScalable(context),
+                                    style: styleElements!.headline5ThemeScalable(context),
                                     textAlign: TextAlign.left,
                                   ),
                                 ),
@@ -184,7 +184,7 @@ class LiteratureAndCompositions extends StatelessWidget {
                                       left: 8.0, right: 8.0, top: 8.0),
                                   child: Text(
                                     data.textFive ??= "",
-                                    style:styleElements.headline6ThemeScalable(context),
+                                    style:styleElements!.headline6ThemeScalable(context),
                                     textAlign: TextAlign.left,
                                   ),
                                 ),
@@ -200,7 +200,7 @@ class LiteratureAndCompositions extends StatelessWidget {
                                   child: Text(
                                     data.textSix ??= "",
                                     maxLines: 5,
-                                    style:styleElements.subtitle1ThemeScalable(context),
+                                    style:styleElements!.subtitle1ThemeScalable(context),
                                     textAlign: TextAlign.left,
                                   ),
                                 ),
@@ -224,8 +224,8 @@ class LiteratureAndCompositions extends StatelessWidget {
               child: Align
                 (
                 alignment:  Alignment.bottomRight,
-                child: Text(AppLocalizations.of(context).translate('see_more'),
-                  style: styleElements.subtitle2ThemeScalable(context),
+                child: Text(AppLocalizations.of(context)!.translate('see_more'),
+                  style: styleElements!.subtitle2ThemeScalable(context),
                   textAlign: TextAlign.center,
                 ),
               ),

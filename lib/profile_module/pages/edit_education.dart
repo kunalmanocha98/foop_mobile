@@ -33,13 +33,13 @@ import 'edit_language-page.dart';
 
 // ignore: must_be_immutable
 class EditEducation extends StatefulWidget {
-  final CommonCardData commonCardData;
+  final CommonCardData? commonCardData;
   bool isEducation;
   bool fromBasicProfileFLow;
 
   _EditEducation createState() => _EditEducation(
       commonCardData, isEducation, fromBasicProfileFLow, call);
- final Null Function() call;
+ final Null Function()? call;
 
   EditEducation(this.commonCardData, this.isEducation,
       this.fromBasicProfileFLow, this.call, );
@@ -51,17 +51,17 @@ class _EditEducation extends State<EditEducation>
   GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
   GlobalKey<TricycleProgressButtonState> progressButtonKeyNext = GlobalKey();
   List names =  [];
-  String selectedEmpType;
-  String selectedIndType;
+  String? selectedEmpType;
+  String? selectedIndType;
   List filteredNames =  [];
-  var items = <String>[];
-  var itemsIndustry = <String>[];
+  var items = <String?>[];
+  var itemsIndustry = <String?>[];
 
-  CommonCardData commonCardData;
-  SharedPreferences prefs;
+ late CommonCardData? commonCardData;
+  late SharedPreferences prefs;
   String classId = "";
-  BuildContext ctx;
-  int institutionId;
+  late BuildContext ctx;
+  int? institutionId;
   final classesCon = TextEditingController();
 
   final cgpaCon = TextEditingController();
@@ -76,11 +76,11 @@ class _EditEducation extends State<EditEducation>
   final firstNameController = TextEditingController();
   final schoolController = TextEditingController();
   final genderController = TextEditingController();
-  bool checkedValue = false;
-  TextStyleElements styleElements;
+  bool? checkedValue = false;
+  late TextStyleElements styleElements;
 
   // bool _isChecked = false;
-  BuildContext context;
+ late BuildContext context;
   final _debouncer = Debouncer(500);
   String startDate = 'Start Date';
   String endDate = 'End Date';
@@ -88,22 +88,28 @@ class _EditEducation extends State<EditEducation>
   String endDateBackEnd = 'End Date';
   String industry = "Industry";
   String hint = "University/School/Institution*";
-  int selectedEpoch, selectedEpoch2;
+  int? selectedEpoch, selectedEpoch2;
 
-  List<InstituteItem> rows = [];
-  List<InstituteClass> classesList = [];
+  List<InstituteItem>? rows = [];
+  List<InstituteClass>? classesList = [];
 
   @override
   void initState() {
     super.initState();
-    setSharedPreferences();
-    getEmpType();
-    getIndustryType();
-    if (commonCardData != null) setOldData(commonCardData);
+
+
+    WidgetsBinding.instance!.addPostFrameCallback((_) =>    setSharedPreferences());
+
+
+
   }
 
   void setSharedPreferences() async {
     prefs = await SharedPreferences.getInstance();
+
+    getEmpType();
+    getIndustryType();
+    if (commonCardData != null) setOldData(commonCardData!);
   }
 
   final body = jsonEncode({
@@ -125,7 +131,7 @@ class _EditEducation extends State<EditEducation>
       for (int i = 0; i < items.length; i++) {
         _genderValues.add(DropdownMenuItem(
           child: Text(
-            items[i],
+            items[i]!,
             style: styleElements.bodyText2ThemeScalable(context),
           ),
           value: items[i],
@@ -140,7 +146,7 @@ class _EditEducation extends State<EditEducation>
       for (int i = 0; i < itemsIndustry.length; i++) {
         _genderValuesIndus.add(DropdownMenuItem(
           child: Text(
-            itemsIndustry[i],
+            itemsIndustry[i]!,
             style: styleElements.bodyText2ThemeScalable(context),
           ),
           value: itemsIndustry[i],
@@ -171,7 +177,7 @@ class _EditEducation extends State<EditEducation>
       scrollPadding: const EdgeInsets.all(20.0),
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(8.0, 15.0, 20.0, 8.0),
-          hintText: AppLocalizations.of(context).translate("location"),
+          hintText: AppLocalizations.of(context)!.translate("location"),
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
           border: UnderlineInputBorder(
             borderSide: BorderSide(
@@ -180,7 +186,7 @@ class _EditEducation extends State<EditEducation>
           )),
     );
 
-    final empType = DropdownButtonFormField(
+    final empType = DropdownButtonFormField<dynamic>(
       value: null,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h)),
@@ -188,36 +194,38 @@ class _EditEducation extends State<EditEducation>
         padding: const EdgeInsets.only(left: 0),
         child: Text(
           selectedEmpType ??
-              AppLocalizations.of(context).translate("employment_type"),
+              AppLocalizations.of(context)!.translate("employment_type"),
           style: styleElements.bodyText2ThemeScalable(context),
         ),
       ),
       items: _getGenderValues(),
       onChanged: (value) {
+        value as DropdownMenuItem;
         if (this.mounted)
        {
          setState(() {
-           selectedEmpType = value ?? selectedEmpType;
+           selectedEmpType = (value) as String?;
          });
        }
       },
     );
-    final indType = DropdownButtonFormField(
+    final indType = DropdownButtonFormField<dynamic>(
       value: null,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h)),
       hint: Padding(
         padding: const EdgeInsets.only(left: 0),
         child: Text(
-          selectedIndType ?? AppLocalizations.of(context).translate("industry"),
+          selectedIndType ?? AppLocalizations.of(context)!.translate("industry"),
           style: styleElements.bodyText2ThemeScalable(context),
         ),
       ),
       items: _getGenderValuesIndus(),
       onChanged: (value) {
+        value as DropdownMenuItem;
         if (this.mounted){
         setState(() {
-          selectedIndType = value ?? selectedIndType;
+          selectedIndType = (value) as String?;
         });}
       },
     );
@@ -244,8 +252,8 @@ class _EditEducation extends State<EditEducation>
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(8.0, 15.0, 20.0, 8.0),
           hintText: isEducation
-              ? AppLocalizations.of(context).translate("cgpa")
-              : AppLocalizations.of(context).translate("industry"),
+              ? AppLocalizations.of(context)!.translate("cgpa")
+              : AppLocalizations.of(context)!.translate("industry"),
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
           border: UnderlineInputBorder(
             borderSide: BorderSide(
@@ -272,8 +280,8 @@ class _EditEducation extends State<EditEducation>
         decoration: InputDecoration(
             contentPadding: EdgeInsets.fromLTRB(8.0, 15.0, 20.0, 8.0),
             hintText: isEducation
-                ? AppLocalizations.of(context).translate("Class_Degree")
-                : AppLocalizations.of(context).translate("degignation"),
+                ? AppLocalizations.of(context)!.translate("Class_Degree")
+                : AppLocalizations.of(context)!.translate("degignation"),
             hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
             border: UnderlineInputBorder(
               borderSide: BorderSide(
@@ -281,23 +289,23 @@ class _EditEducation extends State<EditEducation>
               ),
             )),
       ),
-      suggestionsCallback: (pattern) async {
-        if (pattern != "" && pattern != null) {
+      suggestionsCallback: (pattern)  {
+        if (pattern != "") {
           _debouncer.run(() {
             if (institutionId != null && isEducation) getClasses(pattern);
           });
-          if (classesList.length > 0) return classesList;
+          if (classesList!.length > 0) return classesList!;
         }
 
-        return null;
+return [];
       },
-      itemBuilder: (context, suggestion) {
+      itemBuilder: (context, dynamic suggestion) {
         return ListTile(
 
           title: Text(suggestion.className),
         );
       },
-      onSuggestionSelected: (suggestion) {
+      onSuggestionSelected: (dynamic suggestion) {
         if (this.mounted){
         setState(() {
           classesList = [];
@@ -368,21 +376,21 @@ class _EditEducation extends State<EditEducation>
     final dateEnd = GestureDetector(
       onTap: () {
         if (startDate != "Start Date") {
-          if (!checkedValue)
+          if (!checkedValue!)
             _selectDate(context, endDate);
           else {
             if (isEducation)
               ToastBuilder().showToast(
-                  AppLocalizations.of(context).translate("un_select_e"),
+                  AppLocalizations.of(context)!.translate("un_select_e"),
                   context,HexColor(AppColors.information));
             else
               ToastBuilder().showToast(
-                  AppLocalizations.of(context).translate("un_select_"),
+                  AppLocalizations.of(context)!.translate("un_select_"),
                   context,HexColor(AppColors.information));
           }
         } else {
           ToastBuilder().showToast(
-              AppLocalizations.of(context).translate("select_start_date"),
+              AppLocalizations.of(context)!.translate("select_start_date"),
               context,HexColor(AppColors.information));
         }
       },
@@ -428,7 +436,7 @@ class _EditEducation extends State<EditEducation>
             contentPadding: EdgeInsets.fromLTRB(8.0, 15.0, 20.0, 8.0),
             hintText: isEducation
                 ? hint
-                : AppLocalizations.of(context)
+                : AppLocalizations.of(context)!
                     .translate("work_company_name_hint"),
             hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
             border: UnderlineInputBorder(
@@ -445,12 +453,11 @@ class _EditEducation extends State<EditEducation>
               getListOfInstitutes(pattern);
             });}
           });
-          if (rows.length > 0) return rows;
+          if (rows!.length > 0) return rows!;
         }
-
-        return null;
+return rows!;
       },
-      itemBuilder: (context, suggestion) {
+      itemBuilder: (context, dynamic suggestion) {
         return ListTile(
           leading: SizedBox(
             width: 28,
@@ -464,7 +471,7 @@ class _EditEducation extends State<EditEducation>
           title: Text(suggestion.name),
         );
       },
-      onSuggestionSelected: (suggestion) {
+      onSuggestionSelected: (dynamic suggestion) {
     if (this.mounted){  setState(() {
           rows = [];
           institutionId = suggestion.id;
@@ -477,7 +484,8 @@ class _EditEducation extends State<EditEducation>
         // ignore: missing_return
         onWillPop: () {
           backPressed();
-        },
+          return new Future(() => false);
+        } ,
         child: SafeArea(
           child: Scaffold(
             resizeToAvoidBottomInset: true,
@@ -512,10 +520,10 @@ class _EditEducation extends State<EditEducation>
                                               left: 20, top: 20),
                                           child: Text(
                                             isEducation
-                                                ? AppLocalizations.of(context)
+                                                ? AppLocalizations.of(context)!
                                                     .translate(
                                                         "add_edit_education")
-                                                : AppLocalizations.of(context)
+                                                : AppLocalizations.of(context)!
                                                     .translate("add_edit_work"),
                                             style: styleElements
                                                 .subtitle1ThemeScalable(context)
@@ -536,9 +544,9 @@ class _EditEducation extends State<EditEducation>
                                         const EdgeInsets.only(left: 20, top: 4),
                                     child: Text(
                                       isEducation
-                                          ? AppLocalizations.of(context)
+                                          ? AppLocalizations.of(context)!
                                               .translate("add_education_backg")
-                                          : AppLocalizations.of(context)
+                                          : AppLocalizations.of(context)!
                                               .translate("add_work_backg"),
                                       style: styleElements
                                           .bodyText2ThemeScalable(context),
@@ -581,11 +589,11 @@ class _EditEducation extends State<EditEducation>
                                                 activeColor: HexColor(AppColors.appMainColor),
                                                 checkColor: HexColor(AppColors.appColorWhite65),
                                                 value: checkedValue,
-                                                onChanged: (bool value) {
+                                                onChanged: (bool? value) {
                                                   if (this.mounted){
                                                   setState(() {
                                                     checkedValue = value;
-                                                    if (value)
+                                                    if (value!)
                                                       endDate = "End Date";
                                                   });}
                                                 },
@@ -594,11 +602,11 @@ class _EditEducation extends State<EditEducation>
                                                 child: new Text(
                                                   isEducation
                                                       ? AppLocalizations.of(
-                                                              context)
+                                                              context)!
                                                           .translate(
                                                               "still_studying")
                                                       : AppLocalizations.of(
-                                                              context)
+                                                              context)!
                                                           .translate(
                                                               "still_working"),
                                                   maxLines: 2,
@@ -707,7 +715,7 @@ class _EditEducation extends State<EditEducation>
                                       } },
                                     color: HexColor(AppColors.appColorWhite),
                                     child: Text(
-                                      AppLocalizations.of(context)
+                                      AppLocalizations.of(context)!
                                           .translate('save_exit')
                                           .toUpperCase(),
                                       style: styleElements
@@ -752,14 +760,14 @@ class _EditEducation extends State<EditEducation>
                                         }
                                         else
                                         {
-                                          callbackPicker();
+                                          callbackPicker!();
                                           Navigator.of(ctx).pop({'result': "success"});
                                         }
 
                                       }},
                                     color: HexColor(AppColors.appColorWhite),
                                     child: Text(
-                                      AppLocalizations.of(context)
+                                      AppLocalizations.of(context)!
                                           .translate('next')
                                           .toUpperCase(),
                                       style: styleElements
@@ -820,14 +828,14 @@ class _EditEducation extends State<EditEducation>
                                           _editEducation("save");
                                       } else {
                                         ToastBuilder().showToast(
-                                            AppLocalizations.of(context)
+                                            AppLocalizations.of(context)!
                                                 .translate(
                                                 'work_company_name_mandatory'),
                                             context,HexColor(AppColors.information));
                                       } },
                                     color: HexColor(AppColors.appColorWhite),
                                     child: Text(
-                                      AppLocalizations.of(context)
+                                      AppLocalizations.of(context)!
                                           .translate('next')
                                           .toUpperCase(),
                                       style: styleElements
@@ -853,18 +861,18 @@ class _EditEducation extends State<EditEducation>
 
   setOldData(CommonCardData data) {
     endDate = data.textSix != null && data.textSix != "None"
-        ? DateFormat('MM-yyyy').format(DateTime.parse(data.textSix))
+        ? DateFormat('MM-yyyy').format(DateTime.parse(data.textSix!))
         : "End Date";
     endDateBackEnd = data.textSix != null && data.textSix != "None"
-        ? DateFormat('yyyy-MM-dd').format(DateTime.parse(data.textSix))
+        ? DateFormat('yyyy-MM-dd').format(DateTime.parse(data.textSix!))
         : "End Date";
     if (data.textFive != null && data.textFive != "None") {
       startDate = data.textFive != null && data.textFive != "None"
-          ? DateFormat('MM-yyyy').format(DateTime.parse(data.textFive))
+          ? DateFormat('MM-yyyy').format(DateTime.parse(data.textFive!))
           : "Start Date";
-      selectedEpoch = DateTime.parse(data.textFive).millisecondsSinceEpoch;
+      selectedEpoch = DateTime.parse(data.textFive!).millisecondsSinceEpoch;
       startDateBackEnd = data.textFive != null && data.textFive != "None"
-          ? DateFormat('yyyy-MM-dd').format(DateTime.parse(data.textFive))
+          ? DateFormat('yyyy-MM-dd').format(DateTime.parse(data.textFive!))
           : "Start Date";
     }
 
@@ -887,12 +895,12 @@ class _EditEducation extends State<EditEducation>
 
   Future<void> _selectDate(BuildContext context, String dateType) async {
     var newDate;
-    var selectedDate;
+    late var selectedDate;
 
     newDate = new DateTime.now();
     if (selectedEpoch != null)
-      selectedDate = new DateTime.fromMillisecondsSinceEpoch(selectedEpoch);
-    final DateTime picked = await showDatePicker(
+      selectedDate = new DateTime.fromMillisecondsSinceEpoch(selectedEpoch!);
+    final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: newDate,
         initialDatePickerMode: DatePickerMode.year,
@@ -936,7 +944,7 @@ class _EditEducation extends State<EditEducation>
 
     payload.startDate = startDate != "Start Date" ? startDateBackEnd : null;
     payload.endDate = endDate != "End Date" ? endDateBackEnd : null;
-    payload.id = int.parse(commonCardData.id);
+    payload.id = int.parse(commonCardData!.id!);
     payload.institutionName = schoolController.text;
     payload.description = descriptionController.text;
     payload.personId = prefs.getInt("userId").toString();
@@ -960,39 +968,39 @@ class _EditEducation extends State<EditEducation>
     var data = jsonEncode(payload);
     print(data.toString());
     if(!fromBasicProfileFLow)
-      progressButtonKeyBasic.currentState.show();
+      progressButtonKeyBasic.currentState!.show();
    else if(action=="save")
-      progressButtonKey.currentState.show();
+      progressButtonKey.currentState!.show();
     else
-      progressButtonKeyNext.currentState.show();
+      progressButtonKeyNext.currentState!.show();
     Calls().call(data, context, Config.ADD_EDIT_EDUCATION_WORK).then((value) async {
       DynamicResponse resposne = DynamicResponse.fromJson(value);
       if (resposne.statusCode == Strings.success_code) {
         //callback();
         if(!fromBasicProfileFLow)
-          progressButtonKeyBasic.currentState.hide();
+          progressButtonKeyBasic.currentState!.hide();
         else if(action=="save")
-          progressButtonKey.currentState.hide();
+          progressButtonKey.currentState!.hide();
         else
-          progressButtonKeyNext.currentState.hide();
+          progressButtonKeyNext.currentState!.hide();
 
         Navigator.of(ctx).pop({'result': "success"});
       } else {
         if(!fromBasicProfileFLow)
-          progressButtonKeyBasic.currentState.hide();
+          progressButtonKeyBasic.currentState!.hide();
         else if(action=="save")
-          progressButtonKey.currentState.hide();
+          progressButtonKey.currentState!.hide();
         else
-          progressButtonKeyNext.currentState.hide();
-        ToastBuilder().showToast(resposne.message, context,HexColor(AppColors.information));
+          progressButtonKeyNext.currentState!.hide();
+        ToastBuilder().showToast(resposne.message!, context,HexColor(AppColors.information));
       }
     }).catchError((onError) async {
       if(!fromBasicProfileFLow)
-        progressButtonKeyBasic.currentState.hide();
+        progressButtonKeyBasic.currentState!.hide();
       else if(action=="save")
-        progressButtonKey.currentState.hide();
+        progressButtonKey.currentState!.hide();
       else
-        progressButtonKeyNext.currentState.hide();
+        progressButtonKeyNext.currentState!.hide();
       ToastBuilder().showToast(onError.toString(), context,HexColor(AppColors.information));
     });
   }
@@ -1001,10 +1009,10 @@ class _EditEducation extends State<EditEducation>
     EditEducationWork payload = EditEducationWork();
     payload.startDate = startDate != "Start Date"
         ? startDateBackEnd
-        : commonCardData != null ? commonCardData.textFive ?? "" : "";
+        : commonCardData != null ? commonCardData!.textFive ?? "" : "";
     payload.endDate = endDate != "End Date"
         ? endDateBackEnd
-        : commonCardData != null ? commonCardData.textSix ?? "" : "";
+        : commonCardData != null ? commonCardData!.textSix ?? "" : "";
     payload.institutionName = schoolController.text;
     payload.description = descriptionController.text;
     payload.personId = prefs.getInt("userId").toString();
@@ -1029,21 +1037,21 @@ class _EditEducation extends State<EditEducation>
     var data = jsonEncode(payload);
     print(data.toString());
     if(!fromBasicProfileFLow)
-      progressButtonKeyBasic.currentState.show();
+      progressButtonKeyBasic.currentState!.show();
     else if(action=="save")
-      progressButtonKey.currentState.show();
+      progressButtonKey.currentState!.show();
     else
-      progressButtonKeyNext.currentState.show();
+      progressButtonKeyNext.currentState!.show();
     Calls().call(data, context, Config.ADD_WORK_EDUCATION).then((value) async {
       DynamicResponse resposne = DynamicResponse.fromJson(value);
       if (resposne.statusCode == Strings.success_code) {
         schoolController.clear();
         if(!fromBasicProfileFLow)
-          progressButtonKeyBasic.currentState.hide();
+          progressButtonKeyBasic.currentState!.hide();
         else if(action=="save")
-          progressButtonKey.currentState.hide();
+          progressButtonKey.currentState!.hide();
         else
-          progressButtonKeyNext.currentState.hide();
+          progressButtonKeyNext.currentState!.hide();
 
         if (action == "save" && fromBasicProfileFLow)
          {
@@ -1062,33 +1070,33 @@ class _EditEducation extends State<EditEducation>
               if(result!=null && result['result']=="success")
               {
                 if(callbackPicker!=null)
-                callbackPicker();
+                callbackPicker!();
                 Navigator.pop(context);
               }
             }
           else
             {
               if(callbackPicker!=null)
-              callbackPicker();
+              callbackPicker!();
               Navigator.of(ctx).pop({'result': "success"});}
 
         }
       } else {
         if(!fromBasicProfileFLow)
-          progressButtonKeyBasic.currentState.hide();
+          progressButtonKeyBasic.currentState!.hide();
         else if(action=="save")
-          progressButtonKey.currentState.hide();
+          progressButtonKey.currentState!.hide();
         else
-          progressButtonKeyNext.currentState.hide();
-        ToastBuilder().showToast(resposne.message, context,HexColor(AppColors.information));
+          progressButtonKeyNext.currentState!.hide();
+        ToastBuilder().showToast(resposne.message!, context,HexColor(AppColors.information));
       }
     }).catchError((onError) async {
       if(!fromBasicProfileFLow)
-        progressButtonKeyBasic.currentState.hide();
+        progressButtonKeyBasic.currentState!.hide();
       else if(action=="save")
-        progressButtonKey.currentState.hide();
+        progressButtonKey.currentState!.hide();
       else
-        progressButtonKeyNext.currentState.hide();
+        progressButtonKeyNext.currentState!.hide();
       ToastBuilder().showToast(onError.toString(), context,HexColor(AppColors.information));
     });
   }
@@ -1140,7 +1148,7 @@ class _EditEducation extends State<EditEducation>
         var data = DropDownCommon.fromJson(value);
 if(data!=null&& data.statusCode==Strings.success_code)
   {
-    for (var item in data.rows) {
+    for (var item in data.rows!) {
       items.add(item.description);
     }
     if (this.mounted){
@@ -1167,7 +1175,7 @@ if(data!=null&& data.statusCode==Strings.success_code)
       if (value != null) {
         var data = DropDownCommon.fromJson(value);
         if(data!=null&& data.statusCode==Strings.success_code){
-        for (var item in data.rows) {
+        for (var item in data.rows!) {
           itemsIndustry.add(item.description);
         }
         if (this.mounted){
@@ -1183,7 +1191,7 @@ if(data!=null&& data.statusCode==Strings.success_code)
 
   bool isEducation;
   bool fromBasicProfileFLow;
-  Null Function() callbackPicker;
+  Null Function()? callbackPicker;
 
   _EditEducation(this.commonCardData, this.isEducation,
       this.fromBasicProfileFLow, this.callbackPicker);

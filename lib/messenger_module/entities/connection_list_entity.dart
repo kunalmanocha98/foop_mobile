@@ -1,10 +1,10 @@
 class ConnectionListEntity {
-  String connectionOwnerId;
-  String connectionOwnerType;
-  String searchValue;
-  String connectionCategory;
-  int pageNumber;
-  int pageSize;
+  String? connectionOwnerId;
+  String? connectionOwnerType;
+  String? searchValue;
+  String? connectionCategory;
+  int? pageNumber;
+  int? pageSize;
 
   ConnectionListEntity(
       {this.connectionOwnerId,

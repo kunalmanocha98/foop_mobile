@@ -1,7 +1,7 @@
 class GetUnreadCount {
-  String conversationOwnerId;
-  String conversationOwnerType;
-  String conversationId;
+  String? conversationOwnerId;
+  String? conversationOwnerType;
+  String? conversationId;
   GetUnreadCount({this.conversationOwnerId, this.conversationOwnerType});
 
   GetUnreadCount.fromJson(Map<String, dynamic> json) {

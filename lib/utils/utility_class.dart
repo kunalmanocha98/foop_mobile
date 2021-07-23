@@ -18,9 +18,9 @@ import 'package:intl/intl.dart';
 import 'package:path/path.dart' as p;
 
 class Utility {
-  Future<void> getFormattedDate(
+  Future<String> getFormattedDate(
       BuildContext context, DateTime date, String localeType) async {
-    await initializeDateFormatting(localeType, null);
+    await initializeDateFormatting(localeType, "");
     var formatter = DateFormat.yMMMd(localeType);
     print(formatter.locale);
     return formatter.format(date);
@@ -94,8 +94,8 @@ class Utility {
     return true;
   }
 
-  String getUrlForImage(String url, RESOLUTION_TYPE resolution,SERVICE_TYPE service_type, {bool shouldprint =false} ){
-    String imageName;
+  String getUrlForImage(String? url, RESOLUTION_TYPE? resolution,SERVICE_TYPE? service_type, {bool shouldprint =false} ){
+    String? imageName;
     if(url!=null) {
       var s = url.split('/');
       imageName = s[s.length - 1];
@@ -110,7 +110,7 @@ class Utility {
   String matchLinkRegex(String text){
      var regex = new RegExp(r"((https?:www\.)|(https?:\/\/)|(www\.))?[\w\-?=%.][-a-zA-Z0-9@:%.\+~#=]{1,256}\.[a-zA-Z0-9]{1,6}(\/[-a-zA-Z0-9()@:%\+.~#?&\/=]*)?");
      if(regex.hasMatch(text)) {
-       var matchRegex = regex.firstMatch(text);
+       var matchRegex = regex.firstMatch(text)!;
        return text.substring(matchRegex.start, matchRegex.end);
      }else{
        return "";
@@ -128,7 +128,7 @@ class Utility {
     }));
   }
 
-  bool checkFileMimeType(String mimeType){
+  bool checkFileMimeType(String? mimeType){
     return (mimeType == 'pdf'
         ||mimeType == 'ppt'
         ||mimeType == 'pptx'
@@ -149,7 +149,7 @@ class Utility {
 
   String getFirstName(String title) {
     var str = title.split(' ');
-    return str[0]??="";
+    return str[0];
   }
 
   int getTotalMinutes(int totalMinutes,DateTime enterTime){
@@ -159,7 +159,7 @@ class Utility {
     return diff+totalMinutes;
   }
 
-  Future<String> translate(BuildContext context, String source, String input_lan_code, String output_lan_code, String type) async{
+  Future<String?> translate(BuildContext context, String source, String? input_lan_code, String output_lan_code, String type) async{
     final API_KEY = "AIzaSyDH4xJWHt-0rn6waxCUOtBvljw1jb5w4Kc";
     var authority ="translation.googleapis.com";
     var unencodedPath = "/language/translate/v2";
@@ -175,6 +175,6 @@ class Utility {
     var value  = await NetworkUtil().post(context, uri.toString(),headers: null, body: null,encoding: null);
     var val = JsonDecoder().convert(value);
     var response  = TranslateResponse.fromJson(val);
-    return response.data.translations[0].translatedText;
+    return response.data!.translations![0].translatedText;
   }
 }

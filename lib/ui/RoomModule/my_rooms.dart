@@ -14,12 +14,12 @@ import 'createRoomPage.dart';
 
 // ignore: must_be_immutable
 class MyRooms extends StatefulWidget {
-  int id;
+  int? id;
   int instituteId;
-  int ownerId;
-  String userType;
-  String ownerType;
-  Null Function() callback;
+  int? ownerId;
+  String? userType;
+  String? ownerType;
+  Null Function()? callback;
   @override
   _MyRooms createState() => _MyRooms(id, instituteId, ownerId, userType, ownerType,callback);
 
@@ -27,15 +27,15 @@ class MyRooms extends StatefulWidget {
 }
 
 class _MyRooms extends State<MyRooms> {
-  TextStyleElements styleElements;
-  int id;
+  TextStyleElements? styleElements;
+  int? id;
   int instituteId;
-  SharedPreferences prefs;
-  String ownerType;
-  int ownerId;
-  BuildContext sctx;
-  Null Function() callback;
-  String userType;
+  late SharedPreferences prefs;
+  String? ownerType;
+  int? ownerId;
+  late BuildContext sctx;
+  Null Function()? callback;
+  String? userType;
   GlobalKey<AllRoomsListingState> allRoomsKey = GlobalKey();
   @override
   void initState() {
@@ -57,14 +57,14 @@ class _MyRooms extends State<MyRooms> {
       child: new  Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: TricycleAppBar().getCustomAppBar(context,
-            appBarTitle: AppLocalizations.of(context).translate("rooms"),
+            appBarTitle: AppLocalizations.of(context)!.translate("rooms"),
             onBackButtonPress: () {
               Navigator.pop(context);
             }, actions: [
               GestureDetector(
                 onTap: () {
 
-                  if(prefs.getBool(Strings.isVerified)!=null&&prefs.getBool(Strings.isVerified))
+                  if(prefs.getBool(Strings.isVerified)!=null&&prefs.getBool(Strings.isVerified)!)
                   { Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -76,7 +76,7 @@ class _MyRooms extends State<MyRooms> {
                   else
                   {
                     ToastBuilder().showSnackBar(
-                        AppLocalizations.of(context).translate("only_verirfied"), sctx, HexColor(AppColors.information));
+                        AppLocalizations.of(context)!.translate("only_verirfied"), sctx, HexColor(AppColors.information));
                   }
 
                 },

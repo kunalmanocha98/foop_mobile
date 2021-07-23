@@ -18,17 +18,17 @@ import 'package:oho_works_app/components/paginator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SubjectTopicSelect extends StatefulWidget{
-  final List<SubRow> selectedList;
+  final List<SubRow>? selectedList;
   SubjectTopicSelect({this.selectedList});
   @override
   SubjectTopicSelectState createState() => SubjectTopicSelectState(selectedList: selectedList);
 }
 
 class SubjectTopicSelectState extends State<SubjectTopicSelect>{
-  TextStyleElements styleElements;
-  List<SubRow> selectedList;
+  late TextStyleElements styleElements;
+  List<SubRow>? selectedList;
   List<SubRow> subjectList = [];
-  SharedPreferences prefs = locator<SharedPreferences>();
+  SharedPreferences? prefs = locator<SharedPreferences>();
   SubjectTopicSelectState({
     this.selectedList
 });
@@ -44,10 +44,10 @@ class SubjectTopicSelectState extends State<SubjectTopicSelect>{
               actions:[
                 TricycleTextButton(
                   onPressed:() {
-                    if(selectedList!=null && selectedList.length>0){
+                    if(selectedList!=null && selectedList!.length>0){
                       Navigator.pop(context,selectedList);
                     }else{
-                      ToastBuilder().showToast(AppLocalizations.of(context).translate('please_select_atleast'),
+                      ToastBuilder().showToast(AppLocalizations.of(context)!.translate('please_select_atleast'),
                           context,
                           HexColor(AppColors.information));
                     }
@@ -56,7 +56,7 @@ class SubjectTopicSelectState extends State<SubjectTopicSelect>{
                     direction: Axis.horizontal,
                     crossAxisAlignment: WrapCrossAlignment.center,
                     children:[
-                      Text( AppLocalizations.of(context).translate('next'),
+                      Text( AppLocalizations.of(context)!.translate('next'),
                         style: styleElements
                             .subtitle2ThemeScalable(context)
                             .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -76,7 +76,7 @@ class SubjectTopicSelectState extends State<SubjectTopicSelect>{
   }
 
   String getAppBarTitle() {
-    return AppLocalizations.of(context).translate('select_topics');
+    return AppLocalizations.of(context)!.translate('select_topics');
   }
 
   Widget getBody() {
@@ -96,11 +96,11 @@ class SubjectTopicSelectState extends State<SubjectTopicSelect>{
 
   Future<BaseResponses> fetchData(int page) async{
     final body = jsonEncode({
-      "person_id": prefs.getInt(Strings.userId),
+      "person_id": prefs!.getInt(Strings.userId),
       "type":  "person",
-      "all_institutions_id": prefs.getInt(Strings.userId).toString(),
+      "all_institutions_id": prefs!.getInt(Strings.userId).toString(),
       "page_number": 1,
-      "given_by_id": prefs.getInt(Strings.userId),
+      "given_by_id": prefs!.getInt(Strings.userId),
       "page_size": 100
     });
     var value  = await Calls().call(body, context, Config.DETAILS_SUBJECTS);
@@ -108,29 +108,29 @@ class SubjectTopicSelectState extends State<SubjectTopicSelect>{
   }
 
 
-  List<SubRow> listItemsGetter(BaseResponses pageData) {
-    var itr = pageData.rows[0].subRow.where((element){
-      return selectedList.any((element1){
+  List<SubRow>? listItemsGetter(BaseResponses? pageData) {
+    var itr = pageData!.rows![0].subRow!.where((element){
+      return selectedList!.any((element1){
         return element1.textOne == element.textOne;
       });
     });
     itr.forEach((element) {
       element.isSelected = true;
     });
-    subjectList.addAll(pageData.rows[0].subRow);
-    return pageData.rows[0].subRow;
+    subjectList.addAll(pageData.rows![0].subRow!);
+    return pageData.rows![0].subRow;
   }
 
   Widget listItemBuilder(itemData, int index) {
     SubRow  item = itemData;
     return  ListTile(
       trailing: Checkbox(
-        onChanged: (bool value) {
-          changeSelection(value,item,index);
+        onChanged: (bool? value) {
+          changeSelection(value!,item,index);
         },
         value: item.isSelected??=false,
       ),
-      title: Text(item.textOne,style: styleElements.subtitle1ThemeScalable(context),),
+      title: Text(item.textOne!,style: styleElements.subtitle1ThemeScalable(context),),
     );
   }
 
@@ -138,12 +138,12 @@ class SubjectTopicSelectState extends State<SubjectTopicSelect>{
   void changeSelection(bool value,SubRow item,int index) {
     if(value){
       setState(() {
-        selectedList.add(item);
+        selectedList!.add(item);
         subjectList[index].isSelected = value;
       });
     }else{
       setState(() {
-        selectedList.removeWhere((element){
+        selectedList!.removeWhere((element){
           return element.textOne==item.textOne;
         });
         subjectList[index].isSelected = value;

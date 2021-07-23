@@ -66,9 +66,9 @@ enum TtsState { playing, stopped, paused, continued }
 
 // ignore: must_be_immutable
 class NewNewsAndArticleDetailPage extends StatefulWidget {
-  Null Function() callBack;
-  PostListItem postData;
-  int postId;
+  Null Function()? callBack;
+  PostListItem? postData;
+  int? postId;
 
   NewNewsAndArticleDetailPage({this.postData, this.postId,this.callBack});
 
@@ -80,14 +80,14 @@ class NewNewsAndArticleDetailPage extends StatefulWidget {
 class NewNewsAndArticleDetailPageState
     extends State<NewNewsAndArticleDetailPage>
     with SingleTickerProviderStateMixin {
-  Null Function() callBack;
-  PAGINATOR_ENUMS pageEnum;
-  List<PostListItem> detailPagesList = [];
+  Null Function()? callBack;
+  PAGINATOR_ENUMS? pageEnum;
+  List<PostListItem?> detailPagesList = [];
   int totalItems = 0;
-  SharedPreferences prefs;
+  SharedPreferences? prefs;
   int page = 1;
   String postType = 'news';
-  TextStyleElements styleElements;
+  TextStyleElements? styleElements;
   List<PostSubTypeListItem> selectedList = [];
   List<String> listOfSelections = [];
   String topic = "Choose topic";
@@ -95,19 +95,19 @@ class NewNewsAndArticleDetailPageState
   int _currentPage = 0;
   int mSelectedPosition = 0;
   bool isFirstCall = true;
-  int previousId;
-  int nextId;
+  int? previousId;
+  int? nextId;
   FlutterTts tts = FlutterTts();
-  String searchValue;
-  String textToSpeach;
+  String? searchValue;
+  String? textToSpeach;
   bool showAnimation = true;
   bool isPlaying = false;
   bool isLoading = false;
-  String inputLan;
+  String? inputLan;
   double volume = 0.5;
   double pitch = 1.0;
   double rate = 0.5;
-  String outPutLan;
+  String? outPutLan;
   bool isTranslate = false;
 
   TtsState ttsState = TtsState.stopped;
@@ -132,7 +132,7 @@ class NewNewsAndArticleDetailPageState
     pageEnum = PAGINATOR_ENUMS.SUCCESS;
     if (widget.postData != null) detailPagesList.add(widget.postData);
     if (widget.postId != null) getPost(widget.postId);
-    WidgetsBinding.instance.addPostFrameCallback(
+    WidgetsBinding.instance!.addPostFrameCallback(
         (_) => {showAnimations(), updateHeader(widget.postData, 0)});
     initTts();
     super.initState();
@@ -150,9 +150,9 @@ class NewNewsAndArticleDetailPageState
     await tts.setPitch(pitch);
 
     if (textToSpeach != null) {
-      if (textToSpeach.isNotEmpty) {
+      if (textToSpeach!.isNotEmpty) {
         await tts.awaitSpeakCompletion(true);
-        await tts.speak(textToSpeach);
+        await tts.speak(textToSpeach!);
       }
     }
   }
@@ -235,7 +235,7 @@ class NewNewsAndArticleDetailPageState
       });
     } else {
       print("play----------------------------");
-      await tts.speak(textToSpeach);
+      await tts.speak(textToSpeach!);
       setState(() {
         isLoading = false;
         isPlaying = true;
@@ -322,24 +322,24 @@ class NewNewsAndArticleDetailPageState
                               var text = "";
                               try {
                                 Document doc = Document.fromJson(jsonDecode(
-                                    detailPagesList[_currentPage]
-                                        .postContent
-                                        .content
-                                        .contentMeta
-                                        .meta));
+                                    detailPagesList[_currentPage]!
+                                        .postContent!
+                                        .content!
+                                        .contentMeta!
+                                        .meta!));
                                 QuillController _controller = QuillController(
                                     document: doc,
                                     selection:
                                         TextSelection.collapsed(offset: 0));
                                 text = _controller.document.toPlainText();
                               } catch (error) {
-                                var html = detailPagesList[_currentPage]
-                                    .postContent
-                                    .content
-                                    .contentMeta
+                                var html = detailPagesList[_currentPage]!
+                                    .postContent!
+                                    .content!
+                                    .contentMeta!
                                     .meta;
                                 print(html);
-                                text = parse(html).documentElement.text;
+                                text = parse(html).documentElement!.text;
                                 print(text);
                               }
 
@@ -355,11 +355,11 @@ class NewNewsAndArticleDetailPageState
                             }
                           },
                           translateCallback: () async {
-                            if (prefs.getBool(
+                            if (prefs!.getBool(
                                         Strings.isTranslationLanguageSet) ==
                                     null ||
-                                !prefs.getBool(
-                                    Strings.isTranslationLanguageSet)) {
+                                !prefs!.getBool(
+                                    Strings.isTranslationLanguageSet)!) {
                               var result = await Navigator.push(
                                   context,
                                   MaterialPageRoute(
@@ -368,31 +368,31 @@ class NewNewsAndArticleDetailPageState
                               if (result != null && result['code'] != null) {
                                 outPutLan = result['code'];
 
-                                translate(outPutLan);
+                                translate(outPutLan!);
                               } else {
                                 ToastBuilder().showToast(
-                                    AppLocalizations.of(context).translate(
+                                    AppLocalizations.of(context)!.translate(
                                         "select_translation_language"),
                                     context,
                                     HexColor(AppColors.information));
                               }
                             } else {
-                              translate(outPutLan);
+                              translate(outPutLan!);
                             }
                           },
                           sharecallBack: () {
-                            _onShareCallback(detailPagesList[_currentPage]);
+                            _onShareCallback(detailPagesList[_currentPage]!);
                           },
-                          postId: detailPagesList[_currentPage].postId,
+                          postId: detailPagesList[_currentPage]!.postId,
                           isBookMarked:
-                              detailPagesList[_currentPage].isBookmarked,
-                          isRated: getIsRated(detailPagesList[_currentPage]),
+                              detailPagesList[_currentPage]!.isBookmarked,
+                          isRated: getIsRated(detailPagesList[_currentPage]!),
                           ratingCallback: () {
                             _onRatingCallback(detailPagesList[_currentPage]);
                           },
                           bookmarkCallback: (isBookmarked) {
                             _onBookmarkCallback(
-                                detailPagesList[_currentPage].postId,
+                                detailPagesList[_currentPage]!.postId,
                                 isBookmarked);
                           },
                           filterCallBack: () {
@@ -416,19 +416,19 @@ class NewNewsAndArticleDetailPageState
                           isTranslateVisible: false,
                           isTextToSpeechVisible: false,
                           sharecallBack: () {
-                            _onShareCallback(detailPagesList[_currentPage]);
+                            _onShareCallback(detailPagesList[_currentPage]!);
                           },
-                          postId: detailPagesList[_currentPage].postId,
+                          postId: detailPagesList[_currentPage]!.postId,
                           isBookMarked:
-                              detailPagesList[_currentPage].isBookmarked,
-                          isRated: getIsRated(detailPagesList[_currentPage]),
+                              detailPagesList[_currentPage]!.isBookmarked,
+                          isRated: getIsRated(detailPagesList[_currentPage]!),
                           ratingCallback: () {
                             _onRatingCallback(detailPagesList[_currentPage]);
                           },
                           bookmarkCallback: (isBookmarked) {
                             _onBookmarkCallback(
-                                detailPagesList[_currentPage].postId,
-                                isBookmarked);
+                                detailPagesList[_currentPage]!.postId,
+                                isBookmarked!);
                           },
                           talkCallback: () {
                             onTalkCallback(detailPagesList[_currentPage]);
@@ -473,11 +473,11 @@ class NewNewsAndArticleDetailPageState
   void translate(String outPutCode) {
     print(outPutCode +
         "---------------------------------------------------------------------------------");
-    String html;
+    String? html;
 
     try {
       Document doc = Document.fromJson(jsonDecode(
-          detailPagesList[_currentPage].postContent.content.contentMeta.meta));
+          detailPagesList[_currentPage]!.postContent!.content!.contentMeta!.meta!));
       QuillController _controller = QuillController(
           document: doc, selection: TextSelection.collapsed(offset: 0));
       // Delta delta = Delta.fromJson(
@@ -488,10 +488,10 @@ class NewNewsAndArticleDetailPageState
       print(html);
       // html = NotusHtmlCodec().encode(delta);
     } catch (error) {
-      html = detailPagesList[_currentPage].postContent.content.contentMeta.meta;
+      html = detailPagesList[_currentPage]!.postContent!.content!.contentMeta!.meta;
     }
 
-    var input1 = html.replaceAll("<br><br><br><br>", "<br><br>");
+    var input1 = html!.replaceAll("<br><br><br><br>", "<br><br>");
     var input = input1.replaceRange(input1.length - 8, input1.length, "");
     log(input);
     Utility()
@@ -499,28 +499,28 @@ class NewNewsAndArticleDetailPageState
         .then((value) {
       print(value);
       setState(() {
-        detailPagesList[_currentPage].postContent.content.contentMeta.meta =
+        detailPagesList[_currentPage]!.postContent!.content!.contentMeta!.meta =
             value;
       });
     });
     _toggelLanguage();
   }
 
-  final CreateDeeplink createDeeplink = locator<CreateDeeplink>();
+  final CreateDeeplink? createDeeplink = locator<CreateDeeplink>();
 
-  Future<void> updateHeader(PostListItem item, int index) async {
+  Future<void> updateHeader(PostListItem? item, int index) async {
     prefs = await SharedPreferences.getInstance();
-    outPutLan = prefs.getString(Strings.translation_code);
+    outPutLan = prefs!.getString(Strings.translation_code);
     if (item != null) {
-      bool isFollowed = false;
-      for (var i in item.postContent.header.action) {
+      bool? isFollowed = false;
+      for (var i in item.postContent!.header!.action!) {
         if (i.type == 'is_followed') {
           isFollowed = i.value;
           break;
         }
       }
       Future(() {
-        headerKey.currentState.update(
+        headerKey.currentState!.update(
           postListItem: item,
           prefs: prefs,
           onFollowCallback: (isFollow) {
@@ -534,7 +534,7 @@ class NewNewsAndArticleDetailPageState
 
   void _onFollowCallback(bool isFollow, int index) {
     setState(() {
-      for (var i in detailPagesList[index].postContent.header.action) {
+      for (var i in detailPagesList[index]!.postContent!.header!.action!) {
         if (i.type == 'is_followed') {
           i.value = isFollow;
         }
@@ -585,7 +585,7 @@ class NewNewsAndArticleDetailPageState
 
   void _onShareCallback(PostListItem postData) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    createDeeplink.getDeeplink(
+    createDeeplink!.getDeeplink(
         SHAREITEMTYPE.DETAIL.type,
         prefs.getInt("userId").toString(),
         postData.postId,
@@ -594,10 +594,10 @@ class NewNewsAndArticleDetailPageState
     // _showModalBottomSheet(context);
   }
 
-  void _onRatingCallback(PostListItem postData) {
+  void _onRatingCallback(PostListItem? postData) {
     // postRatingKey.currentState.updateData();
     setState(() {
-      for (var i in postData.postContent.header.action) {
+      for (var i in postData!.postContent!.header!.action!) {
         if (i.type == 'is_rated') {
           i.value = true;
         }
@@ -605,19 +605,19 @@ class NewNewsAndArticleDetailPageState
     });
   }
 
-  void onTalkCallback(PostListItem postData) {
+  void onTalkCallback(PostListItem? postData) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
           return AudioPostDialog(
-              title: postData.postContent.content.contentMeta.title,
+              title: postData!.postContent!.content!.contentMeta!.title,
               okCallback: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (BuildContext context) {
                   return CreateEventPage(
                     type: 'talk',
                     standardEventId: 5,
-                    title: postData.postContent.content.contentMeta.title,
+                    title: postData.postContent!.content!.contentMeta!.title,
                   );
                 }));
               },
@@ -625,11 +625,11 @@ class NewNewsAndArticleDetailPageState
         });
   }
 
-  void _onBookmarkCallback(int postId, bool isBookmarked) {
+  void _onBookmarkCallback(int? postId, bool isBookmarked) {
     bookmarkPost(postId, isBookmarked);
   }
 
-  void _onCommentCallback(PostListItem postData) {
+  void _onCommentCallback(PostListItem? postData) {
     showModalBottomSheet(
         context: context,
         shape: RoundedRectangleBorder(
@@ -639,14 +639,14 @@ class NewNewsAndArticleDetailPageState
         )),
         isScrollControlled: true,
         builder: (BuildContext context) {
-          return CommentSheet(postId: postData.postId);
+          return CommentSheet(postId: postData!.postId);
         });
     // Navigator.of(context).push(MaterialPageRoute(builder:(context)=> PostCardDetailPage()));
   }
 
   bool getIsRated(PostListItem postData) {
-    bool isRated;
-    for (var i in postData.postContent.header.action) {
+    bool? isRated;
+    for (var i in postData.postContent!.header!.action!) {
       if (i.type == 'is_rated') {
         isRated = i.value;
         break;
@@ -655,7 +655,7 @@ class NewNewsAndArticleDetailPageState
     return isRated ??= false;
   }
 
-  void bookmarkPost(int postId, bool isBookMarked) {
+  void bookmarkPost(int? postId, bool isBookMarked) {
     setState(() {
       // postData.isBookmarked = isBookMarked;
     });
@@ -669,7 +669,7 @@ class NewNewsAndArticleDetailPageState
               builder: (context) => SelectedFeedListPage(
                     isFromProfile: false,
                     appBarTitle:
-                        AppLocalizations.of(context).translate('notice_board'),
+                        AppLocalizations.of(context)!.translate('notice_board'),
                     postRecipientStatus: POST_RECIPIENT_STATUS.UNREAD.status,
                     postType: POST_TYPE.NOTICE.status,
                   )));
@@ -681,7 +681,7 @@ class NewNewsAndArticleDetailPageState
               builder: (context) => SelectedFeedListPage(
                     isFromProfile: false,
                     isBookMarked: true,
-                    appBarTitle: AppLocalizations.of(context)
+                    appBarTitle: AppLocalizations.of(context)!
                         .translate('bookmarked_posts'),
                     postRecipientStatus: POST_RECIPIENT_STATUS.UNREAD.status,
                   )));
@@ -699,7 +699,7 @@ class NewNewsAndArticleDetailPageState
               builder: (context) => SelectedFeedListPage(
                     isFromProfile: false,
                     appBarTitle:
-                        AppLocalizations.of(context).translate('article'),
+                        AppLocalizations.of(context)!.translate('article'),
                     postRecipientStatus: POST_RECIPIENT_STATUS.UNREAD.status,
                     postType: POST_TYPE.BLOG.status,
                   )));
@@ -728,7 +728,7 @@ class NewNewsAndArticleDetailPageState
               builder: (context) => SelectedFeedListPage(
                     isFromProfile: false,
                     appBarTitle:
-                        AppLocalizations.of(context).translate('ask_expert'),
+                        AppLocalizations.of(context)!.translate('ask_expert'),
                     postRecipientStatus: POST_RECIPIENT_STATUS.UNREAD.status,
                     postType: POST_TYPE.QNA.status,
                   )));
@@ -758,7 +758,7 @@ class NewNewsAndArticleDetailPageState
               builder: (context) => SelectedFeedListPage(
                     isFromProfile: false,
                     appBarTitle:
-                        AppLocalizations.of(context).translate('general'),
+                        AppLocalizations.of(context)!.translate('general'),
                     postRecipientStatus: POST_RECIPIENT_STATUS.READ.status,
                   )));
           break;
@@ -769,7 +769,7 @@ class NewNewsAndArticleDetailPageState
               builder: (context) => SelectedFeedListPage(
                     isFromProfile: false,
                     appBarTitle:
-                        AppLocalizations.of(context).translate('notice'),
+                        AppLocalizations.of(context)!.translate('notice'),
                     postRecipientStatus: POST_RECIPIENT_STATUS.UNREAD.status,
                     postType: POST_TYPE.NOTICE.status,
                   )));
@@ -807,7 +807,7 @@ class NewNewsAndArticleDetailPageState
     );
   }
 
-  void postStatusUpdate(int postId, bool isBookmarked) {
+  void postStatusUpdate(int? postId, bool? isBookmarked) {
     PostRecipientUpdatePayload payload = PostRecipientUpdatePayload();
     payload.postId = postId;
     payload.postRecipientStatus = POST_RECIPIENT_STATUS.READ.status;
@@ -817,14 +817,15 @@ class NewNewsAndArticleDetailPageState
   }
 
   _buildPage() {
-    postStatusUpdate(detailPagesList[_currentPage].postId,
-        detailPagesList[_currentPage].isBookmarked);
+    postStatusUpdate(detailPagesList[_currentPage]!.postId,
+        detailPagesList[_currentPage]!.isBookmarked);
     setState(() {
       if (!isTranslate)
-        inputLan = detailPagesList[_currentPage].languageCode ?? "";
+        inputLan = detailPagesList[_currentPage]!.languageCode ?? "";
       print(
-          inputLan + "------------------------------------------language code");
+          inputLan! + "------------------------------------------language code");
     });
+    // ignore: missing_enum_constant_in_switch
     switch (pageEnum) {
       case PAGINATOR_ENUMS.SUCCESS:
         return detailPagesList.isNotEmpty
@@ -1003,7 +1004,7 @@ class NewNewsAndArticleDetailPageState
     }
   }
 
-  void getPost(int postId) async {
+  void getPost(int? postId) async {
     final body = jsonEncode({"post_id": postId});
 
     Calls().call(body, context, Config.POST_VIEW).then((value) {
@@ -1031,17 +1032,18 @@ class NewNewsAndArticleDetailPageState
   Future<bool> _onBackPressed() {
     setState(() async {
       await _stop();
-      if (widget.callBack != null) widget.callBack();
+      if (widget.callBack != null) widget.callBack!();
       Navigator.of(context).pop(true);
     });
+    return new Future(() => false);
   }
 
   Future<void> fetchList(String listType) async {
     final body = jsonEncode({
-      "post_id": widget.postData.postId,
+      "post_id": widget.postData!.postId,
       "page_size": 5,
       "page_number": page,
-      "post_type": widget.postData.postType,
+      "post_type": widget.postData!.postType,
       "list_type": listType
     });
     setState(() {
@@ -1054,15 +1056,15 @@ class NewNewsAndArticleDetailPageState
     PostListResponse.fromJson(res);
     if (PostListResponse.fromJson(res).statusCode == Strings.success_code &&
         PostListResponse.fromJson(res).rows != null &&
-        PostListResponse.fromJson(res).rows.isNotEmpty) {
+        PostListResponse.fromJson(res).rows!.isNotEmpty) {
       listType == "previous"
           ? detailPagesList =
-              (new List.from(PostListResponse.fromJson(res).rows)
+              (new List.from(PostListResponse.fromJson(res).rows!)
                 ..addAll(detailPagesList))
-          : detailPagesList.addAll(PostListResponse.fromJson(res).rows);
+          : detailPagesList.addAll(PostListResponse.fromJson(res).rows!);
 
       listType == "previous"
-          ? _currentPage = PostListResponse.fromJson(res).rows.length - 1
+          ? _currentPage = PostListResponse.fromJson(res).rows!.length - 1
           : _currentPage++;
       updateHeader(detailPagesList[_currentPage], _currentPage);
       page++;
@@ -1073,30 +1075,30 @@ class NewNewsAndArticleDetailPageState
     Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
       return CreateLessonsPage(
         isFromDetailPage: true,
-        chapterId: detailPagesList[_currentPage].chapterItem!=null ?detailPagesList[_currentPage].chapterItem.id:null,
-        chapterName: detailPagesList[_currentPage].chapterItem!=null ?detailPagesList[_currentPage].chapterItem.chapterName:"",
+        chapterId: detailPagesList[_currentPage]!.chapterItem!=null ?detailPagesList[_currentPage]!.chapterItem!.id:null,
+        chapterName: detailPagesList[_currentPage]!.chapterItem!=null ?detailPagesList[_currentPage]!.chapterItem!.chapterName:"",
         isEdit: false,
         createLessonData: PostCreatePayload(
-            postId: detailPagesList[_currentPage].postId,
-            id: detailPagesList[_currentPage].postId,
+            postId: detailPagesList[_currentPage]!.postId,
+            id: detailPagesList[_currentPage]!.postId,
             postStatus: "posted",
             contentMeta: ContentMetaCreate(),
-            chapterItem: detailPagesList[_currentPage].chapterItem,
-            lessonTopic: detailPagesList[_currentPage].lessonTopic,
-            lessonListItem: detailPagesList[_currentPage].lessonListItem,
-            affiliatedList: detailPagesList[_currentPage].affiliatedList,
-            classesList: detailPagesList[_currentPage].classesList,
-            disciplineList: detailPagesList[_currentPage].disciplineList,
-            learnerItem: detailPagesList[_currentPage].learnerItem,
-            programmesList: detailPagesList[_currentPage].programmesList,
-            subjectsList: detailPagesList[_currentPage].subjectsList),
+            chapterItem: detailPagesList[_currentPage]!.chapterItem,
+            lessonTopic: detailPagesList[_currentPage]!.lessonTopic,
+            lessonListItem: detailPagesList[_currentPage]!.lessonListItem,
+            affiliatedList: detailPagesList[_currentPage]!.affiliatedList,
+            classesList: detailPagesList[_currentPage]!.classesList,
+            disciplineList: detailPagesList[_currentPage]!.disciplineList,
+            learnerItem: detailPagesList[_currentPage]!.learnerItem,
+            programmesList: detailPagesList[_currentPage]!.programmesList,
+            subjectsList: detailPagesList[_currentPage]!.subjectsList),
       );
     }));
   }
 }
 
 class CommentSheet extends StatefulWidget {
-  final int postId;
+  final int? postId;
 
   CommentSheet({this.postId});
 
@@ -1105,7 +1107,7 @@ class CommentSheet extends StatefulWidget {
 }
 
 class _CommentSheet extends State<CommentSheet> {
-  SharedPreferences prefs = locator<SharedPreferences>();
+  SharedPreferences? prefs = locator<SharedPreferences>();
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
   GlobalKey<TricycleChatFooterState> chatFooterKey = GlobalKey();
 
@@ -1118,7 +1120,7 @@ class _CommentSheet extends State<CommentSheet> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            AppLocalizations.of(context).translate('comments'),
+            AppLocalizations.of(context)!.translate('comments'),
             style: styleElements
                 .headline6ThemeScalable(context)
                 .copyWith(fontWeight: FontWeight.bold),
@@ -1144,9 +1146,9 @@ class _CommentSheet extends State<CommentSheet> {
         TricycleChatFooter(
           chatFooterKey,
           isShowAddIcon: false,
-          hintText: AppLocalizations.of(context).translate('enter_comment'),
+          hintText: AppLocalizations.of(context)!.translate('enter_comment'),
           onValueRecieved: (value) {
-            submitComment(value);
+            submitComment(value!);
             // chatFooterKey.currentState.clearData();
             // addNote(value);
           },
@@ -1186,7 +1188,7 @@ class _CommentSheet extends State<CommentSheet> {
     var body = jsonEncode({
       "note_type": "comment",
       "note_created_by_type": "person",
-      "note_created_by_id": prefs.getInt(Strings.userId),
+      "note_created_by_id": prefs!.getInt(Strings.userId),
       "note_subject_type": "post",
       "note_subject_id": widget.postId,
       "note_content": value,
@@ -1216,7 +1218,7 @@ class _CommentSheet extends State<CommentSheet> {
   }
 
   refresh() {
-    chatFooterKey.currentState.clearData();
-    paginatorKey.currentState.changeState(resetState: true);
+    chatFooterKey.currentState!.clearData();
+    paginatorKey.currentState!.changeState(resetState: true);
   }
 }

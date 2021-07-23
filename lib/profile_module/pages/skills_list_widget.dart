@@ -20,8 +20,8 @@ class SkillsListWidget extends StatefulWidget {
 
 class _SkillsListWidget extends State<SkillsListWidget> {
 
-  SharedPreferences prefs;
-  TextStyleElements styleElements;
+  SharedPreferences? prefs;
+  late TextStyleElements styleElements;
   List<String> language = [
     'Skill 1',
     'Skill 2',
@@ -85,7 +85,7 @@ class _SkillsListWidget extends State<SkillsListWidget> {
                                 color: HexColor(AppColors.appColorBlack65)
                             ),
                             decoration: InputDecoration(
-                              hintText: AppLocalizations.of(context).translate('search'),
+                              hintText: AppLocalizations.of(context)!.translate('search'),
                               border: InputBorder.none,
                               hintStyle:
                                   styleElements.bodyText2ThemeScalable(context).copyWith(
@@ -125,7 +125,7 @@ class _SkillsListWidget extends State<SkillsListWidget> {
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) => RateDialog(
-                                    type: "", title: AppLocalizations.of(context).translate('rate_skill'), subtitle: ""));
+                                    type: "", title: AppLocalizations.of(context)!.translate('rate_skill'), subtitle: ""));
                           },
                           child: Container(
                             margin:
@@ -224,7 +224,7 @@ class _SkillsListWidget extends State<SkillsListWidget> {
 
                                   Container(
                                     margin: const EdgeInsets.only(left: 16,right: 16),
-                                    child: Text(AppLocalizations.of(context).translate('read_write_speak'),
+                                    child: Text(AppLocalizations.of(context)!.translate('read_write_speak'),
                                       style: styleElements
                                           .subtitle2ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorBlack65)),
                                       textAlign: TextAlign.left,
@@ -273,7 +273,7 @@ class _SkillsListWidget extends State<SkillsListWidget> {
                             child: Align(
                               alignment: Alignment.centerLeft,
                               child: Text(
-                                  AppLocalizations.of(context)
+                                  AppLocalizations.of(context)!
                                       .translate('save_exit')
                                       .toUpperCase(),
                                   style: styleElements
@@ -304,7 +304,7 @@ class _SkillsListWidget extends State<SkillsListWidget> {
                                   },
                                   color: HexColor(AppColors.appColorWhite),
                                   child: Text(
-                                    AppLocalizations.of(context)
+                                    AppLocalizations.of(context)!
                                         .translate('next'),
                                     style: styleElements
                                         .subtitle2ThemeScalable(context)

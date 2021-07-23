@@ -1,7 +1,7 @@
 class InstitutionClasses {
-  String statusCode;
-  String message;
-  List<InstituteClass> rows;
+  String? statusCode;
+  String? message;
+  List<InstituteClass>? rows;
 
   InstitutionClasses({this.statusCode, this.message, this.rows});
 
@@ -11,7 +11,7 @@ class InstitutionClasses {
     if (json['rows'] != null) {
       rows = [];
       json['rows'].forEach((v) {
-        rows.add(new InstituteClass.fromJson(v));
+        rows!.add(new InstituteClass.fromJson(v));
       });
     }
   }
@@ -21,29 +21,29 @@ class InstitutionClasses {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class InstituteClass {
-  int id;
-  int classId;
-  String className;
-  String classCode;
-  String classDescription;
-  Course course;
-  Department department;
-  Program program;
-  ClassType classType;
+  int? id;
+  int? classId;
+  String? className;
+  String? classCode;
+  String? classDescription;
+  Course? course;
+  Department? department;
+  Program? program;
+  ClassType? classType;
   Null imageUrl;
-  String section;
-  String roomNumber;
-  String floorNumber;
-  String building;
-  int studentsCapacity;
-  bool isSelected = false;
+  String? section;
+  String? roomNumber;
+  String? floorNumber;
+  String? building;
+  int? studentsCapacity;
+  bool? isSelected = false;
 
   InstituteClass(
       {this.id,
@@ -95,16 +95,16 @@ class InstituteClass {
     data['class_code'] = this.classCode;
     data['class_description'] = this.classDescription;
     if (this.course != null) {
-      data['course'] = this.course.toJson();
+      data['course'] = this.course!.toJson();
     }
     if (this.department != null) {
-      data['department'] = this.department.toJson();
+      data['department'] = this.department!.toJson();
     }
     if (this.program != null) {
-      data['program'] = this.program.toJson();
+      data['program'] = this.program!.toJson();
     }
     if (this.classType != null) {
-      data['class_type'] = this.classType.toJson();
+      data['class_type'] = this.classType!.toJson();
     }
     data['image_url'] = this.imageUrl;
     data['section'] = this.section;
@@ -118,9 +118,9 @@ class InstituteClass {
 }
 
 class Course {
-  int id;
-  String courseName;
-  String courseCode;
+  int? id;
+  String? courseName;
+  String? courseCode;
 
   Course({this.id, this.courseName, this.courseCode});
 
@@ -140,9 +140,9 @@ class Course {
 }
 
 class Department {
-  int id;
-  String departmentName;
-  String departmentCode;
+  int? id;
+  String? departmentName;
+  String? departmentCode;
 
   Department({this.id, this.departmentName, this.departmentCode});
 
@@ -162,9 +162,9 @@ class Department {
 }
 
 class Program {
-  int id;
-  String programName;
-  String programCode;
+  int? id;
+  String? programName;
+  String? programCode;
 
   Program({this.id, this.programName, this.programCode});
 
@@ -184,9 +184,9 @@ class Program {
 }
 
 class ClassType {
-  int id;
-  String classTypeName;
-  String classTypeCode;
+  int? id;
+  String? classTypeName;
+  String? classTypeCode;
 
   ClassType({this.id, this.classTypeName, this.classTypeCode});
 

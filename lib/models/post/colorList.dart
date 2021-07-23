@@ -1,8 +1,8 @@
 class ColorListResponse {
-  String statusCode;
-  String message;
-  List<ColorListItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<ColorListItem>? rows;
+  int? total;
 
   ColorListResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -12,7 +12,7 @@ class ColorListResponse {
     if (json['rows'] != null) {
       rows = [];//ColorListItem>();
       json['rows'].forEach((v) {
-        rows.add(new ColorListItem.fromJson(v));
+        rows!.add(new ColorListItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -23,7 +23,7 @@ class ColorListResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -31,9 +31,9 @@ class ColorListResponse {
 }
 
 class ColorListItem {
-  int id;
-  String name;
-  String code;
+  int? id;
+  String? name;
+  String? code;
 
   ColorListItem({this.id, this.name, this.code});
 

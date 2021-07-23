@@ -1,8 +1,8 @@
 class ClassesAndSectionResponse {
-  String statusCode;
-  String message;
-  List<ClassesWithSection> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<ClassesWithSection>? rows;
+  int? total;
 
   ClassesAndSectionResponse(
       {this.statusCode, this.message, this.rows, this.total});
@@ -13,7 +13,7 @@ class ClassesAndSectionResponse {
     if (json['rows'] != null) {
       rows = [];//ClassesWithSection>();
       json['rows'].forEach((v) {
-        rows.add(new ClassesWithSection.fromJson(v));
+        rows!.add(new ClassesWithSection.fromJson(v));
       });
     }
     total = json['total'];
@@ -24,7 +24,7 @@ class ClassesAndSectionResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -32,13 +32,13 @@ class ClassesAndSectionResponse {
 }
 
 class ClassesWithSection {
-  int id;
-  String className;
-  String classCode;
-  String classDescription;
-  List<Sections> sections;
-  List<Sections> sectionWithMore;
-  bool isSelected=false;
+  int? id;
+  String? className;
+  String? classCode;
+  String? classDescription;
+  List<Sections>? sections;
+  List<Sections>? sectionWithMore;
+  bool? isSelected=false;
 
   ClassesWithSection(
       {this.id,
@@ -57,7 +57,7 @@ class ClassesWithSection {
     if (json['sections'] != null) {
       sections = [];//Sections>();
       json['sections'].forEach((v) {
-        sections.add(new Sections.fromJson(v));
+        sections!.add(new Sections.fromJson(v));
       });
     }
   }
@@ -69,17 +69,17 @@ class ClassesWithSection {
     data['class_code'] = this.classCode;
     data['class_description'] = this.classDescription;
     if (this.sections != null) {
-      data['sections'] = this.sections.map((v) => v.toJson()).toList();
+      data['sections'] = this.sections!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Sections {
-  int id;
-  bool isSelected=false;
-  String sectionName;
-  String sectionDescription;
+  int? id;
+  bool? isSelected=false;
+  String? sectionName;
+  String? sectionDescription;
 
   Sections({this.id, this.sectionName, this.sectionDescription,this.isSelected});
 

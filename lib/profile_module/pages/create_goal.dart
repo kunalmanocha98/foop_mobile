@@ -19,16 +19,16 @@ class CreateGoal extends StatefulWidget {
 
 class _CreateGoal extends State<CreateGoal> {
 
-  SharedPreferences prefs;
-  CustomTabMaker customTabMaker;
+  SharedPreferences? prefs;
+  CustomTabMaker? customTabMaker;
   List<CustomTabMaker> list = [];
-  Map<String, bool> language = {
+  Map<String, bool?> language = {
     'Chapter 1 to be done': false,
     'Grammar to be covered': false,
     'Letters to be learnt': false,
   };
 
-  Map<String, bool> repeat = {
+  Map<String, bool?> repeat = {
     'Only Once': false,
     'Every Monday': false,
     'Every Wednesday': false,
@@ -46,7 +46,7 @@ class _CreateGoal extends State<CreateGoal> {
   void initState() {
     super.initState();
   }
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
   Widget build(BuildContext context) {
     styleElements=TextStyleElements(context);
 
@@ -78,7 +78,7 @@ class _CreateGoal extends State<CreateGoal> {
                       decoration: InputDecoration(
                           contentPadding:
                           EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-                          hintText: AppLocalizations.of(context).translate('what_is_goal'),
+                          hintText: AppLocalizations.of(context)!.translate('what_is_goal'),
                           hintStyle:styleElements.bodyText2ThemeScalable(context).copyWith(
                             color: HexColor(AppColors.appColorBlack35)
                           ),
@@ -109,7 +109,7 @@ class _CreateGoal extends State<CreateGoal> {
                                           child: Container(
                                             margin: const EdgeInsets.only(
                                                 left: 16, top: 24),
-                                            child: Text(AppLocalizations.of(context).translate('check_points'),
+                                            child: Text(AppLocalizations.of(context)!.translate('check_points'),
                                               style: styleElements.subtitle1ThemeScalable(context),
                                               textAlign: TextAlign.left,
                                             ),
@@ -158,7 +158,7 @@ class _CreateGoal extends State<CreateGoal> {
                                                   activeColor:
                                                   HexColor(AppColors.appMainColor),
                                                   value: language[key],
-                                                  onChanged: (bool value) {
+                                                  onChanged: (bool? value) {
                                                     setState(() {
                                                       language[key] = value;
                                                     });
@@ -207,7 +207,7 @@ class _CreateGoal extends State<CreateGoal> {
                                           child: Container(
                                             margin: const EdgeInsets.only(
                                                 left: 16, top: 24),
-                                            child: Text(AppLocalizations.of(context).translate('repeat_frequency'),
+                                            child: Text(AppLocalizations.of(context)!.translate('repeat_frequency'),
                                               style: styleElements.subtitle1ThemeScalable(context),
                                               textAlign: TextAlign.left,
                                             ),
@@ -240,7 +240,7 @@ class _CreateGoal extends State<CreateGoal> {
                                                   child: Checkbox(
                                                     activeColor: HexColor(AppColors.appMainColor),
                                                     value: repeat[key],
-                                                    onChanged: (bool value) {
+                                                    onChanged: (bool? value) {
                                                       setState(() {
                                                         repeat[key] = value;
                                                       });
@@ -284,7 +284,7 @@ class _CreateGoal extends State<CreateGoal> {
                                   child: Container(
                                     margin:
                                     const EdgeInsets.only(left: 16, top: 24),
-                                    child: Text(AppLocalizations.of(context).translate('target_date'),
+                                    child: Text(AppLocalizations.of(context)!.translate('target_date'),
                                       style:styleElements.subtitle1ThemeScalable(context),
                                       textAlign: TextAlign.left,
                                     ),
@@ -298,7 +298,7 @@ class _CreateGoal extends State<CreateGoal> {
                           child: Container(
                             margin: const EdgeInsets.only(
                                 left: 16, top: 4, right: 16, bottom: 16),
-                            child: Text(AppLocalizations.of(context).translate('none'),
+                            child: Text(AppLocalizations.of(context)!.translate('none'),
                               style:styleElements.captionThemeScalable(context),
                               textAlign: TextAlign.left,
                             ),
@@ -429,7 +429,7 @@ class _CreateGoal extends State<CreateGoal> {
                                           margin: const EdgeInsets.only(
                                               top: 16, left: 16, right: 16),
                                           child: Text(
-                                            AppLocalizations.of(context).translate('assign_to'),
+                                            AppLocalizations.of(context)!.translate('assign_to'),
                                             style: styleElements.subtitle1ThemeScalable(context),
                                             textAlign: TextAlign.center,
                                           ),
@@ -470,24 +470,23 @@ class _CreateGoal extends State<CreateGoal> {
           context: context,
           builder: (context) => new AlertDialog(
             title: new Text(
-                AppLocalizations.of(context).translate('are_you_sure')),
+                AppLocalizations.of(context)!.translate('are_you_sure')),
             content: new Text(
-                AppLocalizations.of(context).translate('exit_tricycle')),
+                AppLocalizations.of(context)!.translate('exit_tricycle')),
             actions: <Widget>[
               new GestureDetector(
                 onTap: () => Navigator.of(context).pop(false),
-                child: Text(AppLocalizations.of(context).translate('no')),
+                child: Text(AppLocalizations.of(context)!.translate('no')),
               ),
               SizedBox(height: 16),
               new GestureDetector(
                 onTap: () {
                   SystemChannels.platform.invokeMethod('SystemNavigator.pop');
                 },
-                child: Text(AppLocalizations.of(context).translate('yes')),
+                child: Text(AppLocalizations.of(context)!.translate('yes')),
               ),
             ],
           ),
-        ) ??
-        false;
+        ).then((value) => value as bool) ;
   }
 }

@@ -18,9 +18,9 @@ import 'package:simple_gesture_detector/simple_gesture_detector.dart';
 
 // ignore: must_be_immutable
 class TwoWayStrollPage extends StatefulWidget {
-  Null Function() callBack;
-  PostListItem postData;
-  int postId;
+  Null Function()? callBack;
+  PostListItem? postData;
+  int? postId;
 
   TwoWayStrollPage({this.postData, this.postId});
 
@@ -30,15 +30,15 @@ class TwoWayStrollPage extends StatefulWidget {
 
 class TwoWayStrollPageState extends State<TwoWayStrollPage>
     with SingleTickerProviderStateMixin {
-  Null Function() callBack;
-  PAGINATOR_ENUMS pageEnum;
+  Null Function()? callBack;
+  PAGINATOR_ENUMS? pageEnum;
   List<PostCardDetailPage> detailPagesList = [];
-  List<PostListItem> postList = [];
+  List<PostListItem?> postList = [];
   int totalItems = 0;
-  SharedPreferences prefs;
+  SharedPreferences? prefs;
   int page = 1;
   String postType = 'news';
-  TextStyleElements styleElements;
+  TextStyleElements? styleElements;
   List<PostSubTypeListItem> selectedList = [];
   List<String> listOfSelections = [];
   String topic = "Choose topic";
@@ -46,13 +46,13 @@ class TwoWayStrollPageState extends State<TwoWayStrollPage>
   int _currentPage = 0;
   int mSelectedPosition = 0;
   bool isFirstCall = true;
-  int postId;
+  int? postId;
 
   @override
   void initState() {
     pageEnum = PAGINATOR_ENUMS.SUCCESS;
 
-    postId = widget.postData.postId;
+    postId = widget.postData!.postId;
     detailPagesList.add(PostCardDetailPage(
       postData: widget.postData,
     ));
@@ -62,7 +62,7 @@ class TwoWayStrollPageState extends State<TwoWayStrollPage>
   }
 
   Future<void> firstCall() async {
-    await fetchList("next", widget.postData.postId);
+    await fetchList("next", widget.postData!.postId);
   }
 
   @override
@@ -81,11 +81,11 @@ class TwoWayStrollPageState extends State<TwoWayStrollPage>
       _currentPage = index;
     });
     if (_currentPage == 0) {
-      fetchList("previous", postList[0].postId);
+      fetchList("previous", postList[0]!.postId);
     }
 
     if (_currentPage == detailPagesList.length - 1) {
-      fetchList("next", postList[postList.length - 1].postId);
+      fetchList("next", postList[postList.length - 1]!.postId);
     }
   }
 
@@ -106,6 +106,7 @@ class TwoWayStrollPageState extends State<TwoWayStrollPage>
   }
 
   _buildPage() {
+    // ignore: missing_enum_constant_in_switch
     switch (pageEnum) {
       case PAGINATOR_ENUMS.SUCCESS:
         return Container(
@@ -153,23 +154,24 @@ class TwoWayStrollPageState extends State<TwoWayStrollPage>
     setState(() async {
       Navigator.of(context).pop(true);
     });
+    return new Future(() => false);
   }
 
-  Future<void> fetchList(String listType, int id) async {
+  Future<void> fetchList(String listType, int? id) async {
     final body = jsonEncode({
       "post_id": id,
       "page_size": 10,
       "page_number": 1,
-      "post_type": widget.postData.postType,
+      "post_type": widget.postData!.postType,
       "list_type": listType
     });
     var res = await Calls().call(body, context, Config.DETAIL_PAGE_PAGINATION);
     PostListResponse.fromJson(res);
     if (PostListResponse.fromJson(res).statusCode == Strings.success_code &&
         PostListResponse.fromJson(res).rows != null &&
-        PostListResponse.fromJson(res).rows.isNotEmpty) {
+        PostListResponse.fromJson(res).rows!.isNotEmpty) {
       List<PostCardDetailPage> newList = [];
-      for (var item in PostListResponse.fromJson(res).rows) {
+      for (var item in PostListResponse.fromJson(res).rows!) {
         newList.add(PostCardDetailPage(
           postData: item,
         ));
@@ -183,9 +185,9 @@ class TwoWayStrollPageState extends State<TwoWayStrollPage>
           : detailPagesList.addAll(newList);
 
       listType == "previous"
-          ? postList = (new List.from(PostListResponse.fromJson(res).rows)
+          ? postList = (new List.from(PostListResponse.fromJson(res).rows!)
             ..addAll(postList))
-          : postList.addAll(PostListResponse.fromJson(res).rows);
+          : postList.addAll(PostListResponse.fromJson(res).rows!);
 
       listType == "previous"
           ? mSelectedPosition = newList.length - 1

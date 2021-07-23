@@ -1,10 +1,10 @@
 class FollowUnfollowBlockPayload {
-  String actionByObjectType;
-  int actionByObjectId;
-  String actionOnObjectType;
-  int actionOnObjectId;
-  String engageFlag;
-  String actionDetails;
+  String? actionByObjectType;
+  int? actionByObjectId;
+  String? actionOnObjectType;
+  int? actionOnObjectId;
+  String? engageFlag;
+  String? actionDetails;
 
   FollowUnfollowBlockPayload(
       {this.actionByObjectType,

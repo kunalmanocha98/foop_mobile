@@ -1,8 +1,8 @@
 class SectionData {
-  String statusCode;
-  String message;
-  List<Rows> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<Rows>? rows;
+  int? total;
 
   SectionData({this.statusCode, this.message, this.rows, this.total});
 
@@ -12,7 +12,7 @@ class SectionData {
     if (json['rows'] != null) {
       rows = <Rows>[];
       json['rows'].forEach((v) {
-        rows.add(new Rows.fromJson(v));
+        rows!.add(new Rows.fromJson(v));
       });
     }
     total = json['total'];
@@ -23,7 +23,7 @@ class SectionData {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -31,9 +31,9 @@ class SectionData {
 }
 
 class Rows {
-  int id;
-  String sectionName;
-  String sectionDescription;
+  int? id;
+  String? sectionName;
+  String? sectionDescription;
 bool isSelected=false;
   Rows({this.id, this.sectionName, this.sectionDescription});
 

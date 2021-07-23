@@ -1,8 +1,8 @@
 class CreateReferraResponselEntity {
-  String statusCode;
-  String message;
-  Rows rows;
-  int total;
+  String? statusCode;
+  String? message;
+  Rows? rows;
+  int? total;
 
   CreateReferraResponselEntity(
       {this.statusCode, this.message, this.rows, this.total});
@@ -19,7 +19,7 @@ class CreateReferraResponselEntity {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     data['total'] = this.total;
     return data;
@@ -27,19 +27,19 @@ class CreateReferraResponselEntity {
 }
 
 class Rows {
-  int id;
-  int institutionId;
-  int referredByPersonId;
-  String referredByPersonMobileNumber;
-  String referredByUpiId;
+  int? id;
+  int? institutionId;
+  int? referredByPersonId;
+  String? referredByPersonMobileNumber;
+  String? referredByUpiId;
   Null referredDate;
   Null adminStaffPersonId;
   Null referralDate;
-  String firstName;
-  String lastName;
-  String gender;
+  String? firstName;
+  String? lastName;
+  String? gender;
   Null refferedByImageUrl;
-  String dateOfBirth;
+  String? dateOfBirth;
 
   Rows(
       {this.id,

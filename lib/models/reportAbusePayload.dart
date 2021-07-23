@@ -1,10 +1,10 @@
 class ReportAbusePayload {
-  String reportedByType;
-  int reportedById;
-  String reportedContextType;
-  int reportedContextId;
-  String abuseType;
-  String abuseDetails;
+  String? reportedByType;
+  int? reportedById;
+  String? reportedContextType;
+  int? reportedContextId;
+  String? abuseType;
+  String? abuseDetails;
 
   ReportAbusePayload(
       {this.reportedByType,

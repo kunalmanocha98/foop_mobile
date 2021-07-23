@@ -44,13 +44,13 @@ class UpcomingTalkListPageState extends State<UpcomingTalkListPage> {
   static const String ON_EVENT_CREATE = "event_create";
 
   List<EventListItem> eventList = [];
-  SharedPreferences prefs = locator<SharedPreferences>();
-  SocketService socketService = locator<SocketService>();
-  AudioSocketService audioSocketService = locator<AudioSocketService>();
+  SharedPreferences? prefs = locator<SharedPreferences>();
+  SocketService? socketService = locator<SocketService>();
+  AudioSocketService? audioSocketService = locator<AudioSocketService>();
   List<EventListItem> confirmedList = [];
   PAGINATOR_ENUMS pageEnum = PAGINATOR_ENUMS.LOADING;
   int page = 1;
-  int totalItems = 0;
+  int? totalItems = 0;
   bool loadSuggestions = false;
   int i = 0;
   GlobalKey<TalkEventPageState> talk = GlobalKey();
@@ -59,7 +59,7 @@ class UpcomingTalkListPageState extends State<UpcomingTalkListPage> {
   void initState() {
     super.initState();
     setUpSocket();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       initialFutureCall();
     });
   }
@@ -73,21 +73,21 @@ class UpcomingTalkListPageState extends State<UpcomingTalkListPage> {
   }
 
   void setUpSocket() {
-    audioSocketService.getSocket().on(ON_EVENT_LIVE, onEventLive);
-    audioSocketService.getSocket().on(EMIT_ON_EVENT_RATING, onEventRating);
-    audioSocketService.getSocket().on(ON_EVENT_CREATE, onEventCreate);
+    audioSocketService!.getSocket()!.on(ON_EVENT_LIVE, onEventLive);
+    audioSocketService!.getSocket()!.on(EMIT_ON_EVENT_RATING, onEventRating);
+    audioSocketService!.getSocket()!.on(ON_EVENT_CREATE, onEventCreate);
   }
 
   void switchOffSocket() {
-    audioSocketService.getSocket().off(ON_EVENT_LIVE, onEventLive);
-    audioSocketService.getSocket().off(EMIT_ON_EVENT_RATING, onEventRating);
-    audioSocketService.getSocket().off(ON_EVENT_CREATE, onEventCreate);
+    audioSocketService!.getSocket()!.off(ON_EVENT_LIVE, onEventLive);
+    audioSocketService!.getSocket()!.off(EMIT_ON_EVENT_RATING, onEventRating);
+    audioSocketService!.getSocket()!.off(ON_EVENT_CREATE, onEventCreate);
   }
 
   void initialFutureCall() async {
     prefs ??= await SharedPreferences.getInstance();
     TalkEventListRequest payload = TalkEventListRequest();
-    payload.eventOwnerId = prefs.getInt(Strings.userId);
+    payload.eventOwnerId = prefs!.getInt(Strings.userId);
     payload.eventOwnerType = 'person';
     payload.pageNumber = page;
     payload.pageSize = 10;
@@ -97,9 +97,9 @@ class UpcomingTalkListPageState extends State<UpcomingTalkListPage> {
         .call(jsonEncode(payload), context, Config.TALK_EVENT_LIST);
     var response = EventListResponse.fromJson(res);
     if (response.statusCode == Strings.success_code) {
-      if(response.rows!=null && response.rows.length >0) {
+      if(response.rows!=null && response.rows!.length >0) {
         setState(() {
-          confirmedList.addAll(response.rows);
+          confirmedList.addAll(response.rows!);
           totalItems = response.total;
           pageEnum = PAGINATOR_ENUMS.SUCCESS;
         });
@@ -127,7 +127,7 @@ class UpcomingTalkListPageState extends State<UpcomingTalkListPage> {
               appBar: TricycleAppBar().getCustomAppBar(
                 context,
                 appBarTitle:
-                AppLocalizations.of(context).translate('upcoming_talks'),
+                AppLocalizations.of(context)!.translate('upcoming_talks'),
                 onBackButtonPress: () {
                   switchOffSocket();
                   Navigator.pop(context);
@@ -137,9 +137,9 @@ class UpcomingTalkListPageState extends State<UpcomingTalkListPage> {
         ));
   }
 
-  int _getItemCount() {
+  int? _getItemCount() {
     if (!loadSuggestions) {
-      if (totalItems > confirmedList.length) {
+      if (totalItems! > confirmedList.length) {
         print("count ${confirmedList.length + 1}");
         return confirmedList.length + 1;
       } else {
@@ -149,7 +149,7 @@ class UpcomingTalkListPageState extends State<UpcomingTalkListPage> {
         return confirmedList.length + 1;
       }
     } else {
-      if (totalItems > confirmedList.length) {
+      if (totalItems! > confirmedList.length) {
         print("count ${confirmedList.length + 1}");
         return confirmedList.length + 1;
       } else {
@@ -174,7 +174,7 @@ class UpcomingTalkListPageState extends State<UpcomingTalkListPage> {
 
   Widget emptyListWidgetMaker() {
     return CustomPaginator(context).emptyListWidgetMaker(null,
-        message: AppLocalizations.of(context).translate('no_events_found'),
+        message: AppLocalizations.of(context)!.translate('no_events_found'),
         assetImage: 'assets/appimages/live.png');
   }
 
@@ -195,8 +195,8 @@ class UpcomingTalkListPageState extends State<UpcomingTalkListPage> {
               return CustomPaginator(context).loadingWidgetMaker();
             case ConnectionState.done:
               {
-                if (snapshot.data.rows != null) {
-                  confirmedList.addAll(snapshot.data.rows);
+                if (snapshot.data!.rows != null) {
+                  confirmedList.addAll(snapshot.data!.rows!);
                 }
                 page++;
                 Future.microtask(() {
@@ -212,14 +212,14 @@ class UpcomingTalkListPageState extends State<UpcomingTalkListPage> {
     }
   }
 
-  List<EventListItem> listItemsGetter(EventListResponse pageData) {
-    eventList.addAll(pageData.rows);
+  List<EventListItem>? listItemsGetter(EventListResponse pageData) {
+    eventList.addAll(pageData.rows!);
     return pageData.rows;
   }
 
   Future<EventListResponse> fetchList(int page) async {
     TalkEventListRequest payload = TalkEventListRequest();
-    payload.eventOwnerId = prefs.getInt(Strings.userId);
+    payload.eventOwnerId = prefs!.getInt(Strings.userId);
     payload.eventOwnerType = 'person';
     payload.pageNumber = page;
     payload.pageSize = 10;
@@ -232,7 +232,7 @@ class UpcomingTalkListPageState extends State<UpcomingTalkListPage> {
 
   Future<EventListResponse> fetchListSuggestions(int page) async {
     TalkEventListRequest payload = TalkEventListRequest();
-    payload.eventOwnerId = prefs.getInt(Strings.userId);
+    payload.eventOwnerId = prefs!.getInt(Strings.userId);
     payload.eventOwnerType = 'person';
     payload.pageNumber = page;
     payload.pageSize = 10;
@@ -244,7 +244,7 @@ class UpcomingTalkListPageState extends State<UpcomingTalkListPage> {
     if (response.statusCode == Strings.success_code) {
       if (i == 0) {
         i++;
-        totalItems = totalItems + response.total;
+        totalItems = totalItems! + response.total!;
       }
     }
     return response;
@@ -257,17 +257,17 @@ class UpcomingTalkListPageState extends State<UpcomingTalkListPage> {
       title: confirmedList[index].title,
       description: confirmedList[index].subtitle,
       dateVisible: true,
-      date: DateTime.fromMillisecondsSinceEpoch(confirmedList[index].startTime),
+      date: DateTime.fromMillisecondsSinceEpoch(confirmedList[index].startTime!),
       isLive: false,
       byTitle: ' by ' +
-          confirmedList[index].header.title +
+          confirmedList[index].header!.title! +
           ', ' +
-          confirmedList[index].header.subtitle1,
-      byImage: confirmedList[index].header.avatar,
+          confirmedList[index].header!.subtitle1!,
+      byImage: confirmedList[index].header!.avatar,
       onlyHeader: false,
       isShareVisible: true,
-      cardRating: confirmedList[index].header.rating ?? 0.0,
-      isRated: getIsRated(confirmedList[index].header),
+      cardRating: confirmedList[index].header!.rating ?? 0.0,
+      isRated: getIsRated(confirmedList[index].header!),
       shareCallback: () {
         shareCallback(confirmedList[index].id);
       },
@@ -314,14 +314,14 @@ class UpcomingTalkListPageState extends State<UpcomingTalkListPage> {
                   date: Utility().getDateFormat(
                       'dd MMM yyyy HH:mm',
                       DateTime.fromMillisecondsSinceEpoch(
-                          confirmedList[index].startTime)),
+                          confirmedList[index].startTime!)),
                   okCallback: () {
                     Navigator.push(
                         context,
                         TricycleRouteSlideBottom(
                             page: TalkEventPage(
                               key: talk,
-                              socket: socketService.getSocket(),
+                              socket: socketService!.getSocket(),
                               eventModel: confirmedList[index],
                               successCallback: refresh,
                             )));
@@ -350,7 +350,7 @@ class UpcomingTalkListPageState extends State<UpcomingTalkListPage> {
                   date: Utility().getDateFormat(
                       'dd MMM yyyy HH:mm',
                       DateTime.fromMillisecondsSinceEpoch(
-                          confirmedList[index].startTime)),
+                          confirmedList[index].startTime!)),
                 );
               });
         }
@@ -358,20 +358,20 @@ class UpcomingTalkListPageState extends State<UpcomingTalkListPage> {
     );
   }
 
-  final CreateDeeplink createDeeplink = locator<CreateDeeplink>();
+  final CreateDeeplink? createDeeplink = locator<CreateDeeplink>();
 
-  void shareCallback(int eventId) {
-    createDeeplink.getDeeplink(
+  void shareCallback(int? eventId) {
+    createDeeplink!.getDeeplink(
         SHAREITEMTYPE.DETAIL.type,
-        prefs.getInt(Strings.userId).toString(),
+        prefs!.getInt(Strings.userId).toString(),
         eventId,
         DEEPLINKTYPE.CALENDAR.type,
         context);
   }
 
   bool getIsRated(Header header) {
-    bool isRated;
-    for (var i in header.action) {
+    bool? isRated;
+    for (var i in header.action!) {
       if (i.type == 'is_rated') {
         isRated = i.value;
         break;
@@ -380,17 +380,17 @@ class UpcomingTalkListPageState extends State<UpcomingTalkListPage> {
     return isRated ??= false;
   }
 
-  emitRatingSuccess(int id) {
+  emitRatingSuccess(int? id) {
     JoinEventPayload payload = JoinEventPayload();
     payload.eventId = id;
-    payload.personId = prefs.getInt(Strings.userId);
-    audioSocketService.getSocket().emit(EMIT_ON_EVENT_RATING, payload);
+    payload.personId = prefs!.getInt(Strings.userId);
+    audioSocketService!.getSocket()!.emit(EMIT_ON_EVENT_RATING, payload);
   }
 
   onEventRating(data) {
     log("OnEvent--Rated-campus page-----" + jsonEncode(data));
     var res = EventListItem.fromJson(data);
-    log("OnEvent--Rated-campus page-----" + res.header.rating.toString());
+    log("OnEvent--Rated-campus page-----" + res.header!.rating.toString());
     if (confirmedList.any((element) {
       return element.id == res.id;
     })) {
@@ -414,7 +414,7 @@ class UpcomingTalkListPageState extends State<UpcomingTalkListPage> {
         return element.id == res.id;
       });
       confirmedList.removeAt(index);
-      totalItems--;
+      totalItems=totalItems!-1;
       Future.microtask(() {
         setState(() {});
       });
@@ -427,9 +427,9 @@ class UpcomingTalkListPageState extends State<UpcomingTalkListPage> {
     if (!confirmedList.any((element) {
       return element.id == res.id;
     })) {
-      if (res.eventOwnerId != prefs.getInt(Strings.userId)) {
+      if (res.eventOwnerId != prefs!.getInt(Strings.userId)) {
         confirmedList.insert(0, res);
-        totalItems++;
+        totalItems=totalItems!+1;
         Future.microtask(() {
           setState(() {});
         });

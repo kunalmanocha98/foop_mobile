@@ -5,10 +5,10 @@ import 'package:oho_works_app/models/post/postlist.dart';
 import 'Rooms/roomlistmodels.dart';
 
 class BaseResponses {
-  List<CommonCardData> rows;
-  String statusCode;
-  String message;
-  int total;
+  List<CommonCardData>? rows;
+  String? statusCode;
+  String? message;
+  int? total;
 
   BaseResponses({this.rows, this.statusCode, this.message, this.total});
 
@@ -19,7 +19,7 @@ class BaseResponses {
     if (json['rows'] != null) {
       rows = [];//CommonCardData>();
       json['rows'].forEach((v) {
-        if (v != null) rows.add(new CommonCardData.fromJson(v));
+        if (v != null) rows!.add(new CommonCardData.fromJson(v));
       });
     }
   }
@@ -30,73 +30,73 @@ class BaseResponses {
     data['message'] = this.message;
     data['total'] = this.total;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class CommonCardData {
-  List<Data> data;
-  List<SubRow> subRow;
-  String id;
-  bool isUserExist;
-  String userName;
-  bool isVerified;
-  String locality;
-  String localityInstitute;
-  String institutionId;
-  String type;
-  String classTeacherName;
-  String totalCount;
-  String cardName;
-  String cardNames;
-  String image;
-  String coverImage;
-  String name;
-  String backgroundColor;
-  String title;
-  bool isIntroCard;
-  bool isEditable;
-  String textOne;
-  String textTwo;
-  String textThree;
-  String textFour;
-  String textFive;
-  String textSix;
-  String textSeven;
-  String textEight;
-  String textTen;
-  String textEleven;
-  String textTwelve;
-  bool isCurrent;
-  String textNine;
-  bool isFollow;
-  bool isFollow2;
-  bool isShowMore;
-  bool isBlur;
-  String urlOne;
-  String urlThree;
-  String urlFour;
-  String urlTwo;
-  double ratingValue;
-  double ratingValueFiveStar;
-  double ratingValueFourStar;
-  double ratingValueThreeStar;
-  double ratingValueTwoStar;
-  double ratingValueOneStar;
-  int progress;
-  String imageUrl;
-  String moneyVal;
-  String quote;
-  int givenRating;
-  int givenratingid;
-  int givenreviewid;
-  String givenReview;
-  double lat;
-  double lon;
-  String heading;
-  String coins;
+  List<Data>? data;
+  List<SubRow>? subRow;
+  String? id;
+  bool? isUserExist;
+  String? userName;
+  bool? isVerified;
+  String? locality;
+  String? localityInstitute;
+  String? institutionId;
+  String? type;
+  String? classTeacherName;
+  String? totalCount;
+  String? cardName;
+  String? cardNames;
+  String? image;
+  String? coverImage;
+  String? name;
+  String? backgroundColor;
+  String? title;
+  bool? isIntroCard;
+  bool? isEditable;
+  String? textOne;
+  String? textTwo;
+  String? textThree;
+  String? textFour;
+  String? textFive;
+  String? textSix;
+  String? textSeven;
+  String? textEight;
+  String? textTen;
+  String? textEleven;
+  String? textTwelve;
+  bool? isCurrent;
+  String? textNine;
+  bool? isFollow;
+  bool? isFollow2;
+  bool? isShowMore;
+  bool? isBlur;
+  String? urlOne;
+  String? urlThree;
+  String? urlFour;
+  String? urlTwo;
+  double? ratingValue;
+  double? ratingValueFiveStar;
+  double? ratingValueFourStar;
+  double? ratingValueThreeStar;
+  double? ratingValueTwoStar;
+  double? ratingValueOneStar;
+  int? progress;
+  String? imageUrl;
+  String? moneyVal;
+  String? quote;
+  int? givenRating;
+  int? givenratingid;
+  int? givenreviewid;
+  String? givenReview;
+  double? lat;
+  double? lon;
+  String? heading;
+  String? coins;
 
   CommonCardData.fromJson(Map<String, dynamic> json) {
     progress = json['progress'];
@@ -163,14 +163,14 @@ class CommonCardData {
     if (json['subRow'] != null) {
       subRow = [];//SubRow>();
       json['subRow'].forEach((v) {
-        subRow.add(new SubRow.fromJson(v));
+        subRow!.add(new SubRow.fromJson(v));
       });
     }
     cardNames = json['card_name'];
     if (json['data'] != null) {
       data = [];//Data>();
       json['data'].forEach((v) {
-        data.add(new Data.fromJson(v));
+        data!.add(new Data.fromJson(v));
       });
     }
   }
@@ -178,7 +178,7 @@ class CommonCardData {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.data != null) {
-      data['data'] = this.data.map((v) => v.toJson()).toList();
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
     data['lat'] = this.lat;
     data['lon'] = this.lon;
@@ -238,7 +238,7 @@ class CommonCardData {
     data['coins'] = this.coins;
     data['heading'] = this.heading;
     if (this.subRow != null) {
-      data['subRow'] = this.subRow.map((v) => v.toJson()).toList();
+      data['subRow'] = this.subRow!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -247,48 +247,48 @@ class CommonCardData {
 }
 
 class Data {
-  int id;
-  String quotedByName;
-  String quoteText;
-  String suggestedType;
-  String quoteImageThumbnailUrl;
-  String quoteImageUrl;
-  String bannerText;
-  String bannerImageThumbnailUrl;
-  String bannerImageUrl;
-  String bannerSeq;
-  String title;
-  String subtitle;
-  String avatar;
-  bool isFollowed;
-  int postDatetime;
-  bool isBookmarked;
-  String postOwnerType;
-  int postOwnerTypeId;
-  String postType;
-  int postId;
+  int? id;
+  String? quotedByName;
+  String? quoteText;
+  String? suggestedType;
+  String? quoteImageThumbnailUrl;
+  String? quoteImageUrl;
+  String? bannerText;
+  String? bannerImageThumbnailUrl;
+  String? bannerImageUrl;
+  String? bannerSeq;
+  String? title;
+  String? subtitle;
+  String? avatar;
+  bool? isFollowed;
+  int? postDatetime;
+  bool? isBookmarked;
+  String? postOwnerType;
+  int? postOwnerTypeId;
+  String? postType;
+  int? postId;
   Null postTypeReferenceId;
-  PostContent postContent;
-  bool isRequestedByMember;
-  String roomOwnerType;
-  int roomOwnerTypeId;
-  int roomInstitutionId;
-  String roomName;
-  String roomDescription;
-  bool isPrivate;
-  bool isSharable;
-  String roomStatus;
-  String roomType;
-  String roomCreatedByType;
-  int roomCreatedById;
-  int membersCount;
-  String membershipStatus;
-  String memberRoleType;
-  String roomProfileImageUrl;
-  bool isAutoGeneratedRoom;
-  HeaderRoom header;
-  List<MembersList> membersList;
-  bool isVoted;
+  PostContent? postContent;
+  bool? isRequestedByMember;
+  String? roomOwnerType;
+  int? roomOwnerTypeId;
+  int? roomInstitutionId;
+  String? roomName;
+  String? roomDescription;
+  bool? isPrivate;
+  bool? isSharable;
+  String? roomStatus;
+  String? roomType;
+  String? roomCreatedByType;
+  int? roomCreatedById;
+  int? membersCount;
+  String? membershipStatus;
+  String? memberRoleType;
+  String? roomProfileImageUrl;
+  bool? isAutoGeneratedRoom;
+  HeaderRoom? header;
+  List<MembersList>? membersList;
+  bool? isVoted;
 
   Data(
       {this.id,
@@ -381,7 +381,7 @@ class Data {
     header = json['header'] != null ? new HeaderRoom.fromJson(json['header']) : null;
     if (json['members_list'] != null) {
       membersList = [];//MembersList>();
-      json['members_list'].forEach((v) {membersList.add(new MembersList.fromJson(v));});
+      json['members_list'].forEach((v) {membersList!.add(new MembersList.fromJson(v));});
     }
   }
 
@@ -409,7 +409,7 @@ class Data {
     data['post_id'] = this.postId;
     data['post_type_reference_id'] = this.postTypeReferenceId;
     if (this.postContent != null) {
-      data['post_content'] = this.postContent.toJson();
+      data['post_content'] = this.postContent!.toJson();
     }
     data['is_voted'] = this.isVoted;
     data['is_requested_by_member']=this.isRequestedByMember;
@@ -430,22 +430,22 @@ class Data {
     data['room_profile_image_url'] = this.roomProfileImageUrl;
     data['is_auto_created'] = this.isAutoGeneratedRoom;
     if (this.header != null) {
-      data['header'] = this.header.toJson();
+      data['header'] = this.header!.toJson();
     }
     if (this.membersList != null) {
-      data['members_list'] = this.membersList.map((v) => v.toJson()).toList();
+      data['members_list'] = this.membersList!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class HeaderRoom {
-  String title;
-  List<Action> action;
-  String avatar;
-  double rating;
-  String subtitle1;
-  bool isVerified;
+  String? title;
+  List<Action>? action;
+  String? avatar;
+  double? rating;
+  String? subtitle1;
+  bool? isVerified;
 
   HeaderRoom(
       {this.title,
@@ -460,7 +460,7 @@ class HeaderRoom {
     if (json['action'] != null) {
       action = [];//Action>();
       json['action'].forEach((v) {
-        action.add(new Action.fromJson(v));
+        action!.add(new Action.fromJson(v));
       });
     }
     avatar = json['avatar'];
@@ -474,7 +474,7 @@ class HeaderRoom {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['title'] = this.title;
     if (this.action != null) {
-      data['action'] = this.action.map((v) => v.toJson()).toList();
+      data['action'] = this.action!.map((v) => v.toJson()).toList();
     }
     data['avatar'] = this.avatar;
     data['rating'] = this.rating;
@@ -484,8 +484,8 @@ class HeaderRoom {
   }
 }
 class Action {
-  String type;
-  bool value;
+  String? type;
+  bool? value;
 
   Action({this.type, this.value});
 
@@ -504,72 +504,72 @@ class Action {
 
 
 class SubRow {
-  List<SubRowInternal> subRow;
-  List<String> images;
-  String personType;
-  String locality;
-  String isUserAuthorized;
-  int starRatingId;
-  String imageUrl;
-  String childId;
-  bool isFollow2;
-  String standardExpertiseCategoryTypes;
-  List<String> abilites;
-  String institutionCourse;
-  String institutionSubject;
-  String institutionAcademicYearId;
-  String standardExpertiseCategoryId;
-  String standardExpertiseCategoryTypeId;
-  String institutionClassId;
-  String instSubjectId;
-  int allInstitutions;
-  int allInstitutionsId;
-  String institutionId;
-  String id;
-  int institutionClass;
-  int rattingStar;
-  double avgRating;
-  String totalCount;
-  String language;
-  String course;
-  String department;
-  String gradientOne;
-  String gradientTwo;
-  String cardName;
-  String backgroundColor;
-  String title;
-  bool isEditable;
-  bool isIntroCard;
-  String textOne;
-  String textTwo;
-  String textThree;
-  String textFour;
-  String textFive;
-  String textSix;
-  String textSeven;
-  String textEight;
-  bool isFollow;
-  bool isShowMore;
-  bool isBlur;
-  bool isSelected;
-  String urlOne;
-  String urlThree;
-  String urlFour;
-  String urlTwo;
-  String ratingValue;
-  String ratingValueFiveStar;
-  String ratingValueFourStar;
-  String ratingValueThreeStar;
-  String ratingValueTwoStar;
-  String ratingValueOneStar;
-  String classTeacherName;
-  String chairperson;
+  List<SubRowInternal>? subRow;
+  List<String>? images;
+  String? personType;
+  String? locality;
+  String? isUserAuthorized;
+  int? starRatingId;
+  String? imageUrl;
+  String? childId;
+  bool? isFollow2;
+  String? standardExpertiseCategoryTypes;
+  List<String>? abilites;
+  String? institutionCourse;
+  String? institutionSubject;
+  String? institutionAcademicYearId;
+  String? standardExpertiseCategoryId;
+  String? standardExpertiseCategoryTypeId;
+  String? institutionClassId;
+  String? instSubjectId;
+  int? allInstitutions;
+  int? allInstitutionsId;
+  String? institutionId;
+  String? id;
+  int? institutionClass;
+  int? rattingStar;
+  double? avgRating;
+  String? totalCount;
+  String? language;
+  String? course;
+  String? department;
+  String? gradientOne;
+  String? gradientTwo;
+  String? cardName;
+  String? backgroundColor;
+  String? title;
+  bool? isEditable;
+  bool? isIntroCard;
+  String? textOne;
+  String? textTwo;
+  String? textThree;
+  String? textFour;
+  String? textFive;
+  String? textSix;
+  String? textSeven;
+  String? textEight;
+  bool? isFollow;
+  bool? isShowMore;
+  bool? isBlur;
+  bool? isSelected;
+  String? urlOne;
+  String? urlThree;
+  String? urlFour;
+  String? urlTwo;
+  String? ratingValue;
+  String? ratingValueFiveStar;
+  String? ratingValueFourStar;
+  String? ratingValueThreeStar;
+  String? ratingValueTwoStar;
+  String? ratingValueOneStar;
+  String? classTeacherName;
+  String? chairperson;
 
   SubRow.fromJson(Map<String, dynamic> json) {
     if (json['subRow'] != null) {
       subRow = [];//SubRowInternal>();
       json['subRow'].forEach((v) {
-        subRow.add(new SubRowInternal.fromJson(v));
+        subRow!.add(new SubRowInternal.fromJson(v));
       });
     }
     images =
@@ -638,7 +638,7 @@ class SubRow {
     final Map<String, dynamic> data = new Map<String, dynamic>();
 
     if (this.subRow != null) {
-      data['subRow'] = this.subRow.map((v) => v.toJson()).toList();
+      data['subRow'] = this.subRow!.map((v) => v.toJson()).toList();
     }
     data['institution_class'] = this.institutionClass;
     data['class_taecher_name'] = this.classTeacherName;
@@ -720,63 +720,63 @@ class SubRow {
 }
 
 class SubRowInternal {
-  List<String> images;
-  String personType;
-  String locality;
-  String isUserAuthorized;
-  int starRatingId;
-  String imageUrl;
-  String childId;
-  bool isFollow2;
-  String standardExpertiseCategoryTypes;
-  List<String> abilites;
-  String institutionCourse;
-  String institutionSubject;
-  String institutionAcademicYearId;
-  String standardExpertiseCategoryId;
-  String standardExpertiseCategoryTypeId;
-  String institutionClassId;
-  String instSubjectId;
-  int allInstitutions;
-  int allInstitutionsId;
-  String institutionId;
-  String id;
-  int institutionClass;
-  int rattingStar;
-  double avgRating;
-  String totalCount;
-  String language;
-  String course;
-  String gradientOne;
-  String gradientTwo;
-  String cardName;
-  String backgroundColor;
-  String title;
-  bool isEditable;
-  bool isIntroCard;
-  String textOne;
-  String textTwo;
-  String textThree;
-  String textFour;
-  String textFive;
-  String textSix;
-  String textSeven;
-  String textEight;
-  bool isFollow;
-  bool isShowMore;
-  bool isBlur;
-  String urlOne;
-  String urlThree;
-  String urlFour;
-  String urlTwo;
-  String ratingValue;
-  String ratingValueFiveStar;
-  String ratingValueFourStar;
-  String ratingValueThreeStar;
-  String ratingValueTwoStar;
-  String ratingValueOneStar;
-  String classTeacherName;
-  String chairperson;
+  List<String>? images;
+  String? personType;
+  String? locality;
+  String? isUserAuthorized;
+  int? starRatingId;
+  String? imageUrl;
+  String? childId;
+  bool? isFollow2;
+  String? standardExpertiseCategoryTypes;
+  List<String>? abilites;
+  String? institutionCourse;
+  String? institutionSubject;
+  String? institutionAcademicYearId;
+  String? standardExpertiseCategoryId;
+  String? standardExpertiseCategoryTypeId;
+  String? institutionClassId;
+  String? instSubjectId;
+  int? allInstitutions;
+  int? allInstitutionsId;
+  String? institutionId;
+  String? id;
+  int? institutionClass;
+  int? rattingStar;
+  double? avgRating;
+  String? totalCount;
+  String? language;
+  String? course;
+  String? gradientOne;
+  String? gradientTwo;
+  String? cardName;
+  String? backgroundColor;
+  String? title;
+  bool? isEditable;
+  bool? isIntroCard;
+  String? textOne;
+  String? textTwo;
+  String? textThree;
+  String? textFour;
+  String? textFive;
+  String? textSix;
+  String? textSeven;
+  String? textEight;
+  bool? isFollow;
+  bool? isShowMore;
+  bool? isBlur;
+  String? urlOne;
+  String? urlThree;
+  String? urlFour;
+  String? urlTwo;
+  String? ratingValue;
+  String? ratingValueFiveStar;
+  String? ratingValueFourStar;
+  String? ratingValueThreeStar;
+  String? ratingValueTwoStar;
+  String? ratingValueOneStar;
+  String? classTeacherName;
+  String? chairperson;
 
   SubRowInternal.fromJson(Map<String, dynamic> json) {
     images =

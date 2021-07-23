@@ -23,8 +23,8 @@ class ChangePassword extends StatefulWidget {
 class _ChangePassword extends  State<ChangePassword> {
   final passwordTextController = TextEditingController();
   final confirmpassController = TextEditingController();
-  BuildContext context;
-  TextStyleElements styleElements;
+  late BuildContext context;
+  late TextStyleElements styleElements;
   bool _validate = false;
   bool _validate2 = false;
   GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
@@ -49,8 +49,8 @@ class _ChangePassword extends  State<ChangePassword> {
       scrollPadding: const EdgeInsets.all(20.0),
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: AppLocalizations.of(context).translate('password'),
-          errorText:!_validate?AppLocalizations.of(context).translate("min_character"):null,
+          hintText: AppLocalizations.of(context)!.translate('password'),
+          errorText:!_validate?AppLocalizations.of(context)!.translate("min_character"):null,
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
           prefixIcon: Padding(
               padding: EdgeInsets.all(0.0),
@@ -76,8 +76,8 @@ class _ChangePassword extends  State<ChangePassword> {
       scrollPadding: const EdgeInsets.all(20.0),
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
-          hintText: AppLocalizations.of(context).translate('confirm_password'),
-          errorText:!_validate2?AppLocalizations.of(context).translate("min_character"):null,
+          hintText: AppLocalizations.of(context)!.translate('confirm_password'),
+          errorText:!_validate2?AppLocalizations.of(context)!.translate("min_character"):null,
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
           prefixIcon: Padding(
               padding: EdgeInsets.all(0.0),
@@ -111,7 +111,7 @@ class _ChangePassword extends  State<ChangePassword> {
                   margin: EdgeInsets.only(top: 16),
                   alignment: Alignment.center,
                   child: Text(
-                    AppLocalizations.of(context).translate("change_password"),
+                    AppLocalizations.of(context)!.translate("change_password"),
                     style: styleElements
                         .headline6ThemeScalable(context)
                         .copyWith(fontSize: 32),
@@ -144,7 +144,7 @@ class _ChangePassword extends  State<ChangePassword> {
                       key: progressButtonKey,
                       progressColor: HexColor(AppColors.appColorWhite),
                       progressSize: 20,
-                      child: Text(AppLocalizations.of(context).translate("submit"),
+                      child: Text(AppLocalizations.of(context)!.translate("submit"),
                       style: styleElements.subtitle1ThemeScalable(context).copyWith(
                         color: HexColor(AppColors.appColorWhite)
                       ),),
@@ -174,12 +174,12 @@ class _ChangePassword extends  State<ChangePassword> {
   }
 
   void changepassword(String pass) async {
-   progressButtonKey.currentState.show();
+   progressButtonKey.currentState!.show();
     final body = jsonEncode({
       "password": pass,
     });
     Calls().call(body, context, Config.CHANGEPASSWORD).then((value) async {
-      progressButtonKey.currentState.hide();
+      progressButtonKey.currentState!.hide();
       if (value != null) {
         var data = DynamicResponse.fromJson(value);
         if (data != null && data.statusCode == 'S10001') {
@@ -188,7 +188,7 @@ class _ChangePassword extends  State<ChangePassword> {
         }
       }
     }).catchError((onError) async {
-      progressButtonKey.currentState.hide();
+      progressButtonKey.currentState!.hide();
       ToastBuilder().showToast(onError.toString(), context,HexColor(AppColors.information));
     });
   }

@@ -12,19 +12,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DynamicLinkService {
-  final NavigationService _navigationService = locator<NavigationService>();
+  final NavigationService? _navigationService = locator<NavigationService>();
 
 
-  void handleDynamicLinks(BuildContext context, SharedPreferences prefs) async {
+  void handleDynamicLinks(BuildContext context, SharedPreferences? prefs) async {
     FirebaseDynamicLinks.instance.onLink(
-        onSuccess: (PendingDynamicLinkData dynamicLink) async {
+        onSuccess: (PendingDynamicLinkData? dynamicLink) async {
           _handleDeepLink(dynamicLink, prefs, context);
 
         }, onError: (OnLinkErrorException e) async {
 
     });
 
-    final PendingDynamicLinkData data = await FirebaseDynamicLinks.instance.getInitialLink();
+    final PendingDynamicLinkData? data = await FirebaseDynamicLinks.instance.getInitialLink();
     if(data!=null)
     {
       _handleDeepLink(data, prefs, context);
@@ -33,9 +33,9 @@ class DynamicLinkService {
 
   }
 
-  void _handleDeepLink(PendingDynamicLinkData data, SharedPreferences prefs,
+  void _handleDeepLink(PendingDynamicLinkData? data, SharedPreferences? prefs,
       BuildContext context) {
-    final Uri deepLink = data?.link;
+    final Uri? deepLink = data?.link;
     if (deepLink != null) {
 
      saveUserResponseOnCLik(deepLink.pathSegments,context,deepLink.toString());
@@ -82,7 +82,7 @@ class DynamicLinkService {
   }
 
   void handleProfilePageDeepLinking(
-      List<String> list, SharedPreferences prefs, BuildContext context,bool isEnIn) {
+      List<String> list, SharedPreferences? prefs, BuildContext context,bool isEnIn) {
     DeepLinkingPayload deepLinkingPayload = DeepLinkingPayload();
     if(isEnIn)
       {
@@ -94,11 +94,11 @@ class DynamicLinkService {
        if (list.length > 3) deepLinkingPayload.userId = int.parse(list[3]);
        if (list.length > 1) deepLinkingPayload.userType = list[0];
      }
-    _navigationService.navigateTo("/profile", deepLinkingPayload,context);
+    _navigationService!.navigateTo("/profile", deepLinkingPayload,context);
   }
 
   void handlePostDeepLink(
-      List<String> list, SharedPreferences prefs, BuildContext context,bool isEnIn) {
+      List<String> list, SharedPreferences? prefs, BuildContext context,bool isEnIn) {
     DeepLinkingPayload deepLinkingPayload = DeepLinkingPayload();
     if(isEnIn)
       {  if (list.length > 3) deepLinkingPayload.postId = int.parse(list[3]);
@@ -108,21 +108,21 @@ class DynamicLinkService {
       if (list.length > 1) deepLinkingPayload.userType = list[0];
     }
 
-    _navigationService.navigateTo("/postDetailPage", deepLinkingPayload,context);
+    _navigationService!.navigateTo("/postDetailPage", deepLinkingPayload,context);
   }
   void handleRoom(
-      List<String> list, SharedPreferences prefs, BuildContext context,bool isEnIn) {
+      List<String> list, SharedPreferences? prefs, BuildContext context,bool isEnIn) {
     DeepLinkingPayload deepLinkingPayload = DeepLinkingPayload();
     if (list.length > 3) deepLinkingPayload.postId = int.parse(list[3]);
     if (list.length > 1) deepLinkingPayload.userType = list[1];
-    _navigationService.navigateTo("/room_detail", deepLinkingPayload,context);
+    _navigationService!.navigateTo("/room_detail", deepLinkingPayload,context);
   }
   void handleEvent(
-      List<String> list, SharedPreferences prefs, BuildContext context,bool isEnIn) {
+      List<String> list, SharedPreferences? prefs, BuildContext context,bool isEnIn) {
     DeepLinkingPayload deepLinkingPayload = DeepLinkingPayload();
     if (list.length > 3) deepLinkingPayload.postId = int.parse(list[1]);
     if (list.length > 1) deepLinkingPayload.userType = list[1];
-    _navigationService.navigateTo("/event_detail", deepLinkingPayload,context);
+    _navigationService!.navigateTo("/event_detail", deepLinkingPayload,context);
   }
   void saveUserResponseOnCLik( List<String> list,  BuildContext context,String url) async {
     SharedPreferences prefs=await SharedPreferences.getInstance();

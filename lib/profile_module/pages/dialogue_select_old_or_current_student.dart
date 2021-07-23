@@ -12,9 +12,9 @@ import '../../ui/camera_module/photo_preview_screen.dart';
 class SelectStudentTypeDialog extends StatelessWidget {
   String title;
   String subtitle;
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
   String type;
-  int id;
+  int? id;
 
   Size displaySize(BuildContext context) {
     debugPrint('Size = ' + MediaQuery.of(context).size.toString());
@@ -32,11 +32,11 @@ class SelectStudentTypeDialog extends StatelessWidget {
   }
 
   SelectStudentTypeDialog({
-    Key key,
-    @required this.id,
-    @required this.type,
-    @required this.title,
-    @required this.subtitle,
+    Key? key,
+    required this.id,
+    required this.type,
+    required this.title,
+    required this.subtitle,
   }) : super(key: key);
   RandomColor _randomColor = RandomColor();
 
@@ -119,7 +119,7 @@ class SelectStudentTypeDialog extends StatelessWidget {
                                       color: HexColor(AppColors.appColorWhite),
                                     ),
                                     Text(
-                                      AppLocalizations.of(context)
+                                      AppLocalizations.of(context)!
                                           .translate("current_student"),
                                       maxLines: 2,
                                       style: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorWhite)),
@@ -173,7 +173,7 @@ class SelectStudentTypeDialog extends StatelessWidget {
                                             color: HexColor(AppColors.appColorWhite),
                                           ),
                                           Text(
-                                            AppLocalizations.of(context)
+                                            AppLocalizations.of(context)!
                                                 .translate("old_student"),
                                             maxLines: 2,
                                             style: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorWhite)),

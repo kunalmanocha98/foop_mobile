@@ -4,8 +4,8 @@ import 'package:oho_works_app/utils/hexColors.dart';
 import 'package:flutter/material.dart';
 
 class PostTagComponent extends StatelessWidget{
-  final String type;
-  PostTagComponent({@required this.type});
+  final String? type;
+  PostTagComponent({required this.type});
 
   @override
   Widget build(BuildContext context) {

@@ -54,9 +54,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:event_bus/event_bus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_chat_bubble/bubble_type.dart';
-import 'package:flutter_chat_bubble/chat_bubble.dart';
-import 'package:flutter_chat_bubble/clippers/chat_bubble_clipper_2.dart';
+
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:oho_works_app/components/paginator.dart';
 import 'package:intl/intl.dart';
@@ -68,131 +66,139 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:url_launcher/url_launcher.dart';
 
+import '../bubble_type.dart';
+import '../chat_bubble.dart';
+import '../chat_bubble_clipper_2.dart';
 import 'delete_message_dialog.dart';
 import 'ios_change_provider.dart';
 
 // ignore: must_be_immutable
 class ChatHistoryPage extends StatefulWidget {
-  ConnectionItem connectionItem;
-  RoomListItem roomListItem;
-  ConversationItemDb conversationItem;
-  IO.Socket socket;
-  Null Function() callBack;
-  String userStatus;
-  Null Function() callBackNew;
-  Null Function() refreshList;
-  Null Function() homePageUnreadCount;
-  bool isHeaderVisible;
-  String type;
-  String personId;
+  ConnectionItem? connectionItem;
+  RoomListItem ?roomListItem;
+  ConversationItemDb? conversationItem;
+  IO.Socket? socket;
+  Null Function()? callBack;
+  String? userStatus;
+  Null Function()? callBackNew;
+  Null Function()? refreshList;
+  Null Function()? homePageUnreadCount;
+  bool ?isHeaderVisible;
+  String? type;
+  String? personId;
+  bool? isVisible;
 
   @override
   ChatHistoryPageState createState() => ChatHistoryPageState(
-        conversationItem,
-        connectionItem,
-        callBack,
-        userStatus,
-        callBackNew,
-        roomListItem,
-        refreshList,
-        homePageUnreadCount,
-        type,
-        personId,
-      );
+    conversationItem:conversationItem,
+    connectionItem:connectionItem,
+    callBack:callBack,
+    userStatus:userStatus,
+    callBackNew:callBackNew,
+    roomListItem:roomListItem,
+    refreshList:refreshList,
+    homePageUnreadCount:homePageUnreadCount,
+    type:type,
+    personId:personId,
+  );
 
   ChatHistoryPage(
-      {Key key,
-      this.conversationItem,
-      this.connectionItem,
-      this.socket,
-      this.personId,
-      this.type,
-      this.callBack,
-      this.refreshList,
-      this.roomListItem,
-      this.callBackNew,
-      this.userStatus,
-      this.homePageUnreadCount,
-      this.isHeaderVisible = true})
+      {required Key key,
+        this.conversationItem,
+        this.connectionItem,
+        this.socket,
+        this.personId,
+        this.type,
+        this.callBack,
+        this.refreshList,
+        this.roomListItem,
+        this.callBackNew,
+        this.userStatus,
+        this.homePageUnreadCount,
+        this.isVisible,
+        this.isHeaderVisible = true})
       : super(key: key);
 }
 
 class ChatHistoryPageState extends State<ChatHistoryPage> {
   final db = DatabaseHelper.instance;
-  Null Function() callBack;
-  ConversationItemDb conversationItem;
-  ConnectionItem connectionItem;
-  SocketService socketService = locator<SocketService>();
-  int userId;
-  String personId;
-  String type;
-  int allRoomsId;
-  int eventId;
-  Null Function() refreshList;
-  String currentMessageId;
-  RoomListItem roomListItem;
-  String todayDate;
-  Null Function() callBackNew;
-  bool isNewConversation = false;
-  String userName;
-  bool isRequestApiCalled = false;
-  int callNumber = 0;
-  bool isUserOnCurrentPage = true;
-  final UpdateMessageStatusService updateMessageService =
-      locator<UpdateMessageStatusService>();
-  String conversationWithId;
-  String conversationWithType = "person";
-  String conversationId;
-  String mcId;
-  List<MessagePayloadDatabase> chatList;
-  SharedPreferences prefs;
-  String status = "";
-  String _userStatus;
-  bool isOnline = false;
-  bool isLoading = false;
-  MessagePayloadDatabase replyData;
-  IosNotifier _iosNotifier;
-  Null Function() homePageUnreadCount;
-  String myConversationId;
-  bool isGroupConversation = false;
-  bool isRoomAvailable = true;
-  String imageUrl = "";
-  GlobalKey<PaginatorState> paginatorKey = GlobalKey();
-  String conversationWithName = "";
-  int pageNumber = 1;
-  bool isAlreadySent = false;
-  bool isReply = false;
-  bool isSearch = false;
-  String date = "";
-  String linkPreview;
-  EventBus eventbus = locator<EventBus>();
-  AudioSocketService audioSocketService = locator<AudioSocketService>();
-  EdufluencerRequestData edufluencerRequestData;
-  List<CommentsItem> listComments = [];
+  Null Function()? callBack;
+  ConversationItemDb? conversationItem;
+  ConnectionItem? connectionItem;
+  SocketService? socketService = locator<SocketService>();
+  int? userId;
+  String ?personId;
+  String? type;
+  int? allRoomsId;
+  int? eventId=0;
+  Null Function()? refreshList;
+  String? currentMessageId;
+  RoomListItem? roomListItem;
+  String ?todayDate;
+  Null Function()? callBackNew;
+  bool? isNewConversation = false;
+  String? userName;
+  bool? isRequestApiCalled = false;
+  int? callNumber = 0;
+  bool? isUserOnCurrentPage = true;
+  final UpdateMessageStatusService ?updateMessageService =
+  locator<UpdateMessageStatusService>();
+  String? conversationWithId;
+  String ?conversationWithType = "person";
+  String ?conversationId;
+  String ?mcId;
+  List<MessagePayloadDatabase>? chatList;
+  SharedPreferences? prefs;
+  String? status = "";
+  String? userStatus;
+  bool? isOnline = false;
+  bool? isLoading = false;
+  MessagePayloadDatabase? replyData;
+  IosNotifier? _iosNotifier;
+  Null Function()? homePageUnreadCount;
+  String? myConversationId;
+  bool? isGroupConversation = false;
+  bool? isRoomAvailable = true;
+  String? imageUrl = "";
+  GlobalKey<PaginatorState> ?paginatorKey = GlobalKey();
+  String? conversationWithName = "";
+  int? pageNumber = 1;
+  bool ?isAlreadySent = false;
+  bool ?isReply = false;
+  bool ?isSearch = false;
+  String? date = "";
+  String? linkPreview;
+  EventBus? eventbus = locator<EventBus>();
+  AudioSocketService ?audioSocketService = locator<AudioSocketService>();
+  EdufluencerRequestData? edufluencerRequestData;
+  GlobalKey<ChatHistoryPageState> ch = GlobalKey();
+  List<CommentsItem>? listComments = [];
   final commentController = TextEditingController();
-  TextStyleElements styleElements;
-  GlobalKey<TricycleChatFooterState> chatFooterKey = GlobalKey();
-  bool isVisible;
+  TextStyleElements? styleElements;
+  GlobalKey<TricycleChatFooterState>? chatFooterKey = GlobalKey();
+  bool ?isVisible;
 
   ChatHistoryPageState(
-    this.conversationItem,
-    this.connectionItem,
-    this.callBack,
-    this._userStatus,
-    this.callBackNew,
-    this.roomListItem,
-    this.refreshList,
-    this.homePageUnreadCount,
-    this.type,
-    this.personId,
-  );
+     { this.conversationItem,
+      this.connectionItem,
+      this.callBack,
+      this.userStatus,
+      this.callBackNew,
+      this.roomListItem,
+      this.refreshList,
+      this.homePageUnreadCount,
+      this.type,
+      this.personId,}
+      );
 
   @override
   void initState() {
-    status = _userStatus;
+    status = userStatus;
     isUserOnCurrentPage = true;
+    isVisible=widget.isVisible;
     connectToServer();
-    WidgetsBinding.instance.addPostFrameCallback((_) => setPref());
+
+    WidgetsBinding.instance!.addPostFrameCallback((_) => setPref());
     todayDate = DateFormat('yyyy-MM-dd').format(DateTime.now());
     super.initState();
   }
@@ -204,52 +210,53 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
 
   Future<void> startConversationExisting() async {
     isRoomAvailable = conversationItem != null &&
-        conversationItem.isRoomAvailable != null &&
-        conversationItem.isRoomAvailable == 1;
-    conversationId = conversationItem.conversationId;
-    conversationWithId = conversationItem.conversationWithTypeId;
-    conversationWithType = conversationItem.conversationWithType;
+        conversationItem!.isRoomAvailable != null &&
+        conversationItem!.isRoomAvailable == 1;
+    conversationId = conversationItem!.conversationId;
+    conversationWithId = conversationItem!.conversationWithTypeId;
+    conversationWithType = conversationItem!.conversationWithType;
     isGroupConversation =
-        conversationItem.isGroupConversation == 1 ? true : false;
-    if (conversationItem.eventId == null)
-      allRoomsId = int.parse(conversationItem.conversationWithTypeId);
-    if (conversationItem.eventId != null)
-      eventId = int.parse(conversationItem.conversationWithTypeId);
-    mcId = conversationItem.mcId;
-    myConversationId = conversationItem.sId;
-    imageUrl = conversationItem.conversationImageThumbnail;
-    conversationWithName = conversationItem.conversationName;
+    conversationItem!.isGroupConversation == 1 ? true : false;
+    if (conversationItem!.eventId == null)
+      allRoomsId = int.parse(conversationItem!.conversationWithTypeId!);
+    if (conversationItem!.eventId != null)
+      eventId = int.parse(conversationItem!.conversationWithTypeId!);
+    mcId = conversationItem!.mcId;
+    myConversationId = conversationItem!.sId;
+    imageUrl = conversationItem!.conversationImageThumbnail;
+    conversationWithName = conversationItem!.conversationName;
     await db.makeUnreadCountZero(conversationId, 0);
-    if (socketService.getSocket() != null &&
-        socketService.getSocket().connected) {
+    if (socketService!.getSocket() != null &&
+        socketService!.getSocket()!.connected) {
       joinChat(conversationId);
       joinChat(userId);
     } else {}
     if (conversationId != null)
-      updateMessageService.updateMessagesStatus(
+      updateMessageService!.updateMessagesStatus(
           db,
-          conversationId,
+          isVisible!=null && !isVisible! ? false:true,
+          conversationId!,
           userId.toString(),
-          socketService.getSocket(),
-          conversationWithId,
-          conversationWithType);
+          socketService!.getSocket()!,
+          conversationWithId!,
+          conversationWithType!);
     IosNotifier iosNotifier = Provider.of<IosNotifier>(context, listen: false);
-    iosNotifier.getOlderMessages(db, conversationId, userId, eventId);
-    iosNotifier.reload(db, conversationId, userId, "", eventId);
+    iosNotifier.getOlderMessages(db, conversationId!, userId!, eventId!);
+    iosNotifier.reload(db, conversationId!, userId!, "", eventId!);
     setState(() {});
   }
 
   void startNewConversation() {
     setState(() {
       isRoomAvailable = true;
-      imageUrl = connectionItem.connectionProfileThumbnailUrl ?? "";
-      conversationWithName = connectionItem.connectionName ?? "";
+      imageUrl = connectionItem!.connectionProfileThumbnailUrl ?? "";
+      conversationWithName = connectionItem!.connectionName ?? "";
     });
-    if (connectionItem.isGroupConversation != null &&
-        connectionItem.isGroupConversation) {
+    if (connectionItem!.isGroupConversation != null &&
+        connectionItem!.isGroupConversation!) {
       setState(() {
         isGroupConversation = true;
-        allRoomsId = connectionItem.allRoomsId;
+        allRoomsId = connectionItem!.allRoomsId;
         createConversation(true, false);
       });
     } else
@@ -257,11 +264,9 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
   }
 
   Future<void> setPref() async {
-    print(type +
-        "new prefs pagew   starting--------------------------------------------------------------------");
-    prefs = await SharedPreferences.getInstance();
-    userId = prefs.getInt(Strings.userId);
-    userName = prefs.getString(Strings.userName);
+   prefs = await SharedPreferences.getInstance();
+    userId = prefs!.getInt(Strings.userId);
+    userName = prefs!.getString(Strings.userName);
     await db.makeUnreadCountZero(conversationId, 0);
     if (type != null) {
       switch (type) {
@@ -269,19 +274,17 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
           if (connectionItem != null) {
             startNewConversation();
           } else if (conversationItem != null) {
-            print(
-                "new convrestaion   starting--------------------------------------------------------------------");
-            startConversationExisting();
+           startConversationExisting();
           } else {
             isRoomAvailable = true;
             if (roomListItem != null) {
               setState(() {
                 isGroupConversation = true;
-                imageUrl = roomListItem.roomProfileImageUrl ?? "";
-                conversationWithName = roomListItem.roomName ?? "";
+                imageUrl = roomListItem!.roomProfileImageUrl ?? "";
+                conversationWithName = roomListItem!.roomName ?? "";
               });
               connectionItem = ConnectionItem();
-              if (roomListItem.isEvent != null && roomListItem.isEvent)
+              if (roomListItem!.isEvent != null && roomListItem!.isEvent!)
                 createConversation(false, true);
               else
                 createConversation(true, false);
@@ -289,11 +292,11 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
           }
           break;
         case "notification":
-          conversationItem = await db.getConversationItemFromPeronId(personId);
+          conversationItem = await db.getConversationItemFromPeronId(personId!);
           if (conversationItem != null) {
             startConversationExisting();
           } else {
-            getPersonProfile(context, personId);
+            getPersonProfile(context, personId!);
           }
 // using personid check id there is laredy a conversation
 
@@ -312,128 +315,129 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
     _iosNotifier = Provider.of<IosNotifier>(context);
 
     return WillPopScope(
-        // ignore: missing_return
+      // ignore: missing_return
         onWillPop: () {
-          if (isSearch) {
+          if (isSearch!) {
             setState(() {
               isSearch = false;
-              _iosNotifier.getOlderMessages(
-                  db, conversationId, userId, eventId);
+              _iosNotifier!.getOlderMessages(
+                  db, conversationId!, userId!, eventId!);
             });
           } else {
             setState(() {
               isUserOnCurrentPage = false;
             });
             Navigator.of(context).pop();
-            if (homePageUnreadCount != null) homePageUnreadCount();
+            if (homePageUnreadCount != null) homePageUnreadCount!();
           }
+          return new Future(() => false);
         },
         child: SafeArea(
           child: Scaffold(
               backgroundColor: HexColor(AppColors.chatBackGround),
-              appBar: widget.isHeaderVisible
+              appBar: widget.isHeaderVisible!
                   ? AppBarWithProfileChat(
-                      isNotificationVisible: false,
-                      roomId: allRoomsId,
-                      roomName: userName,
-                      showCallbuttons: !isGroupConversation,
-                      onVideoCallback: () {
-                        checkAndInitiateCall('video');
-                      },
-                      onCallCallback: () {
-                        checkAndInitiateCall('voice');
-                      },
-                      callBack: () {
-                        if (isSearch) {
-                          setState(() {
-                            isSearch = false;
-                            _iosNotifier.getOlderMessages(
-                                db, conversationId, userId, eventId);
-                          });
-                        } else {
-                          setState(() {
-                            isUserOnCurrentPage = false;
-                          });
+                isNotificationVisible: false,
+                roomId: allRoomsId,
+                roomName: userName,
+                showCallbuttons: !isGroupConversation!,
+                onVideoCallback: () {
+                  checkAndInitiateCall('video');
+                },
+                onCallCallback: () {
+                  checkAndInitiateCall('voice');
+                },
+                callBack: () {
+                  if (isSearch!) {
+                    setState(() {
+                      isSearch = false;
+                      _iosNotifier!.getOlderMessages(
+                          db, conversationId!, userId!, eventId!);
+                    });
+                  } else {
+                    setState(() {
+                      isUserOnCurrentPage = false;
+                    });
 
-                          Navigator.of(context).pop();
-                          if (homePageUnreadCount != null)
-                            homePageUnreadCount();
-                        }
-                      },
-                      isSearch: isSearch,
-                      onSearch: (String value) {
-                        _iosNotifier.reload(
-                            db, conversationId, userId, value, eventId);
-                      },
-                      onItemSelect: (String value) {
-                        handleAppBarItemClick(value);
-                      },
-                      imageUrl: imageUrl != null
-                          ? (Config.BASE_URL + imageUrl ?? "")
-                          : "",
-                      title: conversationWithName,
-                      status: isGroupConversation ? "" : status,
-                      isGroupConversation: isGroupConversation,
-                      userType: conversationWithType ?? "",
-                      userId: int.parse(conversationWithId ?? "0"),
-                      notificationCount: 0,
-                    )
+                    Navigator.of(context).pop();
+                    if (homePageUnreadCount != null)
+                      homePageUnreadCount!();
+                  }
+                },
+                isSearch: isSearch,
+                onSearch: (String value) {
+                  _iosNotifier!.reload(
+                      db, conversationId!, userId!, value, eventId!);
+                },
+                onItemSelect: (String value) {
+                  handleAppBarItemClick(value);
+                },
+                imageUrl: imageUrl != null
+                    ? (Config.BASE_URL + imageUrl!)
+                    : "",
+                title: conversationWithName,
+                status: isGroupConversation! ? "" : status,
+                isGroupConversation: isGroupConversation,
+                userType: conversationWithType ?? "",
+                userId: int.parse(conversationWithId ?? "0"),
+                notificationCount: 0,
+              )
                   : null,
               body: Column(
                 children: [
                   Expanded(
                       child: _iosNotifier != null &&
-                              _iosNotifier.getMessagesList() != null &&
-                              _iosNotifier.getMessagesList().isNotEmpty &&
-                              conversationId != null
+                          _iosNotifier!.getMessagesList() != null &&
+                          _iosNotifier!.getMessagesList()!.isNotEmpty &&
+                          conversationId != null
                           ? Container(
-                              child: NotificationListener<ScrollNotification>(
-                                onNotification:
-                                    (ScrollNotification scrollInfo) {
-                                  if (scrollInfo is ScrollEndNotification &&
-                                      scrollInfo.metrics.extentAfter == 0) {
-                                    _iosNotifier.getMore(
-                                        db, conversationId, userId, eventId);
-                                    return true;
-                                  }
-                                  return false;
-                                },
-                                child: ListView.builder(
-                                    reverse: true,
-                                    physics:
-                                        const AlwaysScrollableScrollPhysics(),
-                                    padding: EdgeInsets.only(
-                                        left: 8, right: 8, bottom: 4, top: 8),
-                                    itemCount: _iosNotifier.getMessagesList() !=
-                                            null
-                                        ? _iosNotifier.getMessagesList().length
-                                        : 0,
-                                    cacheExtent: 5,
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      return listItemBuilder(
-                                          _iosNotifier.getMessagesList()[index],
-                                          index);
-                                    }),
-                              ),
-                            )
+                        child: NotificationListener<ScrollNotification>(
+                          onNotification:
+                              (ScrollNotification scrollInfo) {
+                            if (scrollInfo is ScrollEndNotification &&
+                                scrollInfo.metrics.extentAfter == 0) {
+                              _iosNotifier!.getMore(
+                                  db, conversationId!, userId!, eventId!);
+                              return true;
+                            }
+                            return false;
+                          },
+                          child: ListView.builder(
+                              reverse: true,
+                              physics:
+                              const AlwaysScrollableScrollPhysics(),
+                              padding: EdgeInsets.only(
+                                  left: 8, right: 8, bottom: 4, top: 8),
+                              itemCount: _iosNotifier!.getMessagesList() !=
+                                  null
+                                  ? _iosNotifier!.getMessagesList()!.length
+                                  : 0,
+                              cacheExtent: 5,
+                              itemBuilder:
+                                  (BuildContext context, int index) {
+                                return listItemBuilder(
+                                    _iosNotifier!.getMessagesList()![index],
+                                    index);
+                              }),
+                        ),
+                      )
                           : ListView.builder(
-                              physics: const AlwaysScrollableScrollPhysics(),
-                              itemCount: 1,
-                              itemBuilder: (BuildContext context, int index) {
-                                return Center(
-                                    child: Padding(
+                          physics: const AlwaysScrollableScrollPhysics(),
+                          itemCount: 1,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Center(
+                                child: Padding(
                                   padding: const EdgeInsets.all(20.0),
                                   child: TricycleEmptyWidget(
-                                    message: AppLocalizations.of(context)
+                                    message: AppLocalizations.of(context)!
                                         .translate('no_messages'),
                                   ),
                                 )
-                                    // EmptyWidget(AppLocalizations.of(context)
-                                    //     .translate('no_data'),
+                              // EmptyWidget(AppLocalizations.of(context)
+                              //     .translate('no_data'),
 
-                                    );
-                              })),
+                            );
+                          })),
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: Column(
@@ -465,17 +469,16 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
                                             child: ClipOval(
                                               child: CachedNetworkImage(
                                                 imageUrl: edufluencerRequestData !=
-                                                        null
+                                                    null
                                                     ? Config.BASE_URL +
-                                                            edufluencerRequestData
-                                                                .avatar ??
-                                                        ""
+                                                    edufluencerRequestData!
+                                                        .avatar!
                                                     : "",
                                                 placeholder: (context, url) =>
                                                     Center(
                                                         child: Image.asset(
-                                                  'assets/appimages/userplaceholder.jpg',
-                                                )),
+                                                          'assets/appimages/userplaceholder.jpg',
+                                                        )),
                                                 fit: BoxFit.fill,
                                               ),
                                             ),
@@ -485,31 +488,31 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
                                       Expanded(
                                         child: Column(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.start,
+                                          MainAxisAlignment.start,
                                           crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                                 edufluencerRequestData != null
-                                                    ? edufluencerRequestData
-                                                            .title ??
-                                                        ""
+                                                    ? edufluencerRequestData!
+                                                    .title ??
+                                                    ""
                                                     : "",
-                                                style: styleElements
+                                                style: styleElements!
                                                     .subtitle1ThemeScalable(
-                                                        context)
+                                                    context)
                                                     .copyWith(
-                                                        fontWeight:
-                                                            FontWeight.w600)),
+                                                    fontWeight:
+                                                    FontWeight.w600)),
                                             Text(
                                                 edufluencerRequestData != null
-                                                    ? edufluencerRequestData
-                                                            .subtitle ??
-                                                        ""
+                                                    ? edufluencerRequestData!
+                                                    .subtitle ??
+                                                    ""
                                                     : "",
-                                                style: styleElements
+                                                style: styleElements!
                                                     .captionThemeScalable(
-                                                        context)),
+                                                    context)),
                                           ],
                                         ),
                                       ),
@@ -517,11 +520,11 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
                                         padding: EdgeInsets.all(16),
                                         child: Text(
                                           "View profile",
-                                          style: styleElements
+                                          style: styleElements!
                                               .captionThemeScalable(context)
                                               .copyWith(
-                                                  color: HexColor(
-                                                      AppColors.appColorBlue)),
+                                              color: HexColor(
+                                                  AppColors.appColorBlue)),
                                         ),
                                       ),
                                     ],
@@ -533,9 +536,9 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
                                       right: 16,
                                     ),
                                     child: Text(
-                                      AppLocalizations.of(context)
+                                      AppLocalizations.of(context)!
                                           .translate("edu_request_student"),
-                                      style: styleElements
+                                      style: styleElements!
                                           .captionThemeScalable(context),
                                       textAlign: TextAlign.start,
                                     ),
@@ -548,7 +551,7 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
                                         bottom: 2),
                                     child: Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                       children: [
                                         TricycleTextButton(
                                           padding: EdgeInsets.all(0),
@@ -558,20 +561,20 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
                                                       AppColors.appMainColor))),
                                           onPressed: () {
                                             updateRequest(
-                                                edufluencerRequestData.id,
-                                                edufluencerRequestData.personId,
-                                                userId,
+                                                edufluencerRequestData!.id!,
+                                                edufluencerRequestData!.personId!,
+                                                userId!,
                                                 "A");
                                           },
                                           color: HexColor(
                                               AppColors.appColorTransparent),
                                           child: Text(
                                             "accept",
-                                            style: styleElements
+                                            style: styleElements!
                                                 .captionThemeScalable(context)
                                                 .copyWith(
-                                                    color: HexColor(AppColors
-                                                        .appMainColor)),
+                                                color: HexColor(AppColors
+                                                    .appMainColor)),
                                           ),
                                         ),
                                         TricycleTextButton(
@@ -582,20 +585,20 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
                                                       AppColors.appMainColor))),
                                           onPressed: () {
                                             updateRequest(
-                                                edufluencerRequestData.id,
-                                                edufluencerRequestData.personId,
-                                                userId,
+                                                edufluencerRequestData!.id!,
+                                                edufluencerRequestData!.personId!,
+                                                userId!,
                                                 "R");
                                           },
                                           color: HexColor(
                                               AppColors.appColorTransparent),
                                           child: Text(
                                             "reject",
-                                            style: styleElements
+                                            style: styleElements!
                                                 .captionThemeScalable(context)
                                                 .copyWith(
-                                                    color: HexColor(AppColors
-                                                        .appMainColor)),
+                                                color: HexColor(AppColors
+                                                    .appMainColor)),
                                           ),
                                         ),
                                       ],
@@ -606,75 +609,75 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
                             ),
                           ),
                         ),
-                        isRoomAvailable
+                        isRoomAvailable!
                             ? TricycleChatFooter(
-                                chatFooterKey,
-                                data: replyData,
-                                linkPreviewUrl: linkPreview,
-                                isEmptyTextAccepted: false,
-                                userName: conversationWithName,
-                                onCrossCLicked: () {
-                                  isReply = false;
-                                  isReply = false;
-                                  replyData = null;
+                          chatFooterKey!,
+                          data: replyData,
+                          linkPreviewUrl: linkPreview,
+                          isEmptyTextAccepted: false,
+                          userName: conversationWithName,
+                          onCrossCLicked: () {
+                            isReply = false;
+                            isReply = false;
+                            replyData = null;
 
-                                  chatFooterKey.currentState.data = null;
-                                  setState(() {});
-                                },
-                                hintText: AppLocalizations.of(context)
-                                    .translate("enter_text"),
-                                isShowAddIcon: true,
-                                onTyping: (String v) async {
-                                  if (v.isNotEmpty) getUrl(v);
-                                  typing(userId.toString(), conversationId);
-                                },
-                                onValueRecieved: (value) async {
-                                  try {
-                                    if (socketService.getSocket() != null &&
-                                        socketService.getSocket().connected &&
-                                        value != null &&
-                                        isRoomAvailable) {
-                                      final message =
-                                          edufluencerRequestData != null
-                                              ? jsonEncode({"message": value})
-                                              : value;
-                                      MessagePayloadDatabase messageData =
-                                          createMessage(message, null, null);
+                            chatFooterKey!.currentState!.data = null;
+                            setState(() {});
+                          },
+                          hintText: AppLocalizations.of(context)!
+                              .translate("enter_text"),
+                          isShowAddIcon: true,
+                          onTyping: (String v) async {
+                            if (v.isNotEmpty) getUrl(v);
+                            typing(userId.toString(), conversationId);
+                          },
+                          onValueRecieved: (value) async {
+                            try {
+                              if (socketService!.getSocket() != null &&
+                                  socketService!.getSocket()!.connected &&
+                                  value != null &&
+                                  isRoomAvailable!) {
+                                final message =
+                                edufluencerRequestData != null
+                                    ? jsonEncode({"message": value})
+                                    : value;
+                                MessagePayloadDatabase messageData =
+                                createMessage(message, "", "");
 
-                                      _iosNotifier.saveData(
-                                          messageData,
-                                          db,
-                                          conversationId,
-                                          userId,
-                                          true,
-                                          eventId);
-                                      updateConversation(messageData, true);
-                                      currentMessageId = messageData.messageId;
+                                _iosNotifier!.saveData(
+                                    messageData,
+                                    db,
+                                    conversationId!,
+                                    userId!,
+                                    true,
+                                    eventId!);
+                                updateConversation(messageData, true);
+                                currentMessageId = messageData.messageId;
 
-                                      emitMessage(
-                                          getMessagePayload(messageData));
-                                    } else {}
-                                  } catch (e) {
-                                    print(e.toString());
-                                    /*    ToastBuilder().showToast(
+                                emitMessage(
+                                    getMessagePayload(messageData));
+                              } else {}
+                            } catch (e) {
+                              print(e.toString());
+                              /*    ToastBuilder().showToast(
 
                               AppLocalizations.of(context)
                                   .translate("something_wrong_debug"),
                               context,
                               HexColor(AppColors.information));*/
-                                  }
-                                },
-                                onReceiveOption: (value) async {
-                                  handleShareContentOption(value, _iosNotifier);
-                                },
-                              )
+                            }
+                          },
+                          onReceiveOption: (value) async {
+                            handleShareContentOption(value, _iosNotifier!);
+                          },
+                        )
                             : Card(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: Text(AppLocalizations.of(context)
-                                      .translate("ended_event")),
-                                ),
-                              ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Text(AppLocalizations.of(context)!
+                                .translate("ended_event")),
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -685,9 +688,9 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
 
   void checkAndInitiateCall(String type) {
     ChatCallallowedRequest payload = ChatCallallowedRequest();
-    payload.actionByObjectId = prefs.getInt(Strings.userId);
-    payload.actionByObjectType = prefs.getString(Strings.ownerType);
-    payload.actionOnObjectId = int.parse(conversationWithId);
+    payload.actionByObjectId = prefs!.getInt(Strings.userId);
+    payload.actionByObjectType = prefs!.getString(Strings.ownerType);
+    payload.actionOnObjectId = int.parse(conversationWithId!);
     payload.actionOnObjectType = 'person';
     Calls()
         .call(jsonEncode(payload), context, Config.CHAT_CALL_ALLOWED)
@@ -695,25 +698,25 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
       var response = ChatCallallowedResponse.fromJson(value);
       if (response.statusCode == Strings.success_code) {
         if (type == 'voice') {
-          if (response.rows.audioCallIsAllowed) {
+          if (response.rows!.audioCallIsAllowed!) {
           } else {
             ToastBuilder().showToast(
-                AppLocalizations.of(context).translate('call_cant_proceed'),
+                AppLocalizations.of(context)!.translate('call_cant_proceed'),
                 context,
                 HexColor(AppColors.information));
           }
         } else if (type == 'video') {
-          if (response.rows.videoCallIsAllowed) {
+          if (response.rows!.videoCallIsAllowed!) {
           } else {
             ToastBuilder().showToast(
-                AppLocalizations.of(context).translate('call_cant_proceed'),
+                AppLocalizations.of(context)!.translate('call_cant_proceed'),
                 context,
                 HexColor(AppColors.information));
           }
         }
       } else {
         ToastBuilder().showToast(
-            AppLocalizations.of(context).translate('call_cant_proceed'),
+            AppLocalizations.of(context)!.translate('call_cant_proceed'),
             context,
             HexColor(AppColors.information));
       }
@@ -721,15 +724,15 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
   }
 
   // ignore: missing_return
-  String getUrl(String text) {
+  String? getUrl(String text) {
     if (text != null) {
       RegExp exp =
-          new RegExp(r'(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.]+');
+      new RegExp(r'(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.]+');
       Iterable<RegExpMatch> matches = exp.allMatches(text);
 
       if (matches != null && matches.isNotEmpty) {
         matches.forEach((match) {
-          chatFooterKey.currentState.linkPreviewUrl =
+          chatFooterKey!.currentState!.linkPreviewUrl =
               text.substring(match.start, match.end);
         });
       }
@@ -743,29 +746,29 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
         },
         child: item,
         itemBuilder: (context) => [
-              PopupMenuItem(
-                  value: "Reply",
-                  child: Row(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(2, 2, 8, 2),
-                        child: Icon(Icons.reply),
-                      ),
-                      Text(AppLocalizations.of(context).translate('reply')),
-                    ],
-                  )),
-              PopupMenuItem(
-                  value: "Forward",
-                  child: Row(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(2, 2, 8, 2),
-                        child: Icon(Icons.forward),
-                      ),
-                      Text(AppLocalizations.of(context).translate("forward"))
-                    ],
-                  )),
-              /*    PopupMenuItem(
+          PopupMenuItem(
+              value: "Reply",
+              child: Row(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(2, 2, 8, 2),
+                    child: Icon(Icons.reply),
+                  ),
+                  Text(AppLocalizations.of(context)!.translate('reply')),
+                ],
+              )),
+          PopupMenuItem(
+              value: "Forward",
+              child: Row(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(2, 2, 8, 2),
+                    child: Icon(Icons.forward),
+                  ),
+                  Text(AppLocalizations.of(context)!.translate("forward"))
+                ],
+              )),
+          /*    PopupMenuItem(
                   value: "Rate content",
                   child: Row(
                     children: <Widget>[
@@ -788,29 +791,29 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
                       Text(AppLocalizations.of(context).translate("bookmark"))
                     ],
                   )),*/
-              PopupMenuItem(
-                  value: "Copy",
-                  child: Row(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(2, 2, 8, 2),
-                        child: Icon(Icons.copy_outlined),
-                      ),
-                      Text(AppLocalizations.of(context).translate("copy"))
-                    ],
-                  )),
-              PopupMenuItem(
-                  value: "Delete",
-                  child: Row(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(2, 2, 8, 2),
-                        child: Icon(Icons.delete_outline),
-                      ),
-                      Text(AppLocalizations.of(context).translate("delete"))
-                    ],
-                  )),
-            ]);
+          PopupMenuItem(
+              value: "Copy",
+              child: Row(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(2, 2, 8, 2),
+                    child: Icon(Icons.copy_outlined),
+                  ),
+                  Text(AppLocalizations.of(context)!.translate("copy"))
+                ],
+              )),
+          PopupMenuItem(
+              value: "Delete",
+              child: Row(
+                children: <Widget>[
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(2, 2, 8, 2),
+                    child: Icon(Icons.delete_outline),
+                  ),
+                  Text(AppLocalizations.of(context)!.translate("delete"))
+                ],
+              )),
+        ]);
   }
 
   Widget listItemBuilder(value, int index) {
@@ -821,82 +824,83 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
       // ignore: unrelated_type_equality_checks
       child: item.messageById == userId.toString()
           ? Padding(
-              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-              child: GestureDetector(
-                behavior: HitTestBehavior.translucent,
-                onTap: () async {
-                  /*await db.dlt();*/
-                },
-                child: Container(
-                    child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    popItem(
-                        getSenderView(
-                            item,
-                            ChatBubbleClipper2(type: BubbleType.sendBubble),
-                            context),
-                        item,
-                        userName),
-                  ],
-                )),
-              ),
-            )
-          : Padding(
-              padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-              child: Container(
-                  child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+        padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+        child: GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: () async {
+            /*await db.dlt();*/
+          },
+          child: Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   popItem(
-                      getReceiverView(
+                      getSenderView(
                           item,
-                          ChatBubbleClipper2(type: BubbleType.receiverBubble),
-                          context,
-                          index),
+                          ChatBubbleClipper2(type: BubbleType.sendBubble),
+                          context),
                       item,
-                      conversationWithName),
+                      userName!),
                 ],
               )),
-            ),
+        ),
+      )
+          : Padding(
+        padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+        child: Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                popItem(
+                    getReceiverView(
+                        item,
+                        ChatBubbleClipper2(type: BubbleType.receiverBubble),
+                        context,
+                        index),
+                    item,
+                    conversationWithName!),
+              ],
+            )),
+      ),
     );
   }
 
   getReceiverView(
-      dynamic item, CustomClipper clipper, BuildContext context, int index) {
-    if (this.mounted && index == 0) {
-      updateMessageService.updateMessagesStatus(
+      dynamic item, CustomClipper<Path> clipper, BuildContext context, int index) {
+    if (this.mounted && index == 0 && (isVisible==null || isVisible!)) {
+      updateMessageService!.updateMessagesStatus(
           db,
-          conversationId,
+          isVisible!,
+          conversationId!,
           userId.toString(),
-          socketService.getSocket(),
-          conversationWithId,
-          conversationWithType);
+          socketService!.getSocket()!,
+          conversationWithId!,
+          conversationWithType!);
     }
 
     if (item.messageDataType != null &&
         item.messageDataType == "object" &&
         item.messageType == "edufluencer" &&
         item.messageSubType == "request" &&
-        !isRequestApiCalled &&
+        !isRequestApiCalled! &&
         callNumber == 0) {
-      callNumber++;
+      callNumber=callNumber!+1;;
       requestDetails(jsonDecode(item.message)['edufluencer_id'],
-          int.parse(conversationWithId), userId);
+          int.parse(conversationWithId!), userId!);
     }
 
     var textPreview;
     if (item.message != null) {
       RegExp exp =
-          new RegExp(r'(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.]+');
+      new RegExp(r'(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.]+');
       Iterable<RegExpMatch> matches = exp.allMatches(item.message);
       if (matches != null && matches.isNotEmpty) {
         matches.forEach((match) {
           textPreview =
-              item.messageDataType != null && item.messageDataType == "object"
-                  ? jsonDecode(item.message)['message']
-                      .substring(match.start, match.end)
-                  : item.message.substring(match.start, match.end);
+          item.messageDataType != null && item.messageDataType == "object"
+              ? jsonDecode(item.message)['message']
+              .substring(match.start, match.end)
+              : item.message.substring(match.start, match.end);
         });
       }
     }
@@ -904,6 +908,7 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
       clipper: clipper,
       backGroundColor: HexColor(AppColors.appColorWhite),
       margin: EdgeInsets.only(top: 20),
+
       child: Padding(
         padding: const EdgeInsets.only(left: 8.0, right: 8.0),
         child: Container(
@@ -916,9 +921,9 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Visibility(
-                visible: isGroupConversation,
+                visible: isGroupConversation!,
                 child: Text(item.messageSentByName ?? "",
-                    style: styleElements.captionThemeScalable(context)),
+                    style: styleElements!.captionThemeScalable(context)),
               ),
               Visibility(
                 visible: textPreview != null,
@@ -951,7 +956,7 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
                               child: getMediaView(item),
                             ),
                             Text(item.originalMessageSenderName ?? "",
-                                style: styleElements
+                                style: styleElements!
                                     .subtitle2ThemeScalable(context)),
                             Linkify(
                               onOpen: (link) async {
@@ -963,7 +968,7 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
                               },
                               text: item.originalMessage ?? "",
                               style:
-                                  styleElements.subtitle1ThemeScalable(context),
+                              styleElements!.subtitle1ThemeScalable(context),
                               linkStyle: TextStyle(
                                   color: HexColor(AppColors.appMainColor)),
                             ),
@@ -986,12 +991,12 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
                       }
                     },
                     text: item.messageDataType != null &&
-                            item.messageDataType == "object"
+                        item.messageDataType == "object"
                         ? jsonDecode(item.message)['message']
                         : item.message ?? "",
-                    style: styleElements.subtitle1ThemeScalable(context),
+                    style: styleElements!.subtitle1ThemeScalable(context),
                     linkStyle:
-                        TextStyle(color: HexColor(AppColors.appMainColor)),
+                    TextStyle(color: HexColor(AppColors.appMainColor)),
                   ),
                   Row(
                     mainAxisSize: MainAxisSize.min,
@@ -999,10 +1004,10 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
                       Text(
                         timeago.format(DateTime.fromMillisecondsSinceEpoch(
                             item.messageSentTime ?? "")),
-                        style: styleElements
+                        style: styleElements!
                             .captionThemeScalable(context)
                             .copyWith(
-                                color: HexColor(AppColors.appColorBlack35)),
+                            color: HexColor(AppColors.appColorBlack35)),
                       ),
                     ],
                   )
@@ -1020,16 +1025,16 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
     var textPreview;
     if (item.message != null) {
       RegExp exp =
-          new RegExp(r'(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.]+');
+      new RegExp(r'(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.]+');
       Iterable<RegExpMatch> matches = exp.allMatches(item.message);
 
       if (matches != null && matches.isNotEmpty) {
         matches.forEach((match) {
           textPreview =
-              item.messageDataType != null && item.messageDataType == "object"
-                  ? jsonDecode(item.message)['message']
-                      .substring(match.start, match.end)
-                  : item.message.substring(match.start, match.end);
+          item.messageDataType != null && item.messageDataType == "object"
+              ? jsonDecode(item.message)['message']
+              .substring(match.start, match.end)
+              : item.message.substring(match.start, match.end);
         });
       }
     }
@@ -1039,6 +1044,8 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
       backGroundColor: HexColor(AppColors.orangeBackground),
       margin: EdgeInsets.only(top: 16),
       elevation: 1,
+      shadowColor: HexColor(AppColors.appColorBlack35),
+      alignment: Alignment.center,
       child: Padding(
         padding: const EdgeInsets.only(left: 16.0, right: 16.0),
         child: Container(
@@ -1078,7 +1085,7 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
                               child: getMediaView(item),
                             ),
                             Text(item.originalMessageSenderName ?? "",
-                                style: styleElements
+                                style: styleElements!
                                     .subtitle2ThemeScalable(context)),
                             Linkify(
                               onOpen: (link) async {
@@ -1090,7 +1097,7 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
                               },
                               text: item.originalMessage ?? "",
                               style:
-                                  styleElements.subtitle1ThemeScalable(context),
+                              styleElements!.subtitle1ThemeScalable(context),
                               linkStyle: TextStyle(
                                   color: HexColor(AppColors.appMainColor)),
                             ),
@@ -1113,12 +1120,12 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
                       }
                     },
                     text: item.messageDataType != null &&
-                            item.messageDataType == "object"
+                        item.messageDataType == "object"
                         ? jsonDecode(item.message)['message'] ?? ""
                         : item.message ?? "",
-                    style: styleElements.subtitle1ThemeScalable(context),
+                    style: styleElements!.subtitle1ThemeScalable(context),
                     linkStyle:
-                        TextStyle(color: HexColor(AppColors.appMainColor)),
+                    TextStyle(color: HexColor(AppColors.appMainColor)),
                   ),
                   Row(
                     mainAxisSize: MainAxisSize.min,
@@ -1126,34 +1133,34 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
                       Text(
                         timeago.format(DateTime.fromMillisecondsSinceEpoch(
                             item.messageSentTime ?? "")),
-                        style: styleElements
+                        style: styleElements!
                             .captionThemeScalable(context)
                             .copyWith(
-                                color: HexColor(AppColors.appColorBlack35)),
+                            color: HexColor(AppColors.appColorBlack35)),
                       ),
                       item.messageStatus == "sent"
                           ? Icon(
-                              Icons.check,
-                              size: 16.0,
-                              color: HexColor(AppColors.appColorBlack35),
-                            )
+                        Icons.check,
+                        size: 16.0,
+                        color: HexColor(AppColors.appColorBlack35),
+                      )
                           : item.messageStatus == "read"
-                              ? SizedBox(
-                                  height: 16,
-                                  width: 16,
-                                  child: Image(
-                                    image: AssetImage(
-                                        'assets/appimages/blue_double_tick.png'),
-                                  ),
-                                )
-                              : SizedBox(
-                                  height: 16,
-                                  width: 16,
-                                  child: Image(
-                                    image: AssetImage(
-                                        'assets/appimages/double_tick.png'),
-                                  ),
-                                ),
+                          ? SizedBox(
+                        height: 16,
+                        width: 16,
+                        child: Image(
+                          image: AssetImage(
+                              'assets/appimages/blue_double_tick.png'),
+                        ),
+                      )
+                          : SizedBox(
+                        height: 16,
+                        width: 16,
+                        child: Image(
+                          image: AssetImage(
+                              'assets/appimages/double_tick.png'),
+                        ),
+                      ),
                     ],
                   )
                 ],
@@ -1220,7 +1227,7 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
                   position: 0,
                   totalItems: 1)));
         else {
-          launch(Config.BASE_URL + item.messageAttachment);
+          launch(Config.BASE_URL + item.messageAttachment!);
         }
       },
       child: Container(
@@ -1231,80 +1238,80 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
           children: [
             item.isUploading == 1
                 ? SizedBox(
-                    height: 200,
-                    width: 200,
-                    child: item.messageAttachmentType == "image" ||
-                            item.messageAttachmentType == "video"
-                        ? new Image.file(
-                            item.messageAttachmentType == "image"
-                                ? File(item.isReply == 0
-                                    ? item.messageAttachment ?? ""
-                                    : item.originalMessageAttachment ?? "")
-                                : File(item.isReply == 0
-                                    ? item.messageAttachmentThumbnail ?? ""
-                                    : item.originalMessageAttachmentThumbnail ??
-                                        ""),
-                            fit: BoxFit.cover,
-                          )
-                        : SizedBox(
-                            height: 200,
-                            width: 200,
-                            child: Image(
-                              image: AssetImage(
-                                item.messageAttachmentMIMEType == "pdf"
-                                    ? 'assets/appimages/pdf.png'
-                                    : 'assets/appimages/excel.png',
-                              ),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                  )
-                : Stack(
-                    children: [
-                      new Container(
-                        decoration: new BoxDecoration(
-                          image: new DecorationImage(
-                            image: item.messageAttachmentType == "image"
-                                ? new NetworkImage(
-                                    Utility().getUrlForImage(
-                                        (item.isReply == 0
-                                            ? item.messageAttachment ?? ""
-                                            : item.originalMessageAttachment ??
-                                                ""),
-                                        RESOLUTION_TYPE.R256,
-                                        SERVICE_TYPE.PERSON),
-                                  )
-                                : new NetworkImage(Utility().getUrlForImage(
-                                    (item.isReply == 0
-                                        ? item.messageAttachmentThumbnail ?? ""
-                                        : item.originalMessageAttachmentThumbnail ??
-                                            ""),
-                                    RESOLUTION_TYPE.R256,
-                                    SERVICE_TYPE.PERSON)),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      Visibility(
-                        visible: item.messageAttachmentType == "application",
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: SizedBox(
-                            height: 30,
-                            width: 30,
-                            child: Image(
-                              image: AssetImage(
-                                item.messageAttachmentMIMEType == "pdf"
-                                    ? 'assets/appimages/pdf.png'
-                                    : 'assets/appimages/excel.png',
-                              ),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+              height: 200,
+              width: 200,
+              child: item.messageAttachmentType == "image" ||
+                  item.messageAttachmentType == "video"
+                  ? new Image.file(
+                item.messageAttachmentType == "image"
+                    ? File(item.isReply == 0
+                    ? item.messageAttachment ?? ""
+                    : item.originalMessageAttachment ?? "")
+                    : File(item.isReply == 0
+                    ? item.messageAttachmentThumbnail ?? ""
+                    : item.originalMessageAttachmentThumbnail ??
+                    ""),
+                fit: BoxFit.cover,
+              )
+                  : SizedBox(
+                height: 200,
+                width: 200,
+                child: Image(
+                  image: AssetImage(
+                    item.messageAttachmentMIMEType == "pdf"
+                        ? 'assets/appimages/pdf.png'
+                        : 'assets/appimages/excel.png',
                   ),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            )
+                : Stack(
+              children: [
+                new Container(
+                  decoration: new BoxDecoration(
+                    image: new DecorationImage(
+                      image: item.messageAttachmentType == "image"
+                          ? new NetworkImage(
+                        Utility().getUrlForImage(
+                            (item.isReply == 0
+                                ? item.messageAttachment ?? ""
+                                : item.originalMessageAttachment ??
+                                ""),
+                            RESOLUTION_TYPE.R256,
+                            SERVICE_TYPE.PERSON),
+                      )
+                          : new NetworkImage(Utility().getUrlForImage(
+                          (item.isReply == 0
+                              ? item.messageAttachmentThumbnail ?? ""
+                              : item.originalMessageAttachmentThumbnail ??
+                              ""),
+                          RESOLUTION_TYPE.R256,
+                          SERVICE_TYPE.PERSON)),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                Visibility(
+                  visible: item.messageAttachmentType == "application",
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: SizedBox(
+                      height: 30,
+                      width: 30,
+                      child: Image(
+                        image: AssetImage(
+                          item.messageAttachmentMIMEType == "pdf"
+                              ? 'assets/appimages/pdf.png'
+                              : 'assets/appimages/excel.png',
+                        ),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
             Visibility(
               visible: item.isUploading == 1,
               child: Center(
@@ -1315,7 +1322,7 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
             ),
             Visibility(
               visible: (item.messageAttachmentType != null &&
-                  item.messageAttachmentType.contains("video")),
+                  item.messageAttachmentType!.contains("video")),
               child: Align(
                 alignment: Alignment.center,
                 child: Opacity(
@@ -1329,7 +1336,7 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
                                   ownerType: "person",
                                   mediaList: mediaList,
                                   isLocalFile:
-                                      item.isUploading == 1 ? true : false,
+                                  item.isUploading == 1 ? true : false,
                                   isWithOutData: true,
                                   isMediaPage: true,
                                   pageNumber: pageNumber,
@@ -1357,26 +1364,26 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
   //==================================================functions
   void createConversation(bool isGroup, bool isEvent) async {
     if (isGroup) {
-      connectionItem.isGroupConversation = isGroup;
-      connectionItem.connectionOwnerId = userId.toString();
-      connectionItem.connectionOwnerType = "person";
-      connectionItem.connectionCategory = "group";
+      connectionItem!.isGroupConversation = isGroup;
+      connectionItem!.connectionOwnerId = userId.toString();
+      connectionItem!.connectionOwnerType = "person";
+      connectionItem!.connectionCategory = "group";
       if (roomListItem != null) {
-        connectionItem.allRoomsId = roomListItem.id;
-        allRoomsId = roomListItem.id;
+        connectionItem!.allRoomsId = roomListItem!.id;
+        allRoomsId = roomListItem!.id;
       }
     } else {
-      connectionItem.isGroupConversation = false;
+      connectionItem!.isGroupConversation = false;
     }
     if (isEvent) {
-      connectionItem.isGroupConversation = isGroup;
-      connectionItem.isGroupConversation = true;
-      connectionItem.connectionOwnerId = userId.toString();
-      connectionItem.connectionOwnerType = "person";
-      connectionItem.connectionCategory = "group";
-      connectionItem.eventId = roomListItem.id;
-      connectionItem.connectionId = roomListItem.id.toString();
-      eventId = roomListItem.id;
+      connectionItem!.isGroupConversation = isGroup;
+      connectionItem!.isGroupConversation = true;
+      connectionItem!.connectionOwnerId = userId.toString();
+      connectionItem!.connectionOwnerType = "person";
+      connectionItem!.connectionCategory = "group";
+      connectionItem!.eventId = roomListItem!.id;
+      connectionItem!.connectionId = roomListItem!.id.toString();
+      eventId = roomListItem!.id;
     }
     Calls()
         .call(jsonEncode(connectionItem), context, Config.CREATE_CONVERSATION)
@@ -1386,41 +1393,41 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
           var data = CreateConversationResponse.fromJson(value);
           if (data.statusCode == Strings.success_code) {
             isNewConversation = true;
-            if (data != null && data.rows != null && data.rows.length > 0) {
-              conversationId = data.rows[0].conversationId;
-              conversationWithId = data.rows[0].conversationWithTypeId;
-              conversationWithType = data.rows[0].conversationWithType;
-              mcId = data.rows[0].mcId;
-              myConversationId = data.rows[0].sId;
+            if (data != null && data.rows != null && data.rows!.length > 0) {
+              conversationId = data.rows![0].conversationId;
+              conversationWithId = data.rows![0].conversationWithTypeId;
+              conversationWithType = data.rows![0].conversationWithType;
+              mcId = data.rows![0].mcId;
+              myConversationId = data.rows![0].sId;
               IosNotifier iosNotifier =
-                  Provider.of<IosNotifier>(context, listen: false);
-              iosNotifier.getOlderMessages(db, conversationId, userId, eventId);
-              iosNotifier.reload(db, conversationId, userId, "", eventId);
+              Provider.of<IosNotifier>(context, listen: false);
+              iosNotifier.getOlderMessages(db, conversationId!, userId!, eventId!);
+              iosNotifier.reload(db, conversationId!, userId!, "", eventId!);
               await db.makeUnreadCountZero(conversationId, 0);
-              callBack();
+              callBack!();
 
               if (isEvent &&
-                  audioSocketService.getSocket() != null &&
-                  audioSocketService.getSocket().connected) {
-                data.rows[1].eventId = eventId;
-                data.rows[1].personId = userId.toString();
+                  audioSocketService!.getSocket() != null &&
+                  audioSocketService!.getSocket()!.connected) {
+                data.rows![1].eventId = eventId;
+                data.rows![1].personId = userId.toString();
                 log("nerw event conversation created===========================>" +
-                    jsonEncode(data.rows[1]));
-                audioSocketService
-                    .getSocket()
-                    .emit('add_conversation_id', data.rows[1]);
+                    jsonEncode(data.rows![1]));
+                audioSocketService!
+                    .getSocket()!
+                    .emit('add_conversation_id', data.rows![1]);
               }
 
-              if (socketService.getSocket() != null &&
-                  socketService.getSocket().connected) {
-                joinChat(data.rows[0].conversationId.toString() ?? "");
-                if (data.rows.length > 1) addConversation(data.rows[1]);
+              if (socketService!.getSocket() != null &&
+                  socketService!.getSocket()!.connected) {
+                joinChat(data.rows![0].conversationId.toString());
+                if (data.rows!.length > 1) addConversation(data.rows![1]);
               }
               setState(() {});
             }
           } else {}
         } catch (e) {
-          log(e + "error in create conversation");
+
         }
       }
     }).catchError((onError) {});
@@ -1430,21 +1437,21 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
   void connectToServer() {
     new Future.delayed(Duration.zero, () {
       try {
-        if (socketService.getSocket() != null) {
-          socketService.getSocket().onDisconnect((_) {
+        if (socketService!.getSocket() != null) {
+          socketService!.getSocket()!.onDisconnect((_) {
             if (this.mounted)
               setState(() {
                 isAlreadySent = false;
               });
           });
-          socketService.getSocket().on('join', joinChat);
-          socketService.getSocket().on('chat_message', receiveNewMessage);
-          socketService.getSocket().on('add_conversation', newConversation);
-          socketService.getSocket().on('message_status', messageStatusChanged);
-          socketService.getSocket().on('typing', onTyping);
-          socketService.getSocket().on('user_status', userStatus);
-          socketService.getSocket().on('message_error', onError);
-          socketService.getSocket().on('disconnect', (_) => log('disconnect'));
+          socketService!.getSocket()!.on('join', joinChat);
+          socketService!.getSocket()!.on('chat_message', receiveNewMessage);
+          socketService!.getSocket()!.on('add_conversation', newConversation);
+          socketService!.getSocket()!.on('message_status', messageStatusChanged);
+          socketService!.getSocket()!.on('typing', onTyping);
+          socketService!.getSocket()!.on('user_status', _userStatus);
+          socketService!.getSocket()!.on('message_error', onError);
+          socketService!.getSocket()!.on('disconnect', (_) => log('disconnect'));
         }
       } catch (e) {
 //---------
@@ -1455,7 +1462,7 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
   //==========================================Socket metho receiver side
   onError(dynamic payload) {
     log("error        +" + jsonEncode(payload));
-    if (refreshList != null) refreshList();
+    if (refreshList != null) refreshList!();
     // BaseResponse messageDataData = BaseResponse.fromJson(payload);
     //ToastBuilder().showToast(messageDataData.message??"", context, HexColor(AppColors.information));
     // deleteMessages(currentMessageId,conversationId, _iosNotifier);
@@ -1463,47 +1470,53 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
 
   receiveNewMessage(dynamic payload) {
     MessagePayload messageDataData = MessagePayload.fromJson(payload);
-
+    print(isVisible.toString()+"--------------------------------------------------------"+(isVisible!=null && isVisible!?"delivered": "read"));
     if (messageDataData.conversationId == conversationId) {
-      _iosNotifier.saveData(getMessageDatabase(messageDataData), db,
-          conversationId, userId, true, eventId);
+      _iosNotifier!.saveData(getMessageDatabase(messageDataData), db,
+          conversationId!, userId!, true, eventId!);
 
-      messageDataData.messageStatus =isVisible!=null && !isVisible?"delivered": "read";
+      messageDataData.messageStatus =isVisible!=null && isVisible!?"delivered": "read";
       messageDataData.isGroupConversation = isGroupConversation;
       messageDataData.updatedDateById = userId.toString();
       messageDataData.messageToId = userId.toString();
       messageDataData.messageToType = "person";
       messageDataData.updatedDateByType = "person";
       messageDataData.updatedDateTime = DateTime.now().millisecondsSinceEpoch;
-      if (isGroupConversation) {
+      if (isGroupConversation!) {
         messageDataData.allRoomsId = allRoomsId;
         messageDataData.eventId = eventId ?? allRoomsId;
       }
 
+      log(jsonEncode(messageDataData));
       if (this.mounted)
-        socketService.getSocket().emit('update_message', messageDataData);
+        socketService!.getSocket()!.emit('update_message', messageDataData);
       updateConversation(getMessageDatabase(messageDataData), true);
     }
   }
 
   newConversation(dynamic payload) {
-    if (callBackNew != null) callBackNew();
+    if (callBackNew != null) callBackNew!();
   }
 
   messageStatusChanged(dynamic payload) async {
     MessagePayload messageDataData = MessagePayload.fromJson(payload);
     if (messageDataData.conversationId == conversationId) {
       await db.updateMessage(getMessageDatabase(messageDataData));
-      _iosNotifier.getOlderMessages(db, conversationId, userId, eventId);
+      _iosNotifier!.getOlderMessages(db, conversationId!, userId!, eventId!);
     }
   }
 
   void updateCurrentVisible(bool isChatVisible)
   {
-
     setState(() {
       isVisible=isChatVisible;
     });
+
+
+
+
+
+    print(isVisible.toString()+"--------------------------------------------------------ischatvisible 2");
   }
 
 
@@ -1513,8 +1526,8 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
       setState(() {
         conversationId = cvId;
       });
-      _iosNotifier.getOlderMessages(db, cvId, userId, eventId);
-      _iosNotifier.reload(db, cvId, userId, "", eventId);
+      _iosNotifier!.getOlderMessages(db, cvId, userId!, eventId!);
+      _iosNotifier!.reload(db, cvId, userId!, "", eventId!);
     } else {
       setState(() {
         conversationId = null;
@@ -1529,16 +1542,16 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
     if (typingPayload != null && typingPayload.personId == conversationWithId) {
       if (this.mounted) {
         setState(() {
-          if (typingPayload.isTyping)
-            status = AppLocalizations.of(context).translate("typing");
+          if (typingPayload.isTyping!)
+            status = AppLocalizations.of(context)!.translate("typing");
           else
-            status = _userStatus ?? "";
+            status = userStatus ?? "";
         });
       }
     }
   }
 
-  userStatus(dynamic payload) async {
+  _userStatus(dynamic payload) async {
     UserStatusPayload userStatusPayload = UserStatusPayload.fromJson(payload);
     print(jsonEncode(payload));
 
@@ -1550,49 +1563,49 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
     if (item != null && item.isOnline == 0) joinChat(userId);*/
     if (userStatusPayload.personId == conversationWithId) {
       if (this.mounted) {
-        _userStatus = userStatusPayload.isOnline
-            ? AppLocalizations.of(context).translate("online")
+        userStatus = userStatusPayload.isOnline!
+            ? AppLocalizations.of(context)!.translate("online")
             : "Offline";
       }
-      status = _userStatus;
+      status = userStatus;
     }
     if (this.mounted) setState(() {});
   }
 
   //=============================Socket methods Sender Side
   joinChat(dynamic personId) {
-    socketService.getSocket().emit('join', personId);
+    socketService!.getSocket()!.emit('join', personId);
   }
 
   addConversation(dynamic payload) {
     log("add_conversation--" + jsonEncode(payload));
-    socketService.getSocket().emit('add_conversation', payload);
+    socketService!.getSocket()!.emit('add_conversation', payload);
   }
 
   emitMessage(dynamic payload) {
     try {
-      chatFooterKey.currentState.linkPreviewUrl = null;
-      if (socketService.getSocket() != null &&
-          socketService.getSocket().connected) {
-        if (isReply) {
+      chatFooterKey!.currentState!.linkPreviewUrl = null;
+      if (socketService!.getSocket() != null &&
+          socketService!.getSocket()!.connected) {
+        if (isReply!) {
           log("reply++++++++++++++++++++++++++++++++" + jsonEncode(payload));
-          socketService.getSocket().emit('reply_message', payload);
+          socketService!.getSocket()!.emit('reply_message', payload);
           isReply = false;
           replyData = null;
-          chatFooterKey.currentState.data = null;
+          chatFooterKey!.currentState!.data = null;
           setState(() {});
         } else {
           log("chat_message+++" + jsonEncode(payload));
-          socketService.getSocket().emit('chat_message', payload);
+          socketService!.getSocket()!.emit('chat_message', payload);
         }
 
-        if (isNewConversation) {
-          callBackNew();
+        if (isNewConversation!) {
+          callBackNew!();
           isNewConversation = false;
         }
       }
     } catch (e) {
-      log(e);
+
     }
   }
 
@@ -1603,14 +1616,14 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
       conversationItem.lastMessageTime = messageData.messageSentTime;
       conversationItem.lastMessage = messageData.message;
       await db.updateConversationData(conversationItem);
-      if (isZero && isUserOnCurrentPage)
+      if (isZero && isUserOnCurrentPage!)
         await db.makeUnreadCountZero(conversationId, 0);
-      if (callBack != null) callBack();
+      if (callBack != null) callBack!();
     }
   }
 
   changeMessageStatus(dynamic payload) {
-    socketService.getSocket().emit('message_status', payload);
+    socketService!.getSocket()!.emit('message_status', payload);
   }
 
   typing(dynamic userID, dynamic conversationId) {
@@ -1619,11 +1632,11 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
     typingPayload.isTyping = true;
     typingPayload.personId = userId.toString();
 
-    socketService.getSocket().emit('typing', typingPayload);
+    socketService!.getSocket()!.emit('typing', typingPayload);
     Future.delayed(const Duration(milliseconds: 1000), () {
       typingPayload.isTyping = false;
       setState(() {
-        socketService.getSocket().emit('typing', typingPayload);
+        socketService!.getSocket()!.emit('typing', typingPayload);
       });
     });
   }
@@ -1632,7 +1645,7 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
     UserStatusPayload userStatusPayload = UserStatusPayload();
     userStatusPayload.isOnline = true;
     userStatusPayload.personId = userID;
-    socketService.getSocket().emit('user_status', userStatusPayload);
+    socketService!.getSocket()!.emit('user_status', userStatusPayload);
   }
 
   handleShareContentOption(String value, IosNotifier _iosNotifier) async {
@@ -1675,9 +1688,9 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
   void blockAction() async {
     GenericFollowUnfollowButtonState().followUnfollowBlock(
         "person",
-        prefs.getInt(Strings.userId),
+        prefs!.getInt(Strings.userId),
         conversationWithType,
-        int.parse(conversationWithId),
+        int.parse(conversationWithId!),
         "B",
         [""], (isSuccess) {
       if (isSuccess) {}
@@ -1691,8 +1704,8 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
         {
           isReply = true;
           replyData = data;
-          chatFooterKey.currentState.data = data;
-          chatFooterKey.currentState.userName = name;
+          chatFooterKey!.currentState!.data = data;
+          chatFooterKey!.currentState!.userName = name;
           setState(() {});
         }
         break;
@@ -1711,14 +1724,13 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
               context: context,
               barrierDismissible: false,
               builder: (BuildContext context) => DeleteMessageDialog(
-                    callbackPicker: (bool isSubmit) {
-                      if (isSubmit)
-                        deleteMessages(
-                            data.messageId, data.conversationId, _iosNotifier);
-                    },
-                  ));
+                callbackPicker: (bool isSubmit) {
+                  if (isSubmit)
+                    deleteMessages(
+                        data.messageId!, data.conversationId!, _iosNotifier!);
+                },
+              ));
         }
-        break;
       case "Forward":
         {
           replyData = data;
@@ -1727,14 +1739,14 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
               context,
               MaterialPageRoute(
                   builder: (context) => new UserRoomSelectionPage(
-                      socket: socketService.getSocket(),
+                      socket: socketService!.getSocket(),
                       isForward: true,
                       callBack: callBack)));
 
           if (result != null && result['result'] != null) {
             List<ConnectionItem> list = result['result'];
             List<MessagePayload> listMessages = [];
-            MessagePayload message = getMessagePayload(replyData);
+            MessagePayload message = getMessagePayload(replyData!);
             message.forwardMessageId =
                 DateTime.now().millisecondsSinceEpoch.toString();
             listMessages.add(message);
@@ -1748,12 +1760,12 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
                 DateTime.now().millisecondsSinceEpoch);
             log("forward -------------------------------------------" +
                 jsonEncode(forwardMessagePayload));
-            if (socketService.getSocket() != null &&
-                socketService.getSocket().connected)
+            if (socketService!.getSocket() != null &&
+                socketService!.getSocket()!.connected)
               log("forward_message++++++++++++++++++++++++" +
                   jsonEncode(forwardMessagePayload));
-            socketService
-                .getSocket()
+            socketService!
+                .getSocket()!
                 .emit("forward_message", forwardMessagePayload);
             replyData = null;
             setState(() {});
@@ -1763,10 +1775,12 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
                 context,
                 MaterialPageRoute(
                     builder: (ctx) => new ChatHistoryPage(
+                      key:ch,
                         conversationItem: null,
                         type: "normal",
+                        isVisible:true,
                         connectionItem: list[0],
-                        socket: socketService.getSocket(),
+                        socket: socketService!.getSocket(),
                         callBack: () {})));
           } else {
             replyData = null;
@@ -1815,19 +1829,19 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
     message.messageSubType = messageDataData.messageSubType;
     message.createdOn = messageDataData.createdOn;
     message.isGroupConversation = messageDataData.isGroupConversation != null &&
-            messageDataData.isGroupConversation == 1
+        messageDataData.isGroupConversation == 1
         ? true
         : false;
     message.isReply =
-        messageDataData.isReply != null && messageDataData.isReply == 1
-            ? true
-            : false;
+    messageDataData.isReply != null && messageDataData.isReply == 1
+        ? true
+        : false;
     message.isForwarded =
-        messageDataData.isForwarded != null && messageDataData.isForwarded == 1
-            ? true
-            : false;
+    messageDataData.isForwarded != null && messageDataData.isForwarded == 1
+        ? true
+        : false;
     message.isBroadcastType = messageDataData.isBroadcastType != null &&
-            messageDataData.isBroadcastType == 1
+        messageDataData.isBroadcastType == 1
         ? true
         : false;
     message.myConversationId = messageDataData.myConversationId;
@@ -1894,17 +1908,17 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
     message.messageSubType = messageDataData.messageSubType;
     message.createdOn = messageDataData.createdOn;
     message.isGroupConversation = messageDataData.isGroupConversation != null &&
-            messageDataData.isGroupConversation
+        messageDataData.isGroupConversation!
         ? 1
         : 0;
     message.isReply =
-        messageDataData.isReply != null && messageDataData.isReply ? 1 : 0;
+    messageDataData.isReply != null && messageDataData.isReply! ? 1 : 0;
     message.isForwarded =
-        messageDataData.isForwarded != null && messageDataData.isForwarded
-            ? 1
-            : 0;
+    messageDataData.isForwarded != null && messageDataData.isForwarded!
+        ? 1
+        : 0;
     message.isBroadcastType = messageDataData.isBroadcastType != null &&
-            messageDataData.isBroadcastType
+        messageDataData.isBroadcastType!
         ? 1
         : 0;
     message.myConversationId = messageDataData.myConversationId;
@@ -1942,12 +1956,12 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
       messageDataType: edufluencerRequestData != null ? "object" : "",
       allRoomsId: allRoomsId,
       eventId: eventId ?? allRoomsId,
-      isGroupConversation: isGroupConversation ? 1 : 0,
+      isGroupConversation: isGroupConversation! ? 1 : 0,
       conversationId: conversationId,
       messageId: DateTime.now().millisecondsSinceEpoch.toString(),
-      messageAttachment: path ?? "",
-      isUploading: path != null ? 1 : 0,
-      messageAttachmentType: mimeType ?? "",
+      messageAttachment: path,
+      isUploading: path != "" ? 1 : 0,
+      messageAttachmentType: mimeType,
       mcId: mcId,
       messageToId: conversationWithId,
       messageToType: conversationWithType,
@@ -1965,24 +1979,24 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
       updatedDateByType: "",
       messageSentTime: DateTime.now().millisecondsSinceEpoch,
       messageStatus: "sent",
-      isReply: isReply ? 1 : 0,
-      replyToMessageId: isReply ? conversationWithId ?? "" : "",
-      originalMessage: isReply ? replyData.message ?? "" : "",
-      originalMessageSenderType: isReply ? replyData.messageByType ?? "" : "",
+      isReply: isReply! ? 1 : 0,
+      replyToMessageId: isReply! ? conversationWithId ?? "" : "",
+      originalMessage: isReply! ? replyData!.message ?? "" : "",
+      originalMessageSenderType: isReply! ? replyData!.messageByType ?? "" : "",
       originalMessageSenderName:
-          isReply ? replyData.messageSentByName ?? "" : "",
-      originalMessageSenderId: isReply ? replyData.messageById ?? "" : "",
+      isReply! ? replyData!.messageSentByName ?? "" : "",
+      originalMessageSenderId: isReply! ? replyData!.messageById ?? "" : "",
       originalMessageAttachment:
-          isReply ? replyData.messageAttachment ?? "" : "",
+      isReply! ? replyData!.messageAttachment ?? "" : "",
       originalMessageAttachmentType:
-          isReply ? replyData.messageAttachmentType ?? "" : "",
+      isReply! ? replyData!.messageAttachmentType ?? "" : "",
       originalMessageAttachmentMIMEType:
-          isReply ? replyData.messageAttachmentMIMEType ?? "" : "",
+      isReply! ? replyData!.messageAttachmentMIMEType ?? "" : "",
       originalMessageAttachmentName:
-          isReply ? replyData.messageAttachmentName ?? "" : "",
+      isReply! ? replyData!.messageAttachmentName ?? "" : "",
       originalMessageAttachmentThumbnail:
-          isReply ? replyData.messageAttachmentThumbnail ?? "" : "",
-      originalConversationId: isReply ? replyData.conversationId ?? "" : "",
+      isReply! ? replyData!.messageAttachmentThumbnail ?? "" : "",
+      originalConversationId: isReply! ? replyData!.conversationId ?? "" : "",
     );
   }
 
@@ -1995,18 +2009,18 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
           setState(() async {
             var data = PersonalProfile.fromJson(value);
             if (data != null && data.statusCode == 'S10001') {
-              Persondata persondata = data.rows;
+              Persondata persondata = data.rows!;
               connectionItem = ConnectionItem();
               String userName = persondata.firstName ?? "";
-              userName = userName + " " + persondata.lastName ?? "";
-              connectionItem.isGroupConversation = false;
-              connectionItem.connectionProfileThumbnailUrl =
+              userName = userName + " " + persondata.lastName!;
+              connectionItem!.isGroupConversation = false;
+              connectionItem!.connectionProfileThumbnailUrl =
                   persondata.profileImage ?? "";
-              connectionItem.connectionName = userName ?? "";
-              connectionItem.connectionId = persondata.userId.toString() ?? "";
-              connectionItem.connectionOwnerId = userId.toString();
-              connectionItem.connectionType = "person";
-              connectionItem.connectionOwnerType = "person";
+              connectionItem!.connectionName = userName;
+              connectionItem!.connectionId = persondata.userId.toString();
+              connectionItem!.connectionOwnerId = userId.toString();
+              connectionItem!.connectionType = "person";
+              connectionItem!.connectionOwnerType = "person";
               setState(() {
                 startNewConversation();
               });
@@ -2020,12 +2034,12 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
   }
 
   _imagePicker(IosNotifier _iosNotifier) async {
-    File pickedFile = await ImagePickerAndCropperUtil().pickImage(context);
+    File pickedFile = (await ImagePickerAndCropperUtil().pickImage(context))!;
 
     if (pickedFile != null) {
       String profileImageFromPath = pickedFile.path;
       var contentType =
-          ImagePickerAndCropperUtil().getMimeandContentType(pickedFile.path);
+      ImagePickerAndCropperUtil().getMimeandContentType(pickedFile.path);
 
       List<Media> mediaList = [];
       mediaList.add(
@@ -2048,34 +2062,34 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
       messageData.messageAttachmentMIMEType = contentType[1];
 
       _iosNotifier.saveData(
-          messageData, db, conversationId, userId, true, eventId);
+          messageData, db, conversationId!, userId!, true, eventId!);
 
       await UploadFile(
-              baseUrl: Config.BASE_URL,
-              context: context,
-              token: prefs.getString("token"),
-              contextId: userId.toString(),
-              contextType: CONTEXTTYPE_ENUM.PROFILE.type,
-              ownerId: userId.toString(),
-              ownerType: OWNERTYPE_ENUM.PERSON.type,
-              file: pickedFile,
-              subContextId: "",
-              subContextType: "",
-              onProgressCallback: (int progress) {},
-              mimeType: contentType[1],
-              contentType: contentType[0])
+          baseUrl: Config.BASE_URL,
+          context: context,
+          token: prefs!.getString("token"),
+          contextId: userId.toString(),
+          contextType: CONTEXTTYPE_ENUM.PROFILE.type,
+          ownerId: userId.toString(),
+          ownerType: OWNERTYPE_ENUM.PERSON.type,
+          file: pickedFile,
+          subContextId: "",
+          subContextType: "",
+          onProgressCallback: (int progress) {},
+          mimeType: contentType[1],
+          contentType: contentType[0])
           .uploadFile()
           .then((value) async {
         var imageResponse = ImageUpdateResponse.fromJson(value);
         if (imageResponse != null &&
             imageResponse.statusCode == Strings.success_code) {
-          messageData.messageAttachment = imageResponse.rows.fileUrl;
+          messageData.messageAttachment = imageResponse.rows!.fileUrl;
           messageData.messageAttachmentThumbnail =
-              imageResponse.rows.fileThumbnailUrl;
+              imageResponse.rows!.fileThumbnailUrl;
           messageData.messageAttachmentType = contentType[0];
           messageData.isUploading = 0;
           await db.updateMessage(messageData);
-          _iosNotifier.getOlderMessages(db, conversationId, userId, eventId);
+          _iosNotifier.getOlderMessages(db, conversationId!, userId!, eventId!);
           currentMessageId = messageData.messageId;
           emitMessage(getMessagePayload(messageData));
         } else {
@@ -2083,14 +2097,14 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
           messageData.isFailed = 1;
           messageData.messageAttachmentType = contentType[0];
           await db.updateMessage(messageData);
-          _iosNotifier.getOlderMessages(db, conversationId, userId, eventId);
+          _iosNotifier.getOlderMessages(db, conversationId!, userId!, eventId!);
         }
       }).catchError((onError) async {
         messageData.isUploading = 0;
         messageData.isFailed = 1;
         messageData.messageAttachmentType = contentType[0];
         await db.updateMessage(messageData);
-        _iosNotifier.getOlderMessages(db, conversationId, userId, eventId);
+        _iosNotifier.getOlderMessages(db, conversationId!, userId!, eventId!);
         log(onError.toString());
       });
     }
@@ -2099,11 +2113,11 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
   void videoPicker(IosNotifier _iosNotifier) async {
     File pickedFile;
     prefs = await SharedPreferences.getInstance();
-    pickedFile = await ImagePickerAndCropperUtil().pickVideo(context);
+    pickedFile = (await ImagePickerAndCropperUtil().pickVideo(context))!;
 
     if (pickedFile != null) {
       var contentType =
-          ImagePickerAndCropperUtil().getMimeandContentType(pickedFile.path);
+      ImagePickerAndCropperUtil().getMimeandContentType(pickedFile.path);
       String profileImageFromPath = pickedFile.path;
       List<Media> mediaList = [];
       mediaList.add(
@@ -2131,34 +2145,34 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
       messageData.messageAttachmentMIMEType = contentType[1];
       messageData.messageAttachmentThumbnail = "";
       _iosNotifier.saveData(
-          messageData, db, conversationId, userId, true, eventId);
+          messageData, db, conversationId!, userId!, true, eventId!);
 
       await UploadFile(
-              baseUrl: Config.BASE_URL,
-              context: context,
-              token: prefs.getString("token"),
-              contextId: '',
-              contextType: CONTEXTTYPE_ENUM.FEED.type,
-              ownerId: prefs.getInt(Strings.userId).toString(),
-              ownerType: OWNERTYPE_ENUM.PERSON.type,
-              file: pickedFile,
-              subContextId: "",
-              subContextType: "",
-              onProgressCallback: (int progress) {},
-              mimeType: contentType[1],
-              contentType: contentType[0])
+          baseUrl: Config.BASE_URL,
+          context: context,
+          token: prefs!.getString("token"),
+          contextId: '',
+          contextType: CONTEXTTYPE_ENUM.FEED.type,
+          ownerId: prefs!.getInt(Strings.userId).toString(),
+          ownerType: OWNERTYPE_ENUM.PERSON.type,
+          file: pickedFile,
+          subContextId: "",
+          subContextType: "",
+          onProgressCallback: (int progress) {},
+          mimeType: contentType[1],
+          contentType: contentType[0])
           .uploadFile()
           .then((value) async {
         var imageResponse = ImageUpdateResponse.fromJson(value);
         if (imageResponse != null &&
             imageResponse.statusCode == Strings.success_code) {
-          messageData.messageAttachment = imageResponse.rows.fileUrl;
+          messageData.messageAttachment = imageResponse.rows!.fileUrl;
           messageData.messageAttachmentThumbnail =
-              imageResponse.rows.fileThumbnailUrl;
+              imageResponse.rows!.fileThumbnailUrl;
           messageData.messageAttachmentType = contentType[0];
           messageData.isUploading = 0;
           await db.updateMessage(messageData);
-          _iosNotifier.getOlderMessages(db, conversationId, userId, eventId);
+          _iosNotifier.getOlderMessages(db, conversationId!, userId!, eventId!);
           currentMessageId = messageData.messageId;
           emitMessage(getMessagePayload(messageData));
         } else {
@@ -2166,14 +2180,14 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
           messageData.isFailed = 1;
           messageData.messageAttachmentType = contentType[0];
           await db.updateMessage(messageData);
-          _iosNotifier.getOlderMessages(db, conversationId, userId, eventId);
+          _iosNotifier.getOlderMessages(db, conversationId!, userId!, eventId!);
         }
       }).catchError((onError) async {
         messageData.isUploading = 0;
         messageData.isFailed = 1;
         messageData.messageAttachmentType = contentType[0];
         await db.updateMessage(messageData);
-        _iosNotifier.getOlderMessages(db, conversationId, userId, eventId);
+        _iosNotifier.getOlderMessages(db, conversationId!, userId!, eventId!);
         log(onError.toString());
       });
     } else {
@@ -2185,49 +2199,49 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
   void filePicker(IosNotifier _iosNotifier) async {
     File pickedFile;
     prefs = await SharedPreferences.getInstance();
-    pickedFile = await ImagePickerAndCropperUtil().pickFiles(context);
+    pickedFile = (await ImagePickerAndCropperUtil().pickFiles(context))!;
 
     if (pickedFile != null) {
       var contentType =
-          ImagePickerAndCropperUtil().getMimeandContentType(pickedFile.path);
+      ImagePickerAndCropperUtil().getMimeandContentType(pickedFile.path);
       String profileImageFromPath = pickedFile.path;
       List<Media> mediaList = [];
       mediaList.add(
           Media(mediaUrl: profileImageFromPath, mediaType: contentType[0]));
 
       MessagePayloadDatabase messageData =
-          createMessage("", profileImageFromPath, contentType[0]);
+      createMessage("", profileImageFromPath, contentType[0]);
       messageData.messageAttachmentName = contentType[0];
       messageData.messageAttachmentMIMEType = contentType[1];
       _iosNotifier.saveData(
-          messageData, db, conversationId, userId, true, eventId);
+          messageData, db, conversationId!, userId!, true, eventId!);
       await UploadFile(
-              baseUrl: Config.BASE_URL,
-              context: context,
-              token: prefs.getString("token"),
-              contextId: '',
-              contextType: CONTEXTTYPE_ENUM.FEED.type,
-              ownerId: prefs.getInt(Strings.userId).toString(),
-              ownerType: OWNERTYPE_ENUM.PERSON.type,
-              file: pickedFile,
-              subContextId: "",
-              subContextType: "",
-              onProgressCallback: (int progress) {},
-              mimeType: contentType[1],
-              contentType: contentType[0])
+          baseUrl: Config.BASE_URL,
+          context: context,
+          token: prefs!.getString("token"),
+          contextId: '',
+          contextType: CONTEXTTYPE_ENUM.FEED.type,
+          ownerId: prefs!.getInt(Strings.userId).toString(),
+          ownerType: OWNERTYPE_ENUM.PERSON.type,
+          file: pickedFile,
+          subContextId: "",
+          subContextType: "",
+          onProgressCallback: (int progress) {},
+          mimeType: contentType[1],
+          contentType: contentType[0])
           .uploadFile()
           .then((value) async {
         var imageResponse = ImageUpdateResponse.fromJson(value);
 
         if (imageResponse != null &&
             imageResponse.statusCode == Strings.success_code) {
-          messageData.messageAttachment = imageResponse.rows.fileUrl;
+          messageData.messageAttachment = imageResponse.rows!.fileUrl;
           messageData.messageAttachmentThumbnail =
-              imageResponse.rows.fileThumbnailUrl;
+              imageResponse.rows!.fileThumbnailUrl;
           messageData.messageAttachmentType = contentType[0];
           messageData.isUploading = 0;
           await db.updateMessage(messageData);
-          _iosNotifier.getOlderMessages(db, conversationId, userId, eventId);
+          _iosNotifier.getOlderMessages(db, conversationId!, userId!, eventId!);
           currentMessageId = messageData.messageId;
           emitMessage(getMessagePayload(messageData));
         } else {
@@ -2235,7 +2249,7 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
           messageData.isFailed = 1;
           messageData.messageAttachmentType = contentType[0];
           await db.updateMessage(messageData);
-          _iosNotifier.getOlderMessages(db, conversationId, userId, eventId);
+          _iosNotifier.getOlderMessages(db, conversationId!, userId!, eventId!);
         }
       }).catchError((onError) async {
         log(onError.toString());
@@ -2243,7 +2257,7 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
         messageData.isFailed = 1;
         messageData.messageAttachmentType = contentType[0];
         await db.updateMessage(messageData);
-        _iosNotifier.getOlderMessages(db, conversationId, userId, eventId);
+        _iosNotifier.getOlderMessages(db, conversationId!, userId!, eventId!);
       });
     }
   }

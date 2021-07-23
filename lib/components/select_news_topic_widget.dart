@@ -15,7 +15,7 @@ import 'package:flutter/material.dart';
 
 class SelectNewsTopicWidget extends StatefulWidget {
   final bool isCard;
-  final String type;
+  final String? type;
 
   SelectNewsTopicWidget(Key key, {this.isCard = true, this.type})
       : super(key: key);
@@ -71,11 +71,11 @@ class SelectNewsTopicWidgetState extends State<SelectNewsTopicWidget> {
           leading: TricycleAvatar(
             key: UniqueKey(),
             size: 36,
-            isFullUrl: _selectedList != null && _selectedList.length > 0,
+            isFullUrl: _selectedList.length > 0,
             imageUrl: getImageUrl(),
           ),
           title: Text(
-            getTitle(),
+            getTitle()!,
             style: styleElements.subtitle1ThemeScalable(context),
           ),
           trailing: Icon(
@@ -131,7 +131,7 @@ class SelectNewsTopicWidgetState extends State<SelectNewsTopicWidget> {
               )
                   : null,
               title: Text(
-                getTitle(),
+                getTitle()!,
                 style: styleElements.subtitle1ThemeScalable(context),
               ),
               trailing: Icon(
@@ -142,11 +142,11 @@ class SelectNewsTopicWidgetState extends State<SelectNewsTopicWidget> {
         ));
   }
 
-  String getTitle() {
+  String? getTitle() {
     if (widget.type != 'subject') {
       if (_selectedList != null && _selectedList.length > 0) {
         if (_selectedList.length > 1) {
-          return _selectedList[0].postSubTypeName + ' & Others';
+          return _selectedList[0].postSubTypeName! + ' & Others';
         } else {
           return _selectedList[0].postSubTypeName;
         }
@@ -156,7 +156,7 @@ class SelectNewsTopicWidgetState extends State<SelectNewsTopicWidget> {
     } else {
       if (subjectList != null && subjectList.length > 0) {
         if (subjectList.length > 1) {
-          return subjectList[0].textOne + ' & Others';
+          return subjectList[0].textOne! + ' & Others';
         } else {
           return subjectList[0].textOne;
         }
@@ -168,24 +168,24 @@ class SelectNewsTopicWidgetState extends State<SelectNewsTopicWidget> {
 
   String getImageUrl() {
     if (_selectedList != null && _selectedList.length > 0) {
-      debugPrint(Config.BASE_URL + _selectedList[0].imageUrl);
-      return Config.BASE_URL + _selectedList[0].imageUrl;
+      debugPrint(Config.BASE_URL + _selectedList[0].imageUrl!);
+      return Config.BASE_URL + _selectedList[0].imageUrl!;
     } else {
       return Utility()
           .getUrlForImage('', RESOLUTION_TYPE.R64, SERVICE_TYPE.SUBJECT);
     }
   }
 
-  List<String> getSelectedList() {
-    List<String> list = [];
+  List<String?> getSelectedList() {
+    List<String?> list = [];
     _selectedList.forEach((element) {
       list.add(element.postSubTypeName);
     });
     return list;
   }
 
-  List<String> getSubjects() {
-    List<String> list = [];
+  List<String?> getSubjects() {
+    List<String?> list = [];
     subjectList.forEach((element) {
       list.add(element.textOne);
     });

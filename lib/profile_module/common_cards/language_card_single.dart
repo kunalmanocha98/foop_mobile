@@ -12,14 +12,14 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class LanguageCardSingle extends StatelessWidget {
   final CommonCardData data;
-  BuildContext context;
-  TextStyleElements styleElements;
+  late BuildContext context;
+  TextStyleElements? styleElements;
   Widget _simplePopup() => PopupMenuButton<int>(
         itemBuilder: (context) => [
           PopupMenuItem(
             value: 1,
             child: Text(
-                AppLocalizations.of(context).translate('add_new_language')),
+                AppLocalizations.of(context)!.translate('add_new_language')),
           ),
         ],
         onSelected: (value) {
@@ -50,8 +50,8 @@ class LanguageCardSingle extends StatelessWidget {
     debugPrint('Width = ' + displaySize(context).width.toString());
     return displaySize(context).width;
   }
-String instId;
-  LanguageCardSingle({Key key, @required this.data,this.styleElements,this.instId}) : super(key: key);
+String? instId;
+  LanguageCardSingle({Key? key, required this.data,this.styleElements,this.instId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -62,14 +62,14 @@ String instId;
         showDialog(
             context: context,
             builder: (BuildContext context) => RateDialog(
-                type: "", title: AppLocalizations.of(context).translate('select_proficiency'), subtitle: ""));
+                type: "", title: AppLocalizations.of(context)!.translate('select_proficiency'), subtitle: ""));
       },
       child: TricycleListCard(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Visibility(
-              visible: data.title ?? "" != null,
+              visible: data.title as bool? ?? "" != null,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
@@ -80,7 +80,7 @@ String instId;
                           padding: const EdgeInsets.only(left: 16, right: 16,top:12,bottom:12),
                           child: Text(
                             data.title ?? "",
-                            style: styleElements.headline6ThemeScalable(context),
+                            style: styleElements!.headline6ThemeScalable(context),
                             textAlign: TextAlign.left,
                           ),
                         )),
@@ -96,8 +96,8 @@ String instId;
             Align(
               alignment: Alignment.center,
               child: ListTile(
-                title: Text(data.textOne),
-                subtitle: Text(data.textTwo),
+                title: Text(data.textOne!),
+                subtitle: Text(data.textTwo!),
                 trailing: Icon(
                   Icons.star_border,
                   color: HexColor(AppColors.appMainColor),

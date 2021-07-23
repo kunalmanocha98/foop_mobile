@@ -1,6 +1,6 @@
 
 
 class TalkEventEnd{
-  int id;
+  int? id;
   TalkEventEnd({this.id});
 }

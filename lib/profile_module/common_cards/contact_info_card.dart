@@ -17,9 +17,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 // ignore: must_be_immutable
 class ContactInfoCard extends StatelessWidget {
   final CommonCardData data;
-  TextStyleElements styleElements;
-  SharedPreferences prefs;
-  final CallsAndMessagesService _service = locator<CallsAndMessagesService>();
+  TextStyleElements? styleElements;
+  SharedPreferences? prefs;
+  final CallsAndMessagesService? _service = locator<CallsAndMessagesService>();
 
   Size displaySize(BuildContext context) {
     debugPrint('Size = ' + MediaQuery.of(context).size.toString());
@@ -40,7 +40,7 @@ class ContactInfoCard extends StatelessWidget {
         itemBuilder: (context) => [
           PopupMenuItem(
             value: 1,
-            child: Text(AppLocalizations.of(context).translate('add_contact')),
+            child: Text(AppLocalizations.of(context)!.translate('add_contact')),
           ),
         ],
         onSelected: (value) async {},
@@ -51,7 +51,7 @@ class ContactInfoCard extends StatelessWidget {
         ),
       );
 
-  ContactInfoCard({Key key, @required this.data, this.styleElements})
+  ContactInfoCard({Key? key, required this.data, this.styleElements})
       : super(key: key);
 
   setprefs() async {
@@ -77,8 +77,8 @@ class ContactInfoCard extends StatelessWidget {
                           right: 16.h,
                           top: 12.h,
                           bottom: 30.h),
-                      child: Text(AppLocalizations.of(context).translate('contact'),
-                        style: styleElements
+                      child: Text(AppLocalizations.of(context)!.translate('contact'),
+                        style: styleElements!
                             .headline6ThemeScalable(context)
                             .copyWith(
                                 fontWeight: FontWeight.bold,
@@ -129,7 +129,7 @@ class ContactInfoCard extends StatelessWidget {
                             child: Container(
                               child: Text(
                                 data.textOne ?? "",
-                                style: styleElements
+                                style: styleElements!
                                     .subtitle1ThemeScalable(context)
                                     .copyWith(fontWeight: FontWeight.w600),
                                 textAlign: TextAlign.left,
@@ -144,7 +144,7 @@ class ContactInfoCard extends StatelessWidget {
                                 child: Container(
                                   child: Text(
                                     data.textTwo ?? "",
-                                    style: styleElements
+                                    style: styleElements!
                                         .captionThemeScalable(context),
                                     textAlign: TextAlign.left,
                                     maxLines: 3,
@@ -176,7 +176,7 @@ class ContactInfoCard extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => MapPage(
-                                        LatLng(data.lat, data.lon),
+                                        LatLng(data.lat!, data.lon!),
                                         data.lat,
                                         data.lon),
                                   ));
@@ -215,10 +215,10 @@ class ContactInfoCard extends StatelessWidget {
                       child: IconButton(
                         onPressed: () {
                           if (data.textFour != null && data.textFour != "")
-                            _service.call(data.textFour ?? "");
+                            _service!.call(data.textFour ?? "");
                           else
                             ToastBuilder().showToast(
-                                AppLocalizations.of(context)
+                                AppLocalizations.of(context)!
                                     .translate("no_telephone"),
                                 context,
                                 HexColor(AppColors.information));
@@ -247,10 +247,10 @@ class ContactInfoCard extends StatelessWidget {
                       child: IconButton(
                         onPressed: () {
                           if (data.textTen != null && data.textTen != "")
-                            _service.call(data.textTen ?? "");
+                            _service!.call(data.textTen ?? "");
                           else
                             ToastBuilder().showToast(
-                                AppLocalizations.of(context)
+                                AppLocalizations.of(context)!
                                     .translate("no_mobile_number"),
                                 context,
                                 HexColor(AppColors.information));
@@ -279,10 +279,10 @@ class ContactInfoCard extends StatelessWidget {
                       child: IconButton(
                         onPressed: () {
                           if (data.textSix != null && data.textSix != "")
-                            _service.sendEmail(data.textSix ?? "");
+                            _service!.sendEmail(data.textSix ?? "");
                           else
                             ToastBuilder().showToast(
-                                AppLocalizations.of(context)
+                                AppLocalizations.of(context)!
                                     .translate("no_email_found"),
                                 context,
                                 HexColor(AppColors.information));
@@ -320,7 +320,7 @@ class ContactInfoCard extends StatelessWidget {
                                                 "")));
                           else
                             ToastBuilder().showToast(
-                                AppLocalizations.of(context)
+                                AppLocalizations.of(context)!
                                     .translate("no_school_site"),
                                 context,
                                 HexColor(AppColors.information));

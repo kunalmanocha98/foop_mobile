@@ -7,9 +7,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 // ignore: must_be_immutable
 class IntroWidget extends StatelessWidget {
    IntroWidget(
-      {Key key,
-      @required this.screenWidth,
-      @required this.screenheight,
+      {Key? key,
+      required this.screenWidth,
+      required this.screenheight,
       this.image,
       this.type,
       this.startGradientColor,
@@ -20,13 +20,13 @@ class IntroWidget extends StatelessWidget {
 
   final double screenWidth;
   final double screenheight;
-  final String image;
+  final String? image;
   final type;
-  final Color startGradientColor;
-  final Color endGradientColor;
-  final String subText;
-  final String desc;
-  TextStyleElements styleElements;
+  final Color? startGradientColor;
+  final Color? endGradientColor;
+  final String? subText;
+  final String? desc;
+  late TextStyleElements styleElements;
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,7 @@ class IntroWidget extends StatelessWidget {
                 margin:  EdgeInsets.only(
                     left: 16.w, bottom: 12.h, top: 12.h, right: 16.w),
                 alignment: Alignment.topLeft,
-                child: Text(subText,
+                child: Text(subText!,
                     style: styleElements.headline5ThemeScalable(context))),
             Center(
               child: Column(
@@ -61,7 +61,7 @@ class IntroWidget extends StatelessWidget {
                     width: 200.h,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage(image),
+                        image: AssetImage(image!),
                         fit: BoxFit.fill,
                       ),
                     ),
@@ -72,7 +72,7 @@ class IntroWidget extends StatelessWidget {
                         left: 16.w, bottom: 12.h, top: 12.h, right: 16.w),
                     alignment: Alignment(0, -0.76),
                     child: Text(
-                      desc,
+                      desc!,
                       textAlign: TextAlign.center,
                       style: styleElements.subtitle1ThemeScalable(context)
                     ),

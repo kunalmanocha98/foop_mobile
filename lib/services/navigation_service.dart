@@ -5,7 +5,7 @@ class NavigationService {
   final GlobalKey<NavigatorState> navigatorKey =
       new GlobalKey<NavigatorState>();
 
-  Future<dynamic> navigateTo(String routeName,DeepLinkingPayload deepLinkingPayload,BuildContext context) {
-    return navigatorKey.currentState.pushNamed(routeName,arguments: deepLinkingPayload);
+  Future<dynamic> navigateTo(String routeName,DeepLinkingPayload deepLinkingPayload,BuildContext? context) {
+    return navigatorKey.currentState!.pushNamed(routeName,arguments: deepLinkingPayload);
   }
 }

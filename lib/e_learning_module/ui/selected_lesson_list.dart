@@ -7,7 +7,7 @@ class SelectedLessonList extends StatefulWidget{
   final bool isBookmark;
   final bool isOwnPost;
   final bool isDrafted;
-  final Function callBack;
+  final Function? callBack;
   SelectedLessonList({this.isBookmark= false,this.isOwnPost= false,this.isDrafted=false,this.callBack});
   @override
   _SelectedLessonList createState() => _SelectedLessonList();
@@ -20,9 +20,9 @@ class _SelectedLessonList extends State<SelectedLessonList>{
         appBar: TricycleAppBar().getCustomAppBar(
             context,
             appBarTitle: widget.isBookmark
-                ?AppLocalizations.of(context).translate('bookmarked_lessons'):
-            widget.isDrafted?AppLocalizations.of(context).translate('drafted')
-            :AppLocalizations.of(context).translate('lessons_by_me'),
+                ?AppLocalizations.of(context)!.translate('bookmarked_lessons'):
+            widget.isDrafted?AppLocalizations.of(context)!.translate('drafted')
+            :AppLocalizations.of(context)!.translate('lessons_by_me'),
             onBackButtonPress: (){
               Navigator.pop(context);
             }),
@@ -30,7 +30,7 @@ class _SelectedLessonList extends State<SelectedLessonList>{
           headerVisible: false,
           callBack:(){
             Navigator.pop(context);
-            widget.callBack();
+            widget.callBack!();
           },
           isOwnPost: widget.isOwnPost,
           isBookmark: widget.isBookmark,

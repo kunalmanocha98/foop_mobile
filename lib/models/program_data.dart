@@ -1,8 +1,8 @@
 class ProgramsData {
-  String statusCode;
-  String message;
-  List<ProgramDataItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<ProgramDataItem>? rows;
+  int? total;
 
   ProgramsData({this.statusCode, this.message, this.rows, this.total});
 
@@ -12,7 +12,7 @@ class ProgramsData {
     if (json['rows'] != null) {
       rows = [];//ProgramDataItem>();
       json['rows'].forEach((v) {
-        rows.add(new ProgramDataItem.fromJson(v));
+        rows!.add(new ProgramDataItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -23,7 +23,7 @@ class ProgramsData {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -31,8 +31,8 @@ class ProgramsData {
 }
 
 class ProgramDataItem {
-  String degreeType;
-  List<Programs> programs;
+  String? degreeType;
+  List<Programs>? programs;
 
   ProgramDataItem({this.degreeType, this.programs});
 
@@ -41,7 +41,7 @@ class ProgramDataItem {
     if (json['programs'] != null) {
       programs = [];//Programs>();
       json['programs'].forEach((v) {
-        programs.add(new Programs.fromJson(v));
+        programs!.add(new Programs.fromJson(v));
       });
     }
   }
@@ -50,19 +50,19 @@ class ProgramDataItem {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['degree_type'] = this.degreeType;
     if (this.programs != null) {
-      data['programs'] = this.programs.map((v) => v.toJson()).toList();
+      data['programs'] = this.programs!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Programs {
-  int id;
-  String degreeType;
-  String programName;
-  String programCode;
-  String programDescription;
-  bool isSelected = false;
+  int? id;
+  String? degreeType;
+  String? programName;
+  String? programCode;
+  String? programDescription;
+  bool? isSelected = false;
 
   Programs(
       {this.id,

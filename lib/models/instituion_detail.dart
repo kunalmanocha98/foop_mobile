@@ -1,7 +1,7 @@
 class InstitutionDetail {
-  String statusCode;
-  String message;
-  List<InstituteonData> rows;
+  String? statusCode;
+  String? message;
+  List<InstituteonData>? rows;
 
   InstitutionDetail({this.statusCode, this.message, this.rows});
 
@@ -11,7 +11,7 @@ class InstitutionDetail {
     if (json['rows'] != null) {
       rows = [];//InstituteonData>();
       json['rows'].forEach((v) {
-        rows.add(new InstituteonData.fromJson(v));
+        rows!.add(new InstituteonData.fromJson(v));
       });
     }
   }
@@ -21,37 +21,37 @@ class InstitutionDetail {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class InstituteonData {
-  int id;
-  int adminUserId;
-  String institutionType;
+  int? id;
+  int? adminUserId;
+  String? institutionType;
   Null code;
-  String description;
-  String name;
+  String? description;
+  String? name;
   Null shortName;
-  String mission;
-  String vision;
-  int establishmentYear;
-  String history;
+  String? mission;
+  String? vision;
+  int? establishmentYear;
+  String? history;
   Null tagLine;
-  String quote;
-  String institutionCategory;
-  bool isActive;
-  String institutionAddressCountry;
-  String institutionAddressRegion;
-  String institutionAddressCity;
-  String institutionAddressStreetAddress;
-  List<InstitutionContacts> institutionContacts;
-  List<InstitutionOperatingHours> institutionOperatingHours;
-  List<Null> institutionHolidays;
-  List<Null> institutionCalendars;
-  List<InstitutionMediums> institutionMediums;
+  String? quote;
+  String? institutionCategory;
+  bool? isActive;
+  String? institutionAddressCountry;
+  String? institutionAddressRegion;
+  String? institutionAddressCity;
+  String? institutionAddressStreetAddress;
+  List<InstitutionContacts>? institutionContacts;
+  List<InstitutionOperatingHours>? institutionOperatingHours;
+  List<Null>? institutionHolidays;
+  List<Null>? institutionCalendars;
+  List<InstitutionMediums>? institutionMediums;
 
   InstituteonData(
       {this.id,
@@ -103,13 +103,13 @@ class InstituteonData {
     if (json['institution_contacts'] != null) {
       institutionContacts = [];//InstitutionContacts>();
       json['institution_contacts'].forEach((v) {
-        institutionContacts.add(new InstitutionContacts.fromJson(v));
+        institutionContacts!.add(new InstitutionContacts.fromJson(v));
       });
     }
     if (json['institution_operating_hours'] != null) {
       institutionOperatingHours = [];//InstitutionOperatingHours>();
       json['institution_operating_hours'].forEach((v) {
-        institutionOperatingHours
+        institutionOperatingHours!
             .add(new InstitutionOperatingHours.fromJson(v));
       });
     }
@@ -128,7 +128,7 @@ class InstituteonData {
     if (json['institution_mediums'] != null) {
       institutionMediums =  <InstitutionMediums>[];
       json['institution_mediums'].forEach((v) {
-        institutionMediums.add(new InstitutionMediums.fromJson(v));
+        institutionMediums!.add(new InstitutionMediums.fromJson(v));
       });
     }
   }
@@ -157,11 +157,11 @@ class InstituteonData {
         this.institutionAddressStreetAddress;
     if (this.institutionContacts != null) {
       data['institution_contacts'] =
-          this.institutionContacts.map((v) => v.toJson()).toList();
+          this.institutionContacts!.map((v) => v.toJson()).toList();
     }
     if (this.institutionOperatingHours != null) {
       data['institution_operating_hours'] =
-          this.institutionOperatingHours.map((v) => v.toJson()).toList();
+          this.institutionOperatingHours!.map((v) => v.toJson()).toList();
     }
     /* if (this.institutionHolidays != null) {
       data['institution_holidays'] =
@@ -173,15 +173,15 @@ class InstituteonData {
     }*/
     if (this.institutionMediums != null) {
       data['institution_mediums'] =
-          this.institutionMediums.map((v) => v.toJson()).toList();
+          this.institutionMediums!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class InstitutionContacts {
-  String contactType;
-  String contactInfo;
+  String? contactType;
+  String? contactInfo;
 
   InstitutionContacts({this.contactType, this.contactInfo});
 
@@ -199,9 +199,9 @@ class InstitutionContacts {
 }
 
 class InstitutionOperatingHours {
-  String dayOfWeek;
-  String startingHours;
-  String closingHours;
+  String? dayOfWeek;
+  String? startingHours;
+  String? closingHours;
 
   InstitutionOperatingHours(
       {this.dayOfWeek, this.startingHours, this.closingHours});
@@ -222,7 +222,7 @@ class InstitutionOperatingHours {
 }
 
 class InstitutionMediums {
-  String language;
+  String? language;
 
   InstitutionMediums({this.language});
 

@@ -2,7 +2,7 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class AppSqliteDb {
-  static Database sqliteDb;
+  static Database? sqliteDb;
   static String sqliteDbName = 'db1.db';
 
   static Future init() async {

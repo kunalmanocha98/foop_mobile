@@ -1,10 +1,10 @@
 import 'package:oho_works_app/models/post/postlist.dart';
 
 class PostViewResponse {
-  String statusCode;
-  String message;
-  PostListItem rows;
-  int total;
+  String? statusCode;
+  String? message;
+  PostListItem? rows;
+  int? total;
 
   PostViewResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -20,7 +20,7 @@ class PostViewResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     data['total'] = this.total;
     return data;

@@ -10,7 +10,7 @@ import 'colors.dart';
 // ignore: must_be_immutable
 class DilogBlockUnfollow extends StatelessWidget {
   DilogBlockUnfollow(
-      {Key key,
+      {Key? key,
       this.image,
       this.title,
       this.startGradientColor,
@@ -20,16 +20,16 @@ class DilogBlockUnfollow extends StatelessWidget {
       this.callback})
       : super(key: key);
 
-  final String image;
+  final String? image;
   final title;
-  Null Function() clicked;
-  final Color startGradientColor;
-  final Color endGradientColor;
-  final String subText;
-  Null Function(bool isCallSuccess) callback;
+  Null Function()? clicked;
+  final Color? startGradientColor;
+  final Color? endGradientColor;
+  final String? subText;
+  Null Function(bool isCallSuccess)? callback;
 
-  String type;
-  TextStyleElements styleElements;
+  String? type;
+  late TextStyleElements styleElements;
 
   Size displaySize(BuildContext context) {
     debugPrint('Size = ' + MediaQuery.of(context).size.toString());
@@ -62,7 +62,7 @@ class DilogBlockUnfollow extends StatelessWidget {
             width: 250,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage(image),
+                image: AssetImage(image!),
                 fit: BoxFit.fill,
               ),
             ),
@@ -83,7 +83,7 @@ class DilogBlockUnfollow extends StatelessWidget {
                 const EdgeInsets.only(left: 16, bottom: 12, top: 12, right: 16),
             alignment: Alignment.center,
             child: Text(
-              subText,
+              subText!,
               style:styleElements.subtitle2ThemeScalable(context),
               textAlign: TextAlign.center,
             ),
@@ -107,11 +107,11 @@ class DilogBlockUnfollow extends StatelessWidget {
                               side: BorderSide(color: HexColor(AppColors.appMainColor))),
                           onPressed: () {
                             Navigator.pop(context, null);
-                            callback(false);
+                            callback!(false);
                           },
                           color: HexColor(AppColors.appColorWhite),
                           child: Text(
-                              AppLocalizations.of(context)
+                              AppLocalizations.of(context)!
                                   .translate('cancel')
                                   .toUpperCase(),
                               style: styleElements.bodyText2ThemeScalable(context).copyWith(color: HexColor(AppColors.appMainColor))),
@@ -129,12 +129,12 @@ class DilogBlockUnfollow extends StatelessWidget {
                           onPressed: () {
                             Navigator.pop(context, null);
                             if(clicked!=null)
-                            clicked();
-                            callback(true);
+                            clicked!();
+                            callback!(true);
                           },
                           color: HexColor(AppColors.appMainColor),
                             child: Text(
-                                AppLocalizations.of(context)
+                                AppLocalizations.of(context)!
                                     .translate('ok')
                                     .toUpperCase(),
                                 style: styleElements.bodyText2ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite))),

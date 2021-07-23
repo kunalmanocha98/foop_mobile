@@ -21,10 +21,10 @@ import 'package:percent_indicator/percent_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileProgressCard extends StatefulWidget {
-  final int ownerId;
-  final String ownerType;
-  final Persondata persondata;
-  final Function callback;
+  final int? ownerId;
+  final String? ownerType;
+  final Persondata? persondata;
+  final Function? callback;
   ProfileProgressCard({this.ownerId,this.ownerType,this.persondata,this.callback});
 
   @override
@@ -32,15 +32,15 @@ class ProfileProgressCard extends StatefulWidget {
 
 }
 class ProfileProgressCardState extends State<ProfileProgressCard>{
-  int progress =0;
-  TextStyleElements styleElements;
-  SharedPreferences prefs = locator<SharedPreferences>();
+  int? progress =0;
+  late TextStyleElements styleElements;
+  SharedPreferences? prefs = locator<SharedPreferences>();
 
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {fetchDetails();});
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {fetchDetails();});
   }
 
   @override
@@ -50,7 +50,7 @@ class ProfileProgressCardState extends State<ProfileProgressCard>{
       behavior: HitTestBehavior.translucent,
       onTap: () async {
         if (widget.persondata != null) {
-          var result = await Navigator.push(context, MaterialPageRoute(builder: (context) => BasicInfo(widget.persondata,  widget.callback)));
+          var result = await Navigator.push(context, MaterialPageRoute(builder: (context) => BasicInfo(widget.persondata,  widget.callback as Null Function()?)));
           if (result != null && result['result'] == "success") {
             print("success------------------------------------------");
             fetchDetails();
@@ -88,7 +88,7 @@ class ProfileProgressCardState extends State<ProfileProgressCard>{
                       child: Padding(
                         padding: EdgeInsets.all(16.h),
                         child: Center(
-                          child: Text(AppLocalizations.of(context).translate('complete_your_profile'),
+                          child: Text(AppLocalizations.of(context)!.translate('complete_your_profile'),
                             style: styleElements.subtitle1ThemeScalable(context),
                           ),
                         ),

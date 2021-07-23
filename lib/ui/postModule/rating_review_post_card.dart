@@ -20,28 +20,28 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PostRatingCard extends StatefulWidget {
-  final int postId;
-  final String ownerType;
-  final int ownerId;
-  PostRatingCard({Key key, @required this.postId, @required this.ownerId ,@required this.ownerType}) : super(key: key);
+  final int? postId;
+  final String? ownerType;
+  final int? ownerId;
+  PostRatingCard({Key? key, required this.postId, required this.ownerId ,required this.ownerType}) : super(key: key);
   @override
   PostRatingCardState createState() => PostRatingCardState(
       postId: postId,
   );
 }
 class PostRatingCardState extends State<PostRatingCard>{
-  int postId;
-  TextStyleElements styleElements;
+  int? postId;
+  late TextStyleElements styleElements;
   RatingSummaryItem data = RatingSummaryItem();
-  SharedPreferences prefs;
+  SharedPreferences? prefs;
 bool isLoading=true;
-  PostRatingCardState({ @required this.postId});
+  PostRatingCardState({ required this.postId});
 
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
       getRatingsData();
     });
   }
@@ -60,9 +60,9 @@ bool isLoading=true;
         isLoading=false;
       });
       if(res.statusCode== Strings.success_code) {
-        if(res.rows.length>0) {
+        if(res.rows!.length>0) {
           setState(() {
-            data = res.rows[0];
+            data = res.rows![0];
           });
         }
       }
@@ -116,7 +116,7 @@ bool isLoading=true;
                               alignment: Alignment.topCenter,
                               child: Container(
                                 child: Text(
-                                  data.averageRating!=null?  double.parse(data.averageRating).toStringAsFixed(1).toString()??"0.0":"0.0",
+                                  data.averageRating!=null?  double.parse(data.averageRating!).toStringAsFixed(1).toString():"0.0",
                                   style: TextStyle(
                                     fontFamily: 'Source Sans Pro',
                                     fontSize: ScreenUtil()
@@ -200,7 +200,7 @@ bool isLoading=true;
                                           margin:
                                           const EdgeInsets.only(left: 8, top: 8.0),
                                           child: Text(
-                                            AppLocalizations.of(context).translate('number_5'),
+                                            AppLocalizations.of(context)!.translate('number_5'),
                                             style: TextStyle(
                                               fontFamily: 'Source Sans Pro',
                                               fontSize: ScreenUtil()
@@ -221,7 +221,7 @@ bool isLoading=true;
                                           animation: true,
                                           lineHeight:10.0,
                                           animationDuration: 2000,
-                                          percent: (data.rating05!=null && data.rating05!=0)?calculatePercentage(data.rating05.toDouble()):0.1,
+                                          percent: (data.rating05!=null && data.rating05!=0)?calculatePercentage(data.rating05!.toDouble()):0.1,
                                           linearStrokeCap: LinearStrokeCap.roundAll,
                                           progressColor: HexColor(AppColors.appColorGreen),
                                           backgroundColor: HexColor(AppColors.appColorTransparent),
@@ -242,7 +242,7 @@ bool isLoading=true;
                                           margin:
                                           const EdgeInsets.only(left: 8, top: 8.0),
                                           child: Text(
-                                            AppLocalizations.of(context).translate('number_4'),
+                                            AppLocalizations.of(context)!.translate('number_4'),
                                             style: TextStyle(
                                               fontFamily: 'Source Sans Pro',
                                               fontSize: ScreenUtil()
@@ -263,7 +263,7 @@ bool isLoading=true;
                                           animation: true,
                                           lineHeight: 10.0,
                                           animationDuration: 2000,
-                                          percent: (data.rating04!=null && data.rating04!=0)?calculatePercentage(data.rating04.toDouble()):0.1,
+                                          percent: (data.rating04!=null && data.rating04!=0)?calculatePercentage(data.rating04!.toDouble()):0.1,
                                           linearStrokeCap: LinearStrokeCap.roundAll,
                                           progressColor: HexColor(AppColors.appColorLightGreen),
                                           backgroundColor: HexColor(AppColors.appColorTransparent),
@@ -284,7 +284,7 @@ bool isLoading=true;
                                           margin:
                                           const EdgeInsets.only(left: 8, top: 8.0),
                                           child: Text(
-                                            AppLocalizations.of(context).translate('number_3'),
+                                            AppLocalizations.of(context)!.translate('number_3'),
                                             style: TextStyle(
                                               fontFamily: 'Source Sans Pro',
                                               fontSize: ScreenUtil()
@@ -305,7 +305,7 @@ bool isLoading=true;
                                           animation: true,
                                           lineHeight: 10.0,
                                           animationDuration: 2000,
-                                          percent: (data.rating03!=null && data.rating03!=0)?calculatePercentage(data.rating03.toDouble()):0.1,
+                                          percent: (data.rating03!=null && data.rating03!=0)?calculatePercentage(data.rating03!.toDouble()):0.1,
                                           linearStrokeCap: LinearStrokeCap.roundAll,
                                           progressColor: HexColor(AppColors.appColorYellow),
                                           backgroundColor: HexColor(AppColors.appColorTransparent),
@@ -326,7 +326,7 @@ bool isLoading=true;
                                           margin:
                                           const EdgeInsets.only(left: 8, top: 8.0),
                                           child: Text(
-                                            AppLocalizations.of(context).translate('number_2'),
+                                            AppLocalizations.of(context)!.translate('number_2'),
                                             style: TextStyle(
                                               fontFamily: 'Source Sans Pro',
                                               fontSize: ScreenUtil()
@@ -347,7 +347,7 @@ bool isLoading=true;
                                           animation: true,
                                           lineHeight: 10.0,
                                           animationDuration: 2000,
-                                          percent: (data.rating02!=null && data.rating02!=0)?calculatePercentage(data.rating02.toDouble()):0.1,
+                                          percent: (data.rating02!=null && data.rating02!=0)?calculatePercentage(data.rating02!.toDouble()):0.1,
                                           linearStrokeCap: LinearStrokeCap.roundAll,
                                           progressColor: HexColor(AppColors.appColorOrange),
                                           backgroundColor: HexColor(AppColors.appColorTransparent),
@@ -368,7 +368,7 @@ bool isLoading=true;
                                           margin:
                                           const EdgeInsets.only(left: 8, top: 8.0),
                                           child: Text(
-                                            AppLocalizations.of(context).translate('number_1'),
+                                            AppLocalizations.of(context)!.translate('number_1'),
                                             style: TextStyle(
                                               fontFamily: 'Source Sans Pro',
                                               fontSize: ScreenUtil()
@@ -389,7 +389,7 @@ bool isLoading=true;
                                           animation: true,
                                           lineHeight: 10.0,
                                           animationDuration: 2000,
-                                          percent: (data.rating01!=null && data.rating01!=0)?(calculatePercentage(data.rating01.toDouble())):0.1,
+                                          percent: (data.rating01!=null && data.rating01!=0)?(calculatePercentage(data.rating01!.toDouble())):0.1,
                                           linearStrokeCap: LinearStrokeCap.roundAll,
                                           progressColor: HexColor(AppColors.appMainColor),
                                           backgroundColor: HexColor(AppColors.appColorTransparent),
@@ -419,7 +419,7 @@ bool isLoading=true;
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context) => RatersPage(
                             id: postId,
-                            name:prefs.getString(Strings.userName),
+                            name:prefs!.getString(Strings.userName),
                             ratingId: 0,
                             imageUrl:"",
                             ratingType: 'post',
@@ -432,7 +432,7 @@ bool isLoading=true;
                   child: Align(
                     alignment: Alignment.bottomRight,
                     child: Text(
-                      AppLocalizations.of(context).translate('see_people'),
+                      AppLocalizations.of(context)!.translate('see_people'),
                       style: TextStyle(
                         fontFamily: 'Source Sans Pro',
                         fontSize: ScreenUtil()
@@ -529,7 +529,7 @@ bool isLoading=true;
   }
 
   double calculatePercentage(double val) {
-    return val/data.totalRatedUsers.toDouble();
+    return val/data.totalRatedUsers!.toDouble();
   }
 
 

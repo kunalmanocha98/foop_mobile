@@ -35,12 +35,12 @@ import '../../ui/add_subject_select_screen.dart';
 // ignore: must_be_immutable
 class EditLanguage extends StatefulWidget {
   String type;
-  String instId;
+  String? instId;
   bool fromBasicProfileFLow;
 
   _EditLanguage createState() => _EditLanguage(
       this.type, this.instId, this.fromBasicProfileFLow, this.callbackPicker);
-  Null Function() callbackPicker;
+  Null Function()? callbackPicker;
 
   EditLanguage(
       this.type, this.instId, this.fromBasicProfileFLow, this.callbackPicker);
@@ -48,15 +48,15 @@ class EditLanguage extends StatefulWidget {
 
 class _EditLanguage extends State<EditLanguage> {
  bool isLoading=false;
-  SharedPreferences prefs;
+  late SharedPreferences prefs;
   String type;
-  String instId;
-  String searchVal;
+  String? instId;
+  String? searchVal;
   bool fromBasicProfileFLow;
   bool isSearching = false;
-  TextStyleElements styleElements;
-  Map<LanguageItem, bool> language = new Map();
-  int selectedLangId = -1;
+  late TextStyleElements styleElements;
+  Map<LanguageItem, bool?> language = new Map();
+  int? selectedLangId = -1;
  GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
  GlobalKey<TricycleProgressButtonState> progressButtonKeyNext = GlobalKey();
   @override
@@ -68,7 +68,7 @@ class _EditLanguage extends State<EditLanguage> {
   final _debouncer = Debouncer(500);
 
   //"expertise_category_code":"2" is for language
-  void getList(String searchVal) async {
+  void getList(String? searchVal) async {
     prefs = await SharedPreferences.getInstance();
 
     setState(() {
@@ -94,7 +94,7 @@ class _EditLanguage extends State<EditLanguage> {
           language = new Map();
           setState(() {
             if (data.rows != null) {
-              var list = data.rows;
+              var list = data.rows!;
               for (var item in list) {
                 if (item.id == selectedLangId)
                   language[item] = true;
@@ -157,7 +157,7 @@ class _EditLanguage extends State<EditLanguage> {
                                       padding: const EdgeInsets.only(top:0,bottom: 2),
                                       child: CheckboxListTile(
                                         title: Text(
-                                          key.expertiseTypeDescription,
+                                          key.expertiseTypeDescription!,
                                           style: styleElements
                                               .subtitle1ThemeScalable(context),
                                         ),
@@ -204,7 +204,7 @@ class _EditLanguage extends State<EditLanguage> {
                               onPressed: () async {
                                 bool isSelected = false;
                                 language.forEach((key, value) {
-                                  if (value) {
+                                  if (value!) {
                                     isSelected = true;
                                     showDialog(
                                         context: context,
@@ -212,13 +212,13 @@ class _EditLanguage extends State<EditLanguage> {
                                             SelectLanguageProficiencyDialogue(
                                               personId: prefs.getInt("userId"),
                                               title2: AppLocalizations.of(
-                                                  context)
+                                                  context)!
                                                   .translate("what_want_to_be"),
                                               title: AppLocalizations.of(
-                                                  context)
+                                                  context)!
                                                   .translate("my_proficiency"),
                                               subtitle: AppLocalizations
-                                                  .of(context)
+                                                  .of(context)!
                                                   .translate("rate_experties"),
                                               categoryType: type,
                                               id1: key.id.toString(),
@@ -229,18 +229,18 @@ class _EditLanguage extends State<EditLanguage> {
                                                   .toString(),
                                               instId: instId,
                                               callbackPicker: () {
-                                                callbackPicker();
+                                                callbackPicker!();
                                                 Navigator.of(context).pop({'result': "success"});
                                               }, type: null,));
                                   }
                                 });
                                 if (!isSelected) {
-                                  callbackPicker();
+                                  callbackPicker!();
                                   Navigator.of(context).pop({'result': "success"});
                                 } },
                               color: HexColor(AppColors.appColorWhite),
                               child: Text(
-                                AppLocalizations.of(context)
+                                AppLocalizations.of(context)!
                                     .translate('save_exit')
                                     .toUpperCase(),
                                 style: styleElements
@@ -261,15 +261,15 @@ class _EditLanguage extends State<EditLanguage> {
                                       color: HexColor(AppColors.appMainColor))),
                               onPressed: () async {
 
-                                if(language!=null&& language.isEmpty && searchVal!=null && searchVal.isNotEmpty)
+                                if(language!=null&& language.isEmpty && searchVal!=null && searchVal!.isNotEmpty)
                                 {
                                   addNewLangSkill(searchVal);
                                 }
                                 else
                                 {
-                                  LanguageItem item;
+                                  LanguageItem? item;
                                   language.forEach((key, value) {
-                                    if (value) {
+                                    if (value!) {
                                       item = key;
                                     }
                                   });
@@ -281,22 +281,22 @@ class _EditLanguage extends State<EditLanguage> {
                                               personId: prefs.getInt(
                                                   "userId"),
                                               title2: AppLocalizations
-                                                  .of(context)
+                                                  .of(context)!
                                                   .translate(
                                                   "what_want_to_be"),
                                               title: AppLocalizations
-                                                  .of(context)
+                                                  .of(context)!
                                                   .translate(
                                                   "my_proficiency"),
                                               subtitle: AppLocalizations.of(
-                                                  context)
+                                                  context)!
                                                   .translate(
                                                   "rate_experties"),
                                               categoryType: type,
-                                              id1: item.id.toString(),
-                                              id3: item
+                                              id1: item!.id.toString(),
+                                              id3: item!
                                                   .standardExpertiseCategoryTypeId,
-                                              id2: item
+                                              id2: item!
                                                   .standardExpertiseCategoryId
                                                   .toString(),
                                               instId: instId,
@@ -314,7 +314,7 @@ class _EditLanguage extends State<EditLanguage> {
                                },
                               color: HexColor(AppColors.appColorWhite),
                               child: Text(
-                                AppLocalizations.of(context)
+                                AppLocalizations.of(context)!
                                     .translate('next')
                                     .toUpperCase(),
                                 style: styleElements
@@ -364,14 +364,14 @@ class _EditLanguage extends State<EditLanguage> {
                                     side: BorderSide(
                                         color: HexColor(AppColors.appMainColor))),
                                 onPressed: () async {
-                                  if(language!=null&& language.isEmpty && searchVal!=null && searchVal.isNotEmpty)
+                                  if(language!=null&& language.isEmpty && searchVal!=null && searchVal!.isNotEmpty)
                                     {
                                       addNewLangSkill(searchVal);
                                     }
                                   else
                                     {
                                       language.forEach((key, value) {
-                                        if (value) {
+                                        if (value!) {
                                           showDialog(
                                               context: context,
                                               builder: (BuildContext context) =>
@@ -379,15 +379,15 @@ class _EditLanguage extends State<EditLanguage> {
                                                     personId: prefs.getInt(
                                                         "userId"),
                                                     title2: AppLocalizations.of(
-                                                        context)
+                                                        context)!
                                                         .translate(
                                                         "what_want_to_be"),
                                                     title: AppLocalizations.of(
-                                                        context)
+                                                        context)!
                                                         .translate(
                                                         "my_proficiency"),
                                                     subtitle: AppLocalizations
-                                                        .of(context)
+                                                        .of(context)!
                                                         .translate(
                                                         "rate_experties"),
                                                     categoryType: type,
@@ -409,7 +409,7 @@ class _EditLanguage extends State<EditLanguage> {
                                   },
                                 color: HexColor(AppColors.appColorWhite),
                                 child: Text(
-                                  AppLocalizations.of(context)
+                                  AppLocalizations.of(context)!
                                       .translate('next')
                                       .toUpperCase(),
                                   style: styleElements
@@ -442,7 +442,7 @@ class _EditLanguage extends State<EditLanguage> {
                   fromBasicProfileFLow,
                   callbackPicker)));
       if (result != null && result['result'] == "success") {
-        callbackPicker();
+        callbackPicker!();
         Navigator.of(context).pop({'result': "success"});
       }
     } else {
@@ -450,28 +450,28 @@ class _EditLanguage extends State<EditLanguage> {
           context,
           MaterialPageRoute(
               builder: (context) => AddSelectSubject(
-                  int.parse(instId), fromBasicProfileFLow, callbackPicker)));
+                  int.parse(instId!), fromBasicProfileFLow, callbackPicker)));
       if (result != null && result['result'] == "success") {
-        callbackPicker();
+        callbackPicker!();
         Navigator.of(context).pop({'result': "success"});
       }
 
     }
   }
- void addNewLangSkill(String searchValue) async {
+ void addNewLangSkill(String? searchValue) async {
 
     AddNewSkillLangEntity addNewSkillLangEntity = AddNewSkillLangEntity();
    addNewSkillLangEntity.categoryType =type=="Languages"?"language":"skill";
    addNewSkillLangEntity.valueCode = searchValue;
    addNewSkillLangEntity.valueName = searchValue;
    addNewSkillLangEntity.valueDescription = searchValue;
-    progressButtonKeyNext.currentState.show();
+    progressButtonKeyNext.currentState!.show();
 
    Calls()
        .call(jsonEncode(addNewSkillLangEntity), context,
        Config.COMMON_NEW_ENTRY)
        .then((value) {
-     progressButtonKeyNext.currentState.hide();
+     progressButtonKeyNext.currentState!.hide();
      var res = AddNewSkillLangResponse.fromJson(value);
      if (res.statusCode == Strings.success_code) {
        isSearching = true;
@@ -480,15 +480,16 @@ class _EditLanguage extends State<EditLanguage> {
      } else {}
    }).catchError((onError) {
      print(onError);
-     progressButtonKeyNext.currentState.hide();
+     progressButtonKeyNext.currentState!.hide();
    });
  }
   // ignore: missing_return
-  Future<bool> _onBackPressed() {
+  Future<bool>? _onBackPressed() {
     Navigator.of(context).pop(true);
+    return new Future(() => false);
   }
 
-  Null Function() callbackPicker;
+  Null Function()? callbackPicker;
 
   _EditLanguage(
       this.type, this.instId, this.fromBasicProfileFLow, this.callbackPicker);

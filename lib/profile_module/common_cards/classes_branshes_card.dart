@@ -16,20 +16,20 @@ import 'overlaped_circular_images.dart';
 // ignore: must_be_immutable
 class ClassesAndBranches extends StatelessWidget {
   final CommonCardData data;
-  int id;
-  final  String institutionId;
-  String instituteName;
-  String instituteAddress;
-  BuildContext context;
-  String type;
+  int? id;
+  final  String? institutionId;
+  String? instituteName;
+  String? instituteAddress;
+  BuildContext? context;
+  String? type;
 
-  List<SubRow> list = [];
-  TextStyleElements styleElements;
-  Null Function() callbackPicker;
+  List<SubRow>? list = [];
+  TextStyleElements? styleElements;
+  Null Function()? callbackPicker;
 
 
 
-  VoidCallback onSeeMoreClicked;
+  VoidCallback? onSeeMoreClicked;
 
   Size displaySize(BuildContext context) {
     debugPrint('Size = ' + MediaQuery.of(context).size.toString());
@@ -47,9 +47,9 @@ class ClassesAndBranches extends StatelessWidget {
   }
 
   ClassesAndBranches(
-      {Key key,
-        @required this.data,
-        @required this.callbackPicker,
+      {Key? key,
+        required this.data,
+        required this.callbackPicker,
         this.styleElements,
         this.id,this.type,
         this.institutionId})
@@ -74,7 +74,7 @@ class ClassesAndBranches extends StatelessWidget {
                         padding: const EdgeInsets.only(left: 16, right: 16,top:12,bottom:12),
                         child: Text(
                           data.title ?? "",
-                          style: styleElements.headline6ThemeScalable(context).copyWith(fontWeight: FontWeight.bold,color: HexColor(AppColors.appColorBlack85)),
+                          style: styleElements!.headline6ThemeScalable(context).copyWith(fontWeight: FontWeight.bold,color: HexColor(AppColors.appColorBlack85)),
                           textAlign: TextAlign.left,
                         ),
                       )),
@@ -96,7 +96,7 @@ class ClassesAndBranches extends StatelessWidget {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) => ExpertiseSelectClass(
-                                        int.parse(institutionId),
+                                        int.parse(institutionId!),
                                         null,
                                         true,
                                         0,
@@ -120,7 +120,7 @@ class ClassesAndBranches extends StatelessWidget {
                                         ),
                                       ));
                                   if (result != null && result['result'] == "update") {
-                                    callbackPicker();
+                                    callbackPicker!();
                                   }
                                 }
                               },
@@ -137,7 +137,7 @@ class ClassesAndBranches extends StatelessWidget {
               ],
             ),
 
-            list!=null &&  list.isNotEmpty?Container(
+            list!=null &&  list!.isNotEmpty?Container(
                 margin: const EdgeInsets.only(left: 12, right: 12, top: 8),
                 child: GridView.count(
                     padding: EdgeInsets.all(0.0),
@@ -145,7 +145,7 @@ class ClassesAndBranches extends StatelessWidget {
                     crossAxisCount: 2,
                     childAspectRatio: 2 / 2.2,
                     shrinkWrap: true,
-                    children: list.map((SubRow data) {
+                    children: list!.map((SubRow data) {
                       return GestureDetector(
                         onTap: () {
 
@@ -180,7 +180,7 @@ class ClassesAndBranches extends StatelessWidget {
                                               overflow:
                                               TextOverflow.ellipsis,
                                               softWrap: false,
-                                              style: styleElements
+                                              style: styleElements!
                                                   .subtitle2ThemeScalable(
                                                   context)
                                                   .copyWith(
@@ -208,7 +208,7 @@ class ClassesAndBranches extends StatelessWidget {
                                               overflow:
                                               TextOverflow.ellipsis,
                                               softWrap: false,
-                                              style: styleElements
+                                              style: styleElements!
                                                   .subtitle2ThemeScalable(
                                                   context),
                                               textAlign: TextAlign.left,
@@ -229,7 +229,7 @@ class ClassesAndBranches extends StatelessWidget {
                                               overflow:
                                               TextOverflow.ellipsis,
                                               softWrap: false,
-                                              style: styleElements
+                                              style: styleElements!
                                                   .captionThemeScalable(
                                                   context),
                                               textAlign: TextAlign.left,
@@ -261,7 +261,7 @@ class ClassesAndBranches extends StatelessWidget {
                                                         TextOverflow
                                                             .ellipsis,
                                                         softWrap: false,
-                                                        style: styleElements
+                                                        style: styleElements!
                                                             .captionThemeScalable(
                                                             context),
                                                         textAlign:
@@ -315,18 +315,18 @@ class ClassesAndBranches extends StatelessWidget {
                           ),
                         ));
                     if (result != null && result['result'] == "update") {
-                      callbackPicker();
+                      callbackPicker!();
                     }
                   },
                   child: Container(
                     margin: const EdgeInsets.only(right: 16, bottom: 16),
                     child: Visibility(
-                      visible: list!=null && list.isNotEmpty,
+                      visible: list!=null && list!.isNotEmpty,
                       child: Align
                         (
                         alignment:  Alignment.bottomRight,
-                        child: Text(AppLocalizations.of(context).translate('see_more'),
-                          style: styleElements.subtitle2ThemeScalable(context),
+                        child: Text(AppLocalizations.of(context)!.translate('see_more'),
+                          style: styleElements!.subtitle2ThemeScalable(context),
                           textAlign: TextAlign.center,
                         ),
                       ),

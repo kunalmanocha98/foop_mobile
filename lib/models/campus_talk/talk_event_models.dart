@@ -1,10 +1,10 @@
 class TalkEventListRequest {
-  String eventOwnerType;
-  int eventOwnerId;
-  String listType;
-  String eventStatus;
-  int pageNumber;
-  int pageSize;
+  String? eventOwnerType;
+  int? eventOwnerId;
+  String? listType;
+  String? eventStatus;
+  int? pageNumber;
+  int? pageSize;
 
   TalkEventListRequest(
       {this.eventOwnerType,

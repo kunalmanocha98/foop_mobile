@@ -1,7 +1,7 @@
 class CourseData {
-  String statusCode;
-  String message;
-  List<CoursesItem> rows;
+  String? statusCode;
+  String? message;
+  List<CoursesItem>? rows;
 
   CourseData({this.statusCode, this.message, this.rows});
 
@@ -11,7 +11,7 @@ class CourseData {
     if (json['rows'] != null) {
       rows = [];//CoursesItem>();
       json['rows'].forEach((v) {
-        rows.add(new CoursesItem.fromJson(v));
+        rows!.add(new CoursesItem.fromJson(v));
       });
     }
   }
@@ -21,18 +21,18 @@ class CourseData {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class CoursesItem {
-  String courseName;
+  String? courseName;
   Null courseCode;
-  String courseDescription;
+  String? courseDescription;
   Null courseTypeId;
-  int courseId;
+  int? courseId;
 
   CoursesItem(
       {this.courseName,

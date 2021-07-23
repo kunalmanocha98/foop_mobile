@@ -19,27 +19,27 @@ import 'config.dart';
 
 // ignore: must_be_immutable
 class ScratchCardDialogue extends StatefulWidget {
-  int personId;
-  int scratchCardId;
-  String value;
-  String type;
-  String fromPage;
-  Function callBack;
+  int? personId;
+  int? scratchCardId;
+  String? value;
+  String? type;
+  String? fromPage;
+  Function? callBack;
   @override
   _ScratchCardDialogue createState() =>  _ScratchCardDialogue(personId,scratchCardId,value,type,fromPage: fromPage,callBack:callBack);
   ScratchCardDialogue(this.personId, this.scratchCardId,this.value,this.type,{this.fromPage,this.callBack});
 }
 // ignore: must_be_immutable
 class _ScratchCardDialogue  extends State<ScratchCardDialogue> {
-  int personId;
-  int scratchCardId;
-  String value;
-  String type;
-  String name;
-  String fromPage;
-  Function callBack;
-  SharedPreferences prefs;
-  TextStyleElements styleElements;
+  int? personId;
+  int? scratchCardId;
+  String? value;
+  String? type;
+  String? name;
+  String? fromPage;
+  Function? callBack;
+  SharedPreferences? prefs;
+  late TextStyleElements styleElements;
   GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
   Size displaySize(BuildContext context) {
     debugPrint('Size = ' + MediaQuery.of(context).size.toString());
@@ -59,20 +59,20 @@ class _ScratchCardDialogue  extends State<ScratchCardDialogue> {
 
   bool isScrached =false;
   // ignore: missing_return
-  Future<bool> _onBackPressed() async {
-
+  Future<bool> _onBackPressed()  {
+    return new Future(() => false);
   }
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance
+    WidgetsBinding.instance!
         .addPostFrameCallback((_) =>  setpref());
   }
   setpref() async {
     prefs = await SharedPreferences.getInstance();
     if(prefs!=null)
     {
-      name= prefs.getString("createdSchool");
+      name= prefs!.getString("createdSchool");
       setState(() {
 
       });
@@ -116,11 +116,11 @@ class _ScratchCardDialogue  extends State<ScratchCardDialogue> {
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: Text(AppLocalizations.of(context).translate('you_won'), style: styleElements.headline5ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack85),fontWeight: FontWeight.bold),),
+                                      child: Text(AppLocalizations.of(context)!.translate('you_won'), style: styleElements.headline5ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack85),fontWeight: FontWeight.bold),),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
-                                      child: Text( type=="cash"?"₹"+  value: value+" coins", style: styleElements.headline5ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack85),fontWeight: FontWeight.bold),),
+                                      child: Text( type=="cash"?"₹"+  value!: value!+" coins", style: styleElements.headline5ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack85),fontWeight: FontWeight.bold),),
                                     ),
 
 
@@ -151,7 +151,7 @@ class _ScratchCardDialogue  extends State<ScratchCardDialogue> {
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: Text(AppLocalizations.of(context).translate('scratch_here'), style: styleElements.subtitle1ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorWhite),fontWeight: FontWeight.bold),),
+                                        child: Text(AppLocalizations.of(context)!.translate('scratch_here'), style: styleElements.subtitle1ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorWhite),fontWeight: FontWeight.bold),),
                                       )
                                     ],
                                   ),
@@ -167,13 +167,13 @@ class _ScratchCardDialogue  extends State<ScratchCardDialogue> {
                     child: Container(
                       margin: const EdgeInsets.only(bottom: 12, top: 30),
                       child: Text(
-                        AppLocalizations.of(context).translate(fromPage=='buddy'?"thank_you_approving":"thank_you"),
+                        AppLocalizations.of(context)!.translate(fromPage=='buddy'?"thank_you_approving":"thank_you"),
                         style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold),
                         textAlign: TextAlign.center,
                       ),
                     )),
                 Visibility(
-                  visible:name!=null&& name.isNotEmpty,
+                  visible:name!=null&& name!.isNotEmpty,
                   child: Align(
                       alignment: Alignment.topCenter,
                       child: Container(
@@ -192,7 +192,7 @@ class _ScratchCardDialogue  extends State<ScratchCardDialogue> {
                       child: Container(
                         margin: const EdgeInsets.only(bottom: 20,left: 16,right: 16),
                         child: Text(
-                          AppLocalizations.of(context).translate(fromPage=='buddy'?"approve_message":"register_message"),
+                          AppLocalizations.of(context)!.translate(fromPage=='buddy'?"approve_message":"register_message"),
                           style: styleElements.subtitle1ThemeScalable(context),
                           textAlign: TextAlign.center,
                         ),
@@ -217,7 +217,7 @@ class _ScratchCardDialogue  extends State<ScratchCardDialogue> {
                         },
                         color: HexColor(AppColors.appMainColor),
                         child: Text(
-                          AppLocalizations.of(context)
+                          AppLocalizations.of(context)!
                               .translate("proceed"),
                           style: styleElements.subtitle2ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite)),),
                       )),
@@ -228,7 +228,7 @@ class _ScratchCardDialogue  extends State<ScratchCardDialogue> {
     );
   }
   void update() async {
-    progressButtonKey.currentState.show();
+    progressButtonKey.currentState!.show();
     final body = jsonEncode(
         {"all_persons_id":personId,
           "scratch_card_distribution_detail_id":scratchCardId}
@@ -239,21 +239,21 @@ class _ScratchCardDialogue  extends State<ScratchCardDialogue> {
         var data = ScratchCardResult.fromJson(value);
         if(data!=null && data.statusCode==Strings.success_code) {
           if(fromPage!=null && fromPage=='buddy'){
-            progressButtonKey.currentState.hide();
+            progressButtonKey.currentState!.hide();
             Navigator.pop(context);
-            callBack();
+            callBack!();
             // _getData();
           }else if (fromPage!=null && fromPage=='earn'){
-            progressButtonKey.currentState.hide();
+            progressButtonKey.currentState!.hide();
             Navigator.pop(context);
-            callBack();
+            callBack!();
           } else if (fromPage!=null && fromPage=='post'){
-            progressButtonKey.currentState.hide();
+            progressButtonKey.currentState!.hide();
             Navigator.pop(context);
-            callBack();
+            callBack!();
           }else {
-            progressButtonKey.currentState.hide();
-            prefs.setString("create_institute", "created");
+            progressButtonKey.currentState!.hide();
+            prefs!.setString("create_institute", "created");
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
                   builder: (context) =>
@@ -266,21 +266,21 @@ class _ScratchCardDialogue  extends State<ScratchCardDialogue> {
         }
         else{
           if(fromPage!=null && fromPage=='buddy'){
-            progressButtonKey.currentState.hide();
+            progressButtonKey.currentState!.hide();
             Navigator.pop(context);
-            callBack();
+            callBack!();
             // _getData();
           }else if (fromPage!=null && fromPage=='earn'){
-            progressButtonKey.currentState.hide();
+            progressButtonKey.currentState!.hide();
             Navigator.pop(context);
-            callBack();
+            callBack!();
           } else if (fromPage!=null && fromPage=='post'){
-            progressButtonKey.currentState.hide();
+            progressButtonKey.currentState!.hide();
             Navigator.pop(context);
-            callBack();
+            callBack!();
           }else {
-            progressButtonKey.currentState.hide();
-            prefs.setString("create_institute", "created");
+            progressButtonKey.currentState!.hide();
+            prefs!.setString("create_institute", "created");
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
                   builder: (context) =>
@@ -293,7 +293,7 @@ class _ScratchCardDialogue  extends State<ScratchCardDialogue> {
         }
       }
     }).catchError((onError) async {
-      progressButtonKey.currentState.hide();
+      progressButtonKey.currentState!.hide();
     });
 
   }

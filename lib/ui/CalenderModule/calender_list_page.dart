@@ -23,28 +23,28 @@ class CalenderPage extends StatefulWidget{
 class CalenderPageState extends State<CalenderPage> with SingleTickerProviderStateMixin{
   List<CustomTabMaker> list = [];
   int _currentPosition = 0;
-  TabController _tabController;
-  TextStyleElements styleElements;
-  SharedPreferences prefs;
+  late TabController _tabController;
+  TextStyleElements? styleElements;
+  SharedPreferences? prefs;
   DateTime selectedDate = DateTime.now();
-  BuildContext sctx;
+  BuildContext? sctx;
   GlobalKey<CalenderListPageState> _allCalenderListKey = GlobalKey();
   GlobalKey<CalenderListPageState> _myCalenderListKey = GlobalKey();
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => loadPages());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => loadPages());
   }
 
   void loadPages() async {
     prefs ??= await SharedPreferences.getInstance();
     list.add(CustomTabMaker(
-      tabName: AppLocalizations.of(context).translate('all'),
+      tabName: AppLocalizations.of(context)!.translate('all'),
       statelessWidget: CalenderListPage(key: _allCalenderListKey,date: selectedDate,type:"all")
     ));
     list.add(CustomTabMaker(
-        tabName: AppLocalizations.of(context).translate('my_calender'),
+        tabName: AppLocalizations.of(context)!.translate('my_calender'),
         statelessWidget: CalenderListPage(key: _myCalenderListKey,date: selectedDate,type:"my")
     ));
     setState(() {
@@ -80,7 +80,7 @@ class CalenderPageState extends State<CalenderPage> with SingleTickerProviderSta
     styleElements = TextStyleElements(context);
     return SafeArea(child: Scaffold(
       appBar: TricycleAppBar().getCustomAppBar(context,
-        appBarTitle: AppLocalizations.of(context).translate('calender'),
+        appBarTitle: AppLocalizations.of(context)!.translate('calender'),
         onBackButtonPress: (){Navigator.pop(context);},
         actions: [
           IconButton(icon: Icon(Icons.calendar_today_rounded,color: HexColor(AppColors.appColorBlack65),), onPressed: (){
@@ -139,7 +139,7 @@ class CalenderPageState extends State<CalenderPage> with SingleTickerProviderSta
                   Center(child: list[index].statelessWidget),
               onPositionChange: (index) {
                 setState(() {
-                  _currentPosition = index;
+                  _currentPosition = index!;
                 });
               },
               onScroll: (position) => print('$position'),
@@ -152,14 +152,14 @@ class CalenderPageState extends State<CalenderPage> with SingleTickerProviderSta
 
   void updateList() {
     if(_currentPosition==0){
-      _allCalenderListKey.currentState.update(date: selectedDate,searchVal: "");
+      _allCalenderListKey.currentState!.update(date: selectedDate,searchVal: "");
     }else{
-      _myCalenderListKey.currentState.update(date: selectedDate,searchVal: "");
+      _myCalenderListKey.currentState!.update(date: selectedDate,searchVal: "");
     }
   }
 
 
-  onBottomSheetCallBack(String value,int stamdardEventId) {
+  onBottomSheetCallBack(String? value,int ?stamdardEventId) {
     Navigator.pop(context);
     if(value == CALENDERTYPECODE.EVENT.type) {
       Navigator.push(

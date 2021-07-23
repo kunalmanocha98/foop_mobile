@@ -30,9 +30,9 @@ class CountryPage extends StatefulWidget {
 
 class _CountryPage extends State<CountryPage> {
 bool isLoading =false;
-  bool isSignUp;
+  bool? isSignUp;
   bool isCalled = false;
-  SharedPreferences prefs;
+  SharedPreferences? prefs;
   List<LanguageItem>  listRules = [];
 
   @override
@@ -40,7 +40,7 @@ bool isLoading =false;
     super.initState();
 
     application.onLocaleChanged = onLocaleChange;
-    WidgetsBinding.instance.addPostFrameCallback((_) => getList());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => getList());
   }
 
   void onLocaleChange(Locale locale) {
@@ -48,12 +48,12 @@ bool isLoading =false;
       setState(() {});
     }
   }
-  BuildContext sctx;
+  late BuildContext sctx;
 
   void setSharedPreferences() async {
     prefs = await SharedPreferences.getInstance();
   }
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
   Widget build(BuildContext context) {
     setSharedPreferences();
 
@@ -66,7 +66,7 @@ bool isLoading =false;
         backgroundColor: HexColor(AppColors.appColorBackground),
         // AppLocalizations.of(context).translate("language")
         appBar: TricycleAppBar().getCustomAppBar(context,
-          appBarTitle: AppLocalizations.of(context).translate('select_country'),
+          appBarTitle: AppLocalizations.of(context)!.translate('select_country'),
           onBackButtonPress: (){
             Navigator.of(context).pop();
           },
@@ -84,7 +84,7 @@ bool isLoading =false;
                     return CheckboxListTile(
                       checkColor: HexColor(AppColors.appColorWhite),
                       activeColor: HexColor(AppColors.appMainColor),
-                      title: Text(listRules[index].languageName,
+                      title: Text(listRules[index].languageName!,
 
                           style: styleElements.subtitle1ThemeScalable(context)
                       ),
@@ -130,7 +130,7 @@ bool isLoading =false;
                             },
                             color: HexColor(AppColors.appColorWhite),
                             child: Text(
-                                AppLocalizations.of(context).translate("next"),
+                                AppLocalizations.of(context)!.translate("next"),
                                 style: styleElements.buttonThemeScalable(context).copyWith(color: HexColor(AppColors.appMainColor))),
                           ),
                         )),
@@ -144,10 +144,10 @@ bool isLoading =false;
     ;
   }
 
-  LanguageItem getSelectedItem() {
+  LanguageItem? getSelectedItem() {
 
     for (var item in listRules) {
-      if (item.isSelected) {
+      if (item.isSelected!) {
         return item;
       }
     }
@@ -168,10 +168,10 @@ bool isLoading =false;
 
         var data = Country.fromJson(value);
         if (this.mounted) {
-          for (int i = 0; i < data.rows.length; i++) {
+          for (int i = 0; i < data.rows!.length; i++) {
             LanguageItem languageItem=LanguageItem();
-            languageItem.languageCode=data.rows[i][0];
-            languageItem.languageName=data.rows[i][1];
+            languageItem.languageCode=data.rows![i][0];
+            languageItem.languageName=data.rows![i][1];
             languageItem.isSelected=false;
             listRules.add(languageItem);
           }

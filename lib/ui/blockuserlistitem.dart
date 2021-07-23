@@ -7,14 +7,14 @@ import 'package:flutter/material.dart';
 class BlockUserListItem extends StatelessWidget {
   CommonCardData data;
   int position;
-  BuildContext context;
-  Null Function(int index) callback;
-  TextStyleElements styleElements;
+  BuildContext? context;
+  Null Function(int index)? callback;
+  TextStyleElements? styleElements;
 
   BlockUserListItem({
-    Key key,
-    @required this.data,
-    @required this.position,
+    Key? key,
+    required this.data,
+    required this.position,
     this.callback,
   }) : super(key: key);
 

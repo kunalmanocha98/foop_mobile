@@ -24,11 +24,11 @@ import 'learner_category_page.dart';
 
 // ignore: must_be_immutable
 class TopicTypePage extends StatefulWidget {
-  final TopicListItem selectedItem;
-  final List<PostCreatePayload> list;
-  final PostReceiverListItem selectedReceiverData;
-final Function callBack;
-final PostCreatePayload createLessonData;
+  final TopicListItem? selectedItem;
+  final List<PostCreatePayload?>? list;
+  final PostReceiverListItem? selectedReceiverData;
+final Function? callBack;
+final PostCreatePayload? createLessonData;
   TopicTypePage({this.selectedItem, this.list, this.selectedReceiverData,this.callBack, this.createLessonData});
 
   _TopicTypePage createState() => _TopicTypePage(
@@ -40,16 +40,16 @@ final PostCreatePayload createLessonData;
 }
 
 class _TopicTypePage extends State<TopicTypePage> {
-  BuildContext context;
-  TextStyleElements styleElements;
+  late BuildContext context;
+  late TextStyleElements styleElements;
   GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
   GlobalKey<TricycleProgressButtonState> progressButtonKeyNext = GlobalKey();
   List<TopicListItem> topicList = [];
-  List<PostCreatePayload> list;
-  PostReceiverListItem selectedReceiverData;
-  String searchVal;
-  TopicListItem selectedItem;
-  PostCreatePayload createLessonData;
+  List<PostCreatePayload?>? list;
+  PostReceiverListItem? selectedReceiverData;
+  String? searchVal;
+  TopicListItem? selectedItem;
+  PostCreatePayload? createLessonData;
 
   _TopicTypePage({
     this.selectedItem,
@@ -74,7 +74,7 @@ class _TopicTypePage extends State<TopicTypePage> {
           resizeToAvoidBottomInset: false,
           appBar: TricycleAppBar().getCustomAppBar(
             context,
-            appBarTitle: AppLocalizations.of(context).translate('Topic_type'),
+            appBarTitle: AppLocalizations.of(context)!.translate('Topic_type'),
 
             onBackButtonPress: () {
               Navigator.pop(context);
@@ -95,7 +95,7 @@ class _TopicTypePage extends State<TopicTypePage> {
                   child: Padding(
                       padding: EdgeInsets.only(top:16,left: 16,right: 16,bottom: 8),
                       child: Text(
-                        AppLocalizations.of(context).translate("topic_des"),
+                        AppLocalizations.of(context)!.translate("topic_des"),
                         style: styleElements.subtitle2ThemeScalable(context).copyWith(fontWeight: FontWeight.w500),
 
                       )
@@ -135,13 +135,13 @@ class _TopicTypePage extends State<TopicTypePage> {
     return TopicListResponse.fromJson(value);
   }
 
-  List<TopicListItem> listItemGetter(TopicListResponse pageData) {
+  List<TopicListItem>? listItemGetter(TopicListResponse? pageData) {
     if (selectedItem != null) {
-      pageData.rows.forEach((element) {
-        element.isSelected = element.topicId == selectedItem.topicId;
+      pageData!.rows!.forEach((element) {
+        element.isSelected = element.topicId == selectedItem!.topicId;
       });
     }
-    topicList.addAll(pageData.rows);
+    topicList.addAll(pageData!.rows!);
     return pageData.rows;
   }
 
@@ -169,7 +169,7 @@ class _TopicTypePage extends State<TopicTypePage> {
                   list: list,
                   callBack:(){Navigator.of(context).pop();
                   if(widget.callBack!=null)
-                    widget.callBack();
+                    widget.callBack!();
                   },
                   createLessonData:createLessonData,
                   selectedReceiverData: widget.selectedReceiverData,
@@ -194,7 +194,7 @@ class _TopicTypePage extends State<TopicTypePage> {
                     topicListItem: item,
                       callBack:(){Navigator.of(context).pop();
                       if(widget.callBack!=null)
-                        widget.callBack();},
+                        widget.callBack!();},
                       list: list,
                       selectedReceiverData:selectedReceiverData
                   );
@@ -211,11 +211,11 @@ class _TopicTypePage extends State<TopicTypePage> {
       },
       child: ListTile(
         title: Text(
-          item.topicName,
+          item.topicName!,
           style: styleElements.subtitle1ThemeScalable(context),
         ),
         trailing: Visibility(
-          visible: (item.isSelected != null && item.isSelected),
+          visible: (item.isSelected != null && item.isSelected!),
           child: Icon(
             Icons.check_circle,
             color: HexColor(AppColors.appColorGreen),
@@ -233,7 +233,7 @@ class CommentSheet extends StatefulWidget {
 }
 
 class _CommentSheet extends State<CommentSheet> {
-  SharedPreferences prefs = locator<SharedPreferences>();
+  SharedPreferences? prefs = locator<SharedPreferences>();
   final lastNameController = TextEditingController();
 
   @override
@@ -255,7 +255,7 @@ class _CommentSheet extends State<CommentSheet> {
         },
         decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(8.0, 15.0, 20.0, 4.0),
-          hintText: AppLocalizations.of(context).translate('give_lessons_name'),
+          hintText: AppLocalizations.of(context)!.translate('give_lessons_name'),
           hintStyle: styleElements
               .bodyText2ThemeScalable(context)
               .copyWith(color: HexColor(AppColors.appColorBlack35)),
@@ -270,7 +270,7 @@ class _CommentSheet extends State<CommentSheet> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                AppLocalizations.of(context).translate(''),
+                AppLocalizations.of(context)!.translate(''),
                 style: styleElements
                     .headline6ThemeScalable(context)
                     .copyWith(fontWeight: FontWeight.bold),
@@ -279,7 +279,7 @@ class _CommentSheet extends State<CommentSheet> {
             Padding(
               padding: const EdgeInsets.only(top: 20.0),
               child: Text(
-                AppLocalizations.of(context).translate('name_of_lesson'),
+                AppLocalizations.of(context)!.translate('name_of_lesson'),
                 style: styleElements
                     .subtitle1ThemeScalable(context)
                     .copyWith(fontWeight: FontWeight.bold),
@@ -289,7 +289,7 @@ class _CommentSheet extends State<CommentSheet> {
               padding:
                   const EdgeInsets.only(top: 20.0, left: 16.0, right: 16.0),
               child: Text(
-                AppLocalizations.of(context).translate('next'),
+                AppLocalizations.of(context)!.translate('next'),
                 style: styleElements
                     .subtitle2ThemeScalable(context)
                     .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -305,7 +305,7 @@ class _CommentSheet extends State<CommentSheet> {
           padding: const EdgeInsets.only(
               left: 45.0, right: 45.0, top: 20, bottom: 60),
           child: Text(
-            AppLocalizations.of(context).translate('give_lesson_name'),
+            AppLocalizations.of(context)!.translate('give_lesson_name'),
             style: styleElements.bodyText1ThemeScalable(context),
           ),
         ),

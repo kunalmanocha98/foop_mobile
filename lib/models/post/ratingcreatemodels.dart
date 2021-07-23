@@ -1,11 +1,11 @@
 class CreateRatingPayload {
-  int ratingNoteId;
-  String ratingSubjectType;
-  int ratingSubjectId;
-  String ratingContextType;
-  int ratingContextId;
-  int ratingGivenById;
-  String ratingGiven;
+  int? ratingNoteId;
+  String? ratingSubjectType;
+  int? ratingSubjectId;
+  String? ratingContextType;
+  int? ratingContextId;
+  int? ratingGivenById;
+  String? ratingGiven;
 
   CreateRatingPayload(
       {this.ratingNoteId,

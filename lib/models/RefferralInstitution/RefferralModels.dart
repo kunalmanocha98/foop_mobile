@@ -1,11 +1,11 @@
 class ReferralRequest {
-  int institutionId;
-  int referredByPersonId;
-  String referredByPersonMobileNumber;
-  String referredByUpiId;
-  String referredDate;
-  int adminStaffPersonId;
-  String referralDate;
+  int? institutionId;
+  int? referredByPersonId;
+  String? referredByPersonMobileNumber;
+  String? referredByUpiId;
+  String? referredDate;
+  int? adminStaffPersonId;
+  String? referralDate;
 
   ReferralRequest(
       {this.institutionId,
@@ -42,9 +42,9 @@ class ReferralRequest {
 
 
 class ReferralResponse {
-  String statusCode;
-  String message;
-  int total;
+  String? statusCode;
+  String? message;
+  int? total;
 
   ReferralResponse({this.statusCode, this.message, this.total});
 

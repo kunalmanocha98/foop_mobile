@@ -16,7 +16,7 @@ class SpeakersList extends StatefulWidget {
 }
 
 class SpeakersListState extends State<SpeakersList> {
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class SpeakersListState extends State<SpeakersList> {
       child: Scaffold(
         appBar: TricycleAppBar().getCustomAppBarWithSearch(
           context,
-          appBarTitle: AppLocalizations.of(context).translate('manage_speaker'),
+          appBarTitle: AppLocalizations.of(context)!.translate('manage_speaker'),
           onBackButtonPress: () {
             Navigator.pop(context);
           },

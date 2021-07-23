@@ -34,9 +34,9 @@ import 'dialogs/dialog_audio_post.dart';
 
 // ignore: must_be_immutable
 class PostCardDetailPage extends StatefulWidget {
-  PostListItem postData;
+  PostListItem? postData;
 
-  int postId;
+  int? postId;
 
   PostCardDetailPage({this.postData, this.postId});
 
@@ -46,28 +46,28 @@ class PostCardDetailPage extends StatefulWidget {
 }
 
 class _PostCardDetail extends State<PostCardDetailPage> {
-  PostListItem postData;
+  PostListItem? postData;
 
-  int postId;
+  int? postId;
 
   _PostCardDetail({this.postData, this.postId});
 
-  SharedPreferences prefs = locator<SharedPreferences>();
-  TextStyleElements styleElements;
+  SharedPreferences? prefs = locator<SharedPreferences>();
+  late TextStyleElements styleElements;
   GlobalKey<TricycleChatFooterState> chatFooterKey = GlobalKey();
-  PAGINATOR_ENUMS pageEnum_answer;
-  PAGINATOR_ENUMS pageEnum_comment;
-  PAGINATOR_ENUMS pageEnum_assignment;
+  PAGINATOR_ENUMS? pageEnum_answer;
+  PAGINATOR_ENUMS? pageEnum_comment;
+  PAGINATOR_ENUMS? pageEnum_assignment;
   bool isPostDataAvailable = true;
-  String errorMessage;
+  String? errorMessage;
   List<NotesListItem> notesList = [];
   List<AnswersListItem> answersList = [];
   List<AnswersListItem> assignmentList = [];
-  int totalComment = 0;
+  int? totalComment = 0;
   int pageComment = 1;
-  int totalAnswers = 0;
+  int? totalAnswers = 0;
   int pageAnswer = 1;
-  int totalAssignment = 0;
+  int? totalAssignment = 0;
   int pageAssignment = 1;
   int j = 0;
   GlobalKey<PostRatingCardState> postRatingKey = GlobalKey();
@@ -80,15 +80,15 @@ class _PostCardDetail extends State<PostCardDetailPage> {
   void initState() {
     super.initState();
     if (postId != null) {
-      WidgetsBinding.instance.addPostFrameCallback((_) => getPost(postId));
+      WidgetsBinding.instance!.addPostFrameCallback((_) => getPost(postId));
     }
     pageEnum_answer = PAGINATOR_ENUMS.LOADING;
     pageEnum_comment = PAGINATOR_ENUMS.EMPTY;
     pageEnum_assignment = PAGINATOR_ENUMS.LOADING;
-    if (postData != null && postData.postType == 'qa') {
+    if (postData != null && postData!.postType == 'qa') {
       initialcallAnswer();
     }
-    if (postData!=null && postData.postType == 'assignment') {
+    if (postData!=null && postData!.postType == 'assignment') {
       inititalCallAssignment();
     } else {
       initialcallComment();
@@ -128,19 +128,19 @@ class _PostCardDetail extends State<PostCardDetailPage> {
                     ? SliverToBoxAdapter(
                   child: PostRatingCard(
                     key: postRatingKey,
-                    postId: postData.postId,
-                    ownerId: postData.postOwnerTypeId,
-                    ownerType: postData.postOwnerType,
+                    postId: postData!.postId,
+                    ownerId: postData!.postOwnerTypeId,
+                    ownerType: postData!.postOwnerType,
                   ),
                 )
                     : SliverToBoxAdapter(),
-                postData != null && postData.postType == 'assignment'
+                postData != null && postData!.postType == 'assignment'
                     ? SliverToBoxAdapter(
                   child: Padding(
                     padding: const EdgeInsets.only(
                         left: 20.0, top: 8, bottom: 8),
                     child: Text(
-                      AppLocalizations.of(context)
+                      AppLocalizations.of(context)!
                           .translate('assignment_submission'),
                       style: styleElements
                           .headline6ThemeScalable(context)
@@ -149,16 +149,16 @@ class _PostCardDetail extends State<PostCardDetailPage> {
                   ),
                 )
                     : SliverToBoxAdapter(),
-                postData != null && postData.postType == 'assignment'
+                postData != null && postData!.postType == 'assignment'
                     ? getAssignmentSliver()
                     : SliverToBoxAdapter(),
-                postData != null && postData.postType == 'qa'
+                postData != null && postData!.postType == 'qa'
                     ? SliverToBoxAdapter(
                   child: Padding(
                     padding: const EdgeInsets.only(
                         left: 20.0, top: 8, bottom: 8),
                     child: Text(
-                      AppLocalizations.of(context)
+                      AppLocalizations.of(context)!
                           .translate('answers'),
                       style: styleElements
                           .headline6ThemeScalable(context)
@@ -167,7 +167,7 @@ class _PostCardDetail extends State<PostCardDetailPage> {
                   ),
                 )
                     : SliverToBoxAdapter(),
-                postData != null && postData.postType == 'qa'
+                postData != null && postData!.postType == 'qa'
                     ? getAnswerSliver()
                     : SliverToBoxAdapter(),
                 SliverToBoxAdapter(
@@ -175,7 +175,7 @@ class _PostCardDetail extends State<PostCardDetailPage> {
                     padding: const EdgeInsets.only(
                         left: 20.0, top: 8, bottom: 8),
                     child: Text(
-                      AppLocalizations.of(context).translate('comments'),
+                      AppLocalizations.of(context)!.translate('comments'),
                       style: styleElements
                           .headline6ThemeScalable(context)
                           .copyWith(fontWeight: FontWeight.w600),
@@ -194,11 +194,11 @@ class _PostCardDetail extends State<PostCardDetailPage> {
                 TricycleChatFooter(
                   chatFooterKey,
                   isShowAddIcon: false,
-                  hintText: AppLocalizations.of(context)
+                  hintText: AppLocalizations.of(context)!
                       .translate('enter_comment'),
                   onValueRecieved: (value) {
-                    submitComment(value);
-                    chatFooterKey.currentState.clearData();
+                    submitComment(value!);
+                    chatFooterKey.currentState!.clearData();
                     addNote(value);
                   },
                 ),
@@ -219,7 +219,7 @@ class _PostCardDetail extends State<PostCardDetailPage> {
               ),
               TricycleProgressButton(
                 child: Text(
-                  AppLocalizations.of(context).translate('go_back'),
+                  AppLocalizations.of(context)!.translate('go_back'),
                   style: styleElements
                       .captionThemeScalable(context)
                       .copyWith(color: HexColor(AppColors.appColorWhite)),
@@ -255,21 +255,21 @@ class _PostCardDetail extends State<PostCardDetailPage> {
             if (index < assignmentList.length) {
               return CommentItemCard(
                 isAnswer: true,
-                isAssignment:  postData.postType == 'assignment',
+                isAssignment:  postData!.postType == 'assignment',
                 key: UniqueKey(),
-                isGiveMarksVisible: postData.postOwnerTypeId == prefs.getInt(Strings.userId),
-                rating: assignmentList[index].ratingDetails.rating,
-                reviewNote : assignmentList[index].ratingDetails.comment,
+                isGiveMarksVisible: postData!.postOwnerTypeId == prefs!.getInt(Strings.userId),
+                rating: assignmentList[index].ratingDetails!.rating,
+                reviewNote : assignmentList[index].ratingDetails!.comment,
                 answerOtherDetails: assignmentList[index].answerOtherDetails,
                 answerStatus : assignmentList[index].answerStatus,
                 postId : assignmentList[index].postId,
                 refreshCallback:refresh,
-                maxMarks: postData.postContent.content.contentMeta.others.maxMarks.toString(),
+                maxMarks: postData!.postContent!.content!.contentMeta!.others!.maxMarks.toString(),
                 assignmentDate :
-                (postData!=null && postData.postContent.content.contentMeta.others!=null && postData.postContent.content.contentMeta.others.submissionDateTime!=null)
-                    ?DateTime.fromMillisecondsSinceEpoch(postData.postContent.content.contentMeta.others.submissionDateTime)
+                (postData!=null && postData!.postContent!.content!.contentMeta!.others!=null && postData!.postContent!.content!.contentMeta!.others!.submissionDateTime!=null)
+                    ?DateTime.fromMillisecondsSinceEpoch(postData!.postContent!.content!.contentMeta!.others!.submissionDateTime!)
                     :DateTime.now(),
-                assignmentTitle: postData.postContent.content.contentMeta.title,
+                assignmentTitle: postData!.postContent!.content!.contentMeta!.title,
                 data: NotesListItem(
                     note_id:  assignmentList[index].id,
                     noteContent: assignmentList[index].answerDetails,
@@ -291,7 +291,7 @@ class _PostCardDetail extends State<PostCardDetailPage> {
                       return CustomPaginator(context).loadingWidgetMaker();
                     case ConnectionState.done:
                       pageAssignment++;
-                      assignmentList.addAll(snapshot.data.rows);
+                      assignmentList.addAll(snapshot.data!.rows!);
                       Future.microtask(() {
                         setState(() {});
                       });
@@ -326,7 +326,7 @@ class _PostCardDetail extends State<PostCardDetailPage> {
           SliverChildBuilderDelegate((BuildContext context, int index) {
             if (index < answersList.length) {
               return CommentItemCard(
-                isAnswer: postData.postType == 'qa',
+                isAnswer: postData!.postType == 'qa',
                 key: UniqueKey(),
                 data: NotesListItem(
                     noteContent: answersList[index].answerDetails,
@@ -348,7 +348,7 @@ class _PostCardDetail extends State<PostCardDetailPage> {
                       return CustomPaginator(context).loadingWidgetMaker();
                     case ConnectionState.done:
                       pageAnswer++;
-                      answersList.addAll(snapshot.data.rows);
+                      answersList.addAll(snapshot.data!.rows!);
                       Future.microtask(() {
                         setState(() {});
                       });
@@ -388,7 +388,7 @@ class _PostCardDetail extends State<PostCardDetailPage> {
                   ratingCallBack: () {
                     setState(() {
                       notesList[index].commRateCount =
-                          notesList[index].commRateCount + 1;
+                          notesList[index].commRateCount! + 1;
                     });
                   });
             } else {
@@ -403,7 +403,7 @@ class _PostCardDetail extends State<PostCardDetailPage> {
                       return CustomPaginator(context).loadingWidgetMaker();
                     case ConnectionState.done:
                       pageComment++;
-                      notesList.addAll(snapshot.data.rows);
+                      notesList.addAll(snapshot.data!.rows!);
                       Future.microtask(() {
                         setState(() {});
                       });
@@ -420,7 +420,7 @@ class _PostCardDetail extends State<PostCardDetailPage> {
     }
   }
 
-  void getPost(int postId) async {
+  void getPost(int? postId) async {
     final body = jsonEncode({"post_id": postId});
 
     Calls().call(body, context, Config.POST_VIEW).then((value) {
@@ -452,7 +452,7 @@ class _PostCardDetail extends State<PostCardDetailPage> {
     prefs ??= await SharedPreferences.getInstance();
     var body = jsonEncode({
       "note_subject_type": "post",
-      "note_subject_id": postId != null ? postId : postData.postId,
+      "note_subject_id": postId != null ? postId : postData!.postId,
       "page_number": pageComment,
       "page_size": 10
     });
@@ -460,8 +460,8 @@ class _PostCardDetail extends State<PostCardDetailPage> {
     var response = NotesListResponse.fromJson(res);
     totalComment = response.total;
     if (response.statusCode == Strings.success_code) {
-      if (response.total > 0) {
-        notesList.addAll(response.rows);
+      if (response.total! > 0) {
+        notesList.addAll(response.rows!);
         setState(() {
           pageEnum_comment = PAGINATOR_ENUMS.SUCCESS;
           pageComment++;
@@ -478,8 +478,8 @@ class _PostCardDetail extends State<PostCardDetailPage> {
     }
   }
 
-  int getItemsCountComment() {
-    if (totalComment > notesList.length) {
+  int? getItemsCountComment() {
+    if (totalComment! > notesList.length) {
       return notesList.length + 1;
     } else {
       return totalComment;
@@ -488,7 +488,7 @@ class _PostCardDetail extends State<PostCardDetailPage> {
 
   void inititalCallAssignment() async {
     AnswerListRequest payload = AnswerListRequest();
-    payload.postId = postId != null ? postId : postData.postId;
+    payload.postId = postId != null ? postId : postData!.postId;
     payload.pageNumber = pageAnswer;
     payload.pageSize = 10;
     var res =
@@ -496,8 +496,8 @@ class _PostCardDetail extends State<PostCardDetailPage> {
     var response = AnswerListResponse.fromJson(res);
     totalAssignment = response.total;
     if (response.statusCode == Strings.success_code) {
-      if (response.total > 0) {
-        assignmentList.addAll(response.rows);
+      if (response.total! > 0) {
+        assignmentList.addAll(response.rows!);
         setState(() {
           pageEnum_assignment = PAGINATOR_ENUMS.SUCCESS;
           pageAssignment++;
@@ -516,7 +516,7 @@ class _PostCardDetail extends State<PostCardDetailPage> {
 
   void initialcallAnswer() async {
     AnswerListRequest payload = AnswerListRequest();
-    payload.postId = postId != null ? postId : postData.postId;
+    payload.postId = postId != null ? postId : postData!.postId;
     payload.pageNumber = pageAnswer;
     payload.pageSize = 10;
     var res =
@@ -524,8 +524,8 @@ class _PostCardDetail extends State<PostCardDetailPage> {
     var response = AnswerListResponse.fromJson(res);
     totalAnswers = response.total;
     if (response.statusCode == Strings.success_code) {
-      if (response.total > 0) {
-        answersList.addAll(response.rows);
+      if (response.total! > 0) {
+        answersList.addAll(response.rows!);
         setState(() {
           pageEnum_answer = PAGINATOR_ENUMS.SUCCESS;
           pageAnswer++;
@@ -542,8 +542,8 @@ class _PostCardDetail extends State<PostCardDetailPage> {
     }
   }
 
-  int getItemsCountAssignment() {
-    if (totalAssignment > assignmentList.length) {
+  int? getItemsCountAssignment() {
+    if (totalAssignment! > assignmentList.length) {
       return assignmentList.length + 1;
     } else {
       if (j == 0) {
@@ -554,8 +554,8 @@ class _PostCardDetail extends State<PostCardDetailPage> {
     }
   }
 
-  int getItemsCountAnswer() {
-    if (totalAnswers > answersList.length) {
+  int? getItemsCountAnswer() {
+    if (totalAnswers! > answersList.length) {
       return answersList.length + 1;
     } else {
       if (j == 0) {
@@ -569,7 +569,7 @@ class _PostCardDetail extends State<PostCardDetailPage> {
   Future<NotesListResponse> fetchListComments(int page) async {
     var body = jsonEncode({
       "note_subject_type": "post",
-      "note_subject_id": postData.postId,
+      "note_subject_id": postData!.postId,
       "page_number": page,
       "page_size": 10
     });
@@ -579,7 +579,7 @@ class _PostCardDetail extends State<PostCardDetailPage> {
 
   Future<AnswerListResponse> fetchListAnswers(int page) async {
     AnswerListRequest payload = AnswerListRequest();
-    payload.postId = postData.postId;
+    payload.postId = postData!.postId;
     payload.pageNumber = page;
     payload.pageSize = 10;
     var res =
@@ -589,7 +589,7 @@ class _PostCardDetail extends State<PostCardDetailPage> {
 
   Future<AnswerListResponse> fetchListAssignment(int page) async {
     AnswerListRequest payload = AnswerListRequest();
-    payload.postId = postData.postId;
+    payload.postId = postData!.postId;
     payload.pageNumber = page;
     payload.pageSize = 10;
     var res =
@@ -601,23 +601,23 @@ class _PostCardDetail extends State<PostCardDetailPage> {
   //   notesList.addAll(response.rows);
   //   return response.rows;
   // }
-  final CreateDeeplink createDeeplink = locator<CreateDeeplink>();
+  final CreateDeeplink? createDeeplink = locator<CreateDeeplink>();
 
   void _onShareCallback() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    createDeeplink.getDeeplink(
+    createDeeplink!.getDeeplink(
         SHAREITEMTYPE.DETAIL.type,
         prefs.getInt("userId").toString(),
-        postData.postId,
+        postData!.postId,
         DEEPLINKTYPE.POST.type,
         context);
     // _showModalBottomSheet(context);
   }
 
   void _onRatingCallback() {
-    postRatingKey.currentState.updateData();
+    postRatingKey.currentState!.updateData();
     setState(() {
-      for (var i in postData.postContent.header.action) {
+      for (var i in postData!.postContent!.header!.action!) {
         if (i.type == 'is_rated') {
           i.value = true;
         }
@@ -630,14 +630,14 @@ class _PostCardDetail extends State<PostCardDetailPage> {
         context: context,
         builder: (BuildContext context) {
           return AudioPostDialog(
-              title: postData.postContent.content.contentMeta.title,
+              title: postData!.postContent!.content!.contentMeta!.title,
               okCallback: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (BuildContext context) {
                       return CreateEventPage(
                         type: 'talk',
                         standardEventId: 5,
-                        title: postData.postContent.content.contentMeta.title,
+                        title: postData!.postContent!.content!.contentMeta!.title,
                       );
                     }));
               },
@@ -645,7 +645,7 @@ class _PostCardDetail extends State<PostCardDetailPage> {
         });
   }
 
-  void _onBookmarkCallback(int postId, bool isBookmarked) {
+  void _onBookmarkCallback(int? postId, bool isBookmarked) {
     bookmarkPost(postId, isBookmarked);
   }
 
@@ -655,14 +655,14 @@ class _PostCardDetail extends State<PostCardDetailPage> {
 
   void onVoteCallback() {
     // setState(() {
-    postData.isVoted = true;
+    postData!.isVoted = true;
     // postList[index].postContent.content.contentMeta.others.totalResponses = postList[index].postContent.content.contentMeta.others.totalResponses+1;
     // });
   }
 
   void _onFollowCallback(bool isFollow) {
     setState(() {
-      for (var i in postData.postContent.header.action) {
+      for (var i in postData!.postContent!.header!.action!) {
         if (i.type == 'is_followed') {
           i.value = isFollow;
         }
@@ -683,9 +683,9 @@ class _PostCardDetail extends State<PostCardDetailPage> {
   //   );
   // }
 
-  void bookmarkPost(int postId, bool isBookMarked) {
+  void bookmarkPost(int? postId, bool isBookMarked) {
     setState(() {
-      postData.isBookmarked = isBookMarked;
+      postData!.isBookmarked = isBookMarked;
     });
   }
 
@@ -718,7 +718,7 @@ class _PostCardDetail extends State<PostCardDetailPage> {
               _onRatingCallback();
             },
             bookmarkCallback: (isBookmarked) {
-              _onBookmarkCallback(postData.postId, isBookmarked);
+              _onBookmarkCallback(postData!.postId, isBookmarked!);
             },
             onTalkCallback: () {
               onTalkCallback();
@@ -734,14 +734,14 @@ class _PostCardDetail extends State<PostCardDetailPage> {
             },
             onSubmitAnswer: (){
               openSubmitAssignPage(
-                  postData.postContent.content.contentMeta.title,
-                  postData.postId
+                  postData!.postContent!.content!.contentMeta!.title,
+                  postData!.postId
               );
             },
             onAnswerClickCallback: () {
               openAnswerPage(
-                  postData.postContent.content.contentMeta.title,
-                  postData.postId);
+                  postData!.postContent!.content!.contentMeta!.title,
+                  postData!.postId);
             },
           )
               : Container(
@@ -749,11 +749,11 @@ class _PostCardDetail extends State<PostCardDetailPage> {
           );
         } else if (snapshot.hasError) {
           card = Center(
-            child: Text(AppLocalizations.of(context).translate('error')),
+            child: Text(AppLocalizations.of(context)!.translate('error')),
           );
         } else {
           card = Center(
-            child: Text(AppLocalizations.of(context).translate('loading')),
+            child: Text(AppLocalizations.of(context)!.translate('loading')),
           );
         }
         return card;
@@ -761,7 +761,7 @@ class _PostCardDetail extends State<PostCardDetailPage> {
     );
   }
 
-  void openAnswerPage(String question, int postId) {
+  void openAnswerPage(String? question, int? postId) {
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => PostCreatePage(
           type: 'answer',
@@ -770,7 +770,7 @@ class _PostCardDetail extends State<PostCardDetailPage> {
           prefs: prefs,
         )));
   }
-  void openSubmitAssignPage(String question, int postId) {
+  void openSubmitAssignPage(String? question, int? postId) {
     Navigator.of(context).push(MaterialPageRoute(
         builder: (context) => PostCreatePage(
           type: 'submit_assign',
@@ -780,7 +780,7 @@ class _PostCardDetail extends State<PostCardDetailPage> {
         ))).then((value){
       if(value!=null){
         if(value){
-          postData.isVoted = true;
+          postData!.isVoted = true;
         }
         setState(() {
           refresh();
@@ -794,9 +794,9 @@ class _PostCardDetail extends State<PostCardDetailPage> {
     var body = jsonEncode({
       "note_type": "comment",
       "note_created_by_type": "person",
-      "note_created_by_id": prefs.getInt(Strings.userId),
+      "note_created_by_id": prefs!.getInt(Strings.userId),
       "note_subject_type": "post",
-      "note_subject_id": postData.postId,
+      "note_subject_id": postData!.postId,
       "note_content": value,
       "note_format": ["T"],
       "note_status": "A",
@@ -830,11 +830,11 @@ class _PostCardDetail extends State<PostCardDetailPage> {
     pageComment = 1;
     pageAnswer = 1;
     pageAssignment = 1;
-    if (postData != null && postData.postType == 'qa') {
+    if (postData != null && postData!.postType == 'qa') {
       pageAnswer = 1;
       j = 0;
       initialcallAnswer();
-    } else if(postData != null && postData.postType == 'assignment'){
+    } else if(postData != null && postData!.postType == 'assignment'){
       j = 0;
       inititalCallAssignment();
     }else {
@@ -845,18 +845,18 @@ class _PostCardDetail extends State<PostCardDetailPage> {
 
   void addNote(String noteContent) {
     NotesListItem note = NotesListItem();
-    note.notesCreatedByName = prefs.getString(Strings.userName);
-    note.noteCreatedById = prefs.getInt(Strings.userId).toString();
+    note.notesCreatedByName = prefs!.getString(Strings.userName);
+    note.noteCreatedById = prefs!.getInt(Strings.userId).toString();
     note.noteCreatedByType = 'person';
     note.noteContent = noteContent;
-    note.notesCreatedByProfile = prefs.getString(Strings.profileImage);
+    note.notesCreatedByProfile = prefs!.getString(Strings.profileImage);
     setState(() {
       pageEnum_comment = PAGINATOR_ENUMS.SUCCESS;
       notesList.insert(0, note);
-      totalComment += 1;
+      totalComment =totalComment!+1;
     });
     Timer(Duration(milliseconds: 100), () {
-      Scrollable.ensureVisible(commentSliverKey.currentContext);
+      Scrollable.ensureVisible(commentSliverKey.currentContext!);
     });
     // refresh();
   }
@@ -873,8 +873,8 @@ class BottomSheetContentDetail extends StatefulWidget {
 }
 
 class _ShareBottomSheetDetail extends State<BottomSheetContentDetail> {
-  TextStyleElements styleElements;
-  int _selectedshareoption;
+  late TextStyleElements styleElements;
+  int? _selectedshareoption;
   int postId;
 
   @override
@@ -895,7 +895,7 @@ class _ShareBottomSheetDetail extends State<BottomSheetContentDetail> {
                 child: Padding(
                   padding: EdgeInsets.all(16),
                   child: Text(
-                    AppLocalizations.of(context).translate('who_want_share'),
+                    AppLocalizations.of(context)!.translate('who_want_share'),
                     style: styleElements.headline6ThemeScalable(context),
                   ),
                 ),
@@ -908,14 +908,14 @@ class _ShareBottomSheetDetail extends State<BottomSheetContentDetail> {
                       leading: Radio(
                         value: 1,
                         groupValue: _selectedshareoption,
-                        onChanged: (value) {
+                        onChanged: (dynamic value) {
                           setState(() {
                             _selectedshareoption = value;
                           });
                         },
                       ),
                       title: Text(
-                        AppLocalizations.of(context).translate('share_within'),
+                        AppLocalizations.of(context)!.translate('share_within'),
                         style: styleElements.bodyText2ThemeScalable(context),
                       ),
                     )),
@@ -928,14 +928,14 @@ class _ShareBottomSheetDetail extends State<BottomSheetContentDetail> {
                       leading: Radio(
                         value: 2,
                         groupValue: _selectedshareoption,
-                        onChanged: (value) {
+                        onChanged: (dynamic value) {
                           setState(() {
                             _selectedshareoption = value;
                           });
                         },
                       ),
                       title: Text(
-                        AppLocalizations.of(context)
+                        AppLocalizations.of(context)!
                             .translate('share_through_messanger'),
                         style: styleElements.bodyText2ThemeScalable(context),
                       ),
@@ -949,7 +949,7 @@ class _ShareBottomSheetDetail extends State<BottomSheetContentDetail> {
                       leading: Radio(
                         value: 3,
                         groupValue: _selectedshareoption,
-                        onChanged: (value) {
+                        onChanged: (dynamic value) {
                           _onShare();
                           setState(() {
                             _selectedshareoption = value;
@@ -957,7 +957,7 @@ class _ShareBottomSheetDetail extends State<BottomSheetContentDetail> {
                         },
                       ),
                       title: Text(
-                        AppLocalizations.of(context)
+                        AppLocalizations.of(context)!
                             .translate('share_through_other'),
                         style: styleElements.bodyText2ThemeScalable(context),
                       ),
@@ -970,11 +970,11 @@ class _ShareBottomSheetDetail extends State<BottomSheetContentDetail> {
     );
   }
 
-  final CreateDeeplink createDeeplink = locator<CreateDeeplink>();
+  final CreateDeeplink? createDeeplink = locator<CreateDeeplink>();
 
   void _onShare() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    createDeeplink.getDeeplink(
+    createDeeplink!.getDeeplink(
         SHAREITEMTYPE.DETAIL.type,
         prefs.getInt("userId").toString(),
         postId,

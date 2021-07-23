@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -27,13 +28,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class MediaPage extends StatefulWidget {
-  int userId;
-  String userType;
-  String instituteId;
-  int ownerId;
-  String ownerType;
+  int? userId;
+  String? userType;
+  String? instituteId;
+  int? ownerId;
+  String? ownerType;
 
-  MediaPage({Key key, @required this.userId,this.userType, this.ownerId,this.ownerType, this.instituteId})
+  MediaPage({Key? key, required this.userId,this.userType, this.ownerId,this.ownerType, this.instituteId})
       : super(key: key);
 
   @override
@@ -42,22 +43,22 @@ class MediaPage extends StatefulWidget {
 }
 
 class _MediaPage extends State<MediaPage> {
-  String searchVal;
-  String personName;
-  String userType;
-  int userId;
+  String? searchVal;
+  String? personName;
+  String? userType;
+  int? userId;
 
-  bool isUserExist;
+  bool? isUserExist;
   List<Media> images= [];
-  String instituteId;
-  int ownerId;
-  String ownerType;
-  Null Function() callback;
+  String? instituteId;
+  int? ownerId;
+  String? ownerType;
+  Null Function()? callback;
   GlobalKey<PaginatorState> paginatorGlobalKey = GlobalKey();
-  SharedPreferences prefs;
-  TextStyleElements styleElements;
-  int pageNumber;
-  int totalItems;
+  late SharedPreferences prefs;
+  late TextStyleElements styleElements;
+  int? pageNumber;
+  int? totalItems;
 
   void setSharedPreferences() async {
     refresh();
@@ -67,7 +68,7 @@ class _MediaPage extends State<MediaPage> {
     prefs = await SharedPreferences.getInstance();
     ownerId=prefs.getInt("userId");
     ownerType=prefs.getString("ownerType");
-    paginatorGlobalKey.currentState.changeState(
+    paginatorGlobalKey.currentState!.changeState(
       listType: ListType.GRID_VIEW,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
@@ -89,7 +90,7 @@ class _MediaPage extends State<MediaPage> {
   }
 
   refresh() {
-    paginatorGlobalKey.currentState.changeState(resetState: true);
+    paginatorGlobalKey.currentState!.changeState(resetState: true);
   }
 
   @override
@@ -118,7 +119,7 @@ class _MediaPage extends State<MediaPage> {
                         right: 16.h,
                         top: 12.h,
                       ),
-                      child: Text(AppLocalizations.of(context).translate('media'),
+                      child: Text(AppLocalizations.of(context)!.translate('media'),
                         style: styleElements
                             .headline6ThemeScalable(context)
                             .copyWith(
@@ -182,7 +183,7 @@ class _MediaPage extends State<MediaPage> {
   }
   _addPhoto() async {
     var pr =ToastBuilder().setProgressDialogWithPercent(context,'Uploading Image...');
-    File pickedFile = await ImagePickerAndCropperUtil().pickImage(context);
+    File pickedFile = await (ImagePickerAndCropperUtil().pickImage(context) as FutureOr<File>);
     var croppedFile =
         await ImagePickerAndCropperUtil().cropFile(context, pickedFile);
     if (croppedFile != null) {
@@ -208,7 +209,7 @@ class _MediaPage extends State<MediaPage> {
           .uploadFile()
           .then((value) async {
         var imageResponse = ImageUpdateResponse.fromJson(value);
-        var url = imageResponse.rows.otherUrls[0].original;
+        var url = imageResponse.rows!.otherUrls![0].original;
         print(url);
         await pr.hide();
         var result = await Navigator.push(
@@ -244,9 +245,9 @@ class _MediaPage extends State<MediaPage> {
 
     return MediaFiles.fromJson(res);
   }
-  List<Media> listItemsGetter(MediaFiles pageData) {
-    totalItems = pageData.total;
-    images.addAll(pageData.rows);
+  List<Media>? listItemsGetter(MediaFiles ?pageData) {
+    totalItems = pageData!.total;
+    images.addAll(pageData.rows!);
     return pageData.rows;
   }
 
@@ -281,7 +282,7 @@ class _MediaPage extends State<MediaPage> {
         decoration: new BoxDecoration(
         image: new DecorationImage(
         image: new NetworkImage(
-        Config.BASE_URL+ value.mediaThumbnailUrl ?? "",
+        Config.BASE_URL+ value.mediaThumbnailUrl,
         ),
         fit: BoxFit.cover,
       ),

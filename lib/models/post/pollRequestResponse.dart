@@ -1,11 +1,11 @@
 import 'package:oho_works_app/models/post/postcreate.dart';
 
 class PollAnswerRequest {
-  String responseByType;
-  int responseById;
-  String option;
-  int optionSequence;
-  int postId;
+  String? responseByType;
+  int? responseById;
+  String? option;
+  int? optionSequence;
+  int? postId;
 
   PollAnswerRequest(
       {this.responseByType,
@@ -36,10 +36,10 @@ class PollAnswerRequest {
 
 
 class PollVoteResponse {
-  String statusCode;
-  String message;
-  OtherPollRequest rows;
-  int total;
+  String? statusCode;
+  String? message;
+  OtherPollRequest? rows;
+  int? total;
 
   PollVoteResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -55,7 +55,7 @@ class PollVoteResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     data['total'] = this.total;
     return data;

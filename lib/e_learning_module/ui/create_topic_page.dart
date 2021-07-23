@@ -22,26 +22,26 @@ import 'learner_category_page.dart';
 
 // ignore: must_be_immutable
 class CreateTopicPage extends StatefulWidget {
-  final PostCreatePayload createLessonData;
+  final PostCreatePayload? createLessonData;
 
-  const CreateTopicPage({Key key, this.createLessonData}) : super(key: key);
+  const CreateTopicPage({Key? key, this.createLessonData}) : super(key: key);
   _CreateTopicPage createState() => _CreateTopicPage();
 
 
 }
 
 class _CreateTopicPage extends State<CreateTopicPage> {
-  BuildContext context;
-  TextStyleElements styleElements;
+  late BuildContext context;
+  late TextStyleElements styleElements;
   GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
   GlobalKey<TricycleProgressButtonState> progressButtonKeyNext = GlobalKey();
-  TopicListItem topicType;
-  List<LearnerListItem> learnerItem;
+  TopicListItem? topicType;
+  List<LearnerListItem>? learnerItem;
   @override
   void initState() {
     super.initState();
 
-    WidgetsBinding.instance
+    WidgetsBinding.instance!
         .addPostFrameCallback((_) =>   showModalBottomSheet(
         context: context,
         shape: RoundedRectangleBorder(
@@ -53,7 +53,7 @@ class _CreateTopicPage extends State<CreateTopicPage> {
         builder: (BuildContext context) {
           return CommentSheet(nameCallBack: (name){
 
-            widget.createLessonData.lessonTopic.title=name;
+            widget.createLessonData!.lessonTopic!.title=name;
             setState(() {
 
             });
@@ -75,24 +75,24 @@ class _CreateTopicPage extends State<CreateTopicPage> {
           appBar: TricycleAppBar().getCustomAppBar(
             context,
             appBarTitle:
-            AppLocalizations.of(context).translate('topic_detail'),
+            AppLocalizations.of(context)!.translate('topic_detail'),
             actions: [
               Padding(
                 padding: const EdgeInsets.only(top:16.0,left: 16.0,right: 16.0),
                 child: InkWell(
                   onTap: (){
-                    if(widget.createLessonData.lessonTopic.title!=null)
+                    if(widget.createLessonData!.lessonTopic!.title!=null)
                       {
-                          if(widget.createLessonData.lessonTopic.title!=null)
+                          if(widget.createLessonData!.lessonTopic!.title!=null)
                      {
-                       if(widget.createLessonData.learnerItem!=null)
+                       if(widget.createLessonData!.learnerItem!=null)
 
 
                        { Navigator.pop(context, widget.createLessonData);}
                        else
                        {
                          ToastBuilder().showToast(
-                             AppLocalizations.of(context)
+                             AppLocalizations.of(context)!
                                  .translate("topic_group"),
                              context,
                              HexColor(AppColors.information));
@@ -102,7 +102,7 @@ class _CreateTopicPage extends State<CreateTopicPage> {
                           else
                             {
                               ToastBuilder().showToast(
-                                  AppLocalizations.of(context)
+                                  AppLocalizations.of(context)!
                                       .translate("topic_type_required"),
                                   context,
                                   HexColor(AppColors.information));
@@ -111,14 +111,14 @@ class _CreateTopicPage extends State<CreateTopicPage> {
                     else
                       {
                         ToastBuilder().showToast(
-                            AppLocalizations.of(context)
+                            AppLocalizations.of(context)!
                                 .translate("topic_name_required"),
                             context,
                             HexColor(AppColors.information));
                       }
                    },
                   child: Text(
-                    AppLocalizations.of(context).translate('next'),
+                    AppLocalizations.of(context)!.translate('next'),
                     style: styleElements
                         .subtitle2ThemeScalable(context)
                         .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -141,8 +141,8 @@ class _CreateTopicPage extends State<CreateTopicPage> {
                         Padding(
                           padding: const EdgeInsets.only(left :16.0,bottom: 8.0),
                           child: Text(
-                              widget.createLessonData!=null&&   widget.createLessonData.lessonTopic.title!=null?widget.createLessonData.lessonTopic.title:
-                            AppLocalizations.of(context).translate('Topic_name'),
+                              widget.createLessonData!=null&&   widget.createLessonData!.lessonTopic!.title!=null?widget.createLessonData!.lessonTopic!.title!:
+                            AppLocalizations.of(context)!.translate('Topic_name'),
                             style: styleElements
                                 .headline6ThemeScalable(context)
                                 .copyWith(fontWeight: FontWeight.bold),
@@ -158,7 +158,7 @@ class _CreateTopicPage extends State<CreateTopicPage> {
                                   title: Align(
                                     alignment: Alignment.centerLeft,
                                     child: Text(
-                                      AppLocalizations.of(context)
+                                      AppLocalizations.of(context)!
                                           .translate("Topic_type"),
                                       style: styleElements
                                           .subtitle1ThemeScalable(context),
@@ -167,8 +167,8 @@ class _CreateTopicPage extends State<CreateTopicPage> {
                                   ),
                                   subtitle: Align(
                                     alignment: Alignment.centerLeft,
-                                    child: Text((topicType!=null)? topicType.topicName:
-                                      AppLocalizations.of(context)
+                                    child: Text((topicType!=null)? topicType!.topicName!:
+                                      AppLocalizations.of(context)!
                                           .translate("Select_topic_type"),
                                       style: styleElements
                                           .bodyText2ThemeScalable(context),
@@ -195,10 +195,10 @@ class _CreateTopicPage extends State<CreateTopicPage> {
                                     if(value!=null){
                                       setState(() {
                                         topicType = value;
-                                        if(topicType!=null && topicType.topicCode!=value.topicCode)
-                                          {learnerItem.clear();}
+                                        if(topicType!=null && topicType!.topicCode!=value.topicCode)
+                                          {learnerItem!.clear();}
 
-                                        widget.createLessonData.lessonTopic.topic=value;
+                                        widget.createLessonData!.lessonTopic!.topic=value;
 
                                         setState(() {
 
@@ -220,10 +220,10 @@ class _CreateTopicPage extends State<CreateTopicPage> {
                                   title: Align(
                                     alignment: Alignment.centerLeft,
                                     child: Text(
-                                      topicType!=null && topicType.topicCode=="academic"?
-                                      AppLocalizations.of(context)
+                                      topicType!=null && topicType!.topicCode=="academic"?
+                                      AppLocalizations.of(context)!
                                           .translate("Learners_academic_group"):
-                                      AppLocalizations.of(context)
+                                      AppLocalizations.of(context)!
                                           .translate("Learners_academic_group_age"),
                                       style: styleElements
                                           .subtitle1ThemeScalable(context),
@@ -233,10 +233,10 @@ class _CreateTopicPage extends State<CreateTopicPage> {
                                   subtitle: Align(
                                     alignment: Alignment.centerLeft,
                                     child: Text(
-                                      topicType!=null && topicType.topicCode=="academic"?
-                                      AppLocalizations.of(context)
+                                      topicType!=null && topicType!.topicCode=="academic"?
+                                      AppLocalizations.of(context)!
                                           .translate("l_academic_group"):
-                                      AppLocalizations.of(context)
+                                      AppLocalizations.of(context)!
                                           .translate("l_academic_group_age"),
                                       style: styleElements
                                           .bodyText2ThemeScalable(context),
@@ -244,7 +244,7 @@ class _CreateTopicPage extends State<CreateTopicPage> {
                                     ),
                                   ),
                                   trailing: Visibility(
-                                    visible: learnerItem!=null && learnerItem.isNotEmpty,
+                                    visible: learnerItem!=null && learnerItem!.isNotEmpty,
                                     child: Icon(
                                       Icons.check_circle,
                                       color: HexColor(AppColors.appColorGreen),
@@ -264,7 +264,7 @@ class _CreateTopicPage extends State<CreateTopicPage> {
                                   )).then((value){
                                 if(value!=null){
                                   setState(() {
-                                    widget.createLessonData.learnerItem=value;
+                                    widget.createLessonData!.learnerItem=value;
                                     learnerItem = value;
                                   });
                                 }
@@ -290,16 +290,16 @@ class _CreateTopicPage extends State<CreateTopicPage> {
 
 class CommentSheet extends StatefulWidget {
 
-final Function(String name) nameCallBack;
+final Function(String name)? nameCallBack;
 
-  const CommentSheet({Key key, this.nameCallBack}) : super(key: key);
+  const CommentSheet({Key? key, this.nameCallBack}) : super(key: key);
 
   @override
   _CommentSheet createState() => _CommentSheet();
 }
 
 class _CommentSheet extends State<CommentSheet> {
-  SharedPreferences prefs = locator<SharedPreferences>();
+  SharedPreferences? prefs = locator<SharedPreferences>();
   final lastNameController = TextEditingController();
 
   @override
@@ -322,7 +322,7 @@ class _CommentSheet extends State<CommentSheet> {
         },
         decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(8.0, 15.0, 20.0, 4.0),
-          hintText: AppLocalizations.of(context).translate('give_topic_name'),
+          hintText: AppLocalizations.of(context)!.translate('give_topic_name'),
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorBlack35)),
         ));
     return Column(
@@ -335,7 +335,7 @@ class _CommentSheet extends State<CommentSheet> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Text(
-                AppLocalizations.of(context).translate(''),
+                AppLocalizations.of(context)!.translate(''),
                 style: styleElements
                     .headline6ThemeScalable(context)
                     .copyWith(fontWeight: FontWeight.bold),
@@ -344,7 +344,7 @@ class _CommentSheet extends State<CommentSheet> {
             Padding(
               padding: const EdgeInsets.only(top:20.0),
               child: Text(
-                AppLocalizations.of(context).translate('topic_name'),
+                AppLocalizations.of(context)!.translate('topic_name'),
                 style: styleElements
                     .subtitle1ThemeScalable(context)
                     .copyWith(fontWeight: FontWeight.bold),
@@ -357,10 +357,10 @@ class _CommentSheet extends State<CommentSheet> {
                   if(lastNameController.text!=null && lastNameController.text.isNotEmpty)
               {
                 Navigator.of(context).pop();
-                widget.nameCallBack(lastNameController.text);}
+                widget.nameCallBack!(lastNameController.text);}
                 },
                 child: Text(
-                  AppLocalizations.of(context).translate('next'),
+                  AppLocalizations.of(context)!.translate('next'),
                   style: styleElements
                       .subtitle2ThemeScalable(context)
                       .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -376,7 +376,7 @@ class _CommentSheet extends State<CommentSheet> {
         Padding(
           padding: const EdgeInsets.only(left:45.0,right: 45.0,top: 20,bottom: 100),
           child: Text(
-            AppLocalizations.of(context).translate('topic_detail_dec'),
+            AppLocalizations.of(context)!.translate('topic_detail_dec'),
             style: styleElements
                 .bodyText1ThemeScalable(context)
                ,

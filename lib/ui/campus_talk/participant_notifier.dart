@@ -4,15 +4,15 @@ import 'package:oho_works_app/tri_cycle_database/data_base_helper.dart';
 import 'package:flutter/material.dart';
 
 class ParticipantNotifier extends ChangeNotifier {
-  BuildContext context;
+  BuildContext? context;
   // int _pageNumber = 1;
-  List<ParticipantListItem> _listParticipantsFloor;
-  List<ParticipantListItem> _listParticipantsStage;
+  List<ParticipantListItem>? _listParticipantsFloor;
+  List<ParticipantListItem>? _listParticipantsStage;
   // bool _loading = false;
   bool isDisposed = false;
 
-  List<ParticipantListItem> get value => _value;
-  List<ParticipantListItem> _value;
+  List<ParticipantListItem>? get value => _value;
+  List<ParticipantListItem>? _value;
 
   @override
   void dispose() {
@@ -20,11 +20,11 @@ class ParticipantNotifier extends ChangeNotifier {
     super.dispose();
   }
 
-  List<ParticipantListItem> getStageParticipants() {
+  List<ParticipantListItem>? getStageParticipants() {
     return _listParticipantsStage;
   }
 
-  List<ParticipantListItem> getFloorsParticipants() {
+  List<ParticipantListItem>? getFloorsParticipants() {
     return _listParticipantsFloor;
   }
 
@@ -58,13 +58,15 @@ class ParticipantNotifier extends ChangeNotifier {
     notifyListeners();
   }
   Future<void> update(
-      DatabaseHelper db, int id, int isMute) async {
+      DatabaseHelper db, int? id, int? isMute) async {
     await db.updateMuteStatus(isMute,id);
     getOlderMessages(db);
   }
   Future<void> updateVideoStatus(
-      DatabaseHelper db, int id, int isVideoOnd) async {
-    // await db.updateVideoStatus(isVideoOnd,id);
+      DatabaseHelper db, int? id, int isVideoOnd) async {
+
+    print("step 3=-----------------------------------------------------");
+     await db.updateVideoStatus(isVideoOnd,id);
     getOlderMessages(db);
   }
 
@@ -80,7 +82,7 @@ class ParticipantNotifier extends ChangeNotifier {
     getOlderMessages(db);
   }
   Future<void> updateModerators(
-      DatabaseHelper db, int id, int isModerators) async {
+      DatabaseHelper db, int? id, int? isModerators) async {
     await db.updateModeratorStatus(isModerators,id);
     getOlderMessages(db);
   }
@@ -111,7 +113,7 @@ class ParticipantNotifier extends ChangeNotifier {
   }
 
   Future<void> deleteSingleItem(
-      DatabaseHelper db, int id,String type) async {
+      DatabaseHelper db, int? id,String? type) async {
     await db.deleteParticipant(id);
 
     getOlderMessages(db);
@@ -119,7 +121,7 @@ class ParticipantNotifier extends ChangeNotifier {
 
 
   Future<void> saveData(
-      DatabaseHelper db, List<ParticipantListItem> list,String type) async {
+      DatabaseHelper db, List<ParticipantListItem> list,String? type) async {
       for (var item in list) {
         item.type = type;
         await db.insertParticipant(item);

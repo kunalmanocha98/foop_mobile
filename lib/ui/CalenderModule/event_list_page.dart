@@ -17,22 +17,22 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class EventListPage extends StatefulWidget {
-  DateTime date;
-  EventListPage({Key key,this.date}):super(key: key);
+  DateTime? date;
+  EventListPage({Key? key,this.date}):super(key: key);
 
   @override
   EventListState createState() => EventListState(date: date);
 }
 
 class EventListState extends State<EventListPage> {
-  DateTime date;
-  String searchVal;
+  DateTime? date;
+  String? searchVal;
   EventListState({this.date});
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
-  SharedPreferences prefs;
+  SharedPreferences? prefs;
 
   void refresh(){
-    paginatorKey.currentState.changeState(resetState: true);
+    paginatorKey.currentState!.changeState(resetState: true);
   }
 
   @override
@@ -42,7 +42,7 @@ class EventListState extends State<EventListPage> {
           return [
             SliverToBoxAdapter(
               child: SearchBox(
-                hintText: AppLocalizations.of(context).translate('search'),
+                hintText: AppLocalizations.of(context)!.translate('search'),
                 onvalueChanged: (String value) {
                 },
               ),
@@ -66,8 +66,8 @@ class EventListState extends State<EventListPage> {
   Future<EventListResponse> fetchList(int page) async{
     prefs??= await SharedPreferences.getInstance();
     CalenderEventListRequest payload = CalenderEventListRequest();
-    payload.eventDate= Utility().getDateFormat('yyyy-MM-dd',date);
-    payload.eventOwnerId = prefs.getInt(Strings.userId);
+    payload.eventDate= Utility().getDateFormat('yyyy-MM-dd',date!);
+    payload.eventOwnerId = prefs!.getInt(Strings.userId);
     payload.eventOwnerType = 'person';
     payload.pageNumber = page;
     payload.pageSize = 10;
@@ -79,23 +79,23 @@ class EventListState extends State<EventListPage> {
     EventListItem item= itemData;
     return TricycleEventCard(
       title: item.title,
-      listofImages: List<String>.generate(item.participantList.length, (index) { return item.participantList[index].profileImage;}),
+      listofImages: List<String?>.generate(item.participantList!.length, (index) { return item.participantList![index].profileImage;}),
       description: item.subtitle,
       dateVisible: true,
-      date: DateTime.fromMillisecondsSinceEpoch(item.startTime),
-      byTitle: ' by '+item.header.title+', '+item.header.subtitle1,
-      byImage: item.header.avatar,
+      date: DateTime.fromMillisecondsSinceEpoch(item.startTime!),
+      byTitle: ' by '+item.header!.title!+', '+item.header!.subtitle1!,
+      byImage: item.header!.avatar,
       onlyHeader: false,
       isShareVisible: true,
       isModerator: item.eventRoleType == 'admin',
     );
   }
 
-  Widget emptyListWidgetMaker(EventListResponse pageData) {
-    return CustomPaginator(context).emptyListWidgetMaker(pageData,message: AppLocalizations.of(context).translate('no_events_found'),assetImage: 'assets/appimages/event.png');
+  Widget emptyListWidgetMaker(EventListResponse? pageData) {
+    return CustomPaginator(context).emptyListWidgetMaker(pageData,message: AppLocalizations.of(context)!.translate('no_events_found'),assetImage: 'assets/appimages/event.png');
   }
 
-  void update({DateTime date,String searchVal}){
+  void update({DateTime? date,String? searchVal}){
     this.date  = date ?? this.date;
     this.searchVal = searchVal ?? this.searchVal;
     refresh();

@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class SearchKeywordDialog extends StatelessWidget {
   var value;
-  final Function(String) okCallback;
+  final Function(String?)? okCallback;
   SearchKeywordDialog({this.okCallback});
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class SearchKeywordDialog extends StatelessWidget {
               },
               onSubmitted: (value){
                 this.value = value;
-                okCallback(value);
+                okCallback!(value);
                 Navigator.pop(context);
               },
               style: styleElements.subtitle1ThemeScalable(context),
@@ -58,18 +58,18 @@ class SearchKeywordDialog extends StatelessWidget {
                     },
                     shape: StadiumBorder(),
                     child:
-                    Text(AppLocalizations.of(context).translate('cancel'),
+                    Text(AppLocalizations.of(context)!.translate('cancel'),
                       style: styleElements.captionThemeScalable(context).copyWith(
                           color: HexColor(AppColors.appMainColor)
                       ),)),
                 TricycleTextButton(
                     onPressed: () {
-                      okCallback(value);
+                      okCallback!(value);
                       Navigator.pop(context);
                     },
                     shape: StadiumBorder(),
                     child:
-                    Text(AppLocalizations.of(context).translate('ok'),
+                    Text(AppLocalizations.of(context)!.translate('ok'),
                       style: styleElements.captionThemeScalable(context).copyWith(
                         color: HexColor(AppColors.appMainColor)
                       ),)),

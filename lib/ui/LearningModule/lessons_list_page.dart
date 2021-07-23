@@ -39,7 +39,7 @@ class LessonsListPage extends StatefulWidget {
   final bool isBookmark;
   final bool isOwnPost;
   final bool isDrafted;
-final Function callBack;
+final Function? callBack;
   LessonsListPage(
       {this.headerVisible = true,
       this.isBookmark = false,
@@ -53,7 +53,7 @@ final Function callBack;
 
 class _LessonsListPage extends State<LessonsListPage> {
   List<PostListItem> lessonsList = [];
-  SharedPreferences prefs = locator<SharedPreferences>();
+  SharedPreferences? prefs = locator<SharedPreferences>();
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
 
   Widget _simplePopup() {
@@ -67,7 +67,7 @@ class _LessonsListPage extends State<LessonsListPage> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       color: HexColor(AppColors.appColorBackground),
       itemBuilder: (context) => LessonDropMenu(context: context).menuList,
-      onSelected: (value) {
+      onSelected: (dynamic value) {
         switch (value) {
           case 'drafted':
             {
@@ -112,7 +112,7 @@ class _LessonsListPage extends State<LessonsListPage> {
           case 'learning':
           {  Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
               return WelComeScreen(
-                institutionIdtoDelete: prefs.getInt(Strings.instituteId),
+                institutionIdtoDelete: prefs!.getInt(Strings.instituteId),
                 isEdit: true,
               );
             })).then((value){
@@ -134,9 +134,9 @@ class _LessonsListPage extends State<LessonsListPage> {
   void refresh() {
     print("********************REFRESHING**********************************");
     lessonsList.clear();
-    paginatorKey.currentState.changeState(resetState: true);
+    paginatorKey.currentState!.changeState(resetState: true);
   }
-BuildContext ctx;
+BuildContext? ctx;
   @override
   Widget build(BuildContext context) {
     this.ctx=context;
@@ -144,7 +144,7 @@ BuildContext ctx;
         ? SafeArea(
             child: Scaffold(
                 appBar: AppBarWithOnlyTitle(
-                  title: AppLocalizations.of(context)
+                  title: AppLocalizations.of(context)!
                       .translate('microlearning_heading'),
                   actions: [
                     Padding(
@@ -196,7 +196,7 @@ BuildContext ctx;
                                     );
                                   }));
                             },
-                            hintText: AppLocalizations.of(context)
+                            hintText: AppLocalizations.of(context)!
                                 .translate('search'),
                           ),
                         ),
@@ -251,12 +251,12 @@ BuildContext ctx;
     return PostListResponse.fromJson(value);
   }
 
-  List<PostListItem> listItemsGetter(PostListResponse pageData) {
-    pageData.rows.forEach((element) {
+  List<PostListItem>? listItemsGetter(PostListResponse? pageData) {
+    pageData!.rows!.forEach((element) {
       element.bookcovercolor =
           Colors.accents[Random().nextInt(Colors.accents.length)];
     });
-    lessonsList.addAll(pageData.rows);
+    lessonsList.addAll(pageData.rows!);
     return pageData.rows;
   }
 
@@ -296,7 +296,7 @@ BuildContext ctx;
         _onRatingCallback(index);
       },
       bookmarkCallback: (isBookmarked) {
-        _onBookmarkCallback(item.postId, index, isBookmarked);
+        _onBookmarkCallback(item.postId, index, isBookmarked!);
       },
       commentCallback: () {
         _onCommentCallback(index);
@@ -310,17 +310,17 @@ BuildContext ctx;
     );
   }
 
-  final CreateDeeplink createDeeplink = locator<CreateDeeplink>();
+  final CreateDeeplink? createDeeplink = locator<CreateDeeplink>();
 
-  void _onShareCallback(int id) async {
+  void _onShareCallback(int? id) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    createDeeplink.getDeeplink(SHAREITEMTYPE.DETAIL.type,
+    createDeeplink!.getDeeplink(SHAREITEMTYPE.DETAIL.type,
         prefs.getInt("userId").toString(), id, DEEPLINKTYPE.POST.type, context);
   }
 
   void _onRatingCallback(int index) {
     // setState(() {
-    for (var i in lessonsList[index].postContent.header.action) {
+    for (var i in lessonsList[index].postContent!.header!.action!) {
       if (i.type == 'is_rated') {
         i.value = true;
       }
@@ -328,7 +328,7 @@ BuildContext ctx;
     // });
   }
 
-  void _onBookmarkCallback(int postId, int index, bool isBookmarked) {
+  void _onBookmarkCallback(int? postId, int index, bool isBookmarked) {
     lessonsList[index].isBookmarked = isBookmarked;
   }
 
@@ -339,7 +339,7 @@ BuildContext ctx;
         context: context,
         builder: (BuildContext context) {
           return AudioPostDialog(
-              title: lessonsList[index].postContent.content.contentMeta.title,
+              title: lessonsList[index].postContent!.content!.contentMeta!.title,
               okCallback: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (BuildContext context) {
@@ -347,9 +347,9 @@ BuildContext ctx;
                     type: 'talk',
                     standardEventId: 5,
                     title: lessonsList[index]
-                        .postContent
-                        .content
-                        .contentMeta
+                        .postContent!
+                        .content!
+                        .contentMeta!
                         .title,
                   );
                 }));
@@ -372,7 +372,7 @@ BuildContext ctx;
         return element.postOwnerTypeId == lessonsList[index].postOwnerTypeId;
       });
       for (var i in desiredList) {
-        for (var j in i.postContent.header.action) {
+        for (var j in i.postContent!.header!.action!) {
           if (j.type == 'is_followed') {
             j.value = isFollow;
           }
@@ -383,30 +383,30 @@ BuildContext ctx;
 
   void editCallback(int index) async{
     if (lessonsList[index].lessonListItem == null ||
-        lessonsList[index].lessonListItem.id == null) {
+        lessonsList[index].lessonListItem!.id == null) {
       Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => PostCreatePage(
             callBack:(){
-              if( widget.callBack()!=null)
+              if( widget.callBack!()!=null)
               {Navigator.pop(context);
-              widget.callBack();}
+              widget.callBack!();}
               refresh();
             },
             topicName:lessonsList[index].lessonTopic!=null?
-            lessonsList[index].lessonTopic.title:null,
-            mediaFromEdit:lessonsList[index].postContent.content.media,
+            lessonsList[index].lessonTopic!.title:null,
+            mediaFromEdit:lessonsList[index].postContent!.content!.media,
                 createLessonData: PostCreatePayload(
                     postId: lessonsList[index].postId,
                     id: lessonsList[index].postId,
-                  contentMeta: ContentMetaCreate(title:lessonsList[index].postContent.content.contentMeta.title,meta: lessonsList[index].postContent.content.contentMeta.meta )
+                  contentMeta: ContentMetaCreate(title:lessonsList[index].postContent!.content!.contentMeta!.title,meta: lessonsList[index].postContent!.content!.contentMeta!.meta )
                     ),
                 type:'lesson',
 
                 postId: lessonsList[index].postId,
                 contentData:
-                    lessonsList[index].postContent.content.contentMeta.meta,
+                    lessonsList[index].postContent!.content!.contentMeta!.meta,
                 titleLesson:
-                    lessonsList[index].postContent.content.contentMeta.title,
+                    lessonsList[index].postContent!.content!.contentMeta!.title,
 
                 isEdit: true,
               )));
@@ -416,24 +416,24 @@ BuildContext ctx;
         "searchVal": '',
         "page_number": 1,
         "owner_type": "person",
-        "owner_id": prefs.getInt(Strings.userId),
-        "chapter_id":lessonsList[index].chapterItem!=null? lessonsList[index].chapterItem.id:null,
+        "owner_id": prefs!.getInt(Strings.userId),
+        "chapter_id":lessonsList[index].chapterItem!=null? lessonsList[index].chapterItem!.id:null,
         "page_size": 1,
         "list_type": "all"
       });
       var res = await Calls().call(body, context, Config.LESSON_LIST);
       var model = LessonListResponse.fromJson(res);
-      if(model.total > 1) {
+      if(model.total! > 1) {
         Navigator.push(context,
             MaterialPageRoute(builder: (BuildContext context) {
               return CreateLessonsPage(
                 isEdit: true,
-                chapterId:lessonsList[index].chapterItem!=null? lessonsList[index].chapterItem.id:null,
-                chapterName: lessonsList[index].chapterItem!=null?lessonsList[index].chapterItem.chapterName:"",
+                chapterId:lessonsList[index].chapterItem!=null? lessonsList[index].chapterItem!.id:null,
+                chapterName: lessonsList[index].chapterItem!=null?lessonsList[index].chapterItem!.chapterName:"",
                 callBack: () {
-                  if (widget.callBack() != null) {
+                  if (widget.callBack!() != null) {
                     Navigator.pop(context);
-                    widget.callBack();
+                    widget.callBack!();
                   }
                   refresh();
                 },
@@ -442,9 +442,9 @@ BuildContext ctx;
                     id: lessonsList[index].postId,
                     postStatus: "posted",
                     contentMeta: ContentMetaCreate(
-                        title: lessonsList[index].postContent.content
-                            .contentMeta.title,
-                        meta: lessonsList[index].postContent.content.contentMeta
+                        title: lessonsList[index].postContent!.content!
+                            .contentMeta!.title,
+                        meta: lessonsList[index].postContent!.content!.contentMeta!
                             .meta),
                     chapterItem: lessonsList[index].chapterItem,
                     lessonTopic: lessonsList[index].lessonTopic,
@@ -464,7 +464,7 @@ BuildContext ctx;
     builder: (context) => PostCreatePage(
     callBack: () {
     // Navigator.of(context).pop();
-    widget.callBack();
+    widget.callBack!();
     },
     mediaFromEdit: res.rows.postContent.content.media,
     createLessonData: PostCreatePayload(
@@ -472,9 +472,9 @@ BuildContext ctx;
         id: lessonsList[index].postId,
         postStatus: "posted",
         contentMeta: ContentMetaCreate(
-            title: lessonsList[index].postContent.content
-                .contentMeta.title,
-            meta: lessonsList[index].postContent.content.contentMeta
+            title: lessonsList[index].postContent!.content!
+                .contentMeta!.title,
+            meta: lessonsList[index].postContent!.content!.contentMeta!
                 .meta),
         chapterItem: lessonsList[index].chapterItem,
         lessonTopic: lessonsList[index].lessonTopic,
@@ -518,10 +518,10 @@ BuildContext ctx;
 }
 
 class LessonDropMenu {
-  TextStyleElements styleElements;
+  TextStyleElements? styleElements;
   BuildContext context;
 
-  LessonDropMenu({@required this.context}) {
+  LessonDropMenu({required this.context}) {
     styleElements = TextStyleElements(context);
   }
 

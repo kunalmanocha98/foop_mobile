@@ -1,15 +1,15 @@
 class ProfileEditPayload {
-  String firstName;
-  String secondName;
-  String lastName;
-  int gender;
-  String dateOfBirth;
-  String dateOfAnniversary;
-  String bloodGroup;
-  String slug;
-  String bio;
-  String quote;
-  String userName;
+  String? firstName;
+  String? secondName;
+  String? lastName;
+  int? gender;
+  String? dateOfBirth;
+  String? dateOfAnniversary;
+  String? bloodGroup;
+  String? slug;
+  String? bio;
+  String? quote;
+  String? userName;
 
   ProfileEditPayload(
       {this.firstName,

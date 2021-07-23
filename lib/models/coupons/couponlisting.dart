@@ -1,9 +1,9 @@
 class CouponListRequest {
-  String searchVal;
-  int pageNumber;
-  int pageSize;
-  String personId;
-  String ledgerType;
+  String? searchVal;
+  int? pageNumber;
+  int? pageSize;
+  String? personId;
+  String? ledgerType;
 
   CouponListRequest(
       {this.searchVal, this.pageNumber, this.pageSize, this.personId,this.ledgerType});
@@ -28,10 +28,10 @@ class CouponListRequest {
 }
 
 class CouponListResponse {
-  String statusCode;
-  String message;
-  List<CouponListItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<CouponListItem>? rows;
+  int? total;
 
   CouponListResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -42,7 +42,7 @@ class CouponListResponse {
     if (json['rows'] != null) {
       rows = [];//CouponListItem>();
       json['rows'].forEach((v) {
-        rows.add(new CouponListItem.fromJson(v));
+        rows!.add(new CouponListItem.fromJson(v));
       });
     }
   }
@@ -53,31 +53,31 @@ class CouponListResponse {
     data['message'] = this.message;
     data['total'] = this.total;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class CouponListItem {
-  int id;
-  String couponCode;
-  String couponProvider;
-  String couponProviderLogo;
-  String couponText;
-  String couponImage;
-  String couponDiscountType;
-  int couponDiscount;
-  int rewardPointsRequired;
-  String validFrom;
-  String validTill;
-  String couponStatus;
-  String createdDate;
-  String updatedDate;
-  String barCode;
-  String qrCode;
-  String couponTermsConditionsHeading;
-  List<String> couponTermsConditionsPoints;
+  int? id;
+  String? couponCode;
+  String? couponProvider;
+  String? couponProviderLogo;
+  String? couponText;
+  String? couponImage;
+  String? couponDiscountType;
+  int? couponDiscount;
+  int? rewardPointsRequired;
+  String? validFrom;
+  String? validTill;
+  String? couponStatus;
+  String? createdDate;
+  String? updatedDate;
+  String? barCode;
+  String? qrCode;
+  String? couponTermsConditionsHeading;
+  List<String>? couponTermsConditionsPoints;
 
   CouponListItem(
       {this.id,
@@ -146,10 +146,10 @@ class CouponListItem {
 }
 
 class CouponHistoryResponse {
-  String statusCode;
-  String message;
-  List<CouponHistoryItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<CouponHistoryItem>? rows;
+  int? total;
 
   CouponHistoryResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -160,7 +160,7 @@ class CouponHistoryResponse {
     if (json['rows'] != null) {
       rows = [];//CouponHistoryItem>();
       json['rows'].forEach((v) {
-        rows.add(new CouponHistoryItem.fromJson(v));
+        rows!.add(new CouponHistoryItem.fromJson(v));
       });
     }
   }
@@ -171,22 +171,22 @@ class CouponHistoryResponse {
     data['message'] = this.message;
     data['total'] = this.total;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class CouponHistoryItem {
-  int id;
-  String userId;
-  String currencyCode;
-  String rewardsCr;
-  String rewardsDr;
-  String lineBalance;
-  String transactionType;
-  String transactionDatetime;
-  String createdDate;
+  int? id;
+  String? userId;
+  String? currencyCode;
+  String? rewardsCr;
+  String? rewardsDr;
+  String? lineBalance;
+  String? transactionType;
+  String? transactionDatetime;
+  String? createdDate;
 
   CouponHistoryItem(
       {this.id,

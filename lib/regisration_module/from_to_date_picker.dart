@@ -12,11 +12,11 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 
 class DatePickerFromTo extends StatefulWidget {
-  final Null Function(String) selectDateCallBack;
-  final List<YearsData> startYears;
+  final Null Function(String?)? selectDateCallBack;
+  final List<YearsData>? startYears;
 
-  final List<YearsData> passOutYear;
-  final BuildContext ctx;
+  final List<YearsData>? passOutYear;
+  final BuildContext? ctx;
 
   _DatePickerFromTo createState() => _DatePickerFromTo(selectDateCallBack);
 
@@ -26,19 +26,19 @@ class DatePickerFromTo extends StatefulWidget {
 
 class _DatePickerFromTo extends State<DatePickerFromTo>
     with SingleTickerProviderStateMixin {
-  String startDate;
+  String? startDate;
 
-  String passOutDate;
+  String? passOutDate;
 
   int selectedEpoch = 0;
-  Widget datePicker;
-  TextStyleElements styleElements;
-  Animation _animation;
-  AnimationController _controller;
-  int currentYear;
+  Widget? datePicker;
+  late TextStyleElements styleElements;
+  late Animation _animation;
+  late AnimationController _controller;
+  int? currentYear;
   bool isStartYearSelected = false;
 
-  Null Function(String) selectDateCallBack;
+  Null Function(String?)? selectDateCallBack;
 
   _DatePickerFromTo(this.selectDateCallBack);
 
@@ -60,15 +60,15 @@ class _DatePickerFromTo extends State<DatePickerFromTo>
     for (int i = 0; i < 150; i++) {
       if (i == index) {
         isStartYearSelected
-            ? widget.passOutYear[i].isSelected = true
-            : widget.startYears[i].isSelected = true;
+            ? widget.passOutYear![i].isSelected = true
+            : widget.startYears![i].isSelected = true;
         isStartYearSelected
-            ? passOutDate = widget.passOutYear[i].yearName
-            : startDate = widget.startYears[i].yearName;
+            ? passOutDate = widget.passOutYear![i].yearName
+            : startDate = widget.startYears![i].yearName;
       } else {
         isStartYearSelected
-            ? widget.passOutYear[i].isSelected = false
-            : widget.startYears[i].isSelected = false;
+            ? widget.passOutYear![i].isSelected = false
+            : widget.startYears![i].isSelected = false;
       }
     }
     setState(() {});
@@ -83,14 +83,14 @@ class _DatePickerFromTo extends State<DatePickerFromTo>
       },
       child: Chip(
           elevation: 2.0,
-          backgroundColor: yearsData.isSelected
+          backgroundColor: yearsData.isSelected!
               ? HexColor(AppColors.appMainColor)
               : HexColor(AppColors.appColorWhite),
           label: Padding(
             padding: const EdgeInsets.all(4.0),
             child: Text(yearsData.yearName ?? "",
                 style: styleElements.subtitle2ThemeScalable(context).copyWith(
-                    color: yearsData.isSelected
+                    color: yearsData.isSelected!
                         ? HexColor(AppColors.appColorWhite)
                         : HexColor(AppColors.appColorBlack65))),
           )),
@@ -108,7 +108,7 @@ class _DatePickerFromTo extends State<DatePickerFromTo>
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       child: AnimatedBuilder(
         animation: _controller,
-        builder: (BuildContext context, Widget child) {
+        builder: (BuildContext context, Widget? child) {
           bool isFront = _controller.value < .5;
           return Column(
             mainAxisSize: MainAxisSize.min,
@@ -123,9 +123,9 @@ class _DatePickerFromTo extends State<DatePickerFromTo>
                             top: 16, bottom: 16, left: 20, right: 20),
                         child: Text(
                           isStartYearSelected
-                              ? AppLocalizations.of(context)
+                              ? AppLocalizations.of(context)!
                                   .translate('pass_out')
-                              : AppLocalizations.of(context)
+                              : AppLocalizations.of(context)!
                                   .translate('start_year'),
                           style: styleElements
                               .headline6ThemeScalable(context)
@@ -170,7 +170,7 @@ class _DatePickerFromTo extends State<DatePickerFromTo>
                           padding: EdgeInsets.only(
                               top: 16, bottom: 16, left: 20, right: 2),
                           child: Text(
-                            AppLocalizations.of(context).translate('start_year_'),
+                            AppLocalizations.of(context)!.translate('start_year_'),
                             style: styleElements
                                 .captionThemeScalable(context)
                                 .copyWith(),
@@ -205,7 +205,7 @@ class _DatePickerFromTo extends State<DatePickerFromTo>
                           padding: EdgeInsets.only(
                               top: 16, bottom: 16, left: 20, right: 2),
                           child: Text(
-                            AppLocalizations.of(context).translate('pass_out_'),
+                            AppLocalizations.of(context)!.translate('pass_out_'),
                             style: styleElements
                                 .captionThemeScalable(context)
                                 .copyWith(),
@@ -247,13 +247,13 @@ class _DatePickerFromTo extends State<DatePickerFromTo>
                             childAspectRatio: 4 / 2,
                             children: List.generate(
                                 isStartYearSelected
-                                    ? widget.passOutYear.length
-                                    : widget.startYears.length, (index) {
+                                    ? widget.passOutYear!.length
+                                    : widget.startYears!.length, (index) {
                               return Center(
                                   child: get_chip(
                                       isStartYearSelected
-                                          ? widget.passOutYear[index]
-                                          : widget.startYears[index],
+                                          ? widget.passOutYear![index]
+                                          : widget.startYears![index],
                                       index,
                                       isStartYearSelected));
                             })),
@@ -262,20 +262,20 @@ class _DatePickerFromTo extends State<DatePickerFromTo>
               )),
               InkWell(
                   onTap: () {
-                    if (startDate != null && startDate.isNotEmpty) {
-                      if (passOutDate != null && passOutDate.isNotEmpty) {
+                    if (startDate != null && startDate!.isNotEmpty) {
+                      if (passOutDate != null && passOutDate!.isNotEmpty) {
                         Navigator.pop(context, null);
-                        selectDateCallBack(getAcademicYears());
+                        selectDateCallBack!(getAcademicYears());
                       } else {
                         ToastBuilder().showToast(
-                            AppLocalizations.of(widget.ctx)
+                            AppLocalizations.of(widget.ctx!)!
                                 .translate("pass_out"),
                             context,
                             HexColor(AppColors.information));
                       }
                     } else {
                       ToastBuilder().showToast(
-                          AppLocalizations.of(widget.ctx)
+                          AppLocalizations.of(widget.ctx!)!
                               .translate("start_year"),
                           context,
                           HexColor(AppColors.information));
@@ -284,7 +284,7 @@ class _DatePickerFromTo extends State<DatePickerFromTo>
                   child: Container(
                     margin: const EdgeInsets.all(8),
                     child: Text(
-                      AppLocalizations.of(context).translate('submit'),
+                      AppLocalizations.of(context)!.translate('submit'),
                       style: styleElements.subtitle1ThemeScalable(context),
                     ),
                   ))
@@ -295,8 +295,8 @@ class _DatePickerFromTo extends State<DatePickerFromTo>
     );
   }
 
-  String getAcademicYears() {
-    if (startDate.isNotEmpty && passOutDate.isNotEmpty)
+  String? getAcademicYears() {
+    if (startDate!.isNotEmpty && passOutDate!.isNotEmpty)
       return startDate.toString() + "-" + passOutDate.toString();
     else
       return null;

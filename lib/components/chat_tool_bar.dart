@@ -13,29 +13,29 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 // ignore: must_be_immutable
 class AppBarWithProfileChat extends StatelessWidget with PreferredSizeWidget {
   final double appBarHeight = 56.0;
-  String imageUrl;
-  String title;
-  String status;
-  String userType;
-  int userId;
-  bool isGroupConversation;
-  int notificationCount;
-  Null Function() callBack;
-  Null Function(String value) onSearch;
-  Null Function(String value) onItemSelect;
-  Function onCallCallback;
-  Function onVideoCallback;
-  bool isHomepage;
-  Function backButtonPress;
-  bool isNotificationVisible;
-  bool isSearch = false;
-  int roomId;
-  String roomName;
-  bool showCallbuttons;
+  String? imageUrl;
+  String? title;
+  String? status;
+  String? userType;
+  int? userId;
+  bool? isGroupConversation;
+  int? notificationCount;
+  Null Function()? callBack;
+  Null Function(String value)? onSearch;
+  Null Function(String value)? onItemSelect;
+  Function? onCallCallback;
+  Function? onVideoCallback;
+  bool? isHomepage;
+  Function? backButtonPress;
+  bool? isNotificationVisible;
+  bool? isSearch = false;
+  int? roomId;
+  String? roomName;
+  bool? showCallbuttons;
 
   @override
   get preferredSize => Size.fromHeight(appBarHeight);
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +55,7 @@ class AppBarWithProfileChat extends StatelessWidget with PreferredSizeWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
                 InkWell(
-                  onTap: backButtonPress,
+                  onTap: backButtonPress as void Function()?,
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -79,7 +79,7 @@ class AppBarWithProfileChat extends StatelessWidget with PreferredSizeWidget {
                             backgroundColor: Colors.white,
                             child: ClipOval(
                               child: CachedNetworkImage(
-                                imageUrl: imageUrl,
+                                imageUrl: imageUrl!,
                                 placeholder: (context, url) => Center(
                                     child: Image.asset(
                                       'assets/appimages/userplaceholder.jpg',
@@ -94,18 +94,18 @@ class AppBarWithProfileChat extends StatelessWidget with PreferredSizeWidget {
                   ),
                 ),
                 Expanded(
-                  child: isSearch
+                  child: isSearch!
                       ? SearchBox(
                     onvalueChanged: (String value) {
-                      onSearch(value);
+                      onSearch!(value);
                     },
                     hintText:
-                    AppLocalizations.of(context).translate("search"),
+                    AppLocalizations.of(context)!.translate("search"),
                   )
                       : GestureDetector(
                     behavior: HitTestBehavior.translucent,
                     onTap: () {
-                      isGroupConversation
+                      isGroupConversation!
                           ? Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -127,7 +127,7 @@ class AppBarWithProfileChat extends StatelessWidget with PreferredSizeWidget {
                                     : "thirdPerson",
                                 userId: userId,
                                 callback: () {
-                                  callBack();
+                                  callBack!();
                                 },
                                 currentPosition: 1,
                                 type: null,
@@ -154,7 +154,7 @@ class AppBarWithProfileChat extends StatelessWidget with PreferredSizeWidget {
                   ),
                 ),
                 Visibility(
-                  visible: showCallbuttons,
+                  visible: showCallbuttons!,
                   child: Container(
                     child: Stack(
                       children: <Widget>[
@@ -164,14 +164,14 @@ class AppBarWithProfileChat extends StatelessWidget with PreferredSizeWidget {
                               size: 24.0,
                               color: Colors.black54,
                             ),
-                            onPressed: onCallCallback,
+                            onPressed: onCallCallback as void Function()?,
                         ),
                       ],
                     ),
                   ),
                 ),
                 Visibility(
-                  visible: showCallbuttons,
+                  visible: showCallbuttons!,
                   child: Container(
                     child: Stack(
                       children: <Widget>[
@@ -181,7 +181,7 @@ class AppBarWithProfileChat extends StatelessWidget with PreferredSizeWidget {
                               size: 24.0,
                               color: Colors.black54,
                             ),
-                            onPressed: onVideoCallback,
+                            onPressed: onVideoCallback as void Function()?,
                         ),
                       ],
                     ),
@@ -214,10 +214,10 @@ class AppBarWithProfileChat extends StatelessWidget with PreferredSizeWidget {
   }
 
   Widget popItem(Widget item) {
-    return !isGroupConversation
+    return !isGroupConversation!
         ? PopupMenuButton<String>(
         onSelected: (String value) {
-          onItemSelect(value);
+          onItemSelect!(value);
         },
         child: item,
         itemBuilder: (context) => [
@@ -225,7 +225,7 @@ class AppBarWithProfileChat extends StatelessWidget with PreferredSizeWidget {
               value: "Search Chat",
               child: Row(
                 children: <Widget>[
-                  Text(AppLocalizations.of(context)
+                  Text(AppLocalizations.of(context)!
                       .translate("search_chat"))
                 ],
               )),
@@ -233,13 +233,13 @@ class AppBarWithProfileChat extends StatelessWidget with PreferredSizeWidget {
               value: "Block",
               child: Row(
                 children: <Widget>[
-                  Text(AppLocalizations.of(context).translate("block"))
+                  Text(AppLocalizations.of(context)!.translate("block"))
                 ],
               ))
         ])
         : PopupMenuButton<String>(
         onSelected: (String value) {
-          onItemSelect(value);
+          onItemSelect!(value);
         },
         child: item,
         itemBuilder: (context) => [
@@ -247,7 +247,7 @@ class AppBarWithProfileChat extends StatelessWidget with PreferredSizeWidget {
               value: "Search Chat",
               child: Row(
                 children: <Widget>[
-                  Text(AppLocalizations.of(context)
+                  Text(AppLocalizations.of(context)!
                       .translate("search_chat"))
                 ],
               )),
@@ -255,7 +255,7 @@ class AppBarWithProfileChat extends StatelessWidget with PreferredSizeWidget {
   }
 
   AppBarWithProfileChat(
-      {Key key,
+      {Key? key,
         this.imageUrl,
         this.title,
         this.notificationCount,

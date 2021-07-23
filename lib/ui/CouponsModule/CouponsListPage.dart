@@ -21,7 +21,7 @@ import 'couponpageheadercard.dart';
 
 // ignore: must_be_immutable
 class CouponsListPage extends StatefulWidget {
-  GlobalKey<CouponPageHeaderCardState> headerKey;
+  GlobalKey<CouponPageHeaderCardState>? headerKey;
 
   CouponsListPage({this.headerKey});
 
@@ -31,10 +31,10 @@ class CouponsListPage extends StatefulWidget {
 
 class _CouponsListPage extends State<CouponsListPage> {
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
-  String searchVal;
+  String? searchVal;
   List<CommonCardData> couponList = [];
-  GlobalKey<CouponPageHeaderCardState> headerKey;
-  SharedPreferences prefs;
+  GlobalKey<CouponPageHeaderCardState>? headerKey;
+  SharedPreferences? prefs;
 
   _CouponsListPage({this.headerKey});
 
@@ -54,7 +54,7 @@ class _CouponsListPage extends State<CouponsListPage> {
   }
 
   refresh() {
-    paginatorKey.currentState.changeState(resetState: true);
+    paginatorKey.currentState!.changeState(resetState: true);
   }
   Future<Null> refreshList() async {
     refresh();
@@ -88,7 +88,7 @@ class _CouponsListPage extends State<CouponsListPage> {
     CouponListRequest payload = CouponListRequest();
     payload.pageNumber = page;
     payload.pageSize = 20;
-    payload.personId = prefs.getInt(Strings.userId).toString();
+    payload.personId = prefs!.getInt(Strings.userId).toString();
     var data = jsonEncode(payload);
     var res = await Calls().call(data, context, Config.ALLCOUPONLIST);
 
@@ -106,7 +106,7 @@ class _CouponsListPage extends State<CouponsListPage> {
                         couponData: item,
                         showQr: false,
                       ))).then((value) {
-            headerKey.currentState.fetchData();
+            headerKey!.currentState!.fetchData();
           });
         },
         child: Container(
@@ -123,7 +123,7 @@ class _CouponsListPage extends State<CouponsListPage> {
               discountType: item.couponDiscountType,
               rewardPoints: item.rewardPointsRequired,
               validTill: Utility()
-                  .getDateFormat("dd-MMM-yyyy", DateTime.parse(item.validTill)),
+                  .getDateFormat("dd-MMM-yyyy", DateTime.parse(item.validTill!)),
               isDividerHide: false,
               isActive: false,
             ),
@@ -131,9 +131,9 @@ class _CouponsListPage extends State<CouponsListPage> {
         ));
   }
 
-  Widget emptyListWidgetMaker(CouponListResponse pageData) {
+  Widget emptyListWidgetMaker(CouponListResponse? pageData) {
     return CustomPaginator(context).emptyListWidgetMaker(pageData,
-        message: AppLocalizations.of(context).translate('coming_soon'));
+        message: AppLocalizations.of(context)!.translate('coming_soon'));
   }
 }
 
@@ -144,8 +144,8 @@ class RedeemedCouponsListPage extends StatefulWidget {
 
 class _RedeemedCouponsListPage extends State<RedeemedCouponsListPage> {
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
-  SharedPreferences prefs;
-  String searchVal;
+  SharedPreferences? prefs;
+  String? searchVal;
   List<CommonCardData> couponList = [];
 
   @override
@@ -159,7 +159,7 @@ class _RedeemedCouponsListPage extends State<RedeemedCouponsListPage> {
   }
 
   refresh() {
-    paginatorKey.currentState.changeState(resetState: true);
+    paginatorKey.currentState!.changeState(resetState: true);
   }
   Future<Null> refreshList() async {
     refresh();
@@ -192,7 +192,7 @@ class _RedeemedCouponsListPage extends State<RedeemedCouponsListPage> {
     CouponListRequest payload = CouponListRequest();
     payload.pageNumber = page;
     payload.pageSize = 20;
-    payload.personId = prefs.getInt(Strings.userId).toString();
+    payload.personId = prefs!.getInt(Strings.userId).toString();
     var data = jsonEncode(payload);
     var res = await Calls().call(data, context, Config.MYCOUPONLIST);
 
@@ -227,16 +227,16 @@ class _RedeemedCouponsListPage extends State<RedeemedCouponsListPage> {
               rewardPoints: item.rewardPointsRequired,
               isCoinsHide: true,
               validTill: Utility()
-                  .getDateFormat("dd-MMM-yyyy", DateTime.parse(item.validTill)),
+                  .getDateFormat("dd-MMM-yyyy", DateTime.parse(item.validTill!)),
               isActive: item.couponStatus == COUPON_STATUS.Active.type,
             ),
           ),
         ));
   }
 
-  Widget emptyListWidgetMaker(CouponListResponse pageData) {
+  Widget emptyListWidgetMaker(CouponListResponse? pageData) {
     return CustomPaginator(context).emptyListWidgetMaker(pageData,
-        message: AppLocalizations.of(context).translate('coming_soon'));
+        message: AppLocalizations.of(context)!.translate('coming_soon'));
   }
 }
 
@@ -247,8 +247,8 @@ class CouponHistoryListPage extends StatefulWidget {
 
 class _CouponHistoryListPage extends State<CouponHistoryListPage> {
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
-  SharedPreferences prefs;
-  String searchVal;
+  SharedPreferences? prefs;
+  String? searchVal;
   List<CommonCardData> couponList = [];
 
   @override
@@ -262,7 +262,7 @@ class _CouponHistoryListPage extends State<CouponHistoryListPage> {
   }
 
   refresh() {
-    paginatorKey.currentState.changeState(resetState: true);
+    paginatorKey.currentState!.changeState(resetState: true);
   }
 
   Future<Null> refreshList() async {
@@ -297,7 +297,7 @@ class _CouponHistoryListPage extends State<CouponHistoryListPage> {
   Future<CouponHistoryResponse> fetchList(int page) async {
     prefs ??= await SharedPreferences.getInstance();
     CouponListRequest request = CouponListRequest();
-    request.personId = prefs.getInt(Strings.userId).toString();
+    request.personId = prefs!.getInt(Strings.userId).toString();
     request.pageNumber = page;
     request.pageSize = 10;
     var data = jsonEncode(request);
@@ -313,9 +313,9 @@ class _CouponHistoryListPage extends State<CouponHistoryListPage> {
         child: CouponHistoryItemCard(
           title: item.transactionType,
           dayOfMonth:
-              Utility().getDateFormat("d", DateTime.parse(item.createdDate)),
+              Utility().getDateFormat("d", DateTime.parse(item.createdDate!)),
           month: Utility()
-              .getDateFormat("MMM", DateTime.parse(item.createdDate))
+              .getDateFormat("MMM", DateTime.parse(item.createdDate!))
               .toUpperCase(),
           rewardPoints: _rewardPoints(item),
           currencyCode: item.currencyCode,
@@ -325,8 +325,8 @@ class _CouponHistoryListPage extends State<CouponHistoryListPage> {
 
   String _rewardPoints(CouponHistoryItem item) {
     var points;
-    var cr = double.parse(item.rewardsCr).round();
-    var dr = double.parse(item.rewardsDr).round();
+    var cr = double.parse(item.rewardsCr!).round();
+    var dr = double.parse(item.rewardsDr!).round();
     if (cr != 0) {
       points = cr;
     } else if (dr != 0) {
@@ -339,8 +339,8 @@ class _CouponHistoryListPage extends State<CouponHistoryListPage> {
 
   bool _isdeduct(CouponHistoryItem item) {
     var points;
-    var cr = double.parse(item.rewardsCr).round();
-    var dr = double.parse(item.rewardsDr).round();
+    var cr = double.parse(item.rewardsCr!).round();
+    var dr = double.parse(item.rewardsDr!).round();
     if (cr != 0) {
       points = false;
     } else if (dr != 0) {

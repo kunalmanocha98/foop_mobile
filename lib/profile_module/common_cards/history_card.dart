@@ -9,7 +9,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 // ignore: must_be_immutable
 class HistoryCard extends StatelessWidget {
   final CommonCardData data;
-  TextStyleElements styleElements;
+  TextStyleElements? styleElements;
   Size displaySize(BuildContext context) {
     debugPrint('Size = ' + MediaQuery.of(context).size.toString());
     return MediaQuery.of(context).size;
@@ -25,7 +25,7 @@ class HistoryCard extends StatelessWidget {
     return displaySize(context).width;
   }
 
-  HistoryCard({Key key, @required this.data,this.styleElements}) : super(key: key);
+  HistoryCard({Key? key, required this.data,this.styleElements}) : super(key: key);
 
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
@@ -43,7 +43,7 @@ class HistoryCard extends StatelessWidget {
                         padding: const EdgeInsets.only(left: 16, right: 16,top:12,bottom:12),
                         child: Text(
                           data.title ?? "",
-                          style: styleElements.headline6ThemeScalable(context).copyWith(fontWeight: FontWeight.bold,color: HexColor(AppColors.appColorBlack85)),
+                          style: styleElements!.headline6ThemeScalable(context).copyWith(fontWeight: FontWeight.bold,color: HexColor(AppColors.appColorBlack85)),
                           textAlign: TextAlign.left,
                         ),
                       )),
@@ -70,7 +70,7 @@ class HistoryCard extends StatelessWidget {
                                 margin: const EdgeInsets.only(left: 16, top: 20),
                                 child: Text(
                                   data.textOne ??= "",
-                                  style: styleElements.subtitle2ThemeScalable(context),
+                                  style: styleElements!.subtitle2ThemeScalable(context),
                                   textAlign: TextAlign.left,
                                 ),
                               )),
@@ -81,7 +81,7 @@ class HistoryCard extends StatelessWidget {
                                     left: 16, top: 8, right: 16),
                                 child: Text(
                                   data.textTwo ??= "",
-                                  style: styleElements.bodyText1ThemeScalable(context).copyWith(fontWeight: FontWeight.w600),
+                                  style: styleElements!.bodyText1ThemeScalable(context).copyWith(fontWeight: FontWeight.w600),
                                   textAlign: TextAlign.left,
                                 ),
                               )),
@@ -102,7 +102,7 @@ class HistoryCard extends StatelessWidget {
                                       left: 20, top: 20, right: 20),
                                   child: Text(
                                     data.textThree ??= "",
-                                    style: styleElements.subtitle2ThemeScalable(context),
+                                    style: styleElements!.subtitle2ThemeScalable(context),
                                     textAlign: TextAlign.right,
                                   ),
                                 )),
@@ -113,7 +113,7 @@ class HistoryCard extends StatelessWidget {
                                       left: 20, top: 8, right: 20),
                                   child: Text(
                                     data.textFour ??= "",
-                                    style: styleElements.bodyText1ThemeScalable(context).copyWith(fontWeight: FontWeight.w600),
+                                    style: styleElements!.bodyText1ThemeScalable(context).copyWith(fontWeight: FontWeight.w600),
                                     textAlign: TextAlign.left,
                                   ),
                                 )),
@@ -129,7 +129,7 @@ class HistoryCard extends StatelessWidget {
                     margin: EdgeInsets.only(left: 16.h, right: 16.h, top: 20.0.h,bottom: 16.h),
                     child: Text(
                       data.textFive ??= "",
-                      style: styleElements.subtitle2ThemeScalable(context),
+                      style: styleElements!.subtitle2ThemeScalable(context),
                       overflow: TextOverflow.ellipsis,
                       maxLines: 3,
                       textAlign: TextAlign.left,

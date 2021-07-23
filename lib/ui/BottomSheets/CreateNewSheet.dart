@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CreateNewBottomSheet extends StatelessWidget {
-  final Function(String value) onClickCallback;
-  final SharedPreferences prefs;
+  final Function(String value)? onClickCallback;
+  final SharedPreferences? prefs;
   final isRoomsVisible;
   CreateNewBottomSheet({this.onClickCallback,this.prefs,this.isRoomsVisible=true});
   @override
@@ -36,13 +36,13 @@ class CreateNewBottomSheet extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      AppLocalizations.of(context).translate('create_new'),
+                      AppLocalizations.of(context)!.translate('create_new'),
                       style: styleElements.headline6ThemeScalable(context).copyWith(
                         color: HexColor(AppColors.appColorWhite)
                       ),
                     ),
                     Text(
-                      AppLocalizations.of(context).translate("create_lesson_desc"),
+                      AppLocalizations.of(context)!.translate("create_lesson_desc"),
                       style: styleElements.subtitle1ThemeScalable(context).copyWith(
                           color: HexColor(AppColors.appColorWhite)
                       ),
@@ -393,7 +393,7 @@ class CreateNewBottomSheet extends StatelessWidget {
                       width: MediaQuery.of(context).size.width/4,
                       child: GestureDetector(
                         onTap: (){
-                          onClickCallback('feed');
+                          onClickCallback!('feed');
                         },
                         child: Center(
                           child: Column(
@@ -415,7 +415,7 @@ class CreateNewBottomSheet extends StatelessWidget {
                               ),
                               SizedBox(height: 6,),
                               Text(
-                                AppLocalizations.of(context).translate('feed_post'),
+                                AppLocalizations.of(context)!.translate('feed_post'),
                                 style: styleElements.captionThemeScalable(context).copyWith(
                                     color: HexColor(AppColors.appColorBlack65)
                                 ),
@@ -430,7 +430,7 @@ class CreateNewBottomSheet extends StatelessWidget {
                       width: MediaQuery.of(context).size.width/4,
                       child: GestureDetector(
                         onTap: (){
-                          onClickCallback('qa');
+                          onClickCallback!('qa');
                         },
                         child: Center(
                           child: Column(
@@ -452,7 +452,7 @@ class CreateNewBottomSheet extends StatelessWidget {
                               ),
                               SizedBox(height: 6,),
                               Text(
-                                AppLocalizations.of(context).translate('qnA'),
+                                AppLocalizations.of(context)!.translate('qnA'),
                                 style: styleElements.captionThemeScalable(context).copyWith(
                                     color: HexColor(AppColors.appColorBlack65)
                                 ),
@@ -467,7 +467,7 @@ class CreateNewBottomSheet extends StatelessWidget {
                       width: MediaQuery.of(context).size.width/4,
                       child: GestureDetector(
                         onTap: (){
-                          onClickCallback('blog');
+                          onClickCallback!('blog');
                         },
                         child: Center(
                           child: Column(
@@ -489,7 +489,7 @@ class CreateNewBottomSheet extends StatelessWidget {
                               ),
                               SizedBox(height: 6,),
                               Text(
-                                AppLocalizations.of(context).translate('blog'),
+                                AppLocalizations.of(context)!.translate('blog'),
                                 style: styleElements.captionThemeScalable(context).copyWith(
                                     color: HexColor(AppColors.appColorBlack65)
                                 ),
@@ -504,7 +504,7 @@ class CreateNewBottomSheet extends StatelessWidget {
                       width: MediaQuery.of(context).size.width/4,
                       child: GestureDetector(
                         onTap: (){
-                          onClickCallback('poll');
+                          onClickCallback!('poll');
                         },
                         child: Center(
                           child: Column(
@@ -526,7 +526,7 @@ class CreateNewBottomSheet extends StatelessWidget {
                               ),
                               SizedBox(height: 6,),
                               Text(
-                                AppLocalizations.of(context).translate('poll'),
+                                AppLocalizations.of(context)!.translate('poll'),
                                 style: styleElements.captionThemeScalable(context).copyWith(
                                     color: HexColor(AppColors.appColorBlack65)
                                 ),
@@ -536,13 +536,13 @@ class CreateNewBottomSheet extends StatelessWidget {
                         ),
                       ),
                     ),
-                    if(prefs.getStringList(Strings.personTypeList).contains(PERSON_TYPE.TEACHER.type))
+                    if(prefs!.getStringList(Strings.personTypeList)!.contains(PERSON_TYPE.TEACHER.type))
                       Container(
                       margin: EdgeInsets.only(top:18,bottom: 18),
                       width: MediaQuery.of(context).size.width/4,
                       child: GestureDetector(
                         onTap: (){
-                          onClickCallback('notice');
+                          onClickCallback!('notice');
                         },
                         child: Center(
                           child: Column(
@@ -564,7 +564,7 @@ class CreateNewBottomSheet extends StatelessWidget {
                               ),
                               SizedBox(height: 6,),
                               Text(
-                                AppLocalizations.of(context).translate('notice'),
+                                AppLocalizations.of(context)!.translate('notice'),
                                 style: styleElements.captionThemeScalable(context).copyWith(
                                     color: HexColor(AppColors.appColorBlack65)
                                 ),
@@ -579,7 +579,7 @@ class CreateNewBottomSheet extends StatelessWidget {
                       width: MediaQuery.of(context).size.width/4,
                       child: GestureDetector(
                         onTap: (){
-                          onClickCallback('news');
+                          onClickCallback!('news');
                         },
                         child: Center(
                           child: Column(
@@ -601,7 +601,7 @@ class CreateNewBottomSheet extends StatelessWidget {
                               ),
                               SizedBox(height: 6,),
                               Text(
-                                AppLocalizations.of(context).translate('campus_news'),
+                                AppLocalizations.of(context)!.translate('campus_news'),
                                 style: styleElements.captionThemeScalable(context).copyWith(
                                     color: HexColor(AppColors.appColorBlack65)
                                 ),
@@ -616,7 +616,7 @@ class CreateNewBottomSheet extends StatelessWidget {
                       width: MediaQuery.of(context).size.width/4,
                       child: GestureDetector(
                         onTap: (){
-                          onClickCallback('assignment');
+                          onClickCallback!('assignment');
                         },
                         child: Center(
                           child: Column(
@@ -638,7 +638,7 @@ class CreateNewBottomSheet extends StatelessWidget {
                               ),
                               SizedBox(height: 6,),
                               Text(
-                                AppLocalizations.of(context).translate('assignment'),
+                                AppLocalizations.of(context)!.translate('assignment'),
                                 style: styleElements.captionThemeScalable(context).copyWith(
                                     color: HexColor(AppColors.appColorBlack65)
                                 ),
@@ -654,7 +654,7 @@ class CreateNewBottomSheet extends StatelessWidget {
                       width: MediaQuery.of(context).size.width/4,
                       child: GestureDetector(
                         onTap: (){
-                          onClickCallback('room');
+                          onClickCallback!('room');
                         },
                         child: Center(
                           child: Column(
@@ -676,7 +676,7 @@ class CreateNewBottomSheet extends StatelessWidget {
                               ),
                               SizedBox(height: 6,),
                               Text(
-                                AppLocalizations.of(context).translate('room'),
+                                AppLocalizations.of(context)!.translate('room'),
                                 style: styleElements.captionThemeScalable(context).copyWith(
                                     color: HexColor(AppColors.appColorBlack65)
                                 ),
@@ -691,7 +691,7 @@ class CreateNewBottomSheet extends StatelessWidget {
                       width: MediaQuery.of(context).size.width/4,
                       child: GestureDetector(
                         onTap: (){
-                          onClickCallback('lesson');
+                          onClickCallback!('lesson');
                         },
                         child: Center(
                           child: Column(
@@ -713,7 +713,7 @@ class CreateNewBottomSheet extends StatelessWidget {
                               ),
                               SizedBox(height: 6,),
                               Text(
-                                AppLocalizations.of(context).translate('lessons'),
+                                AppLocalizations.of(context)!.translate('lessons'),
                                 style: styleElements.captionThemeScalable(context).copyWith(
                                     color: HexColor(AppColors.appColorBlack65)
                                 ),

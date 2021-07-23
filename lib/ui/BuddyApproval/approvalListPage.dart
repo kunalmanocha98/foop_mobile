@@ -20,11 +20,11 @@ class ApprovalListPage extends StatefulWidget {
 }
 
 class ApprovalListPageState extends State<ApprovalListPage> {
-  String searchVal;
-  SharedPreferences prefs;
+  String? searchVal;
+  SharedPreferences? prefs;
   List<RequestListItem> requestList = [];
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
-  int total;
+  int? total;
 
 
   @override
@@ -33,7 +33,7 @@ class ApprovalListPageState extends State<ApprovalListPage> {
      SafeArea(
           child: Scaffold(
             appBar: TricycleAppBar().getCustomAppBarWithSearch(context,
-                appBarTitle: AppLocalizations.of(context).translate('buddy_approval'),
+                appBarTitle: AppLocalizations.of(context)!.translate('buddy_approval'),
                 onBackButtonPress: () {
                   Navigator.pop(context);
                 }, onSearchValueChanged: (String value) {
@@ -63,7 +63,7 @@ class ApprovalListPageState extends State<ApprovalListPage> {
 
   refresh() {
     requestList.clear();
-    paginatorKey.currentState.changeState(resetState: true);
+    paginatorKey.currentState!.changeState(resetState: true);
     setState(() {
 
     });
@@ -75,15 +75,15 @@ class ApprovalListPageState extends State<ApprovalListPage> {
     payload.searchVal = searchVal;
     payload.pageSize = 20;
     payload.pageNumber = page;
-    payload.approvedByPersonId = prefs.getInt(Strings.userId);
+    payload.approvedByPersonId = prefs!.getInt(Strings.userId);
     // payload.institutionId = prefs.getInt(Strings.instituteId);
     var res = await Calls().call(jsonEncode(payload), context, Config.REQUEST_LIST);
     
     return RequestListResponse.fromJson(res);
   }
 
-  List<RequestListItem> pageItemGetter(RequestListResponse pageData) {
-    requestList.addAll(pageData.rows);
+  List<RequestListItem>? pageItemGetter(RequestListResponse? pageData) {
+    requestList.addAll(pageData!.rows!);
     return pageData.rows;
   }
 
@@ -114,7 +114,7 @@ class ApprovalListPageState extends State<ApprovalListPage> {
     );
   }
 
-  int totalPagesGetter(RequestListResponse pageData) {
+  int? totalPagesGetter(RequestListResponse pageData) {
     total = pageData.total;
     return total;
   }

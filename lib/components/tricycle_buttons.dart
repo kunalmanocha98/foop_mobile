@@ -2,22 +2,22 @@ import 'package:flutter/material.dart';
 
 
 class TricycleTextButton extends StatelessWidget {
-  final Function onPressed;
-  final String buttonText;
-  final Widget child;
-  final Color color;
-  final OutlinedBorder shape;
-  final EdgeInsets padding;
-  final double elevation;
+  final Function? onPressed;
+  final String? buttonText;
+  final Widget? child;
+  final Color? color;
+  final OutlinedBorder? shape;
+  final EdgeInsets? padding;
+  final double? elevation;
 
 
   TricycleTextButton(
-      {@required this.onPressed, this.buttonText, this.child,this.color,this.shape,this.padding,this.elevation});
+      {required this.onPressed, this.buttonText, this.child,this.color,this.shape,this.padding,this.elevation});
 
   @override
   Widget build(BuildContext context) {
     return TextButton(
-        onPressed: onPressed,
+        onPressed: onPressed as void Function()?,
         style: TextButton.styleFrom(
           shape: shape,
           backgroundColor: color,
@@ -32,21 +32,21 @@ class TricycleTextButton extends StatelessWidget {
 }
 
 class TricycleElevatedButton extends StatelessWidget {
-  final Function onPressed;
-  final String buttonText;
-  final Widget child;
-  final Color color;
-  final OutlinedBorder shape;
-  final EdgeInsets padding;
-  final double elevation;
+  final Function? onPressed;
+  final String? buttonText;
+  final Widget? child;
+  final Color? color;
+  final OutlinedBorder? shape;
+  final EdgeInsets? padding;
+  final double? elevation;
 
-  TricycleElevatedButton({@required this.onPressed, this.buttonText, this.child,this.color,this.shape, this.padding, this.elevation
+  TricycleElevatedButton({required this.onPressed, this.buttonText, this.child,this.color,this.shape, this.padding, this.elevation
   });
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-        onPressed: onPressed,
+        onPressed: onPressed as void Function()?,
         style: ElevatedButton.styleFrom(
           shape: shape,
           primary: color,

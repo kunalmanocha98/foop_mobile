@@ -15,23 +15,23 @@ import 'follow_unfollow_block_dialogue.dart';
 
 // ignore: must_be_immutable
 class GenericFollowUnfollowButton extends StatefulWidget {
-  String personName;
-  String engageFlag;
-  Color textColor;
-  Color backGroundColor;
-  String actionByObjectType;
-  int actionByObjectId;
-  String actionOnObjectType;
-  int actionOnObjectId;
-  String actionFlag;
-  List<String> actionDetails;
-  bool isRoundedButton = true;
-  Null Function() clicked;
-  EdgeInsets padding;
-  Null Function(bool isCallSuccess) callback;
+  String? personName;
+  String? engageFlag;
+  Color? textColor;
+  Color? backGroundColor;
+  String? actionByObjectType;
+  int? actionByObjectId;
+  String? actionOnObjectType;
+  int? actionOnObjectId;
+  String? actionFlag;
+  List<String>? actionDetails;
+  bool? isRoundedButton = true;
+  Null Function()? clicked;
+  EdgeInsets? padding;
+  Null Function(bool isCallSuccess)? callback;
 
   GenericFollowUnfollowButton(
-      {Key key,
+      {Key? key,
         this.actionByObjectType,
         this.actionByObjectId,
         this.actionOnObjectType,
@@ -63,10 +63,10 @@ class GenericFollowUnfollowButtonState
     this.clicked,
   });
 
-  TextStyleElements styleElements;
-  BuildContext ctx;
-  Null Function() clicked;
-  Null Function(bool isCallSuccess) callback;
+  late TextStyleElements styleElements;
+  BuildContext? ctx;
+  Null Function()? clicked;
+  Null Function(bool isCallSuccess)? callback;
   bool inProgress = false;
 
   Widget _roundedCornerButton(BuildContext context) => Visibility(
@@ -95,21 +95,21 @@ class GenericFollowUnfollowButtonState
                       ? "Restrict"
                       : "Remove" +
                       " " +
-                      widget.personName +
+                      widget.personName! +
                       "?",
                   subText: widget.actionFlag == "U"
-                      ? AppLocalizations.of(ctx)
+                      ? AppLocalizations.of(ctx!)!
                       .translate("unfollow_content")
                       : widget.actionFlag == "B"
-                      ? AppLocalizations.of(ctx)
+                      ? AppLocalizations.of(ctx!)!
                       .translate("block_content")
                       : widget.actionFlag == "M"
-                      ? AppLocalizations.of(ctx)
+                      ? AppLocalizations.of(ctx!)!
                       .translate("remove_content")
-                      : AppLocalizations.of(ctx)
+                      : AppLocalizations.of(ctx!)!
                       .translate("restrict_content"),
                   clicked: () {
-                    if (clicked != null) clicked();
+                    if (clicked != null) clicked!();
                   },
                   callback: (isCallSuccess) {
                     userButtonCLick(isCallSuccess);
@@ -117,7 +117,7 @@ class GenericFollowUnfollowButtonState
                 ));
           } else {
             apiCall();
-            if (clicked != null) clicked();
+            if (clicked != null) clicked!();
           }
 
           //
@@ -127,7 +127,7 @@ class GenericFollowUnfollowButtonState
             ? widget.backGroundColor
             : HexColor(AppColors.appColorTransparent),
         child: Text(
-          widget.engageFlag,
+          widget.engageFlag!,
           style: styleElements.captionThemeScalable(context).copyWith(
               color: widget.textColor != null
                   ? widget.textColor
@@ -165,18 +165,18 @@ class GenericFollowUnfollowButtonState
                       ? "Restrict"
                       : "Remove" +
                       " " +
-                      widget.personName +
+                      widget.personName! +
                       "?",
                   subText: widget.actionFlag == "U"
-                      ? AppLocalizations.of(ctx)
+                      ? AppLocalizations.of(ctx!)!
                       .translate("unfollow_content")
                       : widget.actionFlag == "B"
-                      ? AppLocalizations.of(ctx)
+                      ? AppLocalizations.of(ctx!)!
                       .translate("block_content")
                       : widget.actionFlag == "M"
-                      ? AppLocalizations.of(ctx)
+                      ? AppLocalizations.of(ctx!)!
                       .translate("remove_content")
-                      : AppLocalizations.of(ctx)
+                      : AppLocalizations.of(ctx!)!
                       .translate("restrict_content"),
                   callback: (isCallSuccess) {
                     userButtonCLick(isCallSuccess);
@@ -184,14 +184,14 @@ class GenericFollowUnfollowButtonState
                 ));
           } else
             apiCall();
-          if (clicked != null) clicked();
+          if (clicked != null) clicked!();
           //
         },
         child: Padding(
-          padding:widget.padding!=null?widget.padding:
+          padding:widget.padding!=null?widget.padding!:
           EdgeInsets.only(left: 8.0, right: 8, top: 4, bottom: 4),
           child: Text(
-            widget.engageFlag,
+            widget.engageFlag!,
             style: styleElements
                 .captionThemeScalable(context)
                 .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -209,12 +209,12 @@ class GenericFollowUnfollowButtonState
       children: [
         Visibility(
           visible:
-          widget.isRoundedButton != null ? widget.isRoundedButton : true,
+          widget.isRoundedButton != null ? widget.isRoundedButton! : true,
           child: _roundedCornerButton(context),
         ),
         Visibility(
           visible:
-          widget.isRoundedButton != null ? !widget.isRoundedButton : false,
+          widget.isRoundedButton != null ? !widget.isRoundedButton! : false,
           child: _simpleTricycleTextButton(context),
         ),
       ],
@@ -237,16 +237,16 @@ class GenericFollowUnfollowButtonState
       if (value != null) {
         var data = DynamicResponse.fromJson(value);
         if (data != null && data.statusCode == 'S10001') {
-          callback(true);
+          callback!(true);
         } else {
           ToastBuilder().showToast(data.message ?? "Please Try Again", ctx,
               HexColor(AppColors.information));
-          callback(false);
+          callback!(false);
         }
       } else {
         ToastBuilder().showToast(
             "Please Try Again", ctx, HexColor(AppColors.information));
-        callback(false);
+        callback!(false);
       }
 
       setState(() {
@@ -259,7 +259,7 @@ class GenericFollowUnfollowButtonState
       setState(() {
         inProgress = false;
       });
-      callback(false);
+      callback!(false);
     });
 
     setState(() {
@@ -269,9 +269,9 @@ class GenericFollowUnfollowButtonState
 
   void followUnfollowBlock(
       String actionByObjectType,
-      int actionByObjectId,
-      String actionOnObjectType,
-      int actionOnObjectId,
+      int? actionByObjectId,
+      String? actionOnObjectType,
+      int? actionOnObjectId,
       String actionFlag,
       List<String> actionDetails,
       Function(bool isSuccess,)

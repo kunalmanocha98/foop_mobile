@@ -13,13 +13,13 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class LanguageCard extends StatelessWidget {
   final CommonCardData data;
-  BuildContext context;
-  TextStyleElements styleElements;
-  List<SubRow> listSubItems = [];
-  Null Function() callbackPicker;
-  String type;
-  int id;
-  String personType;
+  BuildContext? context;
+  TextStyleElements? styleElements;
+  List<SubRow>? listSubItems = [];
+  Null Function()? callbackPicker;
+  String? type;
+  int? id;
+  String? personType;
 
   // Widget _simplePopup(String type) => PopupMenuButton<int>(
   //       itemBuilder: (context) => [
@@ -101,11 +101,11 @@ class LanguageCard extends StatelessWidget {
     return displaySize(context).width;
   }
 
-  String instId;
+  String? instId;
 
   LanguageCard(
-      {Key key,
-      @required this.data,
+      {Key? key,
+      required this.data,
       this.styleElements,
       this.callbackPicker,
         this.personType,
@@ -133,7 +133,7 @@ class LanguageCard extends StatelessWidget {
                         left: 16, right: 16, top: 12, bottom: 8),
                     child: Text(
                       data.title ?? "",
-                      style: styleElements
+                      style: styleElements!
                           .headline6ThemeScalable(context)
                           .copyWith(
                               fontWeight: FontWeight.bold,
@@ -174,7 +174,7 @@ class LanguageCard extends StatelessWidget {
                                     ),
                                   ));
                               if (result != null && result['result'] == "update") {
-                                callbackPicker();
+                                callbackPicker!();
                               }
                             }
                           } else if (type == "Language") {
@@ -198,7 +198,7 @@ class LanguageCard extends StatelessWidget {
                                     ),
                                   ));
                               if (result != null && result['result'] == "update") {
-                                callbackPicker();
+                                callbackPicker!();
                               }
                             }
                           }
@@ -217,7 +217,7 @@ class LanguageCard extends StatelessWidget {
         ),
         Container(
             margin: const EdgeInsets.only(left: 12, right: 12),
-            child: listSubItems!=null &&listSubItems.isNotEmpty
+            child: listSubItems!=null &&listSubItems!.isNotEmpty
                 ? Align(
                     alignment: Alignment.centerLeft,
                     child:  Container(
@@ -227,7 +227,7 @@ class LanguageCard extends StatelessWidget {
                             scrollDirection: Axis.horizontal,
                             shrinkWrap: true,
                             physics: const ClampingScrollPhysics(),
-                            itemCount: listSubItems.length,
+                            itemCount: listSubItems!.length,
                             // itemExtent: 10.0,
                             // reverse: true, //makes the list appear in descending order
                             itemBuilder:
@@ -240,9 +240,9 @@ class LanguageCard extends StatelessWidget {
                                       padding: const EdgeInsets.only(
                                           left: 4, right: 4),
                                       child: Text(
-                                        listSubItems[index].language ?? "",
+                                        listSubItems![index].language ?? "",
                                         overflow: TextOverflow.ellipsis,
-                                        style: styleElements
+                                        style: styleElements!
                                             .subtitle2ThemeScalable(
                                             context),
                                         textAlign: TextAlign.center,
@@ -262,7 +262,7 @@ class LanguageCard extends StatelessWidget {
 
                         if (result != null &&
                             result['result'] == "success") {
-                          callbackPicker();
+                          callbackPicker!();
                         }
                       } else if (type == "Language") {
                         var result = await Navigator.push(
@@ -274,7 +274,7 @@ class LanguageCard extends StatelessWidget {
 
                         if (result != null &&
                             result['result'] == "success") {
-                          callbackPicker();
+                          callbackPicker!();
                         }
                       }
                     },
@@ -303,7 +303,7 @@ class LanguageCard extends StatelessWidget {
                       ),
                     ));
                 if (result != null && result['result'] == "update") {
-                  callbackPicker();
+                  callbackPicker!();
                 }
               },
               child: Container(
@@ -312,8 +312,8 @@ class LanguageCard extends StatelessWidget {
                   /*visible: data.isShowMore ??= false,*/
                   child: Align(
                     alignment: Alignment.bottomRight,
-                    child: Text(AppLocalizations.of(context).translate('see_more'),
-                      style: styleElements.subtitle2ThemeScalable(context),
+                    child: Text(AppLocalizations.of(context)!.translate('see_more'),
+                      style: styleElements!.subtitle2ThemeScalable(context),
                       textAlign: TextAlign.center,
                     ),
                   ),

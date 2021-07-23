@@ -10,9 +10,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 class DilaogPage extends StatelessWidget {
   String title;
   String subtitle;
-  SharedPreferences prefs = locator<SharedPreferences>();
+  SharedPreferences? prefs = locator<SharedPreferences>();
   String type;
-  bool isVerified;
+  bool? isVerified;
 
   Size displaySize(BuildContext context) {
     debugPrint('Size = ' + MediaQuery.of(context).size.toString());
@@ -31,16 +31,16 @@ class DilaogPage extends StatelessWidget {
 
 
   DilaogPage(
-      {Key key,
-        @required this.type,
-        @required this.title,
-        @required this.subtitle,
-        @required this.isVerified})
+      {Key? key,
+        required this.type,
+        required this.title,
+        required this.subtitle,
+        required this.isVerified})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
       Utility().refreshList(context);
       DataSaveUtils().getUserData(context, prefs);
       Future.delayed(Duration(seconds: 3), () {

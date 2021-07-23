@@ -13,14 +13,14 @@ class BioCard extends StatelessWidget {
   final CommonCardData data;
 
   // int colorCode = 0xFFEF9A9A;
-  Persondata persondata;
-  Null Function() callback;
-  BuildContext context;
-  TextStyleElements styleElements;
-  int userId;
-  int ownerId;
-String type;
-  BioCard({Key key, @required this.data, this.persondata, this.callback,this.type,this.ownerId,this.userId})
+  Persondata? persondata;
+  Null Function()? callback;
+  BuildContext? context;
+  late TextStyleElements styleElements;
+  int? userId;
+  int? ownerId;
+String? type;
+  BioCard({Key? key, required this.data, this.persondata, this.callback,this.type,this.ownerId,this.userId})
       : super(key: key);
 
   // Widget _simplePopup() => PopupMenuButton<int>(
@@ -58,7 +58,7 @@ String type;
                 MaterialPageRoute(builder: (context) => BasicInfo(persondata,callback)));
 
             if (result != null && result['result'] == "success") {
-              callback();
+              callback!();
             }
           }
 
@@ -106,7 +106,7 @@ String type;
                                 MaterialPageRoute(builder: (context) => BasicInfo(persondata,callback)));
 
                             if (result != null && result['result'] == "success") {
-                              callback();
+                              callback!();
                             }
 
                           },
@@ -126,7 +126,7 @@ String type;
           Container(
             padding: EdgeInsets.only(left: 16.w, right: 16.w, bottom: 12.h),
             child: Text(
-            data.textOne!=null &&  data.textOne!=""?  data.textOne:userId==ownerId? "Write Something About You ":"  ",
+            data.textOne!=null &&  data.textOne!=""?  data.textOne!:userId==ownerId? "Write Something About You ":"  ",
               style: styleElements.subtitle1ThemeScalable(context),
               textAlign: TextAlign.left,
             ),

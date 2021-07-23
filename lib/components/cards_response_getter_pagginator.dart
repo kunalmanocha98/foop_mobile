@@ -12,8 +12,8 @@ import 'package:flutter/material.dart';
 class CustomResponseGetter {
 
   BuildContext context;
-  List<SubRow> listItemsGetter(BaseResponses response) {
-    return response.rows[0].subRow;
+  List<SubRow>? listItemsGetter(BaseResponses response) {
+    return response.rows![0].subRow;
   }
 
 
@@ -41,7 +41,7 @@ class CustomResponseGetter {
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.all(16.0),
-          child: Text(AppLocalizations.of(context).translate('server_error'),
+          child: Text(AppLocalizations.of(context)!.translate('server_error'),
             style: TextStyle(
                 fontSize: 16,
                 color: HexColor(AppColors.appMainColor),
@@ -51,7 +51,7 @@ class CustomResponseGetter {
         ),
         TricycleTextButton(
           onPressed: retryListener,
-          child: Text(AppLocalizations.of(context).translate('retry')),
+          child: Text(AppLocalizations.of(context)!.translate('retry')),
         )
       ],
     );
@@ -59,13 +59,13 @@ class CustomResponseGetter {
 
   Widget emptyListWidgetMaker(BaseResponses response) {
     return Center(
-        child:EmptyWidget(AppLocalizations.of(context)
+        child:EmptyWidget(AppLocalizations.of(context)!
             .translate('no_data'),
         )
     );
   }
 
-  int totalPagesGetter(BaseResponses response) {
+  int? totalPagesGetter(BaseResponses response) {
     return response.total;
   }
 

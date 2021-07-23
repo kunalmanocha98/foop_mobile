@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
@@ -29,41 +30,41 @@ import 'PostCardFooter.dart';
 
 // ignore: must_be_immutable
 class TricyclePostCard extends StatefulWidget {
-  PostListItem cardData;
-  Function sharecallBack;
-  Function download;
-  Function(bool) bookmarkCallback;
-  Function commentCallback;
-  Function ratingCallback;
-  Function onAnswerClickCallback;
-  SharedPreferences preferences;
-  Function(bool) onFollowCallback;
-  Function hidePostCallback;
-  Function deletePostCallback;
+  PostListItem? cardData;
+  Function? sharecallBack;
+  Function? download;
+  Function(bool?)? bookmarkCallback;
+  Function? commentCallback;
+  Function? ratingCallback;
+  Function? onAnswerClickCallback;
+  SharedPreferences? preferences;
+  Function(bool)? onFollowCallback;
+  Function? hidePostCallback;
+  Function? deletePostCallback;
   Function onVoteCallback;
-  bool isDetailPage;
-  Function onBackPressed;
-  bool isBackButtonVisible;
-  bool isTitleVisible;
-  bool isNewsPage;
-  bool isFilterPage;
-  Function onTalkCallback;
-  Function onSubmitAnswer;
-  FlutterTts tts;
+  bool? isDetailPage;
+  Function? onBackPressed;
+  bool? isBackButtonVisible;
+  bool? isTitleVisible;
+  bool? isNewsPage;
+  bool? isFilterPage;
+  Function? onTalkCallback;
+  Function? onSubmitAnswer;
+  FlutterTts? tts;
   bool isPostHeaderVisible;
   bool isPostActionVisible;
 
   bool horizontalMediaList;
-  bool isTranslateVisible;
-  Function translateCallback;
-  Function textToSpeechCallback;
-  bool isTextToSpeechVisible;
+  bool? isTranslateVisible;
+  Function? translateCallback;
+  Function? textToSpeechCallback;
+  bool? isTextToSpeechVisible;
 bool isLearningPage;
-final String searchHighlightWord;
+final String? searchHighlightWord;
 
   TricyclePostCard(
-      {Key key,
-        @required this.cardData,
+      {Key? key,
+        required this.cardData,
         this.sharecallBack,
         this.download,
         this.tts,
@@ -80,7 +81,7 @@ final String searchHighlightWord;
         this.isFilterPage,
         this.isLearningPage = false,
         this.onTalkCallback,
-        @required this.onVoteCallback,
+        required this.onVoteCallback,
         this.isBackButtonVisible,
         this.isTitleVisible,
         this.onSubmitAnswer,
@@ -118,33 +119,33 @@ final String searchHighlightWord;
 }
 
 class PostCardState extends State<TricyclePostCard> {
-  TextStyleElements styleElements;
-  PostListItem cardData;
-  Function sharecallBack;
-  Function download;
-  Function(bool) bookmarkCallback;
-  Function commentCallback;
-  Function ratingCallback;
-  Function onVoteCallback;
-  Function onAnswerClickCallback;
-  SharedPreferences preferences;
-  Function(bool) onFollowCallback;
-  Function hidePostCallback;
-  Function deletePostCallback;
-  bool isDetailPage;
-  Function onBackPressed;
-  bool isBackButtonVisible;
-  bool isTitleVisible;
+  late TextStyleElements styleElements;
+  PostListItem? cardData;
+  Function? sharecallBack;
+  Function? download;
+  Function(bool?)? bookmarkCallback;
+  Function? commentCallback;
+  Function? ratingCallback;
+  Function? onVoteCallback;
+  Function? onAnswerClickCallback;
+  SharedPreferences? preferences;
+  Function(bool)? onFollowCallback;
+  Function? hidePostCallback;
+  Function? deletePostCallback;
+  bool? isDetailPage;
+  Function? onBackPressed;
+  bool? isBackButtonVisible;
+  bool? isTitleVisible;
   int position = 0;
-  bool isNewsPage;
-  Function onSubmitAnswer;
+  bool? isNewsPage;
+  Function? onSubmitAnswer;
 
 
   // GlobalKey<TricycleDownloadButtonState> downloadButtonKey = GlobalKey();
 
 
   PostCardState(
-      {@required this.cardData,
+      {required this.cardData,
         this.sharecallBack,
         this.bookmarkCallback,
         this.onFollowCallback,
@@ -186,9 +187,9 @@ class PostCardState extends State<TricyclePostCard> {
   Future<String> _findLocalPath() async {
     // ignore: unrelated_type_equality_checks
     final directory = Platform.isAndroid
-        ? await getExternalStorageDirectory()
+        ? await (getExternalStorageDirectory() )
         : await getApplicationDocumentsDirectory();
-    return directory.path;
+    return directory!.path;
   }
 
   @override
@@ -196,19 +197,19 @@ class PostCardState extends State<TricyclePostCard> {
     print("post_card_____________________");
     styleElements = TextStyleElements(context);
     return TricycleCard(
-        color: cardData.postContent.specifications.color != null
-            ? HexColor(cardData.postContent.specifications.color)
+        color: cardData!.postContent!.specifications!.color != null
+            ? HexColor(cardData!.postContent!.specifications!.color!)
             : null,
         // color: color,
         padding: EdgeInsets.all(0),
-        margin: (widget.isLearningPage && cardData.postType == 'lesson')?EdgeInsets.only(top:75):null,
+        margin: (widget.isLearningPage && cardData!.postType == 'lesson')?EdgeInsets.only(top:75):null,
         child: Stack(
           children: [
             Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                (!widget.isPostHeaderVisible || (isNewsPage!=null && isNewsPage))?Container(): Padding(
+                (!widget.isPostHeaderVisible || (isNewsPage!=null && isNewsPage!))?Container(): Padding(
                   padding: const EdgeInsets.only(
                       left: 8.0, right: 8, top: 8, bottom: 8.0),
                   child: PostCardHeader(
@@ -240,13 +241,13 @@ class PostCardState extends State<TricyclePostCard> {
                 //   ),
                 // ),
                 (cardData != null &&
-                    cardData.postType == 'notice' &&
+                    cardData!.postType == 'notice' &&
                     (isTitleVisible ??= false))
                     ? Padding(
                   padding: const EdgeInsets.only(
                       left: 16.0, right: 16, bottom: 8.0),
                   child: Text(
-                    cardData.postContent.content.typeHeading ??= '',
+                    cardData!.postContent!.content!.typeHeading ??= '',
                     style: styleElements
                         .headline6ThemeScalable(context)
                         .copyWith(fontWeight: FontWeight.bold),
@@ -260,14 +261,14 @@ class PostCardState extends State<TricyclePostCard> {
                 //   mediaList: cardData.postContent.content.media,
                 // ),
 
-                cardData.postContent.content.media!=null && cardData.postContent.content.media.isNotEmpty  ?  PostCardMedia(
+                cardData!.postContent!.content!.media!=null && cardData!.postContent!.content!.media!.isNotEmpty  ?  PostCardMedia(
                     // downloadButtonKey:downloadButtonKey,
                     isLearningPage:widget.isLearningPage,
-                    postType:cardData.postType,
+                    postType:cardData!.postType,
                     isFilterPage:widget.isFilterPage,
-                    mediaList: cardData.postContent.content.media,
+                    mediaList: cardData!.postContent!.content!.media,
                     fullPage: false,
-                    link:getLink(cardData.postContent.content.contentMeta.meta),
+                    link:getLink(cardData!.postContent!.content!.contentMeta!.meta!),
                     pagePosition: 0,
                     isNewsPage: isNewsPage,
                     onlyHorizontalList: widget.horizontalMediaList,
@@ -277,18 +278,18 @@ class PostCardState extends State<TricyclePostCard> {
                     onItemClick: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => ImageVideoFullPage(
-                            ownerId: cardData.postOwnerTypeId,
-                            ownerType: cardData.postOwnerType,
-                            mediaList: cardData.postContent.content.media,
-                            stats: cardData.postContent.statistics,
-                            isBookMarked: cardData.isBookmarked,
+                            ownerId: cardData!.postOwnerTypeId,
+                            ownerType: cardData!.postOwnerType,
+                            mediaList: cardData!.postContent!.content!.media,
+                            stats: cardData!.postContent!.statistics,
+                            isBookMarked: cardData!.isBookmarked,
                             isRated: getIsRated(),
                             sharecallBack: sharecallBack,
                             bookmarkCallback: bookmarkCallback,
                             commentCallback: commentCallback,
                             prefs: preferences,
                             ratingCallback: ratingCallback,
-                            postId: cardData.postId,
+                            postId: cardData!.postId,
                             postListItem: cardData,
                             isWithOutData: false,
                             talkcallback: widget.onTalkCallback,
@@ -314,22 +315,22 @@ class PostCardState extends State<TricyclePostCard> {
                 ,
                 (cardData != null)
                     ? Padding(
-                  padding:  EdgeInsets.only(left: isDetailPage?60:8, right: 16),
+                  padding:  EdgeInsets.only(left: isDetailPage!?60:8, right: 16),
                   child: PostCardFooter(
                       prefs: preferences,
                       isFilterPage:widget.isFilterPage,
                       searchHighlightWord:widget.searchHighlightWord,
-                      postOwnerTypeId: cardData.postOwnerTypeId,
-                      postId: cardData.postId,
-                      postType: cardData.postType,
-                      contentData: cardData.postContent.content,
-                      stats: cardData.postContent.statistics,
+                      postOwnerTypeId: cardData!.postOwnerTypeId,
+                      postId: cardData!.postId,
+                      postType: cardData!.postType,
+                      contentData: cardData!.postContent!.content,
+                      stats: cardData!.postContent!.statistics,
                       commentCallback: commentCallback,
                       isDetailPage: isDetailPage,
-                      dateTime: cardData.postDatetime,
+                      dateTime: cardData!.postDatetime,
                       onVoteCallback: onVoteCallback,
-                      isVoted: cardData.isVoted ?? false,
-                      webLink: cardData.sourceLink,
+                      isVoted: cardData!.isVoted ?? false,
+                      webLink: cardData!.sourceLink,
                       isNewsPage:isNewsPage,
                       onSubmitAnswer:onSubmitAnswer,
                       onAnswerClickCallback: onAnswerClickCallback),
@@ -339,7 +340,7 @@ class PostCardState extends State<TricyclePostCard> {
                   visible: isNewsPage??=false,
                     child: Spacer()),
                 Visibility(
-                  visible: !(isNewsPage!=null && isNewsPage) && widget.isPostActionVisible,
+                  visible: !(isNewsPage!=null && isNewsPage!) && widget.isPostActionVisible,
                   child:
                   (cardData != null)
                       ? Align(
@@ -350,32 +351,32 @@ class PostCardState extends State<TricyclePostCard> {
                         isTextToSpeechVisible: widget.isTextToSpeechVisible,
                         textToSpeechCallback: widget.textToSpeechCallback,
                         // downloadButtonKey: downloadButtonKey,
-                        media:cardData.postContent.content.media,
-                        ownerId: cardData.postOwnerTypeId,
-                        ownerType: cardData.postOwnerType,
-                        isDocument: isDocument(cardData),
-                        stats: cardData.postContent.statistics,
-                        isBookMarked: cardData.isBookmarked,
+                        media:cardData!.postContent!.content!.media,
+                        ownerId: cardData!.postOwnerTypeId,
+                        ownerType: cardData!.postOwnerType,
+                        isDocument: isDocument(cardData!),
+                        stats: cardData!.postContent!.statistics,
+                        isBookMarked: cardData!.isBookmarked,
                         isRated: getIsRated(),
-                        isTalkIconVisible: !(cardData.postType == 'poll' || cardData.postType == 'general'),
+                        isTalkIconVisible: !(cardData!.postType == 'poll' || cardData!.postType == 'general'),
                         talkCallback: widget.onTalkCallback,
-                        mediaUrl: isDocument(cardData)
-                            ? cardData
-                            .postContent.content.media[position].mediaUrl
+                        mediaUrl: isDocument(cardData!)
+                            ? cardData!
+                            .postContent!.content!.media![position].mediaUrl
                             : "",
                         sharecallBack: sharecallBack,
                         bookmarkCallback: bookmarkCallback,
                         commentCallback: commentCallback,
                         ratingCallback: ratingCallback,
                         prefs: preferences,
-                        postId: cardData.postId),
+                        postId: cardData!.postId),
                   )
                       : Container(),)
 
               ],
             ),
             Visibility(
-              visible: (isNewsPage!=null && isNewsPage),
+              visible: (isNewsPage!=null && isNewsPage!),
               child:
             (cardData != null)
                 ? Align(
@@ -386,29 +387,29 @@ class PostCardState extends State<TricyclePostCard> {
                       isTranslateVisible: widget.isTranslateVisible,
                       isTextToSpeechVisible: widget.isTextToSpeechVisible,
                       textToSpeechCallback: ()async{
-                     widget. tts.stop();
+                     widget. tts!.stop();
                       var text = "";
                         try {
                           Document doc = Document.fromJson(jsonDecode(
-                              cardData.postContent.content.contentMeta.meta));
+                              cardData!.postContent!.content!.contentMeta!.meta!));
                           QuillController _controller = QuillController(document: doc, selection: TextSelection.collapsed(offset: 0));
                         text = _controller.document.toPlainText();
                         }catch(error){
-                          var html =  cardData.postContent.content.contentMeta.meta;
+                          var html =  cardData!.postContent!.content!.contentMeta!.meta;
                           print(html);
-                          text = parse(html).documentElement.text;
+                          text = parse(html).documentElement!.text;
                           print(text);
                         }
 
-                     widget. tts.setLanguage("hi-IN");
-                     widget. tts.setPitch(1);
-                     widget. tts.speak(text);
+                     widget. tts!.setLanguage("hi-IN");
+                     widget. tts!.setPitch(1);
+                     widget. tts!.speak(text);
                       },
                       translateCallback: (){
-                      String html="";
+                      String? html="";
                       try {
                         Document doc = Document.fromJson(jsonDecode(
-                            cardData.postContent.content.contentMeta.meta));
+                            cardData!.postContent!.content!.contentMeta!.meta!));
                         QuillController _controller = QuillController(document: doc, selection: TextSelection.collapsed(offset: 0));
                         // Delta delta = Delta.fromJson(jsonDecode(jsonEncode(_controller.document.toDelta().toJson())));
                         // var markdown = deltaToMarkdown(delta.toString());
@@ -419,38 +420,38 @@ class PostCardState extends State<TricyclePostCard> {
                         html=  markdownToHtml(markdown);
                          // html  = NotusHtmlCodec().encode(delta);
                       }catch(error){
-                        log(error);
-                        html =  cardData.postContent.content.contentMeta.meta;
+                        log(error.toString());
+                        html =  cardData!.postContent!.content!.contentMeta!.meta;
                       }
 
-                        var input1 = html.replaceAll("<br><br><br><br>", "<br><br>");
+                        var input1 = html!.replaceAll("<br><br><br><br>", "<br><br>");
                         var input  = input1.replaceRange(input1.length-8,input1.length, "");
                         log(input);
                         Utility().translate(context,input, "en", "hi", "html").then((value){
                           setState(() {
-                            cardData.postContent.content.contentMeta.meta = value;
+                            cardData!.postContent!.content!.contentMeta!.meta = value;
                           });
                         });
                       },
-                      media:cardData.postContent.content.media,
-                      ownerId: cardData.postOwnerTypeId,
-                        ownerType: cardData.postOwnerType,
-                        isDocument: isDocument(cardData),
-                        stats: cardData.postContent.statistics,
-                        isBookMarked: cardData.isBookmarked,
+                      media:cardData!.postContent!.content!.media,
+                      ownerId: cardData!.postOwnerTypeId,
+                        ownerType: cardData!.postOwnerType,
+                        isDocument: isDocument(cardData!),
+                        stats: cardData!.postContent!.statistics,
+                        isBookMarked: cardData!.isBookmarked,
                         isRated: getIsRated(),
-                        isTalkIconVisible: cardData.postType != 'poll',
+                        isTalkIconVisible: cardData!.postType != 'poll',
                         talkCallback: widget.onTalkCallback,
-                        mediaUrl: isDocument(cardData)
-                            ? cardData
-                            .postContent.content.media[position].mediaUrl
+                        mediaUrl: isDocument(cardData!)
+                            ? cardData!
+                            .postContent!.content!.media![position].mediaUrl
                             : "",
                         sharecallBack: sharecallBack,
                         bookmarkCallback: bookmarkCallback,
                         commentCallback: commentCallback,
                         ratingCallback: ratingCallback,
                         prefs: preferences,
-                        postId: cardData.postId),
+                        postId: cardData!.postId),
                 )
                 : Container(),)
           ],
@@ -458,9 +459,9 @@ class PostCardState extends State<TricyclePostCard> {
   }
 
   bool isDocument(PostListItem cardData) {
-    if (cardData.postContent.content.media != null &&
-        cardData.postContent.content.media.length > 0) {
-      for (var i in cardData.postContent.content.media) {
+    if (cardData.postContent!.content!.media != null &&
+        cardData.postContent!.content!.media!.length > 0) {
+      for (var i in cardData.postContent!.content!.media!) {
         if (i.mediaType != null) {
           return true;
         }
@@ -472,8 +473,8 @@ class PostCardState extends State<TricyclePostCard> {
   }
 
   bool getIsRated() {
-    bool isRated;
-    for (var i in cardData.postContent.header.action) {
+    bool? isRated;
+    for (var i in cardData!.postContent!.header!.action!) {
       if (i.type == 'is_rated') {
         isRated = i.value;
         break;
@@ -483,8 +484,8 @@ class PostCardState extends State<TricyclePostCard> {
   }
 
   bool getIsFollowing() {
-    bool isFollowed;
-    for (var i in cardData.postContent.header.action) {
+    bool? isFollowed;
+    for (var i in cardData!.postContent!.header!.action!) {
       if (i.type == 'is_followed') {
         isFollowed = i.value;
         break;
@@ -493,7 +494,7 @@ class PostCardState extends State<TricyclePostCard> {
     return isFollowed ??= false;
   }
 
-  String _localPath;
+  late String _localPath;
 
   String getLink(String meta) {
     try {
@@ -505,7 +506,7 @@ class PostCardState extends State<TricyclePostCard> {
     }catch(onError){
       try {
         final document = parse(meta);
-        final String parsedString = parse(document.body.text).documentElement
+        final String parsedString = parse(document.body!.text).documentElement!
             .text;
         print("html--------" + parsedString);
         return Utility().matchLinkRegex(parsedString);

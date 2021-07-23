@@ -1,10 +1,10 @@
 import 'package:oho_works_app/models/post/postcreate.dart';
 
 class SaveAsDraftResponse {
-  String statusCode;
-  String message;
-  PostCreatePayload rows;
-  int total;
+  String? statusCode;
+  String? message;
+  PostCreatePayload? rows;
+  int? total;
 
   SaveAsDraftResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -20,7 +20,7 @@ class SaveAsDraftResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     data['total'] = this.total;
     return data;

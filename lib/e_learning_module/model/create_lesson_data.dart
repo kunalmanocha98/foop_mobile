@@ -3,9 +3,9 @@ import 'package:oho_works_app/models/e_learning/topic_list.dart';
 
 
 class LessonTopic {
-  String title;
-  TopicListItem topic;
-  List<TopicListItem> subtopic;
+  String? title;
+  TopicListItem? topic;
+  List<TopicListItem>? subtopic;
 
   LessonTopic({this.title, this.topic, this.subtopic});
 
@@ -16,7 +16,7 @@ class LessonTopic {
     if (json['subtopic'] != null) {
       subtopic = [];//TopicListItem>();
       json['subtopic'].forEach((v) {
-        subtopic.add(new TopicListItem.fromJson(v));
+        subtopic!.add(new TopicListItem.fromJson(v));
       });
     }
   }
@@ -24,10 +24,10 @@ class LessonTopic {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['title'] = this.title;
     if (this.topic != null) {
-      data['topic'] = this.topic.toJson();
+      data['topic'] = this.topic!.toJson();
     }
     if (this.subtopic != null) {
-      data['subtopic'] = this.subtopic.map((v) => v.toJson()).toList();
+      data['subtopic'] = this.subtopic!.map((v) => v.toJson()).toList();
     }
     return data;
   }

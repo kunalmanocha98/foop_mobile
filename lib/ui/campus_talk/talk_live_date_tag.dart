@@ -6,14 +6,14 @@ import 'package:oho_works_app/utils/utility_class.dart';
 import 'package:flutter/cupertino.dart';
 
 class DateLiveTag extends StatelessWidget{
-  final bool isLive;
-  final DateTime date;
+  final bool? isLive;
+  final DateTime? date;
   DateLiveTag({this.isLive,this.date});
 
   @override
   Widget build(BuildContext context) {
     TextStyleElements styleElements = TextStyleElements(context);
-    return isLive?
+    return isLive!?
     Container(
       margin: EdgeInsets.only(right: 8),
       padding: EdgeInsets.symmetric(vertical: 2, horizontal: 4),
@@ -21,7 +21,7 @@ class DateLiveTag extends StatelessWidget{
           color: HexColor(AppColors.appColorGreen),
           borderRadius: BorderRadius.circular(4)),
       child: Text(
-        AppLocalizations.of(context).translate('live').toUpperCase(),
+        AppLocalizations.of(context)!.translate('live').toUpperCase(),
         style: styleElements
             .captionThemeScalable(context)
             .copyWith(color: HexColor(AppColors.appColorWhite),fontSize: 10),
@@ -30,7 +30,7 @@ class DateLiveTag extends StatelessWidget{
     Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8),
       child: Text(
-        Utility().getDateFormat('dd MMM yyyy, HH:mm', date),
+        Utility().getDateFormat('dd MMM yyyy, HH:mm', date!),
         style: styleElements.captionThemeScalable(context).copyWith(
           color: HexColor(AppColors.appColorBlack65
           )

@@ -1,8 +1,8 @@
 class RoomTypeListRequest {
-  int institutionId;
-  String searchVal;
-  int pageSize;
-  int pageNumber;
+  int? institutionId;
+  String? searchVal;
+  int? pageSize;
+  int? pageNumber;
 
   RoomTypeListRequest(
       {this.institutionId, this.searchVal, this.pageSize, this.pageNumber});
@@ -25,10 +25,10 @@ class RoomTypeListRequest {
 }
 
 class RoomTypeListResponse {
-  String statusCode;
-  String message;
-  List<RoomTypeListItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<RoomTypeListItem>? rows;
+  int? total;
 
   RoomTypeListResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -38,7 +38,7 @@ class RoomTypeListResponse {
     if (json['rows'] != null) {
       rows = [];//RoomTypeListItem>();
       json['rows'].forEach((v) {
-        rows.add(new RoomTypeListItem.fromJson(v));
+        rows!.add(new RoomTypeListItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -49,7 +49,7 @@ class RoomTypeListResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -57,10 +57,10 @@ class RoomTypeListResponse {
 }
 
 class RoomTypeListItem {
-  String name;
-  String code;
-  String description;
-  int roomTypeId;
+  String? name;
+  String? code;
+  String? description;
+  int? roomTypeId;
 
   RoomTypeListItem({this.name, this.code, this.description, this.roomTypeId});
 

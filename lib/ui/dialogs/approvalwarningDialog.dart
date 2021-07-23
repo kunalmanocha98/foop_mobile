@@ -7,7 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ApprovalWarningDialog extends StatelessWidget{
-  final Function onButtonCallback;
+  final Function? onButtonCallback;
   ApprovalWarningDialog({this.onButtonCallback});
   @override
   Widget build(BuildContext context) {
@@ -23,13 +23,13 @@ class ApprovalWarningDialog extends StatelessWidget{
             color: HexColor(AppColors.appMainColor),
             size: 64,),
             SizedBox(height: 20,),
-            Text(AppLocalizations.of(context).translate('not_knowing_user'),
+            Text(AppLocalizations.of(context)!.translate('not_knowing_user'),
             textAlign: TextAlign.center,
             style: styleElements.subtitle1ThemeScalable(context).copyWith(
               fontWeight: FontWeight.bold
             ),),
             SizedBox(height: 16,),
-            Text(AppLocalizations.of(context).translate('not_approve_user'),
+            Text(AppLocalizations.of(context)!.translate('not_approve_user'),
               textAlign: TextAlign.center,
               style: styleElements.subtitle2ThemeScalable(context).copyWith(
               ),),
@@ -39,8 +39,8 @@ class ApprovalWarningDialog extends StatelessWidget{
                 Spacer(),
                 TricycleTextButton(onPressed: (){
                   Navigator.pop(context);
-                  onButtonCallback();
-                }, child: Text(AppLocalizations.of(context).translate('ok'),style: styleElements.buttonThemeScalable(context).copyWith(
+                  onButtonCallback!();
+                }, child: Text(AppLocalizations.of(context)!.translate('ok'),style: styleElements.buttonThemeScalable(context).copyWith(
                   color: HexColor(AppColors.appMainColor)
                 ),)),
               ],

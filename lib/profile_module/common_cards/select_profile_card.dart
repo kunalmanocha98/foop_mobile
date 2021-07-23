@@ -16,15 +16,15 @@ import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class SelectProfileCard extends StatefulWidget {
-  String type;
-  int currentPosition;
+  String? type;
+  int? currentPosition;
 
   _SelectProfileCard createState() => _SelectProfileCard();
 }
 
 // ignore: must_be_immutable
 class _SelectProfileCard extends State<SelectProfileCard> {
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
   Size displaySize(BuildContext context) {
     debugPrint('Size = ' + MediaQuery.of(context).size.toString());
     return MediaQuery.of(context).size;
@@ -40,11 +40,11 @@ class _SelectProfileCard extends State<SelectProfileCard> {
     return displaySize(context).width;
   }
 
-  List<PersonItem> rows = [];
+  List<PersonItem>? rows = [];
 
   @override
   void initState() {
-    WidgetsBinding.instance
+    WidgetsBinding.instance!
         .addPostFrameCallback((_) => getPersonTypeList(context));
     super.initState();
   }
@@ -62,7 +62,7 @@ class _SelectProfileCard extends State<SelectProfileCard> {
                   margin: const EdgeInsets.all(16),
                   child: Center(
                     child: Text(
-                      AppLocalizations.of(context).translate("set_role"),
+                      AppLocalizations.of(context)!.translate("set_role"),
                       style: styleElements.captionThemeScalable(context),
                       textAlign: TextAlign.center,
                     ),
@@ -70,24 +70,24 @@ class _SelectProfileCard extends State<SelectProfileCard> {
                 ),
                 Expanded(
                   child: Visibility(
-                    visible: rows.length > 0,
+                    visible: rows!.length > 0,
                     child: ListView.builder(
                         padding:
                             EdgeInsets.only(left: 8, right: 8, bottom: 8, top: 8),
-                        itemCount: rows.length,
+                        itemCount: rows!.length,
                         itemBuilder: (BuildContext context, int index) {
                           return GestureDetector(
                             onTap: () {
-                              if (rows[index].personTypeCode == "student") {
+                              if (rows![index].personTypeCode == "student") {
                                 showDialog(
                                     context: context,
                                     builder: (BuildContext context) =>
                                         SelectStudentTypeDialog(
-                                            id: rows[index].personTypeId,
+                                            id: rows![index].personTypeId,
                                             type: "student",
-                                            title: AppLocalizations.of(context)
+                                            title: AppLocalizations.of(context)!
                                                 .translate("old_new_student"),
-                                            subtitle: AppLocalizations.of(context)
+                                            subtitle: AppLocalizations.of(context)!
                                                 .translate(
                                                     "select_student_text")));
                               } else {
@@ -129,7 +129,7 @@ class _SelectProfileCard extends State<SelectProfileCard> {
                                         child: Image(
                                       image: CachedNetworkImageProvider(
                                           "http://test.tricycle.group/media/" +
-                                              rows[index].imageUrl),
+                                              rows![index].imageUrl!),
                                       width: 48,
                                       height: 48,
                                     )),
@@ -140,7 +140,7 @@ class _SelectProfileCard extends State<SelectProfileCard> {
                                             margin:
                                                 const EdgeInsets.only(left: 0),
                                             child: Text(
-                                              rows[index].personTypeName,
+                                              rows![index].personTypeName!,
                                               textAlign: TextAlign.start,
                                               style: styleElements.headline6ThemeScalable(context),
                                             ),
@@ -150,7 +150,7 @@ class _SelectProfileCard extends State<SelectProfileCard> {
                                               margin:
                                                   const EdgeInsets.only(left: 16),
                                               child: Text(
-                                                rows[index].personTypeDescription,
+                                                rows![index].personTypeDescription!,
                                                 // textAlign: TextAlign.start,
                                                 style: styleElements.captionThemeScalable(context),
                                                 textAlign: TextAlign.left,

@@ -1,16 +1,16 @@
 class CreateConversation {
-  bool isGroupConversation;
+  bool? isGroupConversation;
   Null allRoomsId;
-  String connectionOwnerType;
-  String connectionOwnerId;
-  String connectionCategory;
-  String connectionType;
-  String connectionId;
-  String connectionName;
-  String connectionMobile;
-  String connectionEmail;
-  String connectionProfileThumbnailUrl;
-  String connectionProfileUrl;
+  String? connectionOwnerType;
+  String? connectionOwnerId;
+  String? connectionCategory;
+  String? connectionType;
+  String? connectionId;
+  String? connectionName;
+  String? connectionMobile;
+  String? connectionEmail;
+  String? connectionProfileThumbnailUrl;
+  String? connectionProfileUrl;
 
   CreateConversation(
       {this.isGroupConversation,

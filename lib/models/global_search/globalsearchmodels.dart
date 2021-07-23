@@ -3,15 +3,15 @@ import 'package:oho_works_app/models/Rooms/roomlistmodels.dart';
 import 'package:oho_works_app/models/post/postlist.dart';
 
 class GlobalSearchRequest {
-  String searchVal;
-  String entityType;
-  String searchPage;
-  int personId;
-  int institutionId;
-  String searchType;
-  int pageNumber;
-  int pageSize;
-  String entitySubType;
+  String? searchVal;
+  String? entityType;
+  String? searchPage;
+  int? personId;
+  int? institutionId;
+  String? searchType;
+  int? pageNumber;
+  int? pageSize;
+  String? entitySubType;
 
   GlobalSearchRequest(
       {this.searchVal,
@@ -52,10 +52,10 @@ class GlobalSearchRequest {
 }
 
 class GlobalSearchResponse {
-  String statusCode;
-  String message;
-  GlobalSearchResponseModel rows;
-  int total;
+  String? statusCode;
+  String? message;
+  GlobalSearchResponseModel? rows;
+  int? total;
 
   GlobalSearchResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -73,7 +73,7 @@ class GlobalSearchResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     data['total'] = this.total;
     return data;
@@ -81,11 +81,11 @@ class GlobalSearchResponse {
 }
 
 class GlobalSearchResponseModel {
-  List<SearchTypeItem> person;
-  List<SearchTypeItem> institution;
-  List<RoomListItem> rooms;
-  List<EventListItem> events;
-  List<PostListItem> post;
+  List<SearchTypeItem>? person;
+  List<SearchTypeItem>? institution;
+  List<RoomListItem>? rooms;
+  List<EventListItem>? events;
+  List<PostListItem>? post;
 
   GlobalSearchResponseModel({this.person, this.institution});
 
@@ -93,32 +93,32 @@ class GlobalSearchResponseModel {
     if (json['room'] != null) {
       rooms = [];//RoomListItem>();
       json['room'].forEach((v) {
-        rooms.add(new RoomListItem.fromJson(v));
+        rooms!.add(new RoomListItem.fromJson(v));
       });
     }
     if (json['event'] != null) {
       events = [];//EventListItem>();
       json['event'].forEach((v) {
-        events.add(new EventListItem.fromJson(v));
+        events!.add(new EventListItem.fromJson(v));
       });
     }
     if (json['post'] != null) {
       post = [];//PostListItem>();
       json['post'].forEach((v) {
-        post.add(new PostListItem.fromJson(v));
+        post!.add(new PostListItem.fromJson(v));
       });
     }
 
     if (json['person'] != null) {
       person = [];//SearchTypeItem>();
       json['person'].forEach((v) {
-        person.add(new SearchTypeItem.fromJson(v));
+        person!.add(new SearchTypeItem.fromJson(v));
       });
     }
     if (json['institution'] != null) {
       institution = [];//SearchTypeItem>();
       json['institution'].forEach((v) {
-        institution.add(new SearchTypeItem.fromJson(v));
+        institution!.add(new SearchTypeItem.fromJson(v));
       });
     }
   }
@@ -127,35 +127,35 @@ class GlobalSearchResponseModel {
     final Map<String, dynamic> data = new Map<String, dynamic>();
 
     if (this.post != null) {
-      data['post'] = this.post.map((v) => v.toJson()).toList();
+      data['post'] = this.post!.map((v) => v.toJson()).toList();
     }
     if (this.rooms != null) {
-      data['room'] = this.rooms.map((v) => v.toJson()).toList();
+      data['room'] = this.rooms!.map((v) => v.toJson()).toList();
     }
     if (this.events != null) {
-      data['person'] = this.events.map((v) => v.toJson()).toList();
+      data['person'] = this.events!.map((v) => v.toJson()).toList();
     }
 
 
 
     if (this.person != null) {
-      data['person'] = this.person.map((v) => v.toJson()).toList();
+      data['person'] = this.person!.map((v) => v.toJson()).toList();
     }
     if (this.institution != null) {
-      data['institution'] = this.institution.map((v) => v.toJson()).toList();
+      data['institution'] = this.institution!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class SearchTypeItem {
-  int id;
-  String avatar;
-  String title;
-  String subtitle1;
-  String subtitle2;
-  String link;
-  bool isFollowing;
+  int? id;
+  String? avatar;
+  String? title;
+  String? subtitle1;
+  String? subtitle2;
+  String? link;
+  bool? isFollowing;
 
   SearchTypeItem(
       {this.id,
@@ -190,18 +190,18 @@ class SearchTypeItem {
 }
 
 class SearchTypeMasterModel {
-  String title;
-  String type;
-  List<SearchTypeItem> list;
+  String? title;
+  String? type;
+  List<SearchTypeItem>? list;
 
   SearchTypeMasterModel({this.title, this.type, this.list});
 }
 
 class GlobalSearchHistoryResponse {
-  String statusCode;
-  String message;
-  List<GlobalSearchHistoryItem> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<GlobalSearchHistoryItem>? rows;
+  int? total;
 
   GlobalSearchHistoryResponse(
       {this.statusCode, this.message, this.rows, this.total});
@@ -212,7 +212,7 @@ class GlobalSearchHistoryResponse {
     if (json['rows'] != null) {
       rows = [];//GlobalSearchHistoryItem>();
       json['rows'].forEach((v) {
-        rows.add(new GlobalSearchHistoryItem.fromJson(v));
+        rows!.add(new GlobalSearchHistoryItem.fromJson(v));
       });
     }
     total = json['total'];
@@ -223,7 +223,7 @@ class GlobalSearchHistoryResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -231,13 +231,13 @@ class GlobalSearchHistoryResponse {
 }
 
 class GlobalSearchHistoryItem {
-  String searchVal;
-  String searchPage;
-  String entityType;
-  int personId;
-  int institutionId;
-  String searchType;
-  int searchDatetime;
+  String? searchVal;
+  String? searchPage;
+  String? entityType;
+  int? personId;
+  int? institutionId;
+  String? searchType;
+  int? searchDatetime;
   Null sessionId;
   Null deviceId;
   Null deviceIp;

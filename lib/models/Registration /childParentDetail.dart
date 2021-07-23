@@ -1,16 +1,16 @@
 class ChildDetailRequest {
-  int parentAllPersonsId;
-  int allInstitutionId;
-  String institutionClassId;
-  String institutionSectionId;
-  String childFullName;
-  String dateOfBirth;
-  String admissionNo;
-  String email;
-  String phoneNumber;
-  String mobileNumber;
-  int invitationId;
-  String gender;
+  int? parentAllPersonsId;
+  int? allInstitutionId;
+  String? institutionClassId;
+  String? institutionSectionId;
+  String? childFullName;
+  String? dateOfBirth;
+  String? admissionNo;
+  String? email;
+  String? phoneNumber;
+  String? mobileNumber;
+  int? invitationId;
+  String? gender;
 
   ChildDetailRequest(
       {this.parentAllPersonsId,
@@ -62,10 +62,10 @@ class ChildDetailRequest {
 
 
 class ChildDetailResponse {
-  String statusCode;
-  String message;
-  ChildDetailRequest rows;
-  int total;
+  String? statusCode;
+  String? message;
+  ChildDetailRequest? rows;
+  int? total;
 
   ChildDetailResponse({this.statusCode, this.message, this.rows, this.total});
 
@@ -81,7 +81,7 @@ class ChildDetailResponse {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     data['total'] = this.total;
     return data;

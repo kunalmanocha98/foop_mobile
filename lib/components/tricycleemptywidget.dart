@@ -5,8 +5,8 @@ import 'package:oho_works_app/utils/hexColors.dart';
 import 'package:flutter/material.dart';
 
 class TricycleEmptyWidget extends StatelessWidget{
-  final String message;
-  final String assetImage;
+  final String? message;
+  final String? assetImage;
   TricycleEmptyWidget({this.message,this.assetImage});
   @override
   Widget build(BuildContext context) {
@@ -23,13 +23,13 @@ class TricycleEmptyWidget extends StatelessWidget{
               decoration: BoxDecoration(
                 image: DecorationImage(
                   fit: BoxFit.contain,
-                  image: AssetImage(assetImage!=null?assetImage:'assets/appimages/empty.png'),
+                  image: AssetImage(assetImage!=null?assetImage!:'assets/appimages/empty.png'),
                 )
               ),
             ),
             Padding(
               padding: EdgeInsets.only(top: 24,left: 24,right: 24),
-              child: Text(message.isEmpty?AppLocalizations.of(context).translate('no_data'):message,
+              child: Text(message!.isEmpty?AppLocalizations.of(context)!.translate('no_data'):message!,
 
                 textAlign: TextAlign.center,
               style: styleElements.subtitle1ThemeScalable(context).copyWith(
@@ -46,8 +46,8 @@ class TricycleEmptyWidget extends StatelessWidget{
 
 
 class TricycleEmptyWidgetForAudio extends StatelessWidget{
-  final String message;
-  final String assetImage;
+  final String? message;
+  final String? assetImage;
   TricycleEmptyWidgetForAudio({this.message,this.assetImage});
   @override
   Widget build(BuildContext context) {
@@ -65,7 +65,7 @@ class TricycleEmptyWidgetForAudio extends StatelessWidget{
               decoration: BoxDecoration(
                   image: DecorationImage(
                     fit: BoxFit.contain,
-                    image: AssetImage(assetImage!=null?assetImage:'assets/appimages/avatar-default.png'),
+                    image: AssetImage(assetImage!=null?assetImage!:'assets/appimages/avatar-default.png'),
                   )
               ),
             ),
@@ -117,8 +117,8 @@ class TricycleEmptyWidgetForAudio extends StatelessWidget{
 
 
 class TricycleEmptyWidgetForAudioList extends StatelessWidget{
-  final String message;
-  final String assetImage;
+  final String? message;
+  final String? assetImage;
   TricycleEmptyWidgetForAudioList({this.message,this.assetImage});
   @override
   Widget build(BuildContext context) {
@@ -136,7 +136,7 @@ class TricycleEmptyWidgetForAudioList extends StatelessWidget{
               decoration: BoxDecoration(
                   image: DecorationImage(
                     fit: BoxFit.contain,
-                    image: AssetImage(assetImage!=null?assetImage:'assets/appimages/avatar-default.png'),
+                    image: AssetImage(assetImage!=null?assetImage!:'assets/appimages/avatar-default.png'),
                   )
               ),
             ),
@@ -151,14 +151,14 @@ class TricycleEmptyWidgetForAudioList extends StatelessWidget{
                       ),
                       children: [
                         TextSpan(
-                            text:AppLocalizations.of(context).translate('no_audio_events1')
+                            text:AppLocalizations.of(context)!.translate('no_audio_events1')
                         ),
                         WidgetSpan(
                             child: Icon(Icons.add,
                               color: HexColor(AppColors.appColorBlack35),)
                         ),
                         TextSpan(
-                            text:AppLocalizations.of(context).translate('no_audio_events2')
+                            text:AppLocalizations.of(context)!.translate('no_audio_events2')
                         ),
                       ]
                   ),

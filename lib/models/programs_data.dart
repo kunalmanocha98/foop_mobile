@@ -1,8 +1,8 @@
 class ProgramsData {
-  String statusCode;
-  String message;
-  List<Programs> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<Programs>? rows;
+  int? total;
 
   ProgramsData({this.statusCode, this.message, this.rows, this.total});
 
@@ -12,7 +12,7 @@ class ProgramsData {
     if (json['rows'] != null) {
       rows = [];//Programs>();
       json['rows'].forEach((v) {
-        rows.add(new Programs.fromJson(v));
+        rows!.add(new Programs.fromJson(v));
       });
     }
     total = json['total'];
@@ -23,7 +23,7 @@ class ProgramsData {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -31,11 +31,11 @@ class ProgramsData {
 }
 
 class Programs {
-  int id;
-  String programName;
-  String programCode;
-  String programDescription;
-  bool isSelected = false;
+  int? id;
+  String? programName;
+  String? programCode;
+  String? programDescription;
+  bool? isSelected = false;
   Programs({this.id, this.programName, this.programCode, this.programDescription,this.isSelected});
 
   Programs.fromJson(Map<String, dynamic> json) {

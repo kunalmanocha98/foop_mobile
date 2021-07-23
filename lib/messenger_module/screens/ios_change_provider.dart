@@ -13,14 +13,14 @@ import 'package:oho_works_app/utils/toast_builder.dart';
 import 'package:flutter/material.dart';
 
 class IosNotifier extends ChangeNotifier {
-  BuildContext context;
+  BuildContext? context;
   int _pageNumber = 1;
-  List<MessagePayloadDatabase> _listMessages;
+  List<MessagePayloadDatabase>? _listMessages;
   // bool _loading = false;
   bool isDisposed = false;
 
-  List<MessagePayloadDatabase> get value => _value;
-  List<MessagePayloadDatabase> _value;
+  List<MessagePayloadDatabase>? get value => _value;
+  List<MessagePayloadDatabase>? _value;
 
   @override
   void dispose() {
@@ -30,7 +30,7 @@ class IosNotifier extends ChangeNotifier {
     super.dispose();
   }
 
-  List<MessagePayloadDatabase> getMessagesList() {
+  List<MessagePayloadDatabase>? getMessagesList() {
     return _listMessages;
   }
 
@@ -85,13 +85,13 @@ class IosNotifier extends ChangeNotifier {
       if (v != null) {
         var data = MessagesResponse.fromJson(v);
         if (data != null && data.statusCode == Strings.success_code) {
-          if (data.rows.isNotEmpty) {
-            if (_pageNumber == 1) _listMessages.clear();
+          if (data.rows!.isNotEmpty) {
+            if (_pageNumber == 1) _listMessages!.clear();
             pageNumber++;
             _pageNumber = pageNumber;
             try {
-              for (var item in data.rows) {
-                _listMessages.add(getMessagePayload(item));
+              for (var item in data.rows!) {
+                _listMessages!.add(getMessagePayload(item));
 
                 saveData(
                     getMessagePayload(item), db, conversationId, userId, false,eventId);
@@ -159,17 +159,17 @@ class IosNotifier extends ChangeNotifier {
     message.messageSubType = messageDataData.messageSubType;
     message.createdOn = messageDataData.createdOn;
     message.isGroupConversation = messageDataData.isGroupConversation != null &&
-            messageDataData.isGroupConversation
+            messageDataData.isGroupConversation!
         ? 1
         : 0;
     message.isReply =
-        messageDataData.isReply != null && messageDataData.isReply ? 1 : 0;
+        messageDataData.isReply != null && messageDataData.isReply! ? 1 : 0;
     message.isForwarded =
-        messageDataData.isForwarded != null && messageDataData.isForwarded
+        messageDataData.isForwarded != null && messageDataData.isForwarded!
             ? 1
             : 0;
     message.isBroadcastType = messageDataData.isBroadcastType != null &&
-            messageDataData.isBroadcastType
+            messageDataData.isBroadcastType!
         ? 1
         : 0;
     message.myConversationId = messageDataData.myConversationId;

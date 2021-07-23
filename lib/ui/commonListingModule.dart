@@ -27,9 +27,9 @@ class CommonListingModule extends StatefulWidget {
   List<String> personType;
 
   CommonListingModule(
-      {@required this.listType,
-      @required this.requestedByType,
-      @required this.personType});
+      {required this.listType,
+      required this.requestedByType,
+      required this.personType});
 
   @override
   _CommonListingModule createState() => _CommonListingModule(
@@ -40,22 +40,22 @@ class CommonListingModule extends StatefulWidget {
 
 class _CommonListingModule extends State<CommonListingModule> {
   GlobalKey<PaginatorState> paginatorGlobalKey = GlobalKey();
-  String searchVal;
-  SharedPreferences prefs;
+  String? searchVal;
+  late SharedPreferences prefs;
   String listType;
   String requestedByType;
   List<String> personType;
   List<CommonListResponseItem> list = [];
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
   _CommonListingModule(
-      {@required this.listType,
-      @required this.requestedByType,
-      @required this.personType});
+      {required this.listType,
+      required this.requestedByType,
+      required this.personType});
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => setSharedPrefrences());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => setSharedPrefrences());
   }
 
   setSharedPrefrences() async {
@@ -64,12 +64,12 @@ class _CommonListingModule extends State<CommonListingModule> {
   }
 
   refresh() {
-    paginatorGlobalKey.currentState.changeState(resetState: true);
+    paginatorGlobalKey.currentState!.changeState(resetState: true);
   }
 
   onSearchValueChanged(String value) {
     searchVal = value;
-    paginatorGlobalKey.currentState.changeState(resetState: true);
+    paginatorGlobalKey.currentState!.changeState(resetState: true);
   }
 
   @override
@@ -78,14 +78,14 @@ class _CommonListingModule extends State<CommonListingModule> {
     // setSharedPrefrences();
     return SafeArea(
       child: Scaffold(
-        appBar: TricycleAppBar().getCustomAppBar(context, appBarTitle:   AppLocalizations.of(context).translate("listing"), onBackButtonPress: (){Navigator.pop(context);}),
+        appBar: TricycleAppBar().getCustomAppBar(context, appBarTitle:   AppLocalizations.of(context)!.translate("listing"), onBackButtonPress: (){Navigator.pop(context);}),
         body: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return [
               SliverToBoxAdapter(
                 child: SearchBox(
                   onvalueChanged: onSearchValueChanged,
-                  hintText: AppLocalizations.of(context).translate("search"),
+                  hintText: AppLocalizations.of(context)!.translate("search"),
                 ),
               )
             ];
@@ -109,12 +109,12 @@ class _CommonListingModule extends State<CommonListingModule> {
     );
   }
 
-  List<CommonListResponseItem> listItemsGetter(dynamic response) {
+  List<CommonListResponseItem>? listItemsGetter(dynamic response) {
     list.addAll(response.rows);
     return response.rows;
   }
 
-  Future<CommonListResponse> getUserList(int page) async {
+  Future<CommonListResponse?> getUserList(int page) async {
     CommonListRequestPayload payload = CommonListRequestPayload();
     payload.searchVal = searchVal;
     payload.personId = prefs.getInt(Strings.userId).toString();
@@ -165,7 +165,7 @@ class _CommonListingModule extends State<CommonListingModule> {
       direction: Axis.horizontal,
       children: [
         Visibility(
-          visible: !item.isFollowing,
+          visible: !item.isFollowing!,
           child: GenericFollowUnfollowButton(
             actionByObjectType: "person",
             isRoundedButton: false,
@@ -190,9 +190,9 @@ class _CommonListingModule extends State<CommonListingModule> {
     );
   }
 
-  Widget _showPopupMenu(bool isFollowing, int id, int index) {
+  Widget _showPopupMenu(bool? isFollowing, int? id, int index) {
     return PopupMenuButton<int>(
-      itemBuilder: (context) => getPopups(isFollowing),
+      itemBuilder: (context) => getPopups(isFollowing!),
       onSelected: (value) {
         print(value);
         if (value == 4) {
@@ -212,40 +212,40 @@ class _CommonListingModule extends State<CommonListingModule> {
       return [
         PopupMenuItem(
           value: 1,
-          child: Text(AppLocalizations.of(context).translate('view_details')),
+          child: Text(AppLocalizations.of(context)!.translate('view_details')),
         ),
         PopupMenuItem(
           value: 2,
-          child: Text(AppLocalizations.of(context).translate('bookmark')),
+          child: Text(AppLocalizations.of(context)!.translate('bookmark')),
         ),
         PopupMenuItem(
           value: 3,
-          child: Text(AppLocalizations.of(context).translate('update_status')),
+          child: Text(AppLocalizations.of(context)!.translate('update_status')),
         ),
         PopupMenuItem(
           value: 4,
-          child: Text(AppLocalizations.of(context).translate('unfollow')),
+          child: Text(AppLocalizations.of(context)!.translate('unfollow')),
         ),
       ];
     } else {
       return [
         PopupMenuItem(
           value: 1,
-          child: Text(AppLocalizations.of(context).translate('view_details')),
+          child: Text(AppLocalizations.of(context)!.translate('view_details')),
         ),
         PopupMenuItem(
           value: 2,
-          child: Text(AppLocalizations.of(context).translate('bookmark')),
+          child: Text(AppLocalizations.of(context)!.translate('bookmark')),
         ),
         PopupMenuItem(
           value: 3,
-          child: Text(AppLocalizations.of(context).translate('update_status')),
+          child: Text(AppLocalizations.of(context)!.translate('update_status')),
         ),
       ];
     }
   }
 
-  void unfollow(int id, int index) async {
+  void unfollow(int? id, int index) async {
     GenericFollowUnfollowButtonState().followUnfollowBlock(
       "person",
       107,

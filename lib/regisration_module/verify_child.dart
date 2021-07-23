@@ -20,7 +20,7 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // ignore: must_be_immutable
 class VerifyChild extends StatefulWidget {
-  RegisterUserAs registerUserAs;
+  RegisterUserAs? registerUserAs;
   int instituteId;
 
   VerifyChild(this.instituteId, this.registerUserAs);
@@ -31,13 +31,13 @@ class VerifyChild extends StatefulWidget {
 class _VerifyChild extends State<VerifyChild>
     with SingleTickerProviderStateMixin {
 
-  SharedPreferences prefs;
-  TextStyleElements styleElements;
-  CupertinoDatePicker cupertinoDatePicker;
-  RegisterUserAs registerUserAs;
+  late SharedPreferences prefs;
+  late TextStyleElements styleElements;
+  CupertinoDatePicker? cupertinoDatePicker;
+  RegisterUserAs? registerUserAs;
   var pageTitle = "";
   var color1 = HexColor(AppColors.appMainColor);
-  int userId;
+  int? userId;
   var color2 = HexColor(AppColors.appColorWhite);
   int instituteId;
   var color3 = HexColor(AppColors.appColorWhite);
@@ -47,9 +47,9 @@ class _VerifyChild extends State<VerifyChild>
   var isSearching = false;
 
   // bool _enabled = true;
-  String previousYear;
-  String currentYear;
-  String acedemicYear;
+  late String previousYear;
+  late String currentYear;
+  String? acedemicYear;
   String type = "parent";
   int selectedEpoch = 0;
   String selectedDate = "Date Of Birth*";
@@ -72,7 +72,7 @@ class _VerifyChild extends State<VerifyChild>
   }
 
 
- BuildContext sctx;
+ late BuildContext sctx;
   Widget build(BuildContext context) {
     ScreenUtil.init;
     styleElements=TextStyleElements(context);
@@ -157,7 +157,7 @@ class _VerifyChild extends State<VerifyChild>
                                               margin: const EdgeInsets.only(
                                                   left: 20, top: 20),
                                               child: Text(
-                                                AppLocalizations.of(context)
+                                                AppLocalizations.of(context)!
                                                     .translate("dob"),
                                                 style: styleElements.subtitle1ThemeScalable(context),
                                                 textAlign: TextAlign.left,
@@ -169,7 +169,7 @@ class _VerifyChild extends State<VerifyChild>
                                               margin: const EdgeInsets.only(
                                                   left: 20, top: 20),
                                               child: Text(
-                                                AppLocalizations.of(context)
+                                                AppLocalizations.of(context)!
                                                     .translate("dob_child"),
                                                 style: styleElements.subtitle2ThemeScalable(context),
                                                 textAlign: TextAlign.left,
@@ -209,7 +209,7 @@ class _VerifyChild extends State<VerifyChild>
                               },
                               color: HexColor(AppColors.appColorWhite),
                               child: Text(
-                                AppLocalizations.of(context).translate('next'),
+                                AppLocalizations.of(context)!.translate('next'),
                                 style: styleElements.subtitle2ThemeScalable(context).copyWith(color: HexColor(AppColors.appMainColor)),),
                             ),
                           )),
@@ -222,8 +222,9 @@ class _VerifyChild extends State<VerifyChild>
          ),
     )) ;
   }
-  void _onBackPressed() {
+  Future<bool> _onBackPressed() {
     Navigator.of(context).pop(true);
+    return new Future(() => false);
   }
 
   void setSharedPreferences() async {
@@ -236,11 +237,11 @@ class _VerifyChild extends State<VerifyChild>
     newDate = new DateTime(DateTime.now().year - 4, DateTime.now().month, DateTime.now().day);
 
 
-    final DateTime picked = await showDatePicker(
+    final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: newDate,
         firstDate: DateTime(1900),
-        builder: (BuildContext context, Widget child) {
+        builder: (BuildContext context, Widget? child) {
           return Theme(
             data: ThemeData.light().copyWith(
               primaryColor: HexColor(AppColors.appColorBlack),
@@ -255,7 +256,7 @@ class _VerifyChild extends State<VerifyChild>
                   textTheme: ButtonTextTheme.primary
               ),
             ),
-            child: child,
+            child: child!,
           );
         },
         lastDate: newDate);
@@ -265,17 +266,17 @@ class _VerifyChild extends State<VerifyChild>
         selectedDate = DateFormat('yyyy-MM-dd').format(picked);
       });
   }
-  void register(int userId) async {
-    registerUserAs.dateOfBirth = selectedDate;
-    registerUserAs.personId = userId;
+  void register(int? userId) async {
+    registerUserAs!.dateOfBirth = selectedDate;
+    registerUserAs!.personId = userId;
     print(teachingClasses.toString() +
         "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-    progressButtonKey.currentState.show();
+    progressButtonKey.currentState!.show();
     final body = jsonEncode(registerUserAs);
 
     Calls().call(body, context, Config.REGISTER_USER_AS).then((value) async {
       if (value != null) {
-        progressButtonKey.currentState.hide();
+        progressButtonKey.currentState!.hide();
         var data = RegisterUserAsResponse.fromJson(value);
         print(data.toString());
         if (data.statusCode == "S10001") {
@@ -283,28 +284,28 @@ class _VerifyChild extends State<VerifyChild>
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                   builder: (context) => DilaogPage(      type: type,
-                      isVerified:data.rows.isVerified,
-                      title:AppLocalizations.of(context).translate('you_are_added_as')+ type,
+                      isVerified:data.rows!.isVerified,
+                      title:AppLocalizations.of(context)!.translate('you_are_added_as')+ type,
                       subtitle: type == "parent"
-                          ? ((data.rows.studentName != null
-                          ? " of " + data.rows.studentName
+                          ? ((data.rows!.studentName != null
+                          ? " of " + data.rows!.studentName!
                           : "") +
-                          (data.rows.institutionName != null
-                              ? " of " + data.rows.institutionName
+                          (data.rows!.institutionName != null
+                              ? " of " + data.rows!.institutionName!
                               : ""))
-                          : (data.rows.institutionName != null
-                          ? " of " + data.rows.institutionName
+                          : (data.rows!.institutionName != null
+                          ? " of " + data.rows!.institutionName!
                           : ""))),
                   (Route<dynamic> route) => false);
 
 
 
         } else
-          ToastBuilder().showSnackBar(data.message, sctx,HexColor(AppColors.information));
+          ToastBuilder().showSnackBar(data.message!, sctx,HexColor(AppColors.information));
       }
     }).catchError((onError) async {
       ToastBuilder().showSnackBar(onError.toString(), sctx,HexColor(AppColors.information));
-      progressButtonKey.currentState.hide();
+      progressButtonKey.currentState!.hide();
     });
   }
 

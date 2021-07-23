@@ -1,12 +1,12 @@
 class UserContact {
-  int id;
-  String name;
-  String firstName;
-  String lastName;
-  String email;
-  String mobileNumber;
-  int isSync;
-  int isSelected;
+  int? id;
+  String? name;
+  String? firstName;
+  String? lastName;
+  String? email;
+  String? mobileNumber;
+  int? isSync;
+  int? isSelected;
   UserContact({this.name, this.mobileNumber, this.id, this.isSync});
 
   UserContact.fromJson(Map<String, dynamic> json) {

@@ -36,8 +36,8 @@ import 'chat_history_page.dart';
 
 // ignore: must_be_immutable
 class ChatListsPage extends StatefulWidget {
-  final String conversationId;
-  Null Function() homePageUnreadCount;
+  final String? conversationId;
+  Null Function()? homePageUnreadCount;
 
   ChatListsPage(
    { this.conversationId,
@@ -50,30 +50,30 @@ this.homePageUnreadCount}
 
 class _ChatListsPage extends State<ChatListsPage>
     with SingleTickerProviderStateMixin {
-  String searchVal;
-  String personName;
-  String conversationId;
-  int id;
-  String ownerType;
-  int ownerId;
-  int instituteId;
-  Null Function() homePageUnreadCount;
-  SocketService socketService = locator<SocketService>();
-  Null Function() callback;
+  String? searchVal;
+  String? personName;
+  String? conversationId;
+  int? id;
+  String? ownerType;
+  int? ownerId;
+  int? instituteId;
+  Null Function()? homePageUnreadCount;
+  SocketService? socketService = locator<SocketService>();
+  Null Function()? callback;
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
   GlobalKey<PaginatorState> paginatorKeyChat = GlobalKey();
-  SharedPreferences prefs;
-  TextStyleElements styleElements;
+  late SharedPreferences prefs;
+  late TextStyleElements styleElements;
   final db = DatabaseHelper.instance;
 
   List<CustomTabMaker> list = [];
   // TabController _tabController;
   // int _currentPosition = 0;
-  String pageTitle;
-  ConversationNotifier chatNotifier;
-  BuildContext ctx;
+  String? pageTitle;
+  ConversationNotifier? chatNotifier;
+  BuildContext? ctx;
   bool isAlreadySent = false;
-
+  GlobalKey<ChatHistoryPageState> ch = GlobalKey();
 
   Future<void> _setPref() async {
 
@@ -81,7 +81,7 @@ class _ChatListsPage extends State<ChatListsPage>
     setState(() {
       ownerId = prefs.getInt(Strings.userId);
       instituteId = prefs.getInt(Strings.instituteId);
-      if (socketService.getSocket() != null) {
+      if (socketService!.getSocket() != null) {
         joinChat(ownerId);
         connectToServer();
       }
@@ -91,14 +91,14 @@ class _ChatListsPage extends State<ChatListsPage>
       ConversationNotifier notifier =
           Provider.of<ConversationNotifier>(context, listen: false);
       notifier.getOlderConversations(db);
-      notifier.reload(db, ownerId, instituteId, context, socketService.getSocket());
+      notifier.reload(db, ownerId, instituteId, context, socketService!.getSocket());
     }
   }
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _setPref());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => _setPref());
   }
 
 /*  @override
@@ -117,9 +117,9 @@ class _ChatListsPage extends State<ChatListsPage>
   void onSearchValueChanged(String value) {
     if (chatNotifier != null && db != null) {
       if (value.isNotEmpty)
-        chatNotifier.getSearchedList(db, value);
+        chatNotifier!.getSearchedList(db, value);
       else
-        chatNotifier.getOlderConversations(db);
+        chatNotifier!.getOlderConversations(db);
     }
   }
 
@@ -133,7 +133,7 @@ class _ChatListsPage extends State<ChatListsPage>
     return SafeArea(
       child: Scaffold(
         appBar:AppBarWithOnlyTitle(
-          title: AppLocalizations.of(context).translate('messenger'),
+          title: AppLocalizations.of(context)!.translate('messenger'),
           isBackButtonVisible: true,
           backButtonCallback: (){
             Navigator.pop(context);
@@ -147,15 +147,15 @@ class _ChatListsPage extends State<ChatListsPage>
                       context,
                       MaterialPageRoute(
                           builder: (context) => new UserRoomSelectionPage(
-                            socket: socketService.getSocket(),
+                            socket: socketService!.getSocket(),
                             isForward: false,
                             callBackNew: () {
                               print("call backkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkne new");
-                              chatNotifier.reload(db, ownerId,
-                                  instituteId, context, socketService.getSocket());
+                              chatNotifier!.reload(db, ownerId,
+                                  instituteId, context, socketService!.getSocket());
                             },
                             callBack: () {
-                              chatNotifier.getOlderConversations(db);
+                              chatNotifier!.getOlderConversations(db);
                             },
                           )));
                 }),
@@ -174,19 +174,19 @@ class _ChatListsPage extends State<ChatListsPage>
           children: [
             SearchBox(
               onvalueChanged: onSearchValueChanged,
-              hintText: AppLocalizations.of(context).translate("search"),
+              hintText: AppLocalizations.of(context)!.translate("search"),
             ),
             Expanded(
               child: chatNotifier != null &&
-                      chatNotifier.getConversationList() != null &&
-                      chatNotifier.getConversationList().isNotEmpty
+                      chatNotifier!.getConversationList() != null &&
+                      chatNotifier!.getConversationList()!.isNotEmpty
                   ? TricycleListCard(
                     child: NotificationListener<ScrollNotification>(
                         onNotification: (ScrollNotification scrollInfo) {
                           if (scrollInfo is ScrollEndNotification &&
                               scrollInfo.metrics.extentAfter == 0) {
-                            chatNotifier.getMore(
-                                db, ownerId, instituteId, context, socketService.getSocket());
+                            chatNotifier!.getMore(
+                                db, ownerId, instituteId, context, socketService!.getSocket());
                             return true;
                           }
                           return false;
@@ -194,11 +194,11 @@ class _ChatListsPage extends State<ChatListsPage>
                         child: ListView.builder(
                             physics: const AlwaysScrollableScrollPhysics(),
 
-                            itemCount: chatNotifier.getConversationList().length,
+                            itemCount: chatNotifier!.getConversationList()!.length,
                             cacheExtent: 5,
                             itemBuilder: (BuildContext context, int index) {
                               return listItemBuilder(
-                                  chatNotifier.getConversationList()[index],
+                                  chatNotifier!.getConversationList()![index],
                                   index);
                             }),
                       ),
@@ -211,7 +211,7 @@ class _ChatListsPage extends State<ChatListsPage>
                             child: Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: TricycleEmptyWidget(
-                            message: AppLocalizations.of(context)
+                            message: AppLocalizations.of(context)!
                                 .translate('no_conversation'),
                           ),
                         )
@@ -235,30 +235,32 @@ class _ChatListsPage extends State<ChatListsPage>
           print("conversation id ++++++++++++++++"+item.toJson().toString());
           var roomListItem;
           if(item.conversationWithType == 'event'){
-            item.eventId  =  int.parse(item.conversationWithTypeId);
-            roomListItem = RoomListItem( roomProfileImageUrl:item.conversationImage,roomName:item.conversationName,isEvent: true,id:  int.parse(item.conversationWithTypeId));
+            item.eventId  =  int.parse(item.conversationWithTypeId!);
+            roomListItem = RoomListItem( roomProfileImageUrl:item.conversationImage,roomName:item.conversationName,isEvent: true,id:  int.parse(item.conversationWithTypeId!));
           }else{
             roomListItem = null;
           }
           await db.makeUnreadCountZero(item.conversationId, 0);
-          chatNotifier.getOlderConversations(db);
+          chatNotifier!.getOlderConversations(db);
           Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (ctx) => new ChatHistoryPage(
+                    key:ch,
+                        isVisible: true,
                         conversationItem: item,
                         connectionItem: null,
                     type:"normal",
                       homePageUnreadCount:homePageUnreadCount,
-                        socket: socketService.getSocket(),
+                        socket: socketService!.getSocket(),
                     roomListItem: roomListItem,
                     refreshList: () {
                       if (chatNotifier != null)
-                        chatNotifier.reload(db, ownerId, instituteId, context, socketService.getSocket());
+                        chatNotifier!.reload(db, ownerId, instituteId, context, socketService!.getSocket());
                     },
                         callBack: () {
                           if (chatNotifier != null)
-                            chatNotifier.getOlderConversations(db);
+                            chatNotifier!.getOlderConversations(db);
                         },
                         userStatus: item.isOnline == 1 ? "Online" : "Offline",
                       )));
@@ -535,19 +537,19 @@ class _ChatListsPage extends State<ChatListsPage>
   }
   void connectToServer() {
 
-    socketService.getSocket().on('chat_message', receiveNewMessage);
-    socketService.getSocket().on('add_conversation', newConversation);
-    socketService.getSocket().on('message_status', messageStatusChanged);
-    socketService.getSocket().on('typing', onTyping);
-    socketService.getSocket().on('user_status', userStatus);
-    socketService.getSocket().on('disconnect', (_) => print('disconnect'));
+    socketService!.getSocket()!.on('chat_message', receiveNewMessage);
+    socketService!.getSocket()!.on('add_conversation', newConversation);
+    socketService!.getSocket()!.on('message_status', messageStatusChanged);
+    socketService!.getSocket()!.on('typing', onTyping);
+    socketService!.getSocket()!.on('user_status', userStatus);
+    socketService!.getSocket()!.on('disconnect', (_) => print('disconnect'));
   }
 
 //==========================================Socket metho receiver side
 
   receiveNewMessage(dynamic payload) {
     MessagePayload messageDataData = MessagePayload.fromJson(payload);
-    chatNotifier.updateUnreadCount(messageDataData, db);
+    chatNotifier!.updateUnreadCount(messageDataData, db);
     messageDataData.messageStatus = "delivered";
     messageDataData.isGroupConversation = false;
     messageDataData.messageToId = ownerId.toString();
@@ -559,11 +561,11 @@ class _ChatListsPage extends State<ChatListsPage>
         messageDataData.updatedDateTime.toString());
     print("sent time  +chat list page" +
         messageDataData.messageSentTime.toString());
-    socketService.getSocket().emit('update_message', messageDataData);
+    socketService!.getSocket()!.emit('update_message', messageDataData);
   }
 
   newConversation(dynamic payload) {
-    chatNotifier.reload(db, ownerId, instituteId, context, socketService.getSocket());
+    chatNotifier!.reload(db, ownerId, instituteId, context, socketService!.getSocket());
   }
 
   messageStatusChanged(dynamic payload) {
@@ -576,28 +578,28 @@ class _ChatListsPage extends State<ChatListsPage>
 
     UserStatusPayload userStatusPayload = UserStatusPayload.fromJson(payload);
 
-    print("user status changed --------------------------"+userStatusPayload.personId);
-    await chatNotifier.updateStatus(userStatusPayload.personId.toString(), userStatusPayload.isOnline ? 1 : 0, db);
+    print("user status changed --------------------------"+userStatusPayload.personId!);
+    await chatNotifier!.updateStatus(userStatusPayload.personId.toString(), userStatusPayload.isOnline! ? 1 : 0, db);
   }
 
   //=============================Socket methods Sender Side
   joinChat(dynamic personId) {
 
-    socketService.getSocket().emit('join', personId);
+    socketService!.getSocket()!.emit('join', personId);
   }
 
   addConversation(dynamic payload) {
 
-    socketService.getSocket().emit('add_conversation', jsonEncode(payload));
+    socketService!.getSocket()!.emit('add_conversation', jsonEncode(payload));
   }
 
   emitMessage(dynamic payload) {
 
-    socketService.getSocket().emit('chat_message', jsonEncode(payload));
+    socketService!.getSocket()!.emit('chat_message', jsonEncode(payload));
   }
 
   changeMessageStatus(dynamic payload) {
-    socketService.getSocket().emit('message_status', jsonEncode(payload));
+    socketService!.getSocket()!.emit('message_status', jsonEncode(payload));
   }
 
   typing(dynamic userID, dynamic conversationId) {
@@ -606,14 +608,14 @@ class _ChatListsPage extends State<ChatListsPage>
       "personId": userID,
       "isTyping": true
     });
-    socketService.getSocket().emit('typing', body);
+    socketService!.getSocket()!.emit('typing', body);
   }
 
   sendStatus(dynamic userID) {
     UserStatusPayload userStatusPayload = UserStatusPayload();
     userStatusPayload.isOnline = true;
     userStatusPayload.personId = userID;
-    socketService.getSocket().emit('user_status', userStatusPayload);
+    socketService!.getSocket()!.emit('user_status', userStatusPayload);
   }
 
   Widget popItem(Widget item) {
@@ -633,7 +635,7 @@ class _ChatListsPage extends State<ChatListsPage>
                           size: 14,
                         ),
                       ),
-                      Text(AppLocalizations.of(context).translate("online"))
+                      Text(AppLocalizations.of(context)!.translate("online"))
                     ],
                   )),
               PopupMenuItem(
@@ -648,7 +650,7 @@ class _ChatListsPage extends State<ChatListsPage>
                           size: 14,
                         ),
                       ),
-                      Text(AppLocalizations.of(context).translate("offline"))
+                      Text(AppLocalizations.of(context)!.translate("offline"))
                     ],
                   )),
               PopupMenuItem(
@@ -663,7 +665,7 @@ class _ChatListsPage extends State<ChatListsPage>
                           size: 14,
                         ),
                       ),
-                      Text(AppLocalizations.of(context).translate("busy"))
+                      Text(AppLocalizations.of(context)!.translate("busy"))
                     ],
                   )),
             ]);

@@ -1,8 +1,8 @@
 class States {
-  String statusCode;
-  String message;
-  List<Rows> rows;
-  int total;
+  String? statusCode;
+  String? message;
+  List<Rows>? rows;
+  int? total;
 
   States({this.statusCode, this.message, this.rows, this.total});
 
@@ -12,7 +12,7 @@ class States {
     if (json['rows'] != null) {
       rows = <Rows>[];
       json['rows'].forEach((v) {
-        rows.add(new Rows.fromJson(v));
+        rows!.add(new Rows.fromJson(v));
       });
     }
     total = json['total'];
@@ -23,7 +23,7 @@ class States {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     data['total'] = this.total;
     return data;
@@ -31,21 +31,21 @@ class States {
 }
 
 class Rows {
-  int id;
-  String country;
+  int? id;
+  String? country;
   Null createdByUserId;
-  String createdDate;
+  String? createdDate;
   Null createdFromIp;
-  String code;
+  String? code;
   Null flagIconUrl;
   Null flagThumbnailUrl;
   Null flagUrl;
-  String name;
+  String? name;
   Null localLanguage;
   Null otherName;
   Null updatedByUserId;
   Null updatedFromIp;
-  String updatedDate;
+  String? updatedDate;
 
   Rows(
       {this.id,

@@ -1,10 +1,10 @@
 class BasicData {
-  String name;
-  String description;
-  String inst_cat_code;
-  String inst_type_code;
-  String profile_image;
-  List<String> listOfNames;
+  String? name;
+  String? description;
+  String? inst_cat_code;
+  String? inst_type_code;
+  String? profile_image;
+  List<String>? listOfNames;
   BasicData.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     description = json['description'];

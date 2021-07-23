@@ -10,15 +10,15 @@ import 'commonComponents.dart';
 // ignore: must_be_immutable
 class Facebookbutton extends StatelessWidget {
   Facebookbutton({
-    Key key,
+    Key? key,
     this.name,
     this.offsetX,
     this.offsetY,
   }) : super(key: key);
   final name;
-  final double offsetX;
-  final double offsetY;
-  TextStyleElements styleElements;
+  final double? offsetX;
+  final double? offsetY;
+  late TextStyleElements styleElements;
 
   @override
   Widget build(BuildContext context) {

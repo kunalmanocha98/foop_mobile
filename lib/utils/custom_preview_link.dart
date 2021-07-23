@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 
 import 'TextStyles/TextStyleElements.dart';
 
-Widget CustomPreviewLink(BuildContext context,String url,  TextStyleElements styleElements) {
+Widget CustomPreviewLink(BuildContext context,String url,  TextStyleElements? styleElements) {
 return Container();
 
   // return FlutterLinkPreview(

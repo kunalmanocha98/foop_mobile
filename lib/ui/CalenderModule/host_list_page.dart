@@ -29,12 +29,12 @@ import 'package:oho_works_app/components/paginator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HostListPage extends StatefulWidget {
-  final String privacyType;
+  final String? privacyType;
   final bool isReceiverList;
-  final EventCreateRequest payload;
-  final List<MembersItem> selectedList;
-  final RoomListItem roomItem;
-  final Function refreshCallBack;
+  final EventCreateRequest? payload;
+  final List<MembersItem>? selectedList;
+  final RoomListItem? roomItem;
+  final Function? refreshCallBack;
   HostListPage({this.privacyType,this.isReceiverList= false,this.payload, this.selectedList,this.roomItem,this.refreshCallBack});
   @override
   HostListPageState createState() => HostListPageState(payload: payload,selectedList: selectedList);
@@ -42,24 +42,24 @@ class HostListPage extends StatefulWidget {
 
 class HostListPageState extends State<HostListPage> {
   static const String EVENT_CREATE = "event_create";
-  String searchVal;
-  SharedPreferences prefs = locator<SharedPreferences>();
-  TextStyleElements styleElements;
+  String? searchVal;
+  SharedPreferences? prefs = locator<SharedPreferences>();
+  late TextStyleElements styleElements;
   bool isAddAll = false;
   List<MemberListItem> memberItemList = [];
-  List<MembersItem> selectedList;
+  List<MembersItem>? selectedList;
   List<InviteeListItem> inviteeItemList = [];
-  EventCreateRequest payload;
+  EventCreateRequest? payload;
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
   GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
-  AudioSocketService audioSocketService = locator<AudioSocketService>();
+  AudioSocketService? audioSocketService = locator<AudioSocketService>();
 
   HostListPageState({this.payload,this.selectedList});
 
 
   void refresh(){
     memberItemList.clear();
-    paginatorKey.currentState.changeState(resetState: true);
+    paginatorKey.currentState!.changeState(resetState: true);
   }
 
 
@@ -93,7 +93,7 @@ class HostListPageState extends State<HostListPage> {
                   crossAxisAlignment: WrapCrossAlignment.center,
                   children: [
                     Text(
-                      AppLocalizations.of(context).translate('next'),
+                      AppLocalizations.of(context)!.translate('next'),
                       style: styleElements
                           .subtitle2ThemeScalable(context)
                           .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -138,7 +138,7 @@ class HostListPageState extends State<HostListPage> {
       payload.pageNumber = page;
       payload.searchVal = searchVal;
       payload.privacyType = widget.privacyType;
-      payload.personId = prefs.getInt(Strings.userId);
+      payload.personId = prefs!.getInt(Strings.userId);
       var res = await Calls().call(
           jsonEncode(payload), context, Config.EVENT_INVITEE_SELECT_LIST);
       return InviteeListResponse.fromJson(res);
@@ -150,23 +150,23 @@ class HostListPageState extends State<HostListPage> {
       inviteeListResponse.rows = [
         InviteeListItem(
           isAllowed: true,
-          recipientImage: widget.roomItem.roomProfileImageUrl,
-          recipientType: widget.roomItem.roomName,
-          recipientTypeReferenceId: widget.roomItem.id,
-          recipientTypeDescription: widget.roomItem.roomDescription,
+          recipientImage: widget.roomItem!.roomProfileImageUrl,
+          recipientType: widget.roomItem!.roomName,
+          recipientTypeReferenceId: widget.roomItem!.id,
+          recipientTypeDescription: widget.roomItem!.roomDescription,
           recipientTypeCode: 'room'
         )
       ];
       return inviteeListResponse;
     }
   }
-  List<InviteeListItem> listItemsGetterReceiver(InviteeListResponse response) {
+  List<InviteeListItem>? listItemsGetterReceiver(InviteeListResponse? response) {
     selectedList ??= [];
-    inviteeItemList.addAll(response.rows);
+    inviteeItemList.addAll(response!.rows!);
     if (!isAddAll) {
       for (int i = 0; i < inviteeItemList.length; i++) {
-        for (int j = 0; j < selectedList.length; j++) {
-          if (inviteeItemList[i].recipientTypeReferenceId == selectedList[j].memberId) {
+        for (int j = 0; j < selectedList!.length; j++) {
+          if (inviteeItemList[i].recipientTypeReferenceId == selectedList![j].memberId) {
             inviteeItemList[i].isSelected = true;
             break;
           }
@@ -193,11 +193,11 @@ class HostListPageState extends State<HostListPage> {
             service_type: value.recipientTypeCode =='room'?SERVICE_TYPE.ROOM:value.recipientTypeCode =='institution'?SERVICE_TYPE.INSTITUTION:SERVICE_TYPE.PERSON,
             imageUrl: value.recipientImage,
           ),
-          title: Text( value.recipientType,
+          title: Text( value.recipientType!,
             style: styleElements.subtitle1ThemeScalable(context),
           ),
-          subtitle:value.recipientTypeCode =='room'|| value.recipientTypeCode =='institution'?Text(""): Text(value.recipientTypeDescription),
-          trailing: (value.isSelected != null && value.isSelected)
+          subtitle:value.recipientTypeCode =='room'|| value.recipientTypeCode =='institution'?Text(""): Text(value.recipientTypeDescription!),
+          trailing: (value.isSelected != null && value.isSelected!)
               ? Container(
             decoration: BoxDecoration(
                 shape: BoxShape.circle,
@@ -207,7 +207,7 @@ class HostListPageState extends State<HostListPage> {
               onPressed: () {
                 setState(() {
                   inviteeItemList[index].isSelected = false;
-                  selectedList.removeWhere((element){
+                  selectedList!.removeWhere((element){
                     return element.memberId == inviteeItemList[index].recipientTypeReferenceId;
                   });
                 });
@@ -219,6 +219,8 @@ class HostListPageState extends State<HostListPage> {
               : TricycleElevatedButton(
             onPressed: () {
               // if (value.isFollowing) {
+
+
               MembersItem item = MembersItem();
               item.memberType = "person";
               item.memberId = value.recipientTypeReferenceId;
@@ -226,7 +228,7 @@ class HostListPageState extends State<HostListPage> {
               item.profileImage = value.recipientImage;
               item.memberName = value.recipientType;
               item.roleType = value.recipientTypeCode;
-              selectedList.add(item);
+              selectedList!.add(item);
               // } else {
               //   MembersItem item = MembersItem();
               //   item.memberType = 'person';
@@ -238,7 +240,7 @@ class HostListPageState extends State<HostListPage> {
               setState(() {});
             },
             child: Text(
-              widget.isReceiverList?AppLocalizations.of(context).translate('invite'):AppLocalizations.of(context).translate('select'),
+              widget.isReceiverList?AppLocalizations.of(context)!.translate('invite'):AppLocalizations.of(context)!.translate('select'),
               style: styleElements
                   .captionThemeScalable(context)
                   .copyWith(
@@ -261,17 +263,17 @@ class HostListPageState extends State<HostListPage> {
     payload.pageNumber = page;
     payload.searchVal = searchVal ;
     payload.privacyType = widget.privacyType;
-    payload.personId = prefs.getInt(Strings.userId);
+    payload.personId = prefs!.getInt(Strings.userId);
     var res = await Calls().call(jsonEncode(payload), context, Config.EVENT_MEMBER_SELECT_LIST);
     return MemberListResponse.fromJson(res);
   }
-  List<MemberListItem> listItemsGetter(MemberListResponse response) {
+  List<MemberListItem>? listItemsGetter(MemberListResponse? response) {
     selectedList ??= [];
-    memberItemList.addAll(response.rows);
+    memberItemList.addAll(response!.rows!);
     if (!isAddAll) {
       for (int i = 0; i < memberItemList.length; i++) {
-        for (int j = 0; j < selectedList.length; j++) {
-          if (memberItemList[i].id == selectedList[j].memberId) {
+        for (int j = 0; j < selectedList!.length; j++) {
+          if (memberItemList[i].id == selectedList![j].memberId) {
             memberItemList[i].isSelected = true;
             break;
           }
@@ -302,12 +304,12 @@ class HostListPageState extends State<HostListPage> {
             ),
             title: Text(
               (value.firstName != null && value.lastName != null)
-                  ? value.firstName + " " + value.lastName
+                  ? value.firstName! + " " + value.lastName!
                   : "",
               style: styleElements.subtitle1ThemeScalable(context),
             ),
-            subtitle: Text(value.isFollowing ? "Following" : ""),
-            trailing: (value.isSelected != null && value.isSelected)
+            subtitle: Text(value.isFollowing! ? "Following" : ""),
+            trailing: (value.isSelected != null && value.isSelected!)
                 ? Container(
               decoration: BoxDecoration(
                   shape: BoxShape.circle,
@@ -317,7 +319,7 @@ class HostListPageState extends State<HostListPage> {
                 onPressed: () {
                   setState(() {
                     memberItemList[index].isSelected = false;
-                    selectedList.removeWhere((element){
+                    selectedList!.removeWhere((element){
                       return element.memberId == memberItemList[index].id;
                     });
                   });
@@ -335,7 +337,7 @@ class HostListPageState extends State<HostListPage> {
                 item.addMethod = MEMBER_ADD_METHOD.DIRECT.type;
                 item.profileImage = value.profileImage;
                 item.memberName = value.firstName;
-                selectedList.add(item);
+                selectedList!.add(item);
                 // } else {
                 //   MembersItem item = MembersItem();
                 //   item.memberType = 'person';
@@ -347,7 +349,7 @@ class HostListPageState extends State<HostListPage> {
                 setState(() {});
               },
               child: Text(
-                widget.isReceiverList?AppLocalizations.of(context).translate('invite'):AppLocalizations.of(context).translate('select'),
+                widget.isReceiverList?AppLocalizations.of(context)!.translate('invite'):AppLocalizations.of(context)!.translate('select'),
                 style: styleElements
                     .captionThemeScalable(context)
                     .copyWith(
@@ -366,43 +368,43 @@ class HostListPageState extends State<HostListPage> {
 
   void createEvent() async{
     // FocusScope.of(context).requestFocus(FocusNode());
-    progressButtonKey.currentState.show();
-    payload.recipientType = List<String>.generate(selectedList.length, (index)  {
-      return selectedList[index].roleType;
+    progressButtonKey.currentState!.show();
+    payload!.recipientType = List<String?>.generate(selectedList!.length, (index)  {
+      return selectedList![index].roleType;
     });
-    payload.recipientDetails = List<RecipientDetails>.generate(selectedList.length, (index){
+    payload!.recipientDetails = List<RecipientDetails>.generate(selectedList!.length, (index){
       return RecipientDetails(
-        type: widget.isReceiverList?selectedList[index].roleType:selectedList[index].memberType,
-        id: selectedList[index].memberId,
+        type: widget.isReceiverList?selectedList![index].roleType:selectedList![index].memberType,
+        id: selectedList![index].memberId,
       );
     });
     Calls().call(jsonEncode(payload), context, Config.CREATE_EVENT).then((value) {
-      progressButtonKey.currentState.hide();
+      progressButtonKey.currentState!.hide();
       var res = CreateEventResponse.fromJson(value);
       if(res.statusCode == Strings.success_code){
 
-        ToastBuilder().showToast(AppLocalizations.of(context).translate('event_created_successfully')
+        ToastBuilder().showToast(AppLocalizations.of(context)!.translate('event_created_successfully')
         , context, HexColor(AppColors.information));
         var body = {
           "type":"boolean",
           "value":true
         };
-        emitCreatePayload(res.rows.id);
+        emitCreatePayload(res.rows!.id);
         Navigator.pop(context,body);
         if(widget.refreshCallBack!=null)
           {
-            widget.refreshCallBack();
+            widget.refreshCallBack!();
           }
       }
     }).catchError((onError){
       print(onError);
-      progressButtonKey.currentState.hide();
+      progressButtonKey.currentState!.hide();
     });
   }
-  void emitCreatePayload(int eventId) {
+  void emitCreatePayload(int? eventId) {
     JoinEventPayload payload  = JoinEventPayload();
-    payload.personId = prefs.getInt(Strings.userId);
+    payload.personId = prefs!.getInt(Strings.userId);
     payload.eventId = eventId;
-    audioSocketService.getSocket().emit(EVENT_CREATE,payload);
+    audioSocketService!.getSocket()!.emit(EVENT_CREATE,payload);
   }
 }

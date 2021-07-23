@@ -1,7 +1,7 @@
 class RolesList {
-  String statusCode;
-  String message;
-  List<Roles> rows;
+  String? statusCode;
+  String? message;
+  List<Roles>? rows;
 
   RolesList({this.statusCode, this.message, this.rows});
 
@@ -11,7 +11,7 @@ class RolesList {
     if (json['rows'] != null) {
       rows = [];//Roles>();
       json['rows'].forEach((v) {
-        rows.add(new Roles.fromJson(v));
+        rows!.add(new Roles.fromJson(v));
       });
     }
   }
@@ -21,18 +21,18 @@ class RolesList {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.map((v) => v.toJson()).toList();
+      data['rows'] = this.rows!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
 class Roles {
-  int id;
-  String roleName;
-  bool isSelected = false;
-  String roleCode;
-  String roleDescription;
+  int? id;
+  String? roleName;
+  bool? isSelected = false;
+  String? roleCode;
+  String? roleDescription;
 
   Roles({this.id, this.roleName, this.roleCode, this.roleDescription});
 

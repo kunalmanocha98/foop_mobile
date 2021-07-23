@@ -22,8 +22,8 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class BecomeEdufluencerFollowupPage extends StatefulWidget {
-  final CreateEdufluencerTutorRequest payload;
-  final edufluencer_type type;
+  final CreateEdufluencerTutorRequest? payload;
+  final edufluencer_type? type;
   BecomeEdufluencerFollowupPage({this.payload,this.type});
   @override
   BecomeEdufluencerFollowupPageState createState() =>
@@ -33,16 +33,16 @@ class BecomeEdufluencerFollowupPage extends StatefulWidget {
 class BecomeEdufluencerFollowupPageState
     extends State<BecomeEdufluencerFollowupPage>
     with CommonMixins{
-  CreateEdufluencerTutorRequest payload;
+  CreateEdufluencerTutorRequest? payload;
   BecomeEdufluencerFollowupPageState({this.payload});
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
   List<SkillsList> skillsList = [];
   List<SubjectsList> subjectsList = [];
   List<ClassesList> classesList = [];
   TextEditingController specialistController = TextEditingController();
   TextEditingController subjectsController = TextEditingController();
   TextEditingController classesController = TextEditingController();
-  SharedPreferences prefs = locator<SharedPreferences>();
+  SharedPreferences? prefs = locator<SharedPreferences>();
 
 
   @override
@@ -52,7 +52,7 @@ class BecomeEdufluencerFollowupPageState
       appBar: TricycleAppBar().getCustomAppBar(
         context,
         appBarTitle:
-        AppLocalizations.of(context).translate(widget.type == edufluencer_type.E?'become_edufluencer':"become_tutor"),
+        AppLocalizations.of(context)!.translate(widget.type == edufluencer_type.E?'become_edufluencer':"become_tutor"),
         actions: [
           TricycleTextButton(
             onPressed: () {
@@ -63,7 +63,7 @@ class BecomeEdufluencerFollowupPageState
               crossAxisAlignment: WrapCrossAlignment.center,
               children: [
                 Text(
-                  AppLocalizations.of(context).translate('create'),
+                  AppLocalizations.of(context)!.translate('create'),
                   style: styleElements
                       .subtitle2ThemeScalable(context)
                       .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -83,13 +83,13 @@ class BecomeEdufluencerFollowupPageState
             mainAxisSize: MainAxisSize.min,
             children: [
               Visibility(
-                visible: payload.edufluencerType == edufluencer_type.E.type,
+                visible: payload!.edufluencerType == edufluencer_type.E.type,
                   child:getSpecialities()),
               Visibility(
-                visible: payload.edufluencerType == edufluencer_type.T.type,
+                visible: payload!.edufluencerType == edufluencer_type.T.type,
                   child: getSubjects()),
               Visibility(
-                visible: payload.edufluencerType == edufluencer_type.T.type,
+                visible: payload!.edufluencerType == edufluencer_type.T.type,
                   child: getClasses()),
               // EdufluemcerProfileCard(),
               // EdufluencerSpecialistSubjectCard()
@@ -100,7 +100,7 @@ class BecomeEdufluencerFollowupPageState
     );
   }
 
-  Widget customCard(String heading, {Widget child}) {
+  Widget customCard(String heading, {Widget? child}) {
     return TricycleListCard(
         padding: EdgeInsets.only(top: 16, bottom: 16, left: 24, right: 24),
         child: Column(
@@ -111,7 +111,7 @@ class BecomeEdufluencerFollowupPageState
               style: styleElements.headline6ThemeScalable(context).copyWith(
                   fontWeight: FontWeight.bold
               ),),
-            child
+            child!
           ],
         )
     );
@@ -131,28 +131,30 @@ class BecomeEdufluencerFollowupPageState
                   "expertise_category_code": "Skill",
                   "page_number": 1,
                   "page_size": 5,
-                  "person_id": prefs.getInt(Strings.userId),
+                  "person_id": prefs!.getInt(Strings.userId),
                 };
                 var res = await Calls()
                     .call(jsonEncode(data), context, Config.EXPERTISE_API);
-                if (ExpertiseList.fromJson(res).rows.length > 0) {
-                  return ExpertiseList.fromJson(res).rows;
+                if (ExpertiseList.fromJson(res).rows!.length > 0) {
+                  return ExpertiseList.fromJson(res).rows!;
                 } else {
-                  return null;
+                  return [];
                 }
               } else {
-                return null;
+                return [];
               }
             },
-            itemBuilder: (BuildContext context, LanguageItem itemData) {
+            itemBuilder: ( context,  itemData) {
+              itemData as LanguageItem;
               return ListTile(
                 title: Text(
-                  itemData.expertiseTypeDescription,
+                  itemData.expertiseTypeDescription!,
                   style: styleElements.subtitle1ThemeScalable(context),
                 ),
               );
             },
-            onSuggestionSelected: (LanguageItem suggestion) {
+            onSuggestionSelected: ( suggestion) {
+              suggestion as LanguageItem;
               setState(() {
                 specialistController.text = "";
                 skillsList.add(SkillsList(
@@ -168,7 +170,7 @@ class BecomeEdufluencerFollowupPageState
               controller: specialistController,
               decoration: InputDecoration(
                   contentPadding: EdgeInsets.only(top: 16, left: 8, right: 16),
-                  hintText: AppLocalizations.of(context)
+                  hintText: AppLocalizations.of(context)!
                       .translate('enter_special_skills'),
                   hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35))),
             ),
@@ -183,7 +185,7 @@ class BecomeEdufluencerFollowupPageState
                 itemCount: skillsList.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Chip(
-                    label: Text(skillsList[index].skillName),
+                    label: Text(skillsList[index].skillName!),
                     padding: EdgeInsets.all(8),
                     onDeleted: (){
                       setState(() {
@@ -211,24 +213,27 @@ class BecomeEdufluencerFollowupPageState
                 var data =  {"searchVal":pattern,"page_number":1,"page_size":5};
                 var res = await Calls()
                     .call(jsonEncode(data), context, Config.SUBJECT_MASTERLIST);
-                if (SubjectListResponse.fromJson(res).rows.length > 0) {
-                  return SubjectListResponse.fromJson(res).rows;
+                if (SubjectListResponse.fromJson(res).rows!.length > 0) {
+                  return SubjectListResponse.fromJson(res).rows!;
                 } else {
-                  return null;
+                  return [];
                 }
               } else {
-                return null;
+                return [];
               }
             },
-            itemBuilder: (BuildContext context, SubjectListItem itemData) {
+            itemBuilder: ( context,  itemData) {
+
+              itemData as SubjectListItem;
               return ListTile(
                 title: Text(
-                  itemData.subjectName,
+                  itemData.subjectName!,
                   style: styleElements.subtitle1ThemeScalable(context),
                 ),
               );
             },
-            onSuggestionSelected: (SubjectListItem suggestion) {
+            onSuggestionSelected: ( suggestion) {
+              suggestion as SubjectListItem;
               setState(() {
                 subjectsController.text = "";
                 subjectsList.add(SubjectsList(
@@ -244,7 +249,7 @@ class BecomeEdufluencerFollowupPageState
               controller: subjectsController,
               decoration: InputDecoration(
                   contentPadding: EdgeInsets.only(top: 16, left: 8, right: 16),
-                  hintText: AppLocalizations.of(context)
+                  hintText: AppLocalizations.of(context)!
                       .translate('enter_subjects_coach'),
                   hintStyle: styleElements.bodyText2ThemeScalable(context)),
             ),
@@ -259,7 +264,7 @@ class BecomeEdufluencerFollowupPageState
                 itemCount: subjectsList.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Chip(
-                    label: Text(subjectsList[index].subjectName),
+                    label: Text(subjectsList[index].subjectName!),
                     padding: EdgeInsets.all(8),
                     onDeleted: (){
                       setState(() {
@@ -281,6 +286,7 @@ class BecomeEdufluencerFollowupPageState
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+
           TypeAheadField(
             suggestionsCallback: (String pattern) async {
               if (pattern.isNotEmpty) {
@@ -293,24 +299,26 @@ class BecomeEdufluencerFollowupPageState
                 };
                 var res = await Calls()
                     .call(jsonEncode(data), context, Config.CLASS_MASTERLIST);
-                if (ClassListResponse.fromJson(res).rows.length > 0) {
-                  return ClassListResponse.fromJson(res).rows;
+                if (ClassListResponse.fromJson(res).rows!.length > 0) {
+                  return ClassListResponse.fromJson(res).rows!;
                 } else {
-                  return null;
+                  return [];
                 }
               } else {
-                return null;
+                return [];
               }
             },
-            itemBuilder: (BuildContext context, ClassListItem itemData) {
+            itemBuilder: ( context,  itemData) {
+              itemData as  ClassListItem;
               return ListTile(
                 title: Text(
-                  itemData.className,
+                  itemData.className!,
                   style: styleElements.subtitle1ThemeScalable(context),
                 ),
               );
             },
-            onSuggestionSelected: (ClassListItem suggestion) {
+            onSuggestionSelected: ( suggestion) {
+              suggestion as  ClassListItem;
               setState(() {
                 classesController.text = "";
                 classesList.add(ClassesList(
@@ -326,7 +334,7 @@ class BecomeEdufluencerFollowupPageState
               controller: classesController,
               decoration: InputDecoration(
                   contentPadding: EdgeInsets.only(top: 16, left: 8, right: 16),
-                  hintText: AppLocalizations.of(context)
+                  hintText: AppLocalizations.of(context)!
                       .translate('enter_class_coach'),
                   hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35))),
             ),
@@ -341,7 +349,7 @@ class BecomeEdufluencerFollowupPageState
                 itemCount: classesList.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Chip(
-                    label: Text(classesList[index].className),
+                    label: Text(classesList[index].className!),
                     padding: EdgeInsets.all(8),
                     onDeleted: (){
                       setState(() {
@@ -359,13 +367,13 @@ class BecomeEdufluencerFollowupPageState
   }
 
   void create() {
-    payload.skillsList = skillsList;
-    payload.subjectsList = subjectsList;
-    payload.classesList = classesList;
+    payload!.skillsList = skillsList;
+    payload!.subjectsList = subjectsList;
+    payload!.classesList = classesList;
     Calls().call(jsonEncode(payload), context, Config.EDUFLUENCER_REGISTER).then((value){
       var response = CreateEdufluencerResponse.fromJson(value);
       if(response.statusCode == Strings.success_code){
-        ToastBuilder().showToast(AppLocalizations.of(context).translate('registered_successfully'), context, HexColor(AppColors.information));
+        ToastBuilder().showToast(AppLocalizations.of(context)!.translate('registered_successfully'), context, HexColor(AppColors.information));
         Navigator.pop(context,true);
       }
     }).catchError((onError){

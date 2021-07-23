@@ -19,7 +19,7 @@ import 'package:oho_works_app/components/paginator.dart';
 class SelectRoomTopicWidget extends StatefulWidget{
   final bool isCard;
   final  List<RoomTopicItem> _selectedList =[];
-  SelectRoomTopicWidget(Key key,{this.isCard = true, List<String> preSelected}):super(key: key){
+  SelectRoomTopicWidget(Key key,{this.isCard = true, List<String>? preSelected}):super(key: key){
     if(preSelected!=null && preSelected.length>0){
       preSelected.forEach((element) {
         _selectedList.add(RoomTopicItem(topicName: element,imageUrl: ""));
@@ -62,7 +62,7 @@ class SelectRoomTopicWidgetState extends State<SelectRoomTopicWidget>{
             ),
             Expanded(
                 child: Text(
-                  getTitle(),
+                  getTitle()!,
                   style: styleElements.subtitle1ThemeScalable(context),
                 )),
             Icon(Icons.arrow_forward_ios,
@@ -98,7 +98,7 @@ class SelectRoomTopicWidgetState extends State<SelectRoomTopicWidget>{
               ),
               Expanded(
                   child: Text(
-                    getTitle(),
+                    getTitle()!,
                     style: styleElements.subtitle1ThemeScalable(context),
                   )),
               Icon(Icons.arrow_forward_ios,
@@ -109,10 +109,10 @@ class SelectRoomTopicWidgetState extends State<SelectRoomTopicWidget>{
         ));
   }
 
-  String getTitle() {
+  String? getTitle() {
     if(selectedList!=null && selectedList.length>0){
       if(selectedList.length>1){
-        return selectedList[0].topicName+' & Others';
+        return selectedList[0].topicName!+' & Others';
       }else{
         return selectedList[0].topicName;
       }
@@ -124,16 +124,16 @@ class SelectRoomTopicWidgetState extends State<SelectRoomTopicWidget>{
 
   String getImageUrl() {
     if(selectedList!=null && selectedList.length>0){
-      debugPrint(Config.BASE_URL+selectedList[0].imageUrl);
-      return Config.BASE_URL+selectedList[0].imageUrl;
+      debugPrint(Config.BASE_URL+selectedList[0].imageUrl!);
+      return Config.BASE_URL+selectedList[0].imageUrl!;
     }else{
       return 'assets/appimages/topics-default.png';
     }
 
   }
 
-  List<String> getSelectedList(){
-    List<String> list = [];
+  List<String?> getSelectedList(){
+    List<String?> list = [];
     selectedList.forEach((element) {
       list.add(element.topicName);
     });
@@ -152,9 +152,9 @@ class _RoomTopicList extends StatefulWidget {
 }
 
 class _RoomTopicListState extends State<_RoomTopicList> {
-  TextStyleElements styleElements;
+  late TextStyleElements styleElements;
   List<RoomTopicItem> postSubTypeList =[];
-  List<RoomTopicItem> selectedList;
+  List<RoomTopicItem>? selectedList;
   bool confirmation_first= false;
   bool confirmation_second = false;
 
@@ -170,10 +170,10 @@ class _RoomTopicListState extends State<_RoomTopicList> {
               actions:[
                 TricycleTextButton(
                   onPressed:() {
-                      if(selectedList!=null && selectedList.length>0){
+                      if(selectedList!=null && selectedList!.length>0){
                         Navigator.pop(context,selectedList);
                       }else{
-                        ToastBuilder().showToast(AppLocalizations.of(context).translate('please_select_atleast'),
+                        ToastBuilder().showToast(AppLocalizations.of(context)!.translate('please_select_atleast'),
                             context,
                             HexColor(AppColors.information));
                       }
@@ -182,7 +182,7 @@ class _RoomTopicListState extends State<_RoomTopicList> {
                     direction: Axis.horizontal,
                     crossAxisAlignment: WrapCrossAlignment.center,
                     children:[
-                      Text( AppLocalizations.of(context).translate('next'),
+                      Text( AppLocalizations.of(context)!.translate('next'),
                         style: styleElements
                             .subtitle2ThemeScalable(context)
                             .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -202,7 +202,7 @@ class _RoomTopicListState extends State<_RoomTopicList> {
   }
 
   String getAppBarTitle() {
-    return AppLocalizations.of(context).translate('select_topics');
+    return AppLocalizations.of(context)!.translate('select_topics');
   }
 
   Widget getBody() {
@@ -229,16 +229,16 @@ class _RoomTopicListState extends State<_RoomTopicList> {
     return RoomTopicListResponse.fromJson(value);
   }
 
-  List<RoomTopicItem> listItemsGetter(RoomTopicListResponse pageData) {
-    var itr = pageData.rows.where((element){
-      return selectedList.any((element1){
+  List<RoomTopicItem>? listItemsGetter(RoomTopicListResponse? pageData) {
+    var itr = pageData!.rows!.where((element){
+      return selectedList!.any((element1){
         return element1.topicName == element.topicName;
       });
     });
     itr.forEach((element) {
       element.isSelected = true;
     });
-    postSubTypeList.addAll(pageData.rows);
+    postSubTypeList.addAll(pageData.rows!);
     return pageData.rows;
   }
 
@@ -252,24 +252,24 @@ class _RoomTopicListState extends State<_RoomTopicList> {
         isFullUrl: true,
       ),
       trailing: Checkbox(
-        onChanged: (bool value) {
-          changeSelection(value,item,index);
+        onChanged: (bool? value) {
+          changeSelection(value!,item,index);
         },
         value: item.isSelected??=false,
       ),
-      title: Text(item.topicName,style: styleElements.subtitle1ThemeScalable(context),),
+      title: Text(item.topicName!,style: styleElements.subtitle1ThemeScalable(context),),
     );
   }
 
   void changeSelection(bool value,RoomTopicItem item,int index) {
     if(value){
       setState(() {
-        selectedList.add(item);
+        selectedList!.add(item);
         postSubTypeList[index].isSelected = value;
       });
     }else{
       setState(() {
-        selectedList.removeWhere((element){
+        selectedList!.removeWhere((element){
           return element.topicName==item.topicName;
         });
         postSubTypeList[index].isSelected = value;

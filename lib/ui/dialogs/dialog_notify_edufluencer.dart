@@ -9,7 +9,7 @@ import 'package:oho_works_app/utils/hexColors.dart';
 import 'package:flutter/material.dart';
 
 class NotifyEdufluencerDialog extends StatelessWidget {
-  final edufluencer_type type;
+  final edufluencer_type? type;
 
   NotifyEdufluencerDialog({this.type});
 
@@ -25,7 +25,7 @@ class NotifyEdufluencerDialog extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(AppLocalizations.of(context).translate(
+            Text(AppLocalizations.of(context)!.translate(
                 type == edufluencer_type.E
                     ? 'notify_edufluencer'
                     : 'notify_tutor'),
@@ -42,7 +42,7 @@ class NotifyEdufluencerDialog extends StatelessWidget {
                     onPressed: (){
                       Navigator.pop(context);
                     },
-                    child: Text(AppLocalizations.of(context).translate('ok'),
+                    child: Text(AppLocalizations.of(context)!.translate('ok'),
                     style: styleElements.captionThemeScalable(context).copyWith(
                       color: HexColor(AppColors.appMainColor)
                     ),))

@@ -1,7 +1,7 @@
 class AlreadyExistingUser {
-  String statusCode;
-  String message;
-  SocialLogin rows;
+  String? statusCode;
+  String? message;
+  SocialLogin? rows;
 
   AlreadyExistingUser({this.statusCode, this.message, this.rows});
 
@@ -16,7 +16,7 @@ class AlreadyExistingUser {
     data['statusCode'] = this.statusCode;
     data['message'] = this.message;
     if (this.rows != null) {
-      data['rows'] = this.rows.toJson();
+      data['rows'] = this.rows!.toJson();
     }
     return data;
   }
@@ -24,8 +24,8 @@ class AlreadyExistingUser {
 
 class SocialLogin {
   Null expiry;
-  String token;
-  bool isExisted;
+  String? token;
+  bool? isExisted;
 
   SocialLogin({this.expiry, this.token, this.isExisted});
 
