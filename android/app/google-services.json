@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "740516889708",
-    "project_id": "ohoworks-4d57f",
-    "storage_bucket": "ohoworks-4d57f.appspot.com"
+    "project_number": "651721047788",
+    "project_id": "ohoworks-d7791",
+    "storage_bucket": "ohoworks-d7791.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:740516889708:android:44ef6850d1d4a080fb4449",
+        "mobilesdk_app_id": "1:651721047788:android:a62a994da1a26e457d2fc9",
         "android_client_info": {
           "package_name": "ohoworks.oho_works_app"
         }
       },
       "oauth_client": [
         {
-          "client_id": "740516889708-tjcj3o5g1pk8unkd86kd3vfd2k8gdihl.apps.googleusercontent.com",
+          "client_id": "651721047788-kiagq67uk9bl114c0krfuult6pfc7dmv.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAd-g38CiG673q56IWnBjPaKSWELQUIFEs"
+          "current_key": "AIzaSyCCsJUt85HwjmT4FObHK5aawO61oQzJ-ys"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "740516889708-tjcj3o5g1pk8unkd86kd3vfd2k8gdihl.apps.googleusercontent.com",
+              "client_id": "651721047788-kiagq67uk9bl114c0krfuult6pfc7dmv.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
