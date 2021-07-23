@@ -166,7 +166,7 @@ Map<int, Color> appColor = {
   100: HexColor(AppColors.appColorWhite),
 };
 
-MaterialColor primarySwatch = MaterialColor(0xFFF66666, color);
+MaterialColor primarySwatch = MaterialColor(0xFFFF2A4B, color);
 const HomeRoute = '/';
 const PostDetailPage = '/postDetailPage';
 const buddyApproval = '/BuddyApproval';
