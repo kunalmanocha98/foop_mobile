@@ -53,19 +53,22 @@ class MyHomePage extends State<Home> {
         Container(
             alignment: Alignment(0, -0.6),
             child: Image.asset("assets/appimages/logo.png",
-                height: 128.w, width: 128.w)),
+                height: 150.w, width: 200.w)),
         Container(
-            alignment: Alignment(0, -0.2),
-            child: Text(
-              AppLocalizations.of(context)!.translate("logo_main"),
-              style: styleElements.headline5ThemeScalable(context),
-            )),
-        Container(
-            alignment: Alignment(0, -0.1),
+            alignment: Alignment(0, -0.4),
             child: Text(
               AppLocalizations.of(context)!.translate("logo_slogan"),
               style: styleElements.subtitle1ThemeScalable(context),
             )),
+        Container(
+            alignment: Alignment(0, -0.3),
+            child: Text(
+              AppLocalizations.of(context)!.translate("welcome_name"),
+              style: styleElements.headline6ThemeScalable(context),
+            )),
+
+
+
         Container(
           alignment: Alignment(0, 0.5),
           child: LargeButton(

@@ -99,7 +99,7 @@ class ToastBuilder {
     Function? okButtonCallback,
     Function? cancelButtonCallback,
     required BuildContext context,
-    Color textColor = Colors.white,
+
     Color? backGroundColor,
     Duration duration = const Duration(milliseconds: 4000),
   }) {
@@ -114,7 +114,7 @@ class ToastBuilder {
                 message,
                 style: TextStyleElements(context)
                     .subtitle2ThemeScalable(context)
-                    .copyWith(color: textColor, fontWeight: FontWeight.w600),
+                    .copyWith(color: HexColor(AppColors.appColorWhite), fontWeight: FontWeight.w600),
               ),
               SizedBox(
                 height: 4,

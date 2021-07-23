@@ -464,8 +464,8 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
                                           width: 36,
                                           child: CircleAvatar(
                                             radius: 36,
-                                            foregroundColor: Colors.white,
-                                            backgroundColor: Colors.white,
+                                            foregroundColor: HexColor(AppColors.appColorWhite),
+                                            backgroundColor: HexColor(AppColors.appColorWhite),
                                             child: ClipOval(
                                               child: CachedNetworkImage(
                                                 imageUrl: edufluencerRequestData !=

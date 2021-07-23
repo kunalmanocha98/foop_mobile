@@ -2038,7 +2038,7 @@ class PostDetailSheetState extends State<PostDetailsSheet> with CommonMixins {
               border: Border(
                 bottom: BorderSide(
                   //
-                  color: Colors.grey,
+                  color: HexColor(AppColors.appColorGrey50),
                   width: 1.0,
                 ),
               ), // set border width

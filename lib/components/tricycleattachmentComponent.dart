@@ -360,7 +360,7 @@ class TricycleAttachmentsState extends State<TricycleAttachments> {
                 //     }
                 // ),
                 IconButton(
-                    icon: Icon(Icons.file_copy_outlined,color: Colors.black38,),
+                    icon: Icon(Icons.file_copy_outlined,color: HexColor(AppColors.appColorBlack35),),
                     onPressed: () {
                       fileUploader();
                     }

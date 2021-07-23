@@ -1,5 +1,7 @@
 import 'package:oho_works_app/messenger_module/chat_bubble_clipper_2.dart';
 import 'package:flutter/material.dart';
+import 'package:oho_works_app/utils/colors.dart';
+import 'package:oho_works_app/utils/hexColors.dart';
 
 import 'bubble_type.dart';
 
@@ -31,7 +33,7 @@ class ChatBubble extends StatelessWidget {
       child: PhysicalShape(
         clipper: clipper,
         elevation: elevation ?? 2,
-        color: backGroundColor ?? Colors.blue,
+        color: backGroundColor ?? HexColor(AppColors.appMainColor),
         shadowColor: shadowColor ?? Colors.grey.shade200,
         child: Padding(
           padding: setPadding(),

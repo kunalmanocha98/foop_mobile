@@ -75,8 +75,8 @@ class AppBarWithProfileChat extends StatelessWidget with PreferredSizeWidget {
                           width: 36,
                           child: CircleAvatar(
                             radius: 36,
-                            foregroundColor: Colors.white,
-                            backgroundColor: Colors.white,
+                            foregroundColor: HexColor(AppColors.appColorWhite),
+                            backgroundColor: HexColor(AppColors.appColorWhite),
                             child: ClipOval(
                               child: CachedNetworkImage(
                                 imageUrl: imageUrl!,
@@ -162,7 +162,7 @@ class AppBarWithProfileChat extends StatelessWidget with PreferredSizeWidget {
                             icon: Icon(
                               Icons.call_outlined,
                               size: 24.0,
-                              color: Colors.black54,
+                              color: HexColor(AppColors.appColorBlack65),
                             ),
                             onPressed: onCallCallback as void Function()?,
                         ),
@@ -179,7 +179,7 @@ class AppBarWithProfileChat extends StatelessWidget with PreferredSizeWidget {
                             icon: Icon(
                               Icons.videocam_outlined,
                               size: 24.0,
-                              color: Colors.black54,
+                              color: HexColor(AppColors.appColorBlack65),
                             ),
                             onPressed: onVideoCallback as void Function()?,
                         ),
@@ -193,7 +193,7 @@ class AppBarWithProfileChat extends StatelessWidget with PreferredSizeWidget {
                       child: Icon(
                         Icons.more_vert,
                         size: 24.0,
-                        color: Colors.black54,
+                        color: HexColor(AppColors.appColorBlack65),
                       ),
                     ))),
               ],

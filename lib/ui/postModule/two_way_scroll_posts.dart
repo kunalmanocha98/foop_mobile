@@ -451,7 +451,7 @@ class NewNewsAndArticleDetailPageState
                             begin: Alignment.centerRight,
                             end: Alignment.center,
                             colors: [
-                              Colors.black,
+                              HexColor(AppColors.appColorBlack85),
                               HexColor(AppColors.appColorGreen)
                             ]).createShader(bounds);
                       },

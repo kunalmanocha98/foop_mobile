@@ -127,18 +127,18 @@ class _AcademicInformationPage extends State<AcademicInformationPage> {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30.0),
                                   side:
-                                  BorderSide(color: Colors.redAccent)),
+                                  BorderSide(color: HexColor(AppColors.appMainColor))),
                               onPressed: () {
                                 Navigator.of(context).pop();
                                 widget.callBack!(widget.registerUserAs);
                               },
-                              color: Colors.white,
+                              color: HexColor(AppColors.appColorWhite),
                               child: Text(
                                   AppLocalizations.of(context)!
                                       .translate("proceed"),
                                   style: styleElements
                                       .buttonThemeScalable(context)
-                                      .copyWith(color: Colors.redAccent)),
+                                      .copyWith(color: HexColor(AppColors.appMainColor))),
                             ),
                           ),
                         ],

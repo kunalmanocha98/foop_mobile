@@ -202,7 +202,7 @@ class _SelectRole extends State<SelectRole>
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(30.0),
                                       side:
-                                          BorderSide(color: Colors.redAccent)),
+                                          BorderSide(color: HexColor(AppColors.appMainColor))),
                                   onPressed: () {
                                     if (isRoleSelected) {
                                       _scrollToTop();
@@ -217,13 +217,13 @@ class _SelectRole extends State<SelectRole>
                                           HexColor(AppColors.information));
                                     }
                                   },
-                                  color: Colors.white,
+                                  color: HexColor(AppColors.appColorWhite),
                                   child: Text(
                                       AppLocalizations.of(context)!
                                           .translate("proceed"),
                                       style: styleElements
                                           .buttonThemeScalable(context)
-                                          .copyWith(color: Colors.redAccent)),
+                                          .copyWith(color: HexColor(AppColors.appMainColor))),
                                 ),
                               ),
                             ],
@@ -512,7 +512,7 @@ class _SelectRole extends State<SelectRole>
                                                 borderRadius:
                                                     BorderRadius.circular(18.0),
                                                 side: BorderSide(
-                                                    color: Colors.redAccent)),
+                                                    color: HexColor(AppColors.appMainColor))),
                                             onPressed: () async {
                                               if (isRoleSelected) {
                                                 _scrollToTop();
@@ -529,7 +529,7 @@ class _SelectRole extends State<SelectRole>
                                                         AppColors.information));
                                               }
                                             },
-                                            color: Colors.white,
+                                            color:HexColor(AppColors.appColorWhite),
                                             child: Text(
                                                 AppLocalizations.of(context)!
                                                     .translate("next"),
@@ -538,7 +538,7 @@ class _SelectRole extends State<SelectRole>
                                                         context)
                                                     .copyWith(
                                                         color:
-                                                            Colors.redAccent)),
+                                                        HexColor(AppColors.appMainColor))),
                                           ),
                                         ),
                                       )

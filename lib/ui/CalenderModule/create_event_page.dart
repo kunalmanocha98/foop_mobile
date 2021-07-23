@@ -127,7 +127,7 @@ class CreateEventPageState extends State<CreateEventPage> {
               border: Border(
                 bottom: BorderSide(
                   //
-                  color: Colors.grey,
+                  color: HexColor(AppColors.appColorGrey50),
                   width: 1.0,
                 ),
               ), // set border width
@@ -153,7 +153,7 @@ class CreateEventPageState extends State<CreateEventPage> {
               border: Border(
                 bottom: BorderSide(
                   //
-                  color: Colors.grey,
+                  color: HexColor(AppColors.appColorGrey50),
                   width: 1.0,
                 ),
               ), // set border width
@@ -179,7 +179,7 @@ class CreateEventPageState extends State<CreateEventPage> {
               border: Border(
                 bottom: BorderSide(
                   //
-                  color: Colors.grey,
+                  color: HexColor(AppColors.appColorGrey50),
                   width: 1.0,
                 ),
               ), // set border width
@@ -225,7 +225,7 @@ class CreateEventPageState extends State<CreateEventPage> {
               border: Border(
                 bottom: BorderSide(
                   //
-                  color: Colors.grey,
+                  color: HexColor(AppColors.appColorGrey50),
                   width: 1.0,
                 ),
               ), // set border width
@@ -534,13 +534,13 @@ class CreateEventPageState extends State<CreateEventPage> {
         builder: (BuildContext context, Widget? child) {
           return Theme(
             data: ThemeData.light().copyWith(
-              primaryColor: Colors.black,
-              accentColor: Colors.black,
+              primaryColor: HexColor(AppColors.appColorBlack85),
+              accentColor: HexColor(AppColors.appColorBlack85),
               colorScheme: ColorScheme.dark(
-                primary: Colors.black,
-                onPrimary: Colors.white,
-                surface: Colors.white,
-                onSurface: Colors.black,
+                primary: HexColor(AppColors.appColorBlack85),
+                onPrimary: HexColor(AppColors.appColorWhite),
+                surface: HexColor(AppColors.appColorWhite),
+                onSurface: HexColor(AppColors.appColorBlack85),
               ),
               buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
             ),
@@ -566,13 +566,13 @@ class CreateEventPageState extends State<CreateEventPage> {
       builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData.light().copyWith(
-            primaryColor: Colors.black,
-            accentColor: Colors.black,
+            primaryColor: HexColor(AppColors.appColorBlack85),
+            accentColor: HexColor(AppColors.appColorBlack85),
             colorScheme: ColorScheme.dark(
-              primary: Colors.black,
-              onPrimary: Colors.white,
-              surface: Colors.white,
-              onSurface: Colors.black,
+              primary: HexColor(AppColors.appColorBlack85),
+              onPrimary: HexColor(AppColors.appColorWhite),
+              surface: HexColor(AppColors.appColorWhite),
+              onSurface: HexColor(AppColors.appColorBlack85),
             ),
             buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
           ),
@@ -596,13 +596,13 @@ class CreateEventPageState extends State<CreateEventPage> {
       builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData.light().copyWith(
-            primaryColor: Colors.black,
-            accentColor: Colors.black,
+            primaryColor:HexColor(AppColors.appColorBlack85),
+            accentColor: HexColor(AppColors.appColorBlack85),
             colorScheme: ColorScheme.dark(
-              primary: Colors.black,
-              onPrimary: Colors.white,
-              surface: Colors.white,
-              onSurface: Colors.black,
+              primary: HexColor(AppColors.appColorBlack85),
+              onPrimary: HexColor(AppColors.appColorWhite),
+              surface: HexColor(AppColors.appColorWhite),
+              onSurface:HexColor(AppColors.appColorBlack85),
             ),
             buttonTheme: ButtonThemeData(textTheme: ButtonTextTheme.primary),
           ),

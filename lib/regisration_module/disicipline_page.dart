@@ -221,7 +221,7 @@ class _SelectDisicipline extends State<SelectDiscipline>
                                                         width: 20.0,
                                                         height: 20.0,
                                                         child: Icon(Icons.date_range,
-                                                            color: Colors.black87),
+                                                            color: HexColor(AppColors.appColorBlack65)),
                                                       ),
                                                     ),
                                                   ))
@@ -255,7 +255,7 @@ class _SelectDisicipline extends State<SelectDiscipline>
                                   textAlign: TextAlign.center,
                                   style: styleElements
                                       .captionThemeScalable(context)
-                                      .copyWith(color: Colors.black87),
+                                      .copyWith(color: HexColor(AppColors.appColorBlack85)),
                                 ),
                               ),
                             )),

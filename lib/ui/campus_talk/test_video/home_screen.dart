@@ -1,4 +1,6 @@
 import "package:flutter/material.dart";
+import 'package:oho_works_app/utils/colors.dart';
+import 'package:oho_works_app/utils/hexColors.dart';
 
 import 'participants.dart';
 import 'universal_variables.dart';
@@ -49,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: HexColor(AppColors.appColorWhite),
       body: SingleChildScrollView(
         child: Container(
           padding: EdgeInsets.symmetric(

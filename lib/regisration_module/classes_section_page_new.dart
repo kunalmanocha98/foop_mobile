@@ -214,7 +214,7 @@ class _SelectDisicipline extends State<selectClassesAndSections>
                                                 width: 20.0,
                                                 height: 20.0,
                                                 child: Icon(Icons.date_range,
-                                                    color: Colors.black87),
+                                                    color: HexColor(AppColors.appColorBlack85)),
                                               ),
                                             ),
                                           ))

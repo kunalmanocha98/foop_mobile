@@ -289,8 +289,10 @@ class StateLoginPage extends State<LoginPage> {
                     child: Column(mainAxisSize: MainAxisSize.min, children: <
                         Widget>[
                       Container(
+                          alignment: Alignment(0, -0.6),
                           child: Image.asset("assets/appimages/logo.png",
-                              height: 72.h, width: 72.h)),
+                              height: 150.w, width: 200.w)),
+
                       Container(
                         child: Text(
                           AppLocalizations.of(context)!.translate("sign_in"),

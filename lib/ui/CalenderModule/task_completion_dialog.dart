@@ -30,7 +30,7 @@ class TaskCompletionDialogState extends State<TaskCompletionDialog> {
               border: Border(
                 bottom: BorderSide(
                   //
-                  color: Colors.grey,
+                  color: HexColor(AppColors.appColorGrey50),
                   width: 1.0,
                 ),
               ), // set border width

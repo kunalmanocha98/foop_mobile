@@ -1081,7 +1081,7 @@ BuildContext? dgsContext;
           width: MediaQuery.of(context).size.width / 2,
           height: 300.0,
           child: Container(
-            color: Colors.white.withOpacity(0.5),
+            color: HexColor(AppColors.appColorWhite).withOpacity(0.5),
           ),
         ),
       ),

@@ -750,7 +750,7 @@ class _SelectInstitute extends State<SelectInstitute>
                                               labelColor: HexColor(
                                                   AppColors.appColorWhite),
                                               indicatorColor:
-                                                  Colors.transparent,
+                                                  HexColor(AppColors.appColorTransparent),
                                               controller: _tabController,
                                               isScrollable: true,
                                               tabs: List<Widget>.generate(
@@ -991,7 +991,7 @@ class _SelectInstitute extends State<SelectInstitute>
                                                               }
                                                             }
                                                           },
-                                                          color: Colors.white,
+                                                          color: HexColor(AppColors.appColorWhite),
                                                           child: Text(
                                                               AppLocalizations.of(
                                                                       context)!

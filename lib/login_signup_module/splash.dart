@@ -300,15 +300,14 @@ class _SplashScreenState extends State<SplashScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Container(
-                            height: 100.w,
-                            width: 100.w,
+
                             child: Center(
                               child: Container(
-                                height: 140.w,
-                                width: 140.w,
+                                height: 60.w,
+                                width: 200.w,
                                 decoration: BoxDecoration(
                                   image: DecorationImage(
-                                    image: AssetImage('assets/appimages/Logo-120.png'),
+                                    image: AssetImage('assets/appimages/logo.png'),
                                     fit: BoxFit.fill,
                                   ),
                                 ),
@@ -321,16 +320,7 @@ class _SplashScreenState extends State<SplashScreen> {
                           ),
                         ],
                       )),
-                  Container(
-                    margin: EdgeInsets.only(bottom: 12.h),
-                    alignment: Alignment(0, -0.76),
-                    child: Text(
-                      AppLocalizations.of(context)!.translate("logo_main"),
-                      style: styleElements
-                          .headline5ThemeScalable(context)
-                          .copyWith(color: HexColor(AppColors.appColorWhite)),
-                    ),
-                  ),
+
                   Container(
                     margin: EdgeInsets.only(bottom: 12.h),
                     alignment: Alignment(0, -0.76),
