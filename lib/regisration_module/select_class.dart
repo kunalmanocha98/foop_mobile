@@ -344,7 +344,7 @@ late BuildContext sctx;
                                       margin: const EdgeInsets.only(
                                           bottom: 4),
                                       decoration: BoxDecoration(
-                                          color: Color(0x33F66666),
+                                          color: HexColor(AppColors.appMainColor33),
                                           borderRadius: BorderRadius
                                               .only(
                                               topRight:

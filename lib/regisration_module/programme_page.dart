@@ -243,7 +243,7 @@ class _SelectProgram extends State<SelectProgram>
                                   child: Container(
                                     width: double.infinity,
                                     decoration: BoxDecoration(
-                                        color: Color(0x33F66666),
+                                        color: HexColor(AppColors.appMainColor33),
                                         borderRadius: BorderRadius.only(
                                             topRight: Radius.circular(4.0),
                                             topLeft: Radius.circular(4.0))),

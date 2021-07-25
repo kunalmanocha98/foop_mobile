@@ -5,6 +5,7 @@ class AppColors {
   static const String appMainColor85 = "#D9FF2A4B";
   static const String appMainColor65 = "#A6FF2A4B";
   static const String appMainColor35 = "#59FF2A4B";
+  static const String appMainColor33 = "#33FF2A4B";
   static const String appMainColor10 = "#1AFF2A4B";
   static const String appTextPrimaryColor = "#D9000000";
   static const String appTextSecondaryColor = "#A6000000";
