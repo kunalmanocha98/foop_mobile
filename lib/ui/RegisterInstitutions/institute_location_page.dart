@@ -282,7 +282,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
               // resizeToAvoidBottomInset: false,
               appBar: TricycleAppBar().getCustomAppBar(context,
                   appBarTitle: isEvent! ?
-                  AppLocalizations.of(context)!.translate('register_institute'):
+                  AppLocalizations.of(context)!.translate('register__entity'):
                   AppLocalizations.of(context)!.translate('select_location'),
                   isIconVisible:isEvent,
                   actions: [
@@ -491,7 +491,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
                     if (value != null) {
                       var data = BaseResponse.fromJson(value);
                       if (data.statusCode == Strings.success_code) {
-                        prefs.setString("create_institute", "ConfirmDetails");
+                        prefs.setString("create_entity", "ConfirmDetails");
                         Navigator.push(
                             context,
                             MaterialPageRoute(

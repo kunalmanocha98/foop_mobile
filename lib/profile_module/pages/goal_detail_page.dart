@@ -410,7 +410,7 @@ class _GoalsDetailPage extends State<GoalsDetailPage> {
                                         left: 20, top: 20, right: 20, bottom: 20),
                                     child: Text(
                                       AppLocalizations.of(context)
-                                          .translate("select_right_institute"),
+                                          .translate("select_right_entity"),
                                       style: TextStyle(
                                         fontFamily: 'Source Sans Pro',
                                         fontSize: ScreenUtil().setSp(42,
@@ -489,7 +489,7 @@ class _GoalsDetailPage extends State<GoalsDetailPage> {
                                         left: 20, top: 20, right: 20, bottom: 20),
                                     child: Text(
                                       AppLocalizations.of(context)
-                                          .translate("select_right_institute"),
+                                          .translate("select_right_entity"),
                                       style: TextStyle(
                                         fontFamily: 'Source Sans Pro',
                                         fontSize: ScreenUtil().setSp(42,
@@ -568,7 +568,7 @@ class _GoalsDetailPage extends State<GoalsDetailPage> {
                                         left: 20, top: 20, right: 20, bottom: 20),
                                     child: Text(
                                       AppLocalizations.of(context)
-                                          .translate("select_right_institute"),
+                                          .translate("select_right_entity"),
                                       style: TextStyle(
                                         fontFamily: 'Source Sans Pro',
                                         fontSize: ScreenUtil().setSp(42,
@@ -663,7 +663,7 @@ class _GoalsDetailPage extends State<GoalsDetailPage> {
             title: new Text(
                 AppLocalizations.of(context)!.translate('are_you_sure')),
             content: new Text(
-                AppLocalizations.of(context)!.translate('exit_tricycle')),
+                AppLocalizations.of(context)!.translate('exit_app')),
             actions: <Widget>[
               new GestureDetector(
                 onTap: () => Navigator.of(context).pop(false),

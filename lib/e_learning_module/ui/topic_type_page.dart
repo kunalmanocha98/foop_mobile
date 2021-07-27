@@ -74,7 +74,7 @@ class _TopicTypePage extends State<TopicTypePage> {
           resizeToAvoidBottomInset: false,
           appBar: TricycleAppBar().getCustomAppBar(
             context,
-            appBarTitle: AppLocalizations.of(context)!.translate('Topic_type'),
+            appBarTitle: AppLocalizations.of(context)!.translate('topic_type'),
 
             onBackButtonPress: () {
               Navigator.pop(context);
@@ -328,7 +328,7 @@ class _CommentSheet extends State<CommentSheet> {
 // const EdgeInsets.only(left: 16.0, bottom: 8.0),
 // child: Text(
 // AppLocalizations.of(context)
-// .translate('Topic_name'),
+// .translate('topic_name'),
 // style: styleElements
 //     .headline6ThemeScalable(context)
 // .copyWith(fontWeight: FontWeight.bold),
@@ -345,7 +345,7 @@ class _CommentSheet extends State<CommentSheet> {
 // alignment: Alignment.centerLeft,
 // child: Text(
 // AppLocalizations.of(context)
-// .translate('academic_topic'),
+// .translate('entity_topic'),
 // style: styleElements
 //     .subtitle1ThemeScalable(context),
 // textAlign: TextAlign.left,
@@ -355,7 +355,7 @@ class _CommentSheet extends State<CommentSheet> {
 // alignment: Alignment.centerLeft,
 // child: Text(
 // AppLocalizations.of(context)
-// .translate("academic_desc"),
+// .translate("entity_desc"),
 // style: styleElements
 //     .bodyText2ThemeScalable(context),
 // textAlign: TextAlign.left,
@@ -377,7 +377,7 @@ class _CommentSheet extends State<CommentSheet> {
 // alignment: Alignment.centerLeft,
 // child: Text(
 // AppLocalizations.of(context)
-// .translate('non_academic_topic'),
+// .translate('non_entity_topic'),
 // style: styleElements
 //     .subtitle1ThemeScalable(context),
 // textAlign: TextAlign.left,
@@ -388,7 +388,7 @@ class _CommentSheet extends State<CommentSheet> {
 // alignment: Alignment.centerLeft,
 // child: Text(
 // AppLocalizations.of(context)
-// .translate("non_academic_desc"),
+// .translate("non_entity_desc"),
 // style: styleElements
 //     .bodyText2ThemeScalable(context),
 // textAlign: TextAlign.left,

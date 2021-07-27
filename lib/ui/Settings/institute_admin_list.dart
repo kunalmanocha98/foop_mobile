@@ -83,7 +83,7 @@ class InstituteAdminListPageState extends State<InstituteAdminListPage> {
       child: Scaffold(
         appBar: TricycleAppBar().getCustomAppBarWithSearch(context,
             appBarTitle:
-            AppLocalizations.of(context)!.translate('institute_admins'),
+            AppLocalizations.of(context)!.translate('entity_admins'),
             onBackButtonPress: () {
               Navigator.pop(context);
             },
@@ -120,7 +120,7 @@ class InstituteAdminListPageState extends State<InstituteAdminListPage> {
                           children: [
                             Padding(
                               padding: EdgeInsets.only(top: 4.0, left: 8,bottom: 8),
-                              child: Text(AppLocalizations.of(context)!.translate('select_institute')),
+                              child: Text(AppLocalizations.of(context)!.translate('select_entity')),
                             ),
                             ListTile(
                               contentPadding: EdgeInsets.all(0),
@@ -255,7 +255,7 @@ class _BottomSheetInstitute extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 12.0, left: 8, bottom: 12),
           child: Text(
-            AppLocalizations.of(context)!.translate('select_institute'),
+            AppLocalizations.of(context)!.translate('select_entity'),
             style: styleElements.headline6ThemeScalable(context),
           ),
         ),

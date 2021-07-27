@@ -121,7 +121,7 @@ class _DomainPage extends State<DomainPage>
           child: Scaffold(
             // resizeToAvoidBottomInset: false,
               appBar: TricycleAppBar().getCustomAppBar(context,
-                  appBarTitle: AppLocalizations.of(context)!.translate('register_institute'),
+                  appBarTitle: AppLocalizations.of(context)!.translate('register__entity'),
                   isIconVisible:false,
                   actions: [
 
@@ -136,7 +136,7 @@ class _DomainPage extends State<DomainPage>
                           {submit();}
                           else
                           {
-                            prefs.setString("create_institute", "Contact");
+                            prefs.setString("create_entity", "Contact");
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
@@ -294,7 +294,7 @@ setState(() {
         var resposne = BasicDataResponse.fromJson(value);
         if (resposne.statusCode == Strings.success_code) {
 
-          prefs.setString("create_institute", "Contact");
+          prefs.setString("create_entity", "Contact");
           Navigator.push(
               context,
               MaterialPageRoute(

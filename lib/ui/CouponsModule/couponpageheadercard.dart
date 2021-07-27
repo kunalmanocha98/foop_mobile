@@ -96,7 +96,7 @@ class CouponPageHeaderCardState extends State<CouponPageHeaderCard> {
                 child: Padding(
                   padding:
                       EdgeInsets.only(left: 8.0, right: 8, top: 4, bottom: 4),
-                  child: Text(AppLocalizations.of(context)!.translate('tricycle_coins'),
+                  child: Text(AppLocalizations.of(context)!.translate('app_coins'),
                     style: styleElements.captionThemeScalable(context).copyWith(
                         color: !isCashSelected
                             ? HexColor(AppColors.appMainColor)

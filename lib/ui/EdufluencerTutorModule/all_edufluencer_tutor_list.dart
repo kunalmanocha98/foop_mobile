@@ -61,7 +61,7 @@ class AllEdufluencerAndTutorsState extends State<AllEdufluencerAndTutors> {
                             padding: const EdgeInsets.all(8.0),
                             child: Text(widget.type == edufluencer_type.E ?
                             AppLocalizations.of(context)!.translate(
-                                'edufluencer_note')
+                                'mentor_note')
                                 : AppLocalizations.of(context)!.translate(
                                 'tutor_note')
                               , style: styleElements.subtitle1ThemeScalable(
@@ -98,7 +98,7 @@ class AllEdufluencerAndTutorsState extends State<AllEdufluencerAndTutors> {
                             child: Text(
                               AppLocalizations.of(context)!.translate(
                                   widget.type == edufluencer_type.E
-                                      ? 'become_edufluencer'
+                                      ? 'become_mentor'
                                       : "become_tutor"),
                               style: styleElements
                                   .captionThemeScalable(context)

@@ -84,7 +84,7 @@ class _SelectMembersPage extends State<SelectMembersPage> {
           appBar: TricycleAppBar().getCustomAppBarWithSearch(context,
               onSearchValueChanged: onsearchValueChanged,
               hintText: AppLocalizations.of(context)!
-                  .translate("search_tricycle_user"),
+                  .translate("search_app_user"),
               appBarTitle: AppLocalizations.of(context)!
                   .translate("select_members"), onBackButtonPress: () {
                 Navigator.pop(context);

@@ -49,7 +49,7 @@ class _CreateChapterLessonMainPage extends State<CreateChapterLessonMainPage> {
           appBar: TricycleAppBar().getCustomAppBar(
             context,
             appBarTitle:
-                AppLocalizations.of(context)!.translate('Create_lessons'),
+                AppLocalizations.of(context)!.translate('create_lessons'),
             onBackButtonPress: () {
               Navigator.pop(context);
             },
@@ -72,7 +72,7 @@ class _CreateChapterLessonMainPage extends State<CreateChapterLessonMainPage> {
                                       alignment: Alignment.centerLeft,
                                       child: Text(
                                         AppLocalizations.of(context)!
-                                            .translate("Lesson_topic"),
+                                            .translate("lesson_topic"),
                                         style: styleElements
                                             .subtitle1ThemeScalable(context),
                                         textAlign: TextAlign.left,
@@ -189,7 +189,7 @@ class _CreateChapterLessonMainPage extends State<CreateChapterLessonMainPage> {
                                         alignment: Alignment.centerLeft,
                                         child: Text(
                                           AppLocalizations.of(context)!
-                                              .translate("Chapters_lessons"),
+                                              .translate("chapters_lessons"),
                                           style: styleElements
                                               .subtitle1ThemeScalable(context),
                                           textAlign: TextAlign.left,
@@ -236,7 +236,7 @@ class _CreateChapterLessonMainPage extends State<CreateChapterLessonMainPage> {
                                       alignment: Alignment.centerLeft,
                                       child: Text(
                                         AppLocalizations.of(context)!
-                                            .translate("Tests"),
+                                            .translate("tests"),
                                         style: styleElements
                                             .subtitle1ThemeScalable(context),
                                         textAlign: TextAlign.left,
@@ -285,7 +285,7 @@ class _CreateChapterLessonMainPage extends State<CreateChapterLessonMainPage> {
                             padding: const EdgeInsets.only(left: 16.0),
                             child: Text(
                               AppLocalizations.of(context)!
-                                  .translate('Save_draft')
+                                  .translate('save_draft')
                                   .toUpperCase(),
                               style: styleElements
                                   .subtitle2ThemeScalable(context)
@@ -305,7 +305,7 @@ class _CreateChapterLessonMainPage extends State<CreateChapterLessonMainPage> {
                               color: HexColor(AppColors.appColorWhite),
                               child: Text(
                                 AppLocalizations.of(context)!
-                                    .translate('Publish')
+                                    .translate('publish')
                                     .toUpperCase(),
                                 style: styleElements
                                     .subtitle2ThemeScalable(context)

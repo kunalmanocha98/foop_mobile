@@ -61,7 +61,7 @@ class EarnCard extends StatelessWidget {
               ),
               Padding(
                 padding:  EdgeInsets.only(top:8.0),
-                child: Text(AppLocalizations.of(context)!.translate('get_institute_registered'),
+                child: Text(AppLocalizations.of(context)!.translate('get_entity_registered'),
                   style:  styleElements.subtitle1ThemeScalable(context),),
               ),
              

@@ -125,7 +125,7 @@ class CustomDialogue extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8.0),
                           side: BorderSide(color: HexColor(AppColors.appColorGreen))),
                       onPressed: () {
-                        prefs.setString("create_institute", "successFullyCreated");
+                        prefs.setString("create_entity", "successFullyCreated");
                         prefs.setBool("isProfileCreated",true);
                         Navigator.of(context).pushAndRemoveUntil(
                             MaterialPageRoute(
@@ -153,7 +153,7 @@ class CustomDialogue extends StatelessWidget {
                           borderRadius: BorderRadius.circular(8.0),
                           side: BorderSide(color: HexColor(AppColors.appMainColor))),
                       onPressed: () {
-                        prefs.setString("create_institute", "successFullyCreated");
+                        prefs.setString("create_entity", "successFullyCreated");
                         prefs.setBool("isProfileCreated",true);
                         Navigator.of(context).pushAndRemoveUntil(
                             MaterialPageRoute(

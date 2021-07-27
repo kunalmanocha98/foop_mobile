@@ -201,7 +201,7 @@ class _SelectDepartment extends State<SelectDepartment>
                                                                   AppLocalizations.of(
                                                                       context)
                                                                       .translate(
-                                                                      'selected_academic_year'),
+                                                                      'selected_financial_year'),
                                                                   style: styleElements
                                                                       .subtitle2ThemeScalable(
                                                                       context),

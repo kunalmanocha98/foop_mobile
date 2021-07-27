@@ -173,7 +173,7 @@ class _WelComeScreen extends State<WelComeScreen> {
                                   alignment: Alignment.centerLeft,
                                   child: Text(
                                     AppLocalizations.of(context)!
-                                        .translate("select_institute_role"),
+                                        .translate("select_entity_role"),
                                     style: styleElements
                                         .bodyText2ThemeScalable(context),
                                     textAlign: TextAlign.left,
@@ -218,7 +218,7 @@ class _WelComeScreen extends State<WelComeScreen> {
                                   alignment: Alignment.centerLeft,
                                   child: Text(
                                     AppLocalizations.of(context)!
-                                        .translate("select_institute_text"),
+                                        .translate("select_entity_text"),
                                     style: styleElements
                                         .bodyText2ThemeScalable(context),
                                     textAlign: TextAlign.left,
@@ -281,7 +281,7 @@ class _WelComeScreen extends State<WelComeScreen> {
                                     alignment: Alignment.centerLeft,
                                     child: Text(
                                       AppLocalizations.of(context).translate(
-                                          "select_institute_program"),
+                                          "select_entity_program"),
                                       style: styleElements
                                           .bodyText2ThemeScalable(context),
                                       textAlign: TextAlign.left,
@@ -349,7 +349,7 @@ class _WelComeScreen extends State<WelComeScreen> {
                                   alignment: Alignment.centerLeft,
                                   child: Text(
                                     AppLocalizations.of(context).translate(
-                                        "select_institute_discipline"),
+                                        "select_entity_discipline"),
                                     style: styleElements
                                         .bodyText2ThemeScalable(context),
                                     textAlign: TextAlign.left,
@@ -409,7 +409,7 @@ class _WelComeScreen extends State<WelComeScreen> {
                                     alignment: Alignment.centerLeft,
                                     child: Text(
                                       AppLocalizations.of(context).translate(
-                                          "select_institute_class_sec"),
+                                          "select_entity_class_sec"),
                                       style: styleElements
                                           .bodyText2ThemeScalable(context),
                                       textAlign: TextAlign.left,
@@ -473,7 +473,7 @@ class _WelComeScreen extends State<WelComeScreen> {
                                     alignment: Alignment.centerLeft,
                                     child: Text(
                                       AppLocalizations.of(context)
-                                          .translate("select_institute_sub"),
+                                          .translate("select_entity_sub"),
                                       style: styleElements
                                           .bodyText2ThemeScalable(context),
                                       textAlign: TextAlign.left,

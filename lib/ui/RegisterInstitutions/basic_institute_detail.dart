@@ -163,7 +163,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
       scrollPadding: EdgeInsets.all(20.0.w),
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-          hintText: AppLocalizations.of(context)!.translate('name_of_institute'),
+          hintText: AppLocalizations.of(context)!.translate('name_of_entity'),
           hintStyle: tsE.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)).copyWith(color: HexColor(AppColors.appColorBlack35)),
 
           border: UnderlineInputBorder(
@@ -275,7 +275,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
       hint: Padding(
         padding: const EdgeInsets.only(left: 0),
         child: Text(
-          selectInstType ?? AppLocalizations.of(context)!.translate("inst_type"),
+          selectInstType ?? AppLocalizations.of(context)!.translate("entity_type"),
           style: styleElements.bodyText2ThemeScalable(context),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
@@ -298,7 +298,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
         padding: const EdgeInsets.only(left: 0),
         child: Text(
           selectInstCategory ??
-              AppLocalizations.of(context)!.translate("inst_category"),
+              AppLocalizations.of(context)!.translate("entity_category"),
           style: styleElements.bodyText2ThemeScalable(context),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
@@ -575,7 +575,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
                   basicData.name=instituteNameC.text.toString();
                   basicData.description=descriptionController.text.toString();
                   basicData.inst_cat_code=cat;
-                  basicData.inst_type_code=type;
+                  basicData.entity_type_code=type;
                   basicData.listOfNames=_listOfHashTags;
                   prefs.setString("instName", instituteNameC.text.toString());
                   print(jsonEncode(basicData));
@@ -613,7 +613,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
   void getInstituteType() async {
     final body = jsonEncode({
       "search_val": "",
-      "dictonary_type_id": "inst_type",
+      "dictonary_type_id": "entity_type",
       "page_number": 1,
       "page_size": 115
     });

@@ -71,7 +71,7 @@ bool isCalling=false;
         resizeToAvoidBottomInset: false,
         backgroundColor: HexColor(AppColors.appColorBackground),
         appBar: TricycleAppBar().getCustomAppBarWithSearch(context,
-            appBarTitle: AppLocalizations.of(context)!.translate('select_academic_header'), onBackButtonPress: () {
+            appBarTitle: AppLocalizations.of(context)!.translate('select_department_header'), onBackButtonPress: () {
           Navigator.pop(context);
         }, onSearchValueChanged: (value) {
           setState(() {

@@ -162,7 +162,7 @@ class _SettingsPage extends State<SettingsPage> {
                         child: ListTile(
                           title: Text(
                               AppLocalizations.of(context)!
-                                  .translate("institute_admins"),
+                                  .translate("entity_admins"),
                               style: styleElements.subtitle1ThemeScalable(context)),
                         ),
                       ),
@@ -304,7 +304,7 @@ class _AccountSettings extends State<AccountSettings> {
                           ),
                           subtitle: Text(
                             AppLocalizations.of(context)!
-                                .translate("tricycle_lang_des"),
+                                .translate("app_lang_des"),
                             style: styleElements.captionThemeScalable(context),
                           ),
                         ),

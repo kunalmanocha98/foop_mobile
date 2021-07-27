@@ -412,7 +412,7 @@ class _ConfirmDetails extends State<ConfirmDetails>
                             ),
                             Padding(
                               padding: const EdgeInsets.all(16.0),
-                              child: Text(AppLocalizations.of(context)!.translate('institute_confirm_des'),
+                              child: Text(AppLocalizations.of(context)!.translate('entity_confirm_des'),
                                 style: styleElements
                                     .bodyText2ThemeScalable(context)
                                     .copyWith(fontWeight: FontWeight.bold),

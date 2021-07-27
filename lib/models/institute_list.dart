@@ -83,7 +83,7 @@ class InstituteItem {
     accessCode = json['access_code'];
     isRegistered=json['is_registered'];
     accessUrl = json['access_url'];
-    institutionType = json['institution_type'];
+    institutionType = json['entity_type'];
     code = json['code'];
     description = json['description'];
     name = json['name'];
@@ -110,7 +110,7 @@ class InstituteItem {
     data['is_registered']=this.isRegistered;
     data['access_code'] = this.accessCode;
     data['access_url'] = this.accessUrl;
-    data['institution_type'] = this.institutionType;
+    data['entity_type'] = this.institutionType;
     data['code'] = this.code;
     data['description'] = this.description;
     data['name'] = this.name;

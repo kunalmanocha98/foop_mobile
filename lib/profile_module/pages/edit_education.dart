@@ -280,8 +280,8 @@ class _EditEducation extends State<EditEducation>
         decoration: InputDecoration(
             contentPadding: EdgeInsets.fromLTRB(8.0, 15.0, 20.0, 8.0),
             hintText: isEducation
-                ? AppLocalizations.of(context)!.translate("Class_Degree")
-                : AppLocalizations.of(context)!.translate("degignation"),
+                ? AppLocalizations.of(context)!.translate("class_degree")
+                : AppLocalizations.of(context)!.translate("designation"),
             hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
             border: UnderlineInputBorder(
               borderSide: BorderSide(
