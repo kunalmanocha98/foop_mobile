@@ -152,7 +152,7 @@ class _SelectInstitute extends State<SelectInstituteSingle>
 
     list = [];
     list.add(TabMaker(
-      tabName: AppLocalizations.of(context)!.translate('select_institute'),
+      tabName: AppLocalizations.of(context)!.translate('select_entity'),
       statelessWidget: Container(
         margin: const EdgeInsets.only(bottom: 65),
         child: NotificationListener<ScrollNotification>(
@@ -220,7 +220,7 @@ class _SelectInstitute extends State<SelectInstituteSingle>
                                             child: Text(
                                               AppLocalizations.of(context)!
                                                   .translate(
-                                                  "select_right_institute"),
+                                                  "select_right_entity"),
                                               textAlign: TextAlign.center,
                                               style: styleElements
                                                   .captionThemeScalable(context),
@@ -697,7 +697,7 @@ class _SelectInstitute extends State<SelectInstituteSingle>
                                                                     AppLocalizations.of(
                                                                         context)!
                                                                         .translate(
-                                                                        "select_Institute"),
+                                                                        "select_entity"),
                                                                     context,HexColor(AppColors.information));}
                                                             }
                                                           },

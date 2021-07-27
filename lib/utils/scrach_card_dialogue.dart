@@ -253,7 +253,7 @@ class _ScratchCardDialogue  extends State<ScratchCardDialogue> {
             callBack!();
           }else {
             progressButtonKey.currentState!.hide();
-            prefs!.setString("create_institute", "created");
+            prefs!.setString("create_entity", "created");
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
                   builder: (context) =>
@@ -280,7 +280,7 @@ class _ScratchCardDialogue  extends State<ScratchCardDialogue> {
             callBack!();
           }else {
             progressButtonKey.currentState!.hide();
-            prefs!.setString("create_institute", "created");
+            prefs!.setString("create_entity", "created");
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
                   builder: (context) =>

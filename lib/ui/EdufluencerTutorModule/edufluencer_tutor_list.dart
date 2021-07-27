@@ -82,7 +82,7 @@ class _EdufluencerTutorList extends State<EdufluencerTutorList>
     if(status!.myEdufluencerTutorCount!>0 && widget.type == edufluencer_type.E) {
       list.add(CustomTabMaker(
           statelessWidget: AllEdufluencerAndTutors(type: widget.type,listType: 'my',isEdufluencer: status!.isEdufluencer),
-          tabName: AppLocalizations.of(context)!.translate('my_edufluencer')));
+          tabName: AppLocalizations.of(context)!.translate('my_mentor')));
     }
     if(status!.myEdufluencerTutorCount!>0 && widget.type == edufluencer_type.T) {
       list.add(CustomTabMaker(

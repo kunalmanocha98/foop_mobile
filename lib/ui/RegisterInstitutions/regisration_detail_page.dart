@@ -31,7 +31,7 @@ class RegisInstruction extends StatelessWidget{
                   moneyVal: "1000",
                   quote: '',
                   isClickable: false,
-                  type: "register_institute",
+                  type: "register__entity",
                 ),
                 TricycleCard(
                   margin: EdgeInsets.only(top:2,left:10,right: 10,bottom: 45),

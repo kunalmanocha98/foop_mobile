@@ -7,8 +7,8 @@ class Strings {
   static const String still_studying = "Still Studying";
   static const String add_edit_education = "Add/Edit Education";
   static const String goals_and_objectives = "Goals & Objectives";
-  static const String logo_main = "Tricycle";
-  static const String logo_slogan = "Mata-Pita-Guru";
+  static const String logo_main = "Ohoworks";
+  static const String logo_slogan = "Office-home-outdoor: Work from anywhere";
   static const String pls_wait = "Please Wait...";
   static const String get_onboard = "Get Onboard";
   static const String sign_in = "Sign In";
@@ -62,7 +62,7 @@ class Strings {
   static const String take_me_to_home = "Take me to Home Page";
   static const String primary_role =
       "Select primary role that you are responsible at";
-  static const String select_right_institute =
+  static const String select_right_entity =
       "Please select the right institute where you are associated with. Institutions with same name are highly possible";
   static const String upload_image_content = "Picture of you is important";
   static const String upload_image_content2 =

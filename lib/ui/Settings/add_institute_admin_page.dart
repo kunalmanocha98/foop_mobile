@@ -47,7 +47,7 @@ class AddInstituteAdminPageState extends State<AddInstituteAdminPage> {
         appBar: TricycleAppBar().getCustomAppBarWithSearch(context,
             controller: searchController,
             appBarTitle:
-            AppLocalizations.of(context)!.translate('add_institute_admin'),
+            AppLocalizations.of(context)!.translate('add_entity_admin'),
             onBackButtonPress: () {
               Navigator.pop(context);
             },

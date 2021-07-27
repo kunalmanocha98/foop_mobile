@@ -52,7 +52,7 @@ class BecomeEdufluencerFollowupPageState
       appBar: TricycleAppBar().getCustomAppBar(
         context,
         appBarTitle:
-        AppLocalizations.of(context)!.translate(widget.type == edufluencer_type.E?'become_edufluencer':"become_tutor"),
+        AppLocalizations.of(context)!.translate(widget.type == edufluencer_type.E?'become_mentor':"become_tutor"),
         actions: [
           TricycleTextButton(
             onPressed: () {

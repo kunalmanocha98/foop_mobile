@@ -281,7 +281,7 @@ late BuildContext sctx;
                                                           alignment:
                                                           Alignment
                                                               .center,
-                                                          child: Text(AppLocalizations.of(context)!.translate('selected_academic_year'),
+                                                          child: Text(AppLocalizations.of(context)!.translate('selected_financial_year'),
                                                             style: styleElements
                                                                 .subtitle2ThemeScalable(
                                                                 context),

@@ -2909,7 +2909,7 @@ class EducationPage extends StatelessWidget {
                             : type == "courses"
                             ? AppLocalizations.of(context)!
                             .translate(
-                            "academic_programs")
+                            "entity_programs")
                             : type == "department"
                             ? AppLocalizations.of(context)!
                             .translate(

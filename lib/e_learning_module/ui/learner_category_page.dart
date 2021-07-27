@@ -118,7 +118,7 @@ class _LearnerCategoryListResponse extends State<LearnerCategoryPage> {
                   Padding(
                     padding: const EdgeInsets.only(left :16.0,bottom: 8.0),
                     child: Text(
-                      widget.list![0]!=null &&widget.list![0]!.lessonTopic!=null&& widget.list![0]!.lessonTopic!.title!=null ?widget.list![0]!.lessonTopic!.title!:  AppLocalizations.of(context)!.translate('Topic_type'),
+                      widget.list![0]!=null &&widget.list![0]!.lessonTopic!=null&& widget.list![0]!.lessonTopic!.title!=null ?widget.list![0]!.lessonTopic!.title!:  AppLocalizations.of(context)!.translate('topic_type'),
                       style: styleElements
                           .headline6ThemeScalable(context)
                           .copyWith(fontWeight: FontWeight.bold),

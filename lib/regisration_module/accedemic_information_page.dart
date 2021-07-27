@@ -169,7 +169,7 @@ class _AcademicInformationPage extends State<AcademicInformationPage> {
                                           alignment: Alignment.centerLeft,
                                           child: Text(
                                             AppLocalizations.of(context)!.translate(
-                                                "select_institute_program"),
+                                                "select_entity_program"),
                                             style: styleElements
                                                 .bodyText2ThemeScalable(context),
                                             textAlign: TextAlign.left,
@@ -240,7 +240,7 @@ print(jsonEncode(widget.registerUserAs));
                                         alignment: Alignment.centerLeft,
                                         child: Text(
                                           AppLocalizations.of(context)!.translate(
-                                              "select_institute_discipline"),
+                                              "select_entity_discipline"),
                                           style: styleElements
                                               .bodyText2ThemeScalable(context),
                                           textAlign: TextAlign.left,
@@ -304,7 +304,7 @@ print(jsonEncode(widget.registerUserAs));
                                           alignment: Alignment.centerLeft,
                                           child: Text(
                                             AppLocalizations.of(context)!.translate(
-                                                "select_institute_class_sec"),
+                                                "select_entity_class_sec"),
                                             style: styleElements
                                                 .bodyText2ThemeScalable(context),
                                             textAlign: TextAlign.left,
@@ -368,7 +368,7 @@ print(jsonEncode(widget.registerUserAs));
                                           alignment: Alignment.centerLeft,
                                           child: Text(
                                             AppLocalizations.of(context)!
-                                                .translate("select_institute_sub"),
+                                                .translate("select_entity_sub"),
                                             style: styleElements
                                                 .bodyText2ThemeScalable(context),
                                             textAlign: TextAlign.left,

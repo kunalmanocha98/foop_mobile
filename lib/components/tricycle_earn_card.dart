@@ -74,7 +74,7 @@ class TricycleEarnCard extends StatelessWidget {
                             height: 4,
                           ),
                           Text(
-                           type=="register_institute"?AppLocalizations.of(context)!.translate("either_student_teacher") :'Minimum Guaranteed $coinsValue coins',
+                           type=="register__entity"?AppLocalizations.of(context)!.translate("either_student_teacher") :'Minimum Guaranteed $coinsValue coins',
                             style: styleElements
                                 .captionThemeScalable(context)
                                 .copyWith(),
@@ -87,7 +87,7 @@ class TricycleEarnCard extends StatelessWidget {
                     //   height: 100,
                     //   width: 100,
                     // )
-                    type=="register_institute"?SizedBox(
+                    type=="register__entity"?SizedBox(
                       height: 95,
                       width: 95,
                       child: Padding(
@@ -114,7 +114,7 @@ class TricycleEarnCard extends StatelessWidget {
                         clickAction(context);
                       },
                       color: HexColor(AppColors.appMainColor),
-                      child: Text(type=="register_institute"?"Register":'Verify',
+                      child: Text(type=="register__entity"?"Register":'Verify',
                       style: styleElements.buttonThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite)),),)
                     ],
                   ),
@@ -127,7 +127,7 @@ class TricycleEarnCard extends StatelessWidget {
   }
   void clickAction(BuildContext context) async{
     prefs??=await SharedPreferences.getInstance();
-     if(type=="register_institute" )
+     if(type=="register__entity" )
     {
       if(isClickable!)
         Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>RegisInstruction()));}
@@ -200,7 +200,7 @@ class TricycleEarnCard extends StatelessWidget {
         ]),
       );
     }
-   else if(type=='register_institute'){
+   else if(type=='register__entity'){
       return  RichText(
         text: TextSpan(children: [
           TextSpan(
@@ -235,7 +235,7 @@ class TricycleEarnCard extends StatelessWidget {
         text: TextSpan(children: [
           TextSpan(
               text:
-              'Get your institute validated and win upto',
+              'Get your company validated and win upto',
               style: styleElements
                   .subtitle1ThemeScalable(context)
                   .copyWith(

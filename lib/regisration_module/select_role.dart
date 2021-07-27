@@ -583,7 +583,7 @@ class _SelectRole extends State<SelectRole>
                   } else
                     ToastBuilder().showSnackBar(
                         AppLocalizations.of(context)!
-                            .translate("academic_years"),
+                            .translate("financial_years"),
                         sctx,
                         HexColor(AppColors.information));
                 },
@@ -815,7 +815,7 @@ class NoInstitutePage extends StatelessWidget {
                       moneyVal: "1000",
                       quote: '',
                       isClickable: true,
-                      type: "register_institute",
+                      type: "register__entity",
                     ),
                     Container(
                       margin: const EdgeInsets.all(16),

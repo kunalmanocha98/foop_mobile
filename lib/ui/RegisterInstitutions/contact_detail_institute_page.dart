@@ -189,7 +189,7 @@ bool isLoading=false;
           child: Scaffold(
               // resizeToAvoidBottomInset: false,
               appBar: TricycleAppBar().getCustomAppBar(context,
-                  appBarTitle: AppLocalizations.of(context)!.translate('register_institute'),
+                  appBarTitle: AppLocalizations.of(context)!.translate('register__entity'),
                   isIconVisible:false,
                   actions: [
 
@@ -288,7 +288,7 @@ bool isLoading=false;
                                       alignment: Alignment.centerLeft,
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: Text(AppLocalizations.of(context)!.translate('tricycle_web_auto')),
+                                        child: Text(AppLocalizations.of(context)!.translate('app_web_auto')),
                                       ))),
                                 )),
 
@@ -333,7 +333,7 @@ bool isLoading=false;
         var data = BaseResponse.fromJson(value);
         if(data.statusCode==Strings.success_code)
         {
-          prefs.setString("create_institute", "Address");
+          prefs.setString("create_entity", "Address");
           Navigator.push(
               context,
               MaterialPageRoute(

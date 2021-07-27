@@ -63,7 +63,7 @@ class BecomeEdufluencerTutorFormState extends State<BecomeEdufluencerTutorForm>
         appBarTitle:
         AppLocalizations.of(context)!.translate(
           widget.type == edufluencer_type.E
-            ?'become_edufluencer'
+            ?'become_mentor'
               :"become_tutor"
         ),
         actions: [
@@ -320,7 +320,7 @@ class BecomeEdufluencerTutorFormState extends State<BecomeEdufluencerTutorForm>
             ),
             Text(
               AppLocalizations.of(context)!
-                  .translate('write_something_about_edufluencer'),
+                  .translate('write_something_about_mentor'),
               style: styleElements.subtitle1ThemeScalable(context),
             ),
             SizedBox(

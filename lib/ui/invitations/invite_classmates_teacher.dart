@@ -89,7 +89,7 @@ class _InviteTeachersClassMates extends State<InviteTeachersClassMates> {
                           Container(
                               child: Text(
                             AppLocalizations.of(context)!
-                                .translate("invite_calssmates_friends"),
+                                .translate("invite_coworkerss"),
                             style:
                                 styleElements.headline6ThemeScalable(context),
                           )),

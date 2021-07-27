@@ -51,7 +51,7 @@ class _ClubsAndSocieties extends State<ClubsAndSocieties> {
           resizeToAvoidBottomInset: false,
           appBar: TricycleAppBar().getCustomAppBar(context,
               appBarTitle: AppLocalizations.of(context)!
-                  .translate("clubs_socities"), onBackButtonPress: () {
+                  .translate("clubs_societies"), onBackButtonPress: () {
                 Navigator.pop(context);
               }),
           body: Scaffold(

@@ -195,11 +195,11 @@ class _SelectProgramNew extends State<SelectProgramNew>
                                                         ? AppLocalizations.of(
                                                                 context)!
                                                             .translate(
-                                                                'selected_academic_year')
+                                                                'selected_financial_year')
                                                         : AppLocalizations.of(
                                                                 context)!
                                                             .translate(
-                                                                'select_academic_year'),
+                                                                'select_financial_year'),
                                                     style: styleElements
                                                         .subtitle2ThemeScalable(
                                                             context),
@@ -379,7 +379,7 @@ class _SelectProgramNew extends State<SelectProgramNew>
                                                                           } else {
                                                                             ToastBuilder().showToast(
                                                                                 AppLocalizations.of(context)!
-                                                                                    .translate("select_academic"),
+                                                                                    .translate("select_department"),
                                                                                 context,
                                                                                 HexColor(AppColors.information));
                                                                           }

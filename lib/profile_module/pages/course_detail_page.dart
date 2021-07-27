@@ -102,7 +102,7 @@ class _CourseDetailPage extends State<CourseDetailPage>
                         children: <Widget>[
                           InstituteCard(
                             title: "",
-                            subtitle: AppLocalizations.of(context)!.translate('academics'),
+                            subtitle: AppLocalizations.of(context)!.translate('entity'),
                             subtitle1: AppLocalizations.of(context)!.translate('courses'),
                             isShowMore: true,
                             isIntroCard: true,

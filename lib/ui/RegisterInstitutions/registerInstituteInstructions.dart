@@ -44,7 +44,7 @@ class RegisterInstituteInstructions extends StatelessWidget{
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(AppLocalizations.of(context)!.translate('institute_registration'),
+                    Text(AppLocalizations.of(context)!.translate('entity_registration'),
                       style: styleElements.headline6ThemeScalable(context).copyWith(
                         fontWeight: FontWeight.bold
                       ),),
@@ -53,7 +53,7 @@ class RegisterInstituteInstructions extends StatelessWidget{
                         fontWeight: FontWeight.bold
                       ),),
                     SizedBox(height: 10,),
-                    Text(AppLocalizations.of(context)!.translate('institute_reg_des'),
+                    Text(AppLocalizations.of(context)!.translate('entity_reg_des'),
                       style: styleElements.bodyText2ThemeScalable(context),),
                     SizedBox(height: 4,),
                     Text(AppLocalizations.of(context)!.translate('what_to_do'),

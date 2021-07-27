@@ -182,7 +182,7 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
             key: UniqueKey(),
             type: GLOBAL_SEARCH_ENUM.INSTITUTION.type,
           ),
-          tabName: AppLocalizations.of(context)!.translate('institute_title')));
+          tabName: AppLocalizations.of(context)!.translate('entity_title')));
       list.add(new CustomTabMaker(
           statelessWidget: new GlobalSearchPersonInstitutePage(
             entitySubType: entitySubType,
