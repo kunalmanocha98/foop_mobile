@@ -1314,7 +1314,7 @@ class _SelectInstitute extends State<SelectInstitute>
               margin: const EdgeInsets.only(left: 16, right: 16, bottom: 60),
               child: WhiteLargeButton(
                 name: AppLocalizations.of(context)!
-                    .translate("join_tricycle_institute"),
+                    .translate("join_app_entity"),
                 offsetX: 70.66,
                 offsetY: 12.93,
                 callback: () {

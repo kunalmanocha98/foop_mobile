@@ -663,7 +663,7 @@ class _GoalsDetailPage extends State<GoalsDetailPage> {
             title: new Text(
                 AppLocalizations.of(context)!.translate('are_you_sure')),
             content: new Text(
-                AppLocalizations.of(context)!.translate('exit_tricycle')),
+                AppLocalizations.of(context)!.translate('exit_app')),
             actions: <Widget>[
               new GestureDetector(
                 onTap: () => Navigator.of(context).pop(false),
