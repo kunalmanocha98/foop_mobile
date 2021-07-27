@@ -97,6 +97,8 @@ class _PostReceiverListPage extends State<PostReceiverListPage> {
                 pageErrorChecker: CustomPaginator(context).pageErrorChecker),
           ),
           Align(
+
+
               alignment: Alignment.bottomCenter,
               child: Container(
                 height: 60,
