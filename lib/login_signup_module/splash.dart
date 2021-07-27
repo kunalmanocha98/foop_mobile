@@ -262,7 +262,7 @@ class _SplashScreenState extends State<SplashScreen> {
     styleElements = TextStyleElements(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: HexColor(AppColors.appMainColor),
+      backgroundColor: HexColor(AppColors.appColorWhite),
       body: Stack(
         children: [
           Align(
@@ -284,7 +284,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     AppLocalizations.of(context)!
                         .translate('handcrafted_in_india'),
                     style: styleElements.captionThemeScalable(context).copyWith(
-                      color: HexColor(AppColors.appColorWhite),
+                      color: HexColor(AppColors.appColorBlack85),
                     ),
                   )
                 ],
@@ -328,7 +328,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       AppLocalizations.of(context)!.translate("logo_slogan"),
                       style: styleElements
                           .bodyText1ThemeScalable(context)
-                          .copyWith(color: HexColor(AppColors.appColorWhite)),
+                          .copyWith(color: HexColor(AppColors.appColorBlack85)),
                     ),
                   ),
                 ],

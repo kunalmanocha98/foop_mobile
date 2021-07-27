@@ -1314,12 +1314,10 @@ class _SelectInstitute extends State<SelectInstitute>
               margin: const EdgeInsets.only(left: 16, right: 16, bottom: 60),
               child: WhiteLargeButton(
                 name: AppLocalizations.of(context)!
-<<<<<<< HEAD
+
                     .translate("join_app_workplace"),
-=======
-                    .translate("join_app_entity"),
->>>>>>> 07c838e5a77ab389ad9bb65120315b8d521eea7d
-                offsetX: 70.66,
+
+      offsetX: 70.66,
                 offsetY: 12.93,
                 callback: () {
                  var registerUserdata=RegisterUserAs();
