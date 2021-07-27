@@ -1,9 +1,9 @@
 
 import 'package:flutter/material.dart';
 
-class TricycleRouteSlideRight extends PageRouteBuilder {
+class appRouteSlideRight extends PageRouteBuilder {
   final Widget? page;
-  TricycleRouteSlideRight({this.page})
+  appRouteSlideRight({this.page})
       : super(
     pageBuilder: (
         BuildContext context,
@@ -28,9 +28,9 @@ class TricycleRouteSlideRight extends PageRouteBuilder {
 }
 
 
-class TricycleRouteSlideBottom extends PageRouteBuilder {
+class appRouteSlideBottom extends PageRouteBuilder {
   final Widget? page;
-  TricycleRouteSlideBottom({this.page})
+  appRouteSlideBottom({this.page})
       : super(
     pageBuilder: (
         BuildContext context,
@@ -57,9 +57,9 @@ class TricycleRouteSlideBottom extends PageRouteBuilder {
   );
 }
 
-class TricycleRouteScale extends PageRouteBuilder {
+class appRouteScale extends PageRouteBuilder {
   final Widget? page;
-  TricycleRouteScale({this.page})
+  appRouteScale({this.page})
       : super(
     pageBuilder: (
         BuildContext context,
@@ -89,9 +89,9 @@ class TricycleRouteScale extends PageRouteBuilder {
 }
 
 
-class TricycleRouteRotation extends PageRouteBuilder {
+class appRouteRotation extends PageRouteBuilder {
   final Widget? page;
-  TricycleRouteRotation({this.page})
+  appRouteRotation({this.page})
       : super(
     pageBuilder: (
         BuildContext context,
@@ -122,9 +122,9 @@ class TricycleRouteRotation extends PageRouteBuilder {
 }
 
 
-class TricycleRouteSize extends PageRouteBuilder {
+class appRouteSize extends PageRouteBuilder {
   final Widget? page;
-  TricycleRouteSize({this.page})
+  appRouteSize({this.page})
       : super(
     pageBuilder: (
         BuildContext context,
@@ -148,9 +148,9 @@ class TricycleRouteSize extends PageRouteBuilder {
 }
 
 
-class TricycleRouteFade extends PageRouteBuilder {
+class appRouteFade extends PageRouteBuilder {
   final Widget? page;
-  TricycleRouteFade({this.page})
+  appRouteFade({this.page})
       : super(
     pageBuilder: (
         BuildContext context,
@@ -172,10 +172,10 @@ class TricycleRouteFade extends PageRouteBuilder {
 }
 
 
-class TricycleRouteEnterExit extends PageRouteBuilder {
+class appRouteEnterExit extends PageRouteBuilder {
   final Widget? enterPage;
   final Widget? exitPage;
-  TricycleRouteEnterExit({this.exitPage, this.enterPage})
+  appRouteEnterExit({this.exitPage, this.enterPage})
       : super(
     pageBuilder: (
         BuildContext context,
@@ -212,9 +212,9 @@ class TricycleRouteEnterExit extends PageRouteBuilder {
 
 
 
-class TricycleRouteScaleRotate extends PageRouteBuilder {
+class appRouteScaleRotate extends PageRouteBuilder {
   final Widget? page;
-  TricycleRouteScaleRotate({this.page})
+  appRouteScaleRotate({this.page})
       : super(
     pageBuilder: (
         BuildContext context,

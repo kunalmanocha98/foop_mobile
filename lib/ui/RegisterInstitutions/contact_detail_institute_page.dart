@@ -188,7 +188,7 @@ bool isLoading=false;
       child: SafeArea(
           child: Scaffold(
               // resizeToAvoidBottomInset: false,
-              appBar: TricycleAppBar().getCustomAppBar(context,
+              appBar: appAppBar().getCustomAppBar(context,
                   appBarTitle: AppLocalizations.of(context)!.translate('register_institute'),
                   isIconVisible:false,
                   actions: [
@@ -235,7 +235,7 @@ bool isLoading=false;
                 children: [
                   Visibility(
                       visible: !isGoogleOrFacebookDataReceived,
-                      child: TricycleCard(
+                      child: appCard(
                         child: Column(
                           children: <Widget>[
                             Align(

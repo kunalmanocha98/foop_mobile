@@ -49,7 +49,7 @@ class _GoalsScreen extends State<GoalsScreen> {
       child: Scaffold(
           resizeToAvoidBottomInset: false,
           backgroundColor: HexColor(AppColors.appColorBackground),
-          appBar:TricycleAppBar().getCustomAppBarWithSearch(
+          appBar:appAppBar().getCustomAppBarWithSearch(
               context,
               appBarTitle: 'Goals',
               onBackButtonPress: (){_onBackPressed();},

@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/commonComponents.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
-import 'package:oho_works_app/components/tricycleavatar.dart';
-import 'package:oho_works_app/components/tricycleemptywidget.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
+import 'package:oho_works_app/components/appemptywidget.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
 import 'package:oho_works_app/models/CommonListingModels/commonListingrequest.dart';
@@ -88,7 +88,7 @@ class _StudentsPage extends State<StudentsPage>
   late TextStyleElements styleElements;
   bool? fromBasicProfileFLow;
   Null Function()? callbackPicker;
-  GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKey = GlobalKey();
   _StudentsPage(this.registerUserAs);
 
   List<TabMaker> list = [];
@@ -244,7 +244,7 @@ class _StudentsPage extends State<StudentsPage>
                                               leading: SizedBox(
                                                 height: 52,
                                                 width: 52,
-                                                child: TricycleAvatar(
+                                                child: appAvatar(
                                                   size: 52,
                                                   key:UniqueKey(),
                                                   imageUrl:  listInstitute![index].avatar,
@@ -308,7 +308,7 @@ class _StudentsPage extends State<StudentsPage>
                       child: Visibility(
                         visible: searchValue != null &&
                             searchValue!.isNotEmpty,
-                        child: TricycleEmptyWidget(
+                        child: appEmptyWidget(
                           message: "No data found!!",
                         ),
                       ),
@@ -322,7 +322,7 @@ class _StudentsPage extends State<StudentsPage>
         onWillPop: _onBackPressed,
         child: SafeArea(
             child: Scaffold(
-              appBar: TricycleAppBar().getCustomAppBar(context,
+              appBar: appAppBar().getCustomAppBar(context,
                   appBarTitle: pageTitle, onBackButtonPress: () {
                     _onBackPressed();
                   }),
@@ -501,7 +501,7 @@ class _StudentsPage extends State<StudentsPage>
                                                                         right:
                                                                         16.0),
                                                                     child:
-                                                                    TricycleProgressButton(
+                                                                    appProgressButton(
                                                                       key: progressButtonKey,
                                                                       shape: RoundedRectangleBorder(
                                                                           borderRadius:

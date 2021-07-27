@@ -295,7 +295,7 @@ class InterestCard extends StatelessWidget {
   Widget build(BuildContext context) {
     listSubItems = data.subRow;
     styleElements = TextStyleElements(context);
-    return TricycleListCard(
+    return appListCard(
         child: Column(
       children: <Widget>[
         Row(

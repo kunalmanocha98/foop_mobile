@@ -1,5 +1,5 @@
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycleHtmlViewer.dart';
+import 'package:oho_works_app/components/appHtmlViewer.dart';
 import 'package:oho_works_app/enums/post_enums.dart';
 import 'package:oho_works_app/models/base_res.dart';
 import 'package:oho_works_app/models/post/postlist.dart';
@@ -157,7 +157,7 @@ class NoticeCards extends StatelessWidget {
                   dragStartBehavior: DragStartBehavior.start,
                   itemExtent: 0.5.sw,
                   itemBuilder: (context, index) {
-                    return TricycleListCard(
+                    return appListCard(
                       color: type == "QuestionCard"
                           ? HexColor(AppColors.appColorWhite)
                           : HexColor(listSubItems![index]
@@ -236,7 +236,7 @@ class NoticeCards extends StatelessWidget {
                               )
                               : Flexible(
                                 child: Container(
-                            child: TricycleHtmlViewer(
+                            child: appHtmlViewer(
                                 isDetailPage: false,
                                 isNewsPage: false,
                                 isNoticeCard: true,

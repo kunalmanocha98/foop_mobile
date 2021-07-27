@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
-import 'package:oho_works_app/components/tricycle_user_list_tile.dart';
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
+import 'package:oho_works_app/components/app_user_list_tile.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
 import 'package:oho_works_app/models/base_res.dart';
@@ -34,7 +34,7 @@ class _ReportAbuse extends State<ReportAbuse> {
   int? contextId;
   String contextType;
   late SharedPreferences prefs;
-  GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKey = GlobalKey();
   _ReportAbuse({required this.contextId, required this.contextType});
   List<CommonCardData>? listAbuses = [];
 
@@ -95,7 +95,7 @@ class _ReportAbuse extends State<ReportAbuse> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: TricycleAppBar().getCustomAppBar(
+        appBar: appAppBar().getCustomAppBar(
             context,
             appBarTitle: AppLocalizations.of(context)!.translate('report_content'),
             onBackButtonPress: (){Navigator.pop(context);}),

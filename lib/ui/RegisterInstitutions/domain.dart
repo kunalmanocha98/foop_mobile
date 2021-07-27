@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
@@ -120,7 +120,7 @@ class _DomainPage extends State<DomainPage>
       child: SafeArea(
           child: Scaffold(
             // resizeToAvoidBottomInset: false,
-              appBar: TricycleAppBar().getCustomAppBar(context,
+              appBar: appAppBar().getCustomAppBar(context,
                   appBarTitle: AppLocalizations.of(context)!.translate('register_institute'),
                   isIconVisible:false,
                   actions: [
@@ -180,7 +180,7 @@ class _DomainPage extends State<DomainPage>
                   SingleChildScrollView(
                     child: Visibility(
                         visible: !isGoogleOrFacebookDataReceived,
-                        child: TricycleCard(
+                        child: appCard(
                           child: Column(
                             children: <Widget>[
                               Align(
@@ -240,7 +240,7 @@ class _DomainPage extends State<DomainPage>
                                       child: Container(
                                         margin: const EdgeInsets.only(
                                             left: 16.0, right: 16.0),
-                                        child: TricycleElevatedButton(
+                                        child: appElevatedButton(
                                           shape: RoundedRectangleBorder(
                                               borderRadius:
                                               BorderRadius.circular(18.0),

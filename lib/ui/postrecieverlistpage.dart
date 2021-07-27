@@ -4,8 +4,8 @@ import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
-import 'package:oho_works_app/components/tricycle_user_list_tile.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
+import 'package:oho_works_app/components/app_user_list_tile.dart';
 import 'package:oho_works_app/enums/postRecipientType.dart';
 import 'package:oho_works_app/models/post/postcreate.dart';
 import 'package:oho_works_app/models/post/postreceiver.dart';
@@ -57,7 +57,7 @@ class _PostReceiverListPage extends State<PostReceiverListPage> {
   PostCreatePayload postCreatePayload = PostCreatePayload();
   bool isPrivateSelected = false;
 
-  GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKey = GlobalKey();
 
   _PostReceiverListPage({this.payload, this.selectedReceiverData});
 
@@ -71,7 +71,7 @@ class _PostReceiverListPage extends State<PostReceiverListPage> {
     styleElements = TextStyleElements(context);
     return SafeArea(
       child: Scaffold(
-        appBar: TricycleAppBar().getCustomAppBarWithSearch(context,
+        appBar: appAppBar().getCustomAppBarWithSearch(context,
             appBarTitle: AppLocalizations.of(context)!.translate('receivers'),
             onBackButtonPress: () {
               Navigator.pop(context);
@@ -105,7 +105,7 @@ class _PostReceiverListPage extends State<PostReceiverListPage> {
                     alignment: Alignment.centerRight,
                     child: Container(
                       margin: const EdgeInsets.only(left: 16.0, right: 16.0),
-                      child: TricycleProgressButton(
+                      child: appProgressButton(
                         key: progressButtonKey,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(18.0),
@@ -197,10 +197,10 @@ class _PostReceiverListPage extends State<PostReceiverListPage> {
   Widget listItemBuilder(value, int index) {
     PostReceiverListItem item = value;
     return Container(
-      child: TricycleCard(
+      child: appCard(
         padding: EdgeInsets.only(top: 8, bottom: 8),
         margin: EdgeInsets.only(top: 1, bottom: 1, left: 8, right: 8),
-        child: TricycleUserListTile(
+        child: appUserListTile(
           imageUrl: (item.recipientImage != null)
               ? Config.BASE_URL + item.recipientImage!
               : 'assets/appimages/userplaceholder.jpg',
@@ -260,7 +260,7 @@ class _PostReceiverListPage extends State<PostReceiverListPage> {
       showDialog(
           context: context,
           builder: (BuildContext context) {
-            return TricycleDialog(
+            return appDialog(
               message: item.allowedMsg,
             );
           });

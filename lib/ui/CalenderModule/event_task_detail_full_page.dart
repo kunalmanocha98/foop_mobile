@@ -1,6 +1,6 @@
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
 import 'package:oho_works_app/models/review_rating_comment/noteslistmodel.dart';
@@ -28,7 +28,7 @@ late TextStyleElements styleElements;
   @override
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
-    final titleProgressWidget = TricycleListCard(
+    final titleProgressWidget = appListCard(
       padding: EdgeInsets.only(left: 12,right: 16,top: 12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -51,7 +51,7 @@ late TextStyleElements styleElements;
           ],
         )
     );
-    final attachmentsWidget = TricycleListCard(
+    final attachmentsWidget = appListCard(
       padding: EdgeInsets.only(left: 12,right: 16,top: 12,bottom: 16),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -83,7 +83,7 @@ late TextStyleElements styleElements;
       ),
     );
 
-    final checkPointsWidget = TricycleListCard(
+    final checkPointsWidget = appListCard(
         padding: EdgeInsets.only(left: 12,right: 16,top: 12,bottom: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -110,13 +110,13 @@ late TextStyleElements styleElements;
             Row(
               children: [
                 Spacer(),
-                TricycleTextButton(onPressed: (){
+                appTextButton(onPressed: (){
 
                 }, child: Text('cancel',style: styleElements.captionThemeScalable(context).copyWith(
                       color: HexColor(AppColors.appMainColor)
                     ),)),
                 SizedBox(width: 16,),
-                TricycleTextButton(onPressed: (){
+                appTextButton(onPressed: (){
                   showDialog(
                       context: context,
                       useSafeArea: true,
@@ -133,7 +133,7 @@ late TextStyleElements styleElements;
         )
     );
 
-    final progressJournalWidget =  TricycleListCard(
+    final progressJournalWidget =  appListCard(
         padding: EdgeInsets.only(left: 12,right: 16,top: 12,bottom: 16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -166,7 +166,7 @@ late TextStyleElements styleElements;
     );
     return SafeArea(
       child: Scaffold(
-        appBar: TricycleAppBar().getCustomAppBar(context,
+        appBar: appAppBar().getCustomAppBar(context,
             appBarTitle: getTitle(), onBackButtonPress: () {
               Navigator.pop(context);
             }),
@@ -185,7 +185,7 @@ late TextStyleElements styleElements;
             ),
             Align(
               alignment: Alignment.bottomCenter,
-              child: TricycleTextButton(onPressed: (){},
+              child: appTextButton(onPressed: (){},
 
                   shape: RoundedRectangleBorder(),
                   color: HexColor(AppColors.appMainColor),

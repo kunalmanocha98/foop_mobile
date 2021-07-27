@@ -280,7 +280,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
       child: SafeArea(
           child: Scaffold(
               // resizeToAvoidBottomInset: false,
-              appBar: TricycleAppBar().getCustomAppBar(context,
+              appBar: appAppBar().getCustomAppBar(context,
                   appBarTitle: isEvent! ?
                   AppLocalizations.of(context)!.translate('register_institute'):
                   AppLocalizations.of(context)!.translate('select_location'),
@@ -329,7 +329,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
                   SingleChildScrollView(
                     child: Visibility(
                         visible: !isGoogleOrFacebookDataReceived,
-                        child: TricycleCard(
+                        child: appCard(
                           child: Column(
                             children: <Widget>[
                               Align(

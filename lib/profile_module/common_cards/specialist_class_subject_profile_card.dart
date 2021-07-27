@@ -13,7 +13,7 @@ class EdufluencerSpecialistSubjectCardState extends State<EdufluencerSpecialistS
   @override
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
-    return TricycleListCard(
+    return appListCard(
       padding: EdgeInsets.only(top: 16,bottom: 16,left: 24,right: 24),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

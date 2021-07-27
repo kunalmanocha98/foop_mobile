@@ -93,7 +93,7 @@ class _FollowersFollowingPage extends State<FollowersFollowingPage> with SingleT
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         backgroundColor: HexColor(AppColors.appColorBackground),
-        appBar: TricycleAppBar().getCustomAppBar(context,
+        appBar: appAppBar().getCustomAppBar(context,
             appBarTitle: pageTitle,
             onBackButtonPress: () {
 
@@ -123,7 +123,7 @@ class _FollowersFollowingPage extends State<FollowersFollowingPage> with SingleT
                             labelPadding: EdgeInsets.symmetric(horizontal: 8.0),
                             isScrollable: true,
                             tabs: List<Widget>.generate(list.length, (int index) {
-                              return TricycleTabButton(
+                              return appTabButton(
                                 tabName: list[index].tabName,
                                 isActive: index==_currentPosition,
                                 onPressed: (){

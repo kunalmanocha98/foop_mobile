@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
 import 'package:oho_works_app/mixins/editProfileMixin.dart';
 import 'package:oho_works_app/models/dynmaicres.dart';
 import 'package:oho_works_app/models/personal_profile.dart';
@@ -36,8 +36,8 @@ class BasicInfo extends StatefulWidget {
 class _BasicInfo extends State<BasicInfo>
     with EditProfileMixins, SingleTickerProviderStateMixin {
   final formKey = GlobalKey<FormState>();
-  GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
-  GlobalKey<TricycleProgressButtonState> progressButtonKeyNext = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKey = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKeyNext = GlobalKey();
   SharedPreferences? prefs;
   Null Function()? callback;
   late TextStyleElements styleElements;
@@ -669,7 +669,7 @@ class _BasicInfo extends State<BasicInfo>
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.only(left:16.0),
-                        child: TricycleProgressButton(
+                        child: appProgressButton(
                           key: progressButtonKey,
                           shape: RoundedRectangleBorder(
                               borderRadius:
@@ -712,7 +712,7 @@ class _BasicInfo extends State<BasicInfo>
 
                      ,  Padding(
                        padding: const EdgeInsets.only(right:16.0),
-                       child: TricycleProgressButton(
+                       child: appProgressButton(
                           key: progressButtonKeyNext,
                           shape: RoundedRectangleBorder(
                               borderRadius:
@@ -753,7 +753,7 @@ class _BasicInfo extends State<BasicInfo>
         child: Scaffold(
             resizeToAvoidBottomInset: true,
             backgroundColor: HexColor(AppColors.appColorBackground),
-            appBar: TricycleAppBar().getCustomAppBar(
+            appBar: appAppBar().getCustomAppBar(
               context,
               appBarTitle: 'Profile',
               onBackButtonPress: () {

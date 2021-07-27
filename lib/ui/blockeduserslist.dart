@@ -4,7 +4,7 @@ import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/searchBox.dart';
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
 import 'package:oho_works_app/models/FollowersData.dart';
@@ -74,7 +74,7 @@ class _BlockedUsersList extends State<BlockedUsersList> {
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         backgroundColor: HexColor(AppColors.appColorBackground),
-        appBar: TricycleAppBar().getCustomAppBar(context,
+        appBar: appAppBar().getCustomAppBar(context,
             appBarTitle: AppLocalizations.of(context)!
                 .translate('blocked_users'), onBackButtonPress: () {
               if (callback != null) callback!();
@@ -196,7 +196,7 @@ class _BlockedUsersList extends State<BlockedUsersList> {
                   },
                   child: Align(
                     alignment: Alignment.centerLeft,
-                    child: TricycleAvatar(
+                    child: appAvatar(
                         size: 52,
                         key: UniqueKey(),
                         resolution_type: RESOLUTION_TYPE.R64,

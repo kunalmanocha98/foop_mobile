@@ -32,7 +32,7 @@ class ApprovalListPageState extends State<ApprovalListPage> {
     return
      SafeArea(
           child: Scaffold(
-            appBar: TricycleAppBar().getCustomAppBarWithSearch(context,
+            appBar: appAppBar().getCustomAppBarWithSearch(context,
                 appBarTitle: AppLocalizations.of(context)!.translate('buddy_approval'),
                 onBackButtonPress: () {
                   Navigator.pop(context);
@@ -89,7 +89,7 @@ class ApprovalListPageState extends State<ApprovalListPage> {
 
   Widget listItemBuilder(itemData, int index) {
     RequestListItem item = itemData;
-    return TricycleRequestCard(
+    return appRequestCard(
       imageUrl: item.profileImage,
       buttonTitle: 'Verify',
       onButtonClickCallback: () {

@@ -94,7 +94,7 @@ class _WelComeScreen extends State<WelComeScreen> {
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: TricycleAppBar().getCustomAppBar(
+          appBar: appAppBar().getCustomAppBar(
             context,
             actions: [
               Visibility(
@@ -156,7 +156,7 @@ class _WelComeScreen extends State<WelComeScreen> {
                         opacity: 1.0,
                         child: GestureDetector(
                           behavior: HitTestBehavior.translucent,
-                          child: TricycleCard(
+                          child: appCard(
                             child: ListTile(
                                 tileColor: HexColor(AppColors.listBg),
                                 title: Align(
@@ -201,7 +201,7 @@ class _WelComeScreen extends State<WelComeScreen> {
                                 !isInstituteSelectedAlready!),
                         child: GestureDetector(
                           behavior: HitTestBehavior.translucent,
-                          child: TricycleCard(
+                          child: appCard(
                             child: ListTile(
                                 tileColor: HexColor(AppColors.listBg),
                                 title: Align(
@@ -264,7 +264,7 @@ class _WelComeScreen extends State<WelComeScreen> {
                           visible: !showLimited,
                           child: GestureDetector(
                             behavior: HitTestBehavior.translucent,
-                            child: TricycleCard(
+                            child: appCard(
                               child: ListTile(
                                   tileColor: HexColor(AppColors.listBg),
                                   title: Align(
@@ -332,7 +332,7 @@ class _WelComeScreen extends State<WelComeScreen> {
                         visible: isDepartment && type != "Other Staff",
                         child: GestureDetector(
                           behavior: HitTestBehavior.translucent,
-                          child: TricycleCard(
+                          child: appCard(
                             child: ListTile(
                                 tileColor: HexColor(AppColors.listBg),
                                 title: Align(
@@ -392,7 +392,7 @@ class _WelComeScreen extends State<WelComeScreen> {
                           visible: type != "Other Staff",
                           child: GestureDetector(
                             behavior: HitTestBehavior.translucent,
-                            child: TricycleCard(
+                            child: appCard(
                               child: ListTile(
                                   tileColor: HexColor(AppColors.listBg),
                                   title: Align(
@@ -456,7 +456,7 @@ class _WelComeScreen extends State<WelComeScreen> {
                           visible: isSubjectVisible && type != "Other Staff",
                           child: GestureDetector(
                             behavior: HitTestBehavior.translucent,
-                            child: TricycleCard(
+                            child: appCard(
                               child: ListTile(
                                   tileColor: HexColor(AppColors.listBg),
                                   title: Align(

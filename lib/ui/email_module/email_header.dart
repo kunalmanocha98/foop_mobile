@@ -1,4 +1,4 @@
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
 import 'package:oho_works_app/models/email_module/email_list_modules.dart';
@@ -37,7 +37,7 @@ class EmailCardHeaderState extends State<EmailCardHeader> {
         children: [
           Padding(
             padding: EdgeInsets.only(left: 8.0, right: 16),
-            child: TricycleAvatar(
+            child: appAvatar(
               key: UniqueKey(),
               resolution_type: RESOLUTION_TYPE.R64,
               service_type: SERVICE_TYPE.PERSON,

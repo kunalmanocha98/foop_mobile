@@ -258,7 +258,7 @@ class SelectedFeedPageState extends State<SelectedFeedListPage> {
     styleElements = TextStyleElements(context);
     return!isFromProfile!? SafeArea(
       child: Scaffold(
-          appBar: TricycleAppBar().getCustomAppBar(context,
+          appBar: appAppBar().getCustomAppBar(context,
               appBarTitle: appBarTitle,
               actions: isOthersPostList
                   ? []
@@ -414,7 +414,7 @@ class SelectedFeedPageState extends State<SelectedFeedListPage> {
                   }
                 }));
           },
-          child: TricyclePostCard(
+          child: appPostCard(
               key: UniqueKey(),
               isFilterPage: true,
               // color: isInView?HexColor(AppColors.appColorBlue)[200]:HexColor(AppColors.appColorWhite),
@@ -805,7 +805,7 @@ class _ShareBottomSheet extends State<BottomSheetContent> {
               //           },
               //         ),
               //         title: Text(
-              //           "Share through Tricycle messenger",
+              //           "Share through app messenger",
               //           style: styleElements.bodyText2ThemeScalable(context),
               //         ),
               //       )),

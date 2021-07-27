@@ -162,7 +162,7 @@ class _RoomDetailPage extends State<RoomDetailPage>
     styleElements = TextStyleElements(context);
     return SafeArea(
       child: Scaffold(
-          appBar: TricycleAppBar().getCustomAppBar(context,
+          appBar: appAppBar().getCustomAppBar(context,
               // appBarTitle: AppLocalizations.of(context)
               //     .translate("room_details"),
               appBarTitle: hasData
@@ -182,7 +182,7 @@ class _RoomDetailPage extends State<RoomDetailPage>
                   currentPosition: _currentPosition,
                   itemCount:
                   list != null && list.isNotEmpty ? list.length : 0,
-                  tabBuilder: (context, index) => TricycleTabButton(
+                  tabBuilder: (context, index) => appTabButton(
                     onPressed: () {
                       setState(() {
                         _currentPosition = index;

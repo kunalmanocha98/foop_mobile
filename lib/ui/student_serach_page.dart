@@ -4,9 +4,9 @@ import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/searchBox.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
-import 'package:oho_works_app/components/tricycle_user_list_tile.dart';
-import 'package:oho_works_app/components/tricycleemptywidget.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
+import 'package:oho_works_app/components/app_user_list_tile.dart';
+import 'package:oho_works_app/components/appemptywidget.dart';
 import 'package:oho_works_app/models/CommonListingModels/commonListingrequest.dart';
 import 'package:oho_works_app/models/RegisterUserAs.dart';
 import 'package:oho_works_app/models/register_user_as_response.dart';
@@ -55,7 +55,7 @@ class _StudentsPageNew extends State<StudentsPageNew>
   List<CommonListResponseItem> listInstitute = [];
   List<CommonListResponseItem> selectedL = [];
   CommonListResponseItem selectedItem = CommonListResponseItem();
-  GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKey = GlobalKey();
 
   @override
   bool get wantKeepAlive => true;
@@ -107,7 +107,7 @@ class _StudentsPageNew extends State<StudentsPageNew>
     return SafeArea(
       child: Scaffold(
         backgroundColor: HexColor(AppColors.appColorBackground),
-        appBar: TricycleAppBar().getCustomAppBar(context,
+        appBar: appAppBar().getCustomAppBar(context,
             appBarTitle: pageTitle, onBackButtonPress: () {
           _onBackPressed();
         }),
@@ -174,7 +174,7 @@ class _StudentsPageNew extends State<StudentsPageNew>
 
 
 
-              TricycleEmptyWidget(message: "No data found !!",),
+              appEmptyWidget(message: "No data found !!",),
             )),
             Align(
                 alignment: Alignment.bottomCenter,
@@ -223,7 +223,7 @@ class _StudentsPageNew extends State<StudentsPageNew>
                                         child: Container(
                                           margin: const EdgeInsets.only(
                                               left: 16.0, right: 16.0),
-                                          child: TricycleProgressButton(
+                                          child: appProgressButton(
                                             key: progressButtonKey,
                                             shape: RoundedRectangleBorder(
                                                 borderRadius:
@@ -298,7 +298,7 @@ class _StudentsPageNew extends State<StudentsPageNew>
       onTap: () {},
       child: Padding(
           padding: EdgeInsets.all(10),
-          child: TricycleUserListTile(
+          child: appUserListTile(
             imageUrl: item.avatar,
               title: item.title,
               trailingWidget: Checkbox(

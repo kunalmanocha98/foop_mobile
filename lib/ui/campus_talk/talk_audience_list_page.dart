@@ -3,9 +3,9 @@ import 'dart:developer';
 
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
-import 'package:oho_works_app/components/tricycle_event_card.dart';
-import 'package:oho_works_app/components/tricycle_talk_footer.dart';
-import 'package:oho_works_app/components/tricycle_talk_footer_button.dart';
+import 'package:oho_works_app/components/app_event_card.dart';
+import 'package:oho_works_app/components/app_talk_footer.dart';
+import 'package:oho_works_app/components/app_talk_footer_button.dart';
 import 'package:oho_works_app/event_bus/event_model.dart';
 import 'package:oho_works_app/home/locator.dart';
 import 'package:oho_works_app/models/CalenderModule/event_listings.dart';
@@ -80,7 +80,7 @@ class TalkEventPageState extends State<TalkEventPage> {
   List<int> participantIds = [];
   GlobalKey<TalkAudiencePageNexgeState> audiencePageKey = GlobalKey();
   GlobalKey<EventChatScreenPageState> chatPageKey = GlobalKey();
-  GlobalKey<TricycleTalkFooterState> footerKey = GlobalKey();
+  GlobalKey<appTalkFooterState> footerKey = GlobalKey();
   AudioSocketService? audioSocketService = locator<AudioSocketService>();
   EventBus? eventbus = locator<EventBus>();
   GlobalKey<EventPostScreenPageState> postScreenKey = GlobalKey();
@@ -231,7 +231,7 @@ class TalkEventPageState extends State<TalkEventPage> {
       child: SafeArea(
         child: Scaffold(
             resizeToAvoidBottomInset: false,
-            bottomNavigationBar: TricycleTalkFooter(
+            bottomNavigationBar: appTalkFooter(
               key: footerKey,
               chatCount: chatCount,
               role: role,
@@ -359,7 +359,7 @@ class TalkEventPageState extends State<TalkEventPage> {
                                           ),
                                   ),
                                   Flexible(
-                                    child: TricycleEventCard(
+                                    child: appEventCard(
                                       key: UniqueKey(),
                                       withCard: false,
                                       title: eventModel!.title,

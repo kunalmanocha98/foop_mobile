@@ -321,7 +321,7 @@ class _ParticularSubject extends State<ParticularSubject>
                                             isScrollable: true,
                                             tabs: List<Widget>.generate(
                                                 list.length, (int index) {
-                                                  return TricycleTabButton(
+                                                  return appTabButton(
                                                     isActive: index ==
                                                         _currentPosition,
                                                     tabName:  list[index].tabName,

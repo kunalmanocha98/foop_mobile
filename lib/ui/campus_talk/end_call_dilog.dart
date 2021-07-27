@@ -1,4 +1,4 @@
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
@@ -38,7 +38,7 @@ final Null Function()? callBackCancel;
             child: Row(
               children: [
                 Spacer(),
-                TricycleTextButton(
+                appTextButton(
                   onPressed: (){
                     Navigator.pop(context);
                     callBackCancel!();
@@ -48,7 +48,7 @@ final Null Function()? callBackCancel;
                       color: HexColor(AppColors.appMainColor)
                   ),),
                 ),
-                TricycleTextButton(
+                appTextButton(
                   onPressed: (){
 
                     Navigator.pop(context);

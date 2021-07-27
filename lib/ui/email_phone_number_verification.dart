@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/commonComponents.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
@@ -120,7 +120,7 @@ class _EmailPhoneVerification extends State<EmailPhoneVerification> {
     styleElements = TextStyleElements(context);
     return SafeArea(
         child: Scaffold(
-            appBar: TricycleAppBar().getCustomAppBar(
+            appBar: appAppBar().getCustomAppBar(
               context,
               onBackButtonPress: () {
                 Navigator.pop(context);
@@ -305,7 +305,7 @@ class _EmailPhoneVerification extends State<EmailPhoneVerification> {
                                 height: 52.0,
                                 margin: const EdgeInsets.only(
                                     top: 16.0, bottom: 16.0),
-                                child: TricycleElevatedButton(
+                                child: appElevatedButton(
                                   shape: RoundedRectangleBorder(
                                       borderRadius:
                                       BorderRadius.circular(24.0),
@@ -361,7 +361,7 @@ class _EmailPhoneVerification extends State<EmailPhoneVerification> {
                                     mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
                                     children: <Widget>[
-                                      TricycleTextButton(
+                                      appTextButton(
                                         onPressed: () {
                                           _handleKeypadClick('1');
                                         },
@@ -372,7 +372,7 @@ class _EmailPhoneVerification extends State<EmailPhoneVerification> {
                                                 fontWeight:
                                                 FontWeight.normal)),
                                       ),
-                                      TricycleTextButton(
+                                      appTextButton(
                                         onPressed: () {
                                           _handleKeypadClick('2');
                                         },
@@ -383,7 +383,7 @@ class _EmailPhoneVerification extends State<EmailPhoneVerification> {
                                                 fontWeight:
                                                 FontWeight.normal)),
                                       ),
-                                      TricycleTextButton(
+                                      appTextButton(
                                         onPressed: () {
                                           _handleKeypadClick('3');
                                         },
@@ -399,7 +399,7 @@ class _EmailPhoneVerification extends State<EmailPhoneVerification> {
                                     mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
                                     children: <Widget>[
-                                      TricycleTextButton(
+                                      appTextButton(
                                         onPressed: () {
                                           _handleKeypadClick('4');
                                         },
@@ -410,7 +410,7 @@ class _EmailPhoneVerification extends State<EmailPhoneVerification> {
                                                 fontWeight:
                                                 FontWeight.normal)),
                                       ),
-                                      TricycleTextButton(
+                                      appTextButton(
                                         onPressed: () {
                                           _handleKeypadClick('5');
                                         },
@@ -421,7 +421,7 @@ class _EmailPhoneVerification extends State<EmailPhoneVerification> {
                                                 fontWeight:
                                                 FontWeight.normal)),
                                       ),
-                                      TricycleTextButton(
+                                      appTextButton(
                                         onPressed: () {
                                           _handleKeypadClick('6');
                                         },
@@ -437,7 +437,7 @@ class _EmailPhoneVerification extends State<EmailPhoneVerification> {
                                     mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
                                     children: <Widget>[
-                                      TricycleTextButton(
+                                      appTextButton(
                                         onPressed: () {
                                           _handleKeypadClick('7');
                                         },
@@ -448,7 +448,7 @@ class _EmailPhoneVerification extends State<EmailPhoneVerification> {
                                                 fontWeight:
                                                 FontWeight.normal)),
                                       ),
-                                      TricycleTextButton(
+                                      appTextButton(
                                         onPressed: () {
                                           _handleKeypadClick('8');
                                         },
@@ -459,7 +459,7 @@ class _EmailPhoneVerification extends State<EmailPhoneVerification> {
                                                 fontWeight:
                                                 FontWeight.normal)),
                                       ),
-                                      TricycleTextButton(
+                                      appTextButton(
                                         onPressed: () {
                                           _handleKeypadClick('9');
                                         },
@@ -477,7 +477,7 @@ class _EmailPhoneVerification extends State<EmailPhoneVerification> {
                                       mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,
                                       children: <Widget>[
-                                        TricycleTextButton(
+                                        appTextButton(
                                           onPressed: () {
                                             _handleSubmit();
                                           },
@@ -489,7 +489,7 @@ class _EmailPhoneVerification extends State<EmailPhoneVerification> {
                                                   fontWeight:
                                                   FontWeight.normal)),
                                         ),
-                                        TricycleTextButton(
+                                        appTextButton(
                                           onPressed: () {
                                             _handleKeypadClick('0');
                                           },
@@ -501,7 +501,7 @@ class _EmailPhoneVerification extends State<EmailPhoneVerification> {
                                                   fontWeight:
                                                   FontWeight.normal)),
                                         ),
-                                        TricycleTextButton(
+                                        appTextButton(
                                           onPressed: () {
                                             _handleKeypadDel();
                                           },

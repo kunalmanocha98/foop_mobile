@@ -5,8 +5,8 @@ import 'dart:io';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/appbar_with_profile%20_image.dart';
-import 'package:oho_works_app/components/tricycle_event_card.dart';
-import 'package:oho_works_app/components/tricycleemptywidget.dart';
+import 'package:oho_works_app/components/app_event_card.dart';
+import 'package:oho_works_app/components/appemptywidget.dart';
 import 'package:oho_works_app/enums/create_deeplink.dart';
 import 'package:oho_works_app/enums/event_status_code.dart';
 import 'package:oho_works_app/enums/paginatorEnums.dart';
@@ -284,7 +284,7 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
                           itemExtent: 400,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (BuildContext context, int index) {
-                            return TricycleEventCard(
+                            return appEventCard(
                               cardHeight: 240,
                               title: confirmedList[index].title,
                               description: confirmedList[index].subtitle,
@@ -346,7 +346,7 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
                                                   confirmedList[index]
                                                       .startTime!)),
                                           okCallback: () {
-                                            Navigator.push(context, TricycleRouteSlideBottom(
+                                            Navigator.push(context, appRouteSlideBottom(
                                               page: TalkEventPage(
                                                         key: talk,
                                                         socket: socketService!.getSocket(),
@@ -498,7 +498,7 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
 
   Widget emptyListWidgetMaker() {
     return Center(
-      child: TricycleEmptyWidgetForAudioList(
+      child: appEmptyWidgetForAudioList(
             message: AppLocalizations.of(context)!.translate('no_audio_events'),
             assetImage: 'assets/appimages/live.png'),
     );
@@ -547,7 +547,7 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
   }
 
   Widget listItemBuilder(EventListItem item, int index) {
-    return TricycleEventCard(
+    return appEventCard(
       title: item.title,
       listofImages: item.participantList != null
           ? List<String?>.generate(item.participantList!.length, (index) {
@@ -601,7 +601,7 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
             ToastBuilder().showSnackBar(AppLocalizations.of(sctx)!.translate('event_warning'), context, HexColor(AppColors.failure));
           }
         }else {
-          Navigator.push(context, TricycleRouteSlideBottom(
+          Navigator.push(context, appRouteSlideBottom(
               page: TalkEventPage(
                 key: talk,
                 socket: socketService!.getSocket(),
@@ -812,7 +812,7 @@ class CampusTalkPageState extends State<CampusTalkListPage> {
       ToastBuilder().showSnackBar('Event has not started yet', sctx, HexColor(AppColors.information));
     }else if(response.rows!.eventStatus == EVENT_STATUS.LIVE.status) {
 
-      Navigator.push(context, TricycleRouteSlideBottom(
+      Navigator.push(context, appRouteSlideBottom(
           page: TalkEventPage(
             key: talk,
             socket: socketService!.getSocket(),

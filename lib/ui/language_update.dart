@@ -3,7 +3,7 @@ import 'dart:developer';
 
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
 import 'package:oho_works_app/models/dynmaicres.dart';
 import 'package:oho_works_app/models/language_list.dart';
 import 'package:oho_works_app/models/settignsView.dart';
@@ -46,7 +46,7 @@ class _UpdateLanguagePage extends State<UpdateLanguagePage> {
   bool isSingleSelection;
   late SettingsView settingsView;
   int? rowId;
-  GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKey = GlobalKey();
   _UpdateLanguagePage(this.isSingleSelection,this.rowId);
 
   @override
@@ -106,7 +106,7 @@ class _UpdateLanguagePage extends State<UpdateLanguagePage> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: HexColor(AppColors.appColorBackground),
-        appBar: TricycleAppBar().getCustomAppBar(
+        appBar: appAppBar().getCustomAppBar(
             context,
             appBarTitle:  AppLocalizations.of(context)!.translate("language"),
             onBackButtonPress: (){ Navigator.pop(context);}),
@@ -177,7 +177,7 @@ class _UpdateLanguagePage extends State<UpdateLanguagePage> {
                       alignment: Alignment.centerRight,
                       child: Container(
                         margin: const EdgeInsets.only(left: 16.0, right: 16.0),
-                        child: TricycleProgressButton(
+                        child: appProgressButton(
                           key: progressButtonKey,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(18.0),

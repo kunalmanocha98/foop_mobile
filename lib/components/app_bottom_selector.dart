@@ -1,5 +1,5 @@
-import 'package:oho_works_app/components/tricycle_talk_footer_button.dart';
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/app_talk_footer_button.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/enums/create_deeplink.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
@@ -29,17 +29,17 @@ import 'package:nexge_video_conference/nexge_rtc.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class TricycleBottomSelector extends StatefulWidget {
+class appBottomSelector extends StatefulWidget {
   final Function(int)? onItemTapped;
   final int? currentIndex;
   final int? chatCount;
-  TricycleBottomSelector({Key? key,this.onItemTapped, this.currentIndex,this.chatCount}):super(key: key);
+  appBottomSelector({Key? key,this.onItemTapped, this.currentIndex,this.chatCount}):super(key: key);
 
   @override
-  TricycleBottomSelectorState createState() => TricycleBottomSelectorState();
+  appBottomSelectorState createState() => appBottomSelectorState();
 }
 
-class TricycleBottomSelectorState extends State<TricycleBottomSelector> {
+class appBottomSelectorState extends State<appBottomSelector> {
   late TextStyleElements styleElements;
   bool playbackOptionVisible = false;
   late ParticipantNotifier _participantNotifier;
@@ -75,7 +75,7 @@ class TricycleBottomSelectorState extends State<TricycleBottomSelector> {
     });
 
     eventbus!.on<TalkEventOpen>().listen((event) {
-      Navigator.push(context, TricycleRouteSlideBottom(
+      Navigator.push(context, appRouteSlideBottom(
           page:  TalkEventPage(
             eventModel: eventModel,
             hideLoader:true,
@@ -132,7 +132,7 @@ class TricycleBottomSelectorState extends State<TricycleBottomSelector> {
             visible: playbackOptionVisible,
             child: GestureDetector(
               onTap: (){
-                Navigator.push(context, TricycleRouteSlideBottom(
+                Navigator.push(context, appRouteSlideBottom(
                     page:  TalkEventPage(
                       eventModel: eventModel,
                       hideLoader:true,
@@ -171,7 +171,7 @@ class TricycleBottomSelectorState extends State<TricycleBottomSelector> {
                             });
                           }),
                     ),
-                    TricycleAvatar(
+                    appAvatar(
                       size: 36,
                       key: UniqueKey(),
                       imageUrl: eventModel!=null ? eventModel!.header!.avatar:"",

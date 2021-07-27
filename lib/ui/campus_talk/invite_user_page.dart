@@ -4,9 +4,9 @@ import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
-import 'package:oho_works_app/components/tricycle_user_list_tile.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
+import 'package:oho_works_app/components/app_user_list_tile.dart';
 import 'package:oho_works_app/enums/member%20enums.dart';
 import 'package:oho_works_app/home/locator.dart';
 import 'package:oho_works_app/models/CalenderModule/event_create_models.dart';
@@ -36,7 +36,7 @@ class InviteTalkParticipantsState extends State<InviteTalkParticipants>{
   late TextStyleElements styleElements;
   List<MemberListItem> memberItemList = [];
   List<MembersItem> selectedList = [];
-  GlobalKey<TricycleProgressButtonState> progressButtonState = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonState = GlobalKey();
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
   bool isAddAll = false;
 
@@ -50,7 +50,7 @@ class InviteTalkParticipantsState extends State<InviteTalkParticipants>{
     return SafeArea(
         child:
         Scaffold(
-          appBar: TricycleAppBar().getCustomAppBarWithSearch(context,
+          appBar: appAppBar().getCustomAppBarWithSearch(context,
               onSearchValueChanged: (value) {
                 searchVal = value;
                 refresh();
@@ -60,7 +60,7 @@ class InviteTalkParticipantsState extends State<InviteTalkParticipants>{
                 Navigator.pop(context);
               },
               actions: [
-                TricycleProgressButton(
+                appProgressButton(
                   key: progressButtonState,
                   onPressed: () {
                     inviteUsers();
@@ -104,7 +104,7 @@ class InviteTalkParticipantsState extends State<InviteTalkParticipants>{
                 ),
               ),
               Expanded(
-                child: TricycleListCard(
+                child: appListCard(
                   child: Paginator.listView(
                     key: paginatorKey,
                       pageLoadFuture: fetchList,
@@ -160,7 +160,7 @@ class InviteTalkParticipantsState extends State<InviteTalkParticipants>{
       margin: EdgeInsets.only(top: 1, bottom: 1, left: 12, right: 12),
       child: InkWell(
         onTap: () {},
-        child: TricycleUserListTile(
+        child: appUserListTile(
           imageUrl: value.profileImage,
             title:
               (value.firstName != null && value.lastName != null)
@@ -186,7 +186,7 @@ class InviteTalkParticipantsState extends State<InviteTalkParticipants>{
                 icon: Icon(Icons.close),
               ),
             )
-                : TricycleElevatedButton(
+                : appElevatedButton(
               onPressed: () {
                 // if (value.isFollowing) {
                 MembersItem item = MembersItem();

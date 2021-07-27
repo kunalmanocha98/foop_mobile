@@ -5,7 +5,7 @@ import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/components/paginator.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
 import 'package:oho_works_app/e_learning_module/model/chapter_response.dart';
 import 'package:oho_works_app/e_learning_module/model/create_chapter_response.dart';
 import 'package:oho_works_app/e_learning_module/ui/lessons_page.dart';
@@ -34,8 +34,8 @@ class _CreateChapterPage extends State<CreateChapterPage> {
 late   BuildContext context;
   late TextStyleElements styleElements;
   String? searchVal;
-  GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
-  GlobalKey<TricycleProgressButtonState> progressButtonKeyNext = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKey = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKeyNext = GlobalKey();
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
 
   @override
@@ -55,7 +55,7 @@ late   BuildContext context;
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: TricycleAppBar().getCustomAppBar(
+          appBar: appAppBar().getCustomAppBar(
             context,
             appBarTitle: AppLocalizations.of(context)!.translate('chapters'),
             actions: [
@@ -120,7 +120,7 @@ late   BuildContext context;
     return Visibility(
       child: GestureDetector(
         behavior: HitTestBehavior.translucent,
-        child: TricycleCard(
+        child: appCard(
           child: ListTile(
             tileColor: HexColor(AppColors.listBg),
             title: Align(

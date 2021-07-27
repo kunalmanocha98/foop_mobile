@@ -1,5 +1,5 @@
-import 'package:oho_works_app/components/tricycle_buttons.dart';
-import 'package:oho_works_app/components/tricycleemptywidget.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
+import 'package:oho_works_app/components/appemptywidget.dart';
 import 'package:oho_works_app/models/followersfollowinglistdata.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
@@ -54,7 +54,7 @@ class CustomPaginator {
             ),
           ),
         ),*/
-        TricycleElevatedButton(
+        appElevatedButton(
           onPressed: retryListener,
           color: HexColor(AppColors.appColorWhite),
           child: Text(AppLocalizations.of(context)!.translate('retry'),style: TextStyleElements(context).buttonThemeScalable(context).copyWith(color: HexColor(AppColors.appMainColor)),),
@@ -71,7 +71,7 @@ class CustomPaginator {
 
   Widget emptyListWidgetMaker(dynamic response,{String? message,String? assetImage}) {
     return Center(
-      child: TricycleEmptyWidget(
+      child: appEmptyWidget(
           message: message!=null?message:AppLocalizations.of(context)!
               .translate('no_data'),
         assetImage: assetImage,

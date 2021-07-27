@@ -1,7 +1,7 @@
 
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/searchBox.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/models/base_res.dart';
 import 'package:oho_works_app/profile_module/common_cards/overlaped_circular_images.dart';
 import 'package:oho_works_app/profile_module/pages/sportsexpertisedialog.dart';
@@ -50,7 +50,7 @@ class _SportsClubListPage extends State<SportsClubListPage> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: TricycleAppBar().getCustomAppBar(context,
+        appBar: appAppBar().getCustomAppBar(context,
             appBarTitle:AppLocalizations.of(context)!.translate("sports_fitness"),
             onBackButtonPress: (){
           Navigator.pop(context);
@@ -189,7 +189,7 @@ class _SportsClubListPage extends State<SportsClubListPage> {
                                           ),
                                           Container(
                                             margin: const EdgeInsets.all(16),
-                                            child: TricycleElevatedButton(
+                                            child: appElevatedButton(
                                               shape: RoundedRectangleBorder(
                                                   borderRadius:
                                                       BorderRadius.circular(8.0),

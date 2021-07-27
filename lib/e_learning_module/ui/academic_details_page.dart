@@ -1,6 +1,6 @@
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
 import 'package:oho_works_app/models/e_learning/academic_details_selection_model.dart';
 import 'package:oho_works_app/models/post/postcreate.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
@@ -27,8 +27,8 @@ final PostCreatePayload? createLessonData;
 class _AcademicDetailspage extends State<AcademicDetailspage> {
   late BuildContext context;
   late TextStyleElements styleElements;
-  GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
-  GlobalKey<TricycleProgressButtonState> progressButtonKeyNext = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKey = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKeyNext = GlobalKey();
   List<AcademicDetailSelectionItem> affiliatedList = [];
   List<AcademicDetailSelectionItem> programmesList = [];
   List<AcademicDetailSelectionItem> classesList = [];
@@ -50,7 +50,7 @@ class _AcademicDetailspage extends State<AcademicDetailspage> {
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: TricycleAppBar().getCustomAppBar(
+          appBar: appAppBar().getCustomAppBar(
             context,
             actions: [
               Padding(
@@ -98,7 +98,7 @@ class _AcademicDetailspage extends State<AcademicDetailspage> {
                         Visibility(
                           child: GestureDetector(
                             behavior: HitTestBehavior.translucent,
-                            child: TricycleCard(
+                            child: appCard(
 
                               child: ListTile(
                                   tileColor: HexColor(AppColors.listBg),
@@ -152,7 +152,7 @@ class _AcademicDetailspage extends State<AcademicDetailspage> {
                           opacity:1.0,
                           child: GestureDetector(
                             behavior: HitTestBehavior.translucent,
-                            child: TricycleCard(
+                            child: appCard(
 
                               child: ListTile(
                                   tileColor: HexColor(AppColors.listBg),
@@ -206,7 +206,7 @@ class _AcademicDetailspage extends State<AcademicDetailspage> {
                           opacity:1.0,
                           child: GestureDetector(
                             behavior: HitTestBehavior.translucent,
-                            child: TricycleCard(
+                            child: appCard(
 
                               child: ListTile(
                                   tileColor: HexColor(AppColors.listBg),
@@ -262,7 +262,7 @@ class _AcademicDetailspage extends State<AcademicDetailspage> {
 
                             child: GestureDetector(
                               behavior: HitTestBehavior.translucent,
-                              child: TricycleCard(
+                              child: appCard(
 
                                 child: ListTile(
                                     tileColor: HexColor(AppColors.listBg),
@@ -317,7 +317,7 @@ class _AcademicDetailspage extends State<AcademicDetailspage> {
 
                           child: GestureDetector(
                             behavior: HitTestBehavior.translucent,
-                            child: TricycleCard(
+                            child: appCard(
 
                               child: ListTile(
                                   tileColor: HexColor(AppColors.listBg),

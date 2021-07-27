@@ -12,7 +12,7 @@ late TextStyleElements styleElements;
     styleElements = TextStyleElements(context);
     return SafeArea(
       child: Scaffold(
-        appBar: TricycleAppBar()
+        appBar: appAppBar()
             .getCustomAppBar(
             context,
             appBarTitle: AppLocalizations.of(context)!.translate('helprooms'),
@@ -21,7 +21,7 @@ late TextStyleElements styleElements;
             }),
         body: Container(
           padding: EdgeInsets.only(top: 16),
-          child: TricycleCard(
+          child: appCard(
 
             child: SingleChildScrollView(
               child: Column(

@@ -56,7 +56,7 @@ class EducationCard extends StatelessWidget {
     CardType =="work" ? "work" : "education";
 
     styleElements = TextStyleElements(context);
-    return TricycleListCard(
+    return appListCard(
         child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[

@@ -6,22 +6,22 @@ import 'package:oho_works_app/utils/hexColors.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class TricycleMenuItem extends StatefulWidget{
+class appMenuItem extends StatefulWidget{
   Data? item;
   Function(String? code)? onMenuItemClick;
-  TricycleMenuItem({this.item,this.onMenuItemClick});
+  appMenuItem({this.item,this.onMenuItemClick});
   @override
-  TricycleMenuItemState createState() =>  TricycleMenuItemState(menuItem:item);
+  appMenuItemState createState() =>  appMenuItemState(menuItem:item);
 }
 
-class TricycleMenuItemState extends State<TricycleMenuItem>{
+class appMenuItemState extends State<appMenuItem>{
   Data? menuItem;
-  TricycleMenuItemState({this.menuItem});
+  appMenuItemState({this.menuItem});
   late TextStyleElements styleElements;
   @override
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
-    return TricycleListCard(
+    return appListCard(
       padding: EdgeInsets.all(0),
       onTap: (){
         widget.onMenuItemClick!(menuItem!.code);

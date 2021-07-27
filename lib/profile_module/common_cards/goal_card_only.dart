@@ -43,7 +43,7 @@ class GoalsCardOnly extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
-    return TricycleListCard(
+    return appListCard(
       child: GestureDetector(
           onTap: () {
             Navigator.push(

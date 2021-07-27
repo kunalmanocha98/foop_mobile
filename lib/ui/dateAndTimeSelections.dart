@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
 import 'package:oho_works_app/models/dateFormatItem.dart';
 import 'package:oho_works_app/models/dynmaicres.dart';
 import 'package:oho_works_app/models/settignsView.dart';
@@ -32,7 +32,7 @@ class _DateSelectionPage extends State<DateSelectionPage> {
   int? rowId;
   bool isLoading=false;
   late SharedPreferences prefs;
-  GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKey = GlobalKey();
   @override
   initState() {
     super.initState();
@@ -109,7 +109,7 @@ class _DateSelectionPage extends State<DateSelectionPage> {
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: TricycleAppBar().getCustomAppBar(context,
+          appBar: appAppBar().getCustomAppBar(context,
               appBarTitle:  AppLocalizations.of(context)!.translate("select_date"),
               onBackButtonPress: (){
                 Navigator.pop(context);
@@ -158,7 +158,7 @@ class _DateSelectionPage extends State<DateSelectionPage> {
                         alignment: Alignment.centerRight,
                         child: Container(
                           margin: const EdgeInsets.only(left: 16.0, right: 16.0),
-                          child: TricycleProgressButton(
+                          child: appProgressButton(
                             key: progressButtonKey,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(18.0),
@@ -231,7 +231,7 @@ class TimeSelectionPage extends StatefulWidget {
 
 class _TimeSelectionPage extends State<TimeSelectionPage> {
   List<DateFormatItem> timeList = [];
-  GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKey = GlobalKey();
   late SettingsView settingsView;
   int? rowId;
   bool isLoading=false;
@@ -293,7 +293,7 @@ class _TimeSelectionPage extends State<TimeSelectionPage> {
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: TricycleAppBar().getCustomAppBar(context,
+          appBar: appAppBar().getCustomAppBar(context,
               appBarTitle:  AppLocalizations.of(context)!.translate("select_date"),
               onBackButtonPress: (){
                 Navigator.pop(context);
@@ -342,7 +342,7 @@ class _TimeSelectionPage extends State<TimeSelectionPage> {
                         alignment: Alignment.centerRight,
                         child: Container(
                           margin: const EdgeInsets.only(left: 16.0, right: 16.0),
-                          child: TricycleProgressButton(
+                          child: appProgressButton(
                             key: progressButtonKey,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(18.0),

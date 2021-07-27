@@ -124,7 +124,7 @@ class _RecoverPasswords extends State<RecoverPasswords> {
         child: Scaffold(
             // resizeToAvoidBottomInset: false,
 
-            appBar: TricycleAppBar().getCustomAppBar(
+            appBar: appAppBar().getCustomAppBar(
               context,
               onBackButtonPress: () {
                 Navigator.pop(context);

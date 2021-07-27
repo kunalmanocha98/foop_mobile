@@ -7,13 +7,13 @@ import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/customgridDelegate.dart';
 import 'package:oho_works_app/components/postcardactionbuttons.dart';
 import 'package:oho_works_app/components/searchBox.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
-import 'package:oho_works_app/components/tricycle_speaker_component.dart';
-import 'package:oho_works_app/components/tricycle_talk_footer_button.dart';
-import 'package:oho_works_app/components/tricycle_time_elapsed_widget.dart';
-import 'package:oho_works_app/components/tricycle_user_list_tile.dart';
-import 'package:oho_works_app/components/tricycleavatar.dart';
-import 'package:oho_works_app/components/tricycleemptywidget.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
+import 'package:oho_works_app/components/app_speaker_component.dart';
+import 'package:oho_works_app/components/app_talk_footer_button.dart';
+import 'package:oho_works_app/components/app_time_elapsed_widget.dart';
+import 'package:oho_works_app/components/app_user_list_tile.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
+import 'package:oho_works_app/components/appemptywidget.dart';
 import 'package:oho_works_app/enums/create_deeplink.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/role_type_enum.dart';
@@ -182,7 +182,7 @@ class TalkAudiencePageNexgeState extends State<TalkAudiencePageNexge> {
   GlobalKey<_SearchParticipantsState> searchPageKey = GlobalKey();
   GlobalKey<_RequestsListSheetState> requestPageKey = GlobalKey();
   GlobalKey<AcceptRejectRequestWidgetState> requestWidgetKey = GlobalKey();
-  GlobalKey<TricycleClockTimerWidgetState> timerWidgetKey = GlobalKey();
+  GlobalKey<appClockTimerWidgetState> timerWidgetKey = GlobalKey();
   GlobalKey<AudioPageLoaderPageState> loaderPageKey = GlobalKey();
 
   late DateTime startTime;
@@ -390,7 +390,7 @@ class TalkAudiencePageNexgeState extends State<TalkAudiencePageNexge> {
                 .copyWith(color: HexColor(AppColors.appColorBlack65)),
           ),
           Spacer(),
-          TricycleClockTimerWidget(
+          appClockTimerWidget(
               key: timerWidgetKey, startTime: getStartTime()),
           SizedBox(
             width: 8,
@@ -458,7 +458,7 @@ class TalkAudiencePageNexgeState extends State<TalkAudiencePageNexge> {
                                             .appColorBlack65)),
                                   ),
                                   Spacer(),
-                                  TricycleClockTimerWidget(
+                                  appClockTimerWidget(
                                       key: timerWidgetKey,
                                       startTime: getStartTime()),
                                   SizedBox(
@@ -550,7 +550,7 @@ class TalkAudiencePageNexgeState extends State<TalkAudiencePageNexge> {
                                       .getStageParticipants()![
                                   index] !=
                                       null)
-                                      ? TricycleSpeakerComponent(
+                                      ? appSpeakerComponent(
                                     renderer: prefs!.getInt(
                                         Strings
                                             .userId) ==
@@ -656,7 +656,7 @@ class TalkAudiencePageNexgeState extends State<TalkAudiencePageNexge> {
                             ),
                           )
                               : SliverToBoxAdapter(
-                              child: TricycleEmptyWidget(
+                              child: appEmptyWidget(
                                   assetImage:
                                   'assets/appimages/avatar-default.png',
                                   message: "No Speakers yet!!")),
@@ -731,7 +731,7 @@ class TalkAudiencePageNexgeState extends State<TalkAudiencePageNexge> {
                                       }
                                     },
                                     child:
-                                    TricycleSpeakerComponent(
+                                    appSpeakerComponent(
                                       size: 64,
                                       isVideoOn: 0,
                                       participantId:
@@ -764,7 +764,7 @@ class TalkAudiencePageNexgeState extends State<TalkAudiencePageNexge> {
                                 },
                               ),
                             )
-                                : TricycleEmptyWidgetForAudio(),
+                                : appEmptyWidgetForAudio(),
                           )
                         ],
                       ),
@@ -1892,7 +1892,7 @@ class _SearchParticipantsState extends State<_SearchParticipantsSheet> {
               itemCount: participantList.length,
               shrinkWrap: true,
               itemBuilder: (BuildContext context, int index) {
-                return TricycleUserListTile(
+                return appUserListTile(
                   imageUrl: participantList[index].profileImage,
                   title: participantList[index].name,
                   subtitle1: participantList[index].role,
@@ -1958,7 +1958,7 @@ class _RequestsListSheetState extends State<_RequestsListSheet> {
               itemBuilder: (BuildContext context, int index) {
                 return ListTile(
                     contentPadding: EdgeInsets.all(8),
-                    leading: TricycleAvatar(
+                    leading: appAvatar(
                       imageUrl: participantList[index].profileImage,
                       service_type: SERVICE_TYPE.PERSON,
                       size: 56,
@@ -1973,7 +1973,7 @@ class _RequestsListSheetState extends State<_RequestsListSheet> {
                     trailing: Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        TricycleTextButton(
+                        appTextButton(
                             onPressed: () {
                               widget.onUserUpdateCallback!(
                                   UpdateHandRaiseRequest(
@@ -2007,7 +2007,7 @@ class _RequestsListSheetState extends State<_RequestsListSheet> {
                                   color: HexColor(
                                       AppColors.appMainColor)),
                             )),
-                        TricycleTextButton(
+                        appTextButton(
                             onPressed: () {
                               widget.onUserUpdateCallback!(
                                   UpdateHandRaiseRequest(

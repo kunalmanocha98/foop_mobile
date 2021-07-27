@@ -1,4 +1,4 @@
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
@@ -58,7 +58,7 @@ class _UnfollowUserDialog extends State<UnfollowUserDialog> {
               children: <Widget>[
                 Padding(
                   padding: EdgeInsets.all(8),
-                  child: TricycleElevatedButton(
+                  child: appElevatedButton(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25.0),
                         side: BorderSide(color: HexColor(AppColors.appMainColor))),
@@ -73,7 +73,7 @@ class _UnfollowUserDialog extends State<UnfollowUserDialog> {
                 ),
                 Padding(
                   padding: EdgeInsets.all(16),
-                  child: TricycleElevatedButton(
+                  child: appElevatedButton(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25.0),
                         side: BorderSide(color: HexColor(AppColors.appMainColor))),

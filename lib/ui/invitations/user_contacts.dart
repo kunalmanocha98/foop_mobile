@@ -4,8 +4,8 @@ import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/components/searchBox.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
-import 'package:oho_works_app/components/tricycle_user_list_tile.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
+import 'package:oho_works_app/components/app_user_list_tile.dart';
 import 'package:oho_works_app/models/deeplink_response.dart';
 import 'package:oho_works_app/models/invite_users_payload.dart';
 import 'package:oho_works_app/models/personal_profile.dart';
@@ -66,7 +66,7 @@ else
     styleElements = TextStyleElements(context);
     return SafeArea(
       child: Scaffold(
-        appBar: TricycleAppBar().getCustomAppBar(context, appBarTitle: 'Select contact',
+        appBar: appAppBar().getCustomAppBar(context, appBarTitle: 'Select contact',
             onBackButtonPress: ()  {
               Navigator.of(context).pop({'result': "imageUrl"});
             }),
@@ -83,11 +83,11 @@ else
                   )
                 ];
               },
-              body:  TricycleListCard(
+              body:  appListCard(
                 child: ListView.builder(
                   itemCount: list.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return  TricycleUserListTile(
+                    return  appUserListTile(
                       leadingWidget:CircleAvatar(
                         radius: 24,
                         foregroundColor: HexColor(AppColors.appColorWhite),
@@ -173,7 +173,7 @@ else
                           alignment: Alignment.centerRight,
                           child: Container(
                             margin: const EdgeInsets.only(left: 16.0, right: 16.0),
-                            child: TricycleElevatedButton(
+                            child: appElevatedButton(
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(18.0),
                                   side: BorderSide(color: HexColor(AppColors.appMainColor))),

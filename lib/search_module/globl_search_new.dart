@@ -5,9 +5,9 @@ import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/commonComponents.dart';
 import 'package:oho_works_app/components/customtabview.dart';
 import 'package:oho_works_app/components/postcard.dart';
-import 'package:oho_works_app/components/tricycle_event_card.dart';
-import 'package:oho_works_app/components/tricycle_find_card.dart';
-import 'package:oho_works_app/components/tricycle_user_list_tile.dart';
+import 'package:oho_works_app/components/app_event_card.dart';
+import 'package:oho_works_app/components/app_find_card.dart';
+import 'package:oho_works_app/components/app_user_list_tile.dart';
 import 'package:oho_works_app/enums/create_deeplink.dart';
 import 'package:oho_works_app/enums/member%20enums.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
@@ -369,7 +369,7 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
                 list != null && list.isNotEmpty ? list.length : 0,
                 tabBuilder: (context, index) => Visibility(
                   visible: !widget.onlyOneSearch,
-                  child: TricycleTabButton(
+                  child: appTabButton(
                     onPressed: () {
                       setState(() {
                         //loadPages(searchVal);
@@ -394,7 +394,7 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
                 : CustomScrollView(
               slivers: [
                 SliverToBoxAdapter(
-                  child: TricycleFindCard(
+                  child: appFindCard(
                     title: "Who do you want to study together?",
                     subtitle:
                     "Search for friends who can support you to learn together",
@@ -436,7 +436,7 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
                                   .entityDetails)))
                               : null;
                           // searchHistory[index].entityDetails;
-                          return TricycleUserListTile(
+                          return appUserListTile(
                             imageUrl: (details != null)
                                 ? details.avatar
                                 : null,
@@ -510,7 +510,7 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
                                                 postData: item,
                                               )));
                                 },
-                                child: TricyclePostCard(
+                                child: appPostCard(
                                     key: UniqueKey(),
                                     // color: isInView?HexColor(AppColors.appColorBlue)[200]:HexColor(AppColors.appColorWhite),
                                     preferences: prefs,
@@ -643,7 +643,7 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
                               searchHistory![index].entityDetails);
                           return GestureDetector(
                             onTap: () {},
-                            child: TricycleEventCard(
+                            child: appEventCard(
                               onClickEvent: () {
                                 saveHistory(
                                     jsonDecode(jsonEncode(value)),
@@ -765,7 +765,7 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
                           EventListItem item = EventListItem.fromJson(
                               jsonDecode(jsonEncode(
                                   searchHistory![index].entityDetails)));
-                          return TricycleEventCard(
+                          return appEventCard(
                             onClickEvent: () {
                               saveHistory(jsonDecode(jsonEncode(item)),
                                   'event');
@@ -796,7 +796,7 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
                             isModerator: item.eventRoleType == 'admin',
                           );
                         } else {
-                          return TricycleUserListTile(
+                          return appUserListTile(
                             imageUrl: null,
                             onPressed: () {
                               setState(() {
@@ -879,7 +879,7 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
                     ? SliverList(
                   delegate: SliverChildBuilderDelegate(
                           (BuildContext context, int index) {
-                        return TricycleUserListTile(
+                        return appUserListTile(
                           imageUrl: Config.BASE_URL +
                               suggestions![index].avatar!,
                           isFullImageUrl: true,

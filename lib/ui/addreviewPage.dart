@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/generic_libraries/generic_comment_review_feedback.dart';
 import 'package:oho_works_app/home/locator.dart';
 import 'package:oho_works_app/models/base_res.dart';
@@ -102,7 +102,7 @@ class _AddReviewPage extends State<AddReviewPage> {
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: true,
-          appBar: TricycleAppBar().getCustomAppBar(context,
+          appBar: appAppBar().getCustomAppBar(context,
               appBarTitle: "Rate " + name!,
               actions: [
                 Padding(
@@ -182,7 +182,7 @@ class _AddReviewPage extends State<AddReviewPage> {
                       child: Center(
                         child: Column(
                           children: [
-                            TricycleAvatar(
+                            appAvatar(
                               imageUrl: imageUrl,
                               size: 120,
                               isFullUrl: true,
@@ -345,7 +345,7 @@ class _AddReviewPage extends State<AddReviewPage> {
                     ),
                     Visibility(
                       visible: widget.isAssignment,
-                      child: TricycleListCard(
+                      child: appListCard(
                         padding: EdgeInsets.only(
                             left: 16, right: 16, top: 16, bottom: 20),
                         child: Column(
@@ -493,7 +493,7 @@ class _AddReviewPage extends State<AddReviewPage> {
                   alignment: Alignment.bottomCenter,
                   child: Container(
                     margin: EdgeInsets.only(bottom: 36),
-                    child: TricycleElevatedButton(
+                    child: appElevatedButton(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(25.0),
                           side: BorderSide(color: HexColor(AppColors.appMainColor))),
@@ -521,7 +521,7 @@ class _AddReviewPage extends State<AddReviewPage> {
                       ),
                     ),
 
-                    // child: TricycleElevatedButton(
+                    // child: appElevatedButton(
                     //   onPressed: (){},
                     //   textColor: HexColor(AppColors.appColorWhite),
                     //   color:HexColor(AppColors.appMainColor) ,

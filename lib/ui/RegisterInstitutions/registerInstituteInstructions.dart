@@ -1,7 +1,7 @@
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
-import 'package:oho_works_app/components/tricycle_earn_card.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
+import 'package:oho_works_app/components/app_earn_card.dart';
 import 'package:oho_works_app/models/buddyApprovalModels/buddyServiceList.dart';
 import 'package:oho_works_app/ui/RegisterInstitutions/confirm_details_institute.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
@@ -23,13 +23,13 @@ class RegisterInstituteInstructions extends StatelessWidget{
     var styleElements = TextStyleElements(context);
     return SafeArea(
       child: Scaffold(
-        appBar: TricycleAppBar().getCustomAppBar(context,
-            appBarTitle: 'Tricycle',
+        appBar: appAppBar().getCustomAppBar(context,
+            appBarTitle: 'app',
             onBackButtonPress: (){Navigator.pop(context);}),
         body: SingleChildScrollView(
           child: Column(
             children: [
-              TricycleEarnCard(
+              appEarnCard(
                 title: buddyServiceListItem!.heading,
                 imageUrl: buddyServiceListItem!.imageUrl,
                 coinsValue: buddyServiceListItem!.coins,
@@ -39,7 +39,7 @@ class RegisterInstituteInstructions extends StatelessWidget{
                 type: buddyServiceListItem!.cardName,
               ),
 
-              TricycleCard(
+              appCard(
                 margin: EdgeInsets.only(top:2,left:10,right: 10,bottom: 45),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -149,7 +149,7 @@ class RegisterInstituteInstructions extends StatelessWidget{
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        TricycleElevatedButton(onPressed: (){
+                        appElevatedButton(onPressed: (){
                           Navigator.push(context,MaterialPageRoute(builder: (BuildContext context) => ConfirmDetails(
                           instId:  prefs!.getInt(Strings.instituteId),
                            fromPage: 'earn'

@@ -62,7 +62,7 @@ class PostCardActionButtons extends StatefulWidget {
   bool? isBellAvailable;
   bool? isBellPressed;
 
-  // GlobalKey<TricycleDownloadButtonState> downloadButtonKey;
+  // GlobalKey<appDownloadButtonState> downloadButtonKey;
   List<Media>? media;
   Function? bellIconCallBack;
 
@@ -152,7 +152,7 @@ class PostCardActionButtonsState extends State<PostCardActionButtons> {
   String? ownerType;
   int? ownerId;
 
-  // GlobalKey<TricycleDownloadButtonState> downloadButtonKey;
+  // GlobalKey<appDownloadButtonState> downloadButtonKey;
   List<Media>? media;
   ButtonTapManager buttonTapManager = ButtonTapManager();
 
@@ -424,9 +424,9 @@ class PostCardActionButtonsState extends State<PostCardActionButtons> {
                 ),
               ),
 
-              // (media!=null && media.length>0 && isDocument)?TricycleDownloadButton(key:downloadButtonKey,isDarkTheme: isDarkTheme,listOfLinks: List<String>.generate(media.length,(int index){return media[index].mediaUrl;}),
+              // (media!=null && media.length>0 && isDocument)?appDownloadButton(key:downloadButtonKey,isDarkTheme: isDarkTheme,listOfLinks: List<String>.generate(media.length,(int index){return media[index].mediaUrl;}),
               // ):Container(),
-              // TricycleDownloadButton(listOfLinks: ["https://www.tricycle.life/logo.png"],key: UniqueKey(),),
+              // appDownloadButton(listOfLinks: ["https://www.tricycle.life/logo.png"],key: UniqueKey(),),
               widget.actionButton != null
                   ? widget.actionButton!
                   : Row(

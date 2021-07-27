@@ -1,7 +1,7 @@
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/enums/event_status_code.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
@@ -266,7 +266,7 @@ class CreateEventPageState extends State<CreateEventPage> {
       },
       child: ListTile(
         contentPadding: EdgeInsets.all(0),
-        leading: TricycleAvatar(
+        leading: appAvatar(
           key: UniqueKey(),
           imageUrl: selectedMembersItem!.length > 0
               ? selectedMembersItem![0].profileImage
@@ -303,9 +303,9 @@ class CreateEventPageState extends State<CreateEventPage> {
 
     return SafeArea(
         child: Scaffold(
-          appBar: TricycleAppBar().getCustomAppBar(context,
+          appBar: appAppBar().getCustomAppBar(context,
               actions: [
-                TricycleTextButton(
+                appTextButton(
                   onPressed: () {
                     createPayload();
                   },
@@ -335,7 +335,7 @@ class CreateEventPageState extends State<CreateEventPage> {
             child: ListView(
               shrinkWrap: true,
               children: [
-                TricycleListCard(
+                appListCard(
                   padding: EdgeInsets.only(left: 16, right: 16, top: 4, bottom: 4),
                   child: ListTile(
                     contentPadding: EdgeInsets.all(0),
@@ -343,7 +343,7 @@ class CreateEventPageState extends State<CreateEventPage> {
                       onLongPress: () {
                         _showSelectorBottomSheet(context);
                       },
-                      child: TricycleAvatar(
+                      child: appAvatar(
                         key: UniqueKey(),
                         imageUrl:
                         ownerImage ?? prefs!.getString(Strings.profileImage),
@@ -367,7 +367,7 @@ class CreateEventPageState extends State<CreateEventPage> {
                     ),
                   ),
                 ),
-                TricycleListCard(
+                appListCard(
                   child: ListView(
                     shrinkWrap: true,
                     children: [

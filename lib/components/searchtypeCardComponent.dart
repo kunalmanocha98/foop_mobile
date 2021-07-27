@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycle_user_list_tile.dart';
+import 'package:oho_works_app/components/app_user_list_tile.dart';
 import 'package:oho_works_app/models/global_search/globalsearchmodels.dart';
 import 'package:oho_works_app/models/global_search/save_history.dart';
 import 'package:oho_works_app/profile_module/pages/profile_page.dart';
@@ -41,7 +41,7 @@ class SearchTypeCardState extends State<SearchTypeCard> {
   @override
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
-    return TricycleCard(
+    return appCard(
       padding: EdgeInsets.all(0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -69,7 +69,7 @@ class SearchTypeCardState extends State<SearchTypeCard> {
               itemCount: typeList!.length,
               physics: NeverScrollableScrollPhysics(),
               itemBuilder: (BuildContext context, int index) {
-                return TricycleUserListTile(
+                return appUserListTile(
                   onPressed: (){
                     saveHistory(typeList![index],type);
                     Navigator.push(

@@ -63,7 +63,7 @@ class ClubAndSocities extends StatelessWidget {
     styleElements = TextStyleElements(context);
     listSubItems = data.subRow;
     return
-      TricycleListCard(
+      appListCard(
           child: Column(
         children: <Widget>[
           Visibility(

@@ -2,7 +2,7 @@
 
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
 import 'package:oho_works_app/e_learning_module/model/learner_list_response.dart';
 import 'package:oho_works_app/e_learning_module/ui/topic_type_page.dart';
 import 'package:oho_works_app/home/locator.dart';
@@ -33,8 +33,8 @@ class CreateTopicPage extends StatefulWidget {
 class _CreateTopicPage extends State<CreateTopicPage> {
   late BuildContext context;
   late TextStyleElements styleElements;
-  GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
-  GlobalKey<TricycleProgressButtonState> progressButtonKeyNext = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKey = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKeyNext = GlobalKey();
   TopicListItem? topicType;
   List<LearnerListItem>? learnerItem;
   @override
@@ -72,7 +72,7 @@ class _CreateTopicPage extends State<CreateTopicPage> {
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: TricycleAppBar().getCustomAppBar(
+          appBar: appAppBar().getCustomAppBar(
             context,
             appBarTitle:
             AppLocalizations.of(context)!.translate('topic_detail'),
@@ -151,7 +151,7 @@ class _CreateTopicPage extends State<CreateTopicPage> {
                         Visibility(
                           child: GestureDetector(
                             behavior: HitTestBehavior.translucent,
-                            child: TricycleCard(
+                            child: appCard(
 
                               child: ListTile(
                                   tileColor: HexColor(AppColors.listBg),
@@ -213,7 +213,7 @@ class _CreateTopicPage extends State<CreateTopicPage> {
                           opacity:topicType!=null ?1.0:0.25,
                           child: GestureDetector(
                             behavior: HitTestBehavior.translucent,
-                            child: TricycleCard(
+                            child: appCard(
 
                               child: ListTile(
                                   tileColor: HexColor(AppColors.listBg),

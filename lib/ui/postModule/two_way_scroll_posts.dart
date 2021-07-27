@@ -12,7 +12,7 @@ import 'package:oho_works_app/components/micro_learning_side_buttons.dart';
 import 'package:oho_works_app/components/postcard.dart';
 import 'package:oho_works_app/components/postcardactionbuttons.dart';
 import 'package:oho_works_app/components/postcardheader.dart';
-import 'package:oho_works_app/components/tricycle_chat_footer.dart';
+import 'package:oho_works_app/components/app_chat_footer.dart';
 import 'package:oho_works_app/e_learning_module/ui/lessons_page.dart';
 import 'package:oho_works_app/enums/create_deeplink.dart';
 import 'package:oho_works_app/enums/paginatorEnums.dart';
@@ -836,7 +836,7 @@ class NewNewsAndArticleDetailPageState
                     child: new Center(
                       child: _currentPage - 1 < detailPagesList.length &&
                               _currentPage - 1 != -1
-                          ? TricyclePostCard(
+                          ? appPostCard(
                               cardData: detailPagesList[_currentPage - 1],
                               isPostHeaderVisible: false,
                               isPostActionVisible: false,
@@ -878,7 +878,7 @@ class NewNewsAndArticleDetailPageState
                       child: new Center(
                     child: _currentPage + 1 < detailPagesList.length &&
                             _currentPage + 1 != -1
-                        ? TricyclePostCard(
+                        ? appPostCard(
                             cardData: detailPagesList[_currentPage + 1],
                             isPostHeaderVisible: false,
                             isPostActionVisible: false,
@@ -950,7 +950,7 @@ class NewNewsAndArticleDetailPageState
                         ? SingleChildScrollView(
                             child: Padding(
                               padding: const EdgeInsets.only(bottom: 120.0),
-                              child: TricyclePostCard(
+                              child: appPostCard(
                                 cardData: detailPagesList[_currentPage],
                                 isPostHeaderVisible: false,
                                 isPostActionVisible: false,
@@ -1109,7 +1109,7 @@ class CommentSheet extends StatefulWidget {
 class _CommentSheet extends State<CommentSheet> {
   SharedPreferences? prefs = locator<SharedPreferences>();
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
-  GlobalKey<TricycleChatFooterState> chatFooterKey = GlobalKey();
+  GlobalKey<appChatFooterState> chatFooterKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -1143,7 +1143,7 @@ class _CommentSheet extends State<CommentSheet> {
             pageErrorChecker: CustomPaginator(context).pageErrorChecker,
           ),
         ),
-        TricycleChatFooter(
+        appChatFooter(
           chatFooterKey,
           isShowAddIcon: false,
           hintText: AppLocalizations.of(context)!.translate('enter_comment'),

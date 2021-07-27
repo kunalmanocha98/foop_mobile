@@ -38,7 +38,7 @@ class _CustomTabs extends State<CustomTabs> {
             itemCount: data.length,
             tabBuilder: (context, index) =>
 
-                TricycleTabButton(
+                appTabButton(
                   onPressed: (){
                     setState(() {
                       initPosition = index;

@@ -67,7 +67,7 @@ class SkillsCard extends StatelessWidget {
             builder: (BuildContext context) =>
                 RateDialog(type: "", title: AppLocalizations.of(context)!.translate('rate_skill'), subtitle: ""));
       },
-      child: TricycleListCard(
+      child: appListCard(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[

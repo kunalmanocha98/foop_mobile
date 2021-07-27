@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
 import 'package:oho_works_app/mixins/someCommonMixins.dart';
 import 'package:oho_works_app/models/invite_module/InviteModels.dart';
 import 'package:oho_works_app/models/menu/menulistmodels.dart';
@@ -43,7 +43,7 @@ class _InviteParent extends State<InviteParent> with CommonMixins{
   List<MenuListItem> menuList = [];
   int? selectedRadio;
   SharedPreferences? prefs;
-  GlobalKey<TricycleProgressButtonState> progressButtonKey= GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKey= GlobalKey();
 
 
   String? fatherFirstName,motherFirstName;
@@ -338,7 +338,7 @@ class _InviteParent extends State<InviteParent> with CommonMixins{
     return SafeArea(
       child: Scaffold(
 
-        appBar: TricycleAppBar().getCustomAppBar(context,
+        appBar: appAppBar().getCustomAppBar(context,
             appBarTitle: 'Invite Parents', onBackButtonPress: () {
           Navigator.pop(context);
         }),
@@ -390,7 +390,7 @@ class _InviteParent extends State<InviteParent> with CommonMixins{
                   children: [
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: TricycleCard(
+                      child: appCard(
                           padding: EdgeInsets.all(0),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -436,7 +436,7 @@ class _InviteParent extends State<InviteParent> with CommonMixins{
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: TricycleCard(
+                      child: appCard(
                           padding: EdgeInsets.all(0),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -493,7 +493,7 @@ class _InviteParent extends State<InviteParent> with CommonMixins{
                       alignment: Alignment.centerRight,
                       child: Container(
                         margin: const EdgeInsets.only(left: 16.0, right: 16.0),
-                        child: TricycleProgressButton(
+                        child: appProgressButton(
                           key: progressButtonKey,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(18.0),

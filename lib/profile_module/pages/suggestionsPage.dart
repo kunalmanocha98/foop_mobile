@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
 import 'package:oho_works_app/models/custom_tab_maker.dart';
@@ -75,7 +75,7 @@ BuildContext? sctx;
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: true,
-          appBar: TricycleAppBar().getCustomAppBar(context,
+          appBar: appAppBar().getCustomAppBar(context,
               appBarTitle: AppLocalizations.of(context)!.translate('suggestions'),
               onBackButtonPress: () {
                 Navigator.pop(context);
@@ -147,7 +147,7 @@ BuildContext? sctx;
                 )));
       },
       tileColor: HexColor(AppColors.listBg),
-      leading:TricycleAvatar(imageUrl: item.avatar,
+      leading:appAvatar(imageUrl: item.avatar,
         service_type: SERVICE_TYPE.PERSON,
         resolution_type: RESOLUTION_TYPE.R64,
         size: 56,

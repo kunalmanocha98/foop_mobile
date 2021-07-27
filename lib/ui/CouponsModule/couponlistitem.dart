@@ -175,7 +175,7 @@ class CouponListItemCard extends StatelessWidget {
         Text(
           (isCoinsHide != null && isCoinsHide!)
               ? ""
-              : "@$rewardPoints Tricycle coins",
+              : "@$rewardPoints app coins",
           style: styleElements.captionThemeScalable(context),
         )
         // Text(

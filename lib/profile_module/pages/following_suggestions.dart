@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
-import 'package:oho_works_app/components/tricycle_user_list_tile.dart';
+import 'package:oho_works_app/components/app_user_list_tile.dart';
 import 'package:oho_works_app/enums/paginatorEnums.dart';
 import 'package:oho_works_app/models/FollowersData.dart';
 import 'package:oho_works_app/models/suggestion_data.dart';
@@ -83,7 +83,7 @@ class _FollowingSuggestionPage extends State<FollowingSuggestionsPage> {
 
     return SafeArea(
       child: Scaffold(
-        // appBar: TricycleAppBar().getCustomAppBar(context,
+        // appBar: appAppBar().getCustomAppBar(context,
         //     appBarTitle: 'PostCardDetail', onBackButtonPress: () {
         //       Navigator.pop(context);
         //     }),
@@ -160,7 +160,7 @@ class _FollowingSuggestionPage extends State<FollowingSuggestionsPage> {
                             type: null,
                           )));
                 },
-                child: TricycleUserListTile(
+                child: appUserListTile(
                   onPressed: (){
                     Navigator.push(
                         context,
@@ -329,7 +329,7 @@ class _FollowingSuggestionPage extends State<FollowingSuggestionsPage> {
     }
   }
   Widget getCard(BuildContext context,int index, String type){
-    return    TricycleUserListTile(
+    return    appUserListTile(
       onPressed: (){
         Navigator.push(
             context,

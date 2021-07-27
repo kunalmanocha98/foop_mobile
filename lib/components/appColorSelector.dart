@@ -10,17 +10,17 @@ import 'package:oho_works_app/utils/hexColors.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class TricycleColorSelector extends StatefulWidget{
+class appColorSelector extends StatefulWidget{
   Function(String ? selectedColor)? onColorSelect;
   bool isHeadingShown;
-  TricycleColorSelector({this.onColorSelect,this.isHeadingShown=true});
+  appColorSelector({this.onColorSelect,this.isHeadingShown=true});
   @override
-  _TricycleColorSelector createState() => _TricycleColorSelector(onColorSelect: onColorSelect);
+  _appColorSelector createState() => _appColorSelector(onColorSelect: onColorSelect);
 }
 
-class _TricycleColorSelector extends State<TricycleColorSelector> {
+class _appColorSelector extends State<appColorSelector> {
   Function(String? selectedColor)? onColorSelect;
-  _TricycleColorSelector({this.onColorSelect});
+  _appColorSelector({this.onColorSelect});
   late TextStyleElements styleElements;
   List<ColorListItem>? colorList = [];
 

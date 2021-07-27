@@ -7,7 +7,7 @@ class Strings {
   static const String still_studying = "Still Studying";
   static const String add_edit_education = "Add/Edit Education";
   static const String goals_and_objectives = "Goals & Objectives";
-  static const String logo_main = "Tricycle";
+  static const String logo_main = "app";
   static const String logo_slogan = "Mata-Pita-Guru";
   static const String pls_wait = "Please Wait...";
   static const String get_onboard = "Get Onboard";

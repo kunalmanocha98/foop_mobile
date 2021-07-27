@@ -1,6 +1,7 @@
 import 'package:oho_works_app/components/appBarWithSearch.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
+
 import 'package:oho_works_app/e_learning_module/model/create_lesson_data.dart';
 import 'package:oho_works_app/models/post/postcreate.dart';
 import 'package:oho_works_app/ui/postcreatepage.dart';
@@ -23,8 +24,8 @@ class CreateChapterLessonMainPage extends StatefulWidget {
 class _CreateChapterLessonMainPage extends State<CreateChapterLessonMainPage> {
   late BuildContext context;
   late TextStyleElements styleElements;
-  GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
-  GlobalKey<TricycleProgressButtonState> progressButtonKeyNext = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKey = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKeyNext = GlobalKey();
   PostCreatePayload? createLessonData = PostCreatePayload();
   LessonTopic lessonTopic=LessonTopic();
   bool isTopicDone = false;
@@ -46,7 +47,7 @@ class _CreateChapterLessonMainPage extends State<CreateChapterLessonMainPage> {
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: TricycleAppBar().getCustomAppBar(
+          appBar: appAppBar().getCustomAppBar(
             context,
             appBarTitle:
                 AppLocalizations.of(context)!.translate('Create_lessons'),
@@ -65,7 +66,7 @@ class _CreateChapterLessonMainPage extends State<CreateChapterLessonMainPage> {
                           Visibility(
                             child: GestureDetector(
                               behavior: HitTestBehavior.translucent,
-                              child: TricycleCard(
+                              child: appCard(
                                 child: ListTile(
                                     tileColor: HexColor(AppColors.listBg),
                                     title: Align(
@@ -119,7 +120,7 @@ class _CreateChapterLessonMainPage extends State<CreateChapterLessonMainPage> {
                               visible:false,
                               child: GestureDetector(
                                 behavior: HitTestBehavior.translucent,
-                                child: TricycleCard(
+                                child: appCard(
                                   child: ListTile(
                                       tileColor: HexColor(AppColors.listBg),
                                       title: Align(
@@ -182,7 +183,7 @@ class _CreateChapterLessonMainPage extends State<CreateChapterLessonMainPage> {
                             child: Visibility(
                               child: GestureDetector(
                                 behavior: HitTestBehavior.translucent,
-                                child: TricycleCard(
+                                child: appCard(
                                   child: ListTile(
                                       tileColor: HexColor(AppColors.listBg),
                                       title: Align(
@@ -229,7 +230,7 @@ class _CreateChapterLessonMainPage extends State<CreateChapterLessonMainPage> {
                             visible: false,
                             child: GestureDetector(
                               behavior: HitTestBehavior.translucent,
-                              child: TricycleCard(
+                              child: appCard(
                                 child: ListTile(
                                     tileColor: HexColor(AppColors.listBg),
                                     title: Align(
@@ -295,7 +296,7 @@ class _CreateChapterLessonMainPage extends State<CreateChapterLessonMainPage> {
                           ),
                           Padding(
                             padding: const EdgeInsets.only(right: 16.0),
-                            child: TricycleProgressButton(
+                            child: appProgressButton(
                               key: progressButtonKeyNext,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(18.0),

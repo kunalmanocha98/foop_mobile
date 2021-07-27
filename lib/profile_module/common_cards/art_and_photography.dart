@@ -1,5 +1,5 @@
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/models/base_res.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
@@ -38,7 +38,7 @@ class ArtAndPhotography extends StatelessWidget {
     var size = MediaQuery.of(context).size;
     final double itemHeight = 250;
     final double itemWidth = size.width / 2;
-    return TricycleListCard(
+    return appListCard(
         child: Column(
       children: <Widget>[
         Container(
@@ -110,7 +110,7 @@ class ArtAndPhotography extends StatelessWidget {
                     child: Container(
                       margin: const EdgeInsets.only(right: 8.0),
                       height: 30,
-                      child: TricycleElevatedButton(
+                      child: appElevatedButton(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.0),
                             side: BorderSide(color: HexColor(AppColors.appMainColor))),

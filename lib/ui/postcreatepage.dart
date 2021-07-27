@@ -9,11 +9,11 @@ import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/components/select_news_topic_widget.dart';
-import 'package:oho_works_app/components/tricycleColorSelector.dart';
-import 'package:oho_works_app/components/tricycleHtmlViewer.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
-import 'package:oho_works_app/components/tricycleattachmentComponent.dart';
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/appColorSelector.dart';
+import 'package:oho_works_app/components/appHtmlViewer.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
+import 'package:oho_works_app/components/appAttachmentComponent.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/components/wordcounterchecker.dart';
 import 'package:oho_works_app/e_learning_module/model/chapter_response.dart';
 import 'package:oho_works_app/e_learning_module/model/create_chapter_response.dart';
@@ -134,13 +134,13 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
   // final ZefyrController _controller = ZefyrController(NotusDocument());
   QuillController _controller = QuillController.basic();
   final FocusNode _focusNode = FocusNode();
-  GlobalKey<TricycleAttachmentsState> attachmentKey = GlobalKey();
+  GlobalKey<appAttachmentsState> attachmentKey = GlobalKey();
   GlobalKey<SelectNewsTopicWidgetState> topicsKey = GlobalKey();
   final formKey = GlobalKey<FormState>();
   List<MediaDetails> mediaList = [];
 
   //final linkPreview = GlobalKey<FlutterLinkPreviewState>();
-  final avatarKey = GlobalKey<TricycleAvatarState>();
+  final avatarKey = GlobalKey<appAvatarState>();
   TextEditingController editingController1 = TextEditingController();
   TextEditingController editingController2 = TextEditingController();
   TextEditingController editingController3 = TextEditingController();
@@ -288,7 +288,7 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
                   onLongPress: () {
                     _showSelectorBottomSheet(context);
                   },
-                  child: TricycleAvatar(
+                  child: appAvatar(
                     key: avatarKey,
                     size: 36,
                     resolution_type: RESOLUTION_TYPE.R64,
@@ -407,7 +407,7 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
 
         Visibility(
           visible: type != 'answer',
-          child: TricycleAttachments(
+          child: appAttachments(
             attachmentKey,
             isMentionVisible: type != 'qa' && type != 'poll',
             mentionCallback: (value) {
@@ -444,13 +444,13 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
     final result = SafeArea(
         child: Scaffold(
       resizeToAvoidBottomInset: true,
-      appBar: TricycleAppBar().getCustomAppBar(context,
+      appBar: appAppBar().getCustomAppBar(context,
           centerTitle: type != 'lesson',
           actions: [
             type == 'lesson'
                 ? Container(
                     margin: EdgeInsets.only(top: 14, bottom: 14, left: 4),
-                    child: TricycleElevatedButton(
+                    child: appElevatedButton(
                         onPressed: () async {
                           var plainContent =
                               _controller.document.toPlainText().trim();
@@ -505,7 +505,7 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
                       ),
                     ),
                   )
-                : TricycleTextButton(
+                : appTextButton(
                     onPressed: () async {
                       if (type == 'notice' || type == 'blog') {
                         if (formKey.currentState!.validate()) {
@@ -900,7 +900,7 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
       }),
       body: Form(
         key: formKey,
-        child: TricycleListCard(child: form),
+        child: appListCard(child: form),
       ),
     ));
     return result;
@@ -1231,7 +1231,7 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
               visible: optionsCount != 4,
               child: Padding(
                 padding: EdgeInsets.only(left: 24.0),
-                child: TricycleElevatedButton(
+                child: appElevatedButton(
                   onPressed: () {
                     addRemoveOption(true);
                   },
@@ -2014,11 +2014,11 @@ class PostDetailSheetState extends State<PostDetailsSheet> with CommonMixins {
   }
 
   Widget notice() {
-    return TricycleColorSelector(onColorSelect: widget.onColorSelect);
+    return appColorSelector(onColorSelect: widget.onColorSelect);
   }
 
   Widget qnA() {
-    return TricycleHtmlViewer(
+    return appHtmlViewer(
       sourceString: AppLocalizations.of(context)!.translate('tips_to_answer'),
       isDetailPage: false,
       isNewsPage: true,
@@ -2167,7 +2167,7 @@ class PostDetailSheetState extends State<PostDetailsSheet> with CommonMixins {
             alignment: Alignment.bottomRight,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: TricycleTextButton(onPressed: (){
+              child: appTextButton(onPressed: (){
                 Navigator.pop(context);
               },
                 shape: StadiumBorder(),

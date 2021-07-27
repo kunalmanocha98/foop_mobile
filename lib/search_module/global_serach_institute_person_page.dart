@@ -3,13 +3,14 @@ import 'dart:convert';
 import 'package:GlobalUploadFilePkg/Enums/GlobalSerachEnum.dart';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
-import 'package:oho_works_app/components/TricycleCaughtupComponent.dart';
+import 'package:oho_works_app/components/appCaughtupComponent.dart';
+
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/components/postcard.dart';
 import 'package:oho_works_app/components/searchtypeCardComponent.dart';
-import 'package:oho_works_app/components/tricycle_event_card.dart';
-import 'package:oho_works_app/components/tricycle_lesson_card.dart';
-import 'package:oho_works_app/components/tricycle_user_list_tile.dart';
+import 'package:oho_works_app/components/app_event_card.dart';
+import 'package:oho_works_app/components/app_lesson_card.dart';
+import 'package:oho_works_app/components/app_user_list_tile.dart';
 import 'package:oho_works_app/enums/create_deeplink.dart';
 import 'package:oho_works_app/enums/member%20enums.dart';
 import 'package:oho_works_app/enums/post_enums.dart';
@@ -97,7 +98,7 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
     return type == "person" || type == "institution"
-        ? TricycleListCard(
+        ? appListCard(
         child: Paginator.listView(
           key: paginatorKey,
           pageLoadFuture: fetchlist,
@@ -250,7 +251,7 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
 
   Widget listItemGetter(itemData, int index) {
     SearchTypeItem item = itemData;
-    return TricycleUserListTile(
+    return appUserListTile(
       onPressed: () {
         saveHistory(jsonDecode(jsonEncode(item)), type);
         Navigator.push(
@@ -303,7 +304,7 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
     RoomListItem value = item;
     return GestureDetector(
       onTap: () {},
-      child: TricycleEventCard(
+      child: appEventCard(
         key: UniqueKey(),
         onClickEvent: () {
           saveHistory(jsonDecode(jsonEncode(value)), 'room');
@@ -406,7 +407,7 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
     PostListItem item = data;
     if (item.postType == 'banner') {
       print("banner");
-      return TricycleCaughtUpComponent(
+      return appCaughtUpComponent(
         title: item.postContent!.header!.title,
         actionTitle: item.postContent!.header!.subtitle1,
         onClick: () {
@@ -438,7 +439,7 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
         ),
       );
     } else if (item.postType == 'lesson') {
-      return TricycleLessonCard(
+      return appLessonCard(
         onPressed: () {
             Navigator.push(context,
                 MaterialPageRoute(builder: (BuildContext context) {
@@ -489,7 +490,7 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
                PostCardDetailPage(postData: item);
             }
           },
-          child: TricyclePostCard(
+          child: appPostCard(
               key: UniqueKey(),
               // color: isInView?HexColor(AppColors.appColorBlue)[200]:HexColor(AppColors.appColorWhite),
               preferences: prefs,
@@ -539,7 +540,7 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
 
   Widget listItemBuilderEvent(itemData, int index) {
     EventListItem item = itemData;
-    return TricycleEventCard(
+    return appEventCard(
       onClickEvent: () {
         saveHistory(jsonDecode(jsonEncode(item)), 'event');
       },
@@ -622,12 +623,12 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
                 child: Text(type,
                     style: styleElements.headline6ThemeScalable(context)),
               ),
-              TricycleListCard(
+              appListCard(
                 child: listItemGetter(person[index], index),
               ),
             ],
           )
-              : TricycleListCard(
+              : appListCard(
             child: listItemGetter(person[index], index),
           ); // might be `data[index]` in practice
         },
@@ -637,7 +638,7 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
   }
 
   getPostList(List<PostListItem> posts) {
-    return TricycleCard(
+    return appCard(
       padding: EdgeInsets.all(0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -691,7 +692,7 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
   }
 
   getEventList(List<EventListItem> events) {
-    return TricycleCard(
+    return appCard(
       padding: EdgeInsets.all(0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -745,7 +746,7 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
   }
 
   getRoomsList(List<RoomListItem> rooms) {
-    return TricycleCard(
+    return appCard(
       padding: EdgeInsets.all(0),
       child: Column(
         mainAxisSize: MainAxisSize.min,

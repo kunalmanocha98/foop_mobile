@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycleHighlightSpan.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/appHighlightSpan.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/enums/buddy_question_type.dart';
 import 'package:oho_works_app/enums/paginatorEnums.dart';
 import 'package:oho_works_app/models/buddyApprovalModels/buddyListModels.dart';
@@ -28,18 +28,18 @@ import 'package:oho_works_app/utils/toast_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class TricycleQuestionnaireCard extends StatefulWidget{
+class appQuestionnaireCard extends StatefulWidget{
   final RequestListItem? data;
   final Function(bool?)? callback;
-  TricycleQuestionnaireCard({this.data,this.callback});
+  appQuestionnaireCard({this.data,this.callback});
   @override
-  TricycleQuestionnaireCardState createState()=> TricycleQuestionnaireCardState(data: data,callback: callback);
+  appQuestionnaireCardState createState()=> appQuestionnaireCardState(data: data,callback: callback);
 }
-class TricycleQuestionnaireCardState extends State<TricycleQuestionnaireCard>{
+class appQuestionnaireCardState extends State<appQuestionnaireCard>{
   late TextStyleElements styleElements;
   RequestListItem? data;
   Function(bool?)? callback;
-  TricycleQuestionnaireCardState({this.data,this.callback});
+  appQuestionnaireCardState({this.data,this.callback});
   SharedPreferences? prefs;
   late QuestionnaireListResponse questionsData;
   QuestionsItem? currentQuestion;
@@ -55,7 +55,7 @@ class TricycleQuestionnaireCardState extends State<TricycleQuestionnaireCard>{
   String? className="";
   String? institutionName="";
   VerifyResponseRow? verifyResponse;
-  GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKey = GlobalKey();
 
   PAGINATOR_ENUMS paginatorEnum = PAGINATOR_ENUMS.LOADING;
   @override
@@ -101,7 +101,7 @@ class TricycleQuestionnaireCardState extends State<TricycleQuestionnaireCard>{
    return getContent();
   }
   Widget get acceptBody {
-    return TricycleCard(
+    return appCard(
       padding: EdgeInsets.all(8),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -153,7 +153,7 @@ class TricycleQuestionnaireCardState extends State<TricycleQuestionnaireCard>{
             child: Row(
               children: [
                 Spacer(),
-                TricycleTextButton(
+                appTextButton(
                   onPressed: (){
                     RequestUpdateRequestModel payload = RequestUpdateRequestModel();
                     payload.institutionUserId = data!.institutionUserId;
@@ -166,7 +166,7 @@ class TricycleQuestionnaireCardState extends State<TricycleQuestionnaireCard>{
                   child: Text(AppLocalizations.of(context)!.translate('i_dont_know'),style: styleElements.captionThemeScalable(context).copyWith(color: HexColor(AppColors.appMainColor)),),
                 ),
                 SizedBox(width: 8,),
-                TricycleProgressButton(
+                appProgressButton(
                   key: progressButtonKey,
                   onPressed: isChecked!?(){
                     progressButtonKey.currentState!.show();
@@ -196,7 +196,7 @@ class TricycleQuestionnaireCardState extends State<TricycleQuestionnaireCard>{
   }
 
   Widget get body{
-    return TricycleCard(
+    return appCard(
       padding: EdgeInsets.all(8),
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -204,7 +204,7 @@ class TricycleQuestionnaireCardState extends State<TricycleQuestionnaireCard>{
           children: [
             Padding(
               padding:  EdgeInsets.only(left: 16.0),
-              child: TricycleHighlightText(
+              child: appHighlightText(
                 text: getQuestion(),
                 highlight: username,
                 style: styleElements.headline6ThemeScalable(context),
@@ -239,7 +239,7 @@ class TricycleQuestionnaireCardState extends State<TricycleQuestionnaireCard>{
                     child: CircularProgressIndicator()):
                 Padding(
                   padding: EdgeInsets.only(right:24,bottom: 8),
-                  child: TricycleElevatedButton(onPressed: (){
+                  child: appElevatedButton(onPressed: (){
                     setState(() {
                       isVerifying = true;
                     });

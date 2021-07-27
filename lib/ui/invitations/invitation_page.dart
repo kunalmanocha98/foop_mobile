@@ -69,7 +69,7 @@ class _InvitationPage extends State<InvitationPage> {
     styleElements = TextStyleElements(context);
     return SafeArea(
       child: Scaffold(
-        appBar: TricycleAppBar().getCustomAppBar(context, appBarTitle: 'Invite',
+        appBar: appAppBar().getCustomAppBar(context, appBarTitle: 'Invite',
             onBackButtonPress: () {
           Navigator.pop(context);
         }),
@@ -166,7 +166,7 @@ class _InvitationPage extends State<InvitationPage> {
                       )
                   ),
                 ):
-                TricycleCard(
+                appCard(
                   padding: EdgeInsets.all(0),
                   margin: menuList![index].code == "copylink"
                       ? const EdgeInsets.only(

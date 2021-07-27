@@ -4,8 +4,8 @@ import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
-import 'package:oho_works_app/components/tricycle_user_list_tile.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
+import 'package:oho_works_app/components/app_user_list_tile.dart';
 import 'package:oho_works_app/models/post/post_sub_type_list.dart';
 import 'package:oho_works_app/models/post/postcreate.dart';
 import 'package:oho_works_app/models/post/postreceiver.dart';
@@ -57,11 +57,11 @@ class _CampusNewsHelperPages extends State<CampusNewsHelperPages> {
     styleElements = TextStyleElements(context);
     return SafeArea(
         child: Scaffold(
-          appBar: TricycleAppBar().getCustomAppBar(
+          appBar: appAppBar().getCustomAppBar(
               context,
               appBarTitle: getAppBarTitle(),
               actions: (widget.campus_news_type==CAMPUS_NEWS_TYPE.assure || widget.campus_news_type==CAMPUS_NEWS_TYPE.topics)?[
-                TricycleTextButton(
+                appTextButton(
                 onPressed:() {
                   if(widget.campus_news_type==CAMPUS_NEWS_TYPE.assure) {
                     if(confirmation_first! && confirmation_second!) {
@@ -142,7 +142,7 @@ class _CampusNewsHelperPages extends State<CampusNewsHelperPages> {
   }
 
   Widget getAssurance() {
-    return TricycleCard(
+    return appCard(
         child:
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -198,7 +198,7 @@ class _CampusNewsHelperPages extends State<CampusNewsHelperPages> {
 
 
   Widget getHelp() {
-    return TricycleCard(
+    return appCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
@@ -260,7 +260,7 @@ class _CampusNewsHelperPages extends State<CampusNewsHelperPages> {
     PostSubTypeListItem item = itemData;
     var imageurl = item.imageUrl??="";
     return
-    TricycleUserListTile(
+    appUserListTile(
       imageUrl:Config.BASE_URL+imageurl ,
       isFullImageUrl: true,
       trailingWidget: Checkbox(

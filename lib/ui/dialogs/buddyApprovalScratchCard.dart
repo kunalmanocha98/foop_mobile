@@ -1,4 +1,4 @@
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
@@ -140,7 +140,7 @@ class _BuddyApprovalScratchCard extends State<BuddyApprovalScratchCard>{
                       left: 16, right: 16, top: 8, bottom: 20),
                   child: SizedBox(
                       width: double.infinity,
-                      child: TricycleElevatedButton(
+                      child: appElevatedButton(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.0),
                             side: BorderSide(color: HexColor(AppColors.appMainColor))),

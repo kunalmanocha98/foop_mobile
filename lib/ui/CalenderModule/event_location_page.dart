@@ -1,7 +1,7 @@
 
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/mixins/someCommonMixins.dart';
 import 'package:oho_works_app/models/CalenderModule/event_create_models.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
@@ -124,9 +124,9 @@ class EventLocationPageState extends State<EventLocationPage> {
 
     return SafeArea(
       child: Scaffold(
-        appBar: TricycleAppBar().getCustomAppBar(context,
+        appBar: appAppBar().getCustomAppBar(context,
             actions: [
-              TricycleTextButton(
+              appTextButton(
                 onPressed: () {
                   updateLocation();
                 },
@@ -155,7 +155,7 @@ class EventLocationPageState extends State<EventLocationPage> {
             mainAxisSize: MainAxisSize.min,
             children: [
 
-              TricycleListCard(
+              appListCard(
                 padding: EdgeInsets.all(16),
                 child: TextField(
                   style: styleElements.subtitle1ThemeScalable(context).copyWith(
@@ -167,7 +167,7 @@ class EventLocationPageState extends State<EventLocationPage> {
                   ),
                 ),
               ),
-              TricycleListCard(
+              appListCard(
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [

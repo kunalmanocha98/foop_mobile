@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/generic_libraries/generic_comment_review_feedback.dart';
 import 'package:oho_works_app/models/post/ratingcreatemodels.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
@@ -97,7 +97,7 @@ class RatingCardDialog extends StatelessWidget{
                     children: [
                       Expanded(
                         child: Container(
-                          child: TricycleTextButton(
+                          child: appTextButton(
                             shape: RoundedRectangleBorder(),
                             onPressed: () {
                               Navigator.pop(context,false);
@@ -108,7 +108,7 @@ class RatingCardDialog extends StatelessWidget{
                       ),
                       Expanded(
                         child: Container(
-                          child: TricycleTextButton(
+                          child: appTextButton(
                             shape: RoundedRectangleBorder(),
                             onPressed: () {
                               submitRating(context);

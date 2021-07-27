@@ -1,10 +1,10 @@
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/colors.dart';
 import 'package:oho_works_app/utils/hexColors.dart';
 import 'package:flutter/material.dart';
 
-class TricycleProgressButton extends StatefulWidget{
+class appProgressButton extends StatefulWidget{
   final double? progressSize;
   final EdgeInsets? padding;
   final Color? progressColor;
@@ -14,19 +14,19 @@ class TricycleProgressButton extends StatefulWidget{
   final Widget? child;
   final Color? splashColor;
   final double? elevation;
-  TricycleProgressButton({Key? key,this.elevation,this.splashColor,this.progressColor,this.padding,this.progressSize,this.shape,this.onPressed,this.color,this.child}):super(key: key);
+  appProgressButton({Key? key,this.elevation,this.splashColor,this.progressColor,this.padding,this.progressSize,this.shape,this.onPressed,this.color,this.child}):super(key: key);
   @override
-  TricycleProgressButtonState createState() => TricycleProgressButtonState();
+  appProgressButtonState createState() => appProgressButtonState();
 }
 
-class TricycleProgressButtonState extends State<TricycleProgressButton>{
+class appProgressButtonState extends State<appProgressButton>{
   bool isProgress = false;
   TextStyleElements? styleElements;
   @override
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
     return Container(
-      child: _getTricycleElevatedButton()
+      child: _getappElevatedButton()
     );
   }
 
@@ -52,8 +52,8 @@ class TricycleProgressButtonState extends State<TricycleProgressButton>{
   }
 
 
-  Widget _getTricycleElevatedButton(){
-    return TricycleElevatedButton(
+  Widget _getappElevatedButton(){
+    return appElevatedButton(
       onPressed: isProgress?(){}:widget.onPressed,
       child: _getChild,
       shape: widget.shape as OutlinedBorder?,

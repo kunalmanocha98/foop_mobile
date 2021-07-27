@@ -1,4 +1,4 @@
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/home/home.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
@@ -114,7 +114,7 @@ class _OnBoardingState extends State<OnBoarding> {
                 children: <Widget>[
                   Container(
                     margin:  EdgeInsets.only(left: 8.w),
-                    child: TricycleElevatedButton(
+                    child: appElevatedButton(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(18.0.w),
                           side: BorderSide(color: HexColor(AppColors.appColorWhite))),
@@ -141,7 +141,7 @@ class _OnBoardingState extends State<OnBoarding> {
                   ),
                   Container(
                       margin:  EdgeInsets.only(right: 8.w),
-                      child: TricycleElevatedButton(
+                      child: appElevatedButton(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(18.0.w),
                             side: BorderSide(color: HexColor(AppColors.appColorWhite))),

@@ -1,5 +1,5 @@
-import 'package:oho_works_app/components/tricycleHtmlViewer.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/appHtmlViewer.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/enums/post_enums.dart';
 import 'package:oho_works_app/models/post/dateTagPostComponent.dart';
 import 'package:oho_works_app/models/post/postPollComponent.dart';
@@ -281,7 +281,7 @@ class _PostCardFooter extends State<PostCardFooter> {
               child: Padding(
                 padding: EdgeInsets.only(top: 8.0),
                 // child: Text(
-                child: TricycleHtmlViewer(
+                child: appHtmlViewer(
                   isNewsPage: widget.isNewsPage,
                   isDetailPage: isDetailPage,
                   sourceString: contentData!.contentMeta!.meta,
@@ -315,7 +315,7 @@ class _PostCardFooter extends State<PostCardFooter> {
             child: Container(
               alignment: Alignment.bottomRight ,
               margin: EdgeInsets.only(top: 8, left: 24, right: 24),
-              child: TricycleElevatedButton(
+              child: appElevatedButton(
                 onPressed:postType==POST_TYPE.QNA.status?onAnswerClickCallback:(){
                   var b = DateTime.fromMillisecondsSinceEpoch(DateTime.now().millisecondsSinceEpoch).isAfter(DateTime.fromMillisecondsSinceEpoch(contentData!.contentMeta!.others!.submissionDateTime!));
                   if(b){
@@ -338,7 +338,7 @@ class _PostCardFooter extends State<PostCardFooter> {
           ),
           // Visibility(
           //   visible: !isDetailPage && stats.commentCount>0,
-          //   child: TricycleTextButton(onPressed: commentCallback,
+          //   child: appTextButton(onPressed: commentCallback,
           //   padding: EdgeInsets.all(8 ),
           //   shape: RoundedRectangleBorder(side: BorderSide(color: HexColor(AppColors.appColorWhite))),
           //       child: Text('see all $comments comments',style: styleElements.captionThemeScalable(context),)),

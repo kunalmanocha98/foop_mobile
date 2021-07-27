@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/models/personal_profile.dart';
 import 'package:oho_works_app/profile_module/common_cards/testcard.dart';
 import 'package:oho_works_app/profile_module/pages/basic_profile.dart';
@@ -256,7 +256,7 @@ class UserNameWithImageCard extends StatelessWidget {
           child: Container(
             margin: EdgeInsets.only(right: 16.h),
             child: userType == "person"
-                ? TricycleElevatedButton(
+                ? appElevatedButton(
                 onPressed: () async {
                   if (userType == "person") {
                     Navigator.push(

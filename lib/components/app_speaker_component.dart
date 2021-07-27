@@ -1,4 +1,4 @@
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
 import 'package:oho_works_app/ui/RoomModule/rooms_listing.dart';
@@ -14,7 +14,7 @@ import 'package:lottie/lottie.dart';
 import 'package:agora_rtc_engine/rtc_local_view.dart' as RtcLocalView;
 // ignore: library_prefixes
 import 'package:agora_rtc_engine/rtc_remote_view.dart' as RtcRemoteView;*/
-class TricycleSpeakerComponent extends StatelessWidget{
+class appSpeakerComponent extends StatelessWidget{
   final String? imageUrl;
   final double? size;
   final String? name;
@@ -29,7 +29,7 @@ class TricycleSpeakerComponent extends StatelessWidget{
   final int? isVideoOn;
   final int? userId;
   final int? participantId;
-  TricycleSpeakerComponent({this.renderer,this.videoClickCallBack,this.userId,this.participantId,this.imageUrl,this.size,this.name,this.isVideoOn,this.designation,this.speaking = false,this.isModerator = false,this.isAudience = false,this.isMute,this.isSpeaking});
+  appSpeakerComponent({this.renderer,this.videoClickCallBack,this.userId,this.participantId,this.imageUrl,this.size,this.name,this.isVideoOn,this.designation,this.speaking = false,this.isModerator = false,this.isAudience = false,this.isMute,this.isSpeaking});
   @override
   Widget build(BuildContext context) {
 
@@ -66,7 +66,7 @@ class TricycleSpeakerComponent extends StatelessWidget{
                        padding: isAudience? EdgeInsets.all(0.0):  newSize<100? EdgeInsets.all(10.0):EdgeInsets.all(20.0),
                        child: Align(
                          alignment: Alignment.topLeft,
-                         child: TricycleAvatar(
+                         child: appAvatar(
                            imageUrl: imageUrl,
                            size: newSize,
                            key: UniqueKey(),

@@ -4,8 +4,8 @@ import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/components/searchBox.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
-import 'package:oho_works_app/components/tricycleemptywidget.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
+import 'package:oho_works_app/components/appemptywidget.dart';
 import 'package:oho_works_app/models/RegisterUserAs.dart';
 import 'package:oho_works_app/models/subject_experties.dart';
 import 'package:oho_works_app/profile_module/pages/expertise_classes.dart';
@@ -59,8 +59,8 @@ class _SelectSubject extends State<AddSelectSubject>
   List<int> personTypeList = [];
   bool _enabled = true;
   bool empty = false;
-  GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
-  GlobalKey<TricycleProgressButtonState> progressButtonKeyNext = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKey = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKeyNext = GlobalKey();
 
   void setSharedPreferences() async {
     prefs = await SharedPreferences.getInstance();
@@ -151,7 +151,7 @@ class _SelectSubject extends State<AddSelectSubject>
         child: Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: HexColor(AppColors.appColorBackground),
-      appBar: TricycleAppBar().getCustomAppBar(context, appBarTitle: pageTitle,
+      appBar: appAppBar().getCustomAppBar(context, appBarTitle: pageTitle,
           onBackButtonPress: () {
         _onBackPressed();
       }),
@@ -196,7 +196,7 @@ class _SelectSubject extends State<AddSelectSubject>
                                   Center(
                                     child: Visibility(
                                       visible: empty,
-                                      child: TricycleEmptyWidget(
+                                      child: appEmptyWidget(
                                         message: AppLocalizations.of(context)!
                                             .translate('no_data'),
                                       ),
@@ -204,7 +204,7 @@ class _SelectSubject extends State<AddSelectSubject>
                                   ),
                                   Container(
                                     margin: const EdgeInsets.only(bottom: 65),
-                                    child: TricycleListCard(
+                                    child: appListCard(
                                       child: ListView.builder(
                                           padding: EdgeInsets.only(
                                               left: 8,
@@ -328,7 +328,7 @@ class _SelectSubject extends State<AddSelectSubject>
                                                   padding:
                                                       const EdgeInsets.only(
                                                           left: 16.0),
-                                                  child: TricycleProgressButton(
+                                                  child: appProgressButton(
                                                     key: progressButtonKey,
                                                     shape:
                                                         RoundedRectangleBorder(
@@ -422,7 +422,7 @@ class _SelectSubject extends State<AddSelectSubject>
                                                   padding:
                                                       const EdgeInsets.only(
                                                           right: 16.0),
-                                                  child: TricycleProgressButton(
+                                                  child: appProgressButton(
                                                     key: progressButtonKeyNext,
                                                     shape:
                                                         RoundedRectangleBorder(
@@ -560,7 +560,7 @@ class _SelectSubject extends State<AddSelectSubject>
                                                         const EdgeInsets.only(
                                                             right: 16.0),
                                                     child:
-                                                        TricycleProgressButton(
+                                                        appProgressButton(
                                                       key:
                                                           progressButtonKeyNext,
                                                       shape: RoundedRectangleBorder(

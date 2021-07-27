@@ -12,7 +12,7 @@ import 'package:flutter_quill/widgets/default_styles.dart';
 import 'package:flutter_quill/widgets/editor.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class TricycleHtmlViewer extends StatefulWidget {
+class appHtmlViewer extends StatefulWidget {
   final String? sourceString;
   final bool? isDetailPage;
   final bool? isNewsPage;
@@ -20,7 +20,7 @@ class TricycleHtmlViewer extends StatefulWidget {
   final String? searchHighlightWord;
   final bool isEmail;
 
-  TricycleHtmlViewer(
+  appHtmlViewer(
       {this.sourceString,
         this.isNewsPage,
         this.isDetailPage,
@@ -29,10 +29,10 @@ class TricycleHtmlViewer extends StatefulWidget {
         this.isNoticeCard});
 
   @override
-  TricycleHtmlViewerState createState() => TricycleHtmlViewerState();
+  appHtmlViewerState createState() => appHtmlViewerState();
 }
 
-class TricycleHtmlViewerState extends State<TricycleHtmlViewer> {
+class appHtmlViewerState extends State<appHtmlViewer> {
   // bool isLoading= true;
   bool showHtmlViewer = false;
   late QuillController _controller;

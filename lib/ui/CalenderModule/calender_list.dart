@@ -4,8 +4,8 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/searchBox.dart';
-import 'package:oho_works_app/components/tricycle_event_card.dart';
-import 'package:oho_works_app/components/tricycleemptywidget.dart';
+import 'package:oho_works_app/components/app_event_card.dart';
+import 'package:oho_works_app/components/appemptywidget.dart';
 import 'package:oho_works_app/models/CalenderModule/calenderModels.dart';
 import 'package:oho_works_app/models/CalenderModule/event_listings.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
@@ -81,7 +81,7 @@ class CalenderListPageState extends State<CalenderListPage> {
         },
         body: isEmpty
             ? Center(
-                child: TricycleEmptyWidget(
+                child: appEmptyWidget(
                 message: AppLocalizations.of(context)!.translate('no_data'),
                 assetImage: null,
               ))
@@ -172,7 +172,7 @@ class CalenderListPageState extends State<CalenderListPage> {
 
   Widget listItemBuilder(itemData) {
     EventListItem item = itemData;
-    return TricycleEventCard(
+    return appEventCard(
       title: item.title,
       byImage: item.header!.avatar,
       description: item.subtitle,

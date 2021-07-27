@@ -9,9 +9,9 @@ import 'package:GlobalUploadFilePkg/Enums/ownertype.dart';
 import 'package:GlobalUploadFilePkg/Files/GlobalUploadFilePkg.dart';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/chat_tool_bar.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
-import 'package:oho_works_app/components/tricycle_chat_footer.dart';
-import 'package:oho_works_app/components/tricycleemptywidget.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
+import 'package:oho_works_app/components/app_chat_footer.dart';
+import 'package:oho_works_app/components/appemptywidget.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
 import 'package:oho_works_app/home/locator.dart';
@@ -175,7 +175,7 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
   List<CommentsItem>? listComments = [];
   final commentController = TextEditingController();
   TextStyleElements? styleElements;
-  GlobalKey<TricycleChatFooterState>? chatFooterKey = GlobalKey();
+  GlobalKey<appChatFooterState>? chatFooterKey = GlobalKey();
   bool ?isVisible;
 
   ChatHistoryPageState(
@@ -428,7 +428,7 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
                             return Center(
                                 child: Padding(
                                   padding: const EdgeInsets.all(20.0),
-                                  child: TricycleEmptyWidget(
+                                  child: appEmptyWidget(
                                     message: AppLocalizations.of(context)!
                                         .translate('no_messages'),
                                   ),
@@ -553,7 +553,7 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
                                       mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                       children: [
-                                        TricycleTextButton(
+                                        appTextButton(
                                           padding: EdgeInsets.all(0),
                                           shape: StadiumBorder(
                                               side: BorderSide(
@@ -577,7 +577,7 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
                                                     .appMainColor)),
                                           ),
                                         ),
-                                        TricycleTextButton(
+                                        appTextButton(
                                           padding: EdgeInsets.all(0),
                                           shape: StadiumBorder(
                                               side: BorderSide(
@@ -610,7 +610,7 @@ class ChatHistoryPageState extends State<ChatHistoryPage> {
                           ),
                         ),
                         isRoomAvailable!
-                            ? TricycleChatFooter(
+                            ? appChatFooter(
                           chatFooterKey!,
                           data: replyData,
                           linkPreviewUrl: linkPreview,

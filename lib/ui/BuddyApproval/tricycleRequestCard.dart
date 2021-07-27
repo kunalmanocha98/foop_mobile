@@ -1,5 +1,5 @@
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
@@ -9,14 +9,14 @@ import 'package:oho_works_app/utils/utility_class.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-class TricycleRequestCard extends StatefulWidget {
+class appRequestCard extends StatefulWidget {
   final String? buttonTitle;
   final Function? onButtonClickCallback;
   final String? imageUrl;
   final bool? isContentVisible;
   final bool? isDetailPage;
 
-  TricycleRequestCard(
+  appRequestCard(
       {this.buttonTitle,
         this.isDetailPage,
         this.onButtonClickCallback,
@@ -24,20 +24,20 @@ class TricycleRequestCard extends StatefulWidget {
         this.isContentVisible});
 
   @override
-  TricycleRequestCardState createState() =>
-      TricycleRequestCardState(isContentVisible: isContentVisible);
+  appRequestCardState createState() =>
+      appRequestCardState(isContentVisible: isContentVisible);
 }
 
-class TricycleRequestCardState extends State<TricycleRequestCard> {
+class appRequestCardState extends State<appRequestCard> {
   bool? isContentVisible;
 
-  TricycleRequestCardState({this.isContentVisible});
+  appRequestCardState({this.isContentVisible});
 
   @override
   Widget build(BuildContext context) {
     Utility().screenUtilInit(context);
     TextStyleElements styleElements = TextStyleElements(context);
-    return TricycleCard(
+    return appCard(
       padding: EdgeInsets.all(0),
       margin: EdgeInsets.only(left: 8,right: 8,top: 8,bottom: 8),
       onTap: (isContentVisible!=null && !isContentVisible!)?null:widget.onButtonClickCallback,
@@ -85,7 +85,7 @@ class TricycleRequestCardState extends State<TricycleRequestCard> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      TricycleElevatedButton(
+                      appElevatedButton(
                         onPressed: widget.onButtonClickCallback,
                         child: Text(
                           widget.buttonTitle!,

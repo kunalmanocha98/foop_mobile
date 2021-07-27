@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/models/drop_down_global.dart';
 import 'package:oho_works_app/models/others_name.dart';
 import 'package:oho_works_app/models/post/keywordsList.dart';
@@ -320,7 +320,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
       child: SafeArea(
           child: Scaffold(
                resizeToAvoidBottomInset: false,
-              appBar: TricycleAppBar().getCustomAppBar(
+              appBar: appAppBar().getCustomAppBar(
                 context,
                 appBarTitle: 'Register institute',
                 onBackButtonPress: () {
@@ -333,7 +333,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
                     SingleChildScrollView(
                       child: Visibility(
                           visible: !isGoogleOrFacebookDataReceived,
-                          child: TricycleCard(
+                          child: appCard(
                             child: Column(
                               children: <Widget>[
                                 Align(
@@ -467,7 +467,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
                                           const EdgeInsets.only(
                                               left: 16.0,
                                               right: 16.0),
-                                          child: TricycleElevatedButton(
+                                          child: appElevatedButton(
                                             shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                 BorderRadius
@@ -504,7 +504,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
                                           const EdgeInsets.only(
                                               left: 16.0,
                                               right: 16.0),
-                                          child: TricycleElevatedButton(
+                                          child: appElevatedButton(
                                             shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                 BorderRadius

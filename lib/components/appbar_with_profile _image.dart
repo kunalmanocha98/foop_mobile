@@ -1,4 +1,4 @@
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/profile_module/pages/profile_page.dart';
 import 'package:oho_works_app/ui/Notification/notification_page.dart';
 import 'package:oho_works_app/ui/searchmodule/globalsearchpage.dart';
@@ -55,7 +55,7 @@ class AppBarWithProfile extends StatelessWidget with PreferredSizeWidget {
                       SizedBox(
                         height: 36,
                         width: 36,
-                        child: TricycleAvatar(
+                        child: appAvatar(
                           size: 36,
                           isClickable: false,
                           key: UniqueKey(),
@@ -85,7 +85,7 @@ class AppBarWithProfile extends StatelessWidget with PreferredSizeWidget {
                   child: SizedBox(
                     height: 36,
                     width: 36,
-                    child: TricycleAvatar(
+                    child: appAvatar(
                       size: 36,
                       key:UniqueKey(),
                       imageUrl: imageUrl,
@@ -405,7 +405,7 @@ class AppBarWithProfileNew extends StatelessWidget with PreferredSizeWidget {
                         child: SizedBox(
                           height: 30,
                           width: 30,
-                          child: TricycleAvatar(
+                          child: appAvatar(
                             size: 30,
                             key: UniqueKey(),
                             imageUrl: imageUrl,

@@ -1,7 +1,7 @@
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
@@ -23,7 +23,7 @@ class SpeakersListState extends State<SpeakersList> {
     styleElements = TextStyleElements(context);
     return SafeArea(
       child: Scaffold(
-        appBar: TricycleAppBar().getCustomAppBarWithSearch(
+        appBar: appAppBar().getCustomAppBarWithSearch(
           context,
           appBarTitle: AppLocalizations.of(context)!.translate('manage_speaker'),
           onBackButtonPress: () {
@@ -32,7 +32,7 @@ class SpeakersListState extends State<SpeakersList> {
           hintText: 'Search members,rooms, channels',
           onSearchValueChanged: (String value) {},
         ),
-        body: TricycleListCard(
+        body: appListCard(
           child: ListView.builder(
             itemCount: 10,
             itemBuilder: (BuildContext context, int index) {
@@ -40,7 +40,7 @@ class SpeakersListState extends State<SpeakersList> {
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
                   children: [
-                    TricycleAvatar(
+                    appAvatar(
                       size: 56,
                       imageUrl: 'https://picsum.photos/100/100',
                       service_type: SERVICE_TYPE.PERSON,
@@ -61,7 +61,7 @@ class SpeakersListState extends State<SpeakersList> {
                     Row(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        TricycleTextButton(
+                        appTextButton(
                             onPressed: () {},
                             shape: StadiumBorder(
                               side: BorderSide(color: HexColor(AppColors.appColorWhite)),
@@ -73,7 +73,7 @@ class SpeakersListState extends State<SpeakersList> {
                                 color: HexColor(AppColors.appMainColor)
                               ),
                             )),
-                        TricycleTextButton(
+                        appTextButton(
                             onPressed: () {},
                             child: Text(
                               'Allow',

@@ -32,7 +32,7 @@ class BlockUserListItem extends StatelessWidget {
       //             children: [
       //               Align(
       //                 alignment: Alignment.centerLeft,
-      //                 child: TricycleAvatar(
+      //                 child: appAvatar(
       //                   imageUrl: data.urlOne,
       //                   size: 52,
       //                 )

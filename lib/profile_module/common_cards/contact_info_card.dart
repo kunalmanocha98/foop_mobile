@@ -61,7 +61,7 @@ class ContactInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
     setprefs();
-    return TricycleListCard(
+    return appListCard(
         child: Column(
       children: <Widget>[
         Visibility(

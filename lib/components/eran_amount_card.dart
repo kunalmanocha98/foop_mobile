@@ -15,7 +15,7 @@ class EarnCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextStyleElements styleElements = TextStyleElements(context);
-    return TricycleCard(
+    return appCard(
         onTap: (){
           if(isClickable!)
           Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>RegisInstruction()));

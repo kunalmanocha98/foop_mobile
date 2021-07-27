@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
-import 'package:oho_works_app/components/tricycle_user_list_tile.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
+import 'package:oho_works_app/components/app_user_list_tile.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
 import 'package:oho_works_app/mixins/someCommonMixins.dart';
 import 'package:oho_works_app/models/RefferralInstitution/RefferralModels.dart';
@@ -31,7 +31,7 @@ class RegisterInstituteFillDetailsState extends State<RegisterInstituteFillDetai
   String? upiId;
   var formKey = GlobalKey<FormState>();
   final TextEditingController _typeAheadController = TextEditingController();
-  GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKey = GlobalKey();
 
   StaffListItem? selectedItem;
   @override
@@ -40,7 +40,7 @@ class RegisterInstituteFillDetailsState extends State<RegisterInstituteFillDetai
     SharedPreferences? prefs;
    return SafeArea(
      child: Scaffold(
-       appBar: TricycleAppBar().getCustomAppBar(context, appBarTitle: 'Tricycle', onBackButtonPress: (){
+       appBar: appAppBar().getCustomAppBar(context, appBarTitle: 'app', onBackButtonPress: (){
          Navigator.pop(context);
        }),
        body: FutureBuilder<SharedPreferences>(
@@ -56,7 +56,7 @@ class RegisterInstituteFillDetailsState extends State<RegisterInstituteFillDetai
                      SizedBox(height: 40,),
                      Padding(
                        padding:  EdgeInsets.only(left:8.0,right:8),
-                       child: TricycleUserListTile(
+                       child: appUserListTile(
                          imageUrl: snapshot.data!.getStringList(Strings.institutionImageList)![0],
                          service_type: SERVICE_TYPE.INSTITUTION,
                          title:snapshot.data!.getStringList(Strings.institutionNameList)![0],
@@ -87,7 +87,7 @@ class RegisterInstituteFillDetailsState extends State<RegisterInstituteFillDetai
                              },
                              itemBuilder: (BuildContext context, dynamic itemData) {
                                StaffListItem item = itemData;
-                               return TricycleUserListTile(
+                               return appUserListTile(
                                  imageUrl: item.profileImage,
                                  title:item.firstName!+" "+item.lastName!,
                                );
@@ -152,7 +152,7 @@ class RegisterInstituteFillDetailsState extends State<RegisterInstituteFillDetai
                              ),
                            ),
                            SizedBox(height: 32,),
-                           TricycleProgressButton(
+                           appProgressButton(
                              key: progressButtonKey,
                              onPressed: (){
                                if(formKey.currentState!.validate()){

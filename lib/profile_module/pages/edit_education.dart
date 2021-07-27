@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
 import 'package:oho_works_app/models/base_res.dart';
@@ -47,9 +47,9 @@ class EditEducation extends StatefulWidget {
 
 class _EditEducation extends State<EditEducation>
     with SingleTickerProviderStateMixin {
-  GlobalKey<TricycleProgressButtonState> progressButtonKeyBasic = GlobalKey();
-  GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
-  GlobalKey<TricycleProgressButtonState> progressButtonKeyNext = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKeyBasic = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKey = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKeyNext = GlobalKey();
   List names =  [];
   String? selectedEmpType;
   String? selectedIndType;
@@ -490,7 +490,7 @@ return rows!;
           child: Scaffold(
             resizeToAvoidBottomInset: true,
             backgroundColor: HexColor(AppColors.appColorBackground),
-            appBar: TricycleAppBar().getCustomAppBar(context,
+            appBar: appAppBar().getCustomAppBar(context,
                 appBarTitle: isEducation ? 'Education' : "Work",
                 onBackButtonPress: () {
              backPressed();
@@ -695,7 +695,7 @@ return rows!;
                               children: <Widget>[
                                 Padding(
                                   padding: const EdgeInsets.only(left:16.0),
-                                  child: TricycleProgressButton(
+                                  child: appProgressButton(
                                     key: progressButtonKey,
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
@@ -728,7 +728,7 @@ return rows!;
 
                                 ,  Padding(
                                   padding: const EdgeInsets.only(right:16.0),
-                                  child: TricycleProgressButton(
+                                  child: appProgressButton(
                                     key: progressButtonKeyNext,
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
@@ -811,7 +811,7 @@ return rows!;
 
                                 Padding(
                                   padding: const EdgeInsets.only(right:16.0),
-                                  child: TricycleProgressButton(
+                                  child: appProgressButton(
                                     key: progressButtonKeyBasic,
                                     shape: RoundedRectangleBorder(
                                         borderRadius:

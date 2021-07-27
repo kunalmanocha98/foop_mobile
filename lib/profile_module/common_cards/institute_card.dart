@@ -1,4 +1,4 @@
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
@@ -110,7 +110,7 @@ class InstituteCard extends StatelessWidget {
                                   margin: const EdgeInsets.only(
                                       left: 16.0, top: 16.0, bottom: 16.0),
                                   height: 30,
-                                  child: TricycleElevatedButton(
+                                  child: appElevatedButton(
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(8.0),
@@ -131,7 +131,7 @@ class InstituteCard extends StatelessWidget {
                                   margin: const EdgeInsets.only(
                                       left: 8.0, top: 16.0, bottom: 16.0),
                                   height: 30,
-                                  child: TricycleElevatedButton(
+                                  child: appElevatedButton(
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(8.0),

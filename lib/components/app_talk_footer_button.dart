@@ -2,7 +2,7 @@ import 'package:oho_works_app/utils/colors.dart';
 import 'package:oho_works_app/utils/hexColors.dart';
 import 'package:flutter/material.dart';
 
-class TricycleTalkFooterButton extends StatefulWidget {
+class appTalkFooterButton extends StatefulWidget {
   final TALKFOOTERENUM? type;
   final Function(bool)? muteCallBack;
 
@@ -13,7 +13,7 @@ class TricycleTalkFooterButton extends StatefulWidget {
   final Function(bool)? videoCallBack;
   final bool? isMute;
 
-  TricycleTalkFooterButton(
+  appTalkFooterButton(
       {Key? key,
         this.type,
         this.isMute = true,
@@ -25,20 +25,20 @@ class TricycleTalkFooterButton extends StatefulWidget {
       : super(key: key);
 
   @override
-  TricycleTalkFooterButtonState createState() =>
-      TricycleTalkFooterButtonState(isMute!);
+  appTalkFooterButtonState createState() =>
+      appTalkFooterButtonState(isMute!);
 }
 
 enum TALKFOOTERENUM { speaker, moderator, audience, chat, post }
 
-class TricycleTalkFooterButtonState extends State<TricycleTalkFooterButton> {
+class appTalkFooterButtonState extends State<appTalkFooterButton> {
   bool _handRaise = false;
   bool _speakerOn = false;
    bool _videoOn = false;
 
   int count = 0;
 
-  TricycleTalkFooterButtonState(bool isMute) {
+  appTalkFooterButtonState(bool isMute) {
     _speakerOn = !isMute;
   }
 

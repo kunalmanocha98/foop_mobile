@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/searchBox.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/models/RegisterUserAs.dart';
 import 'package:oho_works_app/models/UserList.dart';
 import 'package:oho_works_app/regisration_module/verify_child.dart';
@@ -123,7 +123,7 @@ late BuildContext sctx;
             return new  Container(
                 child: Scaffold(
 
-                    appBar:TricycleAppBar().getCustomAppBar(context,
+                    appBar:appAppBar().getCustomAppBar(context,
                         appBarTitle: pageTitle,
                         onBackButtonPress: (){
                           _onBackPressed();
@@ -333,7 +333,7 @@ late BuildContext sctx;
                                             child: Container(
                                               margin: const EdgeInsets.only(
                                                   left: 16.0, right: 16.0),
-                                              child: TricycleElevatedButton(
+                                              child: appElevatedButton(
                                                 shape: RoundedRectangleBorder(
                                                     borderRadius:
                                                     BorderRadius.circular(18.0),

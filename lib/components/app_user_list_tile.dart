@@ -1,4 +1,4 @@
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
 import 'package:oho_works_app/ui/RoomModule/rooms_listing.dart';
@@ -9,7 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-class TricycleUserListTile extends StatelessWidget {
+class appUserListTile extends StatelessWidget {
   final bool isOnline;
   final String? superScriptText;
   final String? title;
@@ -38,7 +38,7 @@ class TricycleUserListTile extends StatelessWidget {
 final Function(int? )? callBack;
 final Widget? trailWidget;
 final int? userId;
-  TricycleUserListTile({
+  appUserListTile({
     this.superScriptText,
     this.iconWidget,
     this.callBack,
@@ -193,7 +193,7 @@ final int? userId;
         children: [
           Align(
             alignment: Alignment.center,
-            child: TricycleAvatar(
+            child: appAvatar(
               size: 52,
               isFullUrl: isFullImageUrl,
               imageUrl: imageUrl,

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
 import 'package:oho_works_app/utils/hexColors.dart';
@@ -59,7 +59,7 @@ bool _toggleCamera =false;
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    TricycleTextButton(
+                    appTextButton(
                       color: HexColor(AppColors.appColorBlack).withOpacity(0.05),
                       shape: StadiumBorder( 
                         side: BorderSide(color: HexColor(AppColors.appColorBlack).withOpacity(0.05), width: 1),
@@ -105,7 +105,7 @@ bool _toggleCamera =false;
                       },
                       child: Icon(Icons.camera_alt),
                     ),
-                    TricycleTextButton(
+                    appTextButton(
                       shape: StadiumBorder( 
                         side: BorderSide(color: HexColor(AppColors.appColorBlack).withOpacity(0.05), width: 1),
                       ),
