@@ -24,7 +24,7 @@ import 'package:oho_works_app/profile_module/pages/network_page.dart';
 import 'package:oho_works_app/profile_module/pages/profile_page.dart';
 import 'package:oho_works_app/services/push_notification_service.dart';
 import 'package:oho_works_app/services/share_data_service.dart';
-import 'package:oho_works_app/tri_cycle_database/data_base_helper.dart';
+import 'package:oho_works_app/app_database/data_base_helper.dart';
 import 'package:oho_works_app/ui/EdufluencerTutorModule/become_edufluencer_tutor_page.dart';
 import 'package:oho_works_app/ui/EdufluencerTutorModule/edufluencer_tutor_list.dart';
 import 'package:oho_works_app/ui/RoomModule/roomsPage.dart';

@@ -17,7 +17,7 @@ import 'package:oho_works_app/messenger_module/screens/user_room_selection_page.
 import 'package:oho_works_app/models/Rooms/roomlistmodels.dart';
 import 'package:oho_works_app/models/custom_tab_maker.dart';
 import 'package:oho_works_app/services/socket_service.dart';
-import 'package:oho_works_app/tri_cycle_database/data_base_helper.dart';
+import 'package:oho_works_app/app_database/data_base_helper.dart';
 import 'package:oho_works_app/ui/RoomModule/rooms_listing.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';

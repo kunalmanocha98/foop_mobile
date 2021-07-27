@@ -32,7 +32,7 @@ import 'package:oho_works_app/models/new_conversation_event.dart';
 import 'package:oho_works_app/services/agora_service.dart';
 import 'package:oho_works_app/services/audio_socket_service.dart';
 import 'package:oho_works_app/services/get_deeplink_url_service.dart';
-import 'package:oho_works_app/tri_cycle_database/data_base_helper.dart';
+import 'package:oho_works_app/app_database/data_base_helper.dart';
 import 'package:oho_works_app/ui/campus_talk/participant_notifier.dart';
 import 'package:oho_works_app/ui/campus_talk/talk_event_profile_page.dart';
 import 'package:oho_works_app/ui/campus_talk/test_pojo.dart';

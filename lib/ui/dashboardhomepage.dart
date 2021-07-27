@@ -27,7 +27,7 @@ import 'package:oho_works_app/services/audio_socket_service.dart';
 import 'package:oho_works_app/services/deeplinking_service.dart';
 import 'package:oho_works_app/services/share_data_service.dart';
 import 'package:oho_works_app/services/socket_service.dart';
-import 'package:oho_works_app/tri_cycle_database/data_base_helper.dart';
+import 'package:oho_works_app/app_database/data_base_helper.dart';
 import 'package:oho_works_app/ui/BottomSheets/CreateNewSheet.dart';
 import 'package:oho_works_app/ui/EdufluencerTutorModule/become_edufluencer_tutor_page.dart';
 import 'package:oho_works_app/ui/EdufluencerTutorModule/edufluencer_tutor_list.dart';

@@ -15,7 +15,7 @@ import 'package:oho_works_app/models/user_contacts.dart';
 import 'package:oho_works_app/profile_module/common_cards/testcard.dart';
 import 'package:oho_works_app/services/audio_socket_service.dart';
 import 'package:oho_works_app/services/push_notification_service.dart';
-import 'package:oho_works_app/tri_cycle_database/data_base_helper.dart';
+import 'package:oho_works_app/app_database/data_base_helper.dart';
 import 'package:oho_works_app/ui/postModule/CampusNewsListPage.dart';
 import 'package:oho_works_app/ui/postModule/pollsListPage.dart';
 import 'package:oho_works_app/ui/postModule/postListPage.dart';

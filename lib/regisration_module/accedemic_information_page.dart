@@ -8,7 +8,7 @@ import 'package:oho_works_app/models/RegisterUserAs.dart';
 import 'package:oho_works_app/models/register_user_as_response.dart';
 import 'package:oho_works_app/profile_module/common_cards/testcard.dart';
 import 'package:oho_works_app/regisration_module/subjects_page_new.dart';
-import 'package:oho_works_app/tri_cycle_database/data_base_helper.dart';
+import 'package:oho_works_app/app_database/data_base_helper.dart';
 import 'package:oho_works_app/ui/dialog_page.dart';
 import 'package:oho_works_app/ui/person_type_list.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';

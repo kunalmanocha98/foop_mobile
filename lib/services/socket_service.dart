@@ -1,6 +1,6 @@
 
 import 'package:oho_works_app/messenger_module/entities/user_status.dart';
-import 'package:oho_works_app/tri_cycle_database/data_base_helper.dart';
+import 'package:oho_works_app/app_database/data_base_helper.dart';
 import 'package:oho_works_app/utils/config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 // ignore: library_prefixes

@@ -12,7 +12,7 @@ import 'package:oho_works_app/models/CalenderModule/event_listings.dart';
 import 'package:oho_works_app/models/campus_talk/socket_emit_models.dart';
 import 'package:oho_works_app/services/audio_socket_service.dart';
 import 'package:oho_works_app/services/get_deeplink_url_service.dart';
-import 'package:oho_works_app/tri_cycle_database/data_base_helper.dart';
+import 'package:oho_works_app/app_database/data_base_helper.dart';
 import 'package:oho_works_app/ui/campus_talk/invite_user_page.dart';
 import 'package:oho_works_app/ui/campus_talk/participant_notifier.dart';
 import 'package:oho_works_app/ui/campus_talk/talk_audience_list_page.dart';

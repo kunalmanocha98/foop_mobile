@@ -1,7 +1,7 @@
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/models/buddyApprovalModels/buddyListModels.dart';
-import 'package:oho_works_app/ui/BuddyApproval/tricycleRequestCard.dart';
-import 'package:oho_works_app/ui/BuddyApproval/tricyclequestionairecard.dart';
+import 'package:oho_works_app/ui/BuddyApproval/appRequestCard.dart';
+import 'package:oho_works_app/ui/BuddyApproval/appquestionairecard.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:flutter/material.dart';
 

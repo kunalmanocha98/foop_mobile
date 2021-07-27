@@ -9,7 +9,7 @@ import 'package:oho_works_app/components/app_user_list_tile.dart';
 import 'package:oho_works_app/enums/postRecipientType.dart';
 import 'package:oho_works_app/models/post/postcreate.dart';
 import 'package:oho_works_app/models/post/postreceiver.dart';
-import 'package:oho_works_app/ui/dialogs/tricycleAlertDialog.dart';
+import 'package:oho_works_app/ui/dialogs/appAlertDialog.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
