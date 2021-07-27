@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:oho_works_app/api_calls/calls.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/models/country_code_response.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
@@ -92,7 +92,7 @@ class _DeleteContacts extends State<DeleteContacts> {
             child: Row(
               children: [
                 Spacer(),
-                TricycleTextButton(
+                appTextButton(
                   onPressed: () {
                     Navigator.pop(context);
                     callBackCancel!();
@@ -105,7 +105,7 @@ class _DeleteContacts extends State<DeleteContacts> {
                         .copyWith(color: HexColor(AppColors.appMainColor)),
                   ),
                 ),
-                TricycleTextButton(
+                appTextButton(
                   onPressed: () {
                     deleteContact();
                   },

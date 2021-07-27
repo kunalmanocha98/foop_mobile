@@ -1,4 +1,4 @@
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/colors.dart';
 import 'package:oho_works_app/utils/hexColors.dart';
@@ -37,7 +37,7 @@ class _Component51State extends State<Component51> {
         Container(
           width: 260.w,
           height: 52.h,
-          child: TricycleElevatedButton(
+          child: appElevatedButton(
             onPressed: callback,
             color: HexColor(AppColors.appColorWhite),
             child: Center(

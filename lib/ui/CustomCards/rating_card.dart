@@ -18,7 +18,7 @@ class RatingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
-    return TricycleListCard(
+    return appListCard(
 
         child:Container(
           decoration: new BoxDecoration(

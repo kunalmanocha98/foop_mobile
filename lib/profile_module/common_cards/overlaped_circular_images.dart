@@ -1,4 +1,4 @@
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/utils/config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,14 +14,14 @@ class OverlappedImages extends StatelessWidget {
       child: Stack(
         //alignment:new Alignment(x, y)
         children: <Widget>[
-          images!.length>0?  TricycleAvatar(
+          images!.length>0?  appAvatar(
             size: 25,
             isFullUrl: true,
             imageUrl:  images!.length>0?Config.BASE_URL+images![0]:"",
           ):Container(),
           images!.length>1? Positioned(
             left: 8,
-            child: TricycleAvatar(
+            child: appAvatar(
               size: 25,
               isFullUrl: true,
               imageUrl:  images!.length>1?Config.BASE_URL+images![1]:"",
@@ -29,7 +29,7 @@ class OverlappedImages extends StatelessWidget {
           ):Container(),
           images!.length>2?   Positioned(
             left: 20,
-            child: TricycleAvatar(
+            child: appAvatar(
               size: 25,
               isFullUrl: true,
               imageUrl: images!.length>2?Config.BASE_URL+images![2]:"",
@@ -37,7 +37,7 @@ class OverlappedImages extends StatelessWidget {
           ):Container(),
           images!.length>3?   Positioned(
             left: 25,
-            child: TricycleAvatar(
+            child: appAvatar(
               size: 25,
               isFullUrl: true,
               imageUrl: images!.length>3?Config.BASE_URL+images![3]:"",
@@ -45,7 +45,7 @@ class OverlappedImages extends StatelessWidget {
           ):Container(),
           // Positioned(
           //   left: 25,
-          //   child:TricycleAvatar(
+          //   child:appAvatar(
           //     size: 25,
           //     imageUrl: images[4],
           //   )

@@ -1,7 +1,7 @@
 
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/commonComponents.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/models/custom_tab_maker.dart';
 import 'package:oho_works_app/profile_module/common_cards/overlappedImagesLarger.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
@@ -48,7 +48,7 @@ class _GoalsDetailPage extends State<GoalsDetailPage> {
       child: Scaffold(
           resizeToAvoidBottomInset: false,
           backgroundColor: HexColor(AppColors.appColorBackground),
-          appBar: TricycleAppBar().getCustomAppBarWithSearch(context,
+          appBar: appAppBar().getCustomAppBarWithSearch(context,
               appBarTitle:  AppLocalizations.of(context)!.translate("select_date"),
               onSearchValueChanged: (value){},
               onBackButtonPress: (){
@@ -211,7 +211,7 @@ class _GoalsDetailPage extends State<GoalsDetailPage> {
                                                                 top: 16.0,
                                                                 bottom: 16.0),
                                                         height: 40,
-                                                        child: TricycleElevatedButton(
+                                                        child: appElevatedButton(
                                                           shape: RoundedRectangleBorder(
                                                               borderRadius:
                                                                   BorderRadius
@@ -237,7 +237,7 @@ class _GoalsDetailPage extends State<GoalsDetailPage> {
                                                                 bottom: 16.0,
                                                                 right: 16),
                                                         height: 40,
-                                                        child: TricycleElevatedButton(
+                                                        child: appElevatedButton(
                                                           shape: RoundedRectangleBorder(
                                                               borderRadius:
                                                                   BorderRadius

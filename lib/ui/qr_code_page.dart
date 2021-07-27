@@ -1,4 +1,4 @@
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
 import 'package:oho_works_app/home/locator.dart';
@@ -52,7 +52,7 @@ class QrCodePage extends StatelessWidget {
                         width: double.infinity,
                         height: 80,
                       ),
-                      TricycleAvatar(
+                      appAvatar(
                         imageUrl: prefs!.getString(Strings.profileImage),
                         service_type: SERVICE_TYPE.PERSON,
                         resolution_type: RESOLUTION_TYPE.R256,

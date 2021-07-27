@@ -3,7 +3,7 @@ import 'dart:io';
 import 'dart:ui';
 
 import 'package:oho_works_app/api_calls/calls.dart';
-import 'package:oho_works_app/components/tricycle_link_preview.dart';
+import 'package:oho_works_app/components/app_link_preview.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
 import 'package:oho_works_app/models/media_files.dart';
@@ -45,7 +45,7 @@ class  PostCardMedia extends StatefulWidget {
 String? postType;
 bool? isLearningPage;
 bool? isFullImageUrl;
-  // GlobalKey<TricycleDownloadButtonState> downloadButtonKey;
+  // GlobalKey<appDownloadButtonState> downloadButtonKey;
   PostCardMedia(
       {required this.mediaList,
         this.onlyHorizontalList = false,
@@ -93,7 +93,7 @@ class _PostCardMedia extends State<PostCardMedia> {
   PageController? _controller;
   int? pageNumber;
 
-  // GlobalKey<TricycleDownloadButtonState> downloadButtonKey;
+  // GlobalKey<appDownloadButtonState> downloadButtonKey;
   int? totalItems;
   late TextStyleElements styleElements;
 
@@ -351,7 +351,7 @@ class _PostCardMedia extends State<PostCardMedia> {
   Widget getLinkPreview() {
     if (mediaList != null && mediaList!.length > 0) {
       return Container(
-        child: TricycleLinkPreview(
+        child: appLinkPreview(
           url: widget.link,
           builder: (InfoBase? info) {
             String? title = "";
@@ -421,7 +421,7 @@ class _PostCardMedia extends State<PostCardMedia> {
       );
     } else {
       return Container(
-        child: TricycleLinkPreview(
+        child: appLinkPreview(
           url: widget.link,
           showMultimedia: true,
           useMultithread: true,
@@ -567,7 +567,7 @@ class _PostCardMedia extends State<PostCardMedia> {
       return Container(
         child: isLocalFile != null && isLocalFile!
             ? new Image.file(new File(media.mediaUrl!))
-            : TricycleImageView(
+            : appImageView(
           url:(widget.isFullImageUrl!=null && widget.isFullImageUrl!)?media.mediaUrl:(onFullPage != null && onFullPage!)
               ? Utility().getUrlForImage(
               media.mediaUrl, RESOLUTION_TYPE.R512, SERVICE_TYPE.POST)
@@ -587,14 +587,14 @@ class _PostCardMedia extends State<PostCardMedia> {
       // );
     } else if (media.mediaType != null && media.mediaType!.contains('video')) {
       return Center(
-          child: TricycleVideoView(
+          child: appVideoView(
               isLocalFile: isLocalFile,
               mediaUrl: media.mediaUrl,
               onFullPage: onFullPage));
     } else if (Utility().checkFileMimeType(media.mediaType ?? "")) {
       return Stack(
         children: [
-          TricycleImageView(
+          appImageView(
             url: (widget.isFullImageUrl!=null && widget.isFullImageUrl!)?media.mediaUrl:(onFullPage != null && onFullPage!)
                 ? Utility().getUrlForImage(
                 media.mediaUrl, RESOLUTION_TYPE.R512, SERVICE_TYPE.POST,
@@ -656,17 +656,17 @@ class _PostCardMedia extends State<PostCardMedia> {
   }
 }
 
-class TricycleImageView extends StatefulWidget {
+class appImageView extends StatefulWidget {
   final String? url;
   final String? path;
 
-  TricycleImageView({this.url, this.path});
+  appImageView({this.url, this.path});
 
   @override
-  TricycleImageViewState createState() => TricycleImageViewState();
+  appImageViewState createState() => appImageViewState();
 }
 
-class TricycleImageViewState extends State<TricycleImageView> {
+class appImageViewState extends State<appImageView> {
   double aspectRatio = 1;
 
   @override
@@ -726,23 +726,23 @@ class TricycleImageViewState extends State<TricycleImageView> {
 }
 
 // ignore: must_be_immutable
-class TricycleVideoView extends StatefulWidget {
+class appVideoView extends StatefulWidget {
   String? mediaUrl;
   bool? onFullPage;
   bool? isLocalFile;
 
-  TricycleVideoView({this.mediaUrl, this.onFullPage, this.isLocalFile});
+  appVideoView({this.mediaUrl, this.onFullPage, this.isLocalFile});
 
-  _TricycleVideoView createState() => _TricycleVideoView(
+  _appVideoView createState() => _appVideoView(
       mediaUrl: mediaUrl, onFullPage: onFullPage, isLocalFile: isLocalFile);
 }
 
-class _TricycleVideoView extends State<TricycleVideoView> {
+class _appVideoView extends State<appVideoView> {
   String? mediaUrl;
   bool? onFullPage;
   bool? isLocalFile;
 
-  _TricycleVideoView({this.mediaUrl, this.onFullPage, this.isLocalFile});
+  _appVideoView({this.mediaUrl, this.onFullPage, this.isLocalFile});
 
   VideoPlayerController? _controller;
 

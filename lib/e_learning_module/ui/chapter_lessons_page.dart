@@ -2,7 +2,7 @@
 
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
 import 'package:oho_works_app/e_learning_module/ui/academic_details_selection_pages.dart';
 import 'package:oho_works_app/home/locator.dart';
 import 'package:oho_works_app/models/e_learning/academic_details_selection_model.dart';
@@ -32,8 +32,8 @@ class _CreateChapterLessonsPage extends State<CreateChapterLessonsPage> {
   late BuildContext context;
   late TextStyleElements styleElements;
   List<PostCreatePayload>? list;
-  GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
-  GlobalKey<TricycleProgressButtonState> progressButtonKeyNext = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKey = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKeyNext = GlobalKey();
   PostReceiverListItem? selectedReceiverData;
   PostCreatePayload? createLessonData;
   _CreateChapterLessonsPage({this.list,this.selectedReceiverData,this.createLessonData});
@@ -51,7 +51,7 @@ class _CreateChapterLessonsPage extends State<CreateChapterLessonsPage> {
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: TricycleAppBar().getCustomAppBar(
+          appBar: appAppBar().getCustomAppBar(
             context,
             appBarTitle:
             AppLocalizations.of(context)!.translate('institution_type'),
@@ -104,7 +104,7 @@ class _CreateChapterLessonsPage extends State<CreateChapterLessonsPage> {
                               Visibility(
                                 child: GestureDetector(
                                   behavior: HitTestBehavior.translucent,
-                                  child: TricycleCard(
+                                  child: appCard(
 
                                     child: ListTile(
                                         tileColor: HexColor(AppColors.listBg),
@@ -157,7 +157,7 @@ class _CreateChapterLessonsPage extends State<CreateChapterLessonsPage> {
                                 opacity:1.0,
                                 child: GestureDetector(
                                   behavior: HitTestBehavior.translucent,
-                                  child: TricycleCard(
+                                  child: appCard(
 
                                     child: ListTile(
                                         tileColor: HexColor(AppColors.listBg),

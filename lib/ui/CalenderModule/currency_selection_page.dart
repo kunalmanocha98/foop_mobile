@@ -17,12 +17,12 @@ class CurrencySelectPageState extends State<CurrencySelectPage> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-          appBar: TricycleAppBar().getCustomAppBarWithSearch(context,
+          appBar: appAppBar().getCustomAppBarWithSearch(context,
             onSearchValueChanged: (value) {},
             appBarTitle: 'Currency List', onBackButtonPress: () {Navigator.pop(context);},
 
           ),
-          body: TricycleListCard(
+          body: appListCard(
             child: Paginator.listView(
                 pageLoadFuture: fetchList,
                 pageItemsGetter: CustomPaginator(context).listItemsGetter,

@@ -50,7 +50,7 @@ class MicroLearningSideButtons extends StatefulWidget {
   bool isTranslateVisible;
   Function? textToSpeechCallback;
   bool? isTextToSpeechVisible;
-  // GlobalKey<TricycleDownloadButtonState> downloadButtonKey;
+  // GlobalKey<appDownloadButtonState> downloadButtonKey;
   List<Media>? media;
 Function? homeCallBack;
 Function? searchCallBAck;
@@ -141,7 +141,7 @@ class MicroLearningSideButtonsState extends State<MicroLearningSideButtons> {
   int counter = 0;
   String? ownerType;
   int? ownerId;
-  // GlobalKey<TricycleDownloadButtonState> downloadButtonKey;
+  // GlobalKey<appDownloadButtonState> downloadButtonKey;
   List<Media>? media;
   ButtonTapManager buttonTapManager = ButtonTapManager();
 

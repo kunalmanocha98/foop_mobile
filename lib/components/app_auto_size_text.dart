@@ -2,12 +2,12 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-class TricycleAutoSizeText extends StatefulWidget {
+class appAutoSizeText extends StatefulWidget {
   /// Creates a [AutoSizeText] widget.
   ///
   /// If the [style] argument is null, the text will use the style from the
   /// closest enclosing [DefaultTextStyle].
-  const TricycleAutoSizeText(
+  const appAutoSizeText(
        this.data, {
         Key? key,
         this.textKey,
@@ -32,7 +32,7 @@ class TricycleAutoSizeText extends StatefulWidget {
         super(key: key);
 
   /// Creates a [AutoSizeText] widget with a [TextSpan].
-  const TricycleAutoSizeText.rich(
+  const appAutoSizeText.rich(
       this.textSpan, {
         Key? key,
         this.textKey,
@@ -215,7 +215,7 @@ class TricycleAutoSizeText extends StatefulWidget {
   _AutoSizeTextState createState() => _AutoSizeTextState();
 }
 
-class _AutoSizeTextState extends State<TricycleAutoSizeText> {
+class _AutoSizeTextState extends State<appAutoSizeText> {
   @override
   void initState() {
     super.initState();
@@ -224,7 +224,7 @@ class _AutoSizeTextState extends State<TricycleAutoSizeText> {
   }
 
   @override
-  void didUpdateWidget(TricycleAutoSizeText oldWidget) {
+  void didUpdateWidget(appAutoSizeText oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     if (oldWidget.group != widget.group) {
@@ -243,7 +243,7 @@ class _AutoSizeTextState extends State<TricycleAutoSizeText> {
         style = defaultTextStyle.style.merge(widget.style);
       }
       if (style!.fontSize == null) {
-        style = style.copyWith(fontSize: TricycleAutoSizeText._defaultFontSize);
+        style = style.copyWith(fontSize: appAutoSizeText._defaultFontSize);
       }
 
       final maxLines = widget.maxLines ?? defaultTextStyle.maxLines;

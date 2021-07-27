@@ -10,7 +10,7 @@ import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/components/customtabview.dart';
-import 'package:oho_works_app/components/tricycleemptywidget.dart';
+import 'package:oho_works_app/components/appemptywidget.dart';
 import 'package:oho_works_app/enums/create_deeplink.dart';
 import 'package:oho_works_app/enums/imageType.dart';
 import 'package:oho_works_app/enums/ownerType.dart';
@@ -411,7 +411,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
         } ,
         child: Scaffold(
             resizeToAvoidBottomInset: false,
-            appBar: TricycleAppBar().getCustomAppBar(context,
+            appBar: appAppBar().getCustomAppBar(context,
                 appBarTitle: "",
                 titleWidget: Row(
                   mainAxisSize: MainAxisSize.min,
@@ -654,7 +654,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                             ),
                           ),
                           SliverToBoxAdapter(
-                            child: TricycleCard(
+                            child: appCard(
                               padding: const EdgeInsets.all(0.0),
                               child: Column(
                                 children: <Widget>[
@@ -744,7 +744,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                         data != null && data!.isNotEmpty ? data!.length : 0,
                         tabBuilder: (context, index) => Visibility(
                           visible: !isFromAudioConf,
-                          child: TricycleTabButton(
+                          child: appTabButton(
                             onPressed: () {
                               setState(() {
                                 if (index == 3) {
@@ -3080,7 +3080,7 @@ class EducationPage extends StatelessWidget {
                   )
                       : isEmpty!
                       ? Center(
-                      child: TricycleEmptyWidget(
+                      child: appEmptyWidget(
                         message:
                         AppLocalizations.of(context)!.translate('no_data'),
                       )

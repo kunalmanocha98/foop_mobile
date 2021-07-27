@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/api_calls/login_apis.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/login_signup_module/update_profile_page.dart';
 import 'package:oho_works_app/mixins/editProfileMixin.dart';
 import 'package:oho_works_app/models/device_info.dart';
@@ -276,7 +276,7 @@ class StateLoginPage extends State<LoginPage> {
     var screenWidth = MediaQuery.of(context).size.width;
     return SafeArea(
         child: Scaffold(
-            appBar: TricycleAppBar().getCustomAppBar(context, appBarTitle: '',
+            appBar: appAppBar().getCustomAppBar(context, appBarTitle: '',
                 onBackButtonPress: () {
               Navigator.pop(context);
             }),
@@ -344,7 +344,7 @@ class StateLoginPage extends State<LoginPage> {
                               padding:
                                   const EdgeInsets.only(left: 50, right: 50),
                               child: Center(
-                                child: TricycleElevatedButton(
+                                child: appElevatedButton(
                                   onPressed: () {
                                     login();
                                   },

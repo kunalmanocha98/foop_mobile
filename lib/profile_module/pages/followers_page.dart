@@ -4,7 +4,7 @@ import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/components/searchBox.dart';
-import 'package:oho_works_app/components/tricycle_user_list_tile.dart';
+import 'package:oho_works_app/components/app_user_list_tile.dart';
 import 'package:oho_works_app/models/FollowersData.dart';
 import 'package:oho_works_app/profile_module/pages/profile_page.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
@@ -166,7 +166,7 @@ class _FollowersPage extends State<FollowersPage>
                     .copyWith(color: HexColor(AppColors.appColorBlack65))),
           ),
         ),
-        TricycleCard(
+        appCard(
             onTap: () {
               Navigator.push(
                   context,
@@ -187,7 +187,7 @@ class _FollowersPage extends State<FollowersPage>
             },
             padding: EdgeInsets.all(6),
             margin: EdgeInsets.all(4),
-            child: TricycleUserListTile(
+            child: appUserListTile(
                 imageUrl: item.imageUrl,
                 title: item.name,
                 subtitleWidget: !(item.suggestedType != null &&

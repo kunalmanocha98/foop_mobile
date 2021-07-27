@@ -1,4 +1,4 @@
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/enums/personType.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
@@ -69,7 +69,7 @@ class SelectProfileSheetState extends State<SelectProfileSheet> {
 
                         },
                         child: ListTile(
-                          leading: TricycleAvatar(
+                          leading: appAvatar(
                             size: 48,
                             resolution_type: RESOLUTION_TYPE.R64,
                             service_type: profiles[index].type =='person'? SERVICE_TYPE.PERSON: SERVICE_TYPE.INSTITUTION,

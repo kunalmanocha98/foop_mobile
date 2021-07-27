@@ -1,4 +1,4 @@
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/colors.dart';
 import 'package:oho_works_app/utils/hexColors.dart';
@@ -8,13 +8,13 @@ import 'package:flutter/material.dart';
 import 'commonComponents.dart';
 
 // ignore: must_be_immutable
-class TricycleTabButton extends StatelessWidget {
+class appTabButton extends StatelessWidget {
   bool isActive;
   Function onPressed;
   String? tabName;
   late TextStyleElements styleElements;
 
-  TricycleTabButton(
+  appTabButton(
       {required this.isActive,
         required this.onPressed,
         required this.tabName});
@@ -28,7 +28,7 @@ class TricycleTabButton extends StatelessWidget {
         borderRadius: BorderRadius.circular(45.0),
         boxShadow: [CommonComponents().getShadowforBox()],
       ),
-      child: TricycleElevatedButton(
+      child: appElevatedButton(
         elevation: 0,
         shape: StadiumBorder(
             side: BorderSide(

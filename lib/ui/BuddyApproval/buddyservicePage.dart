@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
-import 'package:oho_works_app/components/tricycle_earn_card.dart';
+import 'package:oho_works_app/components/app_earn_card.dart';
 import 'package:oho_works_app/models/buddyApprovalModels/buddyServiceList.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/config.dart';
@@ -29,7 +29,7 @@ class BuddyServicesPageState extends State<BuddyServicesPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: TricycleAppBar().getCustomAppBar(
+        appBar: appAppBar().getCustomAppBar(
           context,
           appBarTitle: AppLocalizations.of(context)!.translate('buddy_services'),
           onBackButtonPress: () {
@@ -72,7 +72,7 @@ class BuddyServicesPageState extends State<BuddyServicesPage> {
 
   Widget listItemBuilder(itemData, int index) {
     BuddyServiceListItem item = itemData;
-    return TricycleEarnCard(
+    return appEarnCard(
       title: item.heading,
       coinsValue: item.coins,
       imageUrl: Config.BASE_URL+ item.imageUrl!,

@@ -111,7 +111,7 @@ class _CouponsListPage extends State<CouponsListPage> {
         },
         child: Container(
           padding: EdgeInsets.only(left: 0, right: 0),
-          child: TricycleListCard(
+          child: appListCard(
             // elevation: 3
             padding: EdgeInsets.all(0),
             child: CouponListItemCard(
@@ -214,7 +214,7 @@ class _RedeemedCouponsListPage extends State<RedeemedCouponsListPage> {
         },
         child: Container(
           padding: EdgeInsets.only(left: 8, right: 8),
-          child: TricycleListCard(
+          child: appListCard(
             // elevation: 3,
             padding: EdgeInsets.all(0),
             child: CouponListItemCard(
@@ -274,7 +274,7 @@ class _CouponHistoryListPage extends State<CouponHistoryListPage> {
 
   @override
   Widget build(BuildContext context) {
-    return TricycleListCard(
+    return appListCard(
       child: RefreshIndicator(
         onRefresh: refreshList,
         child: Paginator.listView(

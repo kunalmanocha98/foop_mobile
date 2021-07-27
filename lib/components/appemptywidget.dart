@@ -4,10 +4,10 @@ import 'package:oho_works_app/utils/colors.dart';
 import 'package:oho_works_app/utils/hexColors.dart';
 import 'package:flutter/material.dart';
 
-class TricycleEmptyWidget extends StatelessWidget{
+class appEmptyWidget extends StatelessWidget{
   final String? message;
   final String? assetImage;
-  TricycleEmptyWidget({this.message,this.assetImage});
+  appEmptyWidget({this.message,this.assetImage});
   @override
   Widget build(BuildContext context) {
     TextStyleElements styleElements = TextStyleElements(context);
@@ -45,10 +45,10 @@ class TricycleEmptyWidget extends StatelessWidget{
 }
 
 
-class TricycleEmptyWidgetForAudio extends StatelessWidget{
+class appEmptyWidgetForAudio extends StatelessWidget{
   final String? message;
   final String? assetImage;
-  TricycleEmptyWidgetForAudio({this.message,this.assetImage});
+  appEmptyWidgetForAudio({this.message,this.assetImage});
   @override
   Widget build(BuildContext context) {
 
@@ -116,10 +116,10 @@ class TricycleEmptyWidgetForAudio extends StatelessWidget{
 
 
 
-class TricycleEmptyWidgetForAudioList extends StatelessWidget{
+class appEmptyWidgetForAudioList extends StatelessWidget{
   final String? message;
   final String? assetImage;
-  TricycleEmptyWidgetForAudioList({this.message,this.assetImage});
+  appEmptyWidgetForAudioList({this.message,this.assetImage});
   @override
   Widget build(BuildContext context) {
 

@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:oho_works_app/components/commonComponents.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycleHtmlViewer.dart';
+import 'package:oho_works_app/components/appHtmlViewer.dart';
 import 'package:oho_works_app/home/locator.dart';
 import 'package:oho_works_app/models/email_module/email_list_modules.dart';
 import 'package:oho_works_app/ui/email_module/email_detail_page.dart';
@@ -15,29 +15,29 @@ import 'package:timeago/timeago.dart' as timeago;
 
 import 'email_header.dart';
 
-class TricycleEmailCard extends StatefulWidget {
+class appEmailCard extends StatefulWidget {
   final bool isDetailPage;
   final EmailListItem? emailItem;
 
-  TricycleEmailCard({this.isDetailPage= false,this.emailItem});
+  appEmailCard({this.isDetailPage= false,this.emailItem});
 
   @override
-  _TricycleEmailCard createState() =>
-      _TricycleEmailCard(isDetailPage: isDetailPage,emailItem: emailItem);
+  _appEmailCard createState() =>
+      _appEmailCard(isDetailPage: isDetailPage,emailItem: emailItem);
 }
 
-class _TricycleEmailCard extends State<TricycleEmailCard> {
+class _appEmailCard extends State<appEmailCard> {
   SharedPreferences? prefs = locator<SharedPreferences>();
   late TextStyleElements styleElements;
   bool? isDetailPage;
   EmailListItem? emailItem;
 
-  _TricycleEmailCard({this.isDetailPage,this.emailItem});
+  _appEmailCard({this.isDetailPage,this.emailItem});
 
   @override
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
-    return TricycleCard(
+    return appCard(
       padding: EdgeInsets.only(top:8),
       onTap: widget.isDetailPage?null:() {
         Navigator.push(context,
@@ -140,7 +140,7 @@ class _TricycleEmailCard extends State<TricycleEmailCard> {
                               ),
                             ),
                             Expanded(
-                              child: TricycleHtmlViewer(
+                              child: appHtmlViewer(
                                 isDetailPage: widget.isDetailPage,
                                sourceString: emailItem!.text,
                                 isEmail: true,

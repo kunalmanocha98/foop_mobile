@@ -4,8 +4,8 @@ import 'dart:math';
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/components/postcardactionbuttons.dart';
 import 'package:oho_works_app/components/postcardheader.dart';
-import 'package:oho_works_app/components/tricycle_auto_size_text.dart';
-import 'package:oho_works_app/components/tricycle_user_images_list.dart';
+import 'package:oho_works_app/components/app_auto_size_text.dart';
+import 'package:oho_works_app/components/app_user_images_list.dart';
 import 'package:oho_works_app/home/locator.dart';
 import 'package:oho_works_app/models/post/postlist.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
@@ -17,7 +17,7 @@ import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
-class TricycleLessonCard extends StatefulWidget {
+class appLessonCard extends StatefulWidget {
   final Function? onPressed;
   final bool? headerVisible;
   final PostListItem? item;
@@ -30,7 +30,7 @@ class TricycleLessonCard extends StatefulWidget {
   Function? ratingCallback;
   Function? onTalkCallback;
   Function? editCallback;
-  TricycleLessonCard({
+  appLessonCard({
     this.onPressed,
 
     this.headerVisible,
@@ -46,20 +46,20 @@ class TricycleLessonCard extends StatefulWidget {
     this.editCallback
   });
   @override
-  _TricycleLessonCard createState() => _TricycleLessonCard(item: item);
+  _appLessonCard createState() => _appLessonCard(item: item);
 }
 
-class _TricycleLessonCard extends State<TricycleLessonCard> {
+class _appLessonCard extends State<appLessonCard> {
   SharedPreferences? prefs = locator<SharedPreferences>();
   late TextStyleElements styleElements;
   PostListItem? item;
   String? status;
-  _TricycleLessonCard({this.item});
+  _appLessonCard({this.item});
   @override
   Widget build(BuildContext context) {
     status = getStatus();
     styleElements = TextStyleElements(context);
-    return TricycleListCard(
+    return appListCard(
       onTap: widget.onPressed,
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -92,7 +92,7 @@ class _TricycleLessonCard extends State<TricycleLessonCard> {
                  height: 100,width: 70,
                  child: Padding(
                    padding: const EdgeInsets.all(8.0),
-                   child:TricycleAutoSizeText(item!.postContent!.content!.contentMeta!.title!.toUpperCase(),
+                   child:appAutoSizeText(item!.postContent!.content!.contentMeta!.title!.toUpperCase(),
                      style: styleElements.headline6ThemeScalable(context).copyWith(
                        color: HexColor(AppColors.appColorWhite),
                        fontWeight: FontWeight.bold
@@ -190,7 +190,7 @@ class _TricycleLessonCard extends State<TricycleLessonCard> {
 
                             (item!.membersList!=null && item!.membersList!.length>0)?Padding(
                           padding: EdgeInsets.only(top:8),
-                          child: TricycleUserImageList(
+                          child: appUserImageList(
                             listOfImages: List<String?>.generate(item!.membersList!.length,(int index){
                               return item!.membersList![index].profileImage;
                             }),

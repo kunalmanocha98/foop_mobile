@@ -5,8 +5,8 @@ import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/appbar_with_profile%20_image.dart';
 import 'package:oho_works_app/components/searchBox.dart';
-import 'package:oho_works_app/components/tricycle_find_card.dart';
-import 'package:oho_works_app/components/tricycle_lesson_card.dart';
+import 'package:oho_works_app/components/app_find_card.dart';
+import 'package:oho_works_app/components/app_lesson_card.dart';
 import 'package:oho_works_app/e_learning_module/ui/lesson_list_response.dart';
 import 'package:oho_works_app/e_learning_module/ui/lessons_page.dart';
 import 'package:oho_works_app/e_learning_module/ui/selected_lesson_list.dart';
@@ -201,7 +201,7 @@ BuildContext? ctx;
                           ),
                         ),
                         SliverToBoxAdapter(
-                          child: TricycleFindCard(
+                          child: appFindCard(
                             title: "Fast learning through microlearning",
                             subtitle: "Learn anything in just 2 minutes",
                             titleColor: HexColor(AppColors.appColorBlack85),
@@ -262,7 +262,7 @@ BuildContext? ctx;
 
   Widget listItemBuilder(itemData, int index) {
     PostListItem item = itemData;
-    return TricycleLessonCard(
+    return appLessonCard(
       onPressed: () {
         if (widget.isDrafted) {
           editCallback(index);

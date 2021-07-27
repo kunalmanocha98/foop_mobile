@@ -5,19 +5,19 @@ import 'package:oho_works_app/utils/colors.dart';
 import 'package:oho_works_app/utils/hexColors.dart';
 import 'package:flutter/material.dart';
 
-class TricycleClockTimerWidget extends StatefulWidget {
+class appClockTimerWidget extends StatefulWidget {
   final int? startTime;
-  TricycleClockTimerWidget({Key? key, this.startTime}):super(key: key);
+  appClockTimerWidget({Key? key, this.startTime}):super(key: key);
   @override
-  TricycleClockTimerWidgetState createState() => TricycleClockTimerWidgetState(startTimeMilliseconds: startTime);
+  appClockTimerWidgetState createState() => appClockTimerWidgetState(startTimeMilliseconds: startTime);
 }
 
-class TricycleClockTimerWidgetState extends State<TricycleClockTimerWidget> {
+class appClockTimerWidgetState extends State<appClockTimerWidget> {
   late TextStyleElements styleElements;
   Timer? timer;
   DateTime? startTime;
   Stopwatch? stopwatch;
-  TricycleClockTimerWidgetState({int? startTimeMilliseconds}){
+  appClockTimerWidgetState({int? startTimeMilliseconds}){
     print("widget of timer sheet     "+(startTimeMilliseconds!=null ?startTimeMilliseconds.toString():"this is null"));
    startTime = startTimeMilliseconds!=null ? DateTime.fromMillisecondsSinceEpoch(startTimeMilliseconds) :  DateTime.now();
   }

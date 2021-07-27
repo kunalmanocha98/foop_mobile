@@ -6,7 +6,7 @@ import 'package:GlobalUploadFilePkg/Enums/ownertype.dart';
 import 'package:GlobalUploadFilePkg/Files/GlobalUploadFilePkg.dart';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/camera_module/camera_page.dart';
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
 import 'package:oho_works_app/models/imageuploadrequestandresponse.dart';
@@ -28,18 +28,18 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
-class TricycleAttachments extends StatefulWidget {
+class appAttachments extends StatefulWidget {
   Function(String?)? mentionCallback;
   Function(String)? hashTagCallback;
   bool isHashTagVisible;
   bool isMentionVisible;
 
-  TricycleAttachments(Key key,{this.mentionCallback,this.hashTagCallback,this.isHashTagVisible= true, this.isMentionVisible= true}):super(key: key);
+  appAttachments(Key key,{this.mentionCallback,this.hashTagCallback,this.isHashTagVisible= true, this.isMentionVisible= true}):super(key: key);
   @override
-  TricycleAttachmentsState createState() => TricycleAttachmentsState();
+  appAttachmentsState createState() => appAttachmentsState();
 }
 
-class TricycleAttachmentsState extends State<TricycleAttachments> {
+class appAttachmentsState extends State<appAttachments> {
   List<MediaDetails> mediaList = [];
   late TextStyleElements styleElements;
   SharedPreferences? prefs;
@@ -83,7 +83,7 @@ class TricycleAttachmentsState extends State<TricycleAttachments> {
                               child: Stack(
                                 children: [
                                   // mediaList[index].mediaType == 'video'?
-                                  //     TricycleVideoView(
+                                  //     appVideoView(
                                   //       onFullPage: false,
                                   //       mediaUrl: Config.BASE_URL+mediaList[index].mediaThumbnailUrl,
                                   //     )
@@ -206,7 +206,7 @@ class TricycleAttachmentsState extends State<TricycleAttachments> {
 
                       itemData as MentionListItem;
                       return ListTile(
-                        leading: TricycleAvatar(
+                        leading: appAvatar(
                           service_type: SERVICE_TYPE.PERSON,
                           resolution_type: RESOLUTION_TYPE.R64,
                           imageUrl: itemData.profileImage,

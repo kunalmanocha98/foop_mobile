@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/models/accedemic_list.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
@@ -70,8 +70,8 @@ bool isCalling=false;
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: HexColor(AppColors.appColorBackground),
-        appBar: TricycleAppBar().getCustomAppBarWithSearch(context,
-            appBarTitle: AppLocalizations.of(context)!.translate('select_department_header'), onBackButtonPress: () {
+        appBar: appAppBar().getCustomAppBarWithSearch(context,
+            appBarTitle: AppLocalizations.of(context)!.translate('select_academic_header'), onBackButtonPress: () {
           Navigator.pop(context);
         }, onSearchValueChanged: (value) {
           setState(() {
@@ -84,7 +84,7 @@ bool isCalling=false;
           children: <Widget>[
             Container(
               margin: const EdgeInsets.only(bottom: 70),
-              child: TricycleListCard(
+              child: appListCard(
                 child: ListView.builder(
                     itemCount: listAccedemic!.length,
                     itemBuilder: (BuildContext context, int index) {
@@ -120,7 +120,7 @@ bool isCalling=false;
                       alignment: Alignment.centerRight,
                       child: Container(
                         margin: const EdgeInsets.only(left: 16.0, right: 16.0),
-                        child: TricycleElevatedButton(
+                        child: appElevatedButton(
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(18.0),
                               side: BorderSide(color: HexColor(AppColors.appMainColor))),

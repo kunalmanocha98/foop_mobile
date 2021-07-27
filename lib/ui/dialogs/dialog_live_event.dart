@@ -1,4 +1,4 @@
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
@@ -59,14 +59,14 @@ class DialogLiveEvent extends StatelessWidget{
             Row(
               children: [
                 Spacer(),
-                TricycleTextButton(
+                appTextButton(
                     shape: RoundedRectangleBorder(),
                     onPressed: (){Navigator.pop(context);},
                     child: Text(AppLocalizations.of(context)!.translate('cancel'),style: styleElements.captionThemeScalable(context).copyWith(
                         color: HexColor(AppColors.appMainColor)
                     ),)
                 ),
-                TricycleTextButton(
+                appTextButton(
                     shape: RoundedRectangleBorder(),
                     onPressed: (){Navigator.pop(context);okCallback!();},
                     child: Text(AppLocalizations.of(context)!.translate('start_now'),style: styleElements.captionThemeScalable(context).copyWith(

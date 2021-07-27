@@ -1,6 +1,6 @@
 
 import 'package:oho_works_app/models/campus_talk/participant_list.dart';
-import 'package:oho_works_app/tri_cycle_database/data_base_helper.dart';
+import 'package:oho_works_app/app_database/data_base_helper.dart';
 import 'package:flutter/material.dart';
 
 class ParticipantNotifier extends ChangeNotifier {

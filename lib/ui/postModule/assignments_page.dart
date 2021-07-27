@@ -71,7 +71,7 @@ class AssignmentPageState extends State<AssignmentPage>
     return SafeArea(
       child: new Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: TricycleAppBar().getCustomAppBar(context,
+          appBar: appAppBar().getCustomAppBar(context,
               appBarTitle: AppLocalizations.of(context)!.translate("assignment"),
               onBackButtonPress: () {
                 Navigator.pop(context);
@@ -84,7 +84,7 @@ class AssignmentPageState extends State<AssignmentPage>
                 marginTop: const EdgeInsets.all(16.0),
                 currentPosition: currentPosition,
                 itemCount: list != null && list.isNotEmpty ? list.length : 0,
-                tabBuilder: (context, index) => TricycleTabButton(
+                tabBuilder: (context, index) => appTabButton(
                   onPressed: () {
                     setState(() {
                       currentPosition = index;

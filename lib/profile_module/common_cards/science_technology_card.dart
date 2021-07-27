@@ -33,7 +33,7 @@ class ScienceAndTechnology extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
-    return TricycleListCard(
+    return appListCard(
         child: Column(
       children: <Widget>[
         Row(

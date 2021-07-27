@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:oho_works_app/components/commonComponents.dart';
-import 'package:oho_works_app/components/tricycle_auto_size_text.dart';
+import 'package:oho_works_app/components/app_auto_size_text.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
 import 'package:oho_works_app/ui/DpEnlargePage.dart';
@@ -14,7 +14,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class TricycleAvatar extends StatefulWidget {
+class appAvatar extends StatefulWidget {
   double? size;
   String? imageUrl;
   bool? withBorder;
@@ -31,7 +31,7 @@ class TricycleAvatar extends StatefulWidget {
   double? borderDividersize;
   String? name;
 
-  TricycleAvatar(
+  appAvatar(
       {Key? key,
         this.size,
         this.borderColor,
@@ -51,15 +51,15 @@ class TricycleAvatar extends StatefulWidget {
       : super(key: key);
 
   @override
-  TricycleAvatarState createState() =>
-      TricycleAvatarState(size: size, imageUrl: imageUrl);
+  appAvatarState createState() =>
+      appAvatarState(size: size, imageUrl: imageUrl);
 }
 
-class TricycleAvatarState extends State<TricycleAvatar> {
+class appAvatarState extends State<appAvatar> {
   double? size;
   String? imageUrl;
 
-  TricycleAvatarState({this.size, this.imageUrl});
+  appAvatarState({this.size, this.imageUrl});
 
   void refresh(String imageUrl) {
     setState(() {
@@ -158,7 +158,7 @@ class TricycleAvatarState extends State<TricycleAvatar> {
           color: AppColors.colorsList[Random().nextInt( AppColors.colorsList.length)],
           shape: BoxShape.circle,),
       child: Center(
-        child: TricycleAutoSizeText(
+        child: appAutoSizeText(
          widget.name![0],
          style: TextStyleElements(context).headline1ThemeScalable(context).copyWith(
            fontWeight: FontWeight.normal,

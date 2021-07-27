@@ -1,4 +1,4 @@
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/profile_module/pages/profile_page.dart';
 import 'package:oho_works_app/ui/dashboardhomepage.dart';
 import 'package:oho_works_app/utils/colors.dart';
@@ -120,7 +120,7 @@ class CustomDialogue extends StatelessWidget {
                   margin: const EdgeInsets.only(left: 16, right: 16),
                   child: SizedBox(
                     width: double.infinity,
-                    child: TricycleElevatedButton(
+                    child: appElevatedButton(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),
                           side: BorderSide(color: HexColor(AppColors.appColorGreen))),
@@ -148,7 +148,7 @@ class CustomDialogue extends StatelessWidget {
                     left: 16, right: 16, top: 8, bottom: 20),
                 child: SizedBox(
                     width: double.infinity,
-                    child: TricycleElevatedButton(
+                    child: appElevatedButton(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(8.0),
                           side: BorderSide(color: HexColor(AppColors.appMainColor))),

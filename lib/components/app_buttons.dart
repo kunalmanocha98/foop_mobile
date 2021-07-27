@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 
-class TricycleTextButton extends StatelessWidget {
+class appTextButton extends StatelessWidget {
   final Function? onPressed;
   final String? buttonText;
   final Widget? child;
@@ -11,7 +11,7 @@ class TricycleTextButton extends StatelessWidget {
   final double? elevation;
 
 
-  TricycleTextButton(
+  appTextButton(
       {required this.onPressed, this.buttonText, this.child,this.color,this.shape,this.padding,this.elevation});
 
   @override
@@ -31,7 +31,7 @@ class TricycleTextButton extends StatelessWidget {
   }
 }
 
-class TricycleElevatedButton extends StatelessWidget {
+class appElevatedButton extends StatelessWidget {
   final Function? onPressed;
   final String? buttonText;
   final Widget? child;
@@ -40,7 +40,7 @@ class TricycleElevatedButton extends StatelessWidget {
   final EdgeInsets? padding;
   final double? elevation;
 
-  TricycleElevatedButton({required this.onPressed, this.buttonText, this.child,this.color,this.shape, this.padding, this.elevation
+  appElevatedButton({required this.onPressed, this.buttonText, this.child,this.color,this.shape, this.padding, this.elevation
   });
 
   @override

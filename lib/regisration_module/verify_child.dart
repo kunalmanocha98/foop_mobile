@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
 import 'package:oho_works_app/models/RegisterUserAs.dart';
 import 'package:oho_works_app/models/institution_classes.dart';
 import 'package:oho_works_app/models/register_user_as_response.dart';
@@ -53,7 +53,7 @@ class _VerifyChild extends State<VerifyChild>
   String type = "parent";
   int selectedEpoch = 0;
   String selectedDate = "Date Of Birth*";
-  GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKey = GlobalKey();
 
   @override
   void initState() {
@@ -79,7 +79,7 @@ class _VerifyChild extends State<VerifyChild>
     return SafeArea(child: Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: HexColor(AppColors.appColorBackground),
-      appBar: TricycleAppBar().getCustomAppBar(context,
+      appBar: appAppBar().getCustomAppBar(context,
           appBarTitle: "", onBackButtonPress: () {
             _onBackPressed();
           }),
@@ -198,7 +198,7 @@ class _VerifyChild extends State<VerifyChild>
                           child: Container(
                             margin:
                             const EdgeInsets.only(left: 16.0, right: 16.0),
-                            child: TricycleProgressButton(
+                            child: appProgressButton(
                               key:progressButtonKey,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(18.0),

@@ -5,7 +5,7 @@ import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/components/paginator.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/models/e_learning/academic_details_selection_model.dart';
 import 'package:oho_works_app/models/post/postcreate.dart';
 import 'package:oho_works_app/models/post/postreceiver.dart';
@@ -73,7 +73,7 @@ class AcademicDetailsSelectionPagesState
     styleElements = TextStyleElements(context);
     return SafeArea(
       child: Scaffold(
-        appBar: TricycleAppBar().getCustomAppBarWithSearch(context,
+        appBar: appAppBar().getCustomAppBarWithSearch(context,
             onSearchValueChanged: (value) {
               this.searchVal = value;
               refresh();
@@ -83,7 +83,7 @@ class AcademicDetailsSelectionPagesState
               Navigator.pop(context);
             },
             actions: [
-              TricycleTextButton(
+              appTextButton(
                 onPressed: () {
                   if (selectedList!.length > 0) {
                     if (type == AcademicDetailType.classes) {
@@ -219,7 +219,7 @@ class AcademicDetailsSelectionPagesState
             // ),
 
             Expanded(
-              child: TricycleCard(
+              child: appCard(
                 child: Paginator<AcademicDetailsSelectionListResponse>.listView(
                   key: paginatorKey,
                   pageLoadFuture: fetchData,

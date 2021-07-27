@@ -55,7 +55,7 @@ final String? instId;
     styleElements = TextStyleElements(context);
     setSharedPreferences();
     this.context = context;
-    return TricycleListCard(
+    return appListCard(
         child: Column(
       children: <Widget>[
         Row(

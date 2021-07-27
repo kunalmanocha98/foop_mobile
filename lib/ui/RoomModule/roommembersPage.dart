@@ -5,7 +5,7 @@ import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/components/searchBox.dart';
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/enums/member%20enums.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
@@ -120,7 +120,7 @@ class _RoomMembersPage extends State<RoomMembersPage> {
     setSharedPreferences();
     return SafeArea(
       child: Scaffold(
-        appBar:TricycleAppBar().getCustomAppBar(context,
+        appBar:appAppBar().getCustomAppBar(context,
             appBarTitle:AppLocalizations.of(context)!.translate("members"),
             onBackButtonPress: (){
           Navigator.pop(context);
@@ -139,7 +139,7 @@ class _RoomMembersPage extends State<RoomMembersPage> {
                   )
                 ];
               },
-              body: TricycleListCard(
+              body: appListCard(
                 child: Paginator.listView(
                   shrinkWrap: true,
                     key: paginatorGlobalKey,
@@ -208,7 +208,7 @@ class _RoomMembersPage extends State<RoomMembersPage> {
                       type: null,
                     )));
           },
-          child: TricycleAvatar(
+          child: appAvatar(
             size: 48,
             service_type: SERVICE_TYPE.PERSON,
             resolution_type: RESOLUTION_TYPE.R64,

@@ -6,8 +6,8 @@ import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/api_calls/logout_api.dart';
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/components/customgridDelegate.dart';
-import 'package:oho_works_app/components/tricycle_bottom_selector.dart';
-import 'package:oho_works_app/components/tricyclemenuitem.dart';
+import 'package:oho_works_app/components/app_bottom_selector.dart';
+import 'package:oho_works_app/components/appmenuitem.dart';
 import 'package:oho_works_app/enums/post_enums.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
@@ -27,7 +27,7 @@ import 'package:oho_works_app/services/audio_socket_service.dart';
 import 'package:oho_works_app/services/deeplinking_service.dart';
 import 'package:oho_works_app/services/share_data_service.dart';
 import 'package:oho_works_app/services/socket_service.dart';
-import 'package:oho_works_app/tri_cycle_database/data_base_helper.dart';
+import 'package:oho_works_app/app_database/data_base_helper.dart';
 import 'package:oho_works_app/ui/BottomSheets/CreateNewSheet.dart';
 import 'package:oho_works_app/ui/EdufluencerTutorModule/become_edufluencer_tutor_page.dart';
 import 'package:oho_works_app/ui/EdufluencerTutorModule/edufluencer_tutor_list.dart';
@@ -96,7 +96,7 @@ class _DashBoardPage extends State<DashboardPage> {
   SharedPreferences? prefs;
   late TextStyleElements styleElements;
   GlobalKey<AppMenuPageState> appMenuKey = GlobalKey();
-  GlobalKey<TricycleBottomSelectorState> bottomSelectorKey = GlobalKey();
+  GlobalKey<appBottomSelectorState> bottomSelectorKey = GlobalKey();
   final DynamicLinkService? dynamicLinkService = locator<DynamicLinkService>();
   var followers = 0;
   var following = 0;
@@ -749,7 +749,7 @@ BuildContext? dgsContext;
 
 
 
-            bottomNavigationBar: TricycleBottomSelector(
+            bottomNavigationBar: appBottomSelector(
               onItemTapped: _onItemTapped,
               currentIndex: _selectedIndex,
               chatCount: chatCount,
@@ -946,7 +946,7 @@ BuildContext? dgsContext;
 
                     menuList![index].title=="position_2"?
 
-                    TricycleCard(
+                    appCard(
                       padding: EdgeInsets.all(2),
                       // margin: const EdgeInsets.only(
                       //     left: 12.0, right: 12.0, top: 8.0, bottom: 4.0),
@@ -1047,7 +1047,7 @@ BuildContext? dgsContext;
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
                           itemBuilder: (BuildContext context, int indx) {
-                            return TricycleMenuItem(
+                            return appMenuItem(
                               onMenuItemClick: menuitemClick,
                               item: menuList![index].data![indx],
                             );

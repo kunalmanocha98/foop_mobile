@@ -188,8 +188,8 @@ bool isLoading=false;
       child: SafeArea(
           child: Scaffold(
               // resizeToAvoidBottomInset: false,
-              appBar: TricycleAppBar().getCustomAppBar(context,
-                  appBarTitle: AppLocalizations.of(context)!.translate('register__entity'),
+              appBar: appAppBar().getCustomAppBar(context,
+                  appBarTitle: AppLocalizations.of(context)!.translate('register_institute'),
                   isIconVisible:false,
                   actions: [
 
@@ -235,7 +235,7 @@ bool isLoading=false;
                 children: [
                   Visibility(
                       visible: !isGoogleOrFacebookDataReceived,
-                      child: TricycleCard(
+                      child: appCard(
                         child: Column(
                           children: <Widget>[
                             Align(
@@ -288,7 +288,7 @@ bool isLoading=false;
                                       alignment: Alignment.centerLeft,
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: Text(AppLocalizations.of(context)!.translate('app_web_auto')),
+                                        child: Text(AppLocalizations.of(context)!.translate('tricycle_web_auto')),
                                       ))),
                                 )),
 
@@ -333,7 +333,7 @@ bool isLoading=false;
         var data = BaseResponse.fromJson(value);
         if(data.statusCode==Strings.success_code)
         {
-          prefs.setString("create_entity", "Address");
+          prefs.setString("create_institute", "Address");
           Navigator.push(
               context,
               MaterialPageRoute(

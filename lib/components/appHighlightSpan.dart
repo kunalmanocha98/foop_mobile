@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class TricycleHighlightText extends StatelessWidget {
+class appHighlightText extends StatelessWidget {
   final String? text;
   final String? highlight;
   final TextStyle? style;
   final TextStyle? highlightStyle;
 
-  const TricycleHighlightText({
+  const appHighlightText({
     Key? key,
     this.text,
     this.highlight,

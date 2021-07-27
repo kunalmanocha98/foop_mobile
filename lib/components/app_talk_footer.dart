@@ -1,4 +1,4 @@
-import 'package:oho_works_app/components/tricycle_talk_footer_button.dart';
+import 'package:oho_works_app/components/app_talk_footer_button.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
@@ -7,7 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class TricycleTalkFooter extends StatefulWidget {
+class appTalkFooter extends StatefulWidget {
   final Function? exitCallback;
   final Function? chatCallback;
   final Function? postCallback;
@@ -20,7 +20,7 @@ class TricycleTalkFooter extends StatefulWidget {
   final int? chatCount;
   final Function(bool)? videoCallBack;
   final TALKFOOTERENUM? role;
-  TricycleTalkFooter(
+  appTalkFooter(
       { Key? key,
         this.chatCallback,
         this.postCallback,
@@ -35,17 +35,17 @@ class TricycleTalkFooter extends StatefulWidget {
         this.postCreateCallback,
         this.exitCallback,}):super(key: key);
   @override
-  TricycleTalkFooterState createState() => TricycleTalkFooterState(isMute: isMute,role: role,chatCount: chatCount);
+  appTalkFooterState createState() => appTalkFooterState(isMute: isMute,role: role,chatCount: chatCount);
 
 }
-class TricycleTalkFooterState extends State<TricycleTalkFooter>{
+class appTalkFooterState extends State<appTalkFooter>{
   late TextStyleElements styleElements;
   late BuildContext context;
-  GlobalKey<TricycleTalkFooterButtonState> buttonState = GlobalKey();
+  GlobalKey<appTalkFooterButtonState> buttonState = GlobalKey();
   TALKFOOTERENUM? type;
   bool? isMute;
   int? chatCount;
-  TricycleTalkFooterState({this.isMute,TALKFOOTERENUM? role,this.chatCount =0}){
+  appTalkFooterState({this.isMute,TALKFOOTERENUM? role,this.chatCount =0}){
     this.type = role ?? TALKFOOTERENUM.audience;
   }
   @override
@@ -60,7 +60,7 @@ class TricycleTalkFooterState extends State<TricycleTalkFooter>{
     //       (type == TALKFOOTERENUM.chat || type == TALKFOOTERENUM.post)?_talkButton:_exitButton,
     //       Visibility(
     //           visible: (type != TALKFOOTERENUM.chat),
-    //           child: TricycleTalkFooterButton(key: buttonState,postCreateCallback:widget.postCreateCallback,type: type,muteCallBack:widget.muteCallBack,handRaiseCallback: widget.handRaiseCallback,
+    //           child: appTalkFooterButton(key: buttonState,postCreateCallback:widget.postCreateCallback,type: type,muteCallBack:widget.muteCallBack,handRaiseCallback: widget.handRaiseCallback,
     //             handRaisedByOthersCallback: widget.handRaisebyOthersCallback,)),
     //       (type==TALKFOOTERENUM.post)? _postButton : _chatButton
     //     ],
@@ -74,7 +74,7 @@ class TricycleTalkFooterState extends State<TricycleTalkFooter>{
           (type == TALKFOOTERENUM.chat || type == TALKFOOTERENUM.post)?_talkButton:_exitButton,
           Visibility(
               visible: (type != TALKFOOTERENUM.chat),
-              child: TricycleTalkFooterButton(key: buttonState,
+              child: appTalkFooterButton(key: buttonState,
                 type: type,
                   isMute: isMute
                   ,postCreateCallback:widget.postCreateCallback,muteCallBack:(b){

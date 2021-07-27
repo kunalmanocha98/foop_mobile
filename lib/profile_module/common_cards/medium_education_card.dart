@@ -35,7 +35,7 @@ class MediumEducationcard extends StatelessWidget {
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
     list=data.subRow;
-    return TricycleListCard(
+    return appListCard(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[

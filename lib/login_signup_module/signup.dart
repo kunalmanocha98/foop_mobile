@@ -328,7 +328,7 @@ class StateSignUp extends State<SignUpPage> with SingleTickerProviderStateMixin 
         SafeArea(
           child:Scaffold(
             // resizeToAvoidBottomInset: false,
-              appBar: TricycleAppBar().getCustomAppBar(context,
+              appBar: appAppBar().getCustomAppBar(context,
                 appBarTitle: '',
                 onBackButtonPress: (){
                   Navigator.pop(context);

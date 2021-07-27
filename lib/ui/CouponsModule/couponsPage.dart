@@ -57,7 +57,7 @@ class _CouponsPage extends State<CouponsPage>
     styleElements = TextStyleElements(context);
     return SafeArea(
       child: Scaffold(
-        appBar: TricycleAppBar().getCustomAppBar(context, appBarTitle: AppLocalizations.of(context)!.translate('rewards'),
+        appBar: appAppBar().getCustomAppBar(context, appBarTitle: AppLocalizations.of(context)!.translate('rewards'),
             onBackButtonPress: () {
               Navigator.pop(context);
             }),
@@ -67,7 +67,7 @@ class _CouponsPage extends State<CouponsPage>
             headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
               return [
                 SliverToBoxAdapter(
-                  child: TricycleCard(
+                  child: appCard(
                     child: CouponPageHeaderCard(
                       key: couponPageHeaderKey,
                     ),
@@ -90,7 +90,7 @@ class _CouponsPage extends State<CouponsPage>
                           isScrollable: false,
                           tabs: List<Widget>.generate(list.length, (int index) {
                             return new Tab(
-                              child: TricycleTabButton(
+                              child: appTabButton(
                                 onPressed: () {
                                   _tabController!.animateTo(index);
                                   if (this.mounted) {

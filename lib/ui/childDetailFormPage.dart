@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/mixins/someCommonMixins.dart';
 import 'package:oho_works_app/models/RegisterUserAs.dart';
 import 'package:oho_works_app/models/Registration%20/childParentDetail.dart';
@@ -53,7 +53,7 @@ class ChildDetailFormPageState extends State<ChildDetailFormPage> {
   String? admissionNumber;
   String? mobileNumber;
   GlobalKey<FormState> formKey = GlobalKey();
-  GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKey = GlobalKey();
   Future<void> _setPref() async {
     prefs = await SharedPreferences.getInstance();
 
@@ -247,7 +247,7 @@ class ChildDetailFormPageState extends State<ChildDetailFormPage> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: true,
-        appBar: TricycleAppBar().getCustomAppBar(
+        appBar: appAppBar().getCustomAppBar(
           context,
           appBarTitle: AppLocalizations.of(context)!.translate('child_detail'),
           onBackButtonPress: () {
@@ -263,7 +263,7 @@ class ChildDetailFormPageState extends State<ChildDetailFormPage> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      TricycleCard(
+                      appCard(
                           padding: EdgeInsets.all(16),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
@@ -353,7 +353,7 @@ class ChildDetailFormPageState extends State<ChildDetailFormPage> {
                     color: HexColor(AppColors.appColorWhite),
                     child: Row(
                       children: [
-                        TricycleTextButton(
+                        appTextButton(
                           shape: RoundedRectangleBorder(),
                           onPressed: () {
                             if (prefs.getString("token") != null) {
@@ -381,7 +381,7 @@ class ChildDetailFormPageState extends State<ChildDetailFormPage> {
                           ),
                         ),
                         Spacer(),
-                        TricycleProgressButton(
+                        appProgressButton(
                             key: progressButtonKey,
                             onPressed: () {
                               validate();

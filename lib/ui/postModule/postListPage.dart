@@ -2,7 +2,8 @@ import 'dart:convert';
 
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
-import 'package:oho_works_app/components/TricycleCaughtupComponent.dart';
+import 'package:oho_works_app/components/appCaughtupComponent.dart';
+
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/components/postcard.dart';
 import 'package:oho_works_app/enums/create_deeplink.dart';
@@ -305,7 +306,7 @@ class PostListState extends State<PostListPage> {
     //   body: _buildPage(),
     // );
     // return !isFromProfile ? Scaffold(
-    //     appBar: TricycleAppBar().getCustomAppBar(context,
+    //     appBar: appAppBar().getCustomAppBar(context,
     //         appBarTitle: 'Campus Circle',
     //         isIconVisible: false,
     //         actions: [
@@ -596,7 +597,7 @@ class PostListState extends State<PostListPage> {
   Widget listItemBuilder(PostListItem item, int index) {
     if (item.postType == 'banner') {
       print("banner");
-      return TricycleCaughtUpComponent(
+      return appCaughtUpComponent(
         title: item.postContent!.header!.title,
         actionTitle: item.postContent!.header!.subtitle1,
         onClick: () {
@@ -639,7 +640,7 @@ class PostListState extends State<PostListPage> {
                   }
                 }));
           },
-          child: TricyclePostCard(
+          child: appPostCard(
               key: UniqueKey(),
               // color: isInView?HexColor(AppColors.appColorBlue)[200]:HexColor(AppColors.appColorWhite),
               preferences: prefs,
@@ -893,7 +894,7 @@ class _ShareBottomSheet extends State<BottomSheetContent> {
               //           },
               //         ),
               //         title: Text(
-              //           "Share through Tricycle messenger",
+              //           "Share through app messenger",
               //           style: styleElements.bodyText2ThemeScalable(context),
               //         ),
               //       )),
@@ -1039,7 +1040,7 @@ class PostListMenu {
   }
 
   Widget getUiElement(String title, String subtitle, String assetimage) {
-    return TricycleListCard(
+    return appListCard(
       padding: EdgeInsets.all(8),
       margin: EdgeInsets.only(top: 2, bottom: 2, left: 4, right: 4),
       child: Row(

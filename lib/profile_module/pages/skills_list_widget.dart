@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:oho_works_app/components/commonComponents.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/profile_module/common_cards/overlaped_circular_images.dart';
 import 'package:oho_works_app/ui/rate_dialog.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
@@ -291,7 +291,7 @@ class _SkillsListWidget extends State<SkillsListWidget> {
                               child: Container(
                                 margin: const EdgeInsets.only(
                                     left: 16.0, right: 16.0),
-                                child: TricycleElevatedButton(
+                                child: appElevatedButton(
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(116.0),
                                       side: BorderSide(color: HexColor(AppColors.appMainColor))),
@@ -328,7 +328,7 @@ class _SkillsListWidget extends State<SkillsListWidget> {
 //         context: context,
 //         builder: (context) => new AlertDialog(
 //           title: new Text('Are you sure?'),
-//           content: new Text('Do you want to exit Tricycle?'),
+//           content: new Text('Do you want to exit app?'),
 //           actions: <Widget>[
 //             new GestureDetector(
 //               onTap: () => Navigator.of(context).pop(false),

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/home/locator.dart';
 import 'package:oho_works_app/models/expertise_list.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
@@ -43,13 +43,13 @@ class _EventLanguagePage extends State<EventLanguagePage> {
     styleElements = TextStyleElements(context);
     return SafeArea(
       child: Scaffold(
-        appBar: TricycleAppBar().getCustomAppBarWithSearch(context,
+        appBar: appAppBar().getCustomAppBarWithSearch(context,
             onSearchValueChanged: (value){
           searchVal = value;
           refresh();
             },
             actions: [
-              TricycleTextButton(
+              appTextButton(
                 onPressed: () {
                   if(selectedList!.length>0){
                     Navigator.pop(context,selectedList);
@@ -79,7 +79,7 @@ class _EventLanguagePage extends State<EventLanguagePage> {
                 .translate('select_language'), onBackButtonPress: () {
               Navigator.pop(context);
             }),
-        body: TricycleListCard(child:
+        body: appListCard(child:
         ListView.builder(
           itemCount: languageList!.length,
           itemBuilder: (BuildContext context, int index) {

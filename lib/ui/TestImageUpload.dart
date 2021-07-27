@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:GlobalUploadFilePkg/Enums/contexttype.dart';
 import 'package:GlobalUploadFilePkg/Enums/ownertype.dart';
 import 'package:GlobalUploadFilePkg/Files/GlobalUploadFilePkg.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
 import 'package:oho_works_app/utils/config.dart';
@@ -145,7 +145,7 @@ class _TestImageUpload extends State<TestImageUpload> {
                     )
                   : Text(AppLocalizations.of(context)!.translate('no_image_selected')),
             ),
-            TricycleElevatedButton(
+            appElevatedButton(
               elevation: 8,
               child: Text(AppLocalizations.of(context)!.translate('img_upload')),
               shape: StadiumBorder(),
@@ -153,7 +153,7 @@ class _TestImageUpload extends State<TestImageUpload> {
                 _openGallery(context);
               },
             ),
-            TricycleElevatedButton(
+            appElevatedButton(
               elevation: 8,
               child: Text(AppLocalizations.of(context)!.translate('vid_upload')),
               shape: StadiumBorder(),
@@ -161,7 +161,7 @@ class _TestImageUpload extends State<TestImageUpload> {
                 _openGalleryForVideo(context);
               },
             ),
-            TricycleElevatedButton(
+            appElevatedButton(
               elevation: 8,
               child: Text(AppLocalizations.of(context)!.translate('doc_upload')),
               shape: StadiumBorder(),
@@ -169,7 +169,7 @@ class _TestImageUpload extends State<TestImageUpload> {
                 _openGalleryForDocument(context);
               },
             ),
-            TricycleElevatedButton(
+            appElevatedButton(
               color: HexColor(AppColors.appMainColor),
               padding: EdgeInsets.all(16),
               elevation: 8,

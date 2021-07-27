@@ -51,7 +51,7 @@ class RatingAndReviewCard extends StatelessWidget {
   Widget build(BuildContext context) {
     this.context = context;
     styleElements = TextStyleElements(context);
-    return TricycleListCard(
+    return appListCard(
         child: Column(
           children: <Widget>[
             Row(

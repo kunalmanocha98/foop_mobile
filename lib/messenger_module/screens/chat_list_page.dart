@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:oho_works_app/components/appbar_with_profile%20_image.dart';
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/components/searchBox.dart';
-import 'package:oho_works_app/components/tricycle_user_images_list.dart';
-import 'package:oho_works_app/components/tricycleavatar.dart';
-import 'package:oho_works_app/components/tricycleemptywidget.dart';
+import 'package:oho_works_app/components/app_user_images_list.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
+import 'package:oho_works_app/components/appemptywidget.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
 import 'package:oho_works_app/home/locator.dart';
@@ -17,7 +17,7 @@ import 'package:oho_works_app/messenger_module/screens/user_room_selection_page.
 import 'package:oho_works_app/models/Rooms/roomlistmodels.dart';
 import 'package:oho_works_app/models/custom_tab_maker.dart';
 import 'package:oho_works_app/services/socket_service.dart';
-import 'package:oho_works_app/tri_cycle_database/data_base_helper.dart';
+import 'package:oho_works_app/app_database/data_base_helper.dart';
 import 'package:oho_works_app/ui/RoomModule/rooms_listing.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
@@ -180,7 +180,7 @@ class _ChatListsPage extends State<ChatListsPage>
               child: chatNotifier != null &&
                       chatNotifier!.getConversationList() != null &&
                       chatNotifier!.getConversationList()!.isNotEmpty
-                  ? TricycleListCard(
+                  ? appListCard(
                     child: NotificationListener<ScrollNotification>(
                         onNotification: (ScrollNotification scrollInfo) {
                           if (scrollInfo is ScrollEndNotification &&
@@ -210,7 +210,7 @@ class _ChatListsPage extends State<ChatListsPage>
                         return Center(
                             child: Padding(
                           padding: const EdgeInsets.all(20.0),
-                          child: TricycleEmptyWidget(
+                          child: appEmptyWidget(
                             message: AppLocalizations.of(context)!
                                 .translate('no_conversation'),
                           ),
@@ -275,7 +275,7 @@ class _ChatListsPage extends State<ChatListsPage>
                 height: 56,
                 child: Stack(
                   children: [
-                    TricycleAvatar(
+                    appAvatar(
                       key: UniqueKey(),
                       withBorder: false,
                       size: 56,
@@ -360,7 +360,7 @@ class _ChatListsPage extends State<ChatListsPage>
               Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  TricycleAvatar(
+                  appAvatar(
                     key: UniqueKey(),
                     withBorder: false,
                     size: 56,
@@ -474,7 +474,7 @@ class _ChatListsPage extends State<ChatListsPage>
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          TricycleUserImageList(
+                          appUserImageList(
                             listOfImages: List.generate(4,(index){
                               return "";
                             }),

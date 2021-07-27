@@ -8,7 +8,7 @@ import 'package:GlobalUploadFilePkg/Files/GlobalUploadFilePkg.dart';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/camera_module/camera_page.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/enums/imageType.dart';
 import 'package:oho_works_app/enums/ownerType.dart';
 import 'package:oho_works_app/models/RegisterUserAs.dart';
@@ -253,7 +253,7 @@ class _PhotoPreviewScreenState extends State<PhotoPreviewScreen> {
           child: Scaffold(
               resizeToAvoidBottomInset: false,
               backgroundColor: HexColor(AppColors.appColorBackground),
-              appBar: TricycleAppBar().getCustomAppBar(context,
+              appBar: appAppBar().getCustomAppBar(context,
                   appBarTitle: AppLocalizations.of(context)!.translate('upload_image'), onBackButtonPress: () {
                     _onBackPressed();
                   }),
@@ -339,7 +339,7 @@ class _PhotoPreviewScreenState extends State<PhotoPreviewScreen> {
                               child: Container(
                                 margin: const EdgeInsets.only(
                                     left: 16.0, right: 16.0),
-                                child: TricycleElevatedButton(
+                                child: appElevatedButton(
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(18.0),
                                       side:

@@ -1,4 +1,4 @@
-import 'package:oho_works_app/components/tricycle_talk_footer_button.dart';
+import 'package:oho_works_app/components/app_talk_footer_button.dart';
 import 'package:oho_works_app/home/locator.dart';
 import 'package:oho_works_app/models/base_res.dart';
 import 'package:oho_works_app/models/personal_profile.dart';

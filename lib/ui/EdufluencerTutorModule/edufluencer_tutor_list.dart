@@ -104,7 +104,7 @@ class _EdufluencerTutorList extends State<EdufluencerTutorList>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: TricycleAppBar().getCustomAppBar(context,
+      appBar: appAppBar().getCustomAppBar(context,
           appBarTitle: AppLocalizations.of(context)!.translate(widget.type == edufluencer_type.E ?'edufluencer':"tutor"),
           onBackButtonPress: () {
             Navigator.pop(context);
@@ -125,7 +125,7 @@ class _EdufluencerTutorList extends State<EdufluencerTutorList>
                 marginTop: const EdgeInsets.all(16.0),
                 currentPosition: currentPosition,
                 itemCount: list != null && list.isNotEmpty ? list.length : 0,
-                tabBuilder: (context, index) => TricycleTabButton(
+                tabBuilder: (context, index) => appTabButton(
                   onPressed: () {
                     setState(() {
                       currentPosition = index;

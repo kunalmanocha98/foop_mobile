@@ -24,7 +24,7 @@ class TodaysCalenderCard extends StatelessWidget {
     styleElements = TextStyleElements(context);
     this.context = context;
     listSubItems = data.subRow;
-    return TricycleListCard(
+    return appListCard(
       child: Container(
           height: 300.h,
           child: Column(

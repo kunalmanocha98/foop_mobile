@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/searchBox.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/components/white_button_large.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
@@ -282,7 +282,7 @@ class _SelectInstitute extends State<SelectInstitute>
                                           leading: SizedBox(
                                               width: 52,
                                               height: 52,
-                                              child: TricycleAvatar(
+                                              child: appAvatar(
                                                 key: UniqueKey(),
                                                 imageUrl: listInstitute![index]
                                                     .profileImage,
@@ -556,7 +556,7 @@ class _SelectInstitute extends State<SelectInstitute>
                                       leading: SizedBox(
                                         height: 52,
                                         width: 52,
-                                        child: TricycleAvatar(
+                                        child: appAvatar(
                                           size: 52,
                                           imageUrl: selectSchoolUrl ?? "",
                                           isFullUrl: true,
@@ -719,7 +719,7 @@ class _SelectInstitute extends State<SelectInstitute>
         onWillPop: _onBackPressed,
         child: SafeArea(
             child: Scaffold(
-          appBar: TricycleAppBar().getCustomAppBar(context,
+          appBar: appAppBar().getCustomAppBar(context,
               appBarTitle: pageTitle, onBackButtonPress: () {
             _onBackPressed();
           }),
@@ -943,7 +943,7 @@ class _SelectInstitute extends State<SelectInstitute>
                                                                 .only(
                                                                 left: 16.0,
                                                                 right: 16.0),
-                                                            child: TricycleElevatedButton(
+                                                            child: appElevatedButton(
                                                               shape: RoundedRectangleBorder(
                                                                   borderRadius:
                                                                   BorderRadius

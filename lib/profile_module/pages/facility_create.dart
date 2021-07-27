@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
 import 'package:oho_works_app/models/blank_response.dart';
@@ -56,7 +56,7 @@ class _CreateFacility extends State<CreateFacilities> {
   int? selectedIndTypeId;
   String? selectedIndType;
   String? selectedIndTypeCode;
-  GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKey = GlobalKey();
   _CreateFacility(String? url, String? id) {
     this.imageUrl = url;
     this.id = id;
@@ -262,7 +262,7 @@ class _CreateFacility extends State<CreateFacilities> {
             child: Scaffold(
               resizeToAvoidBottomInset: true,
               backgroundColor: HexColor(AppColors.appColorBackground),
-              appBar: TricycleAppBar().getCustomAppBar(context,
+              appBar: appAppBar().getCustomAppBar(context,
                   appBarTitle: AppLocalizations.of(context)!.translate('create'),
                   actions: actions, onBackButtonPress: () {
                     _onBackPressed();
@@ -417,7 +417,7 @@ class _CreateFacility extends State<CreateFacilities> {
                                         child: Container(
                                           margin: const EdgeInsets.only(
                                               left: 16.0, right: 16.0),
-                                          child: TricycleProgressButton(
+                                          child: appProgressButton(
                                             key: progressButtonKey,
                                             shape: RoundedRectangleBorder(
                                                 borderRadius:

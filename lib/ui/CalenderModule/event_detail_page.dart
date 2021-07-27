@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
 import 'package:oho_works_app/home/locator.dart';
 import 'package:oho_works_app/mixins/someCommonMixins.dart';
 import 'package:oho_works_app/models/CalenderModule/event_create_models.dart';
@@ -47,7 +47,7 @@ class EventDetailPageState extends State<EventDetailPage> {
   List<String> _selectedLanguage = [];
   AudioSocketService? audioSocketService = locator<AudioSocketService>();
   SharedPreferences? prefs = locator<SharedPreferences>();
-  GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKey = GlobalKey();
 
 
   String? getTitle(){
@@ -130,13 +130,13 @@ class EventDetailPageState extends State<EventDetailPage> {
     );
     return SafeArea(
         child: Scaffold(
-          appBar: TricycleAppBar().getCustomAppBar(context,
+          appBar: appAppBar().getCustomAppBar(context,
               appBarTitle: AppLocalizations.of(context)!.translate('event_details'),
               onBackButtonPress: () {
                 Navigator.pop(context);
               },
             actions: [
-              TricycleProgressButton(
+              appProgressButton(
                 key: progressButtonKey,
                 shape: StadiumBorder(),
                 color: HexColor(AppColors.appColorBackground),
@@ -169,7 +169,7 @@ class EventDetailPageState extends State<EventDetailPage> {
             key: formKey,
             child: Container(
               child: SingleChildScrollView(
-                child: TricycleListCard(
+                child: appListCard(
                   padding: EdgeInsets.all(16),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,

@@ -1,4 +1,4 @@
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/profile_module/common_cards/testcard.dart';
 import 'package:oho_works_app/ui/dialogs/DownloadProgressDialog.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
@@ -126,7 +126,7 @@ class ToastBuilder {
                     width: 16,
                   ),
                   Expanded(
-                    child: TricycleTextButton(
+                    child: appTextButton(
                         onPressed: cancelButtonCallback,
                         color: HexColor(AppColors.appColorLightGreen),
                         shape: StadiumBorder(),
@@ -144,7 +144,7 @@ class ToastBuilder {
                     width: 16,
                   ),
                   Expanded(
-                    child: TricycleTextButton(
+                    child: appTextButton(
                         onPressed: okButtonCallback,
                         color: HexColor(AppColors.appColorWhite),
                         shape: StadiumBorder(),

@@ -5,7 +5,7 @@ import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/components/paginator.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
 import 'package:oho_works_app/e_learning_module/model/learner_list_response.dart';
 import 'package:oho_works_app/models/e_learning/topic_list.dart';
 import 'package:oho_works_app/models/post/postcreate.dart';
@@ -43,8 +43,8 @@ class _LearnerCategoryListResponse extends State<LearnerCategoryPage> {
   late BuildContext context;
   late TextStyleElements styleElements;
   String? searchVal;
-  GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
-  GlobalKey<TricycleProgressButtonState> progressButtonKeyNext = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKey = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKeyNext = GlobalKey();
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
   List<LearnerListItem> recList = [];
   List<LearnerListItem> selectedItems = [];
@@ -70,7 +70,7 @@ class _LearnerCategoryListResponse extends State<LearnerCategoryPage> {
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: TricycleAppBar().getCustomAppBar(
+          appBar: appAppBar().getCustomAppBar(
             context,
             appBarTitle: AppLocalizations.of(context)!.translate('select_type'),
             actions: [
@@ -127,7 +127,7 @@ class _LearnerCategoryListResponse extends State<LearnerCategoryPage> {
                   Expanded(
                     child: Container(
                         child: Container(
-                            child: TricycleCard(
+                            child: appCard(
                       child: Paginator.listView(
                           key: paginatorKey,
                           pageLoadFuture: fetchList,

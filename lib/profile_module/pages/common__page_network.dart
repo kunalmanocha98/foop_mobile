@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/searchBox.dart';
-import 'package:oho_works_app/components/tricycle_user_list_tile.dart';
+import 'package:oho_works_app/components/app_user_list_tile.dart';
 import 'package:oho_works_app/models/CommonListingModels/commonListingrequest.dart';
 import 'package:oho_works_app/profile_module/pages/profile_page.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
@@ -185,7 +185,7 @@ class _CommonListingPageNetwork extends State<CommonListingPageNetwork>
                       type: null,
                     )));
       },
-      child:  TricycleUserListTile(
+      child:  appUserListTile(
         onPressed: (){
           Navigator.push(
               context,

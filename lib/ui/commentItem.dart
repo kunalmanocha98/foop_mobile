@@ -1,7 +1,7 @@
 import 'package:GlobalUploadFilePkg/Enums/contexttype.dart';
-import 'package:oho_works_app/components/tricycleHtmlViewer.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/appHtmlViewer.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
 import 'package:oho_works_app/models/base_res.dart';
@@ -126,7 +126,7 @@ class CommentItemCardState extends State<CommentItemCard> {
           children: [
             Row(
               children: [
-                TricycleAvatar(
+                appAvatar(
                   size: 24,
                   imageUrl: data!.notesCreatedByProfile,
                   resolution_type: RESOLUTION_TYPE.R64,
@@ -215,7 +215,7 @@ class CommentItemCardState extends State<CommentItemCard> {
               ],
             ),
             isAnswer! ?
-            TricycleHtmlViewer(
+            appHtmlViewer(
               isNewsPage: false,
               isDetailPage: true,
               sourceString: data!.noteContent,
@@ -276,7 +276,7 @@ class CommentItemCardState extends State<CommentItemCard> {
                       color: HexColor(AppColors.appMainColor),
                     ),
                   ),
-                  // TricycleTextButton(
+                  // appTextButton(
                   //     onPressed: () {},
                   //     shape: RoundedRectangleBorder(),
                   //     padding: EdgeInsets.all(0),
@@ -313,7 +313,7 @@ class CommentItemCardState extends State<CommentItemCard> {
                             margin: EdgeInsets.only(left: 4,right: 4),
                             child: InkWell(
                               onTap: (){
-                                // TricycleDownloadButtonState.requestDownloadFromOutSide(widget.answerOtherDetails.mediaDetails[index].mediaUrl);
+                                // appDownloadButtonState.requestDownloadFromOutSide(widget.answerOtherDetails.mediaDetails[index].mediaUrl);
                               },
                               child: Chip(
                                 label: Text(getFileName(widget.answerOtherDetails!.mediaDetails![index].mediaUrl)),
@@ -349,7 +349,7 @@ class CommentItemCardState extends State<CommentItemCard> {
                     Spacer(),
                     Visibility(
                       visible: widget.isGiveMarksVisible,
-                      child: TricycleTextButton(
+                      child: appTextButton(
                         onPressed: () {   Navigator.push(context, MaterialPageRoute(builder: (
                             BuildContext context) {
                           return AddReviewPage(isAssignment: true,

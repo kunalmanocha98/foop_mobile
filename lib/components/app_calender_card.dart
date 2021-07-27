@@ -1,7 +1,7 @@
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/components/postcardactionbuttons.dart';
-import 'package:oho_works_app/components/tricycle_user_images_list.dart';
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/app_user_images_list.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
 import 'package:oho_works_app/models/CalenderModule/calenderModels.dart';
@@ -13,27 +13,27 @@ import 'package:oho_works_app/utils/utility_class.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-class TricycleCalenderCard extends StatefulWidget {
+class appCalenderCard extends StatefulWidget {
   final CalenderEventItem? data;
 
-  TricycleCalenderCard({Key? key, this.data});
+  appCalenderCard({Key? key, this.data});
 
   @override
-  TricycleCalenderCardState createState() =>
-      TricycleCalenderCardState(data: data);
+  appCalenderCardState createState() =>
+      appCalenderCardState(data: data);
 }
 
-class TricycleCalenderCardState extends State<TricycleCalenderCard> {
+class appCalenderCardState extends State<appCalenderCard> {
   final CalenderEventItem? data;
 
-  TricycleCalenderCardState({this.data});
+  appCalenderCardState({this.data});
 
   late TextStyleElements styleElements;
 
   @override
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
-    return TricycleListCard(
+    return appListCard(
         child: Container(
           margin: EdgeInsets.only(top: 12, left: 12, right: 12),
           child: Column(
@@ -67,7 +67,7 @@ class TricycleCalenderCardState extends State<TricycleCalenderCard> {
                           Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              TricycleAvatar(
+                              appAvatar(
                                 size: 16,
                                 imageUrl: Utility().getUrlForImage(
                                     data!.header!.avatar,
@@ -161,7 +161,7 @@ class TricycleCalenderCardState extends State<TricycleCalenderCard> {
                           SizedBox(
                             height: 8,
                           ),
-                          TricycleUserImageList(
+                          appUserImageList(
                             listOfImages: List.generate(
                                 data!.participantList != null
                                     ? data!.participantList!.length

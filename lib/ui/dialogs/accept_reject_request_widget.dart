@@ -1,4 +1,4 @@
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/colors.dart';
 import 'package:oho_works_app/utils/hexColors.dart';
@@ -52,7 +52,7 @@ class AcceptRejectRequestWidgetState extends State<AcceptRejectRequestWidget> {
                 width: 16,
               ),
               Expanded(
-                child: TricycleTextButton(
+                child: appTextButton(
                     onPressed: cancelButtonCallback,
                     color:actionButtonColor!=null?actionButtonColor: HexColor(AppColors.appColorLightGreen),
                     shape: StadiumBorder(),
@@ -70,7 +70,7 @@ class AcceptRejectRequestWidgetState extends State<AcceptRejectRequestWidget> {
                 width: 16,
               ),
               Expanded(
-                child: TricycleTextButton(
+                child: appTextButton(
                     onPressed: okButtonCallback,
                     color: HexColor(AppColors.appColorWhite),
                     shape: StadiumBorder(),

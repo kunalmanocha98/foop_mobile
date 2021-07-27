@@ -78,7 +78,7 @@ bool isLoading=true;
     styleElements = TextStyleElements(context);
     return Opacity(
       opacity:isLoading? 0.0:1.0,
-      child: TricycleListCard(
+      child: appListCard(
           child: Column(
             children: <Widget>[
               Row(

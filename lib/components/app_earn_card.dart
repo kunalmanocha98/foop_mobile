@@ -1,5 +1,5 @@
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/models/buddyApprovalModels/buddyServiceList.dart';
 import 'package:oho_works_app/ui/BuddyApproval/approvalListPage.dart';
 import 'package:oho_works_app/ui/RegisterInstitutions/regisration_detail_page.dart';
@@ -16,7 +16,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
-class TricycleEarnCard extends StatelessWidget {
+class appEarnCard extends StatelessWidget {
   final String? type;
   final String? moneyVal;
   final String? imageUrl;
@@ -27,7 +27,7 @@ class TricycleEarnCard extends StatelessWidget {
   SharedPreferences? prefs;
   bool? isClickable;
 
-  TricycleEarnCard(
+  appEarnCard(
       {this.moneyVal,
         this.imageUrl,
         this.quote,
@@ -40,7 +40,7 @@ class TricycleEarnCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
      styleElements = TextStyleElements(context);
-    return TricycleListCard(
+    return appListCard(
         onTap: () {
           clickAction(context);
         },
@@ -110,7 +110,7 @@ class TricycleEarnCard extends StatelessWidget {
                   child: Row(
                     children: [
                       Spacer(),
-                      TricycleElevatedButton(onPressed:(){
+                      appElevatedButton(onPressed:(){
                         clickAction(context);
                       },
                       color: HexColor(AppColors.appMainColor),

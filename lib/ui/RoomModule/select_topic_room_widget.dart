@@ -4,8 +4,8 @@ import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/models/Rooms/topic_list.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
@@ -36,7 +36,7 @@ class SelectRoomTopicWidgetState extends State<SelectRoomTopicWidget>{
   @override
   Widget build(BuildContext context) {
     var styleElements = TextStyleElements(context);
-    return widget.isCard? TricycleCard(
+    return widget.isCard? appCard(
         margin: EdgeInsets.only(left:8,right: 8,top: 0,bottom: 0),
         onTap: (){
           Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
@@ -53,7 +53,7 @@ class SelectRoomTopicWidgetState extends State<SelectRoomTopicWidget>{
           children: [
             Padding(
               padding: EdgeInsets.only(right: 12.0),
-              child: TricycleAvatar(
+              child: appAvatar(
                 key: UniqueKey(),
                 size: 36,
                 isFullUrl: selectedList!=null && selectedList.length>0,
@@ -88,7 +88,7 @@ class SelectRoomTopicWidgetState extends State<SelectRoomTopicWidget>{
             children: [
               Padding(
                 padding: EdgeInsets.only(right: 12.0),
-                child: TricycleAvatar(
+                child: appAvatar(
                   key: UniqueKey(),
                   size: 36,
                   isFullUrl: selectedList!=null && selectedList.length>0,
@@ -164,11 +164,11 @@ class _RoomTopicListState extends State<_RoomTopicList> {
     styleElements = TextStyleElements(context);
     return SafeArea(
         child: Scaffold(
-          appBar: TricycleAppBar().getCustomAppBar(
+          appBar: appAppBar().getCustomAppBar(
               context,
               appBarTitle: getAppBarTitle(),
               actions:[
-                TricycleTextButton(
+                appTextButton(
                   onPressed:() {
                       if(selectedList!=null && selectedList!.length>0){
                         Navigator.pop(context,selectedList);
@@ -246,7 +246,7 @@ class _RoomTopicListState extends State<_RoomTopicList> {
     RoomTopicItem item = itemData;
     var imageUrl = item.imageUrl??="";
     return  ListTile(
-      leading: TricycleAvatar(
+      leading: appAvatar(
         imageUrl: Config.BASE_URL+imageUrl,
         size: 42,
         isFullUrl: true,

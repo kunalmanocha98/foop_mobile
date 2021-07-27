@@ -3,8 +3,9 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
+
 import 'package:oho_works_app/home/locator.dart';
 import 'package:oho_works_app/models/e_learning/topic_list.dart';
 import 'package:oho_works_app/models/post/postcreate.dart';
@@ -42,8 +43,8 @@ final PostCreatePayload? createLessonData;
 class _TopicTypePage extends State<TopicTypePage> {
   late BuildContext context;
   late TextStyleElements styleElements;
-  GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
-  GlobalKey<TricycleProgressButtonState> progressButtonKeyNext = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKey = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKeyNext = GlobalKey();
   List<TopicListItem> topicList = [];
   List<PostCreatePayload?>? list;
   PostReceiverListItem? selectedReceiverData;
@@ -72,7 +73,7 @@ class _TopicTypePage extends State<TopicTypePage> {
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: TricycleAppBar().getCustomAppBar(
+          appBar: appAppBar().getCustomAppBar(
             context,
             appBarTitle: AppLocalizations.of(context)!.translate('topic_type'),
 
@@ -147,7 +148,7 @@ class _TopicTypePage extends State<TopicTypePage> {
 
   Widget listItemBuilder(itemData, int index) {
     TopicListItem item = itemData;
-    return TricycleListCard(
+    return appListCard(
       onTap: () {
         if (item.topicCode == "academic") {
 
@@ -337,7 +338,7 @@ class _CommentSheet extends State<CommentSheet> {
 // Visibility(
 // child: GestureDetector(
 // behavior: HitTestBehavior.translucent,
-// child: TricycleCard(
+// child: appCard(
 //
 // child: ListTile(
 // tileColor: HexColor(AppColors.listBg),
@@ -369,7 +370,7 @@ class _CommentSheet extends State<CommentSheet> {
 // Visibility(
 // child: GestureDetector(
 // behavior: HitTestBehavior.translucent,
-// child: TricycleCard(
+// child: appCard(
 //
 // child: ListTile(
 // tileColor: HexColor(AppColors.listBg),

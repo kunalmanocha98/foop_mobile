@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/models/language_list.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
@@ -65,7 +65,7 @@ bool isLoading =false;
         resizeToAvoidBottomInset: false,
         backgroundColor: HexColor(AppColors.appColorBackground),
         // AppLocalizations.of(context).translate("language")
-        appBar: TricycleAppBar().getCustomAppBar(context,
+        appBar: appAppBar().getCustomAppBar(context,
           appBarTitle: AppLocalizations.of(context)!.translate('select_country'),
           onBackButtonPress: (){
             Navigator.of(context).pop();
@@ -115,7 +115,7 @@ bool isLoading =false;
                         alignment: Alignment.centerRight,
                         child: Container(
                           margin: const EdgeInsets.only(left: 16.0, right: 16.0),
-                          child: TricycleElevatedButton(
+                          child: appElevatedButton(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(18.0),
                                 side: BorderSide(color: HexColor(AppColors.appMainColor))),

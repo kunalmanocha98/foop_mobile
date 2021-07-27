@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/components/postcardactionbuttons.dart';
-import 'package:oho_works_app/components/tricycle_user_images_list.dart';
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/app_user_images_list.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
 import 'package:oho_works_app/models/Rooms/rooms_view.dart';
@@ -19,7 +19,7 @@ import 'package:oho_works_app/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
-class TricycleEventCard extends StatefulWidget {
+class appEventCard extends StatefulWidget {
   final String? cardImage;
   final String? byImage;
   final String byTitle;
@@ -61,7 +61,7 @@ class TricycleEventCard extends StatefulWidget {
   final bool? isBellAvailable;
   final bool? isBellPressed;
 final Function? bellIconCallBack;
-  TricycleEventCard(
+  appEventCard(
       {Key? key,
         this.bellIconCallBack,
       this.isBellAvailable,
@@ -107,10 +107,10 @@ final Function? bellIconCallBack;
       : super(key: key);
 
   @override
-  TricycleEventCardState createState() => TricycleEventCardState();
+  appEventCardState createState() => appEventCardState();
 }
 
-class TricycleEventCardState extends State<TricycleEventCard> {
+class appEventCardState extends State<appEventCard> {
   late TextStyleElements styleElements;
 
   @override
@@ -118,7 +118,7 @@ class TricycleEventCardState extends State<TricycleEventCard> {
     styleElements = TextStyleElements(context);
 
     return widget.withCard
-        ? TricycleListCard(
+        ? appListCard(
             margin: EdgeInsets.only(left: 8, right: 8.0, top: 6.0, bottom: 6.0),
             onTap: widget.onClickEvent,
             child: _child,
@@ -158,7 +158,7 @@ class TricycleEventCardState extends State<TricycleEventCard> {
                       Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          TricycleAvatar(
+                          appAvatar(
                             key: UniqueKey(),
                             withBorder: true,
                             size: 56,
@@ -184,7 +184,7 @@ class TricycleEventCardState extends State<TricycleEventCard> {
                                   widget.onlyHeader
                                       ? Container()
                                       : widget.isRoom
-                                          ? TricycleAvatar(
+                                          ? appAvatar(
                                               size: 16,
                                               resolution_type:
                                                   RESOLUTION_TYPE.R64,
@@ -339,7 +339,7 @@ class TricycleEventCardState extends State<TricycleEventCard> {
                                         ),
                                         (widget.listofImages != null &&
                                                 widget.listofImages!.length > 0)
-                                            ? TricycleUserImageList(
+                                            ? appUserImageList(
                                                 listOfImages:
                                                     widget.listofImages)
                                             : Container(),

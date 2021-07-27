@@ -1,7 +1,7 @@
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
-import 'package:oho_works_app/components/tricycle_user_list_tile.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
+import 'package:oho_works_app/components/app_user_list_tile.dart';
 import 'package:oho_works_app/enums/listtypes.dart';
 import 'package:oho_works_app/enums/personType.dart';
 import 'package:oho_works_app/enums/requestedbytype.dart';
@@ -37,14 +37,14 @@ class _TestListingPage extends State<TestListingPage> {
     styleElements = TextStyleElements(context);
     return SafeArea(
       child: Scaffold(
-        appBar: TricycleAppBar().getCustomAppBar(context,
+        appBar: appAppBar().getCustomAppBar(context,
           appBarTitle: AppLocalizations.of(context)!.translate('test_user_list'),
           onBackButtonPress: (){},
         ),
-        body: TricycleListCard(
+        body: appListCard(
           child: ListView(
             children: [
-              TricycleUserListTile(
+              appUserListTile(
                 title: 'Kunal Manocha',
                 subtitle1: 'Teacher, Humpty Dumpty School',
                 imageUrl: 'https://picsum.photos/64/64',
@@ -52,7 +52,7 @@ class _TestListingPage extends State<TestListingPage> {
                 isPerson: true,
                 showAvatar: true,
               ),
-              TricycleUserListTile(
+              appUserListTile(
                 title: 'Kunal Manocha with very very long name ',
                 subtitle1: 'Teacher, Humpty Dumpty School',
                 imageUrl: 'https://picsum.photos/64/64',
@@ -60,7 +60,7 @@ class _TestListingPage extends State<TestListingPage> {
                 isPerson: true,
                 showAvatar: true,
               ),
-              TricycleUserListTile(
+              appUserListTile(
                 title: 'Kunal Manocha with very very long name ',
                 subtitle1: 'Teacher, Humpty Dumpty School',
                 imageUrl: 'https://picsum.photos/64/64',
@@ -69,7 +69,7 @@ class _TestListingPage extends State<TestListingPage> {
                 isPerson: true,
                 showAvatar: true,
               ),
-              TricycleUserListTile(
+              appUserListTile(
                 title: 'Kunal Manocha',
                 subtitle1: 'Teacher, Humpty Dumpty School with long name and verified also ',
                 imageUrl: 'https://picsum.photos/64/64',
@@ -78,7 +78,7 @@ class _TestListingPage extends State<TestListingPage> {
                 isPerson: true,
                 showAvatar: true,
               ),
-              TricycleUserListTile(
+              appUserListTile(
                 title: 'Kunal Manocha',
                 subtitle1: 'Teacher, Humpty Dumpty School with long name and verified also ',
                 imageUrl: 'https://picsum.photos/64/64',
@@ -91,7 +91,7 @@ class _TestListingPage extends State<TestListingPage> {
                 rating: 4.0,
                 superScriptText: 'sunday',
               ),
-              TricycleUserListTile(
+              appUserListTile(
                 title: 'Kunal Manocha',
                 subtitle1: 'Teacher, Humpty Dumpty School with long name and verified also ',
                 imageUrl: 'https://picsum.photos/64/64',
@@ -105,7 +105,7 @@ class _TestListingPage extends State<TestListingPage> {
                 superScriptText: 'sunday',
                 subtitle2: 'public',
               ),
-              TricycleUserListTile(
+              appUserListTile(
                 title: 'Kunal Manocha',
                 subtitle1: 'Teacher, Humpty Dumpty School with long name and verified also ',
                 imageUrl: 'https://picsum.photos/64/64',
@@ -122,7 +122,7 @@ class _TestListingPage extends State<TestListingPage> {
                 showCount: true,
                 count: 11,
               ),
-              TricycleUserListTile(
+              appUserListTile(
                 title: 'Kunal Manocha',
                 subtitle1: 'Teacher, Humpty Dumpty School with long name and verified also ',
                 imageUrl: 'https://picsum.photos/64/64',
@@ -139,7 +139,7 @@ class _TestListingPage extends State<TestListingPage> {
                 showCount: true,
                 count: 111,
               ),
-              TricycleUserListTile(
+              appUserListTile(
                 title: 'Kunal Manocha',
                 subtitle1: 'Teacher, Humpty Dumpty School with long name and verified also ',
                 imageUrl: 'https://picsum.photos/64/64',
@@ -153,7 +153,7 @@ class _TestListingPage extends State<TestListingPage> {
                 rating: 4.0,
                 superScriptText: 'sunday',
                 subtitle2: 'public',
-                trailingWidget: TricycleTextButton(
+                trailingWidget: appTextButton(
                   onPressed: (){},
                   child: Text('follow',style: styleElements.captionThemeScalable(context).copyWith(
                     color: HexColor(AppColors.appMainColor)
@@ -170,7 +170,7 @@ class _TestListingPage extends State<TestListingPage> {
         //       children: [
         //         Padding(
         //           padding: const EdgeInsets.all(8.0),
-        //           child: TricycleElevatedButton(
+        //           child: appElevatedButton(
         //             color: HexColor(AppColors.appColorWhite),
         //             onPressed: _testAlluserListing,
         //             child: Text(AppLocalizations.of(context).translate('all_user_listing'),
@@ -246,7 +246,7 @@ class _TestListingPage extends State<TestListingPage> {
         //         ),
         //         Padding(
         //           padding: const EdgeInsets.all(8.0),
-        //           child: TricycleElevatedButton(
+        //           child: appElevatedButton(
         //             onPressed: _testListing,
         //             color: HexColor(AppColors.appColorWhite),
         //             child: Text(AppLocalizations.of(context).translate('view_listing'),

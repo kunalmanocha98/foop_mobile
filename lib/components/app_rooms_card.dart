@@ -4,8 +4,8 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/components/postcardactionbuttons.dart';
-import 'package:oho_works_app/components/tricycle_user_images_list.dart';
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/app_user_images_list.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/enums/create_deeplink.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
@@ -26,7 +26,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class TricycleRoomCalenderCard extends StatefulWidget {
+class appRoomCalenderCard extends StatefulWidget {
   final dynamic calenderData;
   final RoomListItem? roomData ;
   final bool isRooms;
@@ -34,25 +34,25 @@ class TricycleRoomCalenderCard extends StatefulWidget {
   final Widget? actionButton;
   final bool isSmallCard ;
   final Function? ratingCallback;
-  TricycleRoomCalenderCard({Key? key, this.roomData,this.calenderData,this.isCalender= false,this.isRooms= false,this.actionButton,this.isSmallCard = false,this.ratingCallback}):super(key: key);
+  appRoomCalenderCard({Key? key, this.roomData,this.calenderData,this.isCalender= false,this.isRooms= false,this.actionButton,this.isSmallCard = false,this.ratingCallback}):super(key: key);
 
   @override
-  TricycleRoomCalenderCardState createState() =>
-      TricycleRoomCalenderCardState(calenderData: calenderData,roomData: roomData,isCalender: isCalender,isRooms: isRooms,actionButton: actionButton);
+  appRoomCalenderCardState createState() =>
+      appRoomCalenderCardState(calenderData: calenderData,roomData: roomData,isCalender: isCalender,isRooms: isRooms,actionButton: actionButton);
 }
 
-class TricycleRoomCalenderCardState extends State<TricycleRoomCalenderCard> {
+class appRoomCalenderCardState extends State<appRoomCalenderCard> {
   dynamic calenderData ;
   RoomListItem? roomData ;
   bool isRooms;
   bool isCalender;
   final Widget? actionButton;
-  TricycleRoomCalenderCardState({this.roomData,this.calenderData,this.isCalender= false,this.isRooms= false,this.actionButton});
+  appRoomCalenderCardState({this.roomData,this.calenderData,this.isCalender= false,this.isRooms= false,this.actionButton});
   late TextStyleElements styleElements;
   @override
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
-    return widget.isSmallCard?getSmallCard():TricycleListCard(
+    return widget.isSmallCard?getSmallCard():appListCard(
         child: Container(
           margin: EdgeInsets.only(top: 12, left: 12, right: 12),
           child: Column(
@@ -63,7 +63,7 @@ class TricycleRoomCalenderCardState extends State<TricycleRoomCalenderCard> {
                   Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                     TricycleAvatar(
+                     appAvatar(
                        key: UniqueKey(),
                      withBorder: true,
                      size: 56,
@@ -82,7 +82,7 @@ class TricycleRoomCalenderCardState extends State<TricycleRoomCalenderCard> {
                           Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              TricycleAvatar(
+                              appAvatar(
                                 size: 16,
                                 resolution_type: RESOLUTION_TYPE.R64,
                                 service_type:   roomData!.roomOwnerType=='person'?SERVICE_TYPE.PERSON:SERVICE_TYPE.INSTITUTION,
@@ -193,7 +193,7 @@ class TricycleRoomCalenderCardState extends State<TricycleRoomCalenderCard> {
                           SizedBox(
                             height: 8,
                           ),
-                          TricycleUserImageList(
+                          appUserImageList(
                             listOfImages: List.generate(roomData!.membersCount!,(index){
                               if(index<roomData!.membersList!.length){
                                 return roomData!.membersList![index].profileImage;
@@ -262,14 +262,14 @@ class TricycleRoomCalenderCardState extends State<TricycleRoomCalenderCard> {
 
 
   Widget getSmallCard(){
-    return TricycleListCard(
+    return appListCard(
         child: Container(
           margin: EdgeInsets.only(top: 4,),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              TricycleAvatar(
+              appAvatar(
                 key: UniqueKey(),
                 withBorder: false,
                 size: 64,
@@ -281,7 +281,7 @@ class TricycleRoomCalenderCardState extends State<TricycleRoomCalenderCard> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TricycleAvatar(
+                  appAvatar(
                     size: 16,
                     resolution_type: RESOLUTION_TYPE.R64,
                     service_type:   roomData!.roomOwnerType=='person'?SERVICE_TYPE.PERSON:SERVICE_TYPE.INSTITUTION,
@@ -330,7 +330,7 @@ class TricycleRoomCalenderCardState extends State<TricycleRoomCalenderCard> {
               )
                   :Expanded(child: Container())
               ,
-              TricycleUserImageList(
+              appUserImageList(
                 listOfImages: List.generate(roomData!.membersCount!,(index){
                   if(index<roomData!.membersList!.length){
                     return roomData!.membersList![index].profileImage;

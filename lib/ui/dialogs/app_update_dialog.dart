@@ -1,7 +1,7 @@
 import 'dart:ui';
 
-import 'package:oho_works_app/components/tricycleHtmlViewer.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/appHtmlViewer.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
@@ -29,7 +29,7 @@ class AppUpdateDialog extends StatelessWidget{
             ),),
             SizedBox(height: 16,),
             (note != null && note!.isNotEmpty)?
-            TricycleHtmlViewer(
+            appHtmlViewer(
               sourceString:note,
               isDetailPage: true,
             )
@@ -41,7 +41,7 @@ class AppUpdateDialog extends StatelessWidget{
               Spacer(),
               Visibility(
                 visible: showCancelButton,
-                child: TricycleTextButton(onPressed: (){
+                child: appTextButton(onPressed: (){
                   Navigator.pop(context);
                   cancelButton!();
                   },
@@ -50,7 +50,7 @@ class AppUpdateDialog extends StatelessWidget{
                       styleElements.captionThemeScalable(context)
                           .copyWith(color:HexColor(AppColors.appMainColor)),)),
               ),
-              TricycleTextButton(onPressed: (){
+              appTextButton(onPressed: (){
                 updateButton!();
               },
                   shape: StadiumBorder(),

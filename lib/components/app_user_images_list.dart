@@ -1,4 +1,4 @@
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
@@ -7,12 +7,12 @@ import 'package:oho_works_app/utils/hexColors.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class TricycleUserImageList extends StatelessWidget {
+class appUserImageList extends StatelessWidget {
   final int itemExtent=4;
   final List<String?>? listOfImages;
   int? totalItems;
   int? leftoveritems;
-  TricycleUserImageList({this.listOfImages});
+  appUserImageList({this.listOfImages});
   late TextStyleElements styleElements;
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class TricycleUserImageList extends StatelessWidget {
         itemBuilder: (BuildContext context, int index) {
           return (index!=totalItems)?Padding(
             padding: EdgeInsets.only(top:4,bottom: 4,left: 2,right: 2),
-            child: TricycleAvatar(
+            child: appAvatar(
               size: 30,
               key: UniqueKey(),
               resolution_type: RESOLUTION_TYPE.R64,

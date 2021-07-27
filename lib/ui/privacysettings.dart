@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
 import 'package:oho_works_app/enums/DictionaryType.dart';
 import 'package:oho_works_app/models/disctionarylist.dart';
 import 'package:oho_works_app/models/dynmaicres.dart';
@@ -39,7 +39,7 @@ class _PrivacySettingsPage extends State<PrivacySettingsPage> {
   _PrivacySettingsPage(this.type,this.rowId);
   PrivacySettingsView settingsView = PrivacySettingsView();
   ButtonTapManager buttonTapManager = ButtonTapManager();
-  GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKey = GlobalKey();
 
   @override
   initState() {
@@ -91,7 +91,7 @@ class _PrivacySettingsPage extends State<PrivacySettingsPage> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: HexColor(AppColors.appColorBackground),
-        appBar:TricycleAppBar().getCustomAppBar(context, appBarTitle: getAppBarTitle(), onBackButtonPress: (){
+        appBar:appAppBar().getCustomAppBar(context, appBarTitle: getAppBarTitle(), onBackButtonPress: (){
           Navigator.pop(context);
         }),
         body:  isLoading?    PreloadingView(
@@ -130,7 +130,7 @@ class _PrivacySettingsPage extends State<PrivacySettingsPage> {
                       alignment: Alignment.centerRight,
                       child: Container(
                         margin: const EdgeInsets.only(left: 16.0, right: 16.0),
-                        child: TricycleProgressButton(
+                        child: appProgressButton(
                           key: progressButtonKey,
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(18.0),

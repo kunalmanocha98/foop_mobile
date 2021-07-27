@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'commonComponents.dart';
 
 // ignore: must_be_immutable
-class TricycleCard extends StatelessWidget{
+class appCard extends StatelessWidget{
 
   Widget child;
   EdgeInsetsGeometry? margin;
@@ -12,7 +12,7 @@ class TricycleCard extends StatelessWidget{
   Function? onTap;
   Color? color;
   double borderRadius= 12.0;
-  TricycleCard({required this.child,this.margin,this.padding,this.onTap,this.color});
+  appCard({required this.child,this.margin,this.padding,this.onTap,this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class TricycleCard extends StatelessWidget{
 }
 
 // ignore: must_be_immutable
-class TricycleListCard extends StatelessWidget{
+class appListCard extends StatelessWidget{
   Widget child;
   EdgeInsetsGeometry? margin;
   EdgeInsetsGeometry? padding;
@@ -57,7 +57,7 @@ class TricycleListCard extends StatelessWidget{
   Color? color;
   double borderRadius= 12.0;
   Clip? clip;
-  TricycleListCard({required this.child,this.margin,this.padding,this.onTap,this.color,this.clip});
+  appListCard({required this.child,this.margin,this.padding,this.onTap,this.color,this.clip});
 
   @override
   Widget build(BuildContext context) {

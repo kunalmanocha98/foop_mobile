@@ -10,7 +10,7 @@ import 'package:oho_works_app/components/commonComponents.dart';
 import 'package:oho_works_app/components/postcard.dart';
 import 'package:oho_works_app/components/postcardactionbuttons.dart';
 import 'package:oho_works_app/components/postcardheader.dart';
-import 'package:oho_works_app/components/tricycle_chat_footer.dart';
+import 'package:oho_works_app/components/app_chat_footer.dart';
 import 'package:oho_works_app/enums/create_deeplink.dart';
 import 'package:oho_works_app/enums/paginatorEnums.dart';
 import 'package:oho_works_app/enums/share_item_type.dart';
@@ -59,7 +59,7 @@ class _PostDetailScrollerPage extends State<NewNewsAndArticleDetailPage> {
 
   SharedPreferences prefs = locator<SharedPreferences>();
   TextStyleElements styleElements;
-  GlobalKey<TricycleChatFooterState> chatFooterKey = GlobalKey();
+  GlobalKey<appChatFooterState> chatFooterKey = GlobalKey();
   PAGINATOR_ENUMS pageEnum_answer;
   PAGINATOR_ENUMS pageEnum_comment;
   PAGINATOR_ENUMS pageEnum_assignment;
@@ -304,7 +304,7 @@ class _PostDetailScrollerPage extends State<NewNewsAndArticleDetailPage> {
         child: CustomPaginator(context).loadingWidgetMaker(),
       );
     } else {
-      card = TricyclePostCard(
+      card = appPostCard(
         cardData: item,
         isPostHeaderVisible: false,
         isPostActionVisible: false,
@@ -430,7 +430,7 @@ class CommentSheet extends StatefulWidget {
 class _CommentSheet extends State<CommentSheet> {
   SharedPreferences prefs = locator<SharedPreferences>();
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
-  GlobalKey<TricycleChatFooterState> chatFooterKey = GlobalKey();
+  GlobalKey<appChatFooterState> chatFooterKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
@@ -464,7 +464,7 @@ class _CommentSheet extends State<CommentSheet> {
             pageErrorChecker: CustomPaginator(context).pageErrorChecker,
           ),
         ),
-        TricycleChatFooter(
+        appChatFooter(
           chatFooterKey,
           isShowAddIcon: false,
           hintText: AppLocalizations.of(context).translate('enter_comment'),
@@ -611,7 +611,7 @@ class _PostCardScrollableState extends State<_PostCardScrollable> {
   getPostCard() {
     Widget card;
     card = postData != null
-        ? TricyclePostCard(
+        ? appPostCard(
             cardData: postData,
             isPostHeaderVisible: false,
             isPostActionVisible: false,

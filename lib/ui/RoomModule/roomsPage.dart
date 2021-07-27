@@ -159,7 +159,7 @@ class RoomsPageState extends State<RoomsPage> with SingleTickerProviderStateMixi
               marginTop:const EdgeInsets.all(16.0 ),
               currentPosition: currentPosition,
               itemCount: list!=null && list.isNotEmpty?list.length:0,
-              tabBuilder: (context, index) => TricycleTabButton(
+              tabBuilder: (context, index) => appTabButton(
                 onPressed: () {
                   setState(() {
                     currentPosition = index;
@@ -187,7 +187,7 @@ class RoomsPageState extends State<RoomsPage> with SingleTickerProviderStateMixi
       child: new   Scaffold(
           resizeToAvoidBottomInset: false,
           appBar:
-          TricycleAppBar().getCustomAppBar(context,
+          appAppBar().getCustomAppBar(context,
               appBarTitle: AppLocalizations.of(context)!.translate("rooms"),
               onBackButtonPress: () {
                 Navigator.pop(context);
@@ -236,7 +236,7 @@ class RoomsPageState extends State<RoomsPage> with SingleTickerProviderStateMixi
                 marginTop:const EdgeInsets.all(16.0 ),
                 currentPosition: currentPosition,
                 itemCount: list!=null && list.isNotEmpty?list.length:0,
-                tabBuilder: (context, index) => TricycleTabButton(
+                tabBuilder: (context, index) => appTabButton(
                   onPressed: () {
                     setState(() {
                       currentPosition = index;

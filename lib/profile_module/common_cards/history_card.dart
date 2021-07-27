@@ -29,7 +29,7 @@ class HistoryCard extends StatelessWidget {
 
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
-    return TricycleListCard(
+    return appListCard(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[

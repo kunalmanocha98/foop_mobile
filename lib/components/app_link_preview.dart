@@ -11,8 +11,8 @@ import 'package:http/http.dart';
 import 'package:http/io_client.dart';
 
 /// Link Preview Widget
-class TricycleLinkPreview extends StatefulWidget {
-  const TricycleLinkPreview({
+class appLinkPreview extends StatefulWidget {
+  const appLinkPreview({
     Key? key,
     required this.url,
     this.cache = const Duration(hours: 24),
@@ -48,7 +48,7 @@ class TricycleLinkPreview extends StatefulWidget {
   _FlutterLinkPreviewState createState() => _FlutterLinkPreviewState();
 }
 
-class _FlutterLinkPreviewState extends State<TricycleLinkPreview> {
+class _FlutterLinkPreviewState extends State<appLinkPreview> {
   String? _url;
   InfoBase? _info;
 

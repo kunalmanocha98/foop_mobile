@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/enums/create_deeplink.dart';
 import 'package:oho_works_app/enums/member%20enums.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
@@ -134,7 +134,7 @@ class _RoomAboutPage extends State<RoomAboutPage> {
     setSharedPreferences();
     return ListView(
                 children: [
-                  TricycleListCard(
+                  appListCard(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -143,7 +143,7 @@ class _RoomAboutPage extends State<RoomAboutPage> {
                             children: [
                               Padding(
                                 padding: EdgeInsets.only(left: 8,top: 4),
-                                child: TricycleAvatar(
+                                child: appAvatar(
                                   size: 56,
                                   service_type: SERVICE_TYPE.ROOM,
                                   resolution_type: RESOLUTION_TYPE.R256,
@@ -212,7 +212,7 @@ class _RoomAboutPage extends State<RoomAboutPage> {
                                 visible: _isEditButtonVisible(),
                                 child: Align(
                                     alignment: Alignment.topRight,
-                                    child: TricycleTextButton(
+                                    child: appTextButton(
                                       onPressed: () {
                                         if (value != null &&
                                             value!.membershipStatus ==
@@ -260,7 +260,7 @@ class _RoomAboutPage extends State<RoomAboutPage> {
                     visible: value != null &&
                         value!.membershipStatus ==
                             MEMBERSHIP_STATUS.ACTIVE.type,
-                    child: TricycleListCard(
+                    child: appListCard(
                       child: Column(
                         children: [
                           InkWell(

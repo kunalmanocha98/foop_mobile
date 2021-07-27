@@ -1,4 +1,4 @@
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/colors.dart';
 import 'package:oho_works_app/utils/hexColors.dart';
@@ -109,7 +109,7 @@ class TaskCompletionDialogState extends State<TaskCompletionDialog> {
                   Row(
                     children: [
                       Spacer(),
-                      TricycleTextButton(
+                      appTextButton(
                           onPressed: () {},
                           child: Text(
                             'cancel',
@@ -121,7 +121,7 @@ class TaskCompletionDialogState extends State<TaskCompletionDialog> {
                       SizedBox(
                         width: 16,
                       ),
-                      TricycleTextButton(
+                      appTextButton(
                           onPressed: () {},
                           shape: StadiumBorder(),
                           color: HexColor(AppColors.appMainColor),

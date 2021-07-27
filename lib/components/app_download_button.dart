@@ -15,29 +15,29 @@
 //
 // const debug = true;
 //
-// class TricycleDownloadButton extends StatefulWidget
+// class appDownloadButton extends StatefulWidget
 //     with WidgetsBindingObserver {
 //   final TargetPlatform platform;
 //   final List<String> listOfLinks;
 //   final bool isDarkTheme;
 //
-//   TricycleDownloadButton({Key key, this.title, this.isDarkTheme =false,this.platform, this.listOfLinks})
+//   appDownloadButton({Key key, this.title, this.isDarkTheme =false,this.platform, this.listOfLinks})
 //       : super(key: key);
 //   final String title;
 //
 //   @override
-//   TricycleDownloadButtonState createState() =>
-//       new TricycleDownloadButtonState();
+//   appDownloadButtonState createState() =>
+//       new appDownloadButtonState();
 // }
 //
-// class TricycleDownloadButtonState extends State<TricycleDownloadButton> {
+// class appDownloadButtonState extends State<appDownloadButton> {
 //   List<_TaskInfo> _tasks;
 //   bool _isLoading;
 //   bool _permissionReady;
 //   String _localPath;
 //   ReceivePort _port = ReceivePort();
 //   int index = 0;
-//   static final String TRICYCLE_PATH = "Tricycle";
+//   static final String TRICYCLE_PATH = "app";
 //    BuildContext sctx;
 //   UploadDownloadDialog pr;
 //

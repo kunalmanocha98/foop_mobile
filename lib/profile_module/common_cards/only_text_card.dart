@@ -39,7 +39,7 @@ class OnlyTextCard extends StatelessWidget {
 
 
         },
-        child: TricycleListCard(
+        child: appListCard(
           child: Container(
             padding: EdgeInsets.only(left: 16.w,right: 16.w,top: 12.h,bottom: 12.h),
             child:  Text(

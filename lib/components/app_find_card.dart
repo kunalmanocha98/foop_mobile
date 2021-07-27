@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'customcard.dart';
 
-class TricycleFindCard extends StatelessWidget {
+class appFindCard extends StatelessWidget {
   final String? title;
   final String? subtitle;
   final Widget? image;
@@ -11,7 +11,7 @@ class TricycleFindCard extends StatelessWidget {
   final Color? titleColor;
   final Color? subtitleColor;
 
-  TricycleFindCard({
+  appFindCard({
     this.title,
     this.subtitle,
     this.image,
@@ -23,7 +23,7 @@ class TricycleFindCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var styleElements = TextStyleElements(context);
-    return TricycleListCard(
+    return appListCard(
       padding: EdgeInsets.only(left: 16, right: 16, top: 24, bottom: 24),
       color: color,
       child: Row(

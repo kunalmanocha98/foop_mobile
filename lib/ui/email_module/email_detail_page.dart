@@ -17,7 +17,7 @@ class _EmailDetailPage extends State<EmailDetailPage>{
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: TricycleAppBar().getCustomAppBar(
+        appBar: appAppBar().getCustomAppBar(
             context,
             appBarTitle: widget.subject,
             onBackButtonPress: (){
@@ -30,7 +30,7 @@ class _EmailDetailPage extends State<EmailDetailPage>{
         body:ListView.builder(
           itemCount: 2,
           itemBuilder: (BuildContext context, int index) {
-            return TricycleEmailCard(
+            return appEmailCard(
               isDetailPage: true,
               emailItem: EmailListItem.fromJson(jsonDecode(jsonEncode({
                 "uid": "39",

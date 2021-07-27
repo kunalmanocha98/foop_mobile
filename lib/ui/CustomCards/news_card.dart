@@ -136,7 +136,7 @@ class NewsCard extends StatelessWidget {
                     ))
               ],
             )),
-        TricycleListCard(
+        appListCard(
           child: ListView.builder(
               shrinkWrap: true,
               padding: const EdgeInsets.only(bottom: 16.0),

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/home/locator.dart';
 import 'package:oho_works_app/models/base_res.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
@@ -38,11 +38,11 @@ class SubjectTopicSelectState extends State<SubjectTopicSelect>{
     styleElements = TextStyleElements(context);
     return SafeArea(
         child: Scaffold(
-          appBar: TricycleAppBar().getCustomAppBar(
+          appBar: appAppBar().getCustomAppBar(
               context,
               appBarTitle: getAppBarTitle(),
               actions:[
-                TricycleTextButton(
+                appTextButton(
                   onPressed:() {
                     if(selectedList!=null && selectedList!.length>0){
                       Navigator.pop(context,selectedList);

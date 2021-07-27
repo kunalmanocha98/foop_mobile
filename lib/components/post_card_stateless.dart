@@ -7,7 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 // ignore: must_be_immutable
-class TricyclePostCardStateLess extends StatelessWidget {
+class appPostCardStateLess extends StatelessWidget {
   PostListItem cardData;
   Function? sharecallBack;
   Function? download;
@@ -40,7 +40,7 @@ class TricyclePostCardStateLess extends StatelessWidget {
   bool isLearningPage;
   final String? searchHighlightWord;
 
-  TricyclePostCardStateLess(
+  appPostCardStateLess(
       {Key? key,
         required this.cardData,
         this.sharecallBack,
@@ -77,7 +77,7 @@ class TricyclePostCardStateLess extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TricyclePostCard(
+    return appPostCard(
       cardData: cardData,
       isPostHeaderVisible: false,
       isPostActionVisible: false,

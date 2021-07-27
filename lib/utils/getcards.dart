@@ -1,5 +1,5 @@
 
-import 'package:oho_works_app/components/tricycle_earn_card.dart';
+import 'package:oho_works_app/components/app_earn_card.dart';
 import 'package:oho_works_app/models/base_res.dart';
 import 'package:oho_works_app/models/personal_profile.dart';
 import 'package:oho_works_app/profile_module/common_cards/about_profile_card.dart';
@@ -1012,7 +1012,7 @@ class GetAllCards {
         break;
       case "Earn":
         {
-          return TricycleEarnCard(
+          return appEarnCard(
             imageUrl: commonCardData.imageUrl,
             moneyVal: commonCardData.moneyVal,
             quote: commonCardData.quote,
@@ -1024,7 +1024,7 @@ class GetAllCards {
         //todo add in menulist.json when implying this.
       case "Buddy_Approval":
         {
-          return TricycleEarnCard(
+          return appEarnCard(
             imageUrl: commonCardData.imageUrl,
             moneyVal: commonCardData.moneyVal,
             quote: commonCardData.quote,

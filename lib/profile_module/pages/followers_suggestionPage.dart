@@ -3,8 +3,8 @@ import 'dart:convert';
 
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
-import 'package:oho_works_app/components/tricycle_chat_footer.dart';
-import 'package:oho_works_app/components/tricycle_user_list_tile.dart';
+import 'package:oho_works_app/components/app_chat_footer.dart';
+import 'package:oho_works_app/components/app_user_list_tile.dart';
 import 'package:oho_works_app/enums/paginatorEnums.dart';
 import 'package:oho_works_app/models/FollowersData.dart';
 import 'package:oho_works_app/models/post/postlist.dart';
@@ -64,7 +64,7 @@ class _FollowersSuggestionPage extends State<FollowersSuggestionsPage> {
 
   int? postId;
 
-  GlobalKey<TricycleChatFooterState> chatFooterKey = GlobalKey();
+  GlobalKey<appChatFooterState> chatFooterKey = GlobalKey();
   PAGINATOR_ENUMS? pageEnum_suggestion;
   PAGINATOR_ENUMS? pageEnum_follower;
   bool isPostDataAvailable = true;
@@ -97,7 +97,7 @@ class _FollowersSuggestionPage extends State<FollowersSuggestionsPage> {
 
     return SafeArea(
       child: Scaffold(
-        // appBar: TricycleAppBar().getCustomAppBar(context,
+        // appBar: appAppBar().getCustomAppBar(context,
         //     appBarTitle: 'PostCardDetail', onBackButtonPress: () {
         //       Navigator.pop(context);
         //     }),
@@ -176,7 +176,7 @@ class _FollowersSuggestionPage extends State<FollowersSuggestionsPage> {
                               type: null,
                             )));
                   },
-                  child: TricycleUserListTile(
+                  child: appUserListTile(
                     onPressed: () {
                       Navigator.push(
                           context,
@@ -287,7 +287,7 @@ class _FollowersSuggestionPage extends State<FollowersSuggestionsPage> {
                               color: HexColor(AppColors.appColorBlack65))),
                     ),
                   ),
-                  TricycleUserListTile(
+                  appUserListTile(
                     onPressed: () {
                       Navigator.push(
                           context,

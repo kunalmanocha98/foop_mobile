@@ -4,7 +4,7 @@ import 'package:oho_works_app/api_calls/recover_password.dart';
 import 'package:oho_works_app/api_calls/sign_up_api.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/commonComponents.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/login_signup_module/update_profile_page.dart';
 import 'package:oho_works_app/models/common_response.dart';
 import 'package:oho_works_app/models/device_info.dart';
@@ -281,7 +281,7 @@ class _Verification extends State<Verification> {
     styleElements = TextStyleElements(context);
     return SafeArea(
         child: Scaffold(
-            appBar: TricycleAppBar().getCustomAppBar(
+            appBar: appAppBar().getCustomAppBar(
               context,
               onBackButtonPress: () {
                 Navigator.pop(context);
@@ -473,7 +473,7 @@ class _Verification extends State<Verification> {
                                 height: 52.0,
                                 margin: const EdgeInsets.only(
                                     top: 16.0, bottom: 16.0),
-                                child: TricycleElevatedButton(
+                                child: appElevatedButton(
                                   shape: RoundedRectangleBorder(
                                       borderRadius:
                                       BorderRadius.circular(24.0),
@@ -532,7 +532,7 @@ class _Verification extends State<Verification> {
                                     mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
                                     children: <Widget>[
-                                      TricycleTextButton(
+                                      appTextButton(
                                         onPressed: () {
                                           _handleKeypadClick('1');
                                         },
@@ -543,7 +543,7 @@ class _Verification extends State<Verification> {
                                                 fontWeight:
                                                 FontWeight.normal)),
                                       ),
-                                      TricycleTextButton(
+                                      appTextButton(
                                         onPressed: () {
                                           _handleKeypadClick('2');
                                         },
@@ -554,7 +554,7 @@ class _Verification extends State<Verification> {
                                                 fontWeight:
                                                 FontWeight.normal)),
                                       ),
-                                      TricycleTextButton(
+                                      appTextButton(
                                         onPressed: () {
                                           _handleKeypadClick('3');
                                         },
@@ -570,7 +570,7 @@ class _Verification extends State<Verification> {
                                     mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
                                     children: <Widget>[
-                                      TricycleTextButton(
+                                      appTextButton(
                                         onPressed: () {
                                           _handleKeypadClick('4');
                                         },
@@ -581,7 +581,7 @@ class _Verification extends State<Verification> {
                                                 fontWeight:
                                                 FontWeight.normal)),
                                       ),
-                                      TricycleTextButton(
+                                      appTextButton(
                                         onPressed: () {
                                           _handleKeypadClick('5');
                                         },
@@ -592,7 +592,7 @@ class _Verification extends State<Verification> {
                                                 fontWeight:
                                                 FontWeight.normal)),
                                       ),
-                                      TricycleTextButton(
+                                      appTextButton(
                                         onPressed: () {
                                           _handleKeypadClick('6');
                                         },
@@ -608,7 +608,7 @@ class _Verification extends State<Verification> {
                                     mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
                                     children: <Widget>[
-                                      TricycleTextButton(
+                                      appTextButton(
                                         onPressed: () {
                                           _handleKeypadClick('7');
                                         },
@@ -619,7 +619,7 @@ class _Verification extends State<Verification> {
                                                 fontWeight:
                                                 FontWeight.normal)),
                                       ),
-                                      TricycleTextButton(
+                                      appTextButton(
                                         onPressed: () {
                                           _handleKeypadClick('8');
                                         },
@@ -630,7 +630,7 @@ class _Verification extends State<Verification> {
                                                 fontWeight:
                                                 FontWeight.normal)),
                                       ),
-                                      TricycleTextButton(
+                                      appTextButton(
                                         onPressed: () {
                                           _handleKeypadClick('9');
                                         },
@@ -648,7 +648,7 @@ class _Verification extends State<Verification> {
                                       mainAxisAlignment:
                                       MainAxisAlignment.spaceAround,
                                       children: <Widget>[
-                                        TricycleTextButton(
+                                        appTextButton(
                                           onPressed: () {
                                             _handleSubmit();
                                           },
@@ -660,7 +660,7 @@ class _Verification extends State<Verification> {
                                                   fontWeight:
                                                   FontWeight.normal)),
                                         ),
-                                        TricycleTextButton(
+                                        appTextButton(
                                           onPressed: () {
                                             _handleKeypadClick('0');
                                           },
@@ -672,7 +672,7 @@ class _Verification extends State<Verification> {
                                                   fontWeight:
                                                   FontWeight.normal)),
                                         ),
-                                        TricycleTextButton(
+                                        appTextButton(
                                           onPressed: () {
                                             _handleKeypadDel();
                                           },

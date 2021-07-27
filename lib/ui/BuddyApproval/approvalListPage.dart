@@ -6,7 +6,7 @@ import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/models/buddyApprovalModels/buddyListModels.dart';
 import 'package:oho_works_app/ui/BuddyApproval/approvalDetailsPage.dart';
-import 'package:oho_works_app/ui/BuddyApproval/tricycleRequestCard.dart';
+import 'package:oho_works_app/ui/BuddyApproval/appRequestCard.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/config.dart';
 import 'package:oho_works_app/utils/strings.dart';
@@ -32,7 +32,7 @@ class ApprovalListPageState extends State<ApprovalListPage> {
     return
      SafeArea(
           child: Scaffold(
-            appBar: TricycleAppBar().getCustomAppBarWithSearch(context,
+            appBar: appAppBar().getCustomAppBarWithSearch(context,
                 appBarTitle: AppLocalizations.of(context)!.translate('buddy_approval'),
                 onBackButtonPress: () {
                   Navigator.pop(context);
@@ -89,7 +89,7 @@ class ApprovalListPageState extends State<ApprovalListPage> {
 
   Widget listItemBuilder(itemData, int index) {
     RequestListItem item = itemData;
-    return TricycleRequestCard(
+    return appRequestCard(
       imageUrl: item.profileImage,
       buttonTitle: 'Verify',
       onButtonClickCallback: () {

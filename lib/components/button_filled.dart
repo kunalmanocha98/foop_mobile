@@ -4,7 +4,7 @@ import 'package:oho_works_app/utils/hexColors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'tricycle_buttons.dart';
+import 'app_buttons.dart';
 
 class LargeButton extends StatefulWidget {
   LargeButton({Key? key, this.name, this.offsetX, this.offsetY,required this.callback})
@@ -34,7 +34,7 @@ class _LargeButtonState extends State<LargeButton> {
         Container(
           width: 260.w,
           height: 52.h,
-          child: TricycleElevatedButton(
+          child: appElevatedButton(
             onPressed: callback,
             child: Center(
               child: Text(

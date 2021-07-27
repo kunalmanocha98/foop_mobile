@@ -74,7 +74,7 @@ class StateChatList extends State<ChatListPage> {
         child: Scaffold(
           resizeToAvoidBottomInset: false,
           backgroundColor: HexColor(AppColors.appColorBackground),
-          appBar: TricycleAppBar().getCustomAppBarWithSearch(
+          appBar: appAppBar().getCustomAppBarWithSearch(
               context,
               appBarTitle: 'Chat',
               onBackButtonPress: (){_onBackPressed();},

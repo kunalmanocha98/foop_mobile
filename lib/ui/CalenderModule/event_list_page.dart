@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/searchBox.dart';
-import 'package:oho_works_app/components/tricycle_event_card.dart';
+import 'package:oho_works_app/components/app_event_card.dart';
 import 'package:oho_works_app/models/CalenderModule/calenderModels.dart';
 import 'package:oho_works_app/models/CalenderModule/event_listings.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
@@ -77,7 +77,7 @@ class EventListState extends State<EventListPage> {
 
   Widget listItemBuilder(itemData, int index) {
     EventListItem item= itemData;
-    return TricycleEventCard(
+    return appEventCard(
       title: item.title,
       listofImages: List<String?>.generate(item.participantList!.length, (index) { return item.participantList![index].profileImage;}),
       description: item.subtitle,

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:oho_works_app/components/commonComponents.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/models/ClassesList.dart';
 import 'package:oho_works_app/models/RolesList.dart';
 import 'package:oho_works_app/models/SubjectList.dart';
@@ -375,7 +375,7 @@ class _CommonDetailPage extends State<CommonDetailPage>
                                             child: Container(
                                               margin: const EdgeInsets.only(
                                                   left: 16.0, right: 16.0),
-                                              child: TricycleElevatedButton(
+                                              child: appElevatedButton(
                                                 shape: RoundedRectangleBorder(
                                                     borderRadius:
                                                         BorderRadius.circular(

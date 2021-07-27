@@ -4,7 +4,7 @@ import 'dart:developer';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
-import 'package:oho_works_app/components/tricycle_event_card.dart';
+import 'package:oho_works_app/components/app_event_card.dart';
 import 'package:oho_works_app/enums/create_deeplink.dart';
 import 'package:oho_works_app/enums/event_status_code.dart';
 import 'package:oho_works_app/enums/paginatorEnums.dart';
@@ -124,7 +124,7 @@ class UpcomingTalkListPageState extends State<UpcomingTalkListPage> {
             return Future.value(true);
           },
           child: Scaffold(
-              appBar: TricycleAppBar().getCustomAppBar(
+              appBar: appAppBar().getCustomAppBar(
                 context,
                 appBarTitle:
                 AppLocalizations.of(context)!.translate('upcoming_talks'),
@@ -252,7 +252,7 @@ class UpcomingTalkListPageState extends State<UpcomingTalkListPage> {
 
   Widget listItemBuilder(itemData, int index) {
     // EventListItem item = itemData;
-    return TricycleEventCard(
+    return appEventCard(
       cardHeight: 240,
       title: confirmedList[index].title,
       description: confirmedList[index].subtitle,
@@ -318,7 +318,7 @@ class UpcomingTalkListPageState extends State<UpcomingTalkListPage> {
                   okCallback: () {
                     Navigator.push(
                         context,
-                        TricycleRouteSlideBottom(
+                        appRouteSlideBottom(
                             page: TalkEventPage(
                               key: talk,
                               socket: socketService!.getSocket(),

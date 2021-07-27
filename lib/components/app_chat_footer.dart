@@ -13,7 +13,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class TricycleChatFooter extends StatefulWidget {
+class appChatFooter extends StatefulWidget {
   String? hintText;
   Function(String?) onValueRecieved;
   Function(String)? onReceiveOption;
@@ -25,7 +25,7 @@ class TricycleChatFooter extends StatefulWidget {
   bool? isEmptyTextAccepted;
   String? linkPreviewUrl;
 
-  TricycleChatFooter(Key key,
+  appChatFooter(Key key,
       {this.hintText,
       required this.onValueRecieved,
       this.onTyping,
@@ -38,7 +38,7 @@ class TricycleChatFooter extends StatefulWidget {
       this.data})
       : super(key: key);
 
-  TricycleChatFooterState createState() => TricycleChatFooterState(
+  appChatFooterState createState() => appChatFooterState(
       onValueRecieved: onValueRecieved,
       linkPreviewUrl: linkPreviewUrl,
       onTyping: onTyping,
@@ -50,7 +50,7 @@ class TricycleChatFooter extends StatefulWidget {
       data: data);
 }
 
-class TricycleChatFooterState extends State<TricycleChatFooter> {
+class appChatFooterState extends State<appChatFooter> {
   bool isTyping = false;
   bool? isEmptyTextAccepted;
   Function(String)? onReceiveOption;
@@ -66,7 +66,7 @@ class TricycleChatFooterState extends State<TricycleChatFooter> {
   var controller = TextEditingController();
   String? userName;
 
-  TricycleChatFooterState(
+  appChatFooterState(
       {this.hintText,
       required this.onValueRecieved,
       this.onTyping,

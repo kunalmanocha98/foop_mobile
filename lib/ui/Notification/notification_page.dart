@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
 import 'package:oho_works_app/home/locator.dart';
@@ -61,7 +61,7 @@ class NotificationsPageState extends State<NotificationsPage> {
     styleElements = TextStyleElements(context);
     return SafeArea(
       child: Scaffold(
-        appBar: TricycleAppBar().getCustomAppBar(context,
+        appBar: appAppBar().getCustomAppBar(context,
             appBarTitle: AppLocalizations.of(context)!.translate('notification'),
             onBackButtonPress: () {
               Navigator.pop(context);
@@ -189,7 +189,7 @@ class NotificationsPageState extends State<NotificationsPage> {
         });
       },
       child: ListTile(
-        leading: TricycleAvatar(
+        leading: appAvatar(
           service_type: SERVICE_TYPE.PERSON,
           resolution_type: RESOLUTION_TYPE.R64,
           imageUrl: item.notificationActorImage,
@@ -219,7 +219,7 @@ class NotificationsPageState extends State<NotificationsPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  TricycleTextButton(
+                  appTextButton(
                     onPressed: () {},
                     shape: RoundedRectangleBorder(),
                     child: Text(
@@ -229,7 +229,7 @@ class NotificationsPageState extends State<NotificationsPage> {
                           .copyWith(color: HexColor(AppColors.appMainColor)),
                     ),
                   ),
-                  TricycleTextButton(
+                  appTextButton(
                     onPressed: () {
                       var uri = Uri.parse(item.notificationMobileDeepLink!);
                       handleBuddyDeepLink(uri.pathSegments, prefs, context, item.pid,
