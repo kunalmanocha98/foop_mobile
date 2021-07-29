@@ -6,6 +6,9 @@ import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/components/app_buttons.dart';
+import 'package:oho_works_app/ui/RegisterInstitutions/basic_institute_detail.dart';
+import 'package:oho_works_app/ui/RegisterInstitutions/contact_detail_institute_page.dart';
+import 'package:oho_works_app/ui/RegisterInstitutions/models/basic_response.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
@@ -17,20 +20,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'contact_detail_institute_page.dart';
-import 'models/basic_response.dart';
 
 // ignore: must_be_immutable
-class DomainPage extends StatefulWidget {
+class EmployeeCode extends StatefulWidget {
   int? instId;
   @override
-  _DomainPage createState() =>
-      new _DomainPage(instId);
+  _EmployeeCode createState() =>
+      new _EmployeeCode(instId);
 
-  DomainPage(this.instId);
+  EmployeeCode(this.instId);
 }
 
-class _DomainPage extends State<DomainPage>
+class _EmployeeCode extends State<EmployeeCode>
     with SingleTickerProviderStateMixin {
   String? facebookId;
   String? googleSignInId;
@@ -63,7 +64,7 @@ class _DomainPage extends State<DomainPage>
 
 
 
- late BuildContext context;
+  late BuildContext context;
   late TextStyleElements styleElements;
 
 
@@ -105,7 +106,7 @@ class _DomainPage extends State<DomainPage>
           controller: ohoUserName,
           decoration: InputDecoration(
               contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-              hintText: "@username",
+              hintText: "Enter your admission code",
               hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
               border: UnderlineInputBorder(
                 borderSide: BorderSide(
@@ -141,7 +142,7 @@ class _DomainPage extends State<DomainPage>
           child: Scaffold(
             // resizeToAvoidBottomInset: false,
               appBar: appAppBar().getCustomAppBar(context,
-                  appBarTitle: AppLocalizations.of(context)!.translate('reg_bus'),
+                  appBarTitle: "Enter admission code",
                   isIconVisible:false,
                   actions: [
 
@@ -162,7 +163,7 @@ class _DomainPage extends State<DomainPage>
                                 MaterialPageRoute(
                                     builder: (BuildContext
                                     context) =>
-                                        ContactsDetailsPageInstitute(instId)));
+                                        BasicInstituteDetails()));
                           }
 
                         },
@@ -210,7 +211,7 @@ class _DomainPage extends State<DomainPage>
                                   child: Container(
                                     margin: EdgeInsets.only(
                                         left: 8.w, right: 8.w, bottom: 8.h),
-                                    child: Text(AppLocalizations.of(context)!.translate('default_domain'),
+                                    child: Text('Enter admission Code',
                                       style: styleElements
                                           .headline6ThemeScalable(context)
                                           .copyWith(fontWeight: FontWeight.bold),
@@ -222,7 +223,7 @@ class _DomainPage extends State<DomainPage>
                                 margin: EdgeInsets.only(
                                     left: 8.w, right: 8.w, bottom: 8.h),
                                 child: Text(
-                                  "Oho username",
+                                  "You must have received an invitation with an admission code (AC) from your employer. Please enter the same to validate your association with the company.",
                                   style: styleElements
                                       .bodyText2ThemeScalable(context)
                                       .copyWith(color: HexColor(AppColors.appColorBlack85)),
@@ -234,39 +235,36 @@ class _DomainPage extends State<DomainPage>
                                   alignment: Alignment.center,
                                   child: Container(
                                     margin: EdgeInsets.only(
-                                        left: 8.w, right: 8.w, bottom: 8.h),
+                                        left: 8.w, right: 8.w, bottom: 20.h,top: 80),
                                     child: ohoUserNameForm,
                                   )),
 
 
-                              Align(
-                                  alignment: Alignment.center,
-                                  child: Container(
-                                    margin: EdgeInsets.only(
-                                        left: 8.w, right: 8.w, bottom: 8.h),
-                                    child: donamin,
-                                  )),
-                              Align(
-                                  alignment: Alignment.center,
-                                  child: Container(
-                                    margin: EdgeInsets.only(
-                                        left: 8.w, right: 8.w, bottom: 8.h,top: 16),
-                                    child: Text(
-                                     "1.Enter the domain name for which you want to create your email ID.\n 2. Your email ID will look like johndoe@abc.com - In this example, abc.com is the domain name.\n 3. Ohoworks provides 2 email ID free of cost on your domain name.",
-                                        style: styleElements
-                                        .bodyText2ThemeScalable(context)
-                                        .copyWith(color: HexColor(AppColors.appColorBlack85)),
 
-                                    ),
-                                  )),
-                             
-                            
+
+
 
 
                             ],
                           ),
                         )),
                   ),
+
+                  Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: Container(
+                          margin: EdgeInsets.only(
+                              left: 8.w, right: 8.w, bottom: 8.h,top: 16),
+                          child: Text(
+                            "Instructions\n\n 1. An admission code is provided by your employer that. Please contact administrator’s name to get an invitation.\n 2. Admission code is unique, you should not share the admission code with anyone else.",style: styleElements
+                              .bodyText2ThemeScalable(context)
+                              .copyWith(color: HexColor(AppColors.appColorBlack85)),
+
+                          ),
+                        ),
+                      )),
                   Align(
                       alignment: FractionalOffset.bottomCenter,
                       child: GestureDetector(
@@ -322,9 +320,9 @@ class _DomainPage extends State<DomainPage>
 
   void submit() async {
 
-setState(() {
-  isLoading=true;
-});
+    setState(() {
+      isLoading=true;
+    });
     final body = jsonEncode({
       "institution_id": instId,
       "domain_name": domainController.text
@@ -357,5 +355,5 @@ setState(() {
     });
   }
 
-  _DomainPage(this.instId);
+  _EmployeeCode(this.instId);
 }

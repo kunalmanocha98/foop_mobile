@@ -100,15 +100,18 @@ bool isLoading=false;
       ),
       onSaved: (String? value) {},
       controller: websiteCon,
+
+
       decoration: InputDecoration(
+          border: InputBorder.none,
+          focusedBorder: InputBorder.none,
+          enabledBorder: InputBorder.none,
+          errorBorder: InputBorder.none,
+          disabledBorder: InputBorder.none,
           contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
           hintText: AppLocalizations.of(context)!.translate('website'),
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
-          border: UnderlineInputBorder(
-            borderSide: BorderSide(
-              width: 0.0.h,
-            ),
-          )),
+         ),
     ));
     final emailField = Form(
       child: TextFormField(
@@ -127,11 +130,11 @@ bool isLoading=false;
             contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
             hintText: AppLocalizations.of(context)!.translate('email'),
             hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
-            border: UnderlineInputBorder(
-              borderSide: BorderSide(
-                width: 0.0.w,
-              ),
-            )),
+          border: InputBorder.none,
+          focusedBorder: InputBorder.none,
+          enabledBorder: InputBorder.none,
+          errorBorder: InputBorder.none,
+          disabledBorder: InputBorder.none,),
         validator: EditProfileMixins().validateEmail,
         onSaved: (String? value) {
           email = value;
@@ -154,11 +157,11 @@ bool isLoading=false;
           contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
           hintText: AppLocalizations.of(context)!.translate('mobile_number'),
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
-          border: UnderlineInputBorder(
-            borderSide: BorderSide(
-              width: 0.0.h,
-            ),
-          )),
+        border: InputBorder.none,
+        focusedBorder: InputBorder.none,
+        enabledBorder: InputBorder.none,
+        errorBorder: InputBorder.none,
+        disabledBorder: InputBorder.none,),
     );
     final phone = TextField(
       enableInteractiveSelection: false,
@@ -176,11 +179,11 @@ bool isLoading=false;
           contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
           hintText: AppLocalizations.of(context)!.translate('phone'),
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
-          border: UnderlineInputBorder(
-            borderSide: BorderSide(
-              width: 0.0.h,
-            ),
-          )),
+        border: InputBorder.none,
+        focusedBorder: InputBorder.none,
+        enabledBorder: InputBorder.none,
+        errorBorder: InputBorder.none,
+        disabledBorder: InputBorder.none,),
     );
 
     return new WillPopScope(
@@ -198,8 +201,13 @@ bool isLoading=false;
                       child: GestureDetector(
                         behavior: HitTestBehavior.translucent,
                         onTap: (){
-
-                          submit(context);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (BuildContext
+                                  context) =>
+                                      InstituteLocationAddressPage(instId)));
+                         // submit(context);
 
                         },
                         child: Row(
@@ -249,46 +257,166 @@ bool isLoading=false;
                                         .copyWith(fontWeight: FontWeight.bold),
                                   ),
                                 )),
-                            Align(
-                                alignment: Alignment.center,
-                                child: Container(
-                                  margin: EdgeInsets.only(
-                                      left: 8.w, right: 8.w, bottom: 8.h),
-                                  child: mobile,
-                                )),
-                            Align(
-                                alignment: Alignment.center,
-                                child: Container(
-                                  margin: EdgeInsets.only(
-                                      left: 8.w, right: 8.w, bottom: 8.h),
-                                  child: phone,
-                                )),
-                            Align(
-                              alignment: Alignment.center,
-                              child: Container(
-                                  padding: EdgeInsets.only(
-                                      left: 8.w, right: 8.w, bottom: 8.h),
-                                  child: emailField),
+
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+
+                                Padding(
+                                  padding: const EdgeInsets.only(left :15.0),
+                                  child: Container(
+                                    child: Icon(
+                                      Icons.call,
+                                      color: HexColor(AppColors.appColorGrey500),
+                                    ),
+                                  ),
+                                ),
+
+                                Container(
+                                  child: Text("+91"),
+                                ),
+                                Expanded(
+
+                                  child: Container(
+
+                                    child: mobile,
+                                  ),
+                                ),
+                              ],
+                            )
+                           ,
+                            const Divider(
+                              height: 2,
+                              thickness: 0.5,
+                              indent: 0,
+                              endIndent: 0,
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+
+                                Padding(
+                                  padding: const EdgeInsets.only(left :15.0),
+                                  child: Container(
+                                    child: Icon(
+                                      Icons.call,
+                                      color: HexColor(AppColors.appColorGrey500),
+                                    ),
+                                  ),
+                                ),
+
+                                Container(
+                                  child: Text("+91"),
+                                ),
+                                Expanded(
+
+                                  child: Container(
+
+                                    child: phone,
+                                  ),
+                                ),
+                              ],
+                            )
+                       ,
+                            const Divider(
+                              height: 2,
+                              thickness: 0.5,
+                              indent: 0,
+                              endIndent: 0,
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+
+                                Padding(
+                                  padding: const EdgeInsets.only(left :15.0),
+                                  child: Container(
+                                    child: Icon(
+                                      Icons.mail_outline,
+                                      color: HexColor(AppColors.appColorGrey500),
+                                    ),
+                                  ),
+                                ),
+
+
+                                Expanded(
+
+                                  child: Container(
+
+                                    child: emailField,
+                                  ),
+                                ),
+                              ],
+                            )
+
+                            ,
+                            const Divider(
+                              height: 2,
+                              thickness: 0.5,
+                              indent: 0,
+                              endIndent: 0,
+                            ),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+
+                                Padding(
+                                  padding: const EdgeInsets.only(left :15.0),
+                                  child: Container(
+                                    child: Icon(
+                                      Icons.border_top_sharp,
+                                      color: HexColor(AppColors.appColorGrey500),
+                                    ),
+                                  ),
+                                ),
+
+
+                                Expanded(
+
+                                  child: Container(
+
+                                    child: website,
+                                  ),
+                                ),
+                              ],
+                            )
+
+                          ,
+                            const Divider(
+                              height: 2,
+                              thickness: 0.5,
+                              indent: 0,
+                              endIndent: 0,
                             ),
                             Align(
-                                alignment: Alignment.center,
+                                alignment: Alignment.centerLeft,
                                 child: Container(
                                   margin: EdgeInsets.only(
-                                      left: 8.w, right: 8.w, bottom: 8.h),
-                                  child: website,
+                                      left: 16.w, right: 8.w, bottom: 1.h,top: 16),
+                                  child: Text('Ohoworks address',
+                                    style: styleElements
+                                        .captionThemeScalable(context)
+                                        .copyWith(color: HexColor(AppColors.appColorBlack65)),
+                                  ),
                                 )),
+
+                           
                             Align(
                                 alignment: Alignment.center,
                                 child: Card(
 
                                   color:HexColor(AppColors.appColorWhite65),
                                   margin: EdgeInsets.only(
-                                      left: 8.w, right: 8.w, bottom: 8.h),
+                                      left: 8.w, right: 8.w, bottom: 8.h,top: 1.0),
                                   child: Container(child: Align(
                                       alignment: Alignment.centerLeft,
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
-                                        child: Text(AppLocalizations.of(context)!.translate('tricycle_web_auto')),
+                                        child: Text(AppLocalizations.of(context)!.translate('app_web_auto')),
                                       ))),
                                 )),
 

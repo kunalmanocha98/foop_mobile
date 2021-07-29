@@ -8,11 +8,13 @@ import 'package:oho_works_app/components/button_filled.dart';
 import 'package:oho_works_app/components/white_button_large.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
+import 'package:oho_works_app/models/RegisterUserAs.dart';
 import 'package:oho_works_app/models/common_response.dart';
 import 'package:oho_works_app/models/device_info.dart';
 import 'package:oho_works_app/models/dynmaicres.dart';
 import 'package:oho_works_app/models/profileEditRequest.dart';
 import 'package:oho_works_app/models/register_user_payload.dart';
+import 'package:oho_works_app/regisration_module/select_business_page.dart';
 import 'package:oho_works_app/regisration_module/select_language.dart';
 import 'package:oho_works_app/regisration_module/welcomePage.dart';
 import 'package:oho_works_app/ui/camera_module/photo_preview_screen.dart';
@@ -713,12 +715,23 @@ class _UpdateProfilePage extends State<UpdateProfilePage>
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               //Center Row contents horizontally,
               crossAxisAlignment: CrossAxisAlignment.start,
               //Center Row contents vertically,
 
               children: [
+                Align(
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left:60.0),
+                      child: Container(
+                        child: Text(
+                          AppLocalizations.of(context)!.translate(""),
+                          style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    )),
                 Align(
                     alignment: Alignment.bottomLeft,
                     child: GestureDetector(
@@ -733,10 +746,10 @@ class _UpdateProfilePage extends State<UpdateProfilePage>
                                 AppLocalizations.of(context)!
                                     .translate("register_or_join_business"),
                                 style: styleElements
-                                    .bodyText2ThemeScalable(context)
+                                    .headline6ThemeScalable(context)
                                     .copyWith(
                                     color:
-                                    HexColor((AppColors.appMainColor))))
+                                    HexColor((AppColors.appColorBlack85))))
                           ],
                         ),
                       ),
@@ -777,7 +790,24 @@ class _UpdateProfilePage extends State<UpdateProfilePage>
                 offsetY: 12.93,
                 textColor: AppColors.appColorWhite,
                 color: AppColors.appMainColor,
-                callback: () {
+                callback: () async{
+
+                  var result = await Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SelectBusiness(
+                            type: "",
+                            id: 0,
+                            registerUserAs: RegisterUserAs(),
+                            isInstituteSelectedAlready:
+                            false,
+                            studentType: "",
+                            from: "welcome"),
+                      ));
+                  if (result != null &&
+                      result['registerUserdata'] != null) {
+
+                  }
 
                 },
               ),

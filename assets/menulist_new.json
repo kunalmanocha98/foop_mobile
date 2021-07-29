@@ -15,31 +15,10 @@
 
     },
     {
-      "title": "Buddy Services",
+      "title": "Team",
       "data": [
         {
-          "title": "Invite friends",
-          "code": "invite",
-          "imageUrl": "assets/appimages/create-invitation.png",
-          "tag": "",
-          "description": "Invite & earn oho coins & cash",
-          "isTagVisivle": false
-        },
-        {
-          "title": "Verify Friends",
-          "code": "buddy",
-          "imageUrl": "assets/appimages/buddy.png",
-          "tag": "",
-          "description": "Be the buddy of your circle & help others",
-          "isTagVisivle": false
-        }
-      ]
-    },
-    {
-      "title": "Announcements",
-      "data": [
-        {
-          "title": "Notice board",
+          "title": "My Team",
           "code": "notice",
           "imageUrl": "assets/appimages/create-notice.png",
           "tag": "",
@@ -47,7 +26,23 @@
           "isTagVisivle": false
         },
         {
-          "title": "Birthdays & Events",
+          "title": "Rooms",
+          "code": "events",
+          "imageUrl": "assets/appimages/event.png",
+          "tag": "",
+          "description": "Birthdays and events in one place",
+          "isTagVisivle": false
+        },
+        {
+          "title": "Attendance and Leaves",
+          "code": "notice",
+          "imageUrl": "assets/appimages/create-notice.png",
+          "tag": "",
+          "description": "Announcement & circulars in one place",
+          "isTagVisivle": false
+        },
+        {
+          "title": "Out Sourced Team",
           "code": "events",
           "imageUrl": "assets/appimages/event.png",
           "tag": "",
@@ -55,13 +50,246 @@
           "isTagVisivle": false
         }
 
+
       ]
     },
     {
-      "title": "Write, Read & Ask",
+      "title": "Communication",
       "data": [
         {
-          "title":"Articles-Blog",
+          "title": "Email",
+          "code": "notice",
+          "imageUrl": "assets/appimages/create-notice.png",
+          "tag": "",
+          "description": "Announcement & circulars in one place",
+          "isTagVisivle": false
+        },
+        {
+          "title": "Chat",
+          "code": "events",
+          "imageUrl": "assets/appimages/event.png",
+          "tag": "",
+          "description": "Birthdays and events in one place",
+          "isTagVisivle": false
+        },
+        {
+          "title": "Drop in Audio",
+          "code": "notice",
+          "imageUrl": "assets/appimages/create-notice.png",
+          "tag": "",
+          "description": "Announcement & circulars in one place",
+          "isTagVisivle": false
+        },
+        {
+          "title": "Video Meeting",
+          "code": "events",
+          "imageUrl": "assets/appimages/event.png",
+          "tag": "",
+          "description": "Birthdays and events in one place",
+          "isTagVisivle": false
+        },
+
+        {
+          "title": "Go Live",
+          "code": "notice",
+          "imageUrl": "assets/appimages/create-notice.png",
+          "tag": "",
+          "description": "Announcement & circulars in one place",
+          "isTagVisivle": false
+        },
+        {
+          "title": "Video Webinar",
+          "code": "events",
+          "imageUrl": "assets/appimages/event.png",
+          "tag": "",
+          "description": "Birthdays and events in one place",
+          "isTagVisivle": false
+        }
+      ]
+    },
+
+    {
+      "title": "Collaborate",
+      "data": [
+        {
+          "title": "Cloud Drive",
+          "code": "notice",
+          "imageUrl": "assets/appimages/create-notice.png",
+          "tag": "",
+          "description": "Announcement & circulars in one place",
+          "isTagVisivle": false
+        },
+        {
+          "title": "Social Intranet",
+          "code": "events",
+          "imageUrl": "assets/appimages/event.png",
+          "tag": "",
+          "description": "Birthdays and events in one place",
+          "isTagVisivle": false
+        },
+        {
+          "title": "Training And KB",
+          "code": "notice",
+          "imageUrl": "assets/appimages/create-notice.png",
+          "tag": "",
+          "description": "Announcement & circulars in one place",
+          "isTagVisivle": false
+        },
+        {
+          "title": "Blogs and Articles",
+          "code": "events",
+          "imageUrl": "assets/appimages/event.png",
+          "tag": "",
+          "description": "Birthdays and events in one place",
+          "isTagVisivle": false
+        },
+
+        {
+          "title": "Ask Expert",
+          "code": "notice",
+          "imageUrl": "assets/appimages/create-notice.png",
+          "tag": "",
+          "description": "Announcement & circulars in one place",
+          "isTagVisivle": false
+        },
+        {
+          "title": "Notice Board",
+          "code": "events",
+          "imageUrl": "assets/appimages/event.png",
+          "tag": "",
+          "description": "Birthdays and events in one place",
+          "isTagVisivle": false
+        },
+
+        {
+          "title": "Team Polls",
+          "code": "notice",
+          "imageUrl": "assets/appimages/create-notice.png",
+          "tag": "",
+          "description": "Announcement & circulars in one place",
+          "isTagVisivle": false
+        },
+        {
+          "title": "Daily News",
+          "code": "events",
+          "imageUrl": "assets/appimages/event.png",
+          "tag": "",
+          "description": "Birthdays and events in one place",
+          "isTagVisivle": false
+        }
+      ]
+    },
+
+
+
+
+    {
+      "title": "Productivity",
+      "data": [
+        {
+          "title": "Task And ToDo",
+          "code": "notice",
+          "imageUrl": "assets/appimages/create-notice.png",
+          "tag": "",
+          "description": "Announcement & circulars in one place",
+          "isTagVisivle": false
+        },
+        {
+          "title": "Notes",
+          "code": "events",
+          "imageUrl": "assets/appimages/event.png",
+          "tag": "",
+          "description": "Birthdays and events in one place",
+          "isTagVisivle": false
+        },
+        {
+          "title": "Events",
+          "code": "notice",
+          "imageUrl": "assets/appimages/create-notice.png",
+          "tag": "",
+          "description": "Announcement & circulars in one place",
+          "isTagVisivle": false
+        },
+        {
+          "title": "Calendar",
+          "code": "events",
+          "imageUrl": "assets/appimages/event.png",
+          "tag": "",
+          "description": "Birthdays and events in one place",
+          "isTagVisivle": false
+        }
+      ]
+    },
+    {
+      "title": "Invoice & Expenses",
+      "data": [
+
+        {
+          "title": "Incomes",
+          "code": "settings",
+          "imageUrl": "assets/appimages/create-settings.png",
+          "tag": "",
+          "description": "Record details about your income",
+          "isTagVisivle": false
+        },
+        {
+          "title": "Expenses",
+          "code": "settings",
+          "imageUrl": "assets/appimages/create-settings.png",
+          "tag": "",
+          "description": "Caputer all kind of expense detail",
+          "isTagVisivle": false
+        }
+      ]
+    },
+
+
+
+    {
+      "title": "Customer & Sales Orders",
+      "data": [
+        {
+          "title": "Customers",
+          "code": "notice",
+          "imageUrl": "assets/appimages/create-notice.png",
+          "tag": "",
+          "description": "Announcement & circulars in one place",
+          "isTagVisivle": false
+        },
+        {
+          "title": "Lead & Orders",
+          "code": "lead_order",
+          "imageUrl": "assets/appimages/event.png",
+          "tag": "",
+          "description": "Birthdays and events in one place",
+          "isTagVisivle": false
+        },
+        {
+          "title": "Invoice",
+          "code": "notice",
+          "imageUrl": "assets/appimages/create-notice.png",
+          "tag": "",
+          "description": "Announcement & circulars in one place",
+          "isTagVisivle": false
+        },
+        {
+          "title": "Payment(receivable)",
+          "code": "events",
+          "imageUrl": "assets/appimages/event.png",
+          "tag": "",
+          "description": "Birthdays and events in one place",
+          "isTagVisivle": false
+        }
+      ]
+    },
+
+
+
+    {
+      "title": "Supplier & Purchase Order",
+      "data": [
+        {
+          "title":"Supplier",
           "code": "blog",
           "imageUrl": "assets/appimages/create-articles.png",
           "tag": "",
@@ -70,15 +298,15 @@
         },
 
         {
-          "title":"Campus news",
-          "code": "news",
+          "title":"Purchase Order",
+          "code": "purchase_order",
           "imageUrl": "assets/appimages/news.png",
           "tag": "",
           "description": "Your friends are the journalists..",
           "isTagVisivle": false
         },
         {
-          "title":"Ask the expert",
+          "title":"Purchase Invoice",
           "code": "expert",
           "imageUrl": "assets/appimages/create-ask.png",
           "tag": "",
@@ -86,7 +314,7 @@
           "isTagVisivle": false
         },
         {
-          "title": "Polls",
+          "title": "Payment(payable)",
           "code": "poll",
           "imageUrl": "assets/appimages/polls.png",
           "tag": "",
@@ -97,25 +325,64 @@
     },
 
     {
-      "title": "Others",
+      "title": "Product Managment",
       "data": [
 
         {
-          "title": "Settings",
+          "title": "Product",
           "code": "settings",
           "imageUrl": "assets/appimages/create-settings.png",
           "tag": "",
-          "description": "Account, privacy & Password",
+          "description": "Description",
           "isTagVisivle": false
         },
         {
-          "title": "Logout",
+          "title": "Pricing",
           "code": "logout",
           "imageUrl": "assets/appimages/create-logout.png",
           "tag": "",
-          "description": "You will never want to Logout",
+          "description": "Description",
           "isTagVisivle": false
         }
+      ]
+    },
+
+    {
+      "title": "Inventory & Delivery",
+      "data": [
+
+        {
+          "title": "Inventory",
+          "code": "settings",
+          "imageUrl": "assets/appimages/create-settings.png",
+          "tag": "",
+          "description": "Description",
+          "isTagVisivle": false
+        },
+        {
+          "title": "Track Delivery",
+          "code": "logout",
+          "imageUrl": "assets/appimages/create-logout.png",
+          "tag": "",
+          "description": "Description",
+          "isTagVisivle": false
+        }
+      ]
+    },
+
+    {
+      "title": "Support and Helpdesk",
+      "data": [
+
+        {
+          "title": "Issue & Tickets",
+          "code": "settings",
+          "imageUrl": "assets/appimages/create-settings.png",
+          "tag": "",
+          "description": "Service Description",
+          "isTagVisivle": false
+        }
+
       ]
     }
   ]

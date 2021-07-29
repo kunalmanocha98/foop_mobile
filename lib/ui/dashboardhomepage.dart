@@ -8,6 +8,8 @@ import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/components/customgridDelegate.dart';
 import 'package:oho_works_app/components/app_bottom_selector.dart';
 import 'package:oho_works_app/components/appmenuitem.dart';
+import 'package:oho_works_app/crm_module/crm_page.dart';
+import 'package:oho_works_app/crm_module/purchase_order.dart';
 import 'package:oho_works_app/enums/post_enums.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
@@ -359,15 +361,48 @@ BuildContext? dgsContext;
               ));
           break;
         }
-     /* case 'calender':
+      case 'lead_order':
         {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => CalenderPage(),
+                builder: (context) => CrmPage(
+                    id: prefs!.getInt(Strings.userId),
+                    type: "person",
+                    hideTabs:true,
+                    isSwipeDisabled:true,
+                    hideAppBar: true,
+                    currentTab: 0,
+                    pageTitle: "",
+                    imageUrl: "",
+                    callback: () {
+
+                    }),
               ));
           break;
-        }*/
+        }
+      case 'purchase_order':
+        {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PurchaseOrderPage(
+                    id: prefs!.getInt(Strings.userId),
+                    type: "person",
+                    hideTabs:true,
+                    isSwipeDisabled:true,
+                    hideAppBar: true,
+                    currentTab: 0,
+                    pageTitle: "",
+                    imageUrl: "",
+                    callback: () {
+
+                    }),
+              ));
+          break;
+        }
+
+
       case 'events':
         {
           Navigator.push(

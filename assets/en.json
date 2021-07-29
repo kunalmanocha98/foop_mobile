@@ -67,7 +67,7 @@
 	"assignment_submission": "Assignment submission",
 	"assurance": "Assurance",
 	"at_the_rate": "@",
-	"basic": "Basic",
+	"basic": "Basic Details",
 	"become_mentor": "Become a Mentor",
 	"become_tutor": "Become a tutor",
 	"bio": "Bio",
@@ -963,5 +963,17 @@
 	"you_are_added_as": "You are added as ",
 	"you_cant_select": "You cant select this choice",
 	"you_won": "You won",
-	"your_currency": "Your currency"
+	"your_currency": "Your currency",
+	"select_business": "Select Business",
+	"reg_bus": "Register New  Business",
+
+	"crm_title": "Order Management",
+	"app_web_auto": "https://www.oho.life/business/slb-gover..",
+	"right_business": "Please select the right business where you are working. Businesses with similar names are highly possible, verify throughly. You can create your business if not in the list by clicking .+ You should be an authorised person to register your business.",
+
+	"lead": "Lead",
+	"order": "Order",
+	"invoice": "Invoice",
+	"payment": "Payments",
+	"today": "Today"
 }
