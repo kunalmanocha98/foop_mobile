@@ -147,6 +147,7 @@ flutter:
     - assets/menulist_new.json
     - assets/appimages/
     - assets/appimages/otp.jpg
+    - assets/appimages/cart.png
     - assets/appimages/lessonbanner.png
     - assets/appimages/classron.jpg
     - assets/appimages/mates.jpg

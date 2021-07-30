@@ -975,5 +975,8 @@
 	"order": "Order",
 	"invoice": "Invoice",
 	"payment": "Payments",
-	"today": "Today"
+	"today": "Today",
+
+	"customer": "Customer",
+	"new": "New"
 }

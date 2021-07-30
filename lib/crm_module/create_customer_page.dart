@@ -17,13 +17,12 @@ import 'package:flutter/material.dart';
 import 'package:oho_works_app/utils/strings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'create_customer_page.dart';
-import 'crm_list_page.dart';
-
+import 'bottom_sheet_address.dart';
+import 'common_list_company_customer.dart';
 
 
 // ignore: must_be_immutable
-class CrmPage extends StatefulWidget {
+class CreateCustomerPage extends StatefulWidget {
 
   bool hideTabs;
   String? type;
@@ -34,7 +33,7 @@ class CrmPage extends StatefulWidget {
   String? imageUrl;
   final bool hideAppBar;
   final bool? isSwipeDisabled;
-  CrmPage({
+  CreateCustomerPage({
     Key? key,
     this.hideAppBar=false,
     required this.type,
@@ -47,11 +46,11 @@ class CrmPage extends StatefulWidget {
     required this.imageUrl
   }) : super(key: key);
 
-  CrmPageState createState() =>
-      CrmPageState(type, id, pageTitle, callback, currentTab,imageUrl);
+  CreateCustomerPageState createState() =>
+      CreateCustomerPageState(type, id, pageTitle, callback, currentTab,imageUrl);
 }
 
-class CrmPageState extends State<CrmPage> with SingleTickerProviderStateMixin {
+class CreateCustomerPageState extends State<CreateCustomerPage> with SingleTickerProviderStateMixin {
   List<CustomTabMaker> list = [];
   late TabController _tabController;
   TextStyleElements? styleElements;
@@ -66,7 +65,7 @@ class CrmPageState extends State<CrmPage> with SingleTickerProviderStateMixin {
   String? imageUrl;
 
 
-  CrmPageState(this.type, this.id,this.pageTitle, this.callback, this._currentPosition,this.imageUrl);
+  CreateCustomerPageState(this.type, this.id,this.pageTitle, this.callback, this._currentPosition,this.imageUrl);
 
   @override
   void initState() {
@@ -90,10 +89,8 @@ class CrmPageState extends State<CrmPage> with SingleTickerProviderStateMixin {
   }
   loadPages() {
 
-   list.add(new CustomTabMaker(statelessWidget: new CrmPageList("L"), tabName: AppLocalizations.of(context)!.translate('lead')));
-    list.add(new CustomTabMaker(statelessWidget: new CrmPageList("O"), tabName: AppLocalizations.of(context)!.translate('order')));
-    list.add(new CustomTabMaker(statelessWidget: new CrmPageList("I"), tabName: AppLocalizations.of(context)!.translate('invoice')));
-    list.add(new CustomTabMaker(statelessWidget:new  CrmPageList("P"), tabName: AppLocalizations.of(context)!.translate('payment')));
+    list.add(new CustomTabMaker(statelessWidget: new CommonCompanyCustomerPage("S"), tabName: AppLocalizations.of(context)!.translate('entity')));
+    list.add(new CustomTabMaker(statelessWidget:new  CommonCompanyCustomerPage("C"), tabName: AppLocalizations.of(context)!.translate('customer')));
     setState(() {
       _tabController = TabController(vsync: this, length: list.length);
       _tabController.addListener(onPositionChange);
@@ -114,33 +111,16 @@ class CrmPageState extends State<CrmPage> with SingleTickerProviderStateMixin {
 
     return SafeArea(
       child:
-      widget.hideAppBar? Scaffold(
+
+      Scaffold(
         resizeToAvoidBottomInset: true,
         backgroundColor: HexColor(AppColors.appColorBackground),
-
         appBar: appAppBar().getCustomAppBar(context,
             centerTitle:false,
             actions: [
               InkWell(
-
                 onTap: (){
 
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CreateCustomerPage(
-                            id: prefs.getInt(Strings.userId),
-                            type: "person",
-                            hideTabs:true,
-                            isSwipeDisabled:true,
-                            hideAppBar: true,
-                            currentTab: 0,
-                            pageTitle: "",
-                            imageUrl: "",
-                            callback: () {
-
-                            }),
-                      ));
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(
@@ -149,10 +129,10 @@ class CrmPageState extends State<CrmPage> with SingleTickerProviderStateMixin {
 
                     children: [
 
-                      Icon(Icons.add,color: HexColor(AppColors.appMainColor),),
+
 
                       Text(AppLocalizations.of(context)!
-                          .translate('create'),
+                          .translate('next'),
                         textAlign: TextAlign.center,
                         style: styleElements!
                             .subtitle1ThemeScalable(context)
@@ -164,51 +144,11 @@ class CrmPageState extends State<CrmPage> with SingleTickerProviderStateMixin {
               _simplePopup()
             ],
             appBarTitle: AppLocalizations.of(context)!
-            .translate('crm_title'),
+                .translate('crm_title'),
             onBackButtonPress: (){  Navigator.pop(context);}),
 
 
 
-        body: DefaultTabController(
-          length: list.length,
-          child: CustomTabView(
-            isTabVisible:true,
-            isSwipeDisabled: false,
-            marginTop:const EdgeInsets.only(top:16.0 ),
-            currentPosition: _currentPosition,
-            itemCount: list!=null && list.isNotEmpty?list.length:0,
-            tabBuilder: (context, index) => appTabButton(
-              onPressed: () {
-                setState(() {
-                  _currentPosition = index;
-                });
-              },
-              tabName: list[index].tabName,
-              isActive: index == _currentPosition,
-            ),
-            pageBuilder: (context, index) =>
-                Center(child: list[index].statelessWidget),
-            onPositionChange: (index) {
-              setState(() {
-                _currentPosition = index!;
-              });
-            },
-            onScroll: (position) => print('$position'),
-          ),
-        ),
-      ):
-
-      Scaffold(
-        resizeToAvoidBottomInset: true,
-        backgroundColor: HexColor(AppColors.appColorBackground),
-        appBar:  AppBarWithProfile(
-          imageUrl:imageUrl,
-          title: getPageTitle()+"'s "+AppLocalizations.of(context)!.translate('network'),
-          isHomepage: false,
-          backButtonPress: (){
-            Navigator.pop(context);
-          },
-        ),
 
         body: DefaultTabController(
           length: list.length,
