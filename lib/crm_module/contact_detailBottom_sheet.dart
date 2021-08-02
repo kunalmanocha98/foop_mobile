@@ -68,186 +68,173 @@ class CustomerContactDetailSheet extends StatelessWidget {
       },
     );
     return SafeArea(
-      child: Container(
-        decoration: new BoxDecoration(
-            borderRadius: new BorderRadius.only(
-                topLeft:  Radius.circular(20.0),
-                topRight:  Radius.circular(20.0))),
-        child:  Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                //Center Row contents horizontally,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                //Center Row contents vertically,
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 50.0,left: 16,right: 16,top: 16),
+        child: Container(
+          decoration: new BoxDecoration(
+              borderRadius: new BorderRadius.only(
+                  topLeft:  Radius.circular(20.0),
+                  topRight:  Radius.circular(20.0))),
+          child:  Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(bottom: 30.0,left: 16,right: 16,top: 8),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //Center Row contents horizontally,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  //Center Row contents vertically,
 
-                children: [
-                  Expanded(
-                    child: Align(
-                      alignment: Alignment.center,
+                  children: [
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Container(
+                          child: Text(
+                            "Contact Person Details",
+                            textAlign: TextAlign.center,
+                            style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold),
+                          ),
+                        ),),
+                    ),
+
+                    Align(
+                      alignment: Alignment.centerRight,
                       child: Container(
                         child: Text(
-                          "Contact Person Details",
+                          "Next",
                           textAlign: TextAlign.center,
-                          style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold),
+                          style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold,color: HexColor(AppColors.appMainColor)),
                         ),
-                      ),),
-                  ),
-
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Container(
-                      child: Text(
-                        "Next",
-                        textAlign: TextAlign.center,
-                        style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold,color: HexColor(AppColors.appMainColor)),
-                      ),
-                    ),)
-                ],
+                      ),)
+                  ],
+                ),
               ),
-            ),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: const EdgeInsets.only(left:20.0,top: 8,bottom: 8),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.only(left:20.0,top: 8,bottom: 8),
+                  child: Container(
+                    child: Text(
+                      "Enter Contact person's Email Id and Phone Number",
+                      textAlign: TextAlign.left,
+                      style: styleElements.subtitle1ThemeScalable(context),
+                    ),
+                  ),
+                ),),
+
+
+              Padding(
+                padding: const EdgeInsets.all(8.0),
                 child: Container(
-                  child: Text(
-                    "Enter Contact person's Email Id and Phone Number",
-                    textAlign: TextAlign.left,
-                    style: styleElements.subtitle1ThemeScalable(context),
+                  padding: EdgeInsets.only(bottom: 8),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: HexColor(AppColors.appColorBackground),
+                  ),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Center(
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 8.0, right: 4),
+                              child: Icon(Icons.mail_outline,size: 30,),
+                            ),
+                          ),
+                          Expanded(
+                            child: TextFormField(
+                              validator: EditProfileMixins().validateEmail,
+                              initialValue: "Email Id",
+                              onSaved: (value) {
+
+                              },
+
+
+                              decoration: InputDecoration(
+                                  hintText: "Email id",
+                                  contentPadding: EdgeInsets.only(
+                                      left: 12, top: 16, bottom: 8),
+                                  border: UnderlineInputBorder(
+                                      borderRadius:
+                                      BorderRadius.circular(12)),
+                                  floatingLabelBehavior:
+                                  FloatingLabelBehavior.auto,
+                                  labelText:
+                                  "Email Id of Company"),
+
+                            ),
+                          ),
+                        ],
+                      ),
+
+                    ],
                   ),
                 ),
-              ),),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  padding: EdgeInsets.only(bottom: 8),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: HexColor(AppColors.appColorBackground),
+                  ),
+                  child: Column(
+                    children: [
+                      Row(
 
-
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                padding: EdgeInsets.only(bottom: 8),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: HexColor(AppColors.appColorBackground),
-                ),
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Center(
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 8.0, right: 4),
-                            child: Icon(Icons.mail_outline,size: 30,),
+                        children: [
+                          Center(
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 8.0, right: 4),
+                              child: Icon(Icons.call_outlined,size: 30,),
+                            ),
                           ),
-                        ),
-                        Expanded(
-                          child: TextFormField(
-                            validator: EditProfileMixins().validateEmail,
-                            initialValue: "Email Id",
-                            onSaved: (value) {
+                          /* Container(
+                              width: 80,
+                              child: codes,
+                            ),*/
+                          Expanded(
+                            child: TextFormField(
+                              validator: EditProfileMixins().validateEmail,
+                              initialValue: "Mobil no",
+                              onSaved: (value) {
 
-                            },
-                            decoration: InputDecoration(
-                                hintText: "Email id",
-                                contentPadding: EdgeInsets.only(
-                                    left: 12, top: 16, bottom: 8),
-                                border: InputBorder.none,
-                                focusedBorder: InputBorder.none,
-                                enabledBorder: InputBorder.none,
-                                errorBorder: InputBorder.none,
-                                disabledBorder: InputBorder.none,
-                                floatingLabelBehavior:
-                                FloatingLabelBehavior.auto,
-                                labelText:
-                                "Email Id of Company"),
+                              },
+
+
+                              decoration: InputDecoration(
+                                  hintText: "Mobile No",
+                                  contentPadding: EdgeInsets.only(
+                                      left: 12, top: 16, bottom: 8),
+                                  border: UnderlineInputBorder(
+                                      borderRadius:
+                                      BorderRadius.circular(12)),
+                                  floatingLabelBehavior:
+                                  FloatingLabelBehavior.auto,
+                                  labelText:
+                                  "Mobile Number of the Company"),
+
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top:8.0),
-                      child: Divider(
-                        height: 2,
-                        color: HexColor(AppColors.appMainColor),
-                        thickness: 1,
-                        indent: 0,
-                        endIndent: 0,
+                        ],
                       ),
-                    ),
-                  ],
+
+
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                padding: EdgeInsets.only(bottom: 8),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: HexColor(AppColors.appColorBackground),
-                ),
-                child: Column(
-                  children: [
-                    Row(
 
-                      children: [
-                        Center(
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 8.0, right: 4),
-                            child: Icon(Icons.call_outlined,size: 30,),
-                          ),
-                        ),
-                        /* Container(
-                            width: 80,
-                            child: codes,
-                          ),*/
-                        Expanded(
-                          child: TextFormField(
-                            validator: EditProfileMixins().validateEmail,
-                            initialValue: "Mobil no",
-                            onSaved: (value) {
-
-                            },
-                            decoration: InputDecoration(
-                                hintText: "Mobile No",
-                                contentPadding: EdgeInsets.only(
-                                    left: 12, top: 16, bottom: 8),
-                                border: InputBorder.none,
-                                focusedBorder: InputBorder.none,
-                                enabledBorder: InputBorder.none,
-                                errorBorder: InputBorder.none,
-                                disabledBorder: InputBorder.none,
-                                floatingLabelBehavior:
-                                FloatingLabelBehavior.auto,
-                                labelText:
-                                "Mobile Number of the Company"),
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    Padding(
-                      padding: const EdgeInsets.only(top:8.0),
-                      child: Divider(
-                        height: 2,
-                        color: HexColor(AppColors.appMainColor),
-                        thickness: 1,
-                        indent: 0,
-                        endIndent: 0,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-
-            SizedBox(
-              height: MediaQuery.of(context).viewInsets.bottom,
-            )
-          ],
+              SizedBox(
+                height: MediaQuery.of(context).viewInsets.bottom,
+              )
+            ],
+          ),
         ),
       ),
     );

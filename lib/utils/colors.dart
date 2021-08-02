@@ -49,6 +49,7 @@ class AppColors {
   static const String primaryTextColor65 = "#A6000000";
   static const String primaryTextColor35 = "#59000000";
   static const String primaryTextColor10 = "#1A000000";
+  static const String cardBkg="#DDD8D8";
 
   static const String information = "#cce5ff";
   static const String success = "#d4edda";

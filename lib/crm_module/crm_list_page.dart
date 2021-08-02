@@ -10,8 +10,10 @@ import 'package:oho_works_app/components/app_user_list_tile.dart';
 import 'package:oho_works_app/crm_module/grouped_list.dart';
 import 'package:oho_works_app/models/CommonListingModels/commonListingrequest.dart';
 import 'package:oho_works_app/profile_module/pages/profile_page.dart';
+import 'package:oho_works_app/ui/CalenderModule/calender_view_page.dart';
 import 'package:oho_works_app/ui/dialogs/delete_confirmation_dilog.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
+import 'package:oho_works_app/utils/Transitions/transitions.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
 import 'package:oho_works_app/utils/config.dart';
@@ -22,6 +24,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oho_works_app/components/paginator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'confirmed_order_page.dart';
 
 // ignore: must_be_immutable
 class CrmPageList extends StatefulWidget {
@@ -134,23 +138,35 @@ class _CrmPageList extends State<CrmPageList>
                     hintText: AppLocalizations.of(context)!.translate('search'),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 16.0),
-                  child: Row(
-                    children: [
-                      Text(
-                        AppLocalizations.of(context)!.translate('today'),
-                        textAlign: TextAlign.center,
-                        style: styleElements
-                            .subtitle1ThemeScalable(context)
-                            .copyWith(
-                                color: HexColor(AppColors.appColorBlack65)),
-                      ),
-                      Icon(
-                        Icons.arrow_drop_down,
-                        color: HexColor(AppColors.appColorBlack65),
-                      ),
-                    ],
+                InkWell(
+                  onTap: (){
+
+                    Navigator.push(context, appRouteSlideRight(page: CalenderViewPage(selectedDate: DateTime.now(),))).then((value){
+                      if(value!=null){
+                        setState(() {
+
+                        });
+                      }
+                    });
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 16.0),
+                    child: Row(
+                      children: [
+                        Text(
+                          AppLocalizations.of(context)!.translate('today'),
+                          textAlign: TextAlign.center,
+                          style: styleElements
+                              .subtitle1ThemeScalable(context)
+                              .copyWith(
+                                  color: HexColor(AppColors.appColorBlack65)),
+                        ),
+                        Icon(
+                          Icons.arrow_drop_down,
+                          color: HexColor(AppColors.appColorBlack65),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -375,15 +391,12 @@ var header=value[0]['group'];
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => UserProfileCards(
-                                      userType: "person",
-                                      userId: 2,
-                                      callback: () {
-                                        callback();
-                                      },
-                                      currentPosition: 1,
-                                      type: null,
-                                    )));
+                                  builder: (context) => ConfirmedOrderPage(
+                                    selectedTab:type=="O"?1:type=="L"?0:type=="I"?2:3,
+
+                                    type: "person", standardEventId: 2,
+                                  ),
+                                ));
                           },
                           imageUrl: null,
                           title: "Savil kumar",
@@ -411,7 +424,10 @@ var header=value[0]['group'];
         value: 'delete',
         child: Row(
           children: [
-            Icon(Icons.dashboard_outlined),
+            Padding(
+              padding: const EdgeInsets.only(left:8.0,right: 16),
+              child: Icon(Icons.dashboard_outlined,color: HexColor(AppColors.appColorBlack35),),
+            ),
             Text(name=="P"?"Edit Payment":"Edit",
             ),
           ],
@@ -425,7 +441,10 @@ var header=value[0]['group'];
         value: 'delete',
         child: Row(
           children: [
-            Icon(Icons.data_usage_rounded),
+            Padding(
+              padding: const EdgeInsets.only(left:8.0,right: 16),
+              child: Icon(Icons.face,color: HexColor(AppColors.appColorBlack35),),
+            ),
             Text(name=="P"?"Receive Payment":"Convert to order",
             ),
           ],
@@ -438,7 +457,10 @@ var header=value[0]['group'];
         value: 'delete',
         child: Row(
           children: [
-            Icon(Icons.dangerous),
+            Padding(
+              padding: const EdgeInsets.only(left:8.0,right: 16),
+              child: Icon(Icons.family_restroom_rounded,color: HexColor(AppColors.appColorBlack35),),
+            ),
             Text(name=="O"?"Bill":"Bill the lead",
             ),
           ],
@@ -450,7 +472,10 @@ var header=value[0]['group'];
         value: 'delete',
         child: Row(
           children: [
-            Icon(Icons.print),
+            Padding(
+              padding: const EdgeInsets.only(left:8.0,right: 16),
+              child: Icon(Icons.dashboard_outlined,color: HexColor(AppColors.appColorBlack35),),
+            ),
             Text("Print",
             ),
           ],
@@ -462,7 +487,10 @@ var header=value[0]['group'];
         value: 'delete',
         child: Row(
           children: [
-            Icon(Icons.mail_outline),
+            Padding(
+              padding: const EdgeInsets.only(left:8.0,right: 16),
+              child: Icon(Icons.sanitizer,color: HexColor(AppColors.appColorBlack35),),
+            ),
             Text("Email",
             ),
           ],
@@ -475,7 +503,10 @@ var header=value[0]['group'];
         value: 'delete',
         child: Row(
           children: [
-            Icon(Icons.g_translate_sharp),
+            Padding(
+              padding: const EdgeInsets.only(left:8.0,right: 16),
+              child: Icon(Icons.alternate_email,color: HexColor(AppColors.appColorBlack35),),
+            ),
             Text("Whatsapp",
             ),
           ],

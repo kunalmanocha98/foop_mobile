@@ -36,9 +36,8 @@ import 'contact_detailBottom_sheet.dart';
 
 
 
-class CreateCustomerPage extends StatefulWidget {
+class CreateContactPage extends StatefulWidget {
   final String type;
-  final int standardEventId;
   final String? title;
   final String? ownerName;
   final String? ownerType;
@@ -46,9 +45,13 @@ class CreateCustomerPage extends StatefulWidget {
   final int? ownerId;
   final RoomListItem? roomItem;
   final Function? refreshCallBack;
-  CreateCustomerPage({
+  final String? from;
+  final int? currentTab;
+
+  CreateContactPage({
     required this.type,
-    required this.standardEventId,
+    this.from,
+    this.currentTab,
     this.title,
     this.ownerId,
     this.ownerName,
@@ -59,16 +62,16 @@ class CreateCustomerPage extends StatefulWidget {
   });
 
   @override
-  CreateCustomerPageState createState() =>
-      CreateCustomerPageState(type: type, standardEventId: standardEventId);
+  CreateContactPageState createState() =>
+      CreateContactPageState(type: type, );
 }
 
-class CreateCustomerPageState extends State<CreateCustomerPage> {
+class CreateContactPageState extends State<CreateContactPage> {
   String type;
   String? title;
-  final int standardEventId;
 
-  CreateCustomerPageState({required this.type, required this.standardEventId,});
+
+  CreateContactPageState({required this.type,});
 
   late TextStyleElements styleElements;
   int selectedStartEpoch = 0;
@@ -192,13 +195,7 @@ class CreateCustomerPageState extends State<CreateCustomerPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 4.0),
-                        child: Text(
-                          "Manager",
-                          style: styleElements.subtitle2ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorBlack35)),
-                        ),
-                      ),
+
                       ListTile(
                         contentPadding: EdgeInsets.all(0),
                         leading: GestureDetector(
@@ -281,40 +278,30 @@ class CreateCustomerPageState extends State<CreateCustomerPage> {
                                         Expanded(
                                           child: TextFormField(
                                             validator: EditProfileMixins().validateEmail,
-                                            initialValue: " First Name",
+                                            initialValue: "",
                                             onSaved: (value) {
 
                                             },
+
+
                                             decoration: InputDecoration(
                                                 hintText: "First Name",
                                                 contentPadding: EdgeInsets.only(
                                                     left: 12, top: 16, bottom: 8),
-                                                border: InputBorder.none,
-                                                focusedBorder: InputBorder.none,
-                                                enabledBorder: InputBorder.none,
-                                                errorBorder: InputBorder.none,
-                                                disabledBorder: InputBorder.none,
+                                                border: UnderlineInputBorder(
+                                                    borderRadius:
+                                                    BorderRadius.circular(12)),
                                                 floatingLabelBehavior:
                                                 FloatingLabelBehavior.auto,
                                                 labelText:
                                                 "Enter first name"),
+
+
                                           ),
                                         ),
                                       ],
                                     ),
-                                    Align(
-                                      alignment: FractionalOffset.bottomCenter,
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(top:8.0,left: 8,right: 8),
-                                        child: Divider(
-                                          height: 2,
-                                          color: HexColor(AppColors.appMainColor),
-                                          thickness: 1,
-                                          indent: 0,
-                                          endIndent: 0,
-                                        ),
-                                      ),
-                                    ),
+
                                   ],
                                 ),
                               ),
@@ -341,33 +328,25 @@ class CreateCustomerPageState extends State<CreateCustomerPage> {
                                             onSaved: (value) {
 
                                             },
+
                                             decoration: InputDecoration(
                                                 hintText: "Last Name",
                                                 contentPadding: EdgeInsets.only(
                                                     left: 12, top: 16, bottom: 8),
-                                                border: InputBorder.none,
-                                                focusedBorder: InputBorder.none,
-                                                enabledBorder: InputBorder.none,
-                                                errorBorder: InputBorder.none,
-                                                disabledBorder: InputBorder.none,
+                                                border: UnderlineInputBorder(
+                                                    borderRadius:
+                                                    BorderRadius.circular(12)),
                                                 floatingLabelBehavior:
                                                 FloatingLabelBehavior.auto,
                                                 labelText:
                                                 "Enter Last Name"),
+
+
                                           ),
                                         ),
                                       ],
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(top:8.0,left: 8,right: 8),
-                                      child: Divider(
-                                        height: 2,
-                                        color: HexColor(AppColors.appMainColor),
-                                        thickness: 1,
-                                        indent: 0,
-                                        endIndent: 0,
-                                      ),
-                                    ),
+
                                   ],
                                 ),
                               ),
@@ -399,40 +378,31 @@ class CreateCustomerPageState extends State<CreateCustomerPage> {
                                   Expanded(
                                     child: TextFormField(
                                       validator: EditProfileMixins().validateEmail,
-                                      initialValue: "Designation",
+                                      initialValue: "",
                                       onSaved: (value) {
 
                                       },
+
+
                                       decoration: InputDecoration(
                                           hintText: "Designation",
                                           contentPadding: EdgeInsets.only(
                                               left: 12, top: 16, bottom: 8),
-                                          border: InputBorder.none,
-                                          focusedBorder: InputBorder.none,
-                                          enabledBorder: InputBorder.none,
-                                          errorBorder: InputBorder.none,
-                                          disabledBorder: InputBorder.none,
+                                          border: UnderlineInputBorder(
+                                              borderRadius:
+                                              BorderRadius.circular(12)),
                                           floatingLabelBehavior:
                                           FloatingLabelBehavior.auto,
                                           labelText:
                                           "Designation of contact"),
+
+
+
                                     ),
                                   ),
                                 ],
                               ),
-                              Align(
-                                alignment: FractionalOffset.bottomCenter,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(top:8.0,left: 8,right: 8),
-                                  child: Divider(
-                                    height: 2,
-                                    color: HexColor(AppColors.appMainColor),
-                                    thickness: 1,
-                                    indent: 0,
-                                    endIndent: 0,
-                                  ),
-                                ),
-                              ),
+
                             ],
                           ),
                         ),
@@ -467,39 +437,30 @@ class CreateCustomerPageState extends State<CreateCustomerPage> {
                           ),*/
                                   Expanded(
                                     child: TextFormField(
-                                      validator: EditProfileMixins().validateEmail,
-                                      initialValue: "Oho Id",
+
+                                      initialValue: "",
                                       onSaved: (value) {
 
                                       },
+
                                       decoration: InputDecoration(
-                                          hintText: "Oho Id",
+                                          hintText:  "Oho Id",
                                           contentPadding: EdgeInsets.only(
                                               left: 12, top: 16, bottom: 8),
-                                          border: InputBorder.none,
-                                          focusedBorder: InputBorder.none,
-                                          enabledBorder: InputBorder.none,
-                                          errorBorder: InputBorder.none,
-                                          disabledBorder: InputBorder.none,
+                                          border: UnderlineInputBorder(
+                                              borderRadius:
+                                              BorderRadius.circular(12)),
                                           floatingLabelBehavior:
                                           FloatingLabelBehavior.auto,
                                           labelText:
                                           "Oho Id of Contact"),
+
+
                                     ),
                                   ),
                                 ],
                               ),
 
-                              Padding(
-                                padding: const EdgeInsets.only(top:8.0,left: 8,right: 8),
-                                child: Divider(
-                                  height: 2,
-                                  color: HexColor(AppColors.appMainColor),
-                                  thickness: 1,
-                                  indent: 0,
-                                  endIndent: 0,
-                                ),
-                              ),
 
 
                             ],
@@ -798,7 +759,7 @@ class CreateCustomerPageState extends State<CreateCustomerPage> {
               payload.eventOrganizerId = prefs!.getInt(Strings.userId);
               payload.calContextType = prefs!.getString(Strings.ownerType);
               payload.calContextTypeId = prefs!.getInt(Strings.userId);
-              payload.standardEventsId = standardEventId;
+              payload.standardEventsId = 6;
               payload.eventName = title;
               payload.startTime = sd.millisecondsSinceEpoch;
               if (type == 'talk') payload.eventCategory = 'talk';

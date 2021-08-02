@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:oho_works_app/components/appAttachmentComponent.dart';
 import 'package:oho_works_app/components/searchBox.dart';
 import 'package:oho_works_app/enums/personType.dart';
 import 'package:oho_works_app/mixins/editProfileMixin.dart';
@@ -10,12 +11,16 @@ import 'package:oho_works_app/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class BottomSheetAddress extends StatelessWidget {
+import 'order_detail_page.dart';
+
+class TermAndConditionSheet extends StatelessWidget {
   final Function(String value)? onClickCallback;
   final SharedPreferences? prefs;
   final isRoomsVisible;
+  GlobalKey<appAttachmentsState> attachmentKey = GlobalKey();
   List<dynamic>? countryCodeList = [];
-  BottomSheetAddress({this.onClickCallback,this.prefs,this.isRoomsVisible=true});
+  int? selectedTab;
+  TermAndConditionSheet({this.onClickCallback,this.prefs,this.isRoomsVisible=true,this.selectedTab});
   @override
   Widget build(BuildContext context) {
 
@@ -92,12 +97,22 @@ class BottomSheetAddress extends StatelessWidget {
                   //Center Row contents vertically,
 
                   children: [
+
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Container(
+                        child: Text(
+                          "Skip",
+                          textAlign: TextAlign.center,
+                          style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold,color: HexColor(AppColors.appMainColor)),
+                        ),
+                      ),),
                     Expanded(
                       child: Align(
                         alignment: Alignment.center,
                         child: Container(
                           child: Text(
-                            "Company Address",
+                            "Term & Conditions",
                             textAlign: TextAlign.center,
                             style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold),
                           ),
@@ -106,75 +121,90 @@ class BottomSheetAddress extends StatelessWidget {
 
                     Align(
                       alignment: Alignment.centerRight,
-                      child: Container(
-                        child: Text(
-                          "Next",
-                          textAlign: TextAlign.center,
-                          style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold,color: HexColor(AppColors.appMainColor)),
+                      child: InkWell(
+                        onTap: (){
+
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => OrderDetailPage(
+                                  selectedTab:selectedTab,
+                                    type: "person", standardEventId: 2,
+                                   ),
+                              ));
+                        },
+                        child: Container(
+                          child: Text(
+                            "Next",
+                            textAlign: TextAlign.center,
+                            style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold,color: HexColor(AppColors.appMainColor)),
+                          ),
                         ),
                       ),)
                   ],
                 ),
               ),
 
-              SearchBox(
-                onvalueChanged: (s){},
-                icon:Icons.location_on_outlined,
-                hintText: "Enter Company Address",
-              ),
-
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    child: Text(
+                      "Term & conditions[Optional]",
+                      textAlign: TextAlign.center,
+                      style: styleElements.subtitle1ThemeScalable(context)),
+                    ),
+                  ),
+                ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
                   padding: EdgeInsets.only(bottom: 0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: HexColor(AppColors.appColorBackground),
-                  ),
+
                   child: Column(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 16.0),
-                        child: Row(
-crossAxisAlignment: CrossAxisAlignment.start,
 
-                          children: [
-                            Align(
-                              alignment: Alignment.topLeft,
-                              child: Padding(
-                                padding: EdgeInsets.all(16),
-                                child: Icon(Icons.location_on_outlined,size: 30,),
-                              ),
-                            ),
-                            /* Container(
-                                width: 80,
-                                child: codes,
-                              ),*/
-                            Expanded(
-                              child: TextFormField(
-                                validator: EditProfileMixins().validateEmail,
-                                initialValue: "",
-                                maxLines: 5,
-                                onSaved: (value) {
-
-                                },
-
-                                decoration: InputDecoration(
-                                    hintText: "Address",
-                                    contentPadding: EdgeInsets.only(
-                                        left: 12, top: 16, bottom: 8),
-                                    border: UnderlineInputBorder(
-                                        borderRadius:
-                                        BorderRadius.circular(12)),
-                                    floatingLabelBehavior:
-                                    FloatingLabelBehavior.auto,
-                                    labelText:
-                                    "Enter company address"),
-
-                              ),
-                            ),
-                          ],
+                      Container(
+                        padding: EdgeInsets.only(bottom: 0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: HexColor(AppColors.appColorBackground),
                         ),
+                        child: TextFormField(
+                          validator: EditProfileMixins().validateEmail,
+                          initialValue: "",
+                          maxLines: 5,
+                          onSaved: (value) {
+
+                          },
+
+                          decoration: InputDecoration(
+                            hintText: "",
+                            contentPadding: EdgeInsets.only(
+                                left: 12, top: 16, bottom: 8),
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            disabledBorder: InputBorder.none,
+
+
+
+                          ),
+                        ),
+                      ),
+
+
+                      appAttachments(
+                        attachmentKey,
+                        isMentionVisible: false,
+                        mentionCallback: (value) {
+
+                        },
+                        hashTagCallback: (value) {
+
+                        },
                       ),
 
 

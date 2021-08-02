@@ -2,6 +2,7 @@
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/appbar_with_profile%20_image.dart';
 import 'package:oho_works_app/components/customtabview.dart';
+import 'package:oho_works_app/crm_module/product_inventry_services_page.dart';
 import 'package:oho_works_app/e_learning_module/ui/selected_lesson_list.dart';
 import 'package:oho_works_app/models/custom_tab_maker.dart';
 import 'package:oho_works_app/profile_module/pages/common__page_network.dart';
@@ -22,7 +23,7 @@ import 'common_list_company_customer.dart';
 
 
 // ignore: must_be_immutable
-class CreateCustomerPage extends StatefulWidget {
+class CompanyAndCustomerPage extends StatefulWidget {
 
   bool hideTabs;
   String? type;
@@ -33,12 +34,16 @@ class CreateCustomerPage extends StatefulWidget {
   String? imageUrl;
   final bool hideAppBar;
   final bool? isSwipeDisabled;
-  CreateCustomerPage({
+  String? from;
+  int? selectedTab;
+  CompanyAndCustomerPage({
     Key? key,
     this.hideAppBar=false,
     required this.type,
     required this.id,
     this.hideTabs=false,
+    this.from,
+    this.selectedTab,
     this.isSwipeDisabled,
     required this.pageTitle,
     required this.callback,
@@ -46,11 +51,11 @@ class CreateCustomerPage extends StatefulWidget {
     required this.imageUrl
   }) : super(key: key);
 
-  CreateCustomerPageState createState() =>
-      CreateCustomerPageState(type, id, pageTitle, callback, currentTab,imageUrl);
+  CompanyAndCustomerPageState createState() =>
+      CompanyAndCustomerPageState(type, id, pageTitle, callback, currentTab,imageUrl);
 }
 
-class CreateCustomerPageState extends State<CreateCustomerPage> with SingleTickerProviderStateMixin {
+class CompanyAndCustomerPageState extends State<CompanyAndCustomerPage> with SingleTickerProviderStateMixin {
   List<CustomTabMaker> list = [];
   late TabController _tabController;
   TextStyleElements? styleElements;
@@ -65,7 +70,7 @@ class CreateCustomerPageState extends State<CreateCustomerPage> with SingleTicke
   String? imageUrl;
 
 
-  CreateCustomerPageState(this.type, this.id,this.pageTitle, this.callback, this._currentPosition,this.imageUrl);
+  CompanyAndCustomerPageState(this.type, this.id,this.pageTitle, this.callback, this._currentPosition,this.imageUrl);
 
   @override
   void initState() {
@@ -89,8 +94,8 @@ class CreateCustomerPageState extends State<CreateCustomerPage> with SingleTicke
   }
   loadPages() {
 
-    list.add(new CustomTabMaker(statelessWidget: new CommonCompanyCustomerPage("S"), tabName: AppLocalizations.of(context)!.translate('entity')));
-    list.add(new CustomTabMaker(statelessWidget:new  CommonCompanyCustomerPage("C"), tabName: AppLocalizations.of(context)!.translate('customer')));
+    list.add(new CustomTabMaker(statelessWidget: new CommonCompanyCustomerPage("S",widget.from), tabName: AppLocalizations.of(context)!.translate('entity')));
+    list.add(new CustomTabMaker(statelessWidget:new  CommonCompanyCustomerPage("L",widget.from), tabName: AppLocalizations.of(context)!.translate('customer')));
     setState(() {
       _tabController = TabController(vsync: this, length: list.length);
       _tabController.addListener(onPositionChange);
@@ -121,6 +126,26 @@ class CreateCustomerPageState extends State<CreateCustomerPage> with SingleTicke
               InkWell(
                 onTap: (){
 
+
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SelectItemsPage(
+                            id: prefs.getInt(Strings.userId),
+                            type: "person",
+                            hideTabs:true,
+                            isSwipeDisabled:true,
+                            hideAppBar: true,
+                            currentTab: 0,
+                            selectedTab:widget.selectedTab,
+                            pageTitle: "",
+                            imageUrl: "",
+                            callback: () {
+
+                            }),
+                      ));
+
+
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(
@@ -143,8 +168,7 @@ class CreateCustomerPageState extends State<CreateCustomerPage> with SingleTicke
               ),
               _simplePopup()
             ],
-            appBarTitle: AppLocalizations.of(context)!
-                .translate('crm_title'),
+            appBarTitle: "Select Customer",
             onBackButtonPress: (){  Navigator.pop(context);}),
 
 

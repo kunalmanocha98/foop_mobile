@@ -8,6 +8,8 @@ import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/components/customgridDelegate.dart';
 import 'package:oho_works_app/components/app_bottom_selector.dart';
 import 'package:oho_works_app/components/appmenuitem.dart';
+import 'package:oho_works_app/crm_module/CompanyAndCustomerPage.dart';
+import 'package:oho_works_app/crm_module/create_customer_contact.dart';
 import 'package:oho_works_app/crm_module/crm_page.dart';
 import 'package:oho_works_app/crm_module/purchase_order.dart';
 import 'package:oho_works_app/enums/post_enums.dart';
@@ -381,6 +383,70 @@ BuildContext? dgsContext;
               ));
           break;
         }
+      case 'customers':
+        {
+
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CompanyAndCustomerPage(
+                    id: prefs!.getInt(Strings.userId),
+                    type: "person",
+                    hideTabs:true,
+                    isSwipeDisabled:true,
+                    hideAppBar: true,
+                    from:"home",
+                    currentTab: 1,
+                    pageTitle: "",
+                    imageUrl: "",
+                    callback: () {
+
+                    }),
+              ));
+          break;
+        }
+      case 'payments':
+        {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CrmPage(
+                    id: prefs!.getInt(Strings.userId),
+                    type: "person",
+                    hideTabs:true,
+                    isSwipeDisabled:true,
+                    hideAppBar: true,
+                    currentTab: 3,
+                    pageTitle: "",
+                    imageUrl: "",
+                    callback: () {
+
+                    }),
+              ));
+          break;
+        }
+      case 'invoices':
+        {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CrmPage(
+                    id: prefs!.getInt(Strings.userId),
+                    type: "person",
+                    hideTabs:true,
+                    isSwipeDisabled:true,
+                    hideAppBar: true,
+                    currentTab: 2,
+                    pageTitle: "",
+                    imageUrl: "",
+                    callback: () {
+
+                    }),
+              ));
+          break;
+        }
+
+
       case 'purchase_order':
         {
           Navigator.push(

@@ -2,6 +2,9 @@
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/appbar_with_profile%20_image.dart';
 import 'package:oho_works_app/components/customtabview.dart';
+import 'package:oho_works_app/crm_module/payment_type_sheet.dart';
+import 'package:oho_works_app/crm_module/product_list_page.dart';
+import 'package:oho_works_app/crm_module/quantity_and_price_bottomSheet.dart';
 import 'package:oho_works_app/e_learning_module/ui/selected_lesson_list.dart';
 import 'package:oho_works_app/models/custom_tab_maker.dart';
 import 'package:oho_works_app/profile_module/pages/common__page_network.dart';
@@ -23,7 +26,7 @@ import 'crm_list_page.dart';
 
 
 // ignore: must_be_immutable
-class CrmPage extends StatefulWidget {
+class SelectItemsPage extends StatefulWidget {
 
   bool hideTabs;
   String? type;
@@ -33,12 +36,16 @@ class CrmPage extends StatefulWidget {
   Null Function() callback;
   String? imageUrl;
   final bool hideAppBar;
+  bool isEdit=false;
+  int? selectedTab;
   final bool? isSwipeDisabled;
-  CrmPage({
+  SelectItemsPage({
     Key? key,
     this.hideAppBar=false,
     required this.type,
+    this.isEdit=false,
     required this.id,
+    this.selectedTab,
     this.hideTabs=false,
     this.isSwipeDisabled,
     required this.pageTitle,
@@ -47,11 +54,11 @@ class CrmPage extends StatefulWidget {
     required this.imageUrl
   }) : super(key: key);
 
-  CrmPageState createState() =>
-      CrmPageState(type, id, pageTitle, callback, currentTab,imageUrl);
+  SelectItemsPageState createState() =>
+      SelectItemsPageState(type, id, pageTitle, callback, currentTab,imageUrl);
 }
 
-class CrmPageState extends State<CrmPage> with SingleTickerProviderStateMixin {
+class SelectItemsPageState extends State<SelectItemsPage> with SingleTickerProviderStateMixin {
   List<CustomTabMaker> list = [];
   late TabController _tabController;
   TextStyleElements? styleElements;
@@ -66,7 +73,7 @@ class CrmPageState extends State<CrmPage> with SingleTickerProviderStateMixin {
   String? imageUrl;
 
 
-  CrmPageState(this.type, this.id,this.pageTitle, this.callback, this._currentPosition,this.imageUrl);
+  SelectItemsPageState(this.type, this.id,this.pageTitle, this.callback, this._currentPosition,this.imageUrl);
 
   @override
   void initState() {
@@ -90,11 +97,10 @@ class CrmPageState extends State<CrmPage> with SingleTickerProviderStateMixin {
   }
   loadPages() {
 
-   list.add(new CustomTabMaker(statelessWidget: new CrmPageList("L"), tabName: AppLocalizations.of(context)!.translate('lead')));
-    list.add(new CustomTabMaker(statelessWidget: new CrmPageList("O"), tabName: AppLocalizations.of(context)!.translate('order')));
-    list.add(new CustomTabMaker(statelessWidget: new CrmPageList("I"), tabName: AppLocalizations.of(context)!.translate('invoice')));
-    list.add(new CustomTabMaker(statelessWidget:new  CrmPageList("P"), tabName: AppLocalizations.of(context)!.translate('payment')));
-    setState(() {
+    list.add(new CustomTabMaker(statelessWidget: new ProductListPage("S",widget.isEdit), tabName: AppLocalizations.of(context)!.translate('products')));
+    list.add(new CustomTabMaker(statelessWidget: new ProductListPage("O",widget.isEdit), tabName: AppLocalizations.of(context)!.translate('services')));
+    list.add(new CustomTabMaker(statelessWidget: new ProductListPage("I",widget.isEdit), tabName: AppLocalizations.of(context)!.translate('inventory')));
+     setState(() {
       _tabController = TabController(vsync: this, length: list.length);
       _tabController.addListener(onPositionChange);
     });
@@ -114,7 +120,7 @@ class CrmPageState extends State<CrmPage> with SingleTickerProviderStateMixin {
 
     return SafeArea(
       child:
-      widget.hideAppBar? Scaffold(
+    Scaffold(
         resizeToAvoidBottomInset: true,
         backgroundColor: HexColor(AppColors.appColorBackground),
 
@@ -124,24 +130,26 @@ class CrmPageState extends State<CrmPage> with SingleTickerProviderStateMixin {
               InkWell(
 
                 onTap: (){
+                  showModalBottomSheet<void>(
+                    context: context,
 
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CompanyAndCustomerPage(
-                            id: prefs.getInt(Strings.userId),
-                            type: "person",
-                            hideTabs:true,
-                            isSwipeDisabled:true,
-                            hideAppBar: true,
-                            selectedTab:_currentPosition,
-                            currentTab: 0,
-                            pageTitle: "",
-                            imageUrl: "",
-                            callback: () {
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)),
+                    ),
 
-                            }),
-                      ));
+                    isScrollControlled: true,
+                    builder: (context) {
+                      return PaymentSheet(
+                        prefs: prefs,
+                          selectedTab:widget.selectedTab,
+                        onClickCallback: (value) {
+
+                        },
+                      );
+                      // return BottomSheetContent();
+                    },
+                  );
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(
@@ -150,10 +158,8 @@ class CrmPageState extends State<CrmPage> with SingleTickerProviderStateMixin {
 
                     children: [
 
-                      Icon(Icons.add,color: HexColor(AppColors.appMainColor),),
-
                       Text(AppLocalizations.of(context)!
-                          .translate('create'),
+                          .translate('next'),
                         textAlign: TextAlign.center,
                         style: styleElements!
                             .subtitle1ThemeScalable(context)
@@ -164,8 +170,7 @@ class CrmPageState extends State<CrmPage> with SingleTickerProviderStateMixin {
               ),
               _simplePopup()
             ],
-            appBarTitle: AppLocalizations.of(context)!
-            .translate('crm_title'),
+            appBarTitle: "Select Items",
             onBackButtonPress: (){  Navigator.pop(context);}),
 
 
@@ -197,46 +202,7 @@ class CrmPageState extends State<CrmPage> with SingleTickerProviderStateMixin {
             onScroll: (position) => print('$position'),
           ),
         ),
-      ):
-
-      Scaffold(
-        resizeToAvoidBottomInset: true,
-        backgroundColor: HexColor(AppColors.appColorBackground),
-        appBar:  AppBarWithProfile(
-          imageUrl:imageUrl,
-          title: getPageTitle()+"'s "+AppLocalizations.of(context)!.translate('network'),
-          isHomepage: false,
-          backButtonPress: (){
-            Navigator.pop(context);
-          },
-        ),
-
-        body: DefaultTabController(
-          length: list.length,
-          child: CustomTabView(
-            marginTop:const EdgeInsets.only(top:16.0 ),
-            currentPosition: _currentPosition,
-            itemCount: list!=null && list.isNotEmpty?list.length:0,
-            tabBuilder: (context, index) => appTabButton(
-              onPressed: () {
-                setState(() {
-                  _currentPosition = index;
-                });
-              },
-              tabName: list[index].tabName,
-              isActive: index == _currentPosition,
-            ),
-            pageBuilder: (context, index) =>
-                Center(child: list[index].statelessWidget),
-            onPositionChange: (index) {
-              setState(() {
-                _currentPosition = index!;
-              });
-            },
-            onScroll: (position) => print('$position'),
-          ),
-        ),
-      ),
+      )
     );
   }
   Widget _simplePopup() {

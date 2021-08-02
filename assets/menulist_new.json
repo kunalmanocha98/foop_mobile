@@ -250,7 +250,7 @@
       "data": [
         {
           "title": "Customers",
-          "code": "notice",
+          "code": "customers",
           "imageUrl": "assets/appimages/create-notice.png",
           "tag": "",
           "description": "Announcement & circulars in one place",
@@ -265,8 +265,8 @@
           "isTagVisivle": false
         },
         {
-          "title": "Invoice",
-          "code": "notice",
+          "title": "Invoices",
+          "code": "invoices",
           "imageUrl": "assets/appimages/create-notice.png",
           "tag": "",
           "description": "Announcement & circulars in one place",
@@ -274,7 +274,7 @@
         },
         {
           "title": "Payment(receivable)",
-          "code": "events",
+          "code": "payments",
           "imageUrl": "assets/appimages/event.png",
           "tag": "",
           "description": "Birthdays and events in one place",

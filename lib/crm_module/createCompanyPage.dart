@@ -132,207 +132,6 @@ class CreateCompanyPageState extends State<CreateCompanyPage> {
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
 
-    final titleFieldWidget = TextFormField(
-        validator: CommonMixins().validateTextField,
-        onSaved: (value) {
-          title = value;
-        },
-        initialValue: widget.title ?? '',
-        textCapitalization: TextCapitalization.sentences,
-        style: styleElements
-            .subtitle1ThemeScalable(context)
-            .copyWith(color: HexColor(AppColors.appColorBlack65)),
-        decoration: InputDecoration(
-            hintStyle: styleElements
-                .bodyText2ThemeScalable(context)
-                .copyWith(color: HexColor(AppColors.appColorBlack35)),
-            hintText:
-            AppLocalizations.of(context)!.translate('give_name_to_event')));
-    final startDateWidget = GestureDetector(
-        onTap: () {
-          _selectStartDate(context);
-        },
-        child: Container(
-            padding: EdgeInsets.only(top: 16),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(
-                  //
-                  color: HexColor(AppColors.appColorGrey50),
-                  width: 1.0,
-                ),
-              ), // set border width
-            ),
-            child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  selectedStartDate != "Start date"
-                      ? DateFormat('dd-MM-yyyy')
-                      .format(DateTime.parse(selectedStartDate))
-                      : "Start date",
-                  textAlign: TextAlign.left,
-                  style: styleElements.bodyText2ThemeScalable(context),
-                ))));
-    final endDateWidget = GestureDetector(
-        onTap: () {
-          _selectEndDate(context);
-        },
-        child: Container(
-            padding: EdgeInsets.only(top: 16),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(
-                  //
-                  color: HexColor(AppColors.appColorGrey50),
-                  width: 1.0,
-                ),
-              ), // set border width
-            ),
-            child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  selectedEndDate != "End date"
-                      ? DateFormat('dd-MM-yyyy')
-                      .format(DateTime.parse(selectedEndDate))
-                      : "End date",
-                  textAlign: TextAlign.left,
-                  style: styleElements.bodyText2ThemeScalable(context),
-                ))));
-    final startTimeWidget = GestureDetector(
-        onTap: () {
-          _selectStartTime(context);
-        },
-        child: Container(
-            padding: EdgeInsets.only(top: 16),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(
-                  //
-                  color: HexColor(AppColors.appColorGrey50),
-                  width: 1.0,
-                ),
-              ), // set border width
-            ),
-            child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  selectedStartTime,
-                  textAlign: TextAlign.left,
-                  style: styleElements.bodyText2ThemeScalable(context),
-                ))));
-    final startsNowWidget = Row(
-      children: [
-        Checkbox(
-          onChanged: (bool? value) {
-            setState(() {
-              startsNow = !startsNow;
-              if (value!) {
-                selectedStartEpoch = DateTime.now().millisecondsSinceEpoch;
-                selectedStartTimeOfDay = TimeOfDay.now();
-                selectedStartDate =
-                    DateFormat('yyyy-MM-dd').format(DateTime.now());
-                selectedStartTime = DateFormat('HH:mm').format(DateTime.now());
-              }
-            });
-          },
-          value: startsNow,
-        ),
-        Text(
-          'Starts now',
-          style: styleElements.subtitle1ThemeScalable(context),
-        )
-      ],
-    );
-    final endTimeWidget = GestureDetector(
-        onTap: () {
-          _selectEndTime(context);
-        },
-        child: Container(
-            padding: EdgeInsets.only(top: 16),
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(
-                  //
-                  color: HexColor(AppColors.appColorGrey50),
-                  width: 1.0,
-                ),
-              ), // set border width
-            ),
-            child: Align(
-                alignment: Alignment.centerLeft,
-                child: Text(
-                  selectedEndTime,
-                  textAlign: TextAlign.left,
-                  style: styleElements.bodyText2ThemeScalable(context),
-                ))));
-    final participantsListWidget = GestureDetector(
-      onTap: () {
-        if (privacyTypeKey.currentState!.selectedTypeCode!.isNotEmpty) {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (BuildContext context) {
-                return HostListPage(
-                  privacyType: privacyTypeKey.currentState!.selectedTypeCode,
-                  selectedList: selectedMembersItem,
-                );
-              })).then((value) {
-            if (value != null) {
-              Map<String, dynamic> map = value;
-              if (map['type'] == 'list') {
-                setState(() {
-                  selectedMembersItem = map['value'];
-                });
-              }
-            }
-          });
-        } else {
-          ToastBuilder().showToast(
-              AppLocalizations.of(context)!
-                  .translate('please_select_privacy_type'),
-              context,
-              HexColor(AppColors.information));
-        }
-      },
-      child: ListTile(
-        contentPadding: EdgeInsets.all(0),
-        leading: appAvatar(
-          key: UniqueKey(),
-          imageUrl: selectedMembersItem!.length > 0
-              ? selectedMembersItem![0].profileImage
-              : '',
-          service_type: SERVICE_TYPE.PERSON,
-          resolution_type: RESOLUTION_TYPE.R64,
-          size: 36,
-        ),
-        title: Text(
-          selectedMembersItem!.length > 0
-              ? selectedMembersItem!.length > 1
-              ? selectedMembersItem![0].memberName! + ' & Others'
-              : selectedMembersItem![0].memberName!
-              : 'Co-hosts',
-          style: styleElements.subtitle1ThemeScalable(context),
-        ),
-        trailing: Icon(
-          Icons.arrow_forward_ios,
-          color: HexColor(AppColors.appColorBlack35),
-          size: 20,
-        ),
-      ),
-    );
-    final selectTopicWidget = Padding(
-        padding: EdgeInsets.only(top: 8, bottom: 8),
-        child: SelectRoomTopicWidget(
-          roomTopicKey,
-          isCard: false,
-        ));
-    final selectPrivacyTypeWidget = RoomPrivacyTypeWidget(
-      key: privacyTypeKey,
-      selectedValue: selectedPrivacyType ?? "",
-    );
-
     return SafeArea(
         child: Scaffold(
           appBar: appAppBar().getCustomAppBar(context,
@@ -391,13 +190,7 @@ class CreateCompanyPageState extends State<CreateCompanyPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 4.0),
-                        child: Text(
-                          "Manager",
-                          style: styleElements.subtitle2ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorBlack35)),
-                        ),
-                      ),
+
                       ListTile(
                         contentPadding: EdgeInsets.all(0),
                         leading: GestureDetector(
@@ -475,7 +268,7 @@ class CreateCompanyPageState extends State<CreateCompanyPage> {
                                   Expanded(
                                     child: TextFormField(
                                       validator: EditProfileMixins().validateEmail,
-                                      initialValue: "Name",
+                                      initialValue: "",
                                       onSaved: (value) {
 
                                       },
@@ -483,11 +276,9 @@ class CreateCompanyPageState extends State<CreateCompanyPage> {
                                           hintText: "Name",
                                           contentPadding: EdgeInsets.only(
                                               left: 12, top: 16, bottom: 8),
-                                          border: InputBorder.none,
-                                          focusedBorder: InputBorder.none,
-                                          enabledBorder: InputBorder.none,
-                                          errorBorder: InputBorder.none,
-                                          disabledBorder: InputBorder.none,
+                                          border: UnderlineInputBorder(
+                                              borderRadius:
+                                              BorderRadius.circular(12)),
                                           floatingLabelBehavior:
                                           FloatingLabelBehavior.auto,
                                           labelText:
@@ -496,19 +287,7 @@ class CreateCompanyPageState extends State<CreateCompanyPage> {
                                   ),
                                 ],
                               ),
-                              Align(
-                                alignment: FractionalOffset.bottomCenter,
-                                child: Padding(
-                                  padding: const EdgeInsets.only(top:8.0,left: 8,right: 8),
-                                  child: Divider(
-                                    height: 2,
-                                    color: HexColor(AppColors.appMainColor),
-                                    thickness: 1,
-                                    indent: 0,
-                                    endIndent: 0,
-                                  ),
-                                ),
-                              ),
+
                             ],
                           ),
                         ),
@@ -544,38 +323,26 @@ class CreateCompanyPageState extends State<CreateCompanyPage> {
                                   Expanded(
                                     child: TextFormField(
                                       validator: EditProfileMixins().validateEmail,
-                                      initialValue: "Oho Id",
+                                      initialValue: "",
                                       onSaved: (value) {
 
                                       },
-                                      decoration: InputDecoration(
-                                          hintText: "Oho Id",
-                                          contentPadding: EdgeInsets.only(
-                                              left: 12, top: 16, bottom: 8),
-                                          border: InputBorder.none,
-                                          focusedBorder: InputBorder.none,
-                                          enabledBorder: InputBorder.none,
-                                          errorBorder: InputBorder.none,
-                                          disabledBorder: InputBorder.none,
-                                          floatingLabelBehavior:
-                                          FloatingLabelBehavior.auto,
-                                          labelText:
-                                          "Oho Id of Company"),
+                                        decoration: InputDecoration(
+                                            hintText: "Oho Id",
+                                            contentPadding: EdgeInsets.only(
+                                                left: 12, top: 16, bottom: 8),
+                                            border: UnderlineInputBorder(
+                                                borderRadius:
+                                                BorderRadius.circular(12)),
+                                            floatingLabelBehavior:
+                                            FloatingLabelBehavior.auto,
+                                            labelText:
+                                            "Oho Id of company"),
                                     ),
                                   ),
                                 ],
                               ),
 
-                              Padding(
-                                padding: const EdgeInsets.only(top:8.0,left: 8,right: 8),
-                                child: Divider(
-                                  height: 2,
-                                  color: HexColor(AppColors.appMainColor),
-                                  thickness: 1,
-                                  indent: 0,
-                                  endIndent: 0,
-                                ),
-                              ),
 
 
                             ],

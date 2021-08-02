@@ -92,17 +92,7 @@ class CalenderPageState extends State<CalenderPage> with SingleTickerProviderSta
                     });
                   }
             });
-            // Navigator.push(
-            //     context,
-            //     MaterialPageRoute(
-            //       builder: (context) => CalenderViewPage(selectedDate: selectedDate,),
-            //     )).then((value) {
-            //   if(value!=null){
-            //     setState(() {
-            //       selectedDate =value;
-            //     });
-            //   }
-            // });
+
           }),
           IconButton(icon: Icon(Icons.add),color: HexColor(AppColors.appColorBlack65), onPressed: (){
 

@@ -2,88 +2,73 @@ import 'dart:convert';
 
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
+import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/searchBox.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
 import 'package:oho_works_app/components/app_user_list_tile.dart';
-import 'package:oho_works_app/crm_module/create_customer_contact.dart';
-import 'package:oho_works_app/models/CommonListingModels/commonListingrequest.dart';
-import 'package:oho_works_app/profile_module/pages/profile_page.dart';
+import 'package:oho_works_app/components/searchBox.dart';
+import 'package:oho_works_app/enums/postRecipientType.dart';
+import 'package:oho_works_app/models/post/postcreate.dart';
+import 'package:oho_works_app/models/post/postreceiver.dart';
+import 'package:oho_works_app/ui/dialogs/appAlertDialog.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
 import 'package:oho_works_app/utils/config.dart';
-import 'package:oho_works_app/utils/follow_unfollow_block_remove_unblock_button.dart';
 import 'package:oho_works_app/utils/hexColors.dart';
+import 'package:oho_works_app/utils/scrach_card_dialogue.dart';
 import 'package:oho_works_app/utils/strings.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:oho_works_app/utils/toast_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:oho_works_app/components/paginator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'createCompanyPage.dart';
+import 'create_customer_contact.dart';
 
-// ignore: must_be_immutable
+
+
 class CommonCompanyCustomerPage extends StatefulWidget {
 
-  final String type;
-
-
-  CommonCompanyCustomerPage( this.type,);
+ String? type;
+ String? from;
+  CommonCompanyCustomerPage(
+      this.type,
+      this.from
+      );
 
   @override
-  _CommonCompanyCustomerPage createState() =>
-      _CommonCompanyCustomerPage(type);
+  _CommonCompanyCustomerPage createState() => _CommonCompanyCustomerPage(
+      );
 }
 
-class _CommonCompanyCustomerPage extends State<CommonCompanyCustomerPage>
-    with AutomaticKeepAliveClientMixin<CommonCompanyCustomerPage> {
+class _CommonCompanyCustomerPage extends State<CommonCompanyCustomerPage> {
   String? searchVal;
-  String? personName;
-  String type;
-  int? id;
-  String? ownerType;
-  int? ownerId;
-  late Null Function() callback;
-  GlobalKey<PaginatorState> paginatorKey = GlobalKey();
-  late SharedPreferences prefs;
+  SharedPreferences? prefs;
+  PostCreatePayload? payload;
+  PostReceiverListItem? selectedReceiverData;
   late TextStyleElements styleElements;
-
-  @override
-  bool get wantKeepAlive => true;
-
-  void setSharedPreferences() async {
-    refresh();
-  }
-
-  Future<void> _setPref() async {
-    prefs = await SharedPreferences.getInstance();
-    ownerId= prefs.getInt(Strings.userId);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    _setPref();
-  }
-
-  void onsearchValueChanged(String text) {
-    // print(text);
-    searchVal = text;
-    refresh();
-  }
+  GlobalKey<PaginatorState> paginatorKey = GlobalKey();
+  List<PostReceiverListItem?> recList = [];
+  List<PostReceiverListItem?> _selectedList = [];
+  List<PostRecipientDetailItem> receiverDetailItem = [];
+  PostCreatePayload postCreatePayload = PostCreatePayload();
+  bool isPrivateSelected = false;
+  GlobalKey<appProgressButtonState> progressButtonKey = GlobalKey();
+  _CommonCompanyCustomerPage({this.payload, this.selectedReceiverData});
 
   refresh() {
+    recList.clear();
     paginatorKey.currentState!.changeState(resetState: true);
   }
 
   @override
-  // ignore: must_call_super
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
+    return SafeArea(
+      child: Scaffold(
 
-    return Container(
-        child: NestedScrollView(
+        body: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return [
               SliverToBoxAdapter(
@@ -91,155 +76,399 @@ class _CommonCompanyCustomerPage extends State<CommonCompanyCustomerPage>
                   children: [
                     Expanded(
                       child: SearchBox(
-                        onvalueChanged: onsearchValueChanged,
+                        onvalueChanged: (s){},
                         hintText: AppLocalizations.of(context)!.translate('search'),
                       ),
                     ),
                     InkWell(
                       onTap: (){
 
-                        type=="S"?
-            Navigator.push(context, MaterialPageRoute(
-            builder: (BuildContext context) {
-            return CreateCompanyPage(
-            type: 'talk',
-            standardEventId: 5,
-            title: "",
-            );
-            })):Navigator.push(context, MaterialPageRoute(
-                            builder: (BuildContext context) {
-                              return CreateCustomerPage(
-                                type: 'talk',
-                                standardEventId: 5,
-                                title: "",
-                              );
-                            }));
-            },
-
-                      child:  Padding(
+                      },
+                      child: Padding(
                         padding: const EdgeInsets.only(right: 16.0),
-                        child: Row(
-                          children: [
+                        child: InkWell(
+                          onTap: (){
 
-                            Icon(
-                              Icons.add,
-                              color: HexColor(AppColors.appColorBlack65),
-                            ),
-                            Text(
-                              AppLocalizations.of(context)!.translate('new'),
-                              textAlign: TextAlign.center,
-                              style: styleElements
-                                  .subtitle1ThemeScalable(context)
-                                  .copyWith(
-                                  color: HexColor(AppColors.appColorBlack65)),
-                            ),
-                          ],
+                            widget.type=="S"?
+                            Navigator.push(context, MaterialPageRoute(
+                                builder: (BuildContext context) {
+                                  return CreateCompanyPage(
+                                    type: 'talk',
+                                    standardEventId: 5,
+                                    title: "",
+                                  );
+                                })):Navigator.push(context, MaterialPageRoute(
+                                builder: (BuildContext context) {
+                                  return CreateContactPage(
+                                    type: 'talk',
+
+                                    title: "",
+                                  );
+                                }));
+                          },
+                          child: Row(
+                            children: [
+
+                              Icon(
+                                Icons.add,
+                                color: HexColor(AppColors.appColorBlack65),
+                              ),
+                              Text(
+                                AppLocalizations.of(context)!.translate('new'),
+                                textAlign: TextAlign.center,
+                                style: styleElements
+                                    .subtitle1ThemeScalable(context)
+                                    .copyWith(
+                                    color: HexColor(AppColors.appColorBlack65)),
+                              ),
+
+                            ],
+                          ),
                         ),
                       ),
-                    )
-
+                    ),
                   ],
                 ),
               ),
-            
 
             ];
           },
-          body:RefreshIndicator(
-            onRefresh: refreshList,
-            child: appCard(
-              child: Paginator.listView(
-                  key: paginatorKey,
-                  padding: EdgeInsets.only(top: 8),
-                  scrollPhysics: BouncingScrollPhysics(),
-                  pageLoadFuture: getFollowers,
-                  pageItemsGetter: CustomPaginator(context).listItemsGetter,
-                  listItemBuilder: listItemBuilder,
-                  loadingWidgetBuilder: CustomPaginator(context).loadingWidgetMaker,
-                  errorWidgetBuilder: CustomPaginator(context).errorWidgetMaker,
-                  emptyListWidgetBuilder: CustomPaginator(context).emptyListWidgetMaker,
-                  totalItemsGetter: CustomPaginator(context).totalPagesGetter,
-                  pageErrorChecker: CustomPaginator(context).pageErrorChecker),
-            ),
+          body: appCard(
+            child: Paginator.listView(
+                key: paginatorKey,
+                padding: EdgeInsets.only(top: 16),
+                scrollPhysics: BouncingScrollPhysics(),
+                pageLoadFuture: getReceiverList,
+                pageItemsGetter: listItemsGetter,
+                listItemBuilder: listItemBuilder,
+                loadingWidgetBuilder:
+                CustomPaginator(context).loadingWidgetMaker,
+                errorWidgetBuilder: CustomPaginator(context).errorWidgetMaker,
+                emptyListWidgetBuilder:
+                CustomPaginator(context).emptyListWidgetMaker,
+                totalItemsGetter: CustomPaginator(context).totalPagesGetter,
+                pageErrorChecker: CustomPaginator(context).pageErrorChecker),
           ),
-        ));
-  }
-  Future<Null> refreshList() async {
-    refresh();
-    await new Future.delayed(new Duration(seconds: 2));
-
-    return null;
-  }
-  Future<CommonListResponse> getFollowers(int page) async {
-    prefs = await SharedPreferences.getInstance();
-    final body = jsonEncode({
-      "search_val": searchVal,
-      "person_type": [type],
-      "page_number": page,
-      "page_size": 20,
-      "requested_by_type": "institution",
-      "list_type": null,
-      "person_id": prefs.getInt(Strings.userId),
-      "institution_id": null
-    });
-
-    var res = await Calls().call(body, context, Config.USER_LIST);
-
-    return CommonListResponse.fromJson(res);
-  }
-
-  Widget listItemBuilder(value, int index) {
-    CommonListResponseItem item = value;
-    var schoolName=item.institutionName!=null?item.institutionName??"":"";
-    var desig=item.subTitle1!.designation!=null ?item.subTitle1!.designation??"":"";
-    return GestureDetector(
-        behavior: HitTestBehavior.translucent,
-        onTap: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => UserProfileCards(
-                    userType: item.id == ownerId
-                        ? "person"
-                        : "thirdPerson",
-                    userId: item.id != ownerId ? item.id : null,
-                    callback: () {
-                      callback();
-                    },
-                    currentPosition: 1,
-                    type: null,
-                  )));
-        },
-        child:  appUserListTile(
-          onPressed: (){
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => UserProfileCards(
-                      userType: item.id == ownerId
-                          ? "person"
-                          : "thirdPerson",
-                      userId: item.id != ownerId ? item.id : null,
-                      callback: () {
-                        callback();
-                      },
-                      currentPosition: 1,
-                      type: null,
-                    )));
-          },
-          imageUrl: item.avatar,
-          title: item.title,
-          subtitle1: '$desig , $schoolName',
-          trailingWidget:  Checkbox(
-            onChanged: (value) {
-
-            },
-            value: false,
-          ),
-        )
+        ),
+      ),
     );
   }
 
-  _CommonCompanyCustomerPage(
-      this.type,);
+  Future<PostReceiverResponse> getReceiverList(int page) async {
+    prefs ??= await SharedPreferences.getInstance();
+    if (selectedReceiverData == null) {
+      PostReceiverRequest payload = PostReceiverRequest();
+      payload.pageSize = 10;
+      payload.pageNumber = page;
+      payload.institutionId = prefs!.getInt(Strings.instituteId);
+      payload.type = "post";
+      payload.searchVal = searchVal;
+      payload.postType = "feed";
+      var data = jsonEncode(payload);
+      var value = await Calls().call(data, context, Config.POST_RECEIVER_LIST);
+      return PostReceiverResponse.fromJson(value);
+    } else {
+      PostReceiverResponse response = PostReceiverResponse();
+      List<PostReceiverListItem?> list = [];
+      list.add(selectedReceiverData);
+      _selectedList.add(selectedReceiverData);
+      response.rows = list;
+      response.total = 1;
+      response.statusCode = "S10001";
+      response.message = 'SUCCESS';
+      return response;
+    }
+  }
+
+  List<PostReceiverListItem?>? listItemsGetter(PostReceiverResponse ?response) {
+    response!.rows!.forEach((element) {
+      if (_selectedList.any((selectedItem) {
+        return selectedItem!.recipientTypeReferenceId ==
+            element!.recipientTypeReferenceId &&
+            selectedItem.recipientTypeCode == element.recipientTypeCode;
+      })) {
+        element!.isSelected = true;
+      }
+    });
+    recList.addAll(response.rows!);
+    // for (int i = 0; i < recList.length; i++) {
+    //   for (int j = 0; j < _selectedList.length; j++) {
+    //     if (recList[i].recipientTypeCode == _selectedList[j].recipientTypeCode) {
+    //       recList[i].isSelected = true;
+    //       break;
+    //     }
+    //   }
+    // }
+    return response.rows;
+  }
+
+  Widget listItemBuilder(value, int index) {
+    PostReceiverListItem item = value;
+    return Container(
+      child:  appUserListTile(
+        imageUrl: (item.recipientImage != null)
+            ? Config.BASE_URL + item.recipientImage!
+            : 'assets/appimages/userplaceholder.jpg',
+        isFullImageUrl: true,
+        title: item.recipientType,
+        subtitle1: item.recipientTypeDescription,
+        trailingWidget:widget.from!=null && widget.from=="home"?
+        _simplePopup():
+
+        Checkbox(
+            value: item.isSelected ??= false,
+            onChanged: (value) {
+              changeSelection(value, item, index);
+            }),
+      )
+    );
+  }  List<PopupMenuEntry<String>> getItems(String? name) {
+    List<PopupMenuEntry<String>> popupmenuList = [];
+
+
+    popupmenuList.add(
+      PopupMenuItem(
+        value: 'delete',
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left:8.0,right: 16),
+              child: Icon(Icons.dashboard_outlined,color: HexColor(AppColors.appColorBlack35),),
+            ),
+            Text(name=="P"?"Edit Payment":"Edit",
+            ),
+          ],
+        ),
+      ),
+    );
+
+    if(name!="O" && name!="I")
+      popupmenuList.add(
+        PopupMenuItem(
+          value: 'delete',
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left:8.0,right: 16),
+                child: Icon(Icons.face,color: HexColor(AppColors.appColorBlack35),),
+              ),
+              Text(name=="P"?"Receive Payment":"Convert to order",
+              ),
+            ],
+          ),
+        ),
+      );
+    if(name!="I" && name!="P")
+      popupmenuList.add(
+        PopupMenuItem(
+          value: 'delete',
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left:8.0,right: 16),
+                child: Icon(Icons.family_restroom_rounded,color: HexColor(AppColors.appColorBlack35),),
+              ),
+              Text(name=="O"?"Bill":"Bill the lead",
+              ),
+            ],
+          ),
+        ),
+      );
+    popupmenuList.add(
+      PopupMenuItem(
+        value: 'delete',
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left:8.0,right: 16),
+              child: Icon(Icons.dashboard_outlined,color: HexColor(AppColors.appColorBlack35),),
+            ),
+            Text("Print",
+            ),
+          ],
+        ),
+      ),
+    );
+    popupmenuList.add(
+      PopupMenuItem(
+        value: 'delete',
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left:8.0,right: 16),
+              child: Icon(Icons.sanitizer,color: HexColor(AppColors.appColorBlack35),),
+            ),
+            Text("Email",
+            ),
+          ],
+        ),
+      ),
+    );
+
+    popupmenuList.add(
+      PopupMenuItem(
+        value: 'delete',
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left:8.0,right: 16),
+              child: Icon(Icons.alternate_email,color: HexColor(AppColors.appColorBlack35),),
+            ),
+            Text("Whatsapp",
+            ),
+          ],
+        ),
+      ),
+    );
+    return popupmenuList;
+  }
+  Widget _simplePopup() {
+    // var name = headerData.title;
+    return PopupMenuButton<String>(
+      padding: EdgeInsets.only(right: 0),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+      itemBuilder: (context) => getItems(widget.type),
+      onSelected: (value) {
+        switch (value) {
+          case 'delete':
+            {
+
+
+
+              break;
+            }
+          case 'edit':
+            {
+
+              break;
+            }
+          case 'hide':
+            {
+
+              break;
+            }
+          case 'unfollow':
+            {
+
+              break;
+            }
+          case 'block':
+            {
+
+              break;
+            }
+          case 'topic':{
+
+            break;
+          }
+          case 'report':
+            {
+
+              break;
+            }
+        }
+      },
+      icon: Icon(
+        Icons.more_vert,
+        color:  HexColor(AppColors.appColorBlack65),
+      ),
+    );
+  }
+  void changeSelection(bool? value, PostReceiverListItem item, int index) {
+    if (item.isAllowed != null && item.isAllowed!) {
+      if (item.recipientTypeCode!.toLowerCase() ==
+          POST_RECIPIENT_TYPE.PRIVATE.type) {
+        if (value!) {
+          _selectedList.clear();
+          _selectedList.add(item);
+          isPrivateSelected = true;
+        } else {
+          _selectedList.remove(item);
+          isPrivateSelected = false;
+        }
+        for (int i = 0; i < recList.length; i++) {
+          recList[i]!.isSelected = false;
+        }
+        setState(() {
+          recList[index]!.isSelected = value;
+        });
+      } else {
+        if (value!) {
+          if (isPrivateSelected) {
+            _selectedList.clear();
+            _selectedList.add(item);
+          } else {
+            _selectedList.add(item);
+          }
+        } else {
+          _selectedList.remove(item);
+        }
+        if (isPrivateSelected) {
+          for (int i = 0; i < recList.length; i++) {
+            recList[i]!.isSelected = false;
+          }
+          isPrivateSelected = false;
+        }
+        setState(() {
+          recList[index]!.isSelected = value;
+        });
+      }
+    } else {
+      showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return appDialog(
+              message: item.allowedMsg,
+            );
+          });
+    }
+  }
+
+  List<String?> getTypeCode() {
+    List<String?> typeCode = [];
+    for (int i = 0; i < _selectedList.length; i++) {
+      typeCode.add(_selectedList[i]!.recipientTypeCode);
+    }
+    return typeCode;
+  }
+
+  PostCreatePayload getPayload() {
+    postCreatePayload.postRecipientType = getTypeCode();
+    postCreatePayload.postRecipientDetails = getDetails();
+    return postCreatePayload;
+  }
+
+  List<PostRecipientDetailItem> getDetails() {
+    List<PostRecipientDetailItem> detail = [];
+    for (int i = 0; i < _selectedList.length; i++) {
+      if (_selectedList[i]!.recipientTypeReferenceId != null) {
+        if (_selectedList[i]!.recipientTypeCode ==
+            POST_RECIPIENT_TYPE.CLASS.type ||
+            _selectedList[i]!.recipientTypeCode ==
+                POST_RECIPIENT_TYPE.STAFF.type ||
+            _selectedList[i]!.recipientTypeCode ==
+                POST_RECIPIENT_TYPE.COMMUNITY.type ||
+            _selectedList[i]!.recipientTypeCode ==
+                POST_RECIPIENT_TYPE.PARENT.type) {
+          detail.add(PostRecipientDetailItem(
+              type: POST_RECIPIENT_TYPE.ROOM.type,
+              id: _selectedList[i]!.recipientTypeReferenceId));
+        } else if (_selectedList[i]!.recipientTypeCode ==
+            POST_RECIPIENT_TYPE.INSTITUTION.type) {
+          postCreatePayload.postInstitutionId =
+              _selectedList[i]!.recipientTypeReferenceId;
+          detail.add(PostRecipientDetailItem(
+              type: POST_RECIPIENT_TYPE.INSTITUTION.type,
+              id: _selectedList[i]!.recipientTypeReferenceId));
+        } else {
+          detail.add(PostRecipientDetailItem(
+              type: _selectedList[i]!.recipientTypeCode,
+              id: _selectedList[i]!.recipientTypeReferenceId));
+        }
+      }
+    }
+    return detail;
+  }
+
+
 }

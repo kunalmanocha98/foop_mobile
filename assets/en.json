@@ -967,16 +967,28 @@
 	"select_business": "Select Business",
 	"reg_bus": "Register New  Business",
 
-	"crm_title": "Order Management",
+	"crm_title": "Sales Order",
 	"app_web_auto": "https://www.oho.life/business/slb-gover..",
 	"right_business": "Please select the right business where you are working. Businesses with similar names are highly possible, verify throughly. You can create your business if not in the list by clicking .+ You should be an authorised person to register your business.",
 
-	"lead": "Lead",
-	"order": "Order",
-	"invoice": "Invoice",
+	"lead": "Opportunities",
+	"order": "Orders",
+	"invoice": "Invoices",
 	"payment": "Payments",
 	"today": "Today",
 
 	"customer": "Customer",
-	"new": "New"
+	"new": "New",
+	"products": "Products",
+	"services": "Services",
+	"inventory": "Inventory",
+	"detail_page_title": "Review And Submit ",
+
+
+	"_opportunity": "Opportunity",
+	"_order": "Order",
+	"_invoice": "Invoice",
+	"details": " Details",
+	"date": " Date",
+	"id": " Id"
 }
