@@ -123,27 +123,7 @@ class OrderDetailPageState extends State<OrderDetailPage> {
 
     super.initState();
   }
-  void _showModalBottomSheet(BuildContext context) {
-    showModalBottomSheet<void>(
-      context: context,
 
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)),
-      ),
-
-      isScrollControlled: true,
-      builder: (context) {
-        return CustomerContactDetailSheet(
-          prefs: prefs,
-          onClickCallback: (value) {
-
-          },
-        );
-        // return BottomSheetContent();
-      },
-    );
-  }
   @override
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
@@ -404,6 +384,7 @@ class OrderDetailPageState extends State<OrderDetailPage> {
                                             type: "person",
                                             hideTabs:true,
                                             isEdit:true,
+                                            title: "Select Item",
                                             isSwipeDisabled:true,
                                             hideAppBar: true,
                                             currentTab: 0,

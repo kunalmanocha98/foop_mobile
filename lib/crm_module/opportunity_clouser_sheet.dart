@@ -1,7 +1,4 @@
-import 'package:flutter/cupertino.dart';
-import 'package:oho_works_app/components/appAttachmentComponent.dart';
-import 'package:oho_works_app/components/searchBox.dart';
-import 'package:oho_works_app/crm_module/select_unit_sheet.dart';
+import 'package:oho_works_app/crm_module/payment_notes.dart';
 import 'package:oho_works_app/enums/personType.dart';
 import 'package:oho_works_app/mixins/editProfileMixin.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
@@ -12,17 +9,14 @@ import 'package:oho_works_app/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'oportunity_status_sheet.dart';
 import 'order_detail_page.dart';
 
-class TermAndConditionSheet extends StatelessWidget {
+class OpportunityClouserSheet extends StatelessWidget {
   final Function(String value)? onClickCallback;
   final SharedPreferences? prefs;
   final isRoomsVisible;
-  GlobalKey<appAttachmentsState> attachmentKey = GlobalKey();
   List<dynamic>? countryCodeList = [];
-  int? selectedTab;
-  TermAndConditionSheet({this.onClickCallback,this.prefs,this.isRoomsVisible=true,this.selectedTab});
+  OpportunityClouserSheet({this.onClickCallback,this.prefs,this.isRoomsVisible=true});
   @override
   Widget build(BuildContext context) {
 
@@ -33,7 +27,6 @@ class TermAndConditionSheet extends StatelessWidget {
         countryCodes.add(DropdownMenuItem(
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
                 countryCodeList![i].flagIconUrl??"",
@@ -91,7 +84,7 @@ class TermAndConditionSheet extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.only(bottom: 30.0,left: 16,right: 16,top: 8),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   //Center Row contents horizontally,
@@ -104,7 +97,7 @@ class TermAndConditionSheet extends StatelessWidget {
                       alignment: Alignment.centerRight,
                       child: Container(
                         child: Text(
-                          "Skip",
+                          "back",
                           textAlign: TextAlign.center,
                           style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold,color: HexColor(AppColors.appMainColor)),
                         ),
@@ -114,7 +107,7 @@ class TermAndConditionSheet extends StatelessWidget {
                         alignment: Alignment.center,
                         child: Container(
                           child: Text(
-                            "Term & Conditions",
+                            AppLocalizations.of(context)!.translate("date_clouser"),
                             textAlign: TextAlign.center,
                             style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold),
                           ),
@@ -126,35 +119,25 @@ class TermAndConditionSheet extends StatelessWidget {
                       child: InkWell(
                         onTap: (){
 
-                         selectedTab==0?
-                         showModalBottomSheet<void>(
-                           context: context,
+                          Navigator.pop(context);
+                          showModalBottomSheet<void>(
+                            context: context,
 
-                           shape: RoundedRectangleBorder(
-                             borderRadius: BorderRadius.only(
-                                 topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)),
-                           ),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)),
+                            ),
 
-                           isScrollControlled: true,
-                           builder: (context) {
-                             return OpportunityStatusSheet(
-                               prefs: prefs,
-                               onClickCallback: (value) {
+                            isScrollControlled: true,
+                            builder: (context) {
+                              return PaymentNotesSheet(
+                                postId: 0,
+                              );
+                              // return BottomSheetContent();
+                            },
+                          );
 
-                               },
-                             );
-                             // return BottomSheetContent();
-                           },
-                         ):
 
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => OrderDetailPage(
-                                  selectedTab:selectedTab,
-                                    type: "person", standardEventId: 2,
-                                   ),
-                              ));
                         },
                         child: Container(
                           child: Text(
@@ -168,74 +151,87 @@ class TermAndConditionSheet extends StatelessWidget {
                 ),
               ),
 
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    child: Text(
-                      "Term & conditions[Optional]",
-                      textAlign: TextAlign.center,
-                      style: styleElements.subtitle1ThemeScalable(context)),
-                    ),
-                  ),
-                ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
-                  padding: EdgeInsets.only(bottom: 0),
+                  padding: EdgeInsets.only(bottom: 8),
 
-                  child: Column(
+                  child:   Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-
-                      Container(
-                        padding: EdgeInsets.only(bottom: 0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: HexColor(AppColors.appColorBackground),
-                        ),
-                        child: TextFormField(
-                          validator: EditProfileMixins().validateEmail,
-                          initialValue: "",
-                          maxLines: 5,
-                          onSaved: (value) {
-
-                          },
-
-                          decoration: InputDecoration(
-                            hintText: "",
-                            contentPadding: EdgeInsets.only(
-                                left: 12, top: 16, bottom: 8),
-                            border: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            enabledBorder: InputBorder.none,
-                            errorBorder: InputBorder.none,
-                            disabledBorder: InputBorder.none,
-
-
-
-                          ),
+                      Expanded(
+                        child:
+                        Padding(
+                            padding: EdgeInsets.only(left: 8.0, right: 4),
+                            child: Text(AppLocalizations.of(context)!.translate("expected_date_order"))
                         ),
                       ),
-
-
-                      appAttachments(
-                        attachmentKey,
-                        isMentionVisible: false,
-                        mentionCallback: (value) {
-
-                        },
-                        hashTagCallback: (value) {
-
-                        },
-                      ),
-
 
 
                     ],
                   ),
                 ),
               ),
+
+
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  padding: EdgeInsets.only(bottom: 8),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: HexColor(AppColors.appColorBackground),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      padding: EdgeInsets.only(bottom: 0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: HexColor(AppColors.appColorBackground),
+                      ),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Row(
+                            children: [
+
+                              Expanded(
+                                child: TextFormField(
+                                  validator: EditProfileMixins().validateEmail,
+                                  initialValue: "",
+                                  onSaved: (value) {
+
+                                  },
+
+
+                                  decoration: InputDecoration(
+                                    hintText: AppLocalizations.of(context)!.translate("date"),
+                                    contentPadding: EdgeInsets.only(
+                                        left: 12, top: 16, bottom: 8),
+                                    border: UnderlineInputBorder(
+                                        borderRadius:
+                                        BorderRadius.circular(12)),
+                                    floatingLabelBehavior:
+                                    FloatingLabelBehavior.auto,
+                                    labelText:
+                                    AppLocalizations.of(context)!.translate("date_of_clouser"),),
+
+
+                                ),
+                              ),
+                            ],
+                          ),
+
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
               SizedBox(
                 height: MediaQuery.of(context).viewInsets.bottom,
               )

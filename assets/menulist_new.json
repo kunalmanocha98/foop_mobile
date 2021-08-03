@@ -289,8 +289,8 @@
       "title": "Supplier & Purchase Order",
       "data": [
         {
-          "title":"Supplier",
-          "code": "blog",
+          "title":"Suppliers",
+          "code": "suppliers",
           "imageUrl": "assets/appimages/create-articles.png",
           "tag": "",
           "description": "You learn a lot & get more idea, by reading",
@@ -329,8 +329,8 @@
       "data": [
 
         {
-          "title": "Product",
-          "code": "settings",
+          "title": "Products",
+          "code": "products",
           "imageUrl": "assets/appimages/create-settings.png",
           "tag": "",
           "description": "Description",

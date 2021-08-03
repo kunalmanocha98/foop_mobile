@@ -133,6 +133,7 @@ class CompanyAndCustomerPageState extends State<CompanyAndCustomerPage> with Sin
                         builder: (context) => SelectItemsPage(
                             id: prefs.getInt(Strings.userId),
                             type: "person",
+                            title: "Select Item",
                             hideTabs:true,
                             isSwipeDisabled:true,
                             hideAppBar: true,

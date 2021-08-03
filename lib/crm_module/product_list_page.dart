@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/customcard.dart';
+import 'package:oho_works_app/components/row_cards_common.dart';
 import 'package:oho_works_app/components/searchBox.dart';
 import 'package:oho_works_app/components/app_user_list_tile.dart';
 import 'package:oho_works_app/crm_module/create_customer_contact.dart';
@@ -22,14 +23,16 @@ import 'package:oho_works_app/components/paginator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'createCompanyPage.dart';
+import 'create_product.dart';
+import 'create_product_sheet.dart';
 
 // ignore: must_be_immutable
 class ProductListPage extends StatefulWidget {
 
   final String type;
 bool  isEdit=false;
-
-  ProductListPage( this.type,this.isEdit);
+  String? from;
+  ProductListPage( this.type,this.isEdit,this.from,);
 
   @override
   _ProductListPage createState() =>
@@ -120,22 +123,45 @@ bool isAdded=false;
 
                       child:  Padding(
                         padding: const EdgeInsets.only(right: 16.0),
-                        child: Row(
-                          children: [
+                        child: InkWell(
+                          onTap: (){
+                            showModalBottomSheet<void>(
+                              context: context,
 
-                            Icon(
-                              Icons.add,
-                              color: HexColor(AppColors.appColorBlack65),
-                            ),
-                            Text(
-                              AppLocalizations.of(context)!.translate('new'),
-                              textAlign: TextAlign.center,
-                              style: styleElements
-                                  .subtitle1ThemeScalable(context)
-                                  .copyWith(
-                                  color: HexColor(AppColors.appColorBlack65)),
-                            ),
-                          ],
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)),
+                              ),
+
+                              isScrollControlled: true,
+                              builder: (context) {
+                                return CreateProductSheet(
+                                  prefs: prefs,
+                                  onClickCallback: (value) {
+
+                                  },
+                                );
+                                // return BottomSheetContent();
+                              },
+                            );
+                          },
+                          child: Row(
+                            children: [
+
+                              Icon(
+                                Icons.add,
+                                color: HexColor(AppColors.appColorBlack65),
+                              ),
+                              Text(
+                                AppLocalizations.of(context)!.translate('new'),
+                                textAlign: TextAlign.center,
+                                style: styleElements
+                                    .subtitle1ThemeScalable(context)
+                                    .copyWith(
+                                    color: HexColor(AppColors.appColorBlack65)),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     )
@@ -147,93 +173,21 @@ bool isAdded=false;
               SliverToBoxAdapter(
                 child: Padding(
                   padding: const EdgeInsets.all(6.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
+                  child:    Visibility(
 
-                      Expanded(
-                        child: Card(
-                            child:
-                            Padding(
-                              padding: const EdgeInsets.only(left:16.0,right: 16.0,top: 8,bottom: 8),
-                              child: Column(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Text("Selected Items",style: styleElements
-                                        .subtitle2ThemeScalable(
-                                        context)
-                                        .copyWith(
-                                        color: HexColor(
-                                            AppColors
-                                                .appColorBlack35),
-                                        fontWeight:
-                                        FontWeight
-                                            .bold),),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.bottomRight,
-                                    child: Text("200",style: styleElements
-                                        .headlinecustomThemeScalable(
-                                        context)
-                                        .copyWith(
-                                        color: HexColor(
-                                            AppColors
-                                                .appColorBlack85),
-                                        fontWeight:
-                                        FontWeight
-                                            .bold),),
-                                  )
-                                ],
+                    child:
+                    AppRowCards(
+                      subTitle1: "Item",
+                      subTitle2: "8998",
+                      subTitle3: "Inventory",
+                      subTitle4: "9",
+                      subTitle5: "Value",
+                      subTitle6:"89"
 
-                              ),
-                            )
-                        ),
-                      ),
+                    ),
 
 
 
-                      Expanded(
-                        child: Card(
-                            child:
-                            Padding(
-                              padding: const EdgeInsets.only(left:16.0,right: 16.0,top: 8,bottom: 8),
-                              child: Column(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.topLeft,
-                                    child: Text("Value",style: styleElements
-                                        .subtitle2ThemeScalable(
-                                        context)
-                                        .copyWith(
-                                        color: HexColor(
-                                            AppColors
-                                                .appColorBlack35),
-                                        fontWeight:
-                                        FontWeight
-                                            .bold),),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.bottomRight,
-                                    child: Text("200",style: styleElements
-                                        .headlinecustomThemeScalable(
-                                        context)
-                                        .copyWith(
-                                        color: HexColor(
-                                            AppColors
-                                                .appColorBlack85),
-                                        fontWeight:
-                                        FontWeight
-                                            .bold),),
-                                  )
-                                ],
-
-                              ),
-                            )
-                        ),
-                      ),
-                    ],
                   ),
                 ),
               ),
@@ -380,7 +334,7 @@ bool isAdded=false;
 
           title: "Product Name",
           subtitle1: "ProductId",
-          trailingWidget:  Checkbox(
+          trailingWidget:widget.from!=null && widget.from=="home"? _simplePopup(): Checkbox(
             onChanged: (value) {
               showModalBottomSheet<void>(
                 context: context,
@@ -409,7 +363,131 @@ setState(() {
         )
     );
   }
+  List<PopupMenuEntry<String>> getItems(String? name) {
+    List<PopupMenuEntry<String>> popupmenuList = [];
 
+
+
+
+
+
+    popupmenuList.add(
+      PopupMenuItem(
+        value: 'delete',
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left:8.0,right: 16),
+              child: Icon(Icons.dashboard_outlined,color: HexColor(AppColors.appColorBlack35),),
+            ),
+            Text("Edit",
+            ),
+          ],
+        ),
+      ),
+    );
+    popupmenuList.add(
+      PopupMenuItem(
+        value: 'delete',
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left:8.0,right: 16),
+              child: Icon(Icons.dashboard_outlined,color: HexColor(AppColors.appColorBlack35),),
+            ),
+            Text("Deactivate",
+            ),
+          ],
+        ),
+      ),
+    );
+
+    popupmenuList.add(
+      PopupMenuItem(
+        value: 'delete',
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left:8.0,right: 16),
+              child: Icon(Icons.dashboard_outlined,color: HexColor(AppColors.appColorBlack35),),
+            ),
+            Text("Email",
+            ),
+          ],
+        ),
+      ),
+    );
+
+
+    popupmenuList.add(
+      PopupMenuItem(
+        value: 'delete',
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left:8.0,right: 16),
+              child: Icon(Icons.dashboard_outlined,color: HexColor(AppColors.appColorBlack35),),
+            ),
+            Text("WhatsApp",
+            ),
+          ],
+        ),
+      ),
+    );
+    return popupmenuList;
+  }
+  Widget _simplePopup() {
+    // var name = headerData.title;
+    return PopupMenuButton<String>(
+      padding: EdgeInsets.only(right: 0),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
+      itemBuilder: (context) => getItems("O"),
+      onSelected: (value) {
+        switch (value) {
+          case 'delete':
+            {
+
+
+
+              break;
+            }
+          case 'edit':
+            {
+
+              break;
+            }
+          case 'hide':
+            {
+
+              break;
+            }
+          case 'unfollow':
+            {
+
+              break;
+            }
+          case 'block':
+            {
+
+              break;
+            }
+          case 'topic':{
+
+            break;
+          }
+          case 'report':
+            {
+
+              break;
+            }
+        }
+      },
+      icon: Icon(
+        Icons.more_vert,
+        color:  HexColor(AppColors.appColorBlack65),
+      ),
+    );
+  }
   _ProductListPage(
       this.type,);
 }

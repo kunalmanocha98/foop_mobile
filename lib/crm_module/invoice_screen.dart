@@ -777,6 +777,7 @@ class InvoiceOrderPageState extends State<InvoiceOrderPage> {
                                               type: "person",
                                               hideTabs:true,
                                               isEdit:true,
+                                              title: "Select Item",
                                               isSwipeDisabled:true,
                                               hideAppBar: true,
                                               currentTab: 0,

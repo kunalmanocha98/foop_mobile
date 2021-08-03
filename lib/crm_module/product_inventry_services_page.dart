@@ -28,6 +28,7 @@ import 'crm_list_page.dart';
 // ignore: must_be_immutable
 class SelectItemsPage extends StatefulWidget {
 
+  String? title;
   bool hideTabs;
   String? type;
   int? id;
@@ -39,6 +40,7 @@ class SelectItemsPage extends StatefulWidget {
   bool isEdit=false;
   int? selectedTab;
   final bool? isSwipeDisabled;
+  String? from;
   SelectItemsPage({
     Key? key,
     this.hideAppBar=false,
@@ -46,12 +48,14 @@ class SelectItemsPage extends StatefulWidget {
     this.isEdit=false,
     required this.id,
     this.selectedTab,
+    this.from,
     this.hideTabs=false,
     this.isSwipeDisabled,
     required this.pageTitle,
     required this.callback,
     required this.currentTab,
-    required this.imageUrl
+    required this.imageUrl,
+    this.title
   }) : super(key: key);
 
   SelectItemsPageState createState() =>
@@ -97,9 +101,9 @@ class SelectItemsPageState extends State<SelectItemsPage> with SingleTickerProvi
   }
   loadPages() {
 
-    list.add(new CustomTabMaker(statelessWidget: new ProductListPage("S",widget.isEdit), tabName: AppLocalizations.of(context)!.translate('products')));
-    list.add(new CustomTabMaker(statelessWidget: new ProductListPage("O",widget.isEdit), tabName: AppLocalizations.of(context)!.translate('services')));
-    list.add(new CustomTabMaker(statelessWidget: new ProductListPage("I",widget.isEdit), tabName: AppLocalizations.of(context)!.translate('inventory')));
+    list.add(new CustomTabMaker(statelessWidget: new ProductListPage("S",widget.isEdit,widget.from), tabName: AppLocalizations.of(context)!.translate('products')));
+    list.add(new CustomTabMaker(statelessWidget: new ProductListPage("O",widget.isEdit,widget.from), tabName: AppLocalizations.of(context)!.translate('services')));
+    list.add(new CustomTabMaker(statelessWidget: new ProductListPage("I",widget.isEdit,widget.from), tabName: AppLocalizations.of(context)!.translate('inventory')));
      setState(() {
       _tabController = TabController(vsync: this, length: list.length);
       _tabController.addListener(onPositionChange);
@@ -151,26 +155,29 @@ class SelectItemsPageState extends State<SelectItemsPage> with SingleTickerProvi
                     },
                   );
                 },
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      top: 2.0, left: 16.0, right: 16.0),
-                  child: Row(
+                child: Visibility(
+                  visible: widget.from!=null && widget.from!="home",
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 2.0, left: 16.0, right: 16.0),
+                    child: Row(
 
-                    children: [
+                      children: [
 
-                      Text(AppLocalizations.of(context)!
-                          .translate('next'),
-                        textAlign: TextAlign.center,
-                        style: styleElements!
-                            .subtitle1ThemeScalable(context)
-                            .copyWith(color: HexColor(AppColors.appMainColor)),)
-                    ],
+                        Text(AppLocalizations.of(context)!
+                            .translate('next'),
+                          textAlign: TextAlign.center,
+                          style: styleElements!
+                              .subtitle1ThemeScalable(context)
+                              .copyWith(color: HexColor(AppColors.appMainColor)),)
+                      ],
+                    ),
                   ),
                 ),
               ),
               _simplePopup()
             ],
-            appBarTitle: "Select Items",
+            appBarTitle: widget.title!,
             onBackButtonPress: (){  Navigator.pop(context);}),
 
 

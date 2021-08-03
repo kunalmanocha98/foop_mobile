@@ -30,9 +30,11 @@ import 'confirmed_order_page.dart';
 // ignore: must_be_immutable
 class CrmPageList extends StatefulWidget {
   final String type;
+  final String from;
 
   CrmPageList(
     this.type,
+      this.from,
   );
 
   @override
@@ -184,12 +186,13 @@ class _CrmPageList extends State<CrmPageList>
                   child: Card(
                     child:
                     Padding(
-                      padding: const EdgeInsets.only(left:16.0,right: 16.0,top: 8,bottom: 8),
+                      padding: const EdgeInsets.only(left:8.0,right: 8.0,top: 8,bottom: 8),
                       child: Column(
                        children: [
                          Align(
                            alignment: Alignment.topLeft,
-                           child: Text("Amount",style: styleElements
+                           child: Text(
+                             type=="P"? (widget.from=="sales"? AppLocalizations.of(context)!.translate("_pending_pay"):AppLocalizations.of(context)!.translate("to_pay")):AppLocalizations.of(context)!.translate("amount"),style: styleElements
                                .subtitle2ThemeScalable(
                                context)
                                .copyWith(
@@ -224,12 +227,14 @@ class _CrmPageList extends State<CrmPageList>
                     child: Card(
                         child:
                         Padding(
-                          padding: const EdgeInsets.only(left:16.0,right: 16.0,top: 8,bottom: 8),
+                          padding: const EdgeInsets.only(left:8.0,right: 8.0,top: 8,bottom: 8),
                           child: Column(
                             children: [
                               Align(
                                 alignment: Alignment.topLeft,
-                                child: Text("Sales Orders",style: styleElements
+                                child: Text(type=="I"?AppLocalizations.of(context)!.translate("_invoice"):
+                                type=="P"?(widget.from=="sales"? AppLocalizations.of(context)!.translate("_open_pay"):AppLocalizations.of(context)!.translate("payout")):
+                                AppLocalizations.of(context)!.translate("crm_title"),style: styleElements
                                     .subtitle2ThemeScalable(
                                     context)
                                     .copyWith(
@@ -264,12 +269,12 @@ class _CrmPageList extends State<CrmPageList>
                     child: Card(
                         child:
                         Padding(
-                          padding: const EdgeInsets.only(left:16.0,right: 16.0,top: 8,bottom: 8),
+                          padding: const EdgeInsets.only(left:8.0,right: 8.0,top: 8,bottom: 8),
                           child: Column(
                             children: [
                               Align(
                                 alignment: Alignment.topLeft,
-                                child: Text("Customers",style: styleElements
+                                child: Text(widget.from=="sales"?AppLocalizations.of(context)!.translate("customer"):AppLocalizations.of(context)!.translate("suppliers"),style: styleElements
                                     .subtitle2ThemeScalable(
                                     context)
                                     .copyWith(

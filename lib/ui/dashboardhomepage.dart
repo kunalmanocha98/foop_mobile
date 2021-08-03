@@ -9,8 +9,10 @@ import 'package:oho_works_app/components/customgridDelegate.dart';
 import 'package:oho_works_app/components/app_bottom_selector.dart';
 import 'package:oho_works_app/components/appmenuitem.dart';
 import 'package:oho_works_app/crm_module/CompanyAndCustomerPage.dart';
+import 'package:oho_works_app/crm_module/SuppliersPage.dart';
 import 'package:oho_works_app/crm_module/create_customer_contact.dart';
 import 'package:oho_works_app/crm_module/crm_page.dart';
+import 'package:oho_works_app/crm_module/product_inventry_services_page.dart';
 import 'package:oho_works_app/crm_module/purchase_order.dart';
 import 'package:oho_works_app/enums/post_enums.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
@@ -381,6 +383,56 @@ BuildContext? dgsContext;
 
                     }),
               ));
+          break;
+        }
+
+      case 'products':
+        {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    SelectItemsPage(
+                        id: prefs!.getInt(Strings.userId),
+                        type: "person",
+                        title: "Product Management",
+                        hideTabs: true,
+                        isSwipeDisabled: true,
+                        hideAppBar: true,
+                        from: "home",
+                        currentTab: 0,
+                        pageTitle: "",
+                        imageUrl: "",
+                        callback: () {
+
+                        }),
+              ));
+
+          break;
+        }
+
+
+      case 'suppliers':
+        {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    SupplierPage(
+                        id: prefs!.getInt(Strings.userId),
+                        type: "person",
+                        hideTabs: true,
+                        isSwipeDisabled: true,
+                        hideAppBar: true,
+                        from: "home",
+                        currentTab: 1,
+                        pageTitle: "",
+                        imageUrl: "",
+                        callback: () {
+
+                        }),
+              ));
+
           break;
         }
       case 'customers':

@@ -90,10 +90,10 @@ class CrmPageState extends State<CrmPage> with SingleTickerProviderStateMixin {
   }
   loadPages() {
 
-   list.add(new CustomTabMaker(statelessWidget: new CrmPageList("L"), tabName: AppLocalizations.of(context)!.translate('lead')));
-    list.add(new CustomTabMaker(statelessWidget: new CrmPageList("O"), tabName: AppLocalizations.of(context)!.translate('order')));
-    list.add(new CustomTabMaker(statelessWidget: new CrmPageList("I"), tabName: AppLocalizations.of(context)!.translate('invoice')));
-    list.add(new CustomTabMaker(statelessWidget:new  CrmPageList("P"), tabName: AppLocalizations.of(context)!.translate('payment')));
+   list.add(new CustomTabMaker(statelessWidget: new CrmPageList("L","sales"), tabName: AppLocalizations.of(context)!.translate('lead')));
+    list.add(new CustomTabMaker(statelessWidget: new CrmPageList("O","sales"), tabName: AppLocalizations.of(context)!.translate('order')));
+    list.add(new CustomTabMaker(statelessWidget: new CrmPageList("I","sales"), tabName: AppLocalizations.of(context)!.translate('invoice')));
+    list.add(new CustomTabMaker(statelessWidget:new  CrmPageList("P","sales"), tabName: AppLocalizations.of(context)!.translate('payment')));
     setState(() {
       _tabController = TabController(vsync: this, length: list.length);
       _tabController.addListener(onPositionChange);

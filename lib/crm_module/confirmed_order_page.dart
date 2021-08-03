@@ -19,6 +19,7 @@ import 'package:oho_works_app/components/postcardactionbuttons.dart';
 import 'package:oho_works_app/components/row_cards_common.dart';
 import 'package:oho_works_app/crm_module/payment_type_sheet.dart';
 import 'package:oho_works_app/crm_module/product_inventry_services_page.dart';
+import 'package:oho_works_app/crm_module/update_payment_sheet.dart';
 import 'package:oho_works_app/e_learning_module/ui/chapter_lessons_page.dart';
 import 'package:oho_works_app/e_learning_module/ui/selected_lesson_list.dart';
 import 'package:oho_works_app/enums/event_status_code.dart';
@@ -203,7 +204,7 @@ class ConfirmedOrderPageState extends State<ConfirmedOrderPage> {
 
                   _simplePopup()
                 ],
-                appBarTitle: (widget.selectedTab==1?AppLocalizations.of(context)!.translate("_order"):widget.selectedTab==0?AppLocalizations.of(context)!.translate("_opportunity"):AppLocalizations.of(context)!.translate("_invoice"))+AppLocalizations.of(context)!.translate("details"),
+                appBarTitle: (widget.selectedTab==1?AppLocalizations.of(context)!.translate("_order"):widget.selectedTab==0?AppLocalizations.of(context)!.translate("_opportunity"):widget.selectedTab==3?AppLocalizations.of(context)!.translate("_payment"):AppLocalizations.of(context)!.translate("_invoice"))+AppLocalizations.of(context)!.translate("details"),
 
                 onBackButtonPress: () {
                   Navigator.pop(context);
@@ -217,15 +218,15 @@ class ConfirmedOrderPageState extends State<ConfirmedOrderPage> {
                     children: [
 
                       Visibility(
-                        visible: widget.selectedTab!=null &&(widget.selectedTab==2|| widget.selectedTab==3) ,
+                        visible: widget.selectedTab!=null &&(widget.selectedTab==2|| widget.selectedTab==3||widget.selectedTab==0) ,
                         child:
                         AppRowCards(
-                          subTitle1: widget.selectedTab!=null &&(widget.selectedTab==2)?"To be received":"Status",
-                          subTitle2: widget.selectedTab!=null &&(widget.selectedTab==2)?"2999":"Demo",
-                          subTitle3: widget.selectedTab!=null &&(widget.selectedTab==2)?"Received":"Next Action",
-                          subTitle4: widget.selectedTab!=null &&(widget.selectedTab==2)?"9200":"Call",
-                          subTitle5: widget.selectedTab!=null &&(widget.selectedTab==2)?"Yet to be received":"Next Action Date",
-                          subTitle6: widget.selectedTab!=null &&(widget.selectedTab==2)?"9983":"26 July 2021",
+                          subTitle1: widget.selectedTab!=null &&(widget.selectedTab==2||widget.selectedTab==3)?"To be received":"Status",
+                          subTitle2: widget.selectedTab!=null &&(widget.selectedTab==2||widget.selectedTab==3)?"2999":"Demo",
+                          subTitle3: widget.selectedTab!=null &&(widget.selectedTab==2||widget.selectedTab==3)?"Received":"Next Action",
+                          subTitle4: widget.selectedTab!=null &&(widget.selectedTab==2||widget.selectedTab==3)?"9200":"Call",
+                          subTitle5: widget.selectedTab!=null &&(widget.selectedTab==2||widget.selectedTab==3)?"Yet to be received":"Next Action Date",
+                          subTitle6: widget.selectedTab!=null &&(widget.selectedTab==2||widget.selectedTab==3)?"9983":"26 July 2021",
 
                         ),
 
@@ -311,7 +312,7 @@ class ConfirmedOrderPageState extends State<ConfirmedOrderPage> {
                                 ),
                               ),
                               Visibility(
-                                visible: widget.selectedTab!=null &&(widget.selectedTab==2) ,
+                                visible: widget.selectedTab!=null &&(widget.selectedTab==2 || widget.selectedTab==3) ,
                                 child: Row(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -499,6 +500,7 @@ class ConfirmedOrderPageState extends State<ConfirmedOrderPage> {
                                               id: 2,
                                               type: "person",
                                               hideTabs:true,
+                                              title: "Select Item",
                                               isEdit:true,
                                               isSwipeDisabled:true,
                                               hideAppBar: true,
@@ -748,7 +750,25 @@ class ConfirmedOrderPageState extends State<ConfirmedOrderPage> {
                                   side: BorderSide(
                                       color: HexColor(AppColors.appMainColor))),
                               onPressed: () async {
+                                showModalBottomSheet<void>(
+                                  context: context,
 
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.only(
+                                        topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)),
+                                  ),
+
+                                  isScrollControlled: true,
+                                  builder: (context) {
+                                    return UpdatePaymentSheet(
+                                      prefs: prefs,
+                                      onClickCallback: (value) {
+
+                                      },
+                                    );
+                                    // return BottomSheetContent();
+                                  },
+                                );
 
                               },
                               color: HexColor(AppColors.appColorWhite),

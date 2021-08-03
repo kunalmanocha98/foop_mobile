@@ -33,8 +33,10 @@ class appAttachments extends StatefulWidget {
   Function(String)? hashTagCallback;
   bool isHashTagVisible;
   bool isMentionVisible;
+  Function ? itemPickedCallBack;
+  bool hideMedia;
 
-  appAttachments(Key key,{this.mentionCallback,this.hashTagCallback,this.isHashTagVisible= true, this.isMentionVisible= true}):super(key: key);
+  appAttachments(Key key,{this.mentionCallback,this.hashTagCallback,this.isHashTagVisible= true, this.isMentionVisible= true,this.itemPickedCallBack,this.hideMedia=false}):super(key: key);
   @override
   appAttachmentsState createState() => appAttachmentsState();
 }
@@ -54,362 +56,363 @@ class appAttachmentsState extends State<appAttachments> {
   @override
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
-    return Container(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
+    return  Container(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
 
-          Visibility(
-            visible: mediaList.length>0,
-            child: Container(
-              width: double.infinity,
-              height: 72,
-              child: ListView.builder(
-                itemCount: mediaList.length,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    height: 72,
-                    width: 72,
-                    padding: EdgeInsets.only(
-                        left: 4, right: 4, bottom: 4, top: 4),
-                    child: Stack(
-                      children: [
-                        Align(
-                            alignment: Alignment.bottomLeft,
-                            child: SizedBox(
-                              height: 56,
-                              width: 56,
-                              child: Stack(
-                                children: [
-                                  // mediaList[index].mediaType == 'video'?
-                                  //     appVideoView(
-                                  //       onFullPage: false,
-                                  //       mediaUrl: Config.BASE_URL+mediaList[index].mediaThumbnailUrl,
-                                  //     )
-                                  //     :
-                                  CachedNetworkImage(
-                                    height: 56,
-                                    width: 56,
-                                    imageUrl: Utility().getUrlForImage(mediaList[index].mediaUrl, RESOLUTION_TYPE.R64, SERVICE_TYPE.POST) ,
-                                    fit: BoxFit.cover,
-                                  ),
-                                  Visibility(
-                                    visible: mediaList[index].mediaType == 'video',
-                                    child: Container(
-                                      child: Center(
-                                          child:Icon(Icons.play_circle_outline_outlined,color:HexColor(AppColors.appMainColor)
-                                          )
+            Visibility(
+              visible: mediaList.length>0 && !widget.hideMedia,
+              child: Container(
+                width: double.infinity,
+                height: 72,
+                child: ListView.builder(
+                  itemCount: mediaList.length,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      height: 72,
+                      width: 72,
+                      padding: EdgeInsets.only(
+                          left: 4, right: 4, bottom: 4, top: 4),
+                      child: Stack(
+                        children: [
+                          Align(
+                              alignment: Alignment.bottomLeft,
+                              child: SizedBox(
+                                height: 56,
+                                width: 56,
+                                child: Stack(
+                                  children: [
+                                    // mediaList[index].mediaType == 'video'?
+                                    //     appVideoView(
+                                    //       onFullPage: false,
+                                    //       mediaUrl: Config.BASE_URL+mediaList[index].mediaThumbnailUrl,
+                                    //     )
+                                    //     :
+                                    CachedNetworkImage(
+                                      height: 56,
+                                      width: 56,
+                                      imageUrl: Utility().getUrlForImage(mediaList[index].mediaUrl, RESOLUTION_TYPE.R64, SERVICE_TYPE.POST) ,
+                                      fit: BoxFit.cover,
+                                    ),
+                                    Visibility(
+                                      visible: mediaList[index].mediaType == 'video',
+                                      child: Container(
+                                        child: Center(
+                                            child:Icon(Icons.play_circle_outline_outlined,color:HexColor(AppColors.appMainColor)
+                                            )
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                  Visibility(
-                                    visible: Utility().checkFileMimeType(mediaList[index].mediaType),
-                                    child: Container(
-                                      child: Center(
-                                          child:Icon(Icons.file_copy_outlined,color:HexColor(AppColors.appMainColor)
-                                          )
+                                    Visibility(
+                                      visible: Utility().checkFileMimeType(mediaList[index].mediaType),
+                                      child: Container(
+                                        child: Center(
+                                            child:Icon(Icons.file_copy_outlined,color:HexColor(AppColors.appMainColor)
+                                            )
+                                        ),
                                       ),
-                                    ),
-                                  )
+                                    )
 
-                                ],
-                              ),
-                            )
-                        ),
-                        Align(
-                          alignment: Alignment.topRight,
-                          child: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  mediaList.removeAt(index);
-                                });
-                              },
-                              child: Container(
-                                height: 18,
-                                width: 18,
-                                child: Image.asset('assets/appimages/cancel.png',fit: BoxFit.cover,
+                                  ],
                                 ),
                               )
                           ),
-                        )
-                      ],
-                    ),
-                  );
-                },
-              ),
-            ),
-          ),
-          // SingleChildScrollView(
-          //   scrollDirection: Axis.horizontal,
-          //   child: Row(
-          //       children: [
-          //
-          //   ),
-          // ),
-
-          Visibility(
-              visible: _listOfHashTags.length>0,
-              child: Container(
-                height: 50,
-                padding: EdgeInsets.only(top: 8,bottom: 8,left:8 ,right: 8),
-                alignment: Alignment.centerLeft,
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  scrollDirection: Axis.horizontal,
-                  itemCount: _listOfHashTags.length,
-                  padding: EdgeInsets.only(left: 8,right: 8),
-                  itemBuilder: (BuildContext context, int index) {
-                    return Flexible(
-                      child: Chip(
-                        label: Text(_listOfHashTags[index]!),
-                        padding: EdgeInsets.all(8),
-                        onDeleted: (){
-                          setState(() {
-                            _listOfHashTags.removeAt(index);
-                          });
-                        },
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    mediaList.removeAt(index);
+                                  });
+                                },
+                                child: Container(
+                                  height: 18,
+                                  width: 18,
+                                  child: Image.asset('assets/appimages/cancel.png',fit: BoxFit.cover,
+                                  ),
+                                )
+                            ),
+                          )
+                        ],
                       ),
                     );
-                  },),
-              )
-          ),
+                  },
+                ),
+              ),
+            ),
+            // SingleChildScrollView(
+            //   scrollDirection: Axis.horizontal,
+            //   child: Row(
+            //       children: [
+            //
+            //   ),
+            // ),
 
-          Visibility(
-              visible: isMentionActive,
-              child:Padding(
-                  padding: EdgeInsets.only(bottom: 4),
-                  child: TypeAheadField(
-                    suggestionsCallback: (String pattern) async{
-                      if(pattern.isNotEmpty) {
-                        var data = {
-                          "page_size":5,
-                          "page_number":1,
-                          "search_val": pattern
-                        };
-                        var res = await Calls().call(jsonEncode(data), context, Config.MENTIONS_LIST);
-                        if(MentionsListResponse
-                            .fromJson(res)
-                            .rows!.length>0) {
-                          return MentionsListResponse
+            Visibility(
+                visible: _listOfHashTags.length>0,
+                child: Container(
+                  height: 50,
+                  padding: EdgeInsets.only(top: 8,bottom: 8,left:8 ,right: 8),
+                  alignment: Alignment.centerLeft,
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    scrollDirection: Axis.horizontal,
+                    itemCount: _listOfHashTags.length,
+                    padding: EdgeInsets.only(left: 8,right: 8),
+                    itemBuilder: (BuildContext context, int index) {
+                      return Flexible(
+                        child: Chip(
+                          label: Text(_listOfHashTags[index]!),
+                          padding: EdgeInsets.all(8),
+                          onDeleted: (){
+                            setState(() {
+                              _listOfHashTags.removeAt(index);
+                            });
+                          },
+                        ),
+                      );
+                    },),
+                )
+            ),
+
+            Visibility(
+                visible: isMentionActive,
+                child:Padding(
+                    padding: EdgeInsets.only(bottom: 4),
+                    child: TypeAheadField(
+                      suggestionsCallback: (String pattern) async{
+                        if(pattern.isNotEmpty) {
+                          var data = {
+                            "page_size":5,
+                            "page_number":1,
+                            "search_val": pattern
+                          };
+                          var res = await Calls().call(jsonEncode(data), context, Config.MENTIONS_LIST);
+                          if(MentionsListResponse
                               .fromJson(res)
-                              .rows!;
+                              .rows!.length>0) {
+                            return MentionsListResponse
+                                .fromJson(res)
+                                .rows!;
+                          }else{
+                            return [];
+                          }
                         }else{
                           return [];
                         }
-                      }else{
-                        return [];
-                      }
-                    },
+                      },
 
-                    itemBuilder: ( context,  itemData) {
+                      itemBuilder: ( context,  itemData) {
 
-                      itemData as MentionListItem;
-                      return ListTile(
-                        leading: appAvatar(
-                          service_type: SERVICE_TYPE.PERSON,
-                          resolution_type: RESOLUTION_TYPE.R64,
-                          imageUrl: itemData.profileImage,
+                        itemData as MentionListItem;
+                        return ListTile(
+                          leading: appAvatar(
+                            service_type: SERVICE_TYPE.PERSON,
+                            resolution_type: RESOLUTION_TYPE.R64,
+                            imageUrl: itemData.profileImage,
+                          ),
+                          title: Text(itemData.fullName!, style: styleElements.subtitle1ThemeScalable(context),),
+                          subtitle: Text(AppLocalizations.of(context)!.translate('at_the_rate')+itemData.slug!,style: styleElements.subtitle2ThemeScalable(context),),
+                        );
+                      },
+                      onSuggestionSelected: ( suggestion) {
+                        suggestion as MentionListItem;
+                        typeAheadControllerMention.text ="";
+                        widget.mentionCallback!(suggestion.slug);
+                      },
+                      direction: AxisDirection.up,
+                      textFieldConfiguration: TextFieldConfiguration(
+                        autofocus: true,
+                        controller: typeAheadControllerMention,
+                        style: styleElements.subtitle1ThemeScalable(context).copyWith(
+                            color: HexColor(AppColors.appColorBlack65)
                         ),
-                        title: Text(itemData.fullName!, style: styleElements.subtitle1ThemeScalable(context),),
-                        subtitle: Text(AppLocalizations.of(context)!.translate('at_the_rate')+itemData.slug!,style: styleElements.subtitle2ThemeScalable(context),),
-                      );
-                    },
-                    onSuggestionSelected: ( suggestion) {
-                      suggestion as MentionListItem;
-                      typeAheadControllerMention.text ="";
-                      widget.mentionCallback!(suggestion.slug);
-                    },
-                    direction: AxisDirection.up,
-                    textFieldConfiguration: TextFieldConfiguration(
-                      autofocus: true,
-                      controller: typeAheadControllerMention,
-                      style: styleElements.subtitle1ThemeScalable(context).copyWith(
-                          color: HexColor(AppColors.appColorBlack65)
-                      ),
-                      decoration: InputDecoration(
-                        prefixIcon: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(AppLocalizations.of(context)!.translate('at_the_rate'),style: styleElements.headline6ThemeScalable(context),),
+                        decoration: InputDecoration(
+                          prefixIcon: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(AppLocalizations.of(context)!.translate('at_the_rate'),style: styleElements.headline6ThemeScalable(context),),
+                          ),
+                          contentPadding: EdgeInsets.only(top:16,left: 16,right: 16),
+                          hintText: AppLocalizations.of(context)!.translate('mention_here'),
+                          hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35))
                         ),
-                        contentPadding: EdgeInsets.only(top:16,left: 16,right: 16),
-                        hintText: AppLocalizations.of(context)!.translate('mention_here'),
-                        hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35))
                       ),
-                    ),
-                  )
-              )
-          ),
+                    )
+                )
+            ),
 
-          Visibility(
-              visible: isHashTagActive,
-              child:Padding(
-                  padding: EdgeInsets.only(bottom: 4),
-                  child: TypeAheadField(
-                    suggestionsCallback: (String pattern) async{
-                      if(pattern.isNotEmpty) {
-                        KeywordListRequest payload = KeywordListRequest();
-                        payload.searchVal = pattern;
-                        payload.pageSize = 5;
-                        payload.pageNumber = 1;
-                        var res = await Calls().call(
-                            jsonEncode(payload), context, Config.KEYWORDS_LIST);
-                        if(KeywordListResponse
-                            .fromJson(res)
-                            .rows!.length>0) {
-                          return KeywordListResponse
+            Visibility(
+                visible: isHashTagActive,
+                child:Padding(
+                    padding: EdgeInsets.only(bottom: 4),
+                    child: TypeAheadField(
+                      suggestionsCallback: (String pattern) async{
+                        if(pattern.isNotEmpty) {
+                          KeywordListRequest payload = KeywordListRequest();
+                          payload.searchVal = pattern;
+                          payload.pageSize = 5;
+                          payload.pageNumber = 1;
+                          var res = await Calls().call(
+                              jsonEncode(payload), context, Config.KEYWORDS_LIST);
+                          if(KeywordListResponse
                               .fromJson(res)
-                              .rows!;
+                              .rows!.length>0) {
+                            return KeywordListResponse
+                                .fromJson(res)
+                                .rows!;
+                          }else{
+                            return [];
+                          }
                         }else{
                           return [];
                         }
-                      }else{
-                        return [];
-                      }
-                    },
+                      },
 
-                    itemBuilder: ( context,  itemData) {
+                      itemBuilder: ( context,  itemData) {
 
-                      itemData as KeywordListItem;
-                      return ListTile(
-                        title: Text(AppLocalizations.of(context)!.translate('hash')+itemData.keyword!, style: styleElements.subtitle1ThemeScalable(context),),
-                      );
-                    },
-                    onSuggestionSelected: ( suggestion) {
+                        itemData as KeywordListItem;
+                        return ListTile(
+                          title: Text(AppLocalizations.of(context)!.translate('hash')+itemData.keyword!, style: styleElements.subtitle1ThemeScalable(context),),
+                        );
+                      },
+                      onSuggestionSelected: ( suggestion) {
 
-                      suggestion as KeywordListItem;
-                      typeAheadControllerHashTag.text ="";
-                      setState(() {
-                        _listOfHashTags.add(suggestion.display);
-                      });
-                      // widget.hashTagCallback(suggestion.display);
-                    },
-                    direction: AxisDirection.up,
-                    textFieldConfiguration: TextFieldConfiguration(
-                      autofocus: true,
-                      onSubmitted: (value){
+                        suggestion as KeywordListItem;
                         typeAheadControllerHashTag.text ="";
                         setState(() {
-                          _listOfHashTags.add(value);
+                          _listOfHashTags.add(suggestion.display);
                         });
-                        // widget.hashTagCallback(value);
+                        // widget.hashTagCallback(suggestion.display);
                       },
-                      controller: typeAheadControllerHashTag,
-                      style: styleElements.subtitle1ThemeScalable(context).copyWith(
-                        color: HexColor(AppColors.appColorBlack65)
-                      ),
-                      decoration: InputDecoration(
-                        prefixIcon: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(AppLocalizations.of(context)!.translate('hash'),style: styleElements.headline6ThemeScalable(context),),
+                      direction: AxisDirection.up,
+                      textFieldConfiguration: TextFieldConfiguration(
+                        autofocus: true,
+                        onSubmitted: (value){
+                          typeAheadControllerHashTag.text ="";
+                          setState(() {
+                            _listOfHashTags.add(value);
+                          });
+                          // widget.hashTagCallback(value);
+                        },
+                        controller: typeAheadControllerHashTag,
+                        style: styleElements.subtitle1ThemeScalable(context).copyWith(
+                          color: HexColor(AppColors.appColorBlack65)
                         ),
-                        contentPadding: EdgeInsets.only(top:16,left: 16,right: 16),
-                        hintText: AppLocalizations.of(context)!.translate('enter_tags'),
-                        hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35))
+                        decoration: InputDecoration(
+                          prefixIcon: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Text(AppLocalizations.of(context)!.translate('hash'),style: styleElements.headline6ThemeScalable(context),),
+                          ),
+                          contentPadding: EdgeInsets.only(top:16,left: 16,right: 16),
+                          hintText: AppLocalizations.of(context)!.translate('enter_tags'),
+                          hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35))
+                        ),
                       ),
-                    ),
-                  )
-              )
-          ),
-
-          Card(
-            elevation: 0,
-            child: Row(
-              children: [
-                Visibility(
-                  visible: widget.isMentionVisible,
-                  child: IconButton(
-                    icon: Text(AppLocalizations.of(context)!.translate('at_the_rate'),style: styleElements.headline6ThemeScalable(context).copyWith(
-                        color: HexColor(AppColors.appColorBlack35)
-                    ),),
-                    onPressed: (){
-                      setState(() {
-                        if(isMentionActive){
-                          isMentionActive = !isMentionActive;
-                        }else{
-                          isMentionActive =!isMentionActive;
-                          isHashTagActive = false;
-                        }
-                      });
-                    },
-                  ),
-                ),
-                Visibility(
-                  visible: widget.isHashTagVisible,
-                  child: IconButton(
-                    icon: Text(AppLocalizations.of(context)!.translate('hash'),style: styleElements.headline6ThemeScalable(context).copyWith(
-                        color: HexColor(AppColors.appColorBlack35)
-                    ),),
-                    onPressed: (){
-                      setState(() {
-                        if(isHashTagActive){
-                          isHashTagActive = !isHashTagActive;
-                        }else{
-                          isHashTagActive =!isHashTagActive;
-                          isMentionActive = false;
-                        }
-                      });
-                    },
-                  ),
-                ),
-                Spacer(),
-                // IconButton(
-                //     icon: Icon(Icons.file_copy_outlined,color: HexColor(AppColors.appColorBlack35),),
-                //     onPressed: () {
-                //       fileUploader();
-                //     }
-                // ),
-                IconButton(
-                    icon: Icon(Icons.file_copy_outlined,color: HexColor(AppColors.appColorBlack35),),
-                    onPressed: () {
-                      fileUploader();
-                    }
-                ),
-                IconButton(
-                    icon: Icon(Icons.image_outlined,color: HexColor(AppColors.appColorBlack35),),
-                    onPressed: () {
-                      if(mediaList.length<=10) {
-                        _showSelectionDialog(context, 'image');
-                      }else{
-                        ToastBuilder().showToast('you can only add 10 images/videos', context,HexColor(AppColors.information));
-                      }
-                    }
-                ),
-                IconButton(
-                    icon: Icon(Icons.videocam_outlined,color: HexColor(AppColors.appColorBlack35)),
-                    onPressed: () {
-                      if(mediaList.length<=10) {
-                        _showSelectionDialog(context, 'video');
-                      }else{
-                        ToastBuilder().showToast('you can only add 10 images/videos', context,HexColor(AppColors.information));
-                      }
-                    }
-                ),
-                /*  Visibility(
-                  visible: false,
-                  child: IconButton(
-                      icon: Icon(Icons.upload_file,color: HexColor(AppColors.appColorBlack35)),
-                      onPressed: () async {
-                        FilePickerResult result = await FilePicker.platform.pickFiles(
-                          type: FileType.custom,
-                          allowedExtensions: [ 'pdf', 'doc','txt','xlsx','xlsm','xls','csv'],
-                        );
-                        if(result != null) {
-                          File file = File(result.files.single.path);
-                          PlatformFile f = result.files.first;
-                          fileUploader(file,f.extension);
-                        } else {
-                          // User canceled the picker
-                        }
-                      }
-                  ),
-                )*/
-              ],
+                    )
+                )
             ),
-          )
-        ],
-      ),
-    );
+
+            Card(
+              elevation: 0,
+              child: Row(
+                children: [
+                  Visibility(
+                    visible: widget.isMentionVisible,
+                    child: IconButton(
+                      icon: Text(AppLocalizations.of(context)!.translate('at_the_rate'),style: styleElements.headline6ThemeScalable(context).copyWith(
+                          color: HexColor(AppColors.appColorBlack35)
+                      ),),
+                      onPressed: (){
+                        setState(() {
+                          if(isMentionActive){
+                            isMentionActive = !isMentionActive;
+                          }else{
+                            isMentionActive =!isMentionActive;
+                            isHashTagActive = false;
+                          }
+                        });
+                      },
+                    ),
+                  ),
+                  Visibility(
+                    visible: widget.isHashTagVisible,
+                    child: IconButton(
+                      icon: Text(AppLocalizations.of(context)!.translate('hash'),style: styleElements.headline6ThemeScalable(context).copyWith(
+                          color: HexColor(AppColors.appColorBlack35)
+                      ),),
+                      onPressed: (){
+                        setState(() {
+                          if(isHashTagActive){
+                            isHashTagActive = !isHashTagActive;
+                          }else{
+                            isHashTagActive =!isHashTagActive;
+                            isMentionActive = false;
+                          }
+                        });
+                      },
+                    ),
+                  ),
+                  Spacer(),
+                  // IconButton(
+                  //     icon: Icon(Icons.file_copy_outlined,color: HexColor(AppColors.appColorBlack35),),
+                  //     onPressed: () {
+                  //       fileUploader();
+                  //     }
+                  // ),
+                  IconButton(
+                      icon: Icon(Icons.file_copy_outlined,color: HexColor(AppColors.appColorBlack35),),
+                      onPressed: () {
+                        fileUploader();
+                      }
+                  ),
+                  IconButton(
+                      icon: Icon(Icons.image_outlined,color: HexColor(AppColors.appColorBlack35),),
+                      onPressed: () {
+                        if(mediaList.length<=10) {
+                          _showSelectionDialog(context, 'image');
+                        }else{
+                          ToastBuilder().showToast('you can only add 10 images/videos', context,HexColor(AppColors.information));
+                        }
+                      }
+                  ),
+                  IconButton(
+                      icon: Icon(Icons.videocam_outlined,color: HexColor(AppColors.appColorBlack35)),
+                      onPressed: () {
+                        if(mediaList.length<=10) {
+                          _showSelectionDialog(context, 'video');
+                        }else{
+                          ToastBuilder().showToast('you can only add 10 images/videos', context,HexColor(AppColors.information));
+                        }
+                      }
+                  ),
+                  /*  Visibility(
+                    visible: false,
+                    child: IconButton(
+                        icon: Icon(Icons.upload_file,color: HexColor(AppColors.appColorBlack35)),
+                        onPressed: () async {
+                          FilePickerResult result = await FilePicker.platform.pickFiles(
+                            type: FileType.custom,
+                            allowedExtensions: [ 'pdf', 'doc','txt','xlsx','xlsm','xls','csv'],
+                          );
+                          if(result != null) {
+                            File file = File(result.files.single.path);
+                            PlatformFile f = result.files.first;
+                            fileUploader(file,f.extension);
+                          } else {
+                            // User canceled the picker
+                          }
+                        }
+                    ),
+                  )*/
+                ],
+              ),
+            )
+          ],
+        ),
+      );
+
   }
 
   Future<void> _showSelectionDialog(BuildContext context,String type) {
@@ -631,7 +634,13 @@ class appAttachmentsState extends State<appAttachments> {
   }
   void addImage(String? mediaUrl,String? mediaThumbnailUrl, String mediaType) {
     setState(() {
+
       mediaList.add(MediaDetails(mediaType: mediaType, mediaUrl: mediaUrl,mediaThumbnailUrl: mediaThumbnailUrl));
+      if(widget.itemPickedCallBack!=null) {
+
+        print('picked-----------------------');
+        widget.itemPickedCallBack!();
+      }
     });
   }
 

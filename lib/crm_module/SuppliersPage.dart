@@ -2,6 +2,7 @@
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/appbar_with_profile%20_image.dart';
 import 'package:oho_works_app/components/customtabview.dart';
+import 'package:oho_works_app/crm_module/product_inventry_services_page.dart';
 import 'package:oho_works_app/e_learning_module/ui/selected_lesson_list.dart';
 import 'package:oho_works_app/models/custom_tab_maker.dart';
 import 'package:oho_works_app/profile_module/pages/common__page_network.dart';
@@ -17,13 +18,12 @@ import 'package:flutter/material.dart';
 import 'package:oho_works_app/utils/strings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'CompanyAndCustomerPage.dart';
-import 'crm_list_page.dart';
-
+import 'bottom_sheet_address.dart';
+import 'common_list_company_customer.dart';
 
 
 // ignore: must_be_immutable
-class PurchaseOrderPage extends StatefulWidget {
+class SupplierPage extends StatefulWidget {
 
   bool hideTabs;
   String? type;
@@ -34,12 +34,16 @@ class PurchaseOrderPage extends StatefulWidget {
   String? imageUrl;
   final bool hideAppBar;
   final bool? isSwipeDisabled;
-  PurchaseOrderPage({
+  String? from;
+  int? selectedTab;
+  SupplierPage({
     Key? key,
     this.hideAppBar=false,
     required this.type,
     required this.id,
     this.hideTabs=false,
+    this.from,
+    this.selectedTab,
     this.isSwipeDisabled,
     required this.pageTitle,
     required this.callback,
@@ -47,11 +51,11 @@ class PurchaseOrderPage extends StatefulWidget {
     required this.imageUrl
   }) : super(key: key);
 
-  PurchaseOrderPageState createState() =>
-      PurchaseOrderPageState(type, id, pageTitle, callback, currentTab,imageUrl);
+  SupplierPageState createState() =>
+      SupplierPageState(type, id, pageTitle, callback, currentTab,imageUrl);
 }
 
-class PurchaseOrderPageState extends State<PurchaseOrderPage> with SingleTickerProviderStateMixin {
+class SupplierPageState extends State<SupplierPage> with SingleTickerProviderStateMixin {
   List<CustomTabMaker> list = [];
   late TabController _tabController;
   TextStyleElements? styleElements;
@@ -66,7 +70,7 @@ class PurchaseOrderPageState extends State<PurchaseOrderPage> with SingleTickerP
   String? imageUrl;
 
 
-  PurchaseOrderPageState(this.type, this.id,this.pageTitle, this.callback, this._currentPosition,this.imageUrl);
+  SupplierPageState(this.type, this.id,this.pageTitle, this.callback, this._currentPosition,this.imageUrl);
 
   @override
   void initState() {
@@ -90,9 +94,8 @@ class PurchaseOrderPageState extends State<PurchaseOrderPage> with SingleTickerP
   }
   loadPages() {
 
-   list.add(new CustomTabMaker(statelessWidget: new CrmPageList("O","purchase"), tabName: AppLocalizations.of(context)!.translate('order')));
-    list.add(new CustomTabMaker(statelessWidget: new CrmPageList("I","purchase"), tabName: AppLocalizations.of(context)!.translate('invoice')));
-    list.add(new CustomTabMaker(statelessWidget:new  CrmPageList("P","purchase"), tabName: AppLocalizations.of(context)!.translate('payment')));
+    list.add(new CustomTabMaker(statelessWidget: new CommonCompanyCustomerPage("S",widget.from), tabName: AppLocalizations.of(context)!.translate('entity')));
+    list.add(new CustomTabMaker(statelessWidget:new  CommonCompanyCustomerPage("L",widget.from), tabName: AppLocalizations.of(context)!.translate('customer')));
     setState(() {
       _tabController = TabController(vsync: this, length: list.length);
       _tabController.addListener(onPositionChange);
@@ -113,34 +116,37 @@ class PurchaseOrderPageState extends State<PurchaseOrderPage> with SingleTickerP
 
     return SafeArea(
       child:
-      widget.hideAppBar? Scaffold(
+
+      Scaffold(
         resizeToAvoidBottomInset: true,
         backgroundColor: HexColor(AppColors.appColorBackground),
-
         appBar: appAppBar().getCustomAppBar(context,
             centerTitle:false,
             actions: [
               InkWell(
-
                 onTap: (){
+
 
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => CompanyAndCustomerPage(
+                        builder: (context) => SelectItemsPage(
                             id: prefs.getInt(Strings.userId),
                             type: "person",
                             hideTabs:true,
+                            title: "Select Item",
                             isSwipeDisabled:true,
                             hideAppBar: true,
-                            selectedTab:_currentPosition,
                             currentTab: 0,
+                            selectedTab:widget.selectedTab,
                             pageTitle: "",
                             imageUrl: "",
                             callback: () {
 
                             }),
                       ));
+
+
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(
@@ -149,10 +155,10 @@ class PurchaseOrderPageState extends State<PurchaseOrderPage> with SingleTickerP
 
                     children: [
 
-                      Icon(Icons.add,color: HexColor(AppColors.appMainColor),),
+
 
                       Text(AppLocalizations.of(context)!
-                          .translate('create'),
+                          .translate('next'),
                         textAlign: TextAlign.center,
                         style: styleElements!
                             .subtitle1ThemeScalable(context)
@@ -163,52 +169,11 @@ class PurchaseOrderPageState extends State<PurchaseOrderPage> with SingleTickerP
               ),
               _simplePopup()
             ],
-            appBarTitle: AppLocalizations.of(context)!
-                .translate('purchase_title'),
+            appBarTitle: "Select Supplier",
             onBackButtonPress: (){  Navigator.pop(context);}),
 
 
 
-        body: DefaultTabController(
-          length: list.length,
-          child: CustomTabView(
-            isTabVisible:true,
-            isSwipeDisabled: false,
-            marginTop:const EdgeInsets.only(top:16.0 ),
-            currentPosition: _currentPosition,
-            itemCount: list!=null && list.isNotEmpty?list.length:0,
-            tabBuilder: (context, index) => appTabButton(
-              onPressed: () {
-                setState(() {
-                  _currentPosition = index;
-                });
-              },
-              tabName: list[index].tabName,
-              isActive: index == _currentPosition,
-            ),
-            pageBuilder: (context, index) =>
-                Center(child: list[index].statelessWidget),
-            onPositionChange: (index) {
-              setState(() {
-                _currentPosition = index!;
-              });
-            },
-            onScroll: (position) => print('$position'),
-          ),
-        ),
-      ):
-
-      Scaffold(
-        resizeToAvoidBottomInset: true,
-        backgroundColor: HexColor(AppColors.appColorBackground),
-        appBar:  AppBarWithProfile(
-          imageUrl:imageUrl,
-          title: getPageTitle()+"'s "+AppLocalizations.of(context)!.translate('network'),
-          isHomepage: false,
-          backButtonPress: (){
-            Navigator.pop(context);
-          },
-        ),
 
         body: DefaultTabController(
           length: list.length,
