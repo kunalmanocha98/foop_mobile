@@ -1,3 +1,4 @@
+import 'package:oho_works_app/crm_module/tax/tax_description_sheet.dart';
 import 'package:oho_works_app/enums/personType.dart';
 import 'package:oho_works_app/mixins/editProfileMixin.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
@@ -8,15 +9,17 @@ import 'package:oho_works_app/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'opportunity_clouser_sheet.dart';
+import '../opportunity_clouser_sheet.dart';
 
-class ToFromOpportunitySheet extends StatelessWidget {
+
+
+class CreateNewTaxSheet extends StatelessWidget {
   final Function(String value)? onClickCallback;
   final SharedPreferences? prefs;
   final isRoomsVisible;
   final String? from;
   List<dynamic>? countryCodeList = [];
-  ToFromOpportunitySheet({this.onClickCallback,this.prefs,this.isRoomsVisible=true,this.from});
+  CreateNewTaxSheet({this.onClickCallback,this.prefs,this.isRoomsVisible=true,this.from});
   @override
   Widget build(BuildContext context) {
 
@@ -107,7 +110,7 @@ class ToFromOpportunitySheet extends StatelessWidget {
                         alignment: Alignment.center,
                         child: Container(
                           child: Text(
-                            AppLocalizations.of(context)!.translate("date_time"),
+                            AppLocalizations.of(context)!.translate("new_tax_creation"),
                             textAlign: TextAlign.center,
                             style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold),
                           ),
@@ -130,9 +133,9 @@ class ToFromOpportunitySheet extends StatelessWidget {
 
                             isScrollControlled: true,
                             builder: (context) {
-                              return OpportunityClouserSheet(
+                              return DescribeTaxSheet(
                                 prefs: prefs,
-                                from:from,
+
                                 onClickCallback: (value) {
 
                                 },
@@ -153,33 +156,51 @@ class ToFromOpportunitySheet extends StatelessWidget {
                   ],
                 ),
               ),
-
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
-                  padding: EdgeInsets.only(bottom: 8),
-
-                  child:   Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  padding: EdgeInsets.only(bottom: 0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: HexColor(AppColors.appColorBackground),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
+                      Row(
+                        children: [
+
+                          Expanded(
+                            child: TextFormField(
+                              validator: EditProfileMixins().validateEmail,
+                              initialValue: "",
+                              onSaved: (value) {
+
+                              },
+
+                              decoration: InputDecoration(
+                                hintText: AppLocalizations.of(context)!.translate(""),
+                                contentPadding: EdgeInsets.only(
+                                    left: 12, top: 16, bottom: 8),
+                                border: UnderlineInputBorder(
+                                    borderRadius:
+                                    BorderRadius.circular(12)),
+                                floatingLabelBehavior:
+                                FloatingLabelBehavior.auto,
+                                labelText:
+                                AppLocalizations.of(context)!.translate("enter_hsn_sac"),),
 
 
-                      Expanded(
-                        child:
-                        Padding(
-                            padding: EdgeInsets.only(left: 8.0, right: 4),
-                            child: Text(AppLocalizations.of(context)!.translate("enter_activity_time"))
-                        ),
+                            ),
+                          ),
+                        ],
                       ),
-
 
                     ],
                   ),
                 ),
               ),
-
-
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
@@ -189,10 +210,7 @@ class ToFromOpportunitySheet extends StatelessWidget {
                     color: HexColor(AppColors.appColorBackground),
                   ),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -212,12 +230,7 @@ class ToFromOpportunitySheet extends StatelessWidget {
                                   children: [
                                     Row(
                                       children: [
-                                        Center(
-                                          child: Padding(
-                                            padding: EdgeInsets.only(left: 8.0, right: 4),
-                                            child: Icon(Icons.calendar_today_outlined,size: 15,),
-                                          ),
-                                        ),
+
                                         Expanded(
                                           child: TextFormField(
                                             validator: EditProfileMixins().validateEmail,
@@ -226,9 +239,8 @@ class ToFromOpportunitySheet extends StatelessWidget {
 
                                             },
 
-
                                             decoration: InputDecoration(
-                                              hintText: AppLocalizations.of(context)!.translate("date"),
+                                              hintText: AppLocalizations.of(context)!.translate(""),
                                               contentPadding: EdgeInsets.only(
                                                   left: 12, top: 16, bottom: 8),
                                               border: UnderlineInputBorder(
@@ -237,7 +249,7 @@ class ToFromOpportunitySheet extends StatelessWidget {
                                               floatingLabelBehavior:
                                               FloatingLabelBehavior.auto,
                                               labelText:
-                                              AppLocalizations.of(context)!.translate("enter_next_act_date"),),
+                                              AppLocalizations.of(context)!.translate("sgst"),),
 
 
                                           ),
@@ -264,13 +276,6 @@ class ToFromOpportunitySheet extends StatelessWidget {
                                     Row(
 
                                       children: [
-
-                                        Center(
-                                          child: Padding(
-                                            padding: EdgeInsets.only(left: 8.0, right: 4),
-                                            child: Icon(Icons.calendar_today_outlined,size: 15,),
-                                          ),
-                                        ),
                                         Expanded(
                                           child: TextFormField(
                                             validator: EditProfileMixins().validateEmail,
@@ -280,7 +285,7 @@ class ToFromOpportunitySheet extends StatelessWidget {
                                             },
 
                                             decoration: InputDecoration(
-                                              hintText: AppLocalizations.of(context)!.translate("time"),
+                                              hintText: AppLocalizations.of(context)!.translate(""),
                                               contentPadding: EdgeInsets.only(
                                                   left: 12, top: 16, bottom: 8),
                                               border: UnderlineInputBorder(
@@ -289,7 +294,7 @@ class ToFromOpportunitySheet extends StatelessWidget {
                                               floatingLabelBehavior:
                                               FloatingLabelBehavior.auto,
                                               labelText:
-                                              AppLocalizations.of(context)!.translate("enter_next_act_time"),),
+                                              AppLocalizations.of(context)!.translate("cgst"),),
 
 
                                           ),
@@ -308,7 +313,51 @@ class ToFromOpportunitySheet extends StatelessWidget {
                   ),
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  padding: EdgeInsets.only(bottom: 0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: HexColor(AppColors.appColorBackground),
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Row(
+                        children: [
 
+                          Expanded(
+                            child: TextFormField(
+                              validator: EditProfileMixins().validateEmail,
+                              initialValue: "",
+                              onSaved: (value) {
+
+                              },
+
+                              decoration: InputDecoration(
+                                hintText: AppLocalizations.of(context)!.translate(""),
+                                contentPadding: EdgeInsets.only(
+                                    left: 12, top: 16, bottom: 8),
+                                border: UnderlineInputBorder(
+                                    borderRadius:
+                                    BorderRadius.circular(12)),
+                                floatingLabelBehavior:
+                                FloatingLabelBehavior.auto,
+                                labelText:
+                                AppLocalizations.of(context)!.translate("igst"),),
+
+
+                            ),
+                          ),
+                        ],
+                      ),
+
+                    ],
+                  ),
+                ),
+              ),
               SizedBox(
                 height: MediaQuery.of(context).viewInsets.bottom,
               )

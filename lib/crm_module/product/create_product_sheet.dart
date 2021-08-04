@@ -1,5 +1,5 @@
-import 'package:oho_works_app/crm_module/product_images_sheet.dart';
-import 'package:oho_works_app/crm_module/select_unit_sheet.dart';
+import 'package:oho_works_app/crm_module/product/product_images_sheet.dart';
+import 'package:oho_works_app/crm_module/product/select_unit_sheet.dart';
 import 'package:oho_works_app/enums/personType.dart';
 import 'package:oho_works_app/mixins/editProfileMixin.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
@@ -10,12 +10,15 @@ import 'package:oho_works_app/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'discrive_product_sheet.dart';
+
 class CreateProductSheet extends StatelessWidget {
   final Function(String value)? onClickCallback;
   final SharedPreferences? prefs;
   final isRoomsVisible;
+  final String? type;
   List<dynamic>? countryCodeList = [];
-  CreateProductSheet({this.onClickCallback,this.prefs,this.isRoomsVisible=true});
+  CreateProductSheet({this.onClickCallback,this.prefs,this.isRoomsVisible=true,this.type=""});
   @override
   Widget build(BuildContext context) {
 
@@ -95,7 +98,7 @@ class CreateProductSheet extends StatelessWidget {
                         alignment: Alignment.center,
                         child: Container(
                           child: Text(
-                            AppLocalizations.of(context)!.translate("create_product"),
+                         type=="P" ?  AppLocalizations.of(context)!.translate("create_product"):AppLocalizations.of(context)!.translate("create_service"),
                             textAlign: TextAlign.center,
                             style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold),
                           ),
@@ -107,6 +110,9 @@ class CreateProductSheet extends StatelessWidget {
                       child: InkWell(
                         onTap: (){
                           Navigator.pop(context);
+
+
+                          type=="P"?
                           showModalBottomSheet<void>(
                             context: context,
 
@@ -118,11 +124,37 @@ class CreateProductSheet extends StatelessWidget {
                             isScrollControlled: true,
                             builder: (context) {
                               return MediaUploadSheet(
+type: type,
+                              );
+                              // return BottomSheetContent();
+                            },
+                          ):
 
+                          showModalBottomSheet<void>(
+                            context: context,
+
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)),
+                            ),
+
+                            isScrollControlled: true,
+                            builder: (context) {
+                              return Describe_product_sheet(
+                                prefs: prefs,
+                                type: type,
+                                onClickCallback: (value) {
+
+                                },
                               );
                               // return BottomSheetContent();
                             },
                           );
+
+
+
+
+
                         },
                         child: Container(
                           child: Text(
@@ -141,7 +173,7 @@ class CreateProductSheet extends StatelessWidget {
                   padding: const EdgeInsets.only(left:20.0,top: 8,bottom: 8),
                   child: Container(
                     child: Text(
-                      AppLocalizations.of(context)!.translate("product_type"),
+                        type=="P" ?  AppLocalizations.of(context)!.translate("product_type"):AppLocalizations.of(context)!.translate("service_type"),
                       textAlign: TextAlign.left,
                       style: styleElements.subtitle1ThemeScalable(context),
                     ),
@@ -209,31 +241,34 @@ class CreateProductSheet extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Container(
-                    margin: EdgeInsets.only(top:18,bottom: 18),
-                    width: MediaQuery.of(context).size.width/4,
-                    child: GestureDetector(
-                      onTap: (){
-                        onClickCallback!('blog');
-                      },
-                      child: Center(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Image(
-                              image: AssetImage('assets/appimages/cart.png'),
-                              fit: BoxFit.contain,
-                              width: 80,
-                              height: 80,
-                            ),
-                            SizedBox(height: 6,),
-                            Text(
-                              AppLocalizations.of(context)!.translate("assets"),
-                              style: styleElements.captionThemeScalable(context).copyWith(
-                                  color: HexColor(AppColors.appColorBlack65)
+                  Visibility(
+                    visible: type=="P",
+                    child: Container(
+                      margin: EdgeInsets.only(top:18,bottom: 18),
+                      width: MediaQuery.of(context).size.width/4,
+                      child: GestureDetector(
+                        onTap: (){
+                          onClickCallback!('blog');
+                        },
+                        child: Center(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Image(
+                                image: AssetImage('assets/appimages/cart.png'),
+                                fit: BoxFit.contain,
+                                width: 80,
+                                height: 80,
                               ),
-                            ),
-                          ],
+                              SizedBox(height: 6,),
+                              Text(
+                                AppLocalizations.of(context)!.translate("assets"),
+                                style: styleElements.captionThemeScalable(context).copyWith(
+                                    color: HexColor(AppColors.appColorBlack65)
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -280,7 +315,7 @@ class CreateProductSheet extends StatelessWidget {
                                   floatingLabelBehavior:
                                   FloatingLabelBehavior.auto,
                                   labelText:
-                                 AppLocalizations.of(context)!.translate("name_item")),
+                                type=="P"? AppLocalizations.of(context)!.translate("name_item"):AppLocalizations.of(context)!.translate("service_name_item")),
                             ),
                           ),
                         ],
@@ -290,55 +325,58 @@ class CreateProductSheet extends StatelessWidget {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  padding: EdgeInsets.only(bottom: 8),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: HexColor(AppColors.appColorBackground),
-                  ),
-                  child: Column(
-                    children: [
-                      Row(
+              Visibility(
+                visible: type=="P",
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    padding: EdgeInsets.only(bottom: 8),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: HexColor(AppColors.appColorBackground),
+                    ),
+                    child: Column(
+                      children: [
+                        Row(
 
-                        children: [
-                          Center(
-                            child: Padding(
-                              padding: EdgeInsets.only(left: 8.0, right: 4),
-                              child: Icon(Icons.bar_chart_sharp,size: 30,),
+                          children: [
+                            Center(
+                              child: Padding(
+                                padding: EdgeInsets.only(left: 8.0, right: 4),
+                                child: Icon(Icons.bar_chart_sharp,size: 30,),
+                              ),
                             ),
-                          ),
-                          /* Container(
-                              width: 80,
-                              child: codes,
-                            ),*/
-                          Expanded(
-                            child: TextFormField(
-                              validator: EditProfileMixins().validateEmail,
-                              initialValue: "",
-                              onSaved: (value) {
+                            /* Container(
+                                width: 80,
+                                child: codes,
+                              ),*/
+                            Expanded(
+                              child: TextFormField(
+                                validator: EditProfileMixins().validateEmail,
+                                initialValue: "",
+                                onSaved: (value) {
 
-                              },
-                              decoration: InputDecoration(
-                                  hintText:       AppLocalizations.of(context)!.translate("bar_code"),
-                                  contentPadding: EdgeInsets.only(
-                                      left: 12, top: 16, bottom: 8),
+                                },
+                                decoration: InputDecoration(
+                                    hintText:       AppLocalizations.of(context)!.translate("bar_code"),
+                                    contentPadding: EdgeInsets.only(
+                                        left: 12, top: 16, bottom: 8),
 
-                                  border: UnderlineInputBorder(
-                                      borderRadius:
-                                      BorderRadius.circular(12)),
-                                  floatingLabelBehavior:
-                                  FloatingLabelBehavior.auto,
-                                  labelText:
-                                  AppLocalizations.of(context)!.translate("bar_code_enter")),
+                                    border: UnderlineInputBorder(
+                                        borderRadius:
+                                        BorderRadius.circular(12)),
+                                    floatingLabelBehavior:
+                                    FloatingLabelBehavior.auto,
+                                    labelText:
+                                    AppLocalizations.of(context)!.translate("bar_code_enter")),
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
+                          ],
+                        ),
 
 
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),

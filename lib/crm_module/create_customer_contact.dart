@@ -195,7 +195,12 @@ class CreateContactPageState extends State<CreateContactPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
+                      Text(
+                        "Account Manager",
+                        style: styleElements
+                            .subtitle2ThemeScalable(context)
 
+                      ),
                       ListTile(
                         contentPadding: EdgeInsets.all(0),
                         leading: GestureDetector(
@@ -478,44 +483,60 @@ class CreateContactPageState extends State<CreateContactPage> {
                     ],
                   ),
                 ),
+
+
+
                 appListCard(
                   padding: EdgeInsets.only(left: 16, right: 16, top: 4, bottom: 4),
-                  child:   ListTile(
-                    contentPadding: EdgeInsets.all(0),
-                    leading: GestureDetector(
-                      onLongPress: () {
-                        _showSelectorBottomSheet(context);
-                      },
-                      child:   appAvatar(
-                        key: UniqueKey(),
-                        imageUrl:
-                        ownerImage ?? prefs!.getString(Strings.profileImage),
-                        isClickable: false,
-                        service_type: ownerType == 'person'
-                            ? SERVICE_TYPE.PERSON
-                            : ownerType == 'room'
-                            ? SERVICE_TYPE.ROOM
-                            : SERVICE_TYPE.INSTITUTION,
-                        resolution_type: RESOLUTION_TYPE.R64,
-                        size: 40,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Associated Company",
+                        style: styleElements
+                            .subtitle2ThemeScalable(context)
+                            ,
                       ),
-                    ),
-                    title:  Padding(
-                      padding: const EdgeInsets.only(top:8.0),
-                      child: Text(
-                        ownerName ?? prefs!.getString(Strings.userName)!,
-                        style: styleElements.subtitle1ThemeScalable(context),
-                      ),
-                    )
-                    ,
-                    subtitle:  Text(
-                      'Department',
-                      style: styleElements.captionThemeScalable(context),
-                    ),
+                      ListTile(
+                        contentPadding: EdgeInsets.all(0),
+                        leading: GestureDetector(
+                          onLongPress: () {
+                            _showSelectorBottomSheet(context);
+                          },
+                          child:   appAvatar(
+                            key: UniqueKey(),
+                            imageUrl:
+                            ownerImage ?? prefs!.getString(Strings.profileImage),
+                            isClickable: false,
+                            service_type: ownerType == 'person'
+                                ? SERVICE_TYPE.PERSON
+                                : ownerType == 'room'
+                                ? SERVICE_TYPE.ROOM
+                                : SERVICE_TYPE.INSTITUTION,
+                            resolution_type: RESOLUTION_TYPE.R64,
+                            size: 40,
+                          ),
+                        ),
+                        title:  Padding(
+                          padding: const EdgeInsets.only(top:8.0),
+                          child: Text(
+                            ownerName ?? prefs!.getString(Strings.userName)!,
+                            style: styleElements.subtitle1ThemeScalable(context),
+                          ),
+                        )
+                        ,
+                        subtitle:  Text(
+                          'Department',
+                          style: styleElements.captionThemeScalable(context),
+                        ),
 
-                    trailing: Icon(Icons.keyboard_arrow_right),
+                        trailing: Icon(Icons.keyboard_arrow_right),
+                      ),
+                    ],
                   ),
                 ),
+
 
 
 

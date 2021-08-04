@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/appAttachmentComponent.dart';
 import 'package:oho_works_app/components/searchBox.dart';
-import 'package:oho_works_app/crm_module/select_unit_sheet.dart';
-import 'package:oho_works_app/crm_module/set_pricing_sheet.dart';
+import 'package:oho_works_app/crm_module/product/select_unit_sheet.dart';
+import 'package:oho_works_app/crm_module/product/set_pricing_sheet.dart';
 import 'package:oho_works_app/crm_module/term_and_condition_sheet.dart';
 import 'package:oho_works_app/enums/personType.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
@@ -21,11 +21,13 @@ import 'package:flutter/material.dart';
 import 'package:oho_works_app/utils/utility_class.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'discrive_product_sheet.dart';
+
 class MediaUploadSheet extends StatefulWidget
 {
  final int? selectedTab;
-
-  const MediaUploadSheet({Key? key, this.selectedTab}) : super(key: key);
+ final String ?type;
+  const MediaUploadSheet({Key? key, this.selectedTab,this.type}) : super(key: key);
 
  @override
  MediaUploadSheetState createState() => MediaUploadSheetState(
@@ -145,6 +147,7 @@ class MediaUploadSheetState extends State<MediaUploadSheet> {
                         child: InkWell(
                           onTap: (){
 
+
                             Navigator.pop(context);
                             showModalBottomSheet<void>(
                               context: context,
@@ -156,8 +159,9 @@ class MediaUploadSheetState extends State<MediaUploadSheet> {
 
                               isScrollControlled: true,
                               builder: (context) {
-                                return UnitTypeSheet(
+                                return Describe_product_sheet(
                                   prefs: prefs,
+                                  type: widget.type,
                                   onClickCallback: (value) {
 
                                   },
@@ -165,6 +169,8 @@ class MediaUploadSheetState extends State<MediaUploadSheet> {
                                 // return BottomSheetContent();
                               },
                             );
+
+
                           },
                           child: Container(
                             child: Text(
@@ -193,7 +199,7 @@ class MediaUploadSheetState extends State<MediaUploadSheet> {
                             physics: BouncingScrollPhysics(),
                             crossAxisCount: 3,
                             childAspectRatio: 0.9,
-                            children: mediaList!.map((MediaDetails data) {
+                            children: mediaList.map((MediaDetails data) {
                               return     SizedBox(
                                 height: 100,
                                 width: 100,

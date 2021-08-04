@@ -3,7 +3,7 @@ import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/appbar_with_profile%20_image.dart';
 import 'package:oho_works_app/components/customtabview.dart';
 import 'package:oho_works_app/crm_module/payment_type_sheet.dart';
-import 'package:oho_works_app/crm_module/product_list_page.dart';
+import 'package:oho_works_app/crm_module/product/product_list_page.dart';
 import 'package:oho_works_app/crm_module/quantity_and_price_bottomSheet.dart';
 import 'package:oho_works_app/e_learning_module/ui/selected_lesson_list.dart';
 import 'package:oho_works_app/models/custom_tab_maker.dart';
@@ -20,8 +20,8 @@ import 'package:flutter/material.dart';
 import 'package:oho_works_app/utils/strings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'CompanyAndCustomerPage.dart';
-import 'crm_list_page.dart';
+import '../CompanyAndCustomerPage.dart';
+import '../crm_list_page.dart';
 
 
 
@@ -101,8 +101,8 @@ class SelectItemsPageState extends State<SelectItemsPage> with SingleTickerProvi
   }
   loadPages() {
 
-    list.add(new CustomTabMaker(statelessWidget: new ProductListPage("S",widget.isEdit,widget.from), tabName: AppLocalizations.of(context)!.translate('products')));
-    list.add(new CustomTabMaker(statelessWidget: new ProductListPage("O",widget.isEdit,widget.from), tabName: AppLocalizations.of(context)!.translate('services')));
+    list.add(new CustomTabMaker(statelessWidget: new ProductListPage("P",widget.isEdit,widget.from), tabName: AppLocalizations.of(context)!.translate('products')));
+    list.add(new CustomTabMaker(statelessWidget: new ProductListPage("S",widget.isEdit,widget.from), tabName: AppLocalizations.of(context)!.translate('services')));
     list.add(new CustomTabMaker(statelessWidget: new ProductListPage("I",widget.isEdit,widget.from), tabName: AppLocalizations.of(context)!.translate('inventory')));
      setState(() {
       _tabController = TabController(vsync: this, length: list.length);
@@ -146,6 +146,7 @@ class SelectItemsPageState extends State<SelectItemsPage> with SingleTickerProvi
                     builder: (context) {
                       return PaymentSheet(
                         prefs: prefs,
+                        from:widget.from,
                           selectedTab:widget.selectedTab,
                         onClickCallback: (value) {
 

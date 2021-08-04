@@ -131,6 +131,7 @@ class PurchaseOrderPageState extends State<PurchaseOrderPage> with SingleTickerP
                             id: prefs.getInt(Strings.userId),
                             type: "person",
                             hideTabs:true,
+                            from:"purchase",
                             isSwipeDisabled:true,
                             hideAppBar: true,
                             selectedTab:_currentPosition,

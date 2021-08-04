@@ -15,9 +15,10 @@ class PaymentSheet extends StatelessWidget {
   final Function(String value)? onClickCallback;
   final SharedPreferences? prefs;
   final isRoomsVisible;
+  final String? from;
   List<dynamic>? countryCodeList = [];
   int? selectedTab;
-  PaymentSheet({this.onClickCallback,this.prefs,this.isRoomsVisible=true,this.selectedTab});
+  PaymentSheet({this.onClickCallback,this.prefs,this.isRoomsVisible=true,this.selectedTab,this.from});
   @override
   Widget build(BuildContext context) {
 
@@ -109,6 +110,7 @@ class PaymentSheet extends StatelessWidget {
                             builder: (context) {
                               return TermAndConditionSheet(
                                 prefs: prefs,
+                                from:from,
                                   selectedTab:selectedTab,
                                 onClickCallback: (value) {
 

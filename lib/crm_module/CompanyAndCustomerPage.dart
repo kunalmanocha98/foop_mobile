@@ -2,7 +2,7 @@
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/appbar_with_profile%20_image.dart';
 import 'package:oho_works_app/components/customtabview.dart';
-import 'package:oho_works_app/crm_module/product_inventry_services_page.dart';
+import 'package:oho_works_app/crm_module/product/product_inventry_services_page.dart';
 import 'package:oho_works_app/e_learning_module/ui/selected_lesson_list.dart';
 import 'package:oho_works_app/models/custom_tab_maker.dart';
 import 'package:oho_works_app/profile_module/pages/common__page_network.dart';
@@ -95,7 +95,7 @@ class CompanyAndCustomerPageState extends State<CompanyAndCustomerPage> with Sin
   loadPages() {
 
     list.add(new CustomTabMaker(statelessWidget: new CommonCompanyCustomerPage("S",widget.from), tabName: AppLocalizations.of(context)!.translate('entity')));
-    list.add(new CustomTabMaker(statelessWidget:new  CommonCompanyCustomerPage("L",widget.from), tabName: AppLocalizations.of(context)!.translate('customer')));
+    list.add(new CustomTabMaker(statelessWidget:new  CommonCompanyCustomerPage("L",widget.from), tabName: AppLocalizations.of(context)!.translate('contact')));
     setState(() {
       _tabController = TabController(vsync: this, length: list.length);
       _tabController.addListener(onPositionChange);
@@ -135,6 +135,7 @@ class CompanyAndCustomerPageState extends State<CompanyAndCustomerPage> with Sin
                             type: "person",
                             title: "Select Item",
                             hideTabs:true,
+                            from:widget.from,
                             isSwipeDisabled:true,
                             hideAppBar: true,
                             currentTab: 0,

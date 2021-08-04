@@ -12,7 +12,7 @@ import 'package:oho_works_app/crm_module/CompanyAndCustomerPage.dart';
 import 'package:oho_works_app/crm_module/SuppliersPage.dart';
 import 'package:oho_works_app/crm_module/create_customer_contact.dart';
 import 'package:oho_works_app/crm_module/crm_page.dart';
-import 'package:oho_works_app/crm_module/product_inventry_services_page.dart';
+import 'package:oho_works_app/crm_module/product/product_inventry_services_page.dart';
 import 'package:oho_works_app/crm_module/purchase_order.dart';
 import 'package:oho_works_app/enums/post_enums.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';

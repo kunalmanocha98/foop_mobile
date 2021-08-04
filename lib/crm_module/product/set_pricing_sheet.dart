@@ -1,3 +1,4 @@
+import 'package:oho_works_app/crm_module/product/tax_product_sheet.dart';
 import 'package:oho_works_app/enums/personType.dart';
 import 'package:oho_works_app/mixins/editProfileMixin.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
@@ -12,8 +13,9 @@ class PricingSheet extends StatelessWidget {
   final Function(String value)? onClickCallback;
   final SharedPreferences? prefs;
   final isRoomsVisible;
+  final String ?type;
   List<dynamic>? countryCodeList = [];
-  PricingSheet({this.onClickCallback,this.prefs,this.isRoomsVisible=true});
+  PricingSheet({this.onClickCallback,this.prefs,this.isRoomsVisible=true,this.type});
   @override
   Widget build(BuildContext context) {
 
@@ -113,11 +115,39 @@ class PricingSheet extends StatelessWidget {
 
                     Align(
                       alignment: Alignment.centerRight,
-                      child: Container(
-                        child: Text(
-                          "Next",
-                          textAlign: TextAlign.center,
-                          style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold,color: HexColor(AppColors.appMainColor)),
+                      child: InkWell(
+                        onTap: (){
+
+                          Navigator.pop(context);
+                          showModalBottomSheet<void>(
+                            context: context,
+
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)),
+                            ),
+
+                            isScrollControlled: true,
+                            builder: (context) {
+                              return TaxSheet(
+                                prefs: prefs,
+                                type: type,
+
+                                onClickCallback: (value) {
+
+                                },
+                              );
+                              // return BottomSheetContent();
+                            },
+                          );
+
+                        },
+                        child: Container(
+                          child: Text(
+                            "Next",
+                            textAlign: TextAlign.center,
+                            style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold,color: HexColor(AppColors.appMainColor)),
+                          ),
                         ),
                       ),)
                   ],
@@ -271,6 +301,73 @@ crossAxisAlignment: CrossAxisAlignment.center,
                 ),
               ),
 
+              Visibility(
+                visible: type=="S",
+                child:
+              Padding(
+                padding: const EdgeInsets.only(left:8.0,right: 8.0),
+                child: Container(
+                  padding: EdgeInsets.only(bottom: 8),
+
+                  child:   Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child:
+                        Padding(
+                            padding: EdgeInsets.only(left: 8.0, right: 4),
+                            child: Text(AppLocalizations.of(context)!.translate("recurring_price"))
+                        ),
+                      ),
+
+                      Center(
+                        child: Switch(
+                          value: false,
+                          onChanged: (value){
+
+                          },
+                          activeTrackColor:HexColor(AppColors.appMainColor10),
+                          activeColor: HexColor(AppColors.appMainColor),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              ),
+              Visibility(
+                visible: type=="S",
+                child:
+                ListTile(
+                    title:Text("Kg"),
+                    trailing:  Checkbox(value: false, onChanged: (bool? value) {  },)
+                ),
+              ),
+              Visibility(
+                visible: type=="S",
+                child:
+                ListTile(
+                    title:Text("Kg"),
+                    trailing:  Checkbox(value: false, onChanged: (bool? value) {  },)
+                ),
+              ),
+              Visibility(
+                visible: type=="S",
+                child:
+                ListTile(
+                    title:Text("Kg"),
+                    trailing:  Checkbox(value: false, onChanged: (bool? value) {  },)
+                ),
+              ),
+              Visibility(
+                visible: type=="S",
+                child:
+                ListTile(
+                    title:Text("Kg"),
+                    trailing:  Checkbox(value: false, onChanged: (bool? value) {  },)
+                ),
+              ),
               SizedBox(
                 height: MediaQuery.of(context).viewInsets.bottom,
               )

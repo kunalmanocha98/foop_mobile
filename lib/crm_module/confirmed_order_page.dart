@@ -18,7 +18,7 @@ import 'package:oho_works_app/components/paginator.dart';
 import 'package:oho_works_app/components/postcardactionbuttons.dart';
 import 'package:oho_works_app/components/row_cards_common.dart';
 import 'package:oho_works_app/crm_module/payment_type_sheet.dart';
-import 'package:oho_works_app/crm_module/product_inventry_services_page.dart';
+import 'package:oho_works_app/crm_module/product/product_inventry_services_page.dart';
 import 'package:oho_works_app/crm_module/update_payment_sheet.dart';
 import 'package:oho_works_app/e_learning_module/ui/chapter_lessons_page.dart';
 import 'package:oho_works_app/e_learning_module/ui/selected_lesson_list.dart';
@@ -62,11 +62,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'bottom_sheet_address.dart';
 import 'botton_sheet_create_customer.dart';
 import 'contact_detailBottom_sheet.dart';
+import 'dilogs/update_opportunity_dilog.dart';
 
 
 
 class ConfirmedOrderPage extends StatefulWidget {
   final String type;
+  final String? from;
   final int standardEventId;
   final String? title;
   final String? ownerName;
@@ -81,6 +83,7 @@ class ConfirmedOrderPage extends StatefulWidget {
     required this.standardEventId,
     this.title,
     this.ownerId,
+    this.from,
     this.ownerName,
     this.selectedTab,
     this.ownerImage,
@@ -750,7 +753,42 @@ class ConfirmedOrderPageState extends State<ConfirmedOrderPage> {
                                   side: BorderSide(
                                       color: HexColor(AppColors.appMainColor))),
                               onPressed: () async {
-                                showModalBottomSheet<void>(
+                                widget. selectedTab==0&& widget.from=="sales"?
+                                showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return UpdateOpportunityDilog(
+                                          title:  "Update Opportunity",
+                                          subTile:  "Are you sure youy want to cancel this order",
+                                          description:  "Order Id:097980",
+                                          callBack:(isYes){
+
+                                            if(isYes)
+                                              {
+                                                showModalBottomSheet<void>(
+                                                  context: context,
+
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.only(
+                                                        topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)),
+                                                  ),
+
+                                                  isScrollControlled: true,
+                                                  builder: (context) {
+                                                    return UpdatePaymentSheet(
+                                                      prefs: prefs,
+
+                                                      onClickCallback: (value) {
+
+                                                      },
+                                                    );
+                                                    // return BottomSheetContent();
+                                                  },
+                                                );
+                                              }
+                                          }
+                                      );
+                                    }): showModalBottomSheet<void>(
                                   context: context,
 
                                   shape: RoundedRectangleBorder(
@@ -773,8 +811,9 @@ class ConfirmedOrderPageState extends State<ConfirmedOrderPage> {
                               },
                               color: HexColor(AppColors.appColorWhite),
                               child: Text(
-                                "Update Payment"
-                                    .toUpperCase(),
+
+                                 widget. selectedTab==0&& widget.from=="sales"?"Update"        :   widget. selectedTab==1&& widget.from=="sales"? "Bill Order":"Update Payment"
+                                    ,
                                 style: styleElements
                                     .subtitle2ThemeScalable(context)
                                     .copyWith(

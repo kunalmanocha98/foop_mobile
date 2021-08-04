@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:oho_works_app/components/searchBox.dart';
-import 'package:oho_works_app/crm_module/set_pricing_sheet.dart';
+import 'package:oho_works_app/crm_module/product/set_pricing_sheet.dart';
 import 'package:oho_works_app/crm_module/term_and_condition_sheet.dart';
 import 'package:oho_works_app/enums/personType.dart';
 import 'package:oho_works_app/mixins/editProfileMixin.dart';
@@ -18,9 +18,10 @@ class OpportunityStatusSheet extends StatelessWidget {
   final Function(String value)? onClickCallback;
   final SharedPreferences? prefs;
   final isRoomsVisible;
+  final String? from;
   List<dynamic>? countryCodeList = [];
   int? selectedTab;
-  OpportunityStatusSheet({this.onClickCallback,this.prefs,this.isRoomsVisible=true,this.selectedTab});
+  OpportunityStatusSheet({this.onClickCallback,this.prefs,this.isRoomsVisible=true,this.selectedTab,this.from});
   @override
   Widget build(BuildContext context) {
 
@@ -136,6 +137,7 @@ class OpportunityStatusSheet extends StatelessWidget {
                               builder: (context) {
                                 return NextActivitySheet(
                                   prefs: prefs,
+                                  from:from,
                                   onClickCallback: (value) {
 
                                   },
@@ -199,29 +201,52 @@ class OpportunityStatusSheet extends StatelessWidget {
                     ),
 
                     Align(
-                      alignment: Alignment.centerRight,
+                      alignment: Alignment.centerLeft,
                       child: Container(
                         child: Text(
                           AppLocalizations.of(context)!.translate("enter_lead_status"),
                           textAlign: TextAlign.center,
-                          style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold,color: HexColor(AppColors.appMainColor)),
-                        ),
+                          style: styleElements.subtitle1ThemeScalable(context)),
                       ),),
                     ListTile(
                         title:Text("Hot"),
-                        trailing:  Checkbox(value: false, onChanged: (bool? value) {  },)
+                        trailing:   Radio(
+                          value: "=",
+                          groupValue: 1,
+                          onChanged: ( value) {
+
+                          },
+                        ),
                     ),
                     ListTile(
                         title:Text("Cold"),
-                        trailing:  Checkbox(value: false, onChanged: (bool? value) {  },)
+                        trailing:   Radio(
+                          value: "=",
+                          groupValue: 1,
+                          onChanged: ( value) {
+
+                          },
+                        ),
                     ),
                     ListTile(
                         title:Text("Warm"),
-                        trailing:  Checkbox(value: false, onChanged: (bool? value) {  },)
+                        trailing:  Radio(
+                          value: "=",
+                          groupValue: 1,
+                          onChanged: ( value) {
+
+                          },
+                        ),
                     ),
                     ListTile(
                         title:Text("Initial 70 days"),
-                        trailing:  Checkbox(value: false, onChanged: (bool? value) {  },)
+                        trailing:   Radio(
+                          value: "=",
+                          groupValue: 1,
+                          onChanged: ( value) {
+
+                          },
+                        ),
                     ),
 
 

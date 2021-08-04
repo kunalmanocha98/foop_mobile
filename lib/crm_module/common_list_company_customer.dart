@@ -233,7 +233,7 @@ class _CommonCompanyCustomerPage extends State<CommonCompanyCustomerPage> {
           children: [
             Padding(
               padding: const EdgeInsets.only(left:8.0,right: 16),
-              child: Icon(Icons.dashboard_outlined,color: HexColor(AppColors.appColorBlack35),),
+              child: Icon(Icons.edit_outlined,color: HexColor(AppColors.appColorBlack35),),
             ),
             Text(name=="P"?"Edit Payment":"Edit",
             ),
@@ -242,38 +242,7 @@ class _CommonCompanyCustomerPage extends State<CommonCompanyCustomerPage> {
       ),
     );
 
-    if(name!="O" && name!="I")
-      popupmenuList.add(
-        PopupMenuItem(
-          value: 'delete',
-          child: Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left:8.0,right: 16),
-                child: Icon(Icons.face,color: HexColor(AppColors.appColorBlack35),),
-              ),
-              Text(name=="P"?"Receive Payment":"Convert to order",
-              ),
-            ],
-          ),
-        ),
-      );
-    if(name!="I" && name!="P")
-      popupmenuList.add(
-        PopupMenuItem(
-          value: 'delete',
-          child: Row(
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left:8.0,right: 16),
-                child: Icon(Icons.family_restroom_rounded,color: HexColor(AppColors.appColorBlack35),),
-              ),
-              Text(name=="O"?"Bill":"Bill the lead",
-              ),
-            ],
-          ),
-        ),
-      );
+
     popupmenuList.add(
       PopupMenuItem(
         value: 'delete',
@@ -281,14 +250,16 @@ class _CommonCompanyCustomerPage extends State<CommonCompanyCustomerPage> {
           children: [
             Padding(
               padding: const EdgeInsets.only(left:8.0,right: 16),
-              child: Icon(Icons.dashboard_outlined,color: HexColor(AppColors.appColorBlack35),),
+              child: Icon(Icons.shopping_bag_outlined,color: HexColor(AppColors.appColorBlack35),),
             ),
-            Text("Print",
+            Text("Create opportunity",
             ),
           ],
         ),
       ),
     );
+
+
     popupmenuList.add(
       PopupMenuItem(
         value: 'delete',
@@ -296,7 +267,58 @@ class _CommonCompanyCustomerPage extends State<CommonCompanyCustomerPage> {
           children: [
             Padding(
               padding: const EdgeInsets.only(left:8.0,right: 16),
-              child: Icon(Icons.sanitizer,color: HexColor(AppColors.appColorBlack35),),
+              child: Icon(Icons.shopping_cart_outlined,color: HexColor(AppColors.appColorBlack35),),
+            ),
+            Text("Create Sales Order",
+            ),
+          ],
+        ),
+      ),
+    );
+
+    popupmenuList.add(
+      PopupMenuItem(
+        value: 'delete',
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left:8.0,right: 16),
+              child: Icon(Icons.receipt,color: HexColor(AppColors.appColorBlack35),),
+            ),
+            Text("Create invoice",
+            ),
+          ],
+        ),
+      ),
+    );
+
+
+    popupmenuList.add(
+      PopupMenuItem(
+        value: 'delete',
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left:8.0,right: 16),
+              child: Icon(Icons.shopping_cart_outlined,color: HexColor(AppColors.appColorBlack35),),
+            ),
+            Text("Create purchase order",
+            ),
+          ],
+        ),
+      ),
+    );
+
+
+
+    popupmenuList.add(
+      PopupMenuItem(
+        value: 'delete',
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left:8.0,right: 16),
+              child: Icon(Icons.mail_outline,color: HexColor(AppColors.appColorBlack35),),
             ),
             Text("Email",
             ),
@@ -312,7 +334,26 @@ class _CommonCompanyCustomerPage extends State<CommonCompanyCustomerPage> {
           children: [
             Padding(
               padding: const EdgeInsets.only(left:8.0,right: 16),
-              child: Icon(Icons.alternate_email,color: HexColor(AppColors.appColorBlack35),),
+              child: Icon(Icons.call_outlined,color: HexColor(AppColors.appColorBlack35),),
+            ),
+            Text("Call",
+            ),
+          ],
+        ),
+      ),
+    );
+
+
+    popupmenuList.add(
+      PopupMenuItem(
+        value: 'delete',
+        child: Row(
+          children: [
+            Padding(
+                padding: const EdgeInsets.only(left:8.0,right: 16),
+                child: SizedBox(
+                    height: 20,width: 20,
+                    child: Image(image: AssetImage('assets/appimages/whatsapp.png'),))
             ),
             Text("Whatsapp",
             ),

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:oho_works_app/components/appAttachmentComponent.dart';
 import 'package:oho_works_app/components/searchBox.dart';
-import 'package:oho_works_app/crm_module/set_pricing_sheet.dart';
-import 'package:oho_works_app/crm_module/term_and_condition_sheet.dart';
+import 'package:oho_works_app/crm_module/product/select_unit_sheet.dart';
 import 'package:oho_works_app/enums/personType.dart';
 import 'package:oho_works_app/mixins/editProfileMixin.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
@@ -12,13 +12,17 @@ import 'package:oho_works_app/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class UnitTypeSheet extends StatelessWidget {
+
+
+class Describe_product_sheet extends StatelessWidget {
   final Function(String value)? onClickCallback;
   final SharedPreferences? prefs;
   final isRoomsVisible;
+  String ? type;
+  GlobalKey<appAttachmentsState> attachmentKey = GlobalKey();
   List<dynamic>? countryCodeList = [];
   int? selectedTab;
-  UnitTypeSheet({this.onClickCallback,this.prefs,this.isRoomsVisible=true,this.selectedTab});
+  Describe_product_sheet({this.onClickCallback,this.prefs,this.isRoomsVisible=true,this.selectedTab,this.type});
   @override
   Widget build(BuildContext context) {
 
@@ -49,7 +53,30 @@ class UnitTypeSheet extends StatelessWidget {
       }
       return countryCodes;
     }
+    final codes = DropdownButtonFormField<dynamic>(
+      value: null,
+      isExpanded: true,
+      decoration: InputDecoration(
+        contentPadding: EdgeInsets.fromLTRB(4.0, 15.0, 4.0, 15.0),
 
+        border: InputBorder.none,
+
+      ),
+      hint: Padding(
+          padding: const EdgeInsets.only(left: 0),
+          child: Text(
+            AppLocalizations.of(context)!.translate(""),
+            style: styleElements.bodyText2ThemeScalable(context),)
+      ),
+
+      items: _getCountryCodes(),
+      onChanged: (value) {
+
+        value as String ;
+
+
+      },
+    );
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.only(bottom: 50.0,left: 16,right: 16,top: 16),
@@ -72,11 +99,12 @@ class UnitTypeSheet extends StatelessWidget {
                   //Center Row contents vertically,
 
                   children: [
+
                     Align(
                       alignment: Alignment.centerRight,
                       child: Container(
                         child: Text(
-                       AppLocalizations.of(context)!.translate("back"),
+                          "Skip",
                           textAlign: TextAlign.center,
                           style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold,color: HexColor(AppColors.appMainColor)),
                         ),
@@ -86,7 +114,7 @@ class UnitTypeSheet extends StatelessWidget {
                         alignment: Alignment.center,
                         child: Container(
                           child: Text(
-                            AppLocalizations.of(context)!.translate("select_unit"),
+                        type=="P" ?  AppLocalizations.of(context)!.translate("describe_product"):AppLocalizations.of(context)!.translate("describe_service"),
                             textAlign: TextAlign.center,
                             style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold),
                           ),
@@ -98,57 +126,45 @@ class UnitTypeSheet extends StatelessWidget {
                       child: InkWell(
                         onTap: (){
                           Navigator.pop(context);
-                          showModalBottomSheet<void>(
+                        type=="P" ? showModalBottomSheet<void>(
                             context: context,
-
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)),
                             ),
-
                             isScrollControlled: true,
                             builder: (context) {
-                              return TermAndConditionSheet(
+                              return UnitTypeSheet(
                                 prefs: prefs,
-                                selectedTab:selectedTab,
+                                type: type,
                                 onClickCallback: (value) {
 
                                 },
                               );
                               // return BottomSheetContent();
                             },
-                          );
-                        },
-                        child: InkWell(
-                          onTap: (){
+                          ): showModalBottomSheet<void>(
+                          context: context,
 
-                            Navigator.pop(context);
-                            showModalBottomSheet<void>(
-                              context: context,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)),
+                          ),
 
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)),
-                              ),
-
-                              isScrollControlled: true,
-                              builder: (context) {
-                                return PricingSheet(
-                                  prefs: prefs,
-                                  onClickCallback: (value) {
-
-                                  },
-                                );
-                                // return BottomSheetContent();
-                              },
+                          isScrollControlled: true,
+                          builder: (context) {
+                            return UnitTypeSheet(
+                              type: type,
                             );
+                            // return BottomSheetContent();
                           },
-                          child: Container(
-                            child: Text(
-                              AppLocalizations.of(context)!.translate("next"),
-                              textAlign: TextAlign.center,
-                              style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold,color: HexColor(AppColors.appMainColor)),
-                            ),
+                        );
+                        },
+                        child: Container(
+                          child: Text(
+                            "Next",
+                            textAlign: TextAlign.center,
+                            style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold,color: HexColor(AppColors.appMainColor)),
                           ),
                         ),
                       ),)
@@ -156,80 +172,61 @@ class UnitTypeSheet extends StatelessWidget {
                 ),
               ),
 
+
               Padding(
-                padding: const EdgeInsets.only(top:8.0,bottom:8.0),
-                child: Column(
-                  children: [
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  padding: EdgeInsets.only(bottom: 0),
 
-                    Row(
-                      children: [
-                        Expanded(
-                          child: SearchBox(
-                            onvalueChanged: (s){},
-                            hintText: AppLocalizations.of(context)!.translate('search'),
-                          ),
+                  child: Column(
+                    children: [
+
+                      Container(
+                        padding: EdgeInsets.only(bottom: 0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: HexColor(AppColors.appColorBackground),
                         ),
-                        InkWell(
-                          onTap: (){
-
+                        child: TextFormField(
+                          validator: EditProfileMixins().validateEmail,
+                          initialValue: "",
+                          maxLines: 5,
+                          onSaved: (value) {
 
                           },
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 8.0),
-                            child: Row(
-                              children: [
-                                Text(
-                                  AppLocalizations.of(context)!.translate('new'),
-                                  textAlign: TextAlign.center,
-                                  style: styleElements
-                                      .subtitle1ThemeScalable(context)
-                                      .copyWith(
-                                      color: HexColor(AppColors.appColorBlack65)),
-                                ),
-                                Icon(
-                                  Icons.add,
-                                  color: HexColor(AppColors.appColorBlack65),
-                                ),
-                              ],
-                            ),
+
+                          decoration: InputDecoration(
+                            hintText: "",
+                            contentPadding: EdgeInsets.only(
+                                left: 12, top: 16, bottom: 8),
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            errorBorder: InputBorder.none,
+                            disabledBorder: InputBorder.none,
+
+
+
                           ),
                         ),
-                      ],
-                    ),
+                      ),
 
 
-                    ListTile(
-                      title:Text("Kg"),
-                      trailing:  Checkbox(value: false, onChanged: (bool? value) {  },)
-                    ),
-                    ListTile(
-                      title:Text("grams"),
-                        trailing:  Checkbox(value: false, onChanged: (bool? value) {  },)
-                    ),
-                    ListTile(
-                      title:Text("cms"),
-                        trailing:  Checkbox(value: false, onChanged: (bool? value) {  },)
-                    ),
-                    ListTile(
-                        title:Text("Liters"),
-                        trailing:  Checkbox(value: false, onChanged: (bool? value) {  },)
-                    ),
-                      ListTile(
-                        title:Text("Liters"),
-                        trailing:  Checkbox(value: false, onChanged: (bool? value) {  },)
-                    ),
-                    ListTile(
-                        title:Text("Liters"),
-                        trailing:  Checkbox(value: false, onChanged: (bool? value) {  },)
-                    ),
-                    ListTile(
-                        title:Text("Liters"),
-                        trailing:  Checkbox(value: false, onChanged: (bool? value) {  },)
-                    ),
+                      appAttachments(
+                        attachmentKey,
+                        isMentionVisible: false,
+                        mentionCallback: (value) {
+
+                        },
+                        hashTagCallback: (value) {
+
+                        },
+                      ),
 
 
 
-                  ],
+                    ],
+                  ),
                 ),
               ),
               SizedBox(

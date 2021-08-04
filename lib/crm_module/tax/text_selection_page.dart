@@ -2,7 +2,7 @@
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/appbar_with_profile%20_image.dart';
 import 'package:oho_works_app/components/customtabview.dart';
-import 'package:oho_works_app/crm_module/product/product_inventry_services_page.dart';
+import 'package:oho_works_app/crm_module/tax/tax_list_page.dart';
 import 'package:oho_works_app/e_learning_module/ui/selected_lesson_list.dart';
 import 'package:oho_works_app/models/custom_tab_maker.dart';
 import 'package:oho_works_app/profile_module/pages/common__page_network.dart';
@@ -18,32 +18,29 @@ import 'package:flutter/material.dart';
 import 'package:oho_works_app/utils/strings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'bottom_sheet_address.dart';
-import 'common_list_company_customer.dart';
-
-
+import '../CompanyAndCustomerPage.dart';
+import '../order_detail_page.dart';
 // ignore: must_be_immutable
-class SupplierPage extends StatefulWidget {
-
+class TaxSelectionPage extends StatefulWidget {
   bool hideTabs;
   String? type;
   int? id;
+  int? selectedTab;
+  final String ?from;
   int currentTab;
   String? pageTitle;
   Null Function() callback;
   String? imageUrl;
   final bool hideAppBar;
   final bool? isSwipeDisabled;
-  String? from;
-  int? selectedTab;
-  SupplierPage({
+  TaxSelectionPage({
     Key? key,
     this.hideAppBar=false,
     required this.type,
     required this.id,
-    this.hideTabs=false,
     this.from,
     this.selectedTab,
+    this.hideTabs=false,
     this.isSwipeDisabled,
     required this.pageTitle,
     required this.callback,
@@ -51,11 +48,11 @@ class SupplierPage extends StatefulWidget {
     required this.imageUrl
   }) : super(key: key);
 
-  SupplierPageState createState() =>
-      SupplierPageState(type, id, pageTitle, callback, currentTab,imageUrl);
+  TaxSelectionPageState createState() =>
+      TaxSelectionPageState(type, id, pageTitle, callback, currentTab,imageUrl);
 }
 
-class SupplierPageState extends State<SupplierPage> with SingleTickerProviderStateMixin {
+class TaxSelectionPageState extends State<TaxSelectionPage> with SingleTickerProviderStateMixin {
   List<CustomTabMaker> list = [];
   late TabController _tabController;
   TextStyleElements? styleElements;
@@ -68,9 +65,7 @@ class SupplierPageState extends State<SupplierPage> with SingleTickerProviderSta
   String? pageTitle;
   Null Function() callback;
   String? imageUrl;
-
-
-  SupplierPageState(this.type, this.id,this.pageTitle, this.callback, this._currentPosition,this.imageUrl);
+  TaxSelectionPageState(this.type, this.id,this.pageTitle, this.callback, this._currentPosition,this.imageUrl);
 
   @override
   void initState() {
@@ -93,10 +88,9 @@ class SupplierPageState extends State<SupplierPage> with SingleTickerProviderSta
     loadPages();
   }
   loadPages() {
-
-    list.add(new CustomTabMaker(statelessWidget: new CommonCompanyCustomerPage("S",widget.from), tabName: AppLocalizations.of(context)!.translate('entity')));
-    list.add(new CustomTabMaker(statelessWidget:new  CommonCompanyCustomerPage("L",widget.from), tabName: AppLocalizations.of(context)!.translate('customer')));
-    setState(() {
+    list.add(new CustomTabMaker(statelessWidget: new TaxSelectionListPage(AppLocalizations.of(context)!.translate('hsn_code'),widget.from), tabName: AppLocalizations.of(context)!.translate('hsn_code')));
+    list.add(new CustomTabMaker(statelessWidget: new TaxSelectionListPage(AppLocalizations.of(context)!.translate('sac_code'),widget.from), tabName: AppLocalizations.of(context)!.translate('sac_code')));
+   setState(() {
       _tabController = TabController(vsync: this, length: list.length);
       _tabController.addListener(onPositionChange);
     });
@@ -116,37 +110,18 @@ class SupplierPageState extends State<SupplierPage> with SingleTickerProviderSta
 
     return SafeArea(
       child:
-
-      Scaffold(
+ Scaffold(
         resizeToAvoidBottomInset: true,
         backgroundColor: HexColor(AppColors.appColorBackground),
+
         appBar: appAppBar().getCustomAppBar(context,
             centerTitle:false,
             actions: [
               InkWell(
+
                 onTap: (){
 
-
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SelectItemsPage(
-                            id: prefs.getInt(Strings.userId),
-                            type: "person",
-                            hideTabs:true,
-                            title: "Select Item",
-                            isSwipeDisabled:true,
-                            hideAppBar: true,
-                            currentTab: 0,
-                            selectedTab:widget.selectedTab,
-                            pageTitle: "",
-                            imageUrl: "",
-                            callback: () {
-
-                            }),
-                      ));
-
-
+                Navigator.pop(context);
                 },
                 child: Padding(
                   padding: const EdgeInsets.only(
@@ -154,7 +129,6 @@ class SupplierPageState extends State<SupplierPage> with SingleTickerProviderSta
                   child: Row(
 
                     children: [
-
 
 
                       Text(AppLocalizations.of(context)!
@@ -167,17 +141,19 @@ class SupplierPageState extends State<SupplierPage> with SingleTickerProviderSta
                   ),
                 ),
               ),
-              _simplePopup()
-            ],
-            appBarTitle: "Select Supplier",
-            onBackButtonPress: (){  Navigator.pop(context);}),
 
+            ],
+            appBarTitle: AppLocalizations.of(context)!
+                .translate('select_tax'),
+            onBackButtonPress: (){  Navigator.pop(context);}),
 
 
 
         body: DefaultTabController(
           length: list.length,
           child: CustomTabView(
+            isTabVisible:true,
+            isSwipeDisabled: false,
             marginTop:const EdgeInsets.only(top:16.0 ),
             currentPosition: _currentPosition,
             itemCount: list!=null && list.isNotEmpty?list.length:0,
@@ -200,7 +176,9 @@ class SupplierPageState extends State<SupplierPage> with SingleTickerProviderSta
             onScroll: (position) => print('$position'),
           ),
         ),
-      ),
+      )
+
+
     );
   }
   Widget _simplePopup() {

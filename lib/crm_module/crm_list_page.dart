@@ -398,7 +398,7 @@ var header=value[0]['group'];
                                 MaterialPageRoute(
                                   builder: (context) => ConfirmedOrderPage(
                                     selectedTab:type=="O"?1:type=="L"?0:type=="I"?2:3,
-
+from:widget.from,
                                     type: "person", standardEventId: 2,
                                   ),
                                 ));
@@ -420,6 +420,116 @@ var header=value[0]['group'];
       );
 
   }
+
+
+  List<PopupMenuEntry<String>> getItemsOrderPaymentInvoice(String? name) {
+    List<PopupMenuEntry<String>> popupmenuList = [];
+
+
+    popupmenuList.add(
+      PopupMenuItem(
+        value: 'delete',
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left:8.0,right: 16),
+              child: Icon(Icons.edit_outlined,color: HexColor(AppColors.appColorBlack35),),
+            ),
+            Text(name=="P"?"Edit Payment":"Edit",
+            ),
+          ],
+        ),
+      ),
+    );
+
+      popupmenuList.add(
+        PopupMenuItem(
+          value: 'delete',
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left:8.0,right: 16),
+                child: Icon(Icons.account_balance_wallet_outlined,color: HexColor(AppColors.appColorBlack35),),
+              ),
+              Text("Receive Payment",
+              ),
+            ],
+          ),
+        ),
+      );
+
+
+
+
+    popupmenuList.add(
+      PopupMenuItem(
+        value: 'delete',
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left:8.0,right: 16),
+              child: Icon(Icons.print_outlined,color: HexColor(AppColors.appColorBlack35),),
+            ),
+            Text("Print",
+            ),
+          ],
+        ),
+      ),
+    );
+    popupmenuList.add(
+      PopupMenuItem(
+        value: 'delete',
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left:8.0,right: 16),
+              child: Icon(Icons.mail_outline,color: HexColor(AppColors.appColorBlack35),),
+            ),
+            Text("Email",
+            ),
+          ],
+        ),
+      ),
+    );
+
+    popupmenuList.add(
+      PopupMenuItem(
+        value: 'delete',
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left:8.0,right: 16),
+              child: Icon(Icons.call_outlined,color: HexColor(AppColors.appColorBlack35),),
+            ),
+            Text("Call",
+            ),
+          ],
+        ),
+      ),
+    );
+
+
+    popupmenuList.add(
+      PopupMenuItem(
+        value: 'delete',
+        child: Row(
+          children: [
+            Padding(
+                padding: const EdgeInsets.only(left:8.0,right: 16),
+                child: SizedBox(
+                    height: 20,width: 20,
+                    child: Image(image: AssetImage('assets/appimages/whatsapp.png'),))
+            ),
+            Text("Whatsapp",
+            ),
+          ],
+        ),
+      ),
+    );
+    return popupmenuList;
+  }
+
+
   List<PopupMenuEntry<String>> getItems(String? name) {
     List<PopupMenuEntry<String>> popupmenuList = [];
 
@@ -431,7 +541,7 @@ var header=value[0]['group'];
           children: [
             Padding(
               padding: const EdgeInsets.only(left:8.0,right: 16),
-              child: Icon(Icons.dashboard_outlined,color: HexColor(AppColors.appColorBlack35),),
+              child: Icon(Icons.edit_outlined,color: HexColor(AppColors.appColorBlack35),),
             ),
             Text(name=="P"?"Edit Payment":"Edit",
             ),
@@ -448,7 +558,7 @@ var header=value[0]['group'];
           children: [
             Padding(
               padding: const EdgeInsets.only(left:8.0,right: 16),
-              child: Icon(Icons.face,color: HexColor(AppColors.appColorBlack35),),
+              child: Icon(Icons.shopping_cart_outlined,color: HexColor(AppColors.appColorBlack35),),
             ),
             Text(name=="P"?"Receive Payment":"Convert to order",
             ),
@@ -464,9 +574,9 @@ var header=value[0]['group'];
           children: [
             Padding(
               padding: const EdgeInsets.only(left:8.0,right: 16),
-              child: Icon(Icons.family_restroom_rounded,color: HexColor(AppColors.appColorBlack35),),
+              child: Icon(Icons.receipt,color: HexColor(AppColors.appColorBlack35),),
             ),
-            Text(name=="O"?"Bill":"Bill the lead",
+            Text(name=="O"?"Bill the order":"Bill directly",
             ),
           ],
         ),
@@ -479,7 +589,7 @@ var header=value[0]['group'];
           children: [
             Padding(
               padding: const EdgeInsets.only(left:8.0,right: 16),
-              child: Icon(Icons.dashboard_outlined,color: HexColor(AppColors.appColorBlack35),),
+              child: Icon(Icons.print_outlined,color: HexColor(AppColors.appColorBlack35),),
             ),
             Text("Print",
             ),
@@ -494,7 +604,7 @@ var header=value[0]['group'];
           children: [
             Padding(
               padding: const EdgeInsets.only(left:8.0,right: 16),
-              child: Icon(Icons.sanitizer,color: HexColor(AppColors.appColorBlack35),),
+              child: Icon(Icons.mail_outline,color: HexColor(AppColors.appColorBlack35),),
             ),
             Text("Email",
             ),
@@ -510,7 +620,26 @@ var header=value[0]['group'];
           children: [
             Padding(
               padding: const EdgeInsets.only(left:8.0,right: 16),
-              child: Icon(Icons.alternate_email,color: HexColor(AppColors.appColorBlack35),),
+              child: Icon(Icons.call_outlined,color: HexColor(AppColors.appColorBlack35),),
+            ),
+            Text("Call",
+            ),
+          ],
+        ),
+      ),
+    );
+
+
+    popupmenuList.add(
+      PopupMenuItem(
+        value: 'delete',
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left:8.0,right: 16),
+              child: SizedBox(
+                height: 20,width: 20,
+                  child: Image(image: AssetImage('assets/appimages/whatsapp.png'),))
             ),
             Text("Whatsapp",
             ),
@@ -520,12 +649,242 @@ var header=value[0]['group'];
     );
     return popupmenuList;
   }
+
+
+  List<PopupMenuEntry<String>> getItemsPaymentInvoicePurchase(String? name) {
+    List<PopupMenuEntry<String>> popupmenuList = [];
+
+
+    popupmenuList.add(
+      PopupMenuItem(
+        value: 'delete',
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left:8.0,right: 16),
+              child: Icon(Icons.edit_outlined,color: HexColor(AppColors.appColorBlack35),),
+            ),
+            Text(name=="P"?"Edit Payment":"Edit",
+            ),
+          ],
+        ),
+      ),
+    );
+
+
+      popupmenuList.add(
+        PopupMenuItem(
+          value: 'delete',
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left:8.0,right: 16),
+                child: Icon(Icons.account_balance_wallet_outlined,color: HexColor(AppColors.appColorBlack35),),
+              ),
+              Text("Pay Bill",
+              ),
+            ],
+          ),
+        ),
+      );
+
+
+
+      popupmenuList.add(
+        PopupMenuItem(
+          value: 'delete',
+          child: Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left:8.0,right: 16),
+                child: Icon(Icons.print_outlined,color: HexColor(AppColors.appColorBlack35),),
+              ),
+              Text("Print",
+              ),
+            ],
+          ),
+        ),
+      );
+
+    popupmenuList.add(
+      PopupMenuItem(
+        value: 'delete',
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left:8.0,right: 16),
+              child: Icon(Icons.mail_outline,color: HexColor(AppColors.appColorBlack35),),
+            ),
+            Text("Email",
+            ),
+          ],
+        ),
+      ),
+    );
+
+    popupmenuList.add(
+      PopupMenuItem(
+        value: 'delete',
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left:8.0,right: 16),
+              child: Icon(Icons.call_outlined,color: HexColor(AppColors.appColorBlack35),),
+            ),
+            Text("Call",
+            ),
+          ],
+        ),
+      ),
+    );
+
+
+    popupmenuList.add(
+      PopupMenuItem(
+        value: 'delete',
+        child: Row(
+          children: [
+            Padding(
+                padding: const EdgeInsets.only(left:8.0,right: 16),
+                child: SizedBox(
+                    height: 20,width: 20,
+                    child: Image(image: AssetImage('assets/appimages/whatsapp.png'),))
+            ),
+            Text("Whatsapp",
+            ),
+          ],
+        ),
+      ),
+    );
+    return popupmenuList;
+  }
+
+
+  List<PopupMenuEntry<String>> getPurchaseOrderItems(String? name) {
+    List<PopupMenuEntry<String>> popupmenuList = [];
+
+
+    popupmenuList.add(
+      PopupMenuItem(
+        value: 'delete',
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left:8.0,right: 16),
+              child: Icon(Icons.edit_outlined,color: HexColor(AppColors.appColorBlack35),),
+            ),
+            Text(name=="P"?"Edit Payment":"Edit",
+            ),
+          ],
+        ),
+      ),
+    );
+
+
+    popupmenuList.add(
+      PopupMenuItem(
+        value: 'delete',
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left:8.0,right: 16),
+              child: Icon(Icons.shopping_cart_outlined,color: HexColor(AppColors.appColorBlack35),),
+            ),
+            Text("Receive Delivery",
+            ),
+          ],
+        ),
+      ),
+    );
+
+
+
+    popupmenuList.add(
+      PopupMenuItem(
+        value: 'delete',
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left:8.0,right: 16),
+              child: Icon(Icons.print_outlined,color: HexColor(AppColors.appColorBlack35),),
+            ),
+            Text("Print",
+            ),
+          ],
+        ),
+      ),
+    );
+
+    popupmenuList.add(
+      PopupMenuItem(
+        value: 'delete',
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left:8.0,right: 16),
+              child: Icon(Icons.mail_outline,color: HexColor(AppColors.appColorBlack35),),
+            ),
+            Text("Email",
+            ),
+          ],
+        ),
+      ),
+    );
+
+    popupmenuList.add(
+      PopupMenuItem(
+        value: 'delete',
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left:8.0,right: 16),
+              child: Icon(Icons.call_outlined,color: HexColor(AppColors.appColorBlack35),),
+            ),
+            Text("Call",
+            ),
+          ],
+        ),
+      ),
+    );
+
+
+    popupmenuList.add(
+      PopupMenuItem(
+        value: 'delete',
+        child: Row(
+          children: [
+            Padding(
+                padding: const EdgeInsets.only(left:8.0,right: 16),
+                child: SizedBox(
+                    height: 20,width: 20,
+                    child: Image(image: AssetImage('assets/appimages/whatsapp.png'),))
+            ),
+            Text("Whatsapp",
+            ),
+          ],
+        ),
+      ),
+    );
+    return popupmenuList;
+  }
+
+
   Widget _simplePopup() {
     // var name = headerData.title;
     return PopupMenuButton<String>(
       padding: EdgeInsets.only(right: 0),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(4)),
-      itemBuilder: (context) => getItems(widget.type),
+      itemBuilder: (context) =>
+
+          widget.from=="purchase" &&(widget.type=="P"|| widget.type=="I")?
+          getItemsPaymentInvoicePurchase(widget.type):
+          widget.from=="purchase" &&(widget.type=="O")?
+          getPurchaseOrderItems(widget.type):
+          widget.from=="sales" &&(widget.type=="P"|| widget.type=="I")?
+
+          getItemsOrderPaymentInvoice(widget.type):
+
+          getItems(widget.type),
       onSelected: (value) {
         switch (value) {
           case 'delete':

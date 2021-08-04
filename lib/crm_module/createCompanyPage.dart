@@ -449,7 +449,24 @@ class CreateCompanyPageState extends State<CreateCompanyPage> {
                     trailing: Icon(Icons.keyboard_arrow_right),
                   ),
                 ),
+                appListCard(
+                  padding: EdgeInsets.only(left: 16, right: 16, top: 4, bottom: 4),
+                  child:   ListTile(
+                    contentPadding: EdgeInsets.all(0),
 
+                    title:  Padding(
+                      padding: const EdgeInsets.only(top:8.0),
+                      child: Text(
+                        "Number of employees",
+                        style: styleElements.subtitle1ThemeScalable(context),
+                      ),
+                    )
+                    ,
+
+
+                    trailing: Icon(Icons.keyboard_arrow_right),
+                  ),
+                ),
 
 
 

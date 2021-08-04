@@ -10,7 +10,7 @@ import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/crm_module/payment_type_sheet.dart';
-import 'package:oho_works_app/crm_module/product_inventry_services_page.dart';
+import 'package:oho_works_app/crm_module/product/product_inventry_services_page.dart';
 import 'package:oho_works_app/enums/event_status_code.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
@@ -61,6 +61,7 @@ class OrderDetailPage extends StatefulWidget {
   final RoomListItem? roomItem;
   final Function? refreshCallBack;
   int? selectedTab;
+  final String?from;
   OrderDetailPage({
     required this.type,
     required this.standardEventId,
@@ -69,6 +70,7 @@ class OrderDetailPage extends StatefulWidget {
     this.ownerName,
     this.selectedTab,
     this.ownerImage,
+    this.from,
     this.refreshCallBack,
     this.ownerType,
     this.roomItem
@@ -623,7 +625,7 @@ class OrderDetailPageState extends State<OrderDetailPage> {
                                 MaterialPageRoute(
                                   builder: (context) => ConfirmedOrderPage(
                                     selectedTab:widget.selectedTab,
-
+from: widget.from,
                                     type: "person", standardEventId: 2,
                                   ),
                                 ));

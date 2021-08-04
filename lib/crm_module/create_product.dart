@@ -32,7 +32,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'bottom_sheet_address.dart';
 import 'botton_sheet_create_customer.dart';
-import 'create_product_sheet.dart';
+import 'product/create_product_sheet.dart';
 
 
 

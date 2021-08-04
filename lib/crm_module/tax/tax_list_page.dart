@@ -1,8 +1,31 @@
 import 'dart:convert';
 
+
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/customcard.dart';
+import 'package:oho_works_app/components/searchBox.dart';
+import 'package:oho_works_app/components/app_user_list_tile.dart';
+import 'package:oho_works_app/crm_module/product/create_product_sheet.dart';
+import 'package:oho_works_app/models/CommonListingModels/commonListingrequest.dart';
+import 'package:oho_works_app/profile_module/pages/profile_page.dart';
+import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
+import 'package:oho_works_app/utils/app_localization.dart';
+import 'package:oho_works_app/utils/colors.dart';
+import 'package:oho_works_app/utils/config.dart';
+import 'package:oho_works_app/utils/hexColors.dart';
+import 'package:oho_works_app/utils/strings.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:oho_works_app/components/paginator.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+
+
+import 'dart:convert';
+
+import 'package:oho_works_app/api_calls/calls.dart';
+import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/row_cards_common.dart';
 import 'package:oho_works_app/components/searchBox.dart';
 import 'package:oho_works_app/components/app_user_list_tile.dart';
@@ -11,36 +34,31 @@ import 'package:oho_works_app/crm_module/quantity_and_price_bottomSheet.dart';
 import 'package:oho_works_app/models/CommonListingModels/commonListingrequest.dart';
 import 'package:oho_works_app/profile_module/pages/profile_page.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
-import 'package:oho_works_app/utils/app_localization.dart';
-import 'package:oho_works_app/utils/colors.dart';
 import 'package:oho_works_app/utils/config.dart';
-import 'package:oho_works_app/utils/follow_unfollow_block_remove_unblock_button.dart';
 import 'package:oho_works_app/utils/hexColors.dart';
 import 'package:oho_works_app/utils/strings.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:oho_works_app/components/paginator.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'createCompanyPage.dart';
-import 'create_product.dart';
-import 'create_product_sheet.dart';
+import '../createCompanyPage.dart';
+import 'create_new_tax.dart';
 
 // ignore: must_be_immutable
-class ProductListPage extends StatefulWidget {
+class TaxSelectionListPage extends StatefulWidget {
 
   final String type;
-bool  isEdit=false;
+  bool  isEdit=false;
   String? from;
-  ProductListPage( this.type,this.isEdit,this.from,);
+  TaxSelectionListPage( this.type,this.from,);
 
   @override
-  _ProductListPage createState() =>
-      _ProductListPage(type);
+  _TaxSelectionListPage createState() =>
+      _TaxSelectionListPage(type);
 }
 
-class _ProductListPage extends State<ProductListPage>
-    with AutomaticKeepAliveClientMixin<ProductListPage> {
+class _TaxSelectionListPage extends State<TaxSelectionListPage>
+    with AutomaticKeepAliveClientMixin<TaxSelectionListPage> {
   String? searchVal;
   String? personName;
   String type;
@@ -80,7 +98,7 @@ class _ProductListPage extends State<ProductListPage>
   refresh() {
     paginatorKey.currentState!.changeState(resetState: true);
   }
-bool isAdded=false;
+  bool isAdded=false;
   @override
   // ignore: must_call_super
   Widget build(BuildContext context) {
@@ -102,23 +120,7 @@ bool isAdded=false;
                     InkWell(
                       onTap: (){
 
-                        type=="S"?
-                        Navigator.push(context, MaterialPageRoute(
-                            builder: (BuildContext context) {
-                              return CreateCompanyPage(
-                                type: 'talk',
-                                standardEventId: 5,
-                                title: "",
-                              );
-                            })):Navigator.push(context, MaterialPageRoute(
-                            builder: (BuildContext context) {
-                              return CreateContactPage(
-                                type: 'talk',
 
-                                currentTab: 0,
-                                title: "",
-                              );
-                            }));
                       },
 
                       child:  Padding(
@@ -135,8 +137,9 @@ bool isAdded=false;
 
                               isScrollControlled: true,
                               builder: (context) {
-                                return CreateProductSheet(
+                                return CreateNewTaxSheet(
                                   prefs: prefs,
+                                  from:widget.from,
                                   onClickCallback: (value) {
 
                                   },
@@ -170,49 +173,6 @@ bool isAdded=false;
                 ),
               ),
 
-              SliverToBoxAdapter(
-                child: Padding(
-                  padding: const EdgeInsets.all(6.0),
-                  child:    Visibility(
-
-                    child:
-                    AppRowCards(
-                      subTitle1: "Item",
-                      subTitle2: "8998",
-                      subTitle3: "Inventory",
-                      subTitle4: "9",
-                      subTitle5: "Value",
-                      subTitle6:"89"
-
-                    ),
-
-
-
-                  ),
-                ),
-              ),
-
-
-              SliverToBoxAdapter(
-                child: Visibility(
-                  visible: isAdded||widget.isEdit,
-                  child: Padding(
-                    padding: const EdgeInsets.all(6.0),
-                    child: appCard(
-                      color: HexColor(AppColors.cardBkg),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-
-                        children: [
-                          listItemBuilder2(),
-                          listItemBuilder2()
-
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
             ];
           },
           body:RefreshIndicator(
@@ -244,7 +204,7 @@ bool isAdded=false;
     prefs = await SharedPreferences.getInstance();
     final body = jsonEncode({
       "search_val": searchVal,
-      "person_type": [type],
+      "person_type": ["S"],
       "page_number": page,
       "page_size": 20,
       "requested_by_type": "institution",
@@ -332,8 +292,8 @@ bool isAdded=false;
               height: 30,width: 30,
               child: Image(image: AssetImage('assets/appimages/award.png'),)),
 
-          title: "Product Name",
-          subtitle1: "ProductId",
+          title: "123rt4t5tt",
+          subtitle1: type,
           trailingWidget:widget.from!=null && widget.from=="home"? _simplePopup(): Checkbox(
             onChanged: (value) {
               showModalBottomSheet<void>(
@@ -349,9 +309,9 @@ bool isAdded=false;
                   return QantityAndPriceSheet(
                     prefs: prefs,
                     onClickCallback: (value) {
-setState(() {
-  isAdded=true;
-});
+                      setState(() {
+                        isAdded=true;
+                      });
                     },
                   );
                   // return BottomSheetContent();
@@ -488,6 +448,6 @@ setState(() {
       ),
     );
   }
-  _ProductListPage(
+  _TaxSelectionListPage(
       this.type,);
 }

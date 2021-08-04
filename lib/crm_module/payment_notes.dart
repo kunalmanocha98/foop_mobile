@@ -24,8 +24,8 @@ import 'order_detail_page.dart';
 
 class PaymentNotesSheet extends StatefulWidget {
   final int? postId;
-
-  PaymentNotesSheet({this.postId});
+final String? from;
+  PaymentNotesSheet({this.postId,this.from});
 
   @override
   _PaymentNotesSheet createState() => _PaymentNotesSheet();
@@ -68,20 +68,25 @@ class _PaymentNotesSheet extends State<PaymentNotesSheet> {
               padding: const EdgeInsets.all(8.0),
               child: InkWell(
                 onTap: (){
+
                   Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => OrderDetailPage(
                           selectedTab:0,
+                          from:widget.from,
                           type: "person", standardEventId: 2,
                         ),
                       ));
                 },
-                child: Text(
-                  AppLocalizations.of(context)!.translate('next'),
-                  style: styleElements
-                      .headline6ThemeScalable(context)
-                      .copyWith(fontWeight: FontWeight.bold,color: HexColor(AppColors.appMainColor)),
+                child: Padding(
+                  padding: const EdgeInsets.only(right :16.0),
+                  child: Text(
+                    AppLocalizations.of(context)!.translate('next'),
+                    style: styleElements
+                        .headline6ThemeScalable(context)
+                        .copyWith(color: HexColor(AppColors.appMainColor)),
+                  ),
                 ),
               ),
             ),

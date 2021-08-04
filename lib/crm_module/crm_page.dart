@@ -131,6 +131,7 @@ class CrmPageState extends State<CrmPage> with SingleTickerProviderStateMixin {
                         builder: (context) => CompanyAndCustomerPage(
                             id: prefs.getInt(Strings.userId),
                             type: "person",
+                            from:"sales",
                             hideTabs:true,
                             isSwipeDisabled:true,
                             hideAppBar: true,

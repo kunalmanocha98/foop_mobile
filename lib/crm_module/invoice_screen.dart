@@ -14,7 +14,7 @@ import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/components/paginator.dart';
 import 'package:oho_works_app/components/postcardactionbuttons.dart';
 import 'package:oho_works_app/crm_module/payment_type_sheet.dart';
-import 'package:oho_works_app/crm_module/product_inventry_services_page.dart';
+import 'package:oho_works_app/crm_module/product/product_inventry_services_page.dart';
 import 'package:oho_works_app/e_learning_module/ui/chapter_lessons_page.dart';
 import 'package:oho_works_app/e_learning_module/ui/selected_lesson_list.dart';
 import 'package:oho_works_app/enums/event_status_code.dart';

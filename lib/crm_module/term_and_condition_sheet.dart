@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:oho_works_app/components/appAttachmentComponent.dart';
 import 'package:oho_works_app/components/searchBox.dart';
-import 'package:oho_works_app/crm_module/select_unit_sheet.dart';
+import 'package:oho_works_app/crm_module/product/select_unit_sheet.dart';
 import 'package:oho_works_app/enums/personType.dart';
 import 'package:oho_works_app/mixins/editProfileMixin.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
@@ -19,10 +19,11 @@ class TermAndConditionSheet extends StatelessWidget {
   final Function(String value)? onClickCallback;
   final SharedPreferences? prefs;
   final isRoomsVisible;
+  final String ?from;
   GlobalKey<appAttachmentsState> attachmentKey = GlobalKey();
   List<dynamic>? countryCodeList = [];
   int? selectedTab;
-  TermAndConditionSheet({this.onClickCallback,this.prefs,this.isRoomsVisible=true,this.selectedTab});
+  TermAndConditionSheet({this.onClickCallback,this.prefs,this.isRoomsVisible=true,this.selectedTab,this.from});
   @override
   Widget build(BuildContext context) {
 
@@ -125,7 +126,7 @@ class TermAndConditionSheet extends StatelessWidget {
                       alignment: Alignment.centerRight,
                       child: InkWell(
                         onTap: (){
-
+                         Navigator.pop(context);
                          selectedTab==0?
                          showModalBottomSheet<void>(
                            context: context,
@@ -139,6 +140,7 @@ class TermAndConditionSheet extends StatelessWidget {
                            builder: (context) {
                              return OpportunityStatusSheet(
                                prefs: prefs,
+                                 from:from,
                                onClickCallback: (value) {
 
                                },

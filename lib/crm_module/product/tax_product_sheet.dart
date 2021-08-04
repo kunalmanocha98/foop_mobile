@@ -1,4 +1,4 @@
-import 'package:oho_works_app/crm_module/payment_notes.dart';
+import 'package:oho_works_app/crm_module/tax/text_selection_page.dart';
 import 'package:oho_works_app/enums/personType.dart';
 import 'package:oho_works_app/mixins/editProfileMixin.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
@@ -9,15 +9,15 @@ import 'package:oho_works_app/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'order_detail_page.dart';
+import 'discrive_product_sheet.dart';
 
-class OpportunityClouserSheet extends StatelessWidget {
+class TaxSheet extends StatelessWidget {
   final Function(String value)? onClickCallback;
   final SharedPreferences? prefs;
   final isRoomsVisible;
-  final String ? from;
+  final String?type;
   List<dynamic>? countryCodeList = [];
-  OpportunityClouserSheet({this.onClickCallback,this.prefs,this.isRoomsVisible=true,this.from});
+  TaxSheet({this.onClickCallback,this.prefs,this.isRoomsVisible=true,this.type});
   @override
   Widget build(BuildContext context) {
 
@@ -108,7 +108,7 @@ class OpportunityClouserSheet extends StatelessWidget {
                         alignment: Alignment.center,
                         child: Container(
                           child: Text(
-                            AppLocalizations.of(context)!.translate("date_clouser"),
+                            AppLocalizations.of(context)!.translate("Tax"),
                             textAlign: TextAlign.center,
                             style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold),
                           ),
@@ -119,27 +119,26 @@ class OpportunityClouserSheet extends StatelessWidget {
                       alignment: Alignment.centerRight,
                       child: InkWell(
                         onTap: (){
-
                           Navigator.pop(context);
-                          showModalBottomSheet<void>(
-                            context: context,
 
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)),
-                            ),
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => TaxSelectionPage(
+                                    id: 2,
+                                    type: "person",
+                                    hideTabs:true,
 
-                            isScrollControlled: true,
-                            builder: (context) {
-                              return PaymentNotesSheet(
-                                postId: 0,
-                                from:from,
-                              );
-                              // return BottomSheetContent();
-                            },
-                          );
+                                    selectedTab:type=="P"? 0:1,
+                                    isSwipeDisabled:true,
+                                    hideAppBar: true,
+                                    currentTab: 0,
+                                    pageTitle: "",
+                                    imageUrl: "",
+                                    callback: () {
 
-
+                                    }),
+                              ));
                         },
                         child: Container(
                           child: Text(
@@ -152,6 +151,9 @@ class OpportunityClouserSheet extends StatelessWidget {
                   ],
                 ),
               ),
+
+
+
 
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -166,80 +168,86 @@ class OpportunityClouserSheet extends StatelessWidget {
                         child:
                         Padding(
                             padding: EdgeInsets.only(left: 8.0, right: 4),
-                            child: Text(AppLocalizations.of(context)!.translate("expected_date_order"))
+                            child: Text(AppLocalizations.of(context)!.translate("inclusive_tax"))
                         ),
                       ),
 
+                      Center(
+                        child: Switch(
+                          value: false,
+                          onChanged: (value){
 
+                          },
+                          activeTrackColor:HexColor(AppColors.appMainColor10),
+                          activeColor: HexColor(AppColors.appMainColor),
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ),
-
-
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
                   padding: EdgeInsets.only(bottom: 8),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: HexColor(AppColors.appColorBackground),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      padding: EdgeInsets.only(bottom: 0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: HexColor(AppColors.appColorBackground),
+
+                  child:   Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child:
+                        Padding(
+                            padding: EdgeInsets.only(left: 8.0, right: 4),
+                            child: Text(AppLocalizations.of(context)!.translate("exclusive_tax"))
+                        ),
                       ),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.max,
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Row(
-                            children: [
 
-                              Center(
-                                child: Padding(
-                                  padding: EdgeInsets.only(left: 8.0, right: 4),
-                                  child: Icon(Icons.calendar_today_outlined,size: 15,),
-                                ),
-                              ),
-                              Expanded(
-                                child: TextFormField(
-                                  validator: EditProfileMixins().validateEmail,
-                                  initialValue: "",
-                                  onSaved: (value) {
+                      Center(
+                        child: Switch(
+                          value: false,
+                          onChanged: (value){
 
-                                  },
-
-
-                                  decoration: InputDecoration(
-                                    hintText: AppLocalizations.of(context)!.translate("date"),
-                                    contentPadding: EdgeInsets.only(
-                                        left: 12, top: 16, bottom: 8),
-                                    border: UnderlineInputBorder(
-                                        borderRadius:
-                                        BorderRadius.circular(12)),
-                                    floatingLabelBehavior:
-                                    FloatingLabelBehavior.auto,
-                                    labelText:
-                                    AppLocalizations.of(context)!.translate("date_of_clouser"),),
-
-
-                                ),
-                              ),
-                            ],
-                          ),
-
-                        ],
+                          },
+                          activeTrackColor:HexColor(AppColors.appMainColor10),
+                          activeColor: HexColor(AppColors.appMainColor),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  padding: EdgeInsets.only(bottom: 8),
 
+                  child:   Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child:
+                        Padding(
+                            padding: EdgeInsets.only(left: 8.0, right: 4),
+                            child: Text(AppLocalizations.of(context)!.translate("no_tax"))
+                        ),
+                      ),
+
+                      Center(
+                        child: Switch(
+                          value: false,
+                          onChanged: (value){
+
+                          },
+                          activeTrackColor:HexColor(AppColors.appMainColor10),
+                          activeColor: HexColor(AppColors.appMainColor),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
               SizedBox(
                 height: MediaQuery.of(context).viewInsets.bottom,
               )

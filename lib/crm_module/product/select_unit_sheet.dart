@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:oho_works_app/components/searchBox.dart';
 import 'package:oho_works_app/crm_module/product/set_pricing_sheet.dart';
 import 'package:oho_works_app/crm_module/term_and_condition_sheet.dart';
-import 'package:oho_works_app/crm_module/to_from_date_sheet.dart';
 import 'package:oho_works_app/enums/personType.dart';
 import 'package:oho_works_app/mixins/editProfileMixin.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
@@ -13,14 +12,14 @@ import 'package:oho_works_app/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class NextActivitySheet extends StatelessWidget {
+class UnitTypeSheet extends StatelessWidget {
   final Function(String value)? onClickCallback;
   final SharedPreferences? prefs;
   final isRoomsVisible;
-  final String ? from;
+  final String ?type;
   List<dynamic>? countryCodeList = [];
   int? selectedTab;
-  NextActivitySheet({this.onClickCallback,this.prefs,this.isRoomsVisible=true,this.selectedTab,this.from});
+  UnitTypeSheet({this.onClickCallback,this.prefs,this.isRoomsVisible=true,this.selectedTab,this.type});
   @override
   Widget build(BuildContext context) {
 
@@ -78,7 +77,7 @@ class NextActivitySheet extends StatelessWidget {
                       alignment: Alignment.centerRight,
                       child: Container(
                         child: Text(
-                          AppLocalizations.of(context)!.translate("skip"),
+                       AppLocalizations.of(context)!.translate("back"),
                           textAlign: TextAlign.center,
                           style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold,color: HexColor(AppColors.appMainColor)),
                         ),
@@ -88,7 +87,7 @@ class NextActivitySheet extends StatelessWidget {
                         alignment: Alignment.center,
                         child: Container(
                           child: Text(
-                            AppLocalizations.of(context)!.translate("next_activity"),
+                            AppLocalizations.of(context)!.translate("select_unit"),
                             textAlign: TextAlign.center,
                             style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold),
                           ),
@@ -97,9 +96,33 @@ class NextActivitySheet extends StatelessWidget {
 
                     Align(
                       alignment: Alignment.centerRight,
+                      child: InkWell(
+                        onTap: (){
+                          Navigator.pop(context);
+                          showModalBottomSheet<void>(
+                            context: context,
 
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)),
+                            ),
+
+                            isScrollControlled: true,
+                            builder: (context) {
+                              return TermAndConditionSheet(
+                                prefs: prefs,
+                                selectedTab:selectedTab,
+                                onClickCallback: (value) {
+
+                                },
+                              );
+                              // return BottomSheetContent();
+                            },
+                          );
+                        },
                         child: InkWell(
                           onTap: (){
+
                             Navigator.pop(context);
                             showModalBottomSheet<void>(
                               context: context,
@@ -111,9 +134,9 @@ class NextActivitySheet extends StatelessWidget {
 
                               isScrollControlled: true,
                               builder: (context) {
-                                return ToFromOpportunitySheet(
+                                return PricingSheet(
                                   prefs: prefs,
-                                  from:from,
+                                  type: type,
                                   onClickCallback: (value) {
 
                                   },
@@ -130,7 +153,7 @@ class NextActivitySheet extends StatelessWidget {
                             ),
                           ),
                         ),
-                      )
+                      ),)
                   ],
                 ),
               ),
@@ -176,54 +199,34 @@ class NextActivitySheet extends StatelessWidget {
                       ],
                     ),
 
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Container(
-                        child: Text(
-                          AppLocalizations.of(context)!.translate("next_step"),
-                          textAlign: TextAlign.center,
-                          style: styleElements.subtitle1ThemeScalable(context)
-                        ),
-                      ),),
-                    ListTile(
-                        title:Text("Hot"),
-                        trailing:  Radio(
-                          value: "=",
-                          groupValue: 1,
-                          onChanged: ( value) {
 
-                          },
-                        ),
+                    ListTile(
+                      title:Text("Kg"),
+                      trailing:  Checkbox(value: false, onChanged: (bool? value) {  },)
                     ),
                     ListTile(
-                        title:Text("Call"),
-                        trailing:   Radio(
-                          value: "=",
-                          groupValue: 1,
-                          onChanged: ( value) {
-
-                          },
-                        ),
+                      title:Text("grams"),
+                        trailing:  Checkbox(value: false, onChanged: (bool? value) {  },)
                     ),
                     ListTile(
-                        title:Text("Email"),
-                        trailing:  Radio(
-                          value: "=",
-                          groupValue: 1,
-                          onChanged: ( value) {
-
-                          },
-                        ),
+                      title:Text("cms"),
+                        trailing:  Checkbox(value: false, onChanged: (bool? value) {  },)
                     ),
                     ListTile(
-                        title:Text("Meeting"),
-                        trailing:   Radio(
-                          value: "=",
-                          groupValue: 1,
-                          onChanged: ( value) {
-
-                          },
-                        ),
+                        title:Text("Liters"),
+                        trailing:  Checkbox(value: false, onChanged: (bool? value) {  },)
+                    ),
+                      ListTile(
+                        title:Text("Liters"),
+                        trailing:  Checkbox(value: false, onChanged: (bool? value) {  },)
+                    ),
+                    ListTile(
+                        title:Text("Liters"),
+                        trailing:  Checkbox(value: false, onChanged: (bool? value) {  },)
+                    ),
+                    ListTile(
+                        title:Text("Liters"),
+                        trailing:  Checkbox(value: false, onChanged: (bool? value) {  },)
                     ),
 
 
