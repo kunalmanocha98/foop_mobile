@@ -198,7 +198,7 @@ class _UploadUserIdState extends State<UploadUserId> {
           child: Scaffold(
               resizeToAvoidBottomInset: false,
               backgroundColor: HexColor(AppColors.appColorBackground),
-              appBar: appAppBar().getCustomAppBar(context,
+              appBar: OhoAppBar().getCustomAppBar(context,
                   appBarTitle: AppLocalizations.of(context)!.translate('upload_photo_id_header'),
                   actions: [
                     Padding(

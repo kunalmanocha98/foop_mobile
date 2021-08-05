@@ -722,7 +722,7 @@ class _SelectBusiness extends State<SelectBusiness>
         onWillPop: _onBackPressed,
         child: SafeArea(
             child: Scaffold(
-              appBar: appAppBar().getCustomAppBar(context,
+              appBar: OhoAppBar().getCustomAppBar(context,
                   actions: [ Padding(
                     padding: const EdgeInsets.only(
                         top: 2.0, left: 16.0, right: 16.0),

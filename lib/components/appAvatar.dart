@@ -30,6 +30,7 @@ class appAvatar extends StatefulWidget {
   bool withBorderDivider;
   double? borderDividersize;
   String? name;
+  Color? color;
 
   appAvatar(
       {Key? key,
@@ -47,6 +48,7 @@ class appAvatar extends StatefulWidget {
         this.placeholderImage,
         this.withBorder,
         this.name,
+        this.color,
         this.borderSize})
       : super(key: key);
 
@@ -79,7 +81,8 @@ class appAvatarState extends State<appAvatar> {
                 service_type: widget.service_type,
                 isFullUrl: widget.isFullUrl,
                 isFromAsset: widget.isFromAsset,
-                  name:widget.name
+                  name:widget.name,
+                color:widget.color
               );
             }));
       }
@@ -155,7 +158,7 @@ class appAvatarState extends State<appAvatar> {
       width: size ??= 52,
       padding: EdgeInsets.all(4),
       decoration: BoxDecoration(
-          color: AppColors.colorsList[Random().nextInt( AppColors.colorsList.length)],
+        color: widget.color,
           shape: BoxShape.circle,),
       child: Center(
         child: appAutoSizeText(

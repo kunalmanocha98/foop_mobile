@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:oho_works_app/messenger_module/entities/conversation_list_reponse.dart';
 import 'package:oho_works_app/messenger_module/entities/message_database.dart';
 import 'package:oho_works_app/models/campus_talk/participant_list.dart';
+import 'package:oho_works_app/models/email_module/compose_email.dart';
 import 'package:oho_works_app/models/user_contacts.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -128,6 +129,19 @@ class DatabaseHelper {
   static final joinedDate = 'joined_date';
   static final isSpeaking = 'isSpeaking';
 
+  //==========================================================EmailTable
+  static final emailTable = 'emailTable';
+  static final personId = 'person_id';
+  static final username = 'username';
+  static final from_address = 'from_address';
+  static final to_addresses = 'to_addresses';
+  static final cc_addresses = 'cc_addresses';
+  static final bcc_addresses = 'bcc_addresses';
+  static final email_subject = 'email_subject';
+  static final email_text = 'email_text';
+  static final original_message_uid = 'original_message_uid';
+  static final files = 'files';
+
   DatabaseHelper._privateConstructor();
 
   static final DatabaseHelper instance = DatabaseHelper._privateConstructor();
@@ -163,6 +177,25 @@ class DatabaseHelper {
     await _conversations(db, version);
     await _messages(db, version);
     await _talk(db, version);
+    await _email(db, version);
+  }
+
+  _email(Database db, int version) async{
+    await db.execute('''
+CREATE TABLE $emailTable (
+$id INTEGER PRIMARY KEY AUTOINCREMENT,
+$personId TEXT,
+$username TEXT,
+$from_address TEXT,
+$to_addresses TEXT,
+$cc_addresses TEXT,
+$bcc_addresses TEXT,
+$email_subject TEXT,
+$email_text TEXT,
+$original_message_uid TEXT,
+$files TEXT
+)
+''');
   }
 
   _talk(Database db, int version) async {
@@ -424,6 +457,32 @@ $isFailed INTEGER
     }
     return data;
   }
+
+  //=====================================================================Email queries
+
+  Future<List<EmailCreateRequest>> getAllEmails() async {
+    Database? db = await instance.database;
+    List<Map<String,dynamic>> maps = await db!.query(emailTable);
+    List<EmailCreateRequest> data = [];
+    if (maps.length > 0) {
+      for (int i = 0; i < maps.length; i++) {
+        data.add(EmailCreateRequest.fromJson(maps[i]));
+      }
+    }
+    return data;
+  }
+
+  removeEmail(int emailId) async{
+    final db = await instance.database;
+    var res = await db!.delete(emailTable,where: '$id = ? ',whereArgs: [emailId]);
+    return res;
+  }
+
+  Future<int> insertEmail(EmailCreateRequest row) async {
+    Database? db = await instance.database;
+    return await db!.insert(emailTable, row.toJson());
+  }
+
 
   //=====================================================================Conversation queries
 

@@ -84,7 +84,7 @@ class _CouponDetailPage extends State<CouponDetailPage> {
 
     return SafeArea(
       child: Scaffold(
-        appBar: appAppBar().getCustomAppBar(context, appBarTitle: 'Coupon Detail', onBackButtonPress: (){Navigator.pop(context);}),
+        appBar: OhoAppBar().getCustomAppBar(context, appBarTitle: 'Coupon Detail', onBackButtonPress: (){Navigator.pop(context);}),
         body: Center(
           child: Container(
             decoration: BoxDecoration(

@@ -106,7 +106,7 @@ class _UpdateLanguagePage extends State<UpdateLanguagePage> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: HexColor(AppColors.appColorBackground),
-        appBar: appAppBar().getCustomAppBar(
+        appBar: OhoAppBar().getCustomAppBar(
             context,
             appBarTitle:  AppLocalizations.of(context)!.translate("language"),
             onBackButtonPress: (){ Navigator.pop(context);}),

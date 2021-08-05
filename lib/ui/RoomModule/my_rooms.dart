@@ -56,7 +56,7 @@ class _MyRooms extends State<MyRooms> {
     return SafeArea(
       child: new  Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: appAppBar().getCustomAppBar(context,
+        appBar: OhoAppBar().getCustomAppBar(context,
             appBarTitle: AppLocalizations.of(context)!.translate("rooms"),
             onBackButtonPress: () {
               Navigator.pop(context);

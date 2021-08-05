@@ -48,7 +48,7 @@ class _GoalsDetailPage extends State<GoalsDetailPage> {
       child: Scaffold(
           resizeToAvoidBottomInset: false,
           backgroundColor: HexColor(AppColors.appColorBackground),
-          appBar: appAppBar().getCustomAppBarWithSearch(context,
+          appBar: OhoAppBar().getCustomAppBarWithSearch(context,
               appBarTitle:  AppLocalizations.of(context)!.translate("select_date"),
               onSearchValueChanged: (value){},
               onBackButtonPress: (){

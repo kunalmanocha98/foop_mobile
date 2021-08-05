@@ -49,7 +49,7 @@ class BecomeEdufluencerFollowupPageState
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
     return Scaffold(
-      appBar: appAppBar().getCustomAppBar(
+      appBar: OhoAppBar().getCustomAppBar(
         context,
         appBarTitle:
         AppLocalizations.of(context)!.translate(widget.type == edufluencer_type.E?'become_mentor':"become_tutor"),

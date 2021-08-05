@@ -71,7 +71,7 @@ class AssignmentPageState extends State<AssignmentPage>
     return SafeArea(
       child: new Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: appAppBar().getCustomAppBar(context,
+          appBar: OhoAppBar().getCustomAppBar(context,
               appBarTitle: AppLocalizations.of(context)!.translate("assignment"),
               onBackButtonPress: () {
                 Navigator.pop(context);

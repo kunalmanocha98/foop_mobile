@@ -25,7 +25,7 @@ class _GeneralSkillsEditPage extends State<GeneralSkillsEditPage> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: HexColor(AppColors.appColorBackground),
-        appBar: appAppBar().getCustomAppBar(context,
+        appBar: OhoAppBar().getCustomAppBar(context,
             appBarTitle:  'General Skills',
             actions: <Widget>[
               Padding(

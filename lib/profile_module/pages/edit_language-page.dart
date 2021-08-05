@@ -121,7 +121,7 @@ class _EditLanguage extends State<EditLanguage> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: HexColor(AppColors.appColorBackground),
-        appBar: appAppBar().getCustomAppBar(
+        appBar: OhoAppBar().getCustomAppBar(
           context,
           appBarTitle: type == "Languages" ? ' Add Language' : 'Add Skill',
           onBackButtonPress: () {

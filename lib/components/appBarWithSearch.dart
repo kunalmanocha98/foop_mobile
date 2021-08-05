@@ -78,7 +78,7 @@ import 'package:flutter/material.dart';
 //
 // }
 
-class appAppBar {
+class OhoAppBar {
   getCustomAppBarWithProfileImage(BuildContext context,
       {required String appBarTitle,
         required Function onBackButtonPress,

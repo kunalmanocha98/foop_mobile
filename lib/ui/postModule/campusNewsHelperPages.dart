@@ -57,7 +57,7 @@ class _CampusNewsHelperPages extends State<CampusNewsHelperPages> {
     styleElements = TextStyleElements(context);
     return SafeArea(
         child: Scaffold(
-          appBar: appAppBar().getCustomAppBar(
+          appBar: OhoAppBar().getCustomAppBar(
               context,
               appBarTitle: getAppBarTitle(),
               actions: (widget.campus_news_type==CAMPUS_NEWS_TYPE.assure || widget.campus_news_type==CAMPUS_NEWS_TYPE.topics)?[

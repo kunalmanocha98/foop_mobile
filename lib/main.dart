@@ -482,7 +482,7 @@ class MyApp extends State<MainApp> {
           screen = Verification(
             email: "",
             mobileNo: "",
-            isRecoverPassword: false,
+            isRecoverPassword: false, isEmailRecovery: false,
           );
           break;
         case WelcomeScreen:

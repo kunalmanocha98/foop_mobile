@@ -130,7 +130,7 @@ class EventDetailPageState extends State<EventDetailPage> {
     );
     return SafeArea(
         child: Scaffold(
-          appBar: appAppBar().getCustomAppBar(context,
+          appBar: OhoAppBar().getCustomAppBar(context,
               appBarTitle: AppLocalizations.of(context)!.translate('event_details'),
               onBackButtonPress: () {
                 Navigator.pop(context);

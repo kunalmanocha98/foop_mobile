@@ -50,7 +50,7 @@ class _AcademicDetailspage extends State<AcademicDetailspage> {
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: appAppBar().getCustomAppBar(
+          appBar: OhoAppBar().getCustomAppBar(
             context,
             actions: [
               Padding(

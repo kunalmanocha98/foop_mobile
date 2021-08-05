@@ -93,7 +93,7 @@ class _FollowersFollowingPage extends State<FollowersFollowingPage> with SingleT
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         backgroundColor: HexColor(AppColors.appColorBackground),
-        appBar: appAppBar().getCustomAppBar(context,
+        appBar: OhoAppBar().getCustomAppBar(context,
             appBarTitle: pageTitle,
             onBackButtonPress: () {
 

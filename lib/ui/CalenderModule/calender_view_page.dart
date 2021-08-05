@@ -85,7 +85,7 @@ class CalenderViewPageState extends State<CalenderViewPage>{
     );
 
     return new Scaffold(
-        appBar:appAppBar().getCustomAppBar(context, appBarTitle: AppLocalizations.of(context)!.translate('select_date_heading'),
+        appBar:OhoAppBar().getCustomAppBar(context, appBarTitle: AppLocalizations.of(context)!.translate('select_date_heading'),
             onBackButtonPress: (){Navigator.pop(context);},
         actions: [
           appTextButton(

@@ -23,7 +23,7 @@ class RegisterInstituteInstructions extends StatelessWidget{
     var styleElements = TextStyleElements(context);
     return SafeArea(
       child: Scaffold(
-        appBar: appAppBar().getCustomAppBar(context,
+        appBar: OhoAppBar().getCustomAppBar(context,
             appBarTitle: 'app',
             onBackButtonPress: (){Navigator.pop(context);}),
         body: SingleChildScrollView(

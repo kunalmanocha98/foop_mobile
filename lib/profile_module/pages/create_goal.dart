@@ -58,7 +58,7 @@ class _CreateGoal extends State<CreateGoal> {
       SafeArea(child:  Scaffold(
           resizeToAvoidBottomInset: false,
           backgroundColor: HexColor(AppColors.appColorBackground),
-          appBar: appAppBar().getCustomAppBarWithSearch(
+          appBar: OhoAppBar().getCustomAppBarWithSearch(
               context,
               appBarTitle: 'Create Goal',
               onBackButtonPress: (){_onBackPressed();},

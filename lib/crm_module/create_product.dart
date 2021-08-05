@@ -135,7 +135,7 @@ class CreateProductPageState extends State<CreateProductPage> {
 
     return SafeArea(
         child: Scaffold(
-          appBar: appAppBar().getCustomAppBar(context,
+          appBar: OhoAppBar().getCustomAppBar(context,
               actions: [
                 appTextButton(
                   onPressed: () {

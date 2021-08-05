@@ -133,7 +133,7 @@ class OrderDetailPageState extends State<OrderDetailPage> {
 
     return SafeArea(
         child: Scaffold(
-          appBar: appAppBar().getCustomAppBar(context,
+          appBar: OhoAppBar().getCustomAppBar(context,
               actions: [
                 appTextButton(
                   onPressed: () {

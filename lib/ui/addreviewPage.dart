@@ -102,7 +102,7 @@ class _AddReviewPage extends State<AddReviewPage> {
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: true,
-          appBar: appAppBar().getCustomAppBar(context,
+          appBar: OhoAppBar().getCustomAppBar(context,
               appBarTitle: "Rate " + name!,
               actions: [
                 Padding(

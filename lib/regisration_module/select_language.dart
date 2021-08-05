@@ -73,7 +73,7 @@ late BuildContext sctx;
        resizeToAvoidBottomInset: false,
        backgroundColor: HexColor(AppColors.appColorBackground),
        // AppLocalizations.of(context).translate("language")
-       appBar: appAppBar().getCustomAppBar(context,
+       appBar: OhoAppBar().getCustomAppBar(context,
            appBarTitle: AppLocalizations.of(context)!.translate("language"),
            onBackButtonPress: (){_onBackPressed();},
          ),

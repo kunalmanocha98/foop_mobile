@@ -70,7 +70,7 @@ class _LearnerCategoryListResponse extends State<LearnerCategoryPage> {
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: appAppBar().getCustomAppBar(
+          appBar: OhoAppBar().getCustomAppBar(
             context,
             appBarTitle: AppLocalizations.of(context)!.translate('select_type'),
             actions: [

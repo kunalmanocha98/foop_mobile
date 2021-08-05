@@ -120,7 +120,7 @@ class SupplierPageState extends State<SupplierPage> with SingleTickerProviderSta
       Scaffold(
         resizeToAvoidBottomInset: true,
         backgroundColor: HexColor(AppColors.appColorBackground),
-        appBar: appAppBar().getCustomAppBar(context,
+        appBar: OhoAppBar().getCustomAppBar(context,
             centerTitle:false,
             actions: [
               InkWell(

@@ -78,7 +78,7 @@ class _EventList extends State<EventList> with SingleTickerProviderStateMixin{
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
     return SafeArea(child: Scaffold(
-      appBar: appAppBar().getCustomAppBar(context,
+      appBar: OhoAppBar().getCustomAppBar(context,
         appBarTitle: AppLocalizations.of(context)!.translate('events'),
         onBackButtonPress: (){Navigator.pop(context);},
         actions: [

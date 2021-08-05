@@ -29,7 +29,7 @@ class BuddyServicesPageState extends State<BuddyServicesPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: appAppBar().getCustomAppBar(
+        appBar: OhoAppBar().getCustomAppBar(
           context,
           appBarTitle: AppLocalizations.of(context)!.translate('buddy_services'),
           onBackButtonPress: () {

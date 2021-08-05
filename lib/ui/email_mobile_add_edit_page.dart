@@ -54,7 +54,7 @@ class _AddEditEmailPhonesPage extends State<AddEditEmailPhonesPage> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: appAppBar().getCustomAppBar(
+        appBar: OhoAppBar().getCustomAppBar(
           context,
           appBarTitle: isEmail
               ? AppLocalizations.of(context)!.translate("email_addresses_title")

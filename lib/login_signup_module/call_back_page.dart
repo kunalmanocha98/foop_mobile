@@ -472,7 +472,7 @@ class _CallBackPage extends State<CallBackPage>
       child: SafeArea(
           child: Scaffold(
               // resizeToAvoidBottomInset: false,
-              appBar: appAppBar().getCustomAppBar(
+              appBar: OhoAppBar().getCustomAppBar(
                 context,
                 appBarTitle: '',
                 onBackButtonPress: () {

@@ -281,7 +281,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
       child: SafeArea(
           child: Scaffold(
               // resizeToAvoidBottomInset: false,
-              appBar: appAppBar().getCustomAppBar(context,
+              appBar: OhoAppBar().getCustomAppBar(context,
                   appBarTitle: isEvent! ?
                   AppLocalizations.of(context)!.translate('register__entity'):
                   AppLocalizations.of(context)!.translate('reg_bus'),

@@ -30,4 +30,33 @@ class CommonMixins {
     else
       return null;
   }
+
+  String? validateEmails(String? value) {
+    Pattern pattern =
+        r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+    RegExp regex = new RegExp(pattern.toString());
+    var emails = value!.split(",");
+    for(String email in emails){
+      if (!regex.hasMatch(email.trim())) {
+        return "$email is not a valid email address";
+      }
+    }
+    return null;
+  }
+  String? validateEmailsWithNull(String? value) {
+    if(value!.isNotEmpty) {
+      Pattern pattern =
+          r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$';
+      RegExp regex = new RegExp(pattern.toString());
+      var emails = value.split(",");
+      for (String email in emails) {
+        if (!regex.hasMatch(email.trim())) {
+          return "$email is not a valid email address";
+        }
+      }
+      return null;
+    }else{
+      return null;
+    }
+  }
 }

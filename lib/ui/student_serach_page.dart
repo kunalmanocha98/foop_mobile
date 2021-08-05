@@ -107,7 +107,7 @@ class _StudentsPageNew extends State<StudentsPageNew>
     return SafeArea(
       child: Scaffold(
         backgroundColor: HexColor(AppColors.appColorBackground),
-        appBar: appAppBar().getCustomAppBar(context,
+        appBar: OhoAppBar().getCustomAppBar(context,
             appBarTitle: pageTitle, onBackButtonPress: () {
           _onBackPressed();
         }),

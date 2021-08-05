@@ -117,7 +117,7 @@ class PurchaseOrderPageState extends State<PurchaseOrderPage> with SingleTickerP
         resizeToAvoidBottomInset: true,
         backgroundColor: HexColor(AppColors.appColorBackground),
 
-        appBar: appAppBar().getCustomAppBar(context,
+        appBar: OhoAppBar().getCustomAppBar(context,
             centerTitle:false,
             actions: [
               InkWell(

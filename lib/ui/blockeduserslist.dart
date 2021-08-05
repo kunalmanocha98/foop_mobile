@@ -74,7 +74,7 @@ class _BlockedUsersList extends State<BlockedUsersList> {
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         backgroundColor: HexColor(AppColors.appColorBackground),
-        appBar: appAppBar().getCustomAppBar(context,
+        appBar: OhoAppBar().getCustomAppBar(context,
             appBarTitle: AppLocalizations.of(context)!
                 .translate('blocked_users'), onBackButtonPress: () {
               if (callback != null) callback!();

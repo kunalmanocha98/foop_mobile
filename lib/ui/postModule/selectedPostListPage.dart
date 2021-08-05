@@ -258,7 +258,7 @@ class SelectedFeedPageState extends State<SelectedFeedListPage> {
     styleElements = TextStyleElements(context);
     return!isFromProfile!? SafeArea(
       child: Scaffold(
-          appBar: appAppBar().getCustomAppBar(context,
+          appBar: OhoAppBar().getCustomAppBar(context,
               appBarTitle: appBarTitle,
               actions: isOthersPostList
                   ? []

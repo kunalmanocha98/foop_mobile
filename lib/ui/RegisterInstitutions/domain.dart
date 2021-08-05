@@ -140,7 +140,7 @@ class _DomainPage extends State<DomainPage>
       child: SafeArea(
           child: Scaffold(
             // resizeToAvoidBottomInset: false,
-              appBar: appAppBar().getCustomAppBar(context,
+              appBar: OhoAppBar().getCustomAppBar(context,
                   appBarTitle: AppLocalizations.of(context)!.translate('reg_bus'),
                   isIconVisible:false,
                   actions: [

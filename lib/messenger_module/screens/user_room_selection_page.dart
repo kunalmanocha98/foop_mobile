@@ -149,7 +149,7 @@ class _UserRoomSelectionPage extends State<UserRoomSelectionPage> with SingleTic
       child: Scaffold(
         resizeToAvoidBottomInset: true,
 
-        appBar: appAppBar().getCustomAppBar(context,
+        appBar: OhoAppBar().getCustomAppBar(context,
             appBarTitle: title,
             onBackButtonPress: () {
               Navigator.pop(context);

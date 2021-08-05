@@ -29,7 +29,7 @@ class FindPageState extends State<FindPage>{
     return SafeArea(
       child: Scaffold(
 
-        appBar: appAppBar().getCustomAppBarWithSearch(
+        appBar: OhoAppBar().getCustomAppBarWithSearch(
             context,
             appBarTitle: AppLocalizations.of(context)!.translate('find'),
             onBackButtonPress: (){Navigator.pop(context);},

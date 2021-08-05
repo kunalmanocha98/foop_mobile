@@ -93,7 +93,7 @@ class _ChangePassword extends  State<ChangePassword> {
       child: Scaffold(
           resizeToAvoidBottomInset: false,
           backgroundColor: HexColor(AppColors.appColorBackground),
-          appBar: appAppBar().getCustomAppBar(context,
+          appBar: OhoAppBar().getCustomAppBar(context,
               appBarTitle: ''
               // AppLocalizations.of(context).translate("change_password")
               ,

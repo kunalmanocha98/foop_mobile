@@ -149,7 +149,7 @@ class ConfirmedOrderPageState extends State<ConfirmedOrderPage> {
 
     return SafeArea(
         child: Scaffold(
-            appBar: appAppBar().getCustomAppBar(context,
+            appBar: OhoAppBar().getCustomAppBar(context,
                 centerTitle: false,
                 actions: [
 

@@ -338,7 +338,7 @@ class _InviteParent extends State<InviteParent> with CommonMixins{
     return SafeArea(
       child: Scaffold(
 
-        appBar: appAppBar().getCustomAppBar(context,
+        appBar: OhoAppBar().getCustomAppBar(context,
             appBarTitle: 'Invite Parents', onBackButtonPress: () {
           Navigator.pop(context);
         }),

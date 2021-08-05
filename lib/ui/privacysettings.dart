@@ -91,7 +91,7 @@ class _PrivacySettingsPage extends State<PrivacySettingsPage> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: HexColor(AppColors.appColorBackground),
-        appBar:appAppBar().getCustomAppBar(context, appBarTitle: getAppBarTitle(), onBackButtonPress: (){
+        appBar:OhoAppBar().getCustomAppBar(context, appBarTitle: getAppBarTitle(), onBackButtonPress: (){
           Navigator.pop(context);
         }),
         body:  isLoading?    PreloadingView(

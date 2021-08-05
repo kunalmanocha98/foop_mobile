@@ -81,7 +81,7 @@ class InstituteAdminListPageState extends State<InstituteAdminListPage> {
     styleElements = TextStyleElements(context);
     return SafeArea(
       child: Scaffold(
-        appBar: appAppBar().getCustomAppBarWithSearch(context,
+        appBar: OhoAppBar().getCustomAppBarWithSearch(context,
             appBarTitle:
             AppLocalizations.of(context)!.translate('entity_admins'),
             onBackButtonPress: () {

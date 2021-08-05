@@ -210,7 +210,7 @@ class _CreateFacility extends State<CreateFacility> {
           child: Scaffold(
             resizeToAvoidBottomInset: true,
               backgroundColor: HexColor(AppColors.appColorBackground),
-              appBar: appAppBar().getCustomAppBar(context,
+              appBar: OhoAppBar().getCustomAppBar(context,
                   appBarTitle: AppLocalizations.of(context)!.translate('create'),
                   actions: actions, onBackButtonPress: () {
                 _onBackPressed();

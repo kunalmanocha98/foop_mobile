@@ -2,10 +2,12 @@ import 'dart:convert';
 
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
+import 'package:oho_works_app/components/app_user_list_tile.dart';
 import 'package:oho_works_app/enums/DictionaryType.dart';
 import 'package:oho_works_app/home/locator.dart';
 import 'package:oho_works_app/login_signup_module/changepassword.dart';
 import 'package:oho_works_app/models/disctionarylist.dart';
+import 'package:oho_works_app/models/email_module/domain_create.dart';
 import 'package:oho_works_app/models/language_list.dart';
 import 'package:oho_works_app/models/personal_profile.dart';
 import 'package:oho_works_app/models/settignsView.dart';
@@ -26,6 +28,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'Settings/institute_admin_list.dart';
 import 'blockeduserslist.dart';
 import 'email_mobile_add_edit_page.dart';
+import 'email_module/email_login_page.dart';
+import 'email_module/email_user_listing.dart';
+import 'email_module/manage_domain_page.dart';
+import 'email_module/professional_email_page.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
@@ -42,7 +48,7 @@ class _SettingsPage extends State<SettingsPage> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: appAppBar().getCustomAppBar(context,
+        appBar: OhoAppBar().getCustomAppBar(context,
             appBarTitle: AppLocalizations.of(context)!.translate("settings"),
             onBackButtonPress: () {
           Navigator.pop(context);
@@ -71,6 +77,47 @@ class _SettingsPage extends State<SettingsPage> {
                                 .translate("account_settings"),
                             style:
                                 styleElements.subtitle1ThemeScalable(context),
+                          ),
+                        ),
+                      )),
+                ),
+                InkWell(
+                  onTap: () {
+                    if (prefs!.containsKey(Strings.mailUsername)) {
+                      showManageEmailSheet(
+                          data.permissions!.any((element) {
+                            return element.roleCode == 'ADMIN';
+                          })
+                      );
+                    } else {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (BuildContext context) {
+                            return EmailLoginPage(
+                              onlyLogin: true,
+                            );
+                          })).then((value) {
+                        if (value != null && value) {
+                          showManageEmailSheet(
+                              data.permissions!.any((element) {
+                                return element.roleCode == 'ADMIN';
+                              })
+                          );
+                        }
+                      });
+                    }
+                  },
+                  child: Card(
+                      elevation: 0,
+                      margin:
+                      EdgeInsets.only(left: 4, right: 4, top: 1, bottom: 1),
+                      child: Padding(
+                        padding: EdgeInsets.only(top: 8, bottom: 8, left: 8),
+                        child: ListTile(
+                          title: Text(
+                            AppLocalizations.of(context)!
+                                .translate("manage_professional"),
+                            style:
+                            styleElements.subtitle1ThemeScalable(context),
                           ),
                         ),
                       )),
@@ -176,6 +223,195 @@ class _SettingsPage extends State<SettingsPage> {
       ),
     );
   }
+  void showManageEmailSheet(bool isAdmin) {
+    showModalBottomSheet(
+        context: context,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(12), topRight: Radius.circular(12))),
+        builder: (BuildContext context) {
+          return ManageEmailAccountSheet(isAdmin);
+        });
+  }
+}
+class ManageEmailAccountSheet extends StatelessWidget {
+  final bool isAdmin;
+  ManageEmailAccountSheet(this.isAdmin);
+  final SharedPreferences prefs = locator<SharedPreferences>();
+
+  @override
+  Widget build(BuildContext context) {
+    var prefs = locator<SharedPreferences>();
+    var styleElements = TextStyleElements(context);
+    return Container(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding:
+            EdgeInsets.only(top: 12.0, bottom: 16, left: 12, right: 12),
+            child: Stack(
+              children: [
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 8.0),
+                    child: Text(
+                      AppLocalizations.of(context)!.translate('manage_account'),
+                      style: styleElements
+                          .headlinecustomThemeScalable(context)
+                          .copyWith(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+                Align(
+                    alignment: Alignment.topRight,
+                    child: IconButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        icon: Icon(
+                          Icons.close,
+                          size: 28,
+                          color: HexColor(AppColors.appColorBlack65),
+                        )))
+              ],
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(top: 16, right: 8, left: 8, bottom: 16),
+            child: appUserListTile(
+              imageUrl: prefs.getString(Strings.profileImage),
+              title: prefs.getString(Strings.userName),
+              subtitle1: prefs.getString(Strings.mailUsername),
+            ),
+          ),
+          InkWell(
+            onTap: () {
+              manageyouraccount(context);
+            },
+            child: ListTile(
+              title: Text(
+                AppLocalizations.of(context)!.translate('manage_your_account'),
+                style: styleElements
+                    .subtitle1ThemeScalable(context)
+                    .copyWith(fontWeight: FontWeight.w600),
+              ),
+              subtitle: Text(
+                AppLocalizations.of(context)!
+                    .translate('manage_your_account_des'),
+                style: styleElements.bodyText2ThemeScalable(context),
+              ),
+            ),
+          ),
+          Visibility(
+            visible: isAdmin,
+            child: InkWell(
+              onTap: () {
+                openUserListingPage(context);
+              },
+              child: ListTile(
+                title: Text(
+                  AppLocalizations.of(context)!.translate('manage_user_account'),
+                  style: styleElements
+                      .subtitle1ThemeScalable(context)
+                      .copyWith(fontWeight: FontWeight.w600),
+                ),
+                subtitle: Text(
+                  AppLocalizations.of(context)!
+                      .translate('manage_user_account_des'),
+                  style: styleElements.bodyText2ThemeScalable(context),
+                ),
+              ),
+            ),
+          ),
+          Visibility(
+            visible: isAdmin,
+            child: InkWell(
+              onTap: () {
+                openManageUserListingPage(context);
+              },
+              child: ListTile(
+                title: Text(
+                  AppLocalizations.of(context)!.translate('manage_domain_name'),
+                  style: styleElements
+                      .subtitle1ThemeScalable(context)
+                      .copyWith(fontWeight: FontWeight.w600),
+                ),
+                subtitle: Text(
+                  AppLocalizations.of(context)!
+                      .translate('manage_domain_name_des'),
+                  style: styleElements.bodyText2ThemeScalable(context),
+                ),
+              ),
+            ),
+          ),
+          Visibility(
+            visible: false,
+            child: InkWell(
+              onTap: () {},
+              child: ListTile(
+                title: Text(
+                  AppLocalizations.of(context)!.translate('manage_subscription'),
+                  style: styleElements
+                      .subtitle1ThemeScalable(context)
+                      .copyWith(fontWeight: FontWeight.w600),
+                ),
+                subtitle: Text(
+                  AppLocalizations.of(context)!
+                      .translate('manage_subscription_des'),
+                  style: styleElements.bodyText2ThemeScalable(context),
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 24,
+          )
+        ],
+      ),
+    );
+  }
+
+  void openUserListingPage(BuildContext context) async {
+    DomainCreateRequest payload = DomainCreateRequest();
+    payload.ownerType = prefs.getString(Strings.ownerType)!;
+    payload.ownerId = prefs.getInt(Strings.userId)!;
+    var value = await Calls().call(
+        jsonEncode(payload), context, Config.EMAIL_DOMAIN_LIST,
+        isMailToken: true);
+    var res = DomainListResponse.fromJson(value);
+    if (res.rows!.length > 0) {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (BuildContext context) {
+            return EmailUsersPage();
+          }));
+    } else {
+      openManageUserListingPage(context);
+    }
+  }
+
+  void openManageUserListingPage(BuildContext context) {
+    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+      return ManageDomainPage();
+    }));
+  }
+
+  void manageyouraccount(BuildContext context) async {
+    DomainCreateRequest payload = DomainCreateRequest();
+    payload.ownerType = prefs.getString(Strings.ownerType)!;
+    payload.ownerId = prefs.getInt(Strings.userId)!;
+    var value = await Calls().call(
+        jsonEncode(payload), context, Config.EMAIL_DOMAIN_LIST,
+        isMailToken: true);
+    var res = DomainListResponse.fromJson(value);
+    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+      return ProfessionalEmailActionPage(
+        haveDomain: res.rows!.length > 0,
+        isAdmin: isAdmin,
+      );
+    }));
+  }
 }
 
 class AccountSettings extends StatefulWidget {
@@ -271,7 +507,7 @@ class _AccountSettings extends State<AccountSettings> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: appAppBar().getCustomAppBar(context,
+      appBar: OhoAppBar().getCustomAppBar(context,
           appBarTitle: AppLocalizations.of(context)!
               .translate("account_settings"), onBackButtonPress: () {
         Navigator.pop(context);
@@ -614,7 +850,7 @@ class _PrivacySettings extends State<PrivacySettings> {
     styleElements = TextStyleElements(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: appAppBar().getCustomAppBar(context,
+      appBar: OhoAppBar().getCustomAppBar(context,
           appBarTitle: AppLocalizations.of(context)!
               .translate("privacy_settings"), onBackButtonPress: () {
         Navigator.pop(context);

@@ -59,7 +59,7 @@ class BecomeEdufluencerTutorFormState extends State<BecomeEdufluencerTutorForm>
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
     return Scaffold(
-      appBar: appAppBar().getCustomAppBar(
+      appBar: OhoAppBar().getCustomAppBar(
         context,
         appBarTitle:
         AppLocalizations.of(context)!.translate(

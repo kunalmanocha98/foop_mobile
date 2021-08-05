@@ -49,7 +49,7 @@ class _GoalsScreen extends State<GoalsScreen> {
       child: Scaffold(
           resizeToAvoidBottomInset: false,
           backgroundColor: HexColor(AppColors.appColorBackground),
-          appBar:appAppBar().getCustomAppBarWithSearch(
+          appBar:OhoAppBar().getCustomAppBarWithSearch(
               context,
               appBarTitle: 'Goals',
               onBackButtonPress: (){_onBackPressed();},

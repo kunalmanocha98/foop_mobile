@@ -68,7 +68,7 @@ class HostListPageState extends State<HostListPage> {
     styleElements = TextStyleElements(context);
     return SafeArea(
         child: Scaffold(
-          appBar: appAppBar().getCustomAppBarWithSearch(context,
+          appBar: OhoAppBar().getCustomAppBarWithSearch(context,
             onSearchValueChanged: (value) {
             searchVal = value;
             refresh();

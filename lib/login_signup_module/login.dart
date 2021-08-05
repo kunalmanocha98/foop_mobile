@@ -276,7 +276,7 @@ class StateLoginPage extends State<LoginPage> {
     var screenWidth = MediaQuery.of(context).size.width;
     return SafeArea(
         child: Scaffold(
-            appBar: appAppBar().getCustomAppBar(context, appBarTitle: '',
+            appBar: OhoAppBar().getCustomAppBar(context, appBarTitle: '',
                 onBackButtonPress: () {
               Navigator.pop(context);
             }),

@@ -78,7 +78,7 @@ class _CommonListingModule extends State<CommonListingModule> {
     // setSharedPrefrences();
     return SafeArea(
       child: Scaffold(
-        appBar: appAppBar().getCustomAppBar(context, appBarTitle:   AppLocalizations.of(context)!.translate("listing"), onBackButtonPress: (){Navigator.pop(context);}),
+        appBar: OhoAppBar().getCustomAppBar(context, appBarTitle:   AppLocalizations.of(context)!.translate("listing"), onBackButtonPress: (){Navigator.pop(context);}),
         body: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return [

@@ -69,7 +69,7 @@ class _InvitationPage extends State<InvitationPage> {
     styleElements = TextStyleElements(context);
     return SafeArea(
       child: Scaffold(
-        appBar: appAppBar().getCustomAppBar(context, appBarTitle: 'Invite',
+        appBar: OhoAppBar().getCustomAppBar(context, appBarTitle: 'Invite',
             onBackButtonPress: () {
           Navigator.pop(context);
         }),

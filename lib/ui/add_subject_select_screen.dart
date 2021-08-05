@@ -151,7 +151,7 @@ class _SelectSubject extends State<AddSelectSubject>
         child: Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: HexColor(AppColors.appColorBackground),
-      appBar: appAppBar().getCustomAppBar(context, appBarTitle: pageTitle,
+      appBar: OhoAppBar().getCustomAppBar(context, appBarTitle: pageTitle,
           onBackButtonPress: () {
         _onBackPressed();
       }),

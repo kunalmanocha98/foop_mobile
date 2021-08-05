@@ -134,7 +134,7 @@ class CreateCompanyPageState extends State<CreateCompanyPage> {
 
     return SafeArea(
         child: Scaffold(
-          appBar: appAppBar().getCustomAppBar(context,
+          appBar: OhoAppBar().getCustomAppBar(context,
               actions: [
                 appTextButton(
                   onPressed: () {

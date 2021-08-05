@@ -50,7 +50,7 @@ class _SportsClubListPage extends State<SportsClubListPage> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: appAppBar().getCustomAppBar(context,
+        appBar: OhoAppBar().getCustomAppBar(context,
             appBarTitle:AppLocalizations.of(context)!.translate("sports_fitness"),
             onBackButtonPress: (){
           Navigator.pop(context);

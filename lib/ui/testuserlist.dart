@@ -34,7 +34,7 @@ class _TestUserList extends State<TestUserList> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: appAppBar().getCustomAppBar(context,
+        appBar: OhoAppBar().getCustomAppBar(context,
             appBarTitle:AppLocalizations.of(context)!.translate('users_list'),
             onBackButtonPress: (){
           Navigator.pop(context);

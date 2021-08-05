@@ -75,7 +75,7 @@ BuildContext? sctx;
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: true,
-          appBar: appAppBar().getCustomAppBar(context,
+          appBar: OhoAppBar().getCustomAppBar(context,
               appBarTitle: AppLocalizations.of(context)!.translate('suggestions'),
               onBackButtonPress: () {
                 Navigator.pop(context);

@@ -79,7 +79,7 @@ class _VerifyChild extends State<VerifyChild>
     return SafeArea(child: Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: HexColor(AppColors.appColorBackground),
-      appBar: appAppBar().getCustomAppBar(context,
+      appBar: OhoAppBar().getCustomAppBar(context,
           appBarTitle: "", onBackButtonPress: () {
             _onBackPressed();
           }),

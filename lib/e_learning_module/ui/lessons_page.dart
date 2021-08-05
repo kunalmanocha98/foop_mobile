@@ -80,7 +80,7 @@ class _CreateLessonsPage extends State<CreateLessonsPage> {
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: appAppBar().getCustomAppBar(
+          appBar: OhoAppBar().getCustomAppBar(
             context,
             appBarTitle: AppLocalizations.of(context)!.translate('lessons'),
             actions: [

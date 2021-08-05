@@ -120,7 +120,7 @@ class _RoomMembersPage extends State<RoomMembersPage> {
     setSharedPreferences();
     return SafeArea(
       child: Scaffold(
-        appBar:appAppBar().getCustomAppBar(context,
+        appBar:OhoAppBar().getCustomAppBar(context,
             appBarTitle:AppLocalizations.of(context)!.translate("members"),
             onBackButtonPress: (){
           Navigator.pop(context);

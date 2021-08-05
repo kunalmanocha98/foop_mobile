@@ -411,7 +411,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
         } ,
         child: Scaffold(
             resizeToAvoidBottomInset: false,
-            appBar: appAppBar().getCustomAppBar(context,
+            appBar: OhoAppBar().getCustomAppBar(context,
                 appBarTitle: "",
                 titleWidget: Row(
                   mainAxisSize: MainAxisSize.min,

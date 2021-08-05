@@ -37,7 +37,7 @@ class _TestListingPage extends State<TestListingPage> {
     styleElements = TextStyleElements(context);
     return SafeArea(
       child: Scaffold(
-        appBar: appAppBar().getCustomAppBar(context,
+        appBar: OhoAppBar().getCustomAppBar(context,
           appBarTitle: AppLocalizations.of(context)!.translate('test_user_list'),
           onBackButtonPress: (){},
         ),

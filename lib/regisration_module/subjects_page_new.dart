@@ -124,7 +124,7 @@ class _SubjectsPageNew extends State<SubjectsPageNew>
       } ,
       child: SafeArea(
         child: Scaffold(
-            appBar: appAppBar().getCustomAppBar(
+            appBar: OhoAppBar().getCustomAppBar(
               context,
               appBarTitle:
               AppLocalizations.of(context)!.translate('subjects'),

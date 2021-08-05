@@ -123,7 +123,7 @@ late BuildContext sctx;
             return new  Container(
                 child: Scaffold(
 
-                    appBar:appAppBar().getCustomAppBar(context,
+                    appBar:OhoAppBar().getCustomAppBar(context,
                         appBarTitle: pageTitle,
                         onBackButtonPress: (){
                           _onBackPressed();

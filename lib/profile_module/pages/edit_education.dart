@@ -490,7 +490,7 @@ return rows!;
           child: Scaffold(
             resizeToAvoidBottomInset: true,
             backgroundColor: HexColor(AppColors.appColorBackground),
-            appBar: appAppBar().getCustomAppBar(context,
+            appBar: OhoAppBar().getCustomAppBar(context,
                 appBarTitle: isEducation ? 'Education' : "Work",
                 onBackButtonPress: () {
              backPressed();

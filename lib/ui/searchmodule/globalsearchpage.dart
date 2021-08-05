@@ -136,7 +136,7 @@ class _GlobalSearchPage extends State<GlobalSearchPage>
     return
       SafeArea(
         child: Scaffold(
-          appBar: (widget.withAppBar!=null && widget.withAppBar!)?appAppBar().getCustomAppBar(context, appBarTitle:AppLocalizations.of(context)!.translate('global_search_title') , onBackButtonPress: (){Navigator.pop(context);}):null,
+          appBar: (widget.withAppBar!=null && widget.withAppBar!)?OhoAppBar().getCustomAppBar(context, appBarTitle:AppLocalizations.of(context)!.translate('global_search_title') , onBackButtonPress: (){Navigator.pop(context);}):null,
           body: DefaultTabController(
             length: list.length,
             child: NestedScrollView(

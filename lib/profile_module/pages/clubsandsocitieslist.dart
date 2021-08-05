@@ -49,7 +49,7 @@ class _ClubsAndSocieties extends State<ClubsAndSocieties> {
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: appAppBar().getCustomAppBar(context,
+          appBar: OhoAppBar().getCustomAppBar(context,
               appBarTitle: AppLocalizations.of(context)!
                   .translate("clubs_societies"), onBackButtonPress: () {
                 Navigator.pop(context);

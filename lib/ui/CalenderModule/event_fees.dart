@@ -22,7 +22,7 @@ class EventFeesPageState extends State<EventFeesPage>{
     styleElements = TextStyleElements(context);
     return SafeArea(
       child: Scaffold(
-        appBar: appAppBar().getCustomAppBar(context, appBarTitle: 'Event Fees', onBackButtonPress: (){Navigator.pop(context);}),
+        appBar: OhoAppBar().getCustomAppBar(context, appBarTitle: 'Event Fees', onBackButtonPress: (){Navigator.pop(context);}),
         body: Container(
           child: Column(
             children: [

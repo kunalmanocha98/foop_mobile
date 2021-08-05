@@ -241,7 +241,7 @@ class PollsListPageState extends State<PollsListPage> with SingleTickerProviderS
       return new Future(() => false);} ,
       child: SafeArea(
         child: Scaffold(
-          appBar: appAppBar().getCustomAppBar(
+          appBar: OhoAppBar().getCustomAppBar(
               context,
               actions: [ InkWell(
                   onTap: () {

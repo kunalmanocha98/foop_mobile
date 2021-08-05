@@ -371,7 +371,7 @@ class _SelectInstitute extends State<SelectInstituteSingle>
         onWillPop: _onBackPressed,
         child: SafeArea(
             child: Scaffold(
-              appBar: appAppBar().getCustomAppBar(context,
+              appBar: OhoAppBar().getCustomAppBar(context,
                   appBarTitle: pageTitle, onBackButtonPress: () {
                     _onBackPressed();
                   }),

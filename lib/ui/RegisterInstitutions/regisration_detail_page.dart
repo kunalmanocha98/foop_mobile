@@ -16,7 +16,7 @@ class RegisInstruction extends StatelessWidget{
     var styleElements = TextStyleElements(context);
     return SafeArea(
       child: Scaffold(
-        appBar: appAppBar().getCustomAppBar(context,
+        appBar: OhoAppBar().getCustomAppBar(context,
             appBarTitle: 'Register Institute',
             onBackButtonPress: (){Navigator.pop(context);}),
         body:

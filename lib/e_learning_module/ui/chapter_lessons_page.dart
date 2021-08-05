@@ -51,7 +51,7 @@ class _CreateChapterLessonsPage extends State<CreateChapterLessonsPage> {
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: appAppBar().getCustomAppBar(
+          appBar: OhoAppBar().getCustomAppBar(
             context,
             appBarTitle:
             AppLocalizations.of(context)!.translate('institution_type'),

@@ -113,7 +113,7 @@ class _SelectDisicipline extends State<selectClassesAndSections>
       },
       child: SafeArea(
         child: Scaffold(
-            appBar: appAppBar().getCustomAppBar(
+            appBar: OhoAppBar().getCustomAppBar(
               context,
               appBarTitle: AppLocalizations.of(context)!.translate('classes'),
               onBackButtonPress: () async {

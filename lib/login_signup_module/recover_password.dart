@@ -57,7 +57,8 @@ class _RecoverPasswords extends State<RecoverPasswords> {
                   builder: (context) => Verification(
                     email: emailController.text.toString(),
                     isRecoverPassword: true,
-                    mobileNo: "",
+                    mobileNo: "", isEmailRecovery: false,
+
                   ),
                 ));
           } else {
@@ -124,7 +125,7 @@ class _RecoverPasswords extends State<RecoverPasswords> {
         child: Scaffold(
             // resizeToAvoidBottomInset: false,
 
-            appBar: appAppBar().getCustomAppBar(
+            appBar: OhoAppBar().getCustomAppBar(
               context,
               onBackButtonPress: () {
                 Navigator.pop(context);

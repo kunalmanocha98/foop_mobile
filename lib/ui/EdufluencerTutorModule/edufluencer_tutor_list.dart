@@ -104,7 +104,7 @@ class _EdufluencerTutorList extends State<EdufluencerTutorList>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appAppBar().getCustomAppBar(context,
+      appBar: OhoAppBar().getCustomAppBar(context,
           appBarTitle: AppLocalizations.of(context)!.translate(widget.type == edufluencer_type.E ?'edufluencer':"tutor"),
           onBackButtonPress: () {
             Navigator.pop(context);
