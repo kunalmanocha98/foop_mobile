@@ -196,7 +196,9 @@ class CreateContactPageState extends State<CreateContactPage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        "Account Manager",
+                          AppLocalizations.of(context)!.translate(  "Account_Manager"),
+
+
                         style: styleElements
                             .subtitle2ThemeScalable(context)
 
@@ -230,7 +232,7 @@ class CreateContactPageState extends State<CreateContactPage> {
                         )
                         ,
                         subtitle:  Text(
-                          'Department',
+                          AppLocalizations.of(context)!.translate("department"),
                           style: styleElements.captionThemeScalable(context),
                         ),
 
@@ -475,7 +477,8 @@ class CreateContactPageState extends State<CreateContactPage> {
                       Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: Text(
-                          'Oho Id is an unique Id for every user and company from oho works',
+
+                          AppLocalizations.of(context)!.translate("oho_id_des"),
                           style: styleElements.captionThemeScalable(context),
                         ),
                       ),
@@ -493,7 +496,9 @@ class CreateContactPageState extends State<CreateContactPage> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        "Associated Company",
+
+                        AppLocalizations.of(context)!.translate(  "Associated_Company"),
+
                         style: styleElements
                             .subtitle2ThemeScalable(context)
                             ,
@@ -527,7 +532,9 @@ class CreateContactPageState extends State<CreateContactPage> {
                         )
                         ,
                         subtitle:  Text(
-                          'Department',
+                          AppLocalizations.of(context)!.translate(  "department"),
+
+
                           style: styleElements.captionThemeScalable(context),
                         ),
 

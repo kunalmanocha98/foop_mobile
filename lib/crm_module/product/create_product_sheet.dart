@@ -138,7 +138,7 @@ type: type,
                                   topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)),
                             ),
 
-                            isScrollControlled: true,
+                             isScrollControlled: true,
                             builder: (context) {
                               return Describe_product_sheet(
                                 prefs: prefs,

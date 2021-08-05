@@ -192,7 +192,7 @@ class ConfirmedOrderPageState extends State<ConfirmedOrderPage> {
                         crossAxisAlignment: WrapCrossAlignment.center,
                         children: [
                           Text(
-                            "Close",
+                            AppLocalizations.of(context)!.translate("close"),
                             style: styleElements
                                 .subtitle2ThemeScalable(context)
                                 .copyWith(color: HexColor(AppColors.appMainColor)),
@@ -254,7 +254,8 @@ class ConfirmedOrderPageState extends State<ConfirmedOrderPage> {
                                   children: [          Padding(
                                     padding: const EdgeInsets.only(top:2.0),
                                     child: Text(
-                                      "Order Date",
+                                      AppLocalizations.of(context)!.translate("Order_Date"),
+
                                       style: styleElements.subtitle1ThemeScalable(context),
                                     ),
                                   ),
@@ -322,7 +323,8 @@ class ConfirmedOrderPageState extends State<ConfirmedOrderPage> {
                                 children: [          Padding(
                                 padding: const EdgeInsets.only(top:2.0),
                                 child: Text(
-                                  "Invoice Id",
+                                  AppLocalizations.of(context)!.translate( "Invoice_Id"),
+
                                   style: styleElements.subtitle1ThemeScalable(context),
                                 ),
                               ),
@@ -354,9 +356,9 @@ class ConfirmedOrderPageState extends State<ConfirmedOrderPage> {
 
 
                       AppAddressCard(
-                        title: "Billing Address",
+                        title:   AppLocalizations.of(context)!.translate( "billing_add"),
                         imageUrl: '',
-                        actionText: "Edit",
+                        actionText:  AppLocalizations.of(context)!.translate( "edit"),
                         subTitle1: "main address",
                         subTitle2: "address 1",
                         subTitle3: "address 1",
@@ -387,9 +389,10 @@ class ConfirmedOrderPageState extends State<ConfirmedOrderPage> {
 
 
                       AppAddressCard(
-                        title: "Shipping Address",
+                        title:  AppLocalizations.of(context)!.translate("Shipping_Address"),
+
                         imageUrl: '',
-                        actionText: "Edit",
+                        actionText:  AppLocalizations.of(context)!.translate("edit"),
                         subTitle1: "main address",
                         subTitle2: "address 1",
                         subTitle3: "address 1",
@@ -427,7 +430,8 @@ class ConfirmedOrderPageState extends State<ConfirmedOrderPage> {
                             Padding(
                               padding: const EdgeInsets.only(top:8.0),
                               child: Text(
-                                "Contact Member",
+
+                                AppLocalizations.of(context)!.translate( "Contact_Member"),
                                 style: styleElements.subtitle1ThemeScalable(context),
                               ),
                             ),
@@ -460,7 +464,7 @@ class ConfirmedOrderPageState extends State<ConfirmedOrderPage> {
                               )
                               ,
                               subtitle:  Text(
-                                'Department',
+                                AppLocalizations.of(context)!.translate(  'Department'),
                                 style: styleElements.captionThemeScalable(context),
                               ),
 
@@ -483,7 +487,7 @@ class ConfirmedOrderPageState extends State<ConfirmedOrderPage> {
                               title:  Padding(
                                 padding: const EdgeInsets.only(top:8.0),
                                 child: Text(
-                                  "Items",
+                                  AppLocalizations.of(context)!.translate(  'item'),
                                   style: styleElements.subtitle1ThemeScalable(context),
                                 ),
                               )
@@ -518,7 +522,7 @@ class ConfirmedOrderPageState extends State<ConfirmedOrderPage> {
 
                                   },
                                   child: Text(
-                                    "Edit",
+                                    AppLocalizations.of(context)!.translate(  'edit'),
                                     style: styleElements.subtitle1ThemeScalable(context).copyWith(color: HexColor(AppColors.appMainColor),
                                     ),
                                   ),
@@ -544,7 +548,9 @@ class ConfirmedOrderPageState extends State<ConfirmedOrderPage> {
                               title:  Padding(
                                 padding: const EdgeInsets.only(top:8.0),
                                 child: Text(
-                                  "SGST",
+
+                                  AppLocalizations.of(context)!.translate(  'sgst'),
+
                                   style: styleElements.subtitle1ThemeScalable(context),
                                 ),
                               )
@@ -566,7 +572,7 @@ class ConfirmedOrderPageState extends State<ConfirmedOrderPage> {
                               title:  Padding(
                                 padding: const EdgeInsets.only(top:8.0),
                                 child: Text(
-                                  "CGST",
+                                  AppLocalizations.of(context)!.translate(  'cgst'),
                                   style: styleElements.subtitle1ThemeScalable(context),
                                 ),
                               )
@@ -589,7 +595,7 @@ class ConfirmedOrderPageState extends State<ConfirmedOrderPage> {
 
 
                       AppPaymentCard(
-                        title: "Payment",
+                        title:   AppLocalizations.of(context)!.translate(  'payment'),
                         imageUrl: '',
                         actionText: "Edit",
                         subTitle1: "With in 9-0 days",
@@ -636,14 +642,14 @@ class ConfirmedOrderPageState extends State<ConfirmedOrderPage> {
                                 Padding(
                                   padding: const EdgeInsets.only(top:16.0),
                                   child: Text(
-                                    "Term & Conditions",
+                                    AppLocalizations.of(context)!.translate(  't_c'),
                                     style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold),
                                   ),),
 
                                 Padding(
                                   padding: const EdgeInsets.only(top:16.0),
                                   child: Text(
-                                    "Edit",
+                                    AppLocalizations.of(context)!.translate(  'edit'),
                                     style: styleElements.subtitle1ThemeScalable(context).copyWith(color: HexColor(AppColors.appMainColor)),
                                   ),),
 
@@ -734,8 +740,9 @@ class ConfirmedOrderPageState extends State<ConfirmedOrderPage> {
                               },
                               color: HexColor(AppColors.appMainColor),
                               child: Text(
-                                "Cancel Sale"
-                                    .toUpperCase(),
+                                AppLocalizations.of(context)!.translate(  "Cancel_Sale"),
+
+
                                 style: styleElements
                                     .subtitle2ThemeScalable(context)
                                     .copyWith(
@@ -812,7 +819,8 @@ class ConfirmedOrderPageState extends State<ConfirmedOrderPage> {
                               color: HexColor(AppColors.appColorWhite),
                               child: Text(
 
-                                 widget. selectedTab==0&& widget.from=="sales"?"Update"        :   widget. selectedTab==1&& widget.from=="sales"? "Bill Order":"Update Payment"
+                                 widget. selectedTab==0&& widget.from=="sales"?AppLocalizations.of(context)!.translate(  "update")
+                                  :   widget. selectedTab==1&& widget.from=="sales"? AppLocalizations.of(context)!.translate( "Bill_Order"):AppLocalizations.of(context)!.translate( "Update_Payment")
                                     ,
                                 style: styleElements
                                     .subtitle2ThemeScalable(context)

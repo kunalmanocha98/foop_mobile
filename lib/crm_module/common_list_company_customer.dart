@@ -235,7 +235,12 @@ class _CommonCompanyCustomerPage extends State<CommonCompanyCustomerPage> {
               padding: const EdgeInsets.only(left:8.0,right: 16),
               child: Icon(Icons.edit_outlined,color: HexColor(AppColors.appColorBlack35),),
             ),
-            Text(name=="P"?"Edit Payment":"Edit",
+            Text(name=="P"?
+           AppLocalizations.of(context)!.translate("Edit_Payment")
+            : AppLocalizations.of(context)!.translate("edit")
+
+
+
             ),
           ],
         ),
@@ -252,7 +257,10 @@ class _CommonCompanyCustomerPage extends State<CommonCompanyCustomerPage> {
               padding: const EdgeInsets.only(left:8.0,right: 16),
               child: Icon(Icons.shopping_bag_outlined,color: HexColor(AppColors.appColorBlack35),),
             ),
-            Text("Create opportunity",
+            Text(
+              AppLocalizations.of(context)!.translate("Create_opportunity")
+
+              ,
             ),
           ],
         ),
@@ -269,7 +277,8 @@ class _CommonCompanyCustomerPage extends State<CommonCompanyCustomerPage> {
               padding: const EdgeInsets.only(left:8.0,right: 16),
               child: Icon(Icons.shopping_cart_outlined,color: HexColor(AppColors.appColorBlack35),),
             ),
-            Text("Create Sales Order",
+            Text(
+              AppLocalizations.of(context)!.translate("Create_Sales_Order")
             ),
           ],
         ),
@@ -285,7 +294,9 @@ class _CommonCompanyCustomerPage extends State<CommonCompanyCustomerPage> {
               padding: const EdgeInsets.only(left:8.0,right: 16),
               child: Icon(Icons.receipt,color: HexColor(AppColors.appColorBlack35),),
             ),
-            Text("Create invoice",
+            Text(
+
+              AppLocalizations.of(context)!.translate("Create_invoice")
             ),
           ],
         ),
@@ -302,7 +313,10 @@ class _CommonCompanyCustomerPage extends State<CommonCompanyCustomerPage> {
               padding: const EdgeInsets.only(left:8.0,right: 16),
               child: Icon(Icons.shopping_cart_outlined,color: HexColor(AppColors.appColorBlack35),),
             ),
-            Text("Create purchase order",
+            Text(
+              AppLocalizations.of(context)!.translate("Create_purchase_order")
+
+              ,
             ),
           ],
         ),
@@ -320,7 +334,7 @@ class _CommonCompanyCustomerPage extends State<CommonCompanyCustomerPage> {
               padding: const EdgeInsets.only(left:8.0,right: 16),
               child: Icon(Icons.mail_outline,color: HexColor(AppColors.appColorBlack35),),
             ),
-            Text("Email",
+            Text(   AppLocalizations.of(context)!.translate("_email")
             ),
           ],
         ),
@@ -336,7 +350,7 @@ class _CommonCompanyCustomerPage extends State<CommonCompanyCustomerPage> {
               padding: const EdgeInsets.only(left:8.0,right: 16),
               child: Icon(Icons.call_outlined,color: HexColor(AppColors.appColorBlack35),),
             ),
-            Text("Call",
+            Text(AppLocalizations.of(context)!.translate("call")
             ),
           ],
         ),
@@ -355,7 +369,7 @@ class _CommonCompanyCustomerPage extends State<CommonCompanyCustomerPage> {
                     height: 20,width: 20,
                     child: Image(image: AssetImage('assets/appimages/whatsapp.png'),))
             ),
-            Text("Whatsapp",
+            Text(AppLocalizations.of(context)!.translate("whatsapp")
             ),
           ],
         ),

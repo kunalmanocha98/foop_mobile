@@ -421,7 +421,7 @@ class CreateCompanyPageState extends State<CreateCompanyPage> {
                     title:  Padding(
                       padding: const EdgeInsets.only(top:8.0),
                       child: Text(
-                        "Select the Industry",
+                        AppLocalizations.of(context)!.translate("select_in"),
                         style: styleElements.subtitle1ThemeScalable(context),
                       ),
                     )
@@ -439,7 +439,7 @@ class CreateCompanyPageState extends State<CreateCompanyPage> {
                     title:  Padding(
                       padding: const EdgeInsets.only(top:8.0),
                       child: Text(
-                      "Select the company",
+                        AppLocalizations.of(context)!.translate("select_com"),
                         style: styleElements.subtitle1ThemeScalable(context),
                       ),
                     )
@@ -457,7 +457,7 @@ class CreateCompanyPageState extends State<CreateCompanyPage> {
                     title:  Padding(
                       padding: const EdgeInsets.only(top:8.0),
                       child: Text(
-                        "Number of employees",
+                        AppLocalizations.of(context)!.translate("employee_no"),
                         style: styleElements.subtitle1ThemeScalable(context),
                       ),
                     )

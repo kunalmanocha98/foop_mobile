@@ -221,7 +221,7 @@ class CreateProductPageState extends State<CreateProductPage> {
                         )
                         ,
                         subtitle:  Text(
-                          'Department',
+                         AppLocalizations.of(context)!.translate("department"),
                           style: styleElements.captionThemeScalable(context),
                         ),
 
@@ -353,8 +353,7 @@ class CreateProductPageState extends State<CreateProductPage> {
                       Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: Text(
-                          'Oho Id is an unique Id for every user and company from oho works',
-                          style: styleElements.captionThemeScalable(context),
+                          AppLocalizations.of(context)!.translate("oho_id_des"),style: styleElements.captionThemeScalable(context),
                         ),
                       ),
 
@@ -392,7 +391,7 @@ class CreateProductPageState extends State<CreateProductPage> {
                     )
                     ,
                     subtitle:  Text(
-                      'Department',
+                        AppLocalizations.of(context)!.translate("department"),
                       style: styleElements.captionThemeScalable(context),
                     ),
 
@@ -406,7 +405,8 @@ class CreateProductPageState extends State<CreateProductPage> {
                   child:  Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: Text(
-                      'Skip All Other Details',
+
+                      AppLocalizations.of(context)!.translate("skip_all"),
                       style: styleElements.bodyText2ThemeScalable(context).copyWith(color: HexColor(AppColors.appMainColor)),
                     ),
                   ),
@@ -422,7 +422,8 @@ class CreateProductPageState extends State<CreateProductPage> {
                     title:  Padding(
                       padding: const EdgeInsets.only(top:8.0),
                       child: Text(
-                        "Select the Industry",
+
+                        AppLocalizations.of(context)!.translate("select_in"),
                         style: styleElements.subtitle1ThemeScalable(context),
                       ),
                     )
@@ -440,7 +441,9 @@ class CreateProductPageState extends State<CreateProductPage> {
                     title:  Padding(
                       padding: const EdgeInsets.only(top:8.0),
                       child: Text(
-                        "Select the company",
+
+                        AppLocalizations.of(context)!.translate("select_com"),
+
                         style: styleElements.subtitle1ThemeScalable(context),
                       ),
                     )

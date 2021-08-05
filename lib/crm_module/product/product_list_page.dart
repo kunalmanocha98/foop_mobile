@@ -292,8 +292,6 @@ bool isAdded=false;
   }
   Widget listItemBuilder(value, int index) {
     CommonListResponseItem item = value;
-    var schoolName=item.institutionName!=null?item.institutionName??"":"";
-    var desig=item.subTitle1!.designation!=null ?item.subTitle1!.designation??"":"";
     return GestureDetector(
         behavior: HitTestBehavior.translucent,
         onTap: () {
@@ -381,7 +379,7 @@ setState(() {
               padding: const EdgeInsets.only(left:8.0,right: 16),
               child: Icon(Icons.dashboard_outlined,color: HexColor(AppColors.appColorBlack35),),
             ),
-            Text("Edit",
+            Text(AppLocalizations.of(context)!.translate("edit"),
             ),
           ],
         ),
@@ -396,7 +394,7 @@ setState(() {
               padding: const EdgeInsets.only(left:8.0,right: 16),
               child: Icon(Icons.dashboard_outlined,color: HexColor(AppColors.appColorBlack35),),
             ),
-            Text("Deactivate",
+            Text(AppLocalizations.of(context)!.translate("Deactivate"),
             ),
           ],
         ),
@@ -412,7 +410,7 @@ setState(() {
               padding: const EdgeInsets.only(left:8.0,right: 16),
               child: Icon(Icons.dashboard_outlined,color: HexColor(AppColors.appColorBlack35),),
             ),
-            Text("Email",
+            Text(AppLocalizations.of(context)!.translate("_email"),
             ),
           ],
         ),
@@ -429,7 +427,7 @@ setState(() {
               padding: const EdgeInsets.only(left:8.0,right: 16),
               child: Icon(Icons.dashboard_outlined,color: HexColor(AppColors.appColorBlack35),),
             ),
-            Text("WhatsApp",
+            Text(AppLocalizations.of(context)!.translate("whatsapp"),
             ),
           ],
         ),

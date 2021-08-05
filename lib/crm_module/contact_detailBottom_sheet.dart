@@ -94,7 +94,7 @@ class CustomerContactDetailSheet extends StatelessWidget {
                         alignment: Alignment.center,
                         child: Container(
                           child: Text(
-                            "Contact Person Details",
+                           AppLocalizations.of(context)!.translate( "Contact_Person_Details"),
                             textAlign: TextAlign.center,
                             style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold),
                           ),
@@ -105,7 +105,7 @@ class CustomerContactDetailSheet extends StatelessWidget {
                       alignment: Alignment.centerRight,
                       child: Container(
                         child: Text(
-                          "Next",
+                          AppLocalizations.of(context)!.translate( "next"),
                           textAlign: TextAlign.center,
                           style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold,color: HexColor(AppColors.appMainColor)),
                         ),
@@ -119,7 +119,9 @@ class CustomerContactDetailSheet extends StatelessWidget {
                   padding: const EdgeInsets.only(left:20.0,top: 8,bottom: 8),
                   child: Container(
                     child: Text(
-                      "Enter Contact person's Email Id and Phone Number",
+                      AppLocalizations.of(context)!.translate( "contact_p_email"),
+
+
                       textAlign: TextAlign.left,
                       style: styleElements.subtitle1ThemeScalable(context),
                     ),

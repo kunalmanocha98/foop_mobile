@@ -93,7 +93,7 @@ class CreateCustomerBottomSheet extends StatelessWidget {
                           alignment: Alignment.center,
                           child: Container(
                             child: Text(
-                              "Create Company",
+                              AppLocalizations.of(context)!.translate("Create_Company"),
                               textAlign: TextAlign.center,
                               style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold),
                             ),
@@ -104,7 +104,7 @@ class CreateCustomerBottomSheet extends StatelessWidget {
                         alignment: Alignment.centerRight,
                         child: Container(
                           child: Text(
-                            "Next",
+                            AppLocalizations.of(context)!.translate("next"),
                             textAlign: TextAlign.center,
                             style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold,color: HexColor(AppColors.appMainColor)),
                           ),
@@ -118,7 +118,8 @@ class CreateCustomerBottomSheet extends StatelessWidget {
                     padding: const EdgeInsets.only(left:20.0,top: 8,bottom: 8),
                     child: Container(
                       child: Text(
-                        "Select RelationShip",
+
+                        AppLocalizations.of(context)!.translate("Select_RelationShip"),
                         textAlign: TextAlign.left,
                         style: styleElements.subtitle1ThemeScalable(context),
                       ),
@@ -147,7 +148,7 @@ class CreateCustomerBottomSheet extends StatelessWidget {
                               ),
                               SizedBox(height: 6,),
                               Text(
-                                "Customer",
+                                AppLocalizations.of(context)!.translate("customer"),
                                 style: styleElements.captionThemeScalable(context).copyWith(
                                     color: HexColor(AppColors.appColorBlack65)
                                 ),
@@ -176,7 +177,7 @@ class CreateCustomerBottomSheet extends StatelessWidget {
                               ),
                               SizedBox(height: 6,),
                               Text(
-                                "Supplier",
+                                AppLocalizations.of(context)!.translate("supplier"),
                                 style: styleElements.captionThemeScalable(context).copyWith(
                                     color: HexColor(AppColors.appColorBlack65)
                                 ),
@@ -205,7 +206,8 @@ class CreateCustomerBottomSheet extends StatelessWidget {
                               ),
                               SizedBox(height: 6,),
                               Text(
-                                "Channel Partner",
+                                AppLocalizations.of(context)!.translate("Channel_Partner"),
+
                                 style: styleElements.captionThemeScalable(context).copyWith(
                                     color: HexColor(AppColors.appColorBlack65)
                                 ),

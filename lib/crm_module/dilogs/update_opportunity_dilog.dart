@@ -46,7 +46,7 @@ class UpdateOpportunityDilogState extends State<UpdateOpportunityDilog> {
             ),
             SizedBox(height: 24,),
             ListTile(
-              title:Text("Update status"),
+              title:Text(AppLocalizations.of(context)!.translate("Update_status")),
               trailing:  Radio(
                 value: "=",
                 groupValue: 1,
@@ -56,7 +56,7 @@ class UpdateOpportunityDilogState extends State<UpdateOpportunityDilog> {
               ),
             ),
             ListTile(
-              title:Text("Convert to order"),
+              title:Text(AppLocalizations.of(context)!.translate("convert_order")),
               trailing:  Radio(
                 value: "=",
                 groupValue: 1,
@@ -76,7 +76,7 @@ class UpdateOpportunityDilogState extends State<UpdateOpportunityDilog> {
                       Navigator.pop(context);
                       widget.callBack!(false);
                     },
-                    child: Text("No",style:
+                    child: Text(AppLocalizations.of(context)!.translate("no"),style:
                     styleElements.captionThemeScalable(context).copyWith(
                         color: HexColor(AppColors.appMainColor)
                     ),)
@@ -88,7 +88,7 @@ class UpdateOpportunityDilogState extends State<UpdateOpportunityDilog> {
                       Navigator.pop(context);
                       widget. callBack!(true);
                     },
-                    child: Text("Yes".toUpperCase(),style:
+                    child: Text(AppLocalizations.of(context)!.translate("yes").toUpperCase(),style:
                     styleElements.captionThemeScalable(context).copyWith(
                         color: HexColor(AppColors.appMainColor)
                     ),)

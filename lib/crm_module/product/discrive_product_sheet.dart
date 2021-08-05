@@ -104,7 +104,7 @@ class Describe_product_sheet extends StatelessWidget {
                       alignment: Alignment.centerRight,
                       child: Container(
                         child: Text(
-                          "Skip",
+                          AppLocalizations.of(context)!.translate("skip"),
                           textAlign: TextAlign.center,
                           style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold,color: HexColor(AppColors.appMainColor)),
                         ),
@@ -162,7 +162,7 @@ class Describe_product_sheet extends StatelessWidget {
                         },
                         child: Container(
                           child: Text(
-                            "Next",
+                            AppLocalizations.of(context)!.translate("next"),
                             textAlign: TextAlign.center,
                             style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold,color: HexColor(AppColors.appMainColor)),
                           ),

@@ -97,7 +97,7 @@ class BottomSheetAddress extends StatelessWidget {
                         alignment: Alignment.center,
                         child: Container(
                           child: Text(
-                            "Company Address",
+                            AppLocalizations.of(context)!.translate("Company_Address") ,
                             textAlign: TextAlign.center,
                             style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold),
                           ),
@@ -108,7 +108,7 @@ class BottomSheetAddress extends StatelessWidget {
                       alignment: Alignment.centerRight,
                       child: Container(
                         child: Text(
-                          "Next",
+                            AppLocalizations.of(context)!.translate("next") ,
                           textAlign: TextAlign.center,
                           style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold,color: HexColor(AppColors.appMainColor)),
                         ),
@@ -120,7 +120,7 @@ class BottomSheetAddress extends StatelessWidget {
               SearchBox(
                 onvalueChanged: (s){},
                 icon:Icons.location_on_outlined,
-                hintText: "Enter Company Address",
+                hintText: AppLocalizations.of(context)!.translate("company_address") ,
               ),
 
               Padding(

@@ -96,7 +96,7 @@ class PricingSheet extends StatelessWidget {
                       alignment: Alignment.centerRight,
                       child: Container(
                         child: Text(
-                          "back",
+                            AppLocalizations.of(context)!.translate("back"),
                           textAlign: TextAlign.center,
                           style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold,color: HexColor(AppColors.appMainColor)),
                         ),
@@ -144,7 +144,7 @@ class PricingSheet extends StatelessWidget {
                         },
                         child: Container(
                           child: Text(
-                            "Next",
+                              AppLocalizations.of(context)!.translate("next"),
                             textAlign: TextAlign.center,
                             style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold,color: HexColor(AppColors.appMainColor)),
                           ),
