@@ -74,6 +74,7 @@ import 'campus_talk/test_video/home_screen.dart';
 import 'community_page.dart';
 import 'dialogs/logout_dialog.dart';
 import 'email_module/email_home_page.dart';
+import 'email_module/email_login_page.dart';
 import 'homepage.dart';
 import 'invitations/invitation_page.dart';
 import 'menu_user_popularity_card.dart';
@@ -219,8 +220,17 @@ BuildContext? dgsContext;
         }
       case 'email':
         {
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => EmailHomePage()));
+          if(prefs!.containsKey(Strings.mailUsername)){
+            Navigator.push(context, MaterialPageRoute(
+                builder: (context){
+                  return EmailHomePage();
+                }
+            ));
+          }else {
+            Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => EmailLoginPage()));
+          }
           break;
         }
       case 'network':

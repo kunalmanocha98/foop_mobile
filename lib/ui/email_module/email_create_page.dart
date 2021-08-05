@@ -102,7 +102,6 @@ class _EmailCreatePage extends State<EmailCreatePage> {
       var postfix = "</blockquote>";
       value = prefix + nametag + content + postfix;
       List<String>? to;
-      List<String>? cc;
       if (widget.isForward) {
         to = null;
       } else {
@@ -184,7 +183,7 @@ class _EmailCreatePage extends State<EmailCreatePage> {
       child: SafeArea(
         child: Scaffold(
           appBar: OhoAppBar().getCustomAppBar(context,
-              appBarTitle: request != null ? request!.emailSubject : 'Subject',
+              appBarTitle:  request?.emailSubject ?? 'Subject',
               onBackButtonPress: () {
             onBackPressed();
               }, actions: [
@@ -284,13 +283,13 @@ class _EmailCreatePage extends State<EmailCreatePage> {
   }
 
   Widget getChips() {
-    var tos =  request!.to!.split(",");
+    var tos =  request!=null ?request!.to!.split(","):null;
     return Expanded(
       child: request != null
           ? Wrap(
         direction: Axis.horizontal,
         children: [
-          if (tos.length > 0)
+          if (tos!.length > 0)
             Chip(
               label: Text(tos[0]),
               shape: StadiumBorder(),
@@ -460,7 +459,7 @@ class _EmailCreatePage extends State<EmailCreatePage> {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       builder: (BuildContext context) {
         return ComposeEmailDetailSheet(
-          request: request!,
+          request: request,
           isReply: widget.isReply,
           callback: (value) {
             setState(() {

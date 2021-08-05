@@ -89,7 +89,7 @@ class _TricycleEmailCard extends State<TricycleEmailCard> {
   @override
   void initState() {
     super.initState();
-    outPutLan = prefs.getString(Strings.translation_code)!;
+    outPutLan = prefs.getString(Strings.translation_code)!=null ?prefs.getString(Strings.translation_code) :null;
     tts.setCompletionHandler(() {
       setState(() {
         isPlaying = false;
