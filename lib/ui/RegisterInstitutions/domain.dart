@@ -326,7 +326,7 @@ setState(() {
   isLoading=true;
 });
     final body = jsonEncode({
-      "institution_id": instId,
+      "business_id": instId,
       "domain_name": domainController.text
     });
     Calls()

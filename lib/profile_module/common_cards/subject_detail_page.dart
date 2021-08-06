@@ -285,7 +285,7 @@ setState(() {
   isLoading=true;
 });
     final body = jsonEncode({
-      "institution_id": 2,
+      "business_id": 2,
       "searchVal": searchValue,
     });
 

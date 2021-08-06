@@ -14,7 +14,7 @@ class StaffListRequest {
 
   StaffListRequest.fromJson(Map<String, dynamic> json) {
     searchVal = json['search_val'];
-    institutionId = json['institution_id'];
+    institutionId = json['business_id'];
     personType = json['person_type'];
     pageNumber = json['page_number'];
     pageSize = json['page_size'];
@@ -23,7 +23,7 @@ class StaffListRequest {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['search_val'] = this.searchVal;
-    data['institution_id'] = this.institutionId;
+    data['business_id'] = this.institutionId;
     data['person_type'] = this.personType;
     data['page_number'] = this.pageNumber;
     data['page_size'] = this.pageSize;

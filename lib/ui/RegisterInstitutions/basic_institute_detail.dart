@@ -1,15 +1,47 @@
 import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
+import 'dart:convert';
+import 'dart:io';
 
+import 'package:GlobalUploadFilePkg/Enums/contexttype.dart';
+import 'package:GlobalUploadFilePkg/Enums/ownertype.dart';
+import 'package:GlobalUploadFilePkg/Files/GlobalUploadFilePkg.dart';
+import 'package:oho_works_app/api_calls/calls.dart';
+import 'package:oho_works_app/camera_module/camera_page.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
+import 'package:oho_works_app/enums/resolutionenums.dart';
+import 'package:oho_works_app/enums/serviceTypeEnums.dart';
+import 'package:oho_works_app/models/imageuploadrequestandresponse.dart';
+import 'package:oho_works_app/models/post/keywordsList.dart';
+import 'package:oho_works_app/models/post/postcreate.dart';
+import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
+import 'package:oho_works_app/utils/app_localization.dart';
+import 'package:oho_works_app/utils/colors.dart';
+import 'package:oho_works_app/utils/config.dart';
+import 'package:oho_works_app/utils/hexColors.dart';
+import 'package:oho_works_app/utils/imagepickerAndCropper.dart';
+import 'package:oho_works_app/utils/strings.dart';
+import 'package:oho_works_app/utils/toast_builder.dart';
+import 'package:oho_works_app/utils/utility_class.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:camera/camera.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/components/app_buttons.dart';
+import 'package:oho_works_app/enums/resolutionenums.dart';
+import 'package:oho_works_app/enums/serviceTypeEnums.dart';
+import 'package:oho_works_app/models/disctionarylist.dart';
 import 'package:oho_works_app/models/drop_down_global.dart';
 import 'package:oho_works_app/models/others_name.dart';
 import 'package:oho_works_app/models/post/keywordsList.dart';
 import 'package:oho_works_app/ui/RegisterInstitutions/institutePhotoPage.dart';
+import 'package:oho_works_app/ui/camera_module/photo_preview_screen.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
@@ -21,6 +53,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:oho_works_app/utils/utility_class.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'domain.dart';
@@ -36,12 +69,13 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
   String? facebookId;
   String? googleSignInId;
   String? userName;
-  String? imageUrl;
+  String? imageUrl="";
   var range = <String>[];
   var rangeStudent = <String>[];
 
   var instituteTypelist = <String?>[];
   var instCategory = <String?>[];
+  var employeeRangeList = <String?>[];
   bool isTermAndConditionAccepted = false;
   String email = "";
   bool isGoogleOrFacebookDataReceived = false;
@@ -66,7 +100,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
   String? selectInstCategory;
   String? selectInstType;
   String? selectStRange;
-  String? selectTecRange;
+  String? employeeRange;
   int? selectedEpoch;
   var mapIntType = HashMap<String?, String?>();
   var mapCategory = HashMap<String?, String?>();
@@ -80,12 +114,17 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
     super.initState();
 
     WidgetsBinding.instance!.addPostFrameCallback((_) =>
-    {   getInstituteType(),
+    {
+      setPrefs(),
+      getInstituteType(),
         getRelationType()});
   }
 
   String quotesCharacterLength = "0";
+  setPrefs() async {
+    prefs = await SharedPreferences.getInstance();
 
+  }
   @override
   Widget build(BuildContext context) {
     this.context = context;
@@ -107,6 +146,9 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
       }
       return instituteType;
     }
+
+
+
 
     _getRelationtype() {
       for (int i = 0; i < instCategory.length; i++) {
@@ -286,22 +328,25 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
       ),
       items: _getInstituteType(),
       onChanged: (value) {
-        value as DropdownMenuItem;
+
         setState(() {
-          selectInstType = (value) as String?;
+
+
+          selectInstType = value;
         });
         FocusScope.of(context).requestFocus(new FocusNode());
       },
     );
-    final relation = DropdownButtonFormField<dynamic>(
+
+
+    final category = DropdownButtonFormField<dynamic>(
       value: null,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 2.0.w, 15.0.h)),
       hint: Padding(
         padding: const EdgeInsets.only(left: 0),
         child: Text(
-          selectInstCategory ??
-              AppLocalizations.of(context)!.translate("entity_category"),
+          selectInstCategory ?? AppLocalizations.of(context)!.translate("entity_category"),
           style: styleElements.bodyText2ThemeScalable(context),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
@@ -309,38 +354,15 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
       ),
       items: _getRelationtype(),
       onChanged: (value) {
-        value as DropdownMenuItem;
-        setState(() {
-          selectInstCategory = (value) as String?;
 
+        setState(() {
+          selectInstCategory = value;
         });
         FocusScope.of(context).requestFocus(new FocusNode());
       },
     );
-    final employees = DropdownButtonFormField<dynamic>(
-      value: null,
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 2.0.w, 15.0.h)),
-      hint: Padding(
-        padding: const EdgeInsets.only(left: 0),
-        child: Text(
-          selectInstCategory ??
-             "Number of employees",
-          style: styleElements.bodyText2ThemeScalable(context),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-      ),
-      items: _getRelationtype(),
-      onChanged: (value) {
-        value as DropdownMenuItem;
-        setState(() {
-          selectInstCategory = (value) as String?;
+    
 
-        });
-        FocusScope.of(context).requestFocus(new FocusNode());
-      },
-    );
     return new WillPopScope(
       onWillPop: _onBackPressed,
       child: SafeArea(
@@ -348,14 +370,16 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
                resizeToAvoidBottomInset: false,
               appBar: appAppBar().getCustomAppBar(
                 context,
-                actions: [ InkWell(
+                actions: [
+                  InkWell(
                     onTap:(){
-                      submit(context);
+                     submit(context);
                     },
 
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Text(AppLocalizations.of(context)!.translate('next'), style:styleElements.subtitle2ThemeScalable(context).copyWith(color: HexColor(AppColors.appMainColor)),),
+
                     )),
                 ],
                 appBarTitle:AppLocalizations.of(context)!.translate('reg_bus'),
@@ -393,17 +417,30 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
                                       },
                                       child: Padding(
                                         padding:EdgeInsets.only( left: 12, right: 12),
-                                        child: Container(
-                                            height: 80,
-                                            width: 80,
+                                        child:    GestureDetector(
+                                          onTap: () async {
+                                            imagePicker("gallery");
+                                          },
+                                          child:  Container(
+                                            width: 68,
+                                            height: 68,
                                             decoration: BoxDecoration(
-                                                color: HexColor(AppColors.appColorBackground),
+                                              color: HexColor(AppColors.appColorBlack10),
+                                                borderRadius: BorderRadius.circular(8),
                                                 image: DecorationImage(
-                                                    image: AssetImage('assets/appimages/grey_bg.png')
+                                                    fit: BoxFit.cover,
+
+                                                    image:CachedNetworkImageProvider(
+                                                      Utility().getUrlForImage(
+                                                          imageUrl,
+                                                          RESOLUTION_TYPE.R64,
+                                                          SERVICE_TYPE.INSTITUTION),
+                                                    )
+
                                                 )
                                             ),
-                                            child: Text('')
-                                            )
+                                          )
+                                        ),
                                         ),
                                       ),
 
@@ -428,7 +465,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
                                   child: Container(
                                       padding: EdgeInsets.only(
                                           left: 8.w, right: 8.w, bottom: 8.h),
-                                      child: relation),
+                                      child: category),
                                 ),
 
 
@@ -446,7 +483,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
                                   child: Container(
                                       padding: EdgeInsets.only(
                                           left: 8.w, right: 8.w, bottom: 8.h),
-                                      child: employees),
+                                      child: Container()),
                                 ),
 
 
@@ -485,105 +522,73 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
                             ),
                           )),
                     ),
-                   /* Align(
-                        alignment: FractionalOffset.bottomCenter,
-                        child: GestureDetector(
-                          child: Container(
-                            height: 60,
-                            color: HexColor(AppColors.appColorWhite),
-                            child: Align(
-                                alignment: Alignment.centerRight,
-                                child: Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment
-                                      .spaceBetween,
-                                  children: <Widget>[
-                                    Align(
-                                      alignment: Alignment.bottomRight,
-                                      child: Visibility(
-                                        visible: false,
-                                        child: Container(
-                                          margin:
-                                          const EdgeInsets.only(
-                                              left: 16.0,
-                                              right: 16.0),
-                                          child: appElevatedButton(
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                BorderRadius
-                                                    .circular(
-                                                    18.0),
-                                                side: BorderSide(
-                                                    color: Colors
-                                                        .redAccent)),
-                                            onPressed: () async {
 
-                                            },
-                                            color: Colors
-                                                .white,
-                                            child: Text(
-                                                AppLocalizations.of(
-                                                    context)!
-                                                    .translate(
-                                                    "next"),
-                                                style: styleElements
-                                                    .buttonThemeScalable(
-                                                    context)
-                                                    .copyWith(
-                                                    color:  Colors
-                                                        .redAccent)),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Align(
-                                      alignment: Alignment.bottomRight,
-                                      child: Visibility(
-                                        child: Container(
-                                          margin:
-                                          const EdgeInsets.only(
-                                              left: 16.0,
-                                              right: 16.0),
-                                          child: appElevatedButton(
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                BorderRadius
-                                                    .circular(
-                                                    18.0),
-                                                side: BorderSide(
-                                                    color: Colors
-                                                        .redAccent)),
-                                            onPressed: () async {
-
-                                              submit(context);
-                                            },
-                                            color: Colors
-                                                .white,
-                                            child: Text(
-                                                AppLocalizations.of(
-                                                    context)!
-                                                    .translate(
-                                                    "next"),
-                                                style: styleElements
-                                                    .buttonThemeScalable(
-                                                    context)
-                                                    .copyWith(
-                                                    color:  Colors
-                                                        .redAccent)),
-                                          ),
-                                        ),
-                                      ),
-                                    )
-                                  ],
-                                )),
-                          ),
-                        ))*/
                   ],
                 
               ))),
     );
   }
+  void imagePicker(String type) async {
+    File? pickedFile;
+    var pr = ToastBuilder().setProgressDialogWithPercent(context,'Uploading Image...');
 
+    if(type=="gallery"){
+      pickedFile = await ImagePickerAndCropperUtil().pickImage(context);
+      print("#####PATH###  "+pickedFile!.path);
+    }else{
+      final cameras = await availableCameras();
+      var reult = await Navigator.push(context,
+          MaterialPageRoute(builder: (context) => Camera(cameras: cameras,type: "camera",)));
+      File p = File(reult["result"]);
+      pickedFile = await ImagePickerAndCropperUtil().cropFileMulti(context, p);
+      print(reult["result"]+"pppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp");
+    }
+
+    if (pickedFile != null) {
+      await pr.show();
+      var contentType = ImagePickerAndCropperUtil().getMimeandContentType(
+          pickedFile.path);
+      await UploadFile(
+          baseUrl: Config.BASE_URL,
+          context: context,
+          token: prefs.getString("token"),
+          contextId: '',
+          contextType: CONTEXTTYPE_ENUM.FEED.type,
+          ownerId: prefs.getInt(Strings.userId).toString(),
+          ownerType: OWNERTYPE_ENUM.PERSON.type,
+          file: pickedFile,
+          subContextId: "",
+          subContextType: "",
+          onProgressCallback: (int value){
+            pr.update(progress:value.toDouble());
+          },
+          mimeType: contentType[1],
+          contentType: contentType[0])
+          .uploadFile()
+          .then((value) async {
+        print(value);
+        var imageResponse = ImageUpdateResponse.fromJson(value);
+        print (jsonEncode(imageResponse));
+        if(imageResponse.statusCode == Strings.success_code) {
+       setState(() {
+         imageUrl=imageResponse.rows!.fileUrl;
+       });
+          await pr.hide();
+        }else{
+          await pr.hide();
+          ToastBuilder().showToast(imageResponse.message!, context, HexColor(AppColors.information));
+        }
+      }).catchError((onError) async {
+        await pr.hide();
+        print(onError.toString());
+        ToastBuilder().showToast(AppLocalizations.of(context)!.translate('some_error_occurred'), context, HexColor(AppColors.information));
+      });
+    }else{
+      await pr.hide();
+      ToastBuilder().showToast(AppLocalizations.of(context)!.translate('corrupted_file_error'), context, HexColor(AppColors.information));
+
+    }
+  }
   // ignore: missing_return
   Future<bool> _onBackPressed() {
     Navigator.of(context).pop(true);
@@ -603,80 +608,63 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
     prefs.setString("instName", instituteNameC.text.toString());
     print(jsonEncode(basicData));
 
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => DomainPage(2),
-        ));
-    /*if(isSelect2! && isSelect1!){
-      if (instituteNameC.text.trim().isNotEmpty) {
-        if (selectInstType !=null) {
-          if (selectInstCategory != null) {
+    if (instituteNameC.text.trim().isNotEmpty) {
+      if (selectInstType !=null) {
+        if (selectInstCategory != null) {
+          {
             {
               {
-                {
-                  var cat;
-                  var type;
-                  mapCategory.forEach((key, value) {
-                    if(key==selectInstCategory)
-                      cat=value;
+                var cat;
+                var type;
+                mapCategory.forEach((key, value) {
+                  if(key==selectInstCategory)
+                    cat=value;
 
-                  });
-                  mapIntType.forEach((key, value) {
-                    if(key==selectInstType)
-                      type=value;
+                });
+                mapIntType.forEach((key, value) {
+                  if(key==selectInstType)
+                    type=value;
 
-                  });
-                  prefs = await SharedPreferences.getInstance();
-                  BasicData basicData = new BasicData();
-                  basicData.name=instituteNameC.text.toString();
-                  basicData.description=descriptionController.text.toString();
-                  basicData.inst_cat_code=cat;
-                  basicData.entity_type_code=type;
-                  basicData.listOfNames=_listOfHashTags;
-                  prefs.setString("instName", instituteNameC.text.toString());
-                  print(jsonEncode(basicData));
-                  Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>InstitutePhotoPage(basicData: basicData)));
-                }
+                });
+                prefs = await SharedPreferences.getInstance();
+                BasicData basicData = new BasicData();
+                basicData.name=instituteNameC.text.toString();
+                basicData.description=descriptionController.text.toString();
+                basicData.inst_cat_code=cat;
+                basicData.entity_type_code=type;
+                basicData.listOfNames=_listOfHashTags;
+                prefs.setString("instName", instituteNameC.text.toString());
+                print(jsonEncode(basicData));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => DomainPage(2),
+                    ));
               }
             }
           }
-          else {
-            ToastBuilder().showToast(
-                "Please select institute category",
-                context,
-                HexColor(AppColors.information));
-          }
-        } else
+        }
+        else {
           ToastBuilder().showToast(
-              "Please select institute type",
+              "Please select institute category",
               context,
               HexColor(AppColors.information));
+        }
       } else
         ToastBuilder().showToast(
-            "Institute name required",
+            "Please select institute type",
             context,
             HexColor(AppColors.information));
     }
-    else
-      ToastBuilder().showToast(
-          AppLocalizations.of(context)!.translate("tick_check_box"),
-          context,
-          HexColor(AppColors.information));*/
   }
 
 
 
   void getInstituteType() async {
-    final body = jsonEncode({
-      "search_val": "",
-      "dictonary_type_id": "entity_type",
-      "page_number": 1,
-      "page_size": 115
-    });
-    Calls().call(body, context, Config.DROP_DOWN_GLOBAL).then((value) async {
+    final body = jsonEncode({"type":"BUSCAT"});
+    Calls().call(body, context, Config.DICTIONARYLIST).then((value) async {
       if (value != null) {
-        var data = DropDownCommon.fromJson(value);
+        var data = DictionaryListResponse.fromJson(value);
 
         for (var item in data.rows!) {
           instituteTypelist.add(item.description);
@@ -691,17 +679,13 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
   }
 
   void getRelationType() async {
-    final body = jsonEncode({
-      "search_val": "",
-      "dictonary_type_id": "inst_cat",
-      "page_number": 1,
-      "page_size": 115
-    });
-    Calls().call(body, context, Config.DROP_DOWN_GLOBAL).then((value) async {
+    final body = jsonEncode({"type":"BUSTYPE"} );
+    Calls().call(body, context, Config.DICTIONARYLIST).then((value) async {
       if (value != null) {
-        var data = DropDownCommon.fromJson(value);
+        var data = DictionaryListResponse.fromJson(value);
         for (var item in data.rows!) {
           instCategory.add(item.description);
+          employeeRangeList.add(item.description);
           mapCategory.putIfAbsent(item.description,() =>item.code);
         }
         setState(() {});

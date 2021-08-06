@@ -52,7 +52,7 @@ class AdminListItem {
 
   AdminListItem.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    institutionId = json['institution_id'];
+    institutionId = json['business_id'];
     institutionName = json['institution_name'];
     personName = json['person_name'];
     personId = json['person_id'];
@@ -64,7 +64,7 @@ class AdminListItem {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['institution_id'] = this.institutionId;
+    data['business_id'] = this.institutionId;
     data['institution_name'] = this.institutionName;
     data['person_name'] = this.personName;
     data['person_id'] = this.personId;

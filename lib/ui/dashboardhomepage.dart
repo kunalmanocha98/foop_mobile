@@ -367,6 +367,7 @@ BuildContext? dgsContext;
         }
       case 'lead_order':
         {
+
           Navigator.push(
               context,
               MaterialPageRoute(
@@ -383,6 +384,22 @@ BuildContext? dgsContext;
 
                     }),
               ));
+        /*  Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CrmPage(
+                    id: prefs!.getInt(Strings.userId),
+                    type: "person",
+                    hideTabs:true,
+                    isSwipeDisabled:true,
+                    hideAppBar: true,
+                    currentTab: 0,
+                    pageTitle: "",
+                    imageUrl: "",
+                    callback: () {
+
+                    }),
+              ));*/
           break;
         }
 

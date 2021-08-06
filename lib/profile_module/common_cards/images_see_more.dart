@@ -230,7 +230,7 @@ class _ImagesSeeMore extends State<ImagesSeeMore> {
     final body = jsonEncode({
       "person_id": null,
       "type": type == "institution" ? "institution" : "person",
-      "institution_id": instituteId,
+      "business_id": instituteId,
       "page_number": page,
       "given_by_id": prefs.getInt("userId"),
       "page_size": 4

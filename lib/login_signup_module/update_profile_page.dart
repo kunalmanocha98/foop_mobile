@@ -14,9 +14,11 @@ import 'package:oho_works_app/models/device_info.dart';
 import 'package:oho_works_app/models/dynmaicres.dart';
 import 'package:oho_works_app/models/profileEditRequest.dart';
 import 'package:oho_works_app/models/register_user_payload.dart';
+import 'package:oho_works_app/regisration_module/eployee_code.dart';
 import 'package:oho_works_app/regisration_module/select_business_page.dart';
 import 'package:oho_works_app/regisration_module/select_language.dart';
 import 'package:oho_works_app/regisration_module/welcomePage.dart';
+import 'package:oho_works_app/ui/RegisterInstitutions/basic_institute_detail.dart';
 import 'package:oho_works_app/ui/camera_module/photo_preview_screen.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
@@ -88,6 +90,7 @@ class _UpdateProfilePage extends State<UpdateProfilePage>
   void setSharedPreferences() async {
     prefs = await SharedPreferences.getInstance();
     prefs!.setBool("isProfileUpdated", false);
+    print('Token' + " " + prefs!.getString("token")!);
     if (prefs != null && prefs!.getString("imageUrl") != null) {
       setState(() {
         imageUrl = prefs!.getString("imageUrl");
@@ -520,18 +523,8 @@ class _UpdateProfilePage extends State<UpdateProfilePage>
                                     callback: () {
                                       if (imageUrl != null) {
 
-                                        showModalBottomSheet<void>(
-                                          context: context,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.only(
-                                                topLeft: Radius.circular(15.0),
-                                                topRight: Radius.circular(15.0)),
-                                          ),
-                                          builder: (context) {
-                                            return noInstituteFound( context);
-                                          },
-                                        );
-                                      //  _profileUpdate();
+
+                                        _profileUpdate();
                                       } else
                                         ToastBuilder().showToast(
                                             AppLocalizations.of(context)!
@@ -570,6 +563,7 @@ class _UpdateProfilePage extends State<UpdateProfilePage>
             payload.lastName = lastNameController.text;
             payload.gender = selectedGender;
             payload.dateOfBirth = selectedDate;
+           // payload.userName = firstNameController.text+"_"+lastNameController.text;
             // payload.lastName = "";
             var data = jsonEncode(payload);
             setState(() {
@@ -776,7 +770,7 @@ class _UpdateProfilePage extends State<UpdateProfilePage>
               textAlign: TextAlign.center,
               style: styleElements
                   .captionThemeScalable(context)
-                  .copyWith(color: HexColor(AppColors.appColorBlack85)),
+                  .copyWith(color: HexColor(AppColors.appMainColor)),
             ),
           ),
           Align(
@@ -792,23 +786,12 @@ class _UpdateProfilePage extends State<UpdateProfilePage>
                 color: AppColors.appMainColor,
                 callback: () async{
 
-                  var result = await Navigator.push(
+                  Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => SelectBusiness(
-                            type: "",
-                            id: 0,
-                            registerUserAs: RegisterUserAs(),
-                            isInstituteSelectedAlready:
-                            false,
-                            studentType: "",
-                            from: "welcome"),
-                      ));
-                  if (result != null &&
-                      result['registerUserdata'] != null) {
-
-                  }
-
+                          builder: (BuildContext
+                          context) =>
+                              BasicInstituteDetails()));
                 },
               ),
             ),
@@ -829,7 +812,18 @@ class _UpdateProfilePage extends State<UpdateProfilePage>
                 offsetX: 70.66,
                 offsetY: 12.93,
                 callback: () {
-
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SelectBusiness(
+                            type: "",
+                            id: 0,
+                            registerUserAs: RegisterUserAs(),
+                            isInstituteSelectedAlready:
+                            false,
+                            studentType: "",
+                            from: "welcome"),
+                      ));
                 },
               ),
             ),

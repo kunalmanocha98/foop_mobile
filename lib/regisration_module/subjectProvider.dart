@@ -40,7 +40,7 @@ class SubjectsProvider extends ChangeNotifier {
     _listConversations ??= <SubjectItems>[];
     int pageNumber = page;
     final body = jsonEncode({
-      "institution_id":instituteId,
+      "business_id":instituteId,
       "search_val": searchVal,
       "page_number": page,
       "page_size": 50

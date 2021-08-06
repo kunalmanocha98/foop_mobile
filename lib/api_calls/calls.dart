@@ -80,15 +80,25 @@ class Calls {
       print('Token' + " " + prefs.getString("token")!);
       print(url);
     } else {
+
+      print(url);
       headers = {
         "Content-Type": 'application/json',
       };
-      print('Token' +
-          "Nooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
+      
     }
 
     return _netUtil
         .post(context, url, body: data, headers: headers)
+        .then((dynamic res) {
+      return _decoder.convert(res.toString());
+    });
+  }
+  Future<dynamic> getRequest(BuildContext context, String url) async {
+
+    print(url);
+    return _netUtil
+        .get(url)
         .then((dynamic res) {
       return _decoder.convert(res.toString());
     });

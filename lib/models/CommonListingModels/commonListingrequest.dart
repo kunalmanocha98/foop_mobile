@@ -26,7 +26,7 @@ class CommonListRequestPayload {
     requestedByType = json['requested_by_type'];
     listType = json['list_type'];
     personId = json['person_id'];
-    institutionId = json['institution_id'];
+    institutionId = json['business_id'];
   }
 
   Map<String, dynamic> toJson() {
@@ -38,7 +38,7 @@ class CommonListRequestPayload {
     data['requested_by_type'] = this.requestedByType;
     data['list_type'] = this.listType;
     data['person_id'] = this.personId;
-    data['institution_id'] = this.institutionId;
+    data['business_id'] = this.institutionId;
     return data;
   }
 }

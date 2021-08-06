@@ -2,12 +2,14 @@ import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
 
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/conversationPage/base_response.dart';
 import 'package:oho_works_app/models/CalenderModule/event_create_models.dart';
 import 'package:oho_works_app/models/language_list.dart';
+import 'package:oho_works_app/profile_module/pages/directions.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
@@ -360,17 +362,34 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
                                         left: 8.w, right: 8.w, bottom: 8.h),
                                     child: selectMap,
                                   )),*/
-                              Container(
-                                  height: 150,
-                                  margin: const EdgeInsets.only(
-                                      left: 8.0, right: 8.0),
-                                  decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: HexColor(AppColors.appColorGrey500),
-                                      ),
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(8))),
-                                  child: address),
+                              InkWell(
+                                onTap: (){
+
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => MapPage(
+                                            LatLng(28.7041, 77.1025),
+                                            28.7041,
+                                            77.1025),
+                                      ));
+                                },
+                                child: Container(
+                                    height: 150,
+                                    width: double.infinity,
+                                    margin: const EdgeInsets.only(
+                                        left: 8.0, right: 8.0),
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: HexColor(AppColors.appColorGrey500),
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.all(Radius.circular(8))),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Text("Address"),
+                                    )),
+                              ),
                               Align(
                                   alignment: Alignment.center,
                                   child: Container(

@@ -1103,7 +1103,7 @@ return rows!;
 
   void getClasses(String searchValue) async {
     final body = jsonEncode({
-      "institution_id": institutionId,
+      "business_id": institutionId,
       "searchVal": searchValue,
     });
 

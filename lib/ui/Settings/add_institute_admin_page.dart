@@ -113,7 +113,7 @@ class AddInstituteAdminPageState extends State<AddInstituteAdminPage> {
           return AdminAddRemoveDialog(
             okCallback: () {
               var body = jsonEncode({
-                "institution_id": member.institutionId,
+                "business_id": member.institutionId,
                 "person_id": member.personId,
                 "role_id": 9
               });

@@ -109,7 +109,7 @@ class Persondata {
     mobileCountryCode = json['mobile_country_code'];
     profileImage = json['profile_image'];
     coverImage = json['cover_image'];
-    institutionId = json['institution_id'];
+    institutionId = json['business_id'];
     if (json['institutions'] != null) {
       institutions = [];//Institutions>();
       json['institutions'].forEach((v) {
@@ -153,7 +153,7 @@ class Persondata {
     data['mobile_country_code'] = this.mobileCountryCode;
     data['profile_image'] = this.profileImage;
     data['cover_image'] = this.coverImage;
-    data['institution_id'] = this.institutionId;
+    data['business_id'] = this.institutionId;
     if (this.institutions != null) {
       data['institutions'] = this.institutions!.map((v) => v.toJson()).toList();
     }

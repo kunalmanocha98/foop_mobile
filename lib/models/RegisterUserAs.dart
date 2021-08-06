@@ -32,7 +32,7 @@ bool? isDefaultInstitution;
       this.academicYear});
 
   RegisterUserAs.fromJson(Map<String, dynamic> json) {
-    institutionId = json['institution_id'];
+    institutionId = json['business_id'];
     personId = json['person_id'];
     childId = json['child_id'];
     isDefaultInstitution=json['is_default_institution'];
@@ -56,7 +56,7 @@ bool? isDefaultInstitution;
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['institution_id'] = this.institutionId;
+    data['business_id'] = this.institutionId;
     data['person_id'] = this.personId;
     data['is_default_institution']=this.isDefaultInstitution;
     data['child_id'] = this.childId;

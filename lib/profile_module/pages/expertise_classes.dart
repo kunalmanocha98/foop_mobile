@@ -118,7 +118,7 @@ class _SelectClasses extends State<ExpertiseSelectClass>
 
         {"search_val":searchValue,
           "person_id":prefs.getInt("userId").toString(),
-          "institution_id":instituteId,
+          "business_id":instituteId,
           "page_number":1,"page_size":100}
 
 

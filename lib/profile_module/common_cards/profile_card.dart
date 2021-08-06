@@ -385,7 +385,7 @@ class Profiledetailcard extends StatelessWidget {
 
   void deleteRole(String institutionId, String deleteUserId) {
     var body = {
-      "institution_id" : int.parse(institutionId),
+      "business_id" : int.parse(institutionId),
       "person_id": prefs!.getInt(Strings.userId),
       "deleted_institution_user_id": int.parse(deleteUserId)
     };

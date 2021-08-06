@@ -281,7 +281,7 @@ class _ClassesMainPage extends State<ClassesMainPage>
   void getCourses(String? searchValue) async {
 
     final body = jsonEncode({
-      "institution_id": 2,
+      "business_id": 2,
       "searchVal": searchValue,
     });
 

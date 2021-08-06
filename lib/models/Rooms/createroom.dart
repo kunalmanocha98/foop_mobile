@@ -32,7 +32,7 @@ class CreateRoomPayload {
       this.roomProfileImageUrl});
 
   CreateRoomPayload.fromJson(Map<String, dynamic> json) {
-    institutionId = json['institution_id'];
+    institutionId = json['business_id'];
     roomCreatedByType = json['room_created_by_type'];
     roomCreatedById = json['room_created_by_id'];
     roomOwnerType = json['room_owner_type'];
@@ -51,7 +51,7 @@ class CreateRoomPayload {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['institution_id'] = this.institutionId;
+    data['business_id'] = this.institutionId;
     data['room_created_by_type'] = this.roomCreatedByType;
     data['room_created_by_id'] = this.roomCreatedById;
     data['room_owner_type'] = this.roomOwnerType;

@@ -356,7 +356,7 @@ class _CreateFacility extends State<CreateFacility> {
   void createFacility(String desc, String name,int? selectedId,String? selectedIndTypeCode) async {
 
     final body = jsonEncode({
-      "institution_id": prefs.getInt(Strings.instituteId),
+      "business_id": prefs.getInt(Strings.instituteId),
       "facility_name": name,
       "facility_code": selectedIndTypeCode,
       "facility_description": desc,

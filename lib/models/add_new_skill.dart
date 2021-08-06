@@ -16,7 +16,7 @@ class AddNewSkillLangEntity {
     categoryType = json['category_type'];
     valueName = json['value_name'];
     valueCode = json['value_code'];
-    instituteId=json['institution_id'];
+    instituteId=json['business_id'];
     valueDescription = json['value_description'];
   }
 
@@ -24,7 +24,7 @@ class AddNewSkillLangEntity {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['category_type'] = this.categoryType;
     data['value_name'] = this.valueName;
-    data['institution_id']=this.instituteId;
+    data['business_id']=this.instituteId;
     data['value_code'] = this.valueCode;
     data['value_description'] = this.valueDescription;
     return data;

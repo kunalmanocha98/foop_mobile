@@ -1,8 +1,15 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ohoworks.oho_works_app">
-   <application
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <application
         android:label="oho_works_app"
         android:icon="@mipmap/ic_launcher">
+
+
+       <meta-data
+           android:name="com.google.android.geo.API_KEY"
+           android:value="AIzaSyDWv75mZjT0FoUZE-NxxYqOJ4c4xLZLUhY"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

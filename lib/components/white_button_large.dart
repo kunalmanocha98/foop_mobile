@@ -44,7 +44,7 @@ class _WhiteLargeButtonState extends State<WhiteLargeButton> {
               child: Text(
                 this.widget.name,
                 style: styleElements.subtitle2ThemeScalable(context)
-                    .copyWith(color: HexColor(textColor??AppColors.appColorBlack), fontSize: 14.sp),
+                    .copyWith(color: HexColor(textColor??AppColors.appMainColor), fontSize: 14.sp),
                 textAlign: TextAlign.left,
               ),
             ),

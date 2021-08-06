@@ -6,9 +6,12 @@ import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/components/app_buttons.dart';
+import 'package:oho_works_app/models/RegisterUserAs.dart';
+import 'package:oho_works_app/models/register_user_as_response.dart';
 import 'package:oho_works_app/ui/RegisterInstitutions/basic_institute_detail.dart';
 import 'package:oho_works_app/ui/RegisterInstitutions/contact_detail_institute_page.dart';
 import 'package:oho_works_app/ui/RegisterInstitutions/models/basic_response.dart';
+import 'package:oho_works_app/ui/dialog_page.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
@@ -18,6 +21,7 @@ import 'package:oho_works_app/utils/strings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:oho_works_app/utils/toast_builder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -62,7 +66,7 @@ class _EmployeeCode extends State<EmployeeCode>
   final addController = TextEditingController();
   final ohoUserName = TextEditingController();
 
-
+  RegisterUserAs? registerUserAs=RegisterUserAs();
 
   late BuildContext context;
   late TextStyleElements styleElements;
@@ -153,23 +157,20 @@ class _EmployeeCode extends State<EmployeeCode>
                         onTap: (){
 
 
-                          if(domainController.text.trim()!=null  && domainController.text.trim()!="")
-                          {submit();}
-                          else
-                          {
-                            prefs.setString("create_institute", "Contact");
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (BuildContext
-                                    context) =>
-                                        BasicInstituteDetails()));
-                          }
-
+                          register();
                         },
                         child: Row(
                           children: [
-                            Text(AppLocalizations.of(context)!.translate('next'), style:styleElements.subtitle2ThemeScalable(context).copyWith(color: HexColor(AppColors.appMainColor)),),
+                            InkWell(
+                                onTap:(){
+
+
+register();
+
+                                },
+
+
+                                child: Text(AppLocalizations.of(context)!.translate('next'), style:styleElements.subtitle2ThemeScalable(context).copyWith(color: HexColor(AppColors.appMainColor)),)),
                             Visibility(
                               visible: isLoading,
                               child: Padding(
@@ -324,7 +325,7 @@ class _EmployeeCode extends State<EmployeeCode>
       isLoading=true;
     });
     final body = jsonEncode({
-      "institution_id": instId,
+      "business_id": instId,
       "domain_name": domainController.text
     });
     Calls()
@@ -356,4 +357,36 @@ class _EmployeeCode extends State<EmployeeCode>
   }
 
   _EmployeeCode(this.instId);
+
+  void register() async {
+
+    final body = jsonEncode(registerUserAs);
+
+    Calls().call(body, context, Config.REGISTER_USER_AS).then((value) async {
+      if (value != null) {
+
+        var data = RegisterUserAsResponse.fromJson(value);
+        print(data.toString());
+        if (data.statusCode == "S10001") {
+          prefs.setBool("isProfileCreated", true);
+
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                  builder: (context) => DilaogPage(
+                      type: "admin",
+                      isVerified: true,
+                      title: AppLocalizations.of(context)!.translate('you_are_added_as') + "Employee ",
+                      subtitle: ("of Google"))),
+                  (Route<dynamic> route) => false);
+
+
+
+        } else
+          ToastBuilder().showToast(data.message!, context,HexColor(AppColors.information));
+      }
+    }).catchError((onError) async {
+      ToastBuilder().showToast(onError.toString(), context,HexColor(AppColors.information));
+
+    });
+  }
 }

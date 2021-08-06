@@ -60,7 +60,7 @@ class AccountSettingUpdateRequest {
   AccountSettingUpdateRequest.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     transLateLanguage=json['translate_language'];
-    institutionId = json['institution_id'];
+    institutionId = json['business_id'];
     personId = json['person_id'];
     academicDateStart = json['academic_date_start'];
     academicDateEnd = json['academic_date_end'];
@@ -75,7 +75,7 @@ class AccountSettingUpdateRequest {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['translate_language']=this.transLateLanguage;
-    data['institution_id'] = this.institutionId;
+    data['business_id'] = this.institutionId;
     data['person_id'] = this.personId;
     data['academic_date_start'] = this.academicDateStart;
     data['academic_date_end'] = this.academicDateEnd;
@@ -141,7 +141,7 @@ class PrivacySettingUpdateRequest {
   PrivacySettingUpdateRequest.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     profileVisibleTo = json['profile_visible_to'];
-    institutionId = json['institution_id'];
+    institutionId = json['business_id'];
     personId = json['person_id'];
     networkType = json['network_type'];
     postVisibleTo = json['post_visible_to'].cast<String>();
@@ -156,7 +156,7 @@ class PrivacySettingUpdateRequest {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['profile_visible_to'] = this.profileVisibleTo;
-    data['institution_id'] = this.institutionId;
+    data['business_id'] = this.institutionId;
     data['person_id'] = this.personId;
     data['network_type'] = this.networkType;
     data['post_visible_to'] = this.postVisibleTo;

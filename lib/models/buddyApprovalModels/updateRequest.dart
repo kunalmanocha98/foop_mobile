@@ -7,14 +7,14 @@ class RequestUpdateRequestModel {
       {this.institutionId, this.institutionUserId, this.assignmentStatus});
 
   RequestUpdateRequestModel.fromJson(Map<String, dynamic> json) {
-    institutionId = json['institution_id'];
+    institutionId = json['business_id'];
     institutionUserId = json['institution_user_id'];
     assignmentStatus = json['assignment_status'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['institution_id'] = this.institutionId;
+    data['business_id'] = this.institutionId;
     data['institution_user_id'] = this.institutionUserId;
     data['assignment_status'] = this.assignmentStatus;
     return data;

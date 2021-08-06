@@ -19,7 +19,7 @@ class PostReceiverRequest {
     pageSize = json['page_size'];
     pageNumber = json['page_number'];
     type = json['type'];
-    institutionId = json['institution_id'];
+    institutionId = json['business_id'];
     postType = json['post_type'];
   }
 
@@ -29,7 +29,7 @@ class PostReceiverRequest {
     data['page_size'] = this.pageSize;
     data['page_number'] = this.pageNumber;
     data['type'] = this.type;
-    data['institution_id'] = this.institutionId;
+    data['business_id'] = this.institutionId;
     data['post_type'] = this.postType;
     return data;
   }

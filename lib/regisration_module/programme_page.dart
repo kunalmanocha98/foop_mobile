@@ -410,7 +410,7 @@ class _SelectProgram extends State<SelectProgram>
   Future<ProgramsData> getDepartment(int page) async {
     prefs = await SharedPreferences.getInstance();
     final body = jsonEncode({
-      "institution_id": registerUserAs.institutionId,
+      "business_id": registerUserAs.institutionId,
       "search_val": searchVal,
       "page_number": page,
       "page_size": pageSize

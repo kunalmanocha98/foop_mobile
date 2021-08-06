@@ -29,7 +29,7 @@ class GlobalSearchRequest {
     entityType = json['entity_type'];
     searchPage = json['search_page'];
     personId = json['person_id'];
-    institutionId = json['institution_id'];
+    institutionId = json['business_id'];
     searchType = json['search_type'];
     pageNumber = json['page_number'];
     pageSize = json['page_size'];
@@ -42,7 +42,7 @@ class GlobalSearchRequest {
     data['entity_type'] = this.entityType;
     data['search_page'] = this.searchPage;
     data['person_id'] = this.personId;
-    data['institution_id'] = this.institutionId;
+    data['business_id'] = this.institutionId;
     data['search_type'] = this.searchType;
     data['page_number'] = this.pageNumber;
     data['page_size'] = this.pageSize;
@@ -270,7 +270,7 @@ class GlobalSearchHistoryItem {
     searchPage = json['search_page'];
     entityType = json['entity_type'];
     personId = json['person_id'];
-    institutionId = json['institution_id'];
+    institutionId = json['business_id'];
     searchType = json['search_type'];
     searchDatetime = json['search_datetime'];
     sessionId = json['session_id'];
@@ -292,7 +292,7 @@ class GlobalSearchHistoryItem {
     data['search_page'] = this.searchPage;
     data['entity_type'] = this.entityType;
     data['person_id'] = this.personId;
-    data['institution_id'] = this.institutionId;
+    data['business_id'] = this.institutionId;
     data['search_type'] = this.searchType;
     data['search_datetime'] = this.searchDatetime;
     data['session_id'] = this.sessionId;

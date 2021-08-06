@@ -10,7 +10,7 @@ class DeleteClassSubjectPayload {
   DeleteClassSubjectPayload.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     personId = json['person_id'];
-    institutionId = json['institution_id'];
+    institutionId = json['business_id'];
     actionType = json['action_type'];
   }
 
@@ -18,7 +18,7 @@ class DeleteClassSubjectPayload {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['person_id'] = this.personId;
-    data['institution_id'] = this.institutionId;
+    data['business_id'] = this.institutionId;
     data['action_type'] = this.actionType;
     return data;
   }

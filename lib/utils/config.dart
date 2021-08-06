@@ -9,7 +9,7 @@ class Config {
 
   static String LOGIN_API = BASE_URL + '/api/v1/rl/login/';
   static String LOGOUT_API = BASE_URL + '/api/v1/rl/logout/';
-  static String REGISTER_USER = BASE_URL + '/api/v2/rl/register/';
+  static String REGISTER_USER = BASE_URL + '/api/v1/rl/register/';
   static String ACTIVATE_REGISTRATION = BASE_URL +
       '/api/v1/rl/activate/';
   static String RECOVER_PASSWORD =
@@ -20,21 +20,21 @@ class Config {
       '/api/v1/rl/password-reset/';
   static String ROLES_LIST = BASE_URL + '/api/v1/standard/role/list';
   static String SUBJECT_LIST =
-      BASE_URL + '/api/v2/institution/subject/list';
+      BASE_URL + '/api/v1/business/subject/list';
   static String CLASSES_LIST =
-      BASE_URL + '/api/v1/institution/class/list';
+      BASE_URL + '/api/v1/business/class/list';
   static String SUBJECTS_CATEGORIES =
       BASE_URL + '/api/v1/standard/subjectcategories/list';
   static String COURSE_LIST = BASE_URL + '/api/v1/standard/course/list';
   static String PERSONAL_PROFILE = BASE_URL + '/api/v1/user/profile/';
   static String INSTITUTE_DETAILS = BASE_URL +
-      '/api/v1/institution/detail';
+      '/api/v1/business/detail';
   static String INSTITUTE_CLASSES =
-      BASE_URL + '/api/v1/institution/class/list';
+      BASE_URL + '/api/v1/business/class/list';
   static String PERSON_LIST =
       BASE_URL + '/api/v1/standard/persontype/list';
   static String REGISTER_USER_AS =
-      BASE_URL + '/api/v2/institution/user/register';
+      BASE_URL + '/api/v1/business/user/register';
 
   static String LANGUAGE_LIST =
       BASE_URL + '/api/v1/standard/applanguage/list';
@@ -45,7 +45,7 @@ class Config {
   static String CURRENCYFORMATLIST =
       BASE_URL + '/api/v1/standard/currency/list';
 
-  static String INSTITUTE_LIST = BASE_URL + '/api/v1/institution/list';
+  static String INSTITUTE_LIST = BASE_URL + '/api/v1/business/list';
 
   static String ALREADY_EXIST_USER_CHECK =
       BASE_URL + '/api/v1/rl/social/login/';
@@ -84,7 +84,7 @@ class Config {
   static String COMMENTS_LIST = BASE_URL + '/api/v1/rr/notes/list';
   static String CREATE_RATINGS = BASE_URL + '/api/v1/rr/ratings/create';
   static String RESEND_OTP = BASE_URL + '/api/v1/rl/resend-otp/';
-  static String USER_LIST = BASE_URL + '/api/v1/institution/user/list';
+  static String USER_LIST = BASE_URL + '/api/v1/business/user/list';
   static String ACMC_API =
       BASE_URL + '/api/v1/standard/academicyear/list';
   static String PROFILEEDIT = BASE_URL + '/api/v1/user/profile/edit';
@@ -95,20 +95,20 @@ class Config {
       BASE_URL + '/api/v1/network/contact/synccontactdetail';
   static String SEND_FCM_TOKEN = BASE_URL +
       '/api/v1/network/contact/setfcmid';
-  static String USER_PROFILE = BASE_URL + '/api/v1/institution/profile';
+  static String USER_PROFILE = BASE_URL + '/api/v1/business/profile';
   static String ADD_EDIT_EDUCATION_WORK =
       BASE_URL + '/api/v1/user/edit_education';
 
-  static String CREATE_ROOM = BASE_URL + "/api/v2/rooms/create";
+  static String CREATE_ROOM = BASE_URL + "/api/v1/rooms/create";
 
-  static String UPDATEROOM = BASE_URL + "/api/v2/rooms/update";
+  static String UPDATEROOM = BASE_URL + "/api/v1/rooms/update";
 
-  static String ROOMS_LIST = BASE_URL + "/api/v2/rooms/list";
+  static String ROOMS_LIST = BASE_URL + "/api/v1/rooms/list";
 
   static String MEMBER_ADD = BASE_URL + '/api/v1/rooms/member/add';
 
   static String MEMBERSLIST =
-      BASE_URL + '/api/v2/rooms/member/select/list';
+      BASE_URL + '/api/v1/rooms/member/select/list';
 
   static String ROOMMEMBERLIST = BASE_URL + '/api/v1/rooms/member/list';
 
@@ -191,7 +191,7 @@ class Config {
   static String DROP_DOWN_FACILITIES_TYPE =
       BASE_URL + '/api/v1/standard/facilitytype/list';
   static String CREATE_FACILITY =
-      BASE_URL + '/api/v1/institution/facilities/create';
+      BASE_URL + '/api/v1/business/facilities/create';
 
   static String POSTLIST = BASE_URL + '/api/v1/post/list';
 
@@ -255,7 +255,7 @@ class Config {
   static String MENTIONS_LIST = BASE_URL +
       '/api/v1/utility/mention/list';
 
-  static String HOME_PAGE_CARDS = BASE_URL + '/api/v2/utility/home/';
+  static String HOME_PAGE_CARDS = BASE_URL + '/api/v1/utility/home/';
   static String CALL_BACK = BASE_URL +
       '/api/v1/bi/call_back/create_mktg_all_enquiries';
 
@@ -277,19 +277,19 @@ class Config {
 
 
   static String PROGRAM_LIST = BASE_URL +
-      '/api/v2/institution/program/list';
+      '/api/v1/business/program/list';
   static String DEPARTMENT_LIST = BASE_URL +
-      '/api/v2/institution/department/list';
+      '/api/v1/business/department/list';
   static String SECTIONS_LIST = BASE_URL +
-      '/api/v1/institution/section/list';
+      '/api/v1/business/section/list';
   static String COUNTRIES = BASE_URL + '/api/v1/rl/countries/';
   static String STATES = BASE_URL + '/api/v1/rl/states/';
   static String BASIC_INSTITUTE_REGISTER = BASE_URL +
-      '/api/v1/institution/basic/register';
+      '/api/v1/business/basic/register';
   static String INSTITUTE_CONTACT = BASE_URL +
-      '/api/v1/institution/contact/register/';
+      '/api/v1/business/contact/register/';
   static String INSTITUTE_ADDRESS = BASE_URL +
-      '/api/v1/institution/location/register/';
+      '/api/v1/business/location/register/';
   static String CARD_ALLOCATE = BASE_URL +
       '/api/v1/scratch/card/allocate';
   static String CARD_SCRATCHED = BASE_URL + '/api/v1/scratch/card/open';
@@ -298,23 +298,23 @@ class Config {
   static String CREATE_REF = BASE_URL +
       '/api/v1/utility/banner/create_referral';
   static String ADD_DOMAIN_INSTITUTE = BASE_URL +
-      '/api/v1/institution/domain/create';
+      '/api/v1/business/domain/create';
   static String REQUEST_LIST = BASE_URL +
-      '/api/v1/institution/request/list';
+      '/api/v1/business/request/list';
   static String QUESTIONNAIRE_LIST = BASE_URL +
-      '/api/v2/utility/buddy/set/questionarrie';
+      '/api/v1/utility/buddy/set/questionarrie';
   static String VERIFY_RESPONSE = BASE_URL +
       '/api/v1/utility/buddy/verify/response';
   static String REQUEST_UPDATE = BASE_URL +
-      '/api/v1/institution/request/update';
+      '/api/v1/business/request/update';
   static String BUDDY_SERVICE_LIST = BASE_URL +
       '/api/v1/utility/buddy/menu/list';
   static String CHILD_DETAIL_CREATE = BASE_URL +
-      '/api/v1/institution/child_details/create';
+      '/api/v1/business/child_details/create';
   static String COMMON_NEW_ENTRY = BASE_URL +
       '/api/v1/utility/master/common_insertion';
   static String OTHERS_NAME_SCHOOL = BASE_URL +
-      '/api/v1/institution/othernames/list';
+      '/api/v1/business/othernames/list';
   static String CALENDERS_EVENT_LIST = BASE_URL +
       '/api/v1/calendar/event/list';
   static String CHAT_MESSAGES_UNREAD_COUNT = BASE_URL_MESSENGER +
@@ -338,7 +338,7 @@ class Config {
       '/api/v1/standard/roomprivacytype/list';
   static String ROOM_TOPIC_LIST = BASE_URL +
       '/api/v1/standard/roomtopic/list';
-  static String ROOM_VIEW = BASE_URL + '/api/v2/rooms/view';
+  static String ROOM_VIEW = BASE_URL + '/api/v1/rooms/view';
   static String EVENT_MEMBERS_LIST = BASE_URL +
       '/api/v1/calendar/event/member/list';
   static String EVENT_MEMBER_SELECT_LIST = BASE_URL +
@@ -358,12 +358,12 @@ class Config {
   static String TALK_EVENT_INVITEE_ADD = BASE_URL +
       '/api/v1/calendar/event/invitee/add';
   static String CLASSES_SECTIONS = BASE_URL +
-      '/api/v1/institution/class/section/list';
+      '/api/v1/business/class/section/list';
   static String EVENT_HOST_LIST = BASE_URL +
       '/api/v1/calendar/event/host/select';
   static String GET_PROFILE_PROGRESS = BASE_URL +
       '/api/v1/utility/get/profile/progress';
-  static String INSTITUTION_DELETE_ROLE = BASE_URL +'/api/v1/institution/user/role/delete';
+  static String INSTITUTION_DELETE_ROLE = BASE_URL +'/api/v1/business/user/role/delete';
   static String ADD_NEW_CONTACTS = BASE_URL +
       '/api/v1/rl/contact/add';
   static String MAKE_CONTACT_PRIMARY = BASE_URL +
@@ -393,10 +393,10 @@ class Config {
   static String EDUFLUENCER_TUTOR_LIST = BASE_URL +'/api/v1/utility/edufluencer/list';
   static String EDUFLUENCER_TUTOR_STUDENT_LIST = BASE_URL + '/api/v1/utility/edufluencer/student/list';
   static String EDUFLUENCER_TUTOR_STATUS = BASE_URL + '/api/v1/utility/edufluencer/get/status';
-  static String ADMIN_STAFF_LIST = BASE_URL + '/api/v1/institution/admin/staff_list';
-  static String ADMIN_ASSIGN_ROLE= BASE_URL + '/api/v1/institution/admin/assign_role_admin';
-  static String ADMIN_LIST = BASE_URL +'/api/v1/institution/admin/institute_admin_list';
-  static String ADMIN_REMOVE = BASE_URL+'/api/v1/institution/admin/delete_role_admin';
+  static String ADMIN_STAFF_LIST = BASE_URL + '/api/v1/business/admin/staff_list';
+  static String ADMIN_ASSIGN_ROLE= BASE_URL + '/api/v1/business/admin/assign_role_admin';
+  static String ADMIN_LIST = BASE_URL +'/api/v1/business/admin/institute_admin_list';
+  static String ADMIN_REMOVE = BASE_URL+'/api/v1/business/admin/delete_role_admin';
   static String DETAIL_PAGE_PAGINATION = BASE_URL+'/api/v1/post/scroll/list';
 
   static String CHAPTERS_LIST = BASE_URL+'/api/v1/standard/chapter/list';

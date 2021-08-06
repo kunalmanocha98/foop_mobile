@@ -40,7 +40,7 @@ class RoomListPayload {
     searchVal = json['searchVal'];
     pageSize = json['page_size'];
     pageNumber = json['page_number'];
-    institutionId = json['institution_id'];
+    institutionId = json['business_id'];
     roomType = json['room_type'];
     roomPrivacyType =json['room_privacy_type'];
   }
@@ -57,7 +57,7 @@ class RoomListPayload {
     data['searchVal'] = this.searchVal;
     data['page_size'] = this.pageSize;
     data['page_number'] = this.pageNumber;
-    data['institution_id'] = this.institutionId;
+    data['business_id'] = this.institutionId;
     data['room_type'] = this.roomType;
     data['room_privacy_type'] = this.roomPrivacyType;
     return data;
