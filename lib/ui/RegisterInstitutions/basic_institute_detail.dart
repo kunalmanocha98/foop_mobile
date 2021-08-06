@@ -346,7 +346,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
       child: SafeArea(
           child: Scaffold(
                resizeToAvoidBottomInset: false,
-              appBar: OhoAppBar().getCustomAppBar(
+              appBar: appAppBar().getCustomAppBar(
                 context,
                 actions: [ InkWell(
                     onTap:(){

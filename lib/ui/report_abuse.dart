@@ -95,7 +95,7 @@ class _ReportAbuse extends State<ReportAbuse> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: OhoAppBar().getCustomAppBar(
+        appBar: appAppBar().getCustomAppBar(
             context,
             appBarTitle: AppLocalizations.of(context)!.translate('report_content'),
             onBackButtonPress: (){Navigator.pop(context);}),

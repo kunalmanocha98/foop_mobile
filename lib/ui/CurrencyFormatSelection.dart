@@ -55,7 +55,7 @@ class _CurrencyFormatSelection extends State<CurrencyFormatSelection> {
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: OhoAppBar().getCustomAppBar(context,
+          appBar: appAppBar().getCustomAppBar(context,
               appBarTitle: AppLocalizations.of(context)!.translate("choose_currency"),
               onBackButtonPress:(){
                 Navigator.pop(context);

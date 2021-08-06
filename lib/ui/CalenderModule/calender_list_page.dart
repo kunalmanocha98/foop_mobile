@@ -79,7 +79,7 @@ class CalenderPageState extends State<CalenderPage> with SingleTickerProviderSta
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
     return SafeArea(child: Scaffold(
-      appBar: OhoAppBar().getCustomAppBar(context,
+      appBar: appAppBar().getCustomAppBar(context,
         appBarTitle: AppLocalizations.of(context)!.translate('calender'),
         onBackButtonPress: (){Navigator.pop(context);},
         actions: [

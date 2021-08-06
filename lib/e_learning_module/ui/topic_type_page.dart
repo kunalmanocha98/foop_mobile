@@ -73,7 +73,7 @@ class _TopicTypePage extends State<TopicTypePage> {
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: OhoAppBar().getCustomAppBar(
+          appBar: appAppBar().getCustomAppBar(
             context,
             appBarTitle: AppLocalizations.of(context)!.translate('topic_type'),
 

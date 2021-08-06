@@ -94,7 +94,7 @@ class SelectEventLocationPageState extends State<SelectEventLocationPage> {
     );
     return SafeArea(
         child: Scaffold(
-          appBar: OhoAppBar().getCustomAppBar(
+          appBar: appAppBar().getCustomAppBar(
               context,
               actions: [ appTextButton(
                 onPressed: () {

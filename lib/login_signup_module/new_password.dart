@@ -169,7 +169,7 @@ late BuildContext sctx;
         // resizeToAvoidBottomInset: false,
           resizeToAvoidBottomInset: false,
 
-          appBar: OhoAppBar().getCustomAppBar(context,
+          appBar: appAppBar().getCustomAppBar(context,
             onBackButtonPress: (){
               Navigator.pop(context);
             },

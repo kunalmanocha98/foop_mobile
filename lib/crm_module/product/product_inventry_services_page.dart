@@ -128,7 +128,7 @@ class SelectItemsPageState extends State<SelectItemsPage> with SingleTickerProvi
         resizeToAvoidBottomInset: true,
         backgroundColor: HexColor(AppColors.appColorBackground),
 
-        appBar: OhoAppBar().getCustomAppBar(context,
+        appBar: appAppBar().getCustomAppBar(context,
             centerTitle:false,
             actions: [
               InkWell(

@@ -164,7 +164,7 @@ class _RoomTopicListState extends State<_RoomTopicList> {
     styleElements = TextStyleElements(context);
     return SafeArea(
         child: Scaffold(
-          appBar: OhoAppBar().getCustomAppBar(
+          appBar: appAppBar().getCustomAppBar(
               context,
               appBarTitle: getAppBarTitle(),
               actions:[

@@ -156,7 +156,7 @@ class _CreateEmailPage extends State<CreateEmailPage>
     );
     return SafeArea(
       child: Scaffold(
-        appBar: OhoAppBar().getCustomAppBar(
+        appBar: appAppBar().getCustomAppBar(
           context,
           appBarTitle: AppLocalizations.of(context)!.translate('create_email'),
           onBackButtonPress: () {

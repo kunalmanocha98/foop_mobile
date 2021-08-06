@@ -120,7 +120,7 @@ class _SelectDisicipline extends State<SelectDiscipline>
       } ,
       child: SafeArea(
         child: Scaffold(
-            appBar: OhoAppBar().getCustomAppBar(
+            appBar: appAppBar().getCustomAppBar(
               context,
               appBarTitle: AppLocalizations.of(context)!.translate('discipline'),
               onBackButtonPress: () async {

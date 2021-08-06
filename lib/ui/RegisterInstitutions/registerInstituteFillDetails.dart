@@ -40,7 +40,7 @@ class RegisterInstituteFillDetailsState extends State<RegisterInstituteFillDetai
     SharedPreferences? prefs;
    return SafeArea(
      child: Scaffold(
-       appBar: OhoAppBar().getCustomAppBar(context, appBarTitle: 'app', onBackButtonPress: (){
+       appBar: appAppBar().getCustomAppBar(context, appBarTitle: 'app', onBackButtonPress: (){
          Navigator.pop(context);
        }),
        body: FutureBuilder<SharedPreferences>(

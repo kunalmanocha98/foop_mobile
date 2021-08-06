@@ -17,7 +17,7 @@ class _SelectedLessonList extends State<SelectedLessonList>{
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: OhoAppBar().getCustomAppBar(
+        appBar: appAppBar().getCustomAppBar(
             context,
             appBarTitle: widget.isBookmark
                 ?AppLocalizations.of(context)!.translate('bookmarked_lessons'):

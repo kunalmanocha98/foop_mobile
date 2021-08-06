@@ -57,7 +57,7 @@ class _CouponsPage extends State<CouponsPage>
     styleElements = TextStyleElements(context);
     return SafeArea(
       child: Scaffold(
-        appBar: OhoAppBar().getCustomAppBar(context, appBarTitle: AppLocalizations.of(context)!.translate('rewards'),
+        appBar: appAppBar().getCustomAppBar(context, appBarTitle: AppLocalizations.of(context)!.translate('rewards'),
             onBackButtonPress: () {
               Navigator.pop(context);
             }),

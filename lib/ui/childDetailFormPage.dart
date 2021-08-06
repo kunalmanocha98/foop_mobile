@@ -247,7 +247,7 @@ class ChildDetailFormPageState extends State<ChildDetailFormPage> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: true,
-        appBar: OhoAppBar().getCustomAppBar(
+        appBar: appAppBar().getCustomAppBar(
           context,
           appBarTitle: AppLocalizations.of(context)!.translate('child_detail'),
           onBackButtonPress: () {

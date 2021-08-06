@@ -70,7 +70,7 @@ bool isCalling=false;
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: HexColor(AppColors.appColorBackground),
-        appBar: OhoAppBar().getCustomAppBarWithSearch(context,
+        appBar: appAppBar().getCustomAppBarWithSearch(context,
             appBarTitle: AppLocalizations.of(context)!.translate('select_academic_header'), onBackButtonPress: () {
           Navigator.pop(context);
         }, onSearchValueChanged: (value) {

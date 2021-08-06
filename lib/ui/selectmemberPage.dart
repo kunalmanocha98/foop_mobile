@@ -81,7 +81,7 @@ class _SelectMembersPage extends State<SelectMembersPage> {
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: OhoAppBar().getCustomAppBarWithSearch(context,
+          appBar: appAppBar().getCustomAppBarWithSearch(context,
               onSearchValueChanged: onsearchValueChanged,
               hintText: AppLocalizations.of(context)!
                   .translate("search_app_user"),

@@ -139,7 +139,7 @@ class CreateContactPageState extends State<CreateContactPage> {
 
     return SafeArea(
         child: Scaffold(
-          appBar: OhoAppBar().getCustomAppBar(context,
+          appBar: appAppBar().getCustomAppBar(context,
               actions: [
                 appTextButton(
                   onPressed: () {

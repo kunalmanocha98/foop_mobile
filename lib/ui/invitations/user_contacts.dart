@@ -66,7 +66,7 @@ else
     styleElements = TextStyleElements(context);
     return SafeArea(
       child: Scaffold(
-        appBar: OhoAppBar().getCustomAppBar(context, appBarTitle: 'Select contact',
+        appBar: appAppBar().getCustomAppBar(context, appBarTitle: 'Select contact',
             onBackButtonPress: ()  {
               Navigator.of(context).pop({'result': "imageUrl"});
             }),

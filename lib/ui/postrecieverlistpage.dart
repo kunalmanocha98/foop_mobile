@@ -71,7 +71,7 @@ class _PostReceiverListPage extends State<PostReceiverListPage> {
     styleElements = TextStyleElements(context);
     return SafeArea(
       child: Scaffold(
-        appBar: OhoAppBar().getCustomAppBarWithSearch(context,
+        appBar: appAppBar().getCustomAppBarWithSearch(context,
             appBarTitle: AppLocalizations.of(context)!.translate('receivers'),
             onBackButtonPress: () {
               Navigator.pop(context);

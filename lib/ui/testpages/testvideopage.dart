@@ -36,7 +36,7 @@ class _TestVideoState extends State<TestVideoPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: OhoAppBar().getCustomAppBar(context, appBarTitle: 'testvideopage', onBackButtonPress:(){
+        appBar: appAppBar().getCustomAppBar(context, appBarTitle: 'testvideopage', onBackButtonPress:(){
 
         }),
         body: SingleChildScrollView(

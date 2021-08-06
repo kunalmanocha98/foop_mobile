@@ -195,7 +195,7 @@ class _InstitutePhotoPageState extends State<InstitutePhotoPage> {
           child: Scaffold(
               resizeToAvoidBottomInset: false,
               backgroundColor: HexColor(AppColors.appColorBackground),
-              appBar: OhoAppBar().getCustomAppBar(context,
+              appBar: appAppBar().getCustomAppBar(context,
                   appBarTitle: AppLocalizations.of(context)!.translate('upload_logo'),
                   actions: [
 

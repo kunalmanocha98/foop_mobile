@@ -54,7 +54,7 @@ class _EmailHomePage extends State<EmailHomePage> {
       onWillPop: _onWillpop,
       child: SafeArea(
           child: Scaffold(
-            appBar: OhoAppBar().getCustomAppBarWithSearch(context,
+            appBar: appAppBar().getCustomAppBarWithSearch(context,
                 appBarTitle: folderType == FOLDER_TYPE_ENUM.INBOX.type
                     ? AppLocalizations.of(context)!.translate('')
                     : folderType,

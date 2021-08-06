@@ -27,7 +27,7 @@ class ApprovalDetailsPageState extends State<ApprovalDetailsPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: OhoAppBar().getCustomAppBar(
+        appBar: appAppBar().getCustomAppBar(
           context,
           appBarTitle: AppLocalizations.of(context)!.translate('buddy_approval'),
           onBackButtonPress: (){

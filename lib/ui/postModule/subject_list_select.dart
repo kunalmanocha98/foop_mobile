@@ -38,7 +38,7 @@ class SubjectTopicSelectState extends State<SubjectTopicSelect>{
     styleElements = TextStyleElements(context);
     return SafeArea(
         child: Scaffold(
-          appBar: OhoAppBar().getCustomAppBar(
+          appBar: appAppBar().getCustomAppBar(
               context,
               appBarTitle: getAppBarTitle(),
               actions:[

@@ -117,7 +117,7 @@ class _SelectProgramNew extends State<SelectProgramNew>
       },
       child: SafeArea(
         child: Scaffold(
-            appBar: OhoAppBar().getCustomAppBar(
+            appBar: appAppBar().getCustomAppBar(
               context,
               appBarTitle: AppLocalizations.of(context)!
                   .translate('select_programme'),

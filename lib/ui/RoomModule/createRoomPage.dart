@@ -289,7 +289,7 @@ class _CreateRoomPage extends State<CreateRoomPage> with CommonMixins {
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: true,
-          appBar: OhoAppBar().getCustomAppBar(context,
+          appBar: appAppBar().getCustomAppBar(context,
               actions: [
                 appTextButton(
                   onPressed: () {

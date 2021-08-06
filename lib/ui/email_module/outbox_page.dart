@@ -42,7 +42,7 @@ class _OutBoxPage extends State<OutBoxPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: OhoAppBar().getCustomAppBar(context, appBarTitle: 'Outbox',
+        appBar: appAppBar().getCustomAppBar(context, appBarTitle: 'Outbox',
             onBackButtonPress: () {
               Navigator.pop(context);
             }),

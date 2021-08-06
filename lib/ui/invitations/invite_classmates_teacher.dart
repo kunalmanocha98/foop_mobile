@@ -59,7 +59,7 @@ class _InviteTeachersClassMates extends State<InviteTeachersClassMates> {
     styleElements = TextStyleElements(context);
 
     return Scaffold(
-      appBar: OhoAppBar().getCustomAppBar(context,
+      appBar: appAppBar().getCustomAppBar(context,
           appBarTitle: AppLocalizations.of(context)!.translate("invite_teacher"),
           onBackButtonPress: () {
         Navigator.pop(context);

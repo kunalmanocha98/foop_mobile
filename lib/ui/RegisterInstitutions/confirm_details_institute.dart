@@ -534,7 +534,7 @@ class _ConfirmDetails extends State<ConfirmDetails>
         child: Scaffold(
             resizeToAvoidBottomInset: true,
             backgroundColor: HexColor(AppColors.appColorBackground),
-            appBar: OhoAppBar().getCustomAppBar(
+            appBar: appAppBar().getCustomAppBar(
               context,
               appBarTitle: 'Verify Profile Details',
               isIconVisible: true,

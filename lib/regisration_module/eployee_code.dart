@@ -141,7 +141,7 @@ class _EmployeeCode extends State<EmployeeCode>
       child: SafeArea(
           child: Scaffold(
             // resizeToAvoidBottomInset: false,
-              appBar: OhoAppBar().getCustomAppBar(context,
+              appBar: appAppBar().getCustomAppBar(context,
                   appBarTitle: "Enter admission code",
                   isIconVisible:false,
                   actions: [

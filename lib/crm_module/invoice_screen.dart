@@ -159,7 +159,7 @@ class InvoiceOrderPageState extends State<InvoiceOrderPage> {
 
     return SafeArea(
         child: Scaffold(
-            appBar: OhoAppBar().getCustomAppBar(context,
+            appBar: appAppBar().getCustomAppBar(context,
                 centerTitle: false,
                 actions: [
 

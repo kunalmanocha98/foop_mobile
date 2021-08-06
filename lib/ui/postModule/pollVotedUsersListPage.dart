@@ -61,7 +61,7 @@ class PollsVotedUserListPageState extends State<PollsVotedUserListPage> with Sin
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: OhoAppBar().getCustomAppBar(
+        appBar: appAppBar().getCustomAppBar(
             context,
             appBarTitle: 'Votes',
             onBackButtonPress: (){

@@ -50,7 +50,7 @@ class InviteTalkParticipantsState extends State<InviteTalkParticipants>{
     return SafeArea(
         child:
         Scaffold(
-          appBar: OhoAppBar().getCustomAppBarWithSearch(context,
+          appBar: appAppBar().getCustomAppBarWithSearch(context,
               onSearchValueChanged: (value) {
                 searchVal = value;
                 refresh();

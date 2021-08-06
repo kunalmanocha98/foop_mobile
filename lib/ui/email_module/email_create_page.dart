@@ -188,7 +188,7 @@ class _EmailCreatePage extends State<EmailCreatePage> {
       onWillPop: onBackPressed,
       child: SafeArea(
         child: Scaffold(
-          appBar: OhoAppBar().getCustomAppBar(context,
+          appBar: appAppBar().getCustomAppBar(context,
               appBarTitle:  request?.emailSubject ?? 'Subject',
               onBackButtonPress: () {
             onBackPressed();

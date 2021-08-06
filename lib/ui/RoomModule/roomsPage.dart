@@ -187,7 +187,7 @@ class RoomsPageState extends State<RoomsPage> with SingleTickerProviderStateMixi
       child: new   Scaffold(
           resizeToAvoidBottomInset: false,
           appBar:
-          OhoAppBar().getCustomAppBar(context,
+          appAppBar().getCustomAppBar(context,
               appBarTitle: AppLocalizations.of(context)!.translate("rooms"),
               onBackButtonPress: () {
                 Navigator.pop(context);

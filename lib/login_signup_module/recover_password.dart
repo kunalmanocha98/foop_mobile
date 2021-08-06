@@ -125,7 +125,7 @@ class _RecoverPasswords extends State<RecoverPasswords> {
         child: Scaffold(
             // resizeToAvoidBottomInset: false,
 
-            appBar: OhoAppBar().getCustomAppBar(
+            appBar: appAppBar().getCustomAppBar(
               context,
               onBackButtonPress: () {
                 Navigator.pop(context);

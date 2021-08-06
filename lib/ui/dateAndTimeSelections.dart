@@ -109,7 +109,7 @@ class _DateSelectionPage extends State<DateSelectionPage> {
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: OhoAppBar().getCustomAppBar(context,
+          appBar: appAppBar().getCustomAppBar(context,
               appBarTitle:  AppLocalizations.of(context)!.translate("select_date"),
               onBackButtonPress: (){
                 Navigator.pop(context);
@@ -293,7 +293,7 @@ class _TimeSelectionPage extends State<TimeSelectionPage> {
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: OhoAppBar().getCustomAppBar(context,
+          appBar: appAppBar().getCustomAppBar(context,
               appBarTitle:  AppLocalizations.of(context)!.translate("select_date"),
               onBackButtonPress: (){
                 Navigator.pop(context);

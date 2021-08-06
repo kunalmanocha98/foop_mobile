@@ -45,7 +45,7 @@ class _SetProfile extends State<Profile> {
         resizeToAvoidBottomInset: false,
         backgroundColor: HexColor(AppColors.appColorBackground),
         appBar:
-        OhoAppBar().getCustomAppBarWithSearch(context,
+        appAppBar().getCustomAppBarWithSearch(context,
             appBarTitle: AppLocalizations.of(context)!.translate("i_am"),
             onBackButtonPress: (){},
             onSearchValueChanged: (value) {

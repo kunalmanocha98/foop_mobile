@@ -56,7 +56,7 @@ class _EmailLoginPage extends State<EmailLoginPage> with CommonMixins {
       onWillPop: onpopPressed,
       child: SafeArea(
         child: Scaffold(
-          appBar: OhoAppBar().getCustomAppBar(context,
+          appBar: appAppBar().getCustomAppBar(context,
               appBarTitle: AppLocalizations.of(context)!
                   .translate('email_login'), onBackButtonPress: () {
                 if (isRecoverPassword || isResetPassword) {

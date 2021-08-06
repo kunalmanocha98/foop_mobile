@@ -61,7 +61,7 @@ class NotificationsPageState extends State<NotificationsPage> {
     styleElements = TextStyleElements(context);
     return SafeArea(
       child: Scaffold(
-        appBar: OhoAppBar().getCustomAppBar(context,
+        appBar: appAppBar().getCustomAppBar(context,
             appBarTitle: AppLocalizations.of(context)!.translate('notification'),
             onBackButtonPress: () {
               Navigator.pop(context);

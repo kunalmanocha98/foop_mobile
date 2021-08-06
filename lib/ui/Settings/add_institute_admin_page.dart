@@ -44,7 +44,7 @@ class AddInstituteAdminPageState extends State<AddInstituteAdminPage> {
     this.sctx = context;
     return SafeArea(
       child: Scaffold(
-        appBar: OhoAppBar().getCustomAppBarWithSearch(context,
+        appBar: appAppBar().getCustomAppBarWithSearch(context,
             controller: searchController,
             appBarTitle:
             AppLocalizations.of(context)!.translate('add_entity_admin'),

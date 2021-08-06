@@ -17,7 +17,7 @@ class CurrencySelectPageState extends State<CurrencySelectPage> {
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
-          appBar: OhoAppBar().getCustomAppBarWithSearch(context,
+          appBar: appAppBar().getCustomAppBarWithSearch(context,
             onSearchValueChanged: (value) {},
             appBarTitle: 'Currency List', onBackButtonPress: () {Navigator.pop(context);},
 

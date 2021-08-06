@@ -85,7 +85,7 @@ class _CommentsPage extends State<CommentsPage>
     return SafeArea(
       child: Scaffold(
         backgroundColor: HexColor(AppColors.appColorBackground),
-        appBar: OhoAppBar().getCustomAppBarWithSearch(
+        appBar: appAppBar().getCustomAppBarWithSearch(
             context,
             appBarTitle: pageTitle,
             onBackButtonPress: (){},

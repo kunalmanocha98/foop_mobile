@@ -753,7 +753,7 @@ class _BasicInfo extends State<BasicInfo>
         child: Scaffold(
             resizeToAvoidBottomInset: true,
             backgroundColor: HexColor(AppColors.appColorBackground),
-            appBar: OhoAppBar().getCustomAppBar(
+            appBar: appAppBar().getCustomAppBar(
               context,
               appBarTitle: 'Profile',
               onBackButtonPress: () {

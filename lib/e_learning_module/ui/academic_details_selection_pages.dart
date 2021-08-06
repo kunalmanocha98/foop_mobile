@@ -73,7 +73,7 @@ class AcademicDetailsSelectionPagesState
     styleElements = TextStyleElements(context);
     return SafeArea(
       child: Scaffold(
-        appBar: OhoAppBar().getCustomAppBarWithSearch(context,
+        appBar: appAppBar().getCustomAppBarWithSearch(context,
             onSearchValueChanged: (value) {
               this.searchVal = value;
               refresh();

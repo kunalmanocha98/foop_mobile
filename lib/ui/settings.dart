@@ -48,7 +48,7 @@ class _SettingsPage extends State<SettingsPage> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: OhoAppBar().getCustomAppBar(context,
+        appBar: appAppBar().getCustomAppBar(context,
             appBarTitle: AppLocalizations.of(context)!.translate("settings"),
             onBackButtonPress: () {
           Navigator.pop(context);
@@ -507,7 +507,7 @@ class _AccountSettings extends State<AccountSettings> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: OhoAppBar().getCustomAppBar(context,
+      appBar: appAppBar().getCustomAppBar(context,
           appBarTitle: AppLocalizations.of(context)!
               .translate("account_settings"), onBackButtonPress: () {
         Navigator.pop(context);
@@ -850,7 +850,7 @@ class _PrivacySettings extends State<PrivacySettings> {
     styleElements = TextStyleElements(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: OhoAppBar().getCustomAppBar(context,
+      appBar: appAppBar().getCustomAppBar(context,
           appBarTitle: AppLocalizations.of(context)!
               .translate("privacy_settings"), onBackButtonPress: () {
         Navigator.pop(context);

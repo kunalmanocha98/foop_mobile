@@ -64,7 +64,7 @@ class _ManageDomainPage extends State<ManageDomainPage> {
     styleElements = TextStyleElements(context);
     return SafeArea(
       child: Scaffold(
-        appBar: OhoAppBar().getCustomAppBar(context,
+        appBar: appAppBar().getCustomAppBar(context,
             appBarTitle: AppLocalizations.of(context)!
                 .translate('manage_domain'), onBackButtonPress: () {
               Navigator.pop(context);

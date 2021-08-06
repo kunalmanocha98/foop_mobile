@@ -49,7 +49,7 @@ class _CustomWebViewState extends State<CustomWebView> {
           child: CircularProgressIndicator(),
       )),
 
-          appBar: OhoAppBar().getCustomAppBar(
+          appBar: appAppBar().getCustomAppBar(
               context,
               appBarTitle: getTitle(),
               onBackButtonPress: (){

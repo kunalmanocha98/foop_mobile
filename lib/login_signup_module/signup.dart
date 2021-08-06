@@ -328,7 +328,7 @@ class StateSignUp extends State<SignUpPage> with SingleTickerProviderStateMixin 
         SafeArea(
           child:Scaffold(
             // resizeToAvoidBottomInset: false,
-              appBar: OhoAppBar().getCustomAppBar(context,
+              appBar: appAppBar().getCustomAppBar(context,
                 appBarTitle: '',
                 onBackButtonPress: (){
                   Navigator.pop(context);

@@ -188,7 +188,7 @@ late BuildContext sctx;
         child: Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: HexColor(AppColors.appColorBackground),
-      appBar: OhoAppBar().getCustomAppBar(context, appBarTitle: pageTitle,
+      appBar: appAppBar().getCustomAppBar(context, appBarTitle: pageTitle,
           onBackButtonPress: () {
         _onBackPressed();
       }),

@@ -444,7 +444,7 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
     final result = SafeArea(
         child: Scaffold(
       resizeToAvoidBottomInset: true,
-      appBar: OhoAppBar().getCustomAppBar(context,
+      appBar: appAppBar().getCustomAppBar(context,
           centerTitle: type != 'lesson',
           actions: [
             type == 'lesson'

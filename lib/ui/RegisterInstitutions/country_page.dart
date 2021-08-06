@@ -65,7 +65,7 @@ bool isLoading =false;
         resizeToAvoidBottomInset: false,
         backgroundColor: HexColor(AppColors.appColorBackground),
         // AppLocalizations.of(context).translate("language")
-        appBar: OhoAppBar().getCustomAppBar(context,
+        appBar: appAppBar().getCustomAppBar(context,
           appBarTitle: AppLocalizations.of(context)!.translate('select_country'),
           onBackButtonPress: (){
             Navigator.of(context).pop();

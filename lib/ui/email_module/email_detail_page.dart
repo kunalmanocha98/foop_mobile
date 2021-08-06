@@ -52,7 +52,7 @@ class _EmailDetailPage extends State<EmailDetailPage>{
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: OhoAppBar().getCustomAppBar(
+        appBar: appAppBar().getCustomAppBar(
             context,
             appBarTitle: widget.subject,
             onBackButtonPress: (){

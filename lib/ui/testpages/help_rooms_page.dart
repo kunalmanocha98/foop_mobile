@@ -12,7 +12,7 @@ late TextStyleElements styleElements;
     styleElements = TextStyleElements(context);
     return SafeArea(
       child: Scaffold(
-        appBar: OhoAppBar()
+        appBar: appAppBar()
             .getCustomAppBar(
             context,
             appBarTitle: AppLocalizations.of(context)!.translate('helprooms'),

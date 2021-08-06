@@ -124,7 +124,7 @@ class UpcomingTalkListPageState extends State<UpcomingTalkListPage> {
             return Future.value(true);
           },
           child: Scaffold(
-              appBar: OhoAppBar().getCustomAppBar(
+              appBar: appAppBar().getCustomAppBar(
                 context,
                 appBarTitle:
                 AppLocalizations.of(context)!.translate('upcoming_talks'),

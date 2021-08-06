@@ -162,7 +162,7 @@ class _RoomDetailPage extends State<RoomDetailPage>
     styleElements = TextStyleElements(context);
     return SafeArea(
       child: Scaffold(
-          appBar: OhoAppBar().getCustomAppBar(context,
+          appBar: appAppBar().getCustomAppBar(context,
               // appBarTitle: AppLocalizations.of(context)
               //     .translate("room_details"),
               appBarTitle: hasData

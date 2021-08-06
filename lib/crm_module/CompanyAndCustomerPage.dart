@@ -120,7 +120,7 @@ class CompanyAndCustomerPageState extends State<CompanyAndCustomerPage> with Sin
       Scaffold(
         resizeToAvoidBottomInset: true,
         backgroundColor: HexColor(AppColors.appColorBackground),
-        appBar: OhoAppBar().getCustomAppBar(context,
+        appBar: appAppBar().getCustomAppBar(context,
             centerTitle:false,
             actions: [
               InkWell(

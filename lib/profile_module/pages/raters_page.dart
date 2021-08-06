@@ -102,7 +102,7 @@ class _RatersPage extends State<RatersPage> with SingleTickerProviderStateMixin 
       child: Scaffold(
         resizeToAvoidBottomInset: true,
         backgroundColor: HexColor(AppColors.appColorBackground),
-        appBar: OhoAppBar().getCustomAppBar(context,
+        appBar: appAppBar().getCustomAppBar(context,
             appBarTitle: AppLocalizations.of(context)!.translate('network'),
             onBackButtonPress: () {
               Navigator.pop(context);

@@ -32,7 +32,7 @@ class ApprovalListPageState extends State<ApprovalListPage> {
     return
      SafeArea(
           child: Scaffold(
-            appBar: OhoAppBar().getCustomAppBarWithSearch(context,
+            appBar: appAppBar().getCustomAppBarWithSearch(context,
                 appBarTitle: AppLocalizations.of(context)!.translate('buddy_approval'),
                 onBackButtonPress: () {
                   Navigator.pop(context);

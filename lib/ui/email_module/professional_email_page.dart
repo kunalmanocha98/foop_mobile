@@ -25,7 +25,7 @@ class ProfessionalEmailActionPage extends StatelessWidget {
     var styleElements = TextStyleElements(context);
     return SafeArea(
       child: Scaffold(
-        appBar: OhoAppBar().getCustomAppBar(
+        appBar: appAppBar().getCustomAppBar(
           context,
           appBarTitle:
           AppLocalizations.of(context)!.translate('profession_email'),

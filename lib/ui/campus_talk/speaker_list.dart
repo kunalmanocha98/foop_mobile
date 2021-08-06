@@ -23,7 +23,7 @@ class SpeakersListState extends State<SpeakersList> {
     styleElements = TextStyleElements(context);
     return SafeArea(
       child: Scaffold(
-        appBar: OhoAppBar().getCustomAppBarWithSearch(
+        appBar: appAppBar().getCustomAppBarWithSearch(
           context,
           appBarTitle: AppLocalizations.of(context)!.translate('manage_speaker'),
           onBackButtonPress: () {

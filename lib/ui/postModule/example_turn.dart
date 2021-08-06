@@ -15,7 +15,7 @@ class _ExampleScrennEpub extends State<ExampleScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: OhoAppBar().getCustomAppBar(
+        appBar: appAppBar().getCustomAppBar(
           context,
           appBarTitle: 'Sample Epub Viewer',
           onBackButtonPress: () {

@@ -166,7 +166,7 @@ late TextStyleElements styleElements;
     );
     return SafeArea(
       child: Scaffold(
-        appBar: OhoAppBar().getCustomAppBar(context,
+        appBar: appAppBar().getCustomAppBar(context,
             appBarTitle: getTitle(), onBackButtonPress: () {
               Navigator.pop(context);
             }),

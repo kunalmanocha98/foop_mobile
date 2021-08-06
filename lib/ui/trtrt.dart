@@ -310,7 +310,7 @@ class _OtpViewState extends State<OtpView> with SingleTickerProviderStateMixin {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar:OhoAppBar().getCustomAppBar(
+        appBar:appAppBar().getCustomAppBar(
             context,
             appBarTitle: '',
             onBackButtonPress: (){

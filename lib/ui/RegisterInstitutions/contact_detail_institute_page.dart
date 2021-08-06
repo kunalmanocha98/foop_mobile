@@ -191,7 +191,7 @@ bool isLoading=false;
       child: SafeArea(
           child: Scaffold(
               // resizeToAvoidBottomInset: false,
-              appBar: OhoAppBar().getCustomAppBar(context,
+              appBar: appAppBar().getCustomAppBar(context,
                   appBarTitle: AppLocalizations.of(context)!.translate('register_institute'),
                   isIconVisible:false,
                   actions: [

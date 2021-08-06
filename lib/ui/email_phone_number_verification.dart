@@ -120,7 +120,7 @@ class _EmailPhoneVerification extends State<EmailPhoneVerification> {
     styleElements = TextStyleElements(context);
     return SafeArea(
         child: Scaffold(
-            appBar: OhoAppBar().getCustomAppBar(
+            appBar: appAppBar().getCustomAppBar(
               context,
               onBackButtonPress: () {
                 Navigator.pop(context);

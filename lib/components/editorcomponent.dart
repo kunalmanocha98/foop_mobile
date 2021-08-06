@@ -24,7 +24,7 @@ class _appEditorState extends State<appEditor> {
     // styleElements = TextStyleElements(context);
     return SafeArea(
       child: Scaffold(
-        appBar: OhoAppBar().getCustomAppBar(context,
+        appBar: appAppBar().getCustomAppBar(context,
             appBarTitle: AppLocalizations.of(context)!.translate('post_create'),
             onBackButtonPress: () {
               Navigator.pop(context);
