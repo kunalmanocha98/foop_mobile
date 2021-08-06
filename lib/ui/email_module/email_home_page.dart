@@ -85,7 +85,7 @@ class _EmailHomePage extends State<EmailHomePage> {
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (BuildContext context) {
-                            return EmailCreatePage();
+                            return EmailCreatePage(folderType: folderType,);
                           }));
                     },
                     child: Container(
@@ -258,6 +258,7 @@ class _EmailHomePage extends State<EmailHomePage> {
                 return EmailCreatePage(
                   isReply: true,
                   isForward: false,
+                  folderType: folderType,
                   replyUid: emailList[index].uid,
                   subject: emailList[index].subject,
                   senderDetails: emailList[index].fromValues!,
@@ -274,6 +275,7 @@ class _EmailHomePage extends State<EmailHomePage> {
                 return EmailCreatePage(
                   isReply: true,
                   isForward: false,
+                  folderType: folderType,
                   replyUid: emailList[index].uid,
                   subject: emailList[index].subject,
                   senderDetails: emailList[index].fromValues!,
@@ -288,6 +290,7 @@ class _EmailHomePage extends State<EmailHomePage> {
                 return EmailCreatePage(
                   isReply: true,
                   isForward: true,
+                  folderType: folderType,
                   replyUid: emailList[index].uid,
                   subject: emailList[index].subject,
                   senderDetails: emailList[index].fromValues!,
@@ -302,6 +305,7 @@ class _EmailHomePage extends State<EmailHomePage> {
                 MaterialPageRoute(builder: (BuildContext context) {
                   return EmailCreatePage(
                     toValues: emailList[index].toValues,
+                      folderType: folderType,
                     subject: emailList[index].subject,
                     ccValues: emailList[index].ccValues,
                     replyContent: emailList[index].html,

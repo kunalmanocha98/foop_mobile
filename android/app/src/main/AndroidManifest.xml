@@ -1,8 +1,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="ohoworks.oho_works_app">
    <application
-        android:label="oho_works_app"
-        android:icon="@mipmap/ic_launcher">
+       android:label="oho_works_app"
+       android:allowBackup="true"
+       android:fullBackupOnly="false"
+       tools:replace="android:label"
+       android:requestLegacyExternalStorage="true"
+       android:icon="@mipmap/ic_launcher">
+       <meta-data
+           android:name="com.google.firebase.messaging.default_notification_icon"
+           android:resource="@mipmap/ic_launcher" />
+       <meta-data
+           android:name="com.google.firebase.messaging.default_notification_channel_id"
+           android:value="ohoWorks" />
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

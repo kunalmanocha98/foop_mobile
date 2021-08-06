@@ -60,6 +60,9 @@ class _OutBoxPage extends State<OutBoxPage> {
               sendAgain: (){
                 sendAgain(emails![index]);
               },
+              deleteFromOutbox: (){
+                deleteFromOutbox(emails![index],index);
+              },
               emailItem: EmailListItem(
                   cc: emails![index].ccAddresses!.isNotEmpty
                       ? emails![index].ccAddresses!.split(",")
@@ -68,20 +71,24 @@ class _OutBoxPage extends State<OutBoxPage> {
                   from: emails![index].fromAddress!,
                   fromValues: FromValues(
                     email: emails![index].fromAddress!,
+                    name: emails![index].fromAddress!,
                   ),
                   flags: [""],
-                  to: emails![index].toAddresses!.isNotEmpty
+                  to: emails![index].toAddresses!=null?emails![index].toAddresses!.isNotEmpty
                       ? emails![index].toAddresses!.split(",")
-                      : [],
+                      : [""]:[""],
                   html: emails![index].emailText!,
                   subject: emails![index].emailSubject!,
                   toValues: List<FromValues>.generate(
-                      emails![index].toAddresses!.split(",").length,
-                          (index) {
+                      emails![index].toAddresses!=null?emails![index].toAddresses!.split(",").length:0,
+                          (indx) {
                         return FromValues(
+                          name: emails![index]
+                              .toAddresses!
+                              .split(",")[indx],
                             email: emails![index]
                                 .toAddresses!
-                                .split(",")[index]);
+                                .split(",")[indx]);
                       })),
             );
           },
@@ -126,5 +133,12 @@ class _OutBoxPage extends State<OutBoxPage> {
       await db.removeEmail(email.id!);
       fetchOutboxData();
     }
+  }
+
+  void deleteFromOutbox(EmailCreateRequest email,int index) {
+    db.removeEmail(email.id!);
+    setState(() {
+      emails!.removeAt(index);
+    });
   }
 }

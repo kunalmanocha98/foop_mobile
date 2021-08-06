@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/appProgressButton.dart';
+import 'package:oho_works_app/home/locator.dart';
 import 'package:oho_works_app/models/dynmaicres.dart';
 import 'package:oho_works_app/models/language_list.dart';
 import 'package:oho_works_app/models/settignsView.dart';
@@ -41,13 +42,13 @@ class _UpdateLanguagePage extends State<UpdateLanguagePage> {
   String? code;
   String? name;
   int? id;
-  late SharedPreferences prefs;
   List<LanguageItem>? listRules = [];
   bool isSingleSelection;
   late SettingsView settingsView;
   int? rowId;
   GlobalKey<appProgressButtonState> progressButtonKey = GlobalKey();
   _UpdateLanguagePage(this.isSingleSelection,this.rowId);
+  SharedPreferences prefs = locator<SharedPreferences>();
 
   @override
   initState() {
@@ -66,7 +67,6 @@ class _UpdateLanguagePage extends State<UpdateLanguagePage> {
    setState(() {
      isLoading=true;
    });
-    prefs = await SharedPreferences.getInstance();
 
     final body = jsonEncode({
       "person_id":prefs.getInt("userId"),

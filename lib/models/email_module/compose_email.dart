@@ -10,6 +10,7 @@ class EmailCreateRequest {
   String? emailText;
   String? originalMessageUid;
   String? files;
+  String? folder;
 
   EmailCreateRequest(
       {this.personId,
@@ -22,6 +23,7 @@ class EmailCreateRequest {
         this.emailText,
         this.originalMessageUid,
         this.id,
+        this.folder,
         this.files});
 
   EmailCreateRequest.fromJson(Map<String, dynamic> json) {
@@ -36,6 +38,7 @@ class EmailCreateRequest {
     originalMessageUid = json['original_message_uid'];
     files = json['files'];
     id = json['id'];
+    folder = json['folder'];
   }
 
   Map<String, dynamic> toJson() {
@@ -51,6 +54,7 @@ class EmailCreateRequest {
     data['original_message_uid'] = this.originalMessageUid;
     data['files'] = this.files;
     data['id'] = this.id;
+    data['folder'] = this.folder;
     return data;
   }
 }

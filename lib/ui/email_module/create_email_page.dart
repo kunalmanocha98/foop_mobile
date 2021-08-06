@@ -485,7 +485,7 @@ class _CreateEmailPage extends State<CreateEmailPage>
                               if (formKey.currentState!.validate()) {
                                 formKey.currentState!.save();
                                 if (password == confirmPassword) {
-                                  createEmail();
+                                  createEmail(exit: true);
                                 } else {
                                   ToastBuilder().showToast(
                                       AppLocalizations.of(context)!
@@ -545,7 +545,7 @@ class _CreateEmailPage extends State<CreateEmailPage>
         progressButtonSaveandExit.currentState!.hide();
       else
         progressButtonSave.currentState!.hide();
-      if (res.rows!.isExists!) {
+      if (res.rows!.isExists) {
         ToastBuilder().showToast(
             AppLocalizations.of(context)!.translate("email_exist"),
             context,

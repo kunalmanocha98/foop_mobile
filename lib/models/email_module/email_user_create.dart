@@ -68,17 +68,17 @@ class EmailUserExistResponse {
 }
 
 class Rows {
-  bool? isExists;
+  late bool isExists;
 
-  Rows({this.isExists});
+  Rows({this.isExists= false});
 
   Rows.fromJson(Map<String, dynamic> json) {
-    isExists = json['is_exists'];
+    isExists = json['is_existed']!=null?json['is_existed']:false;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['is_exists'] = this.isExists;
+    data['is_existed'] = this.isExists;
     return data;
   }
 }

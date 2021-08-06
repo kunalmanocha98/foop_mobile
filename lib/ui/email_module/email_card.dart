@@ -50,6 +50,7 @@ class TricycleEmailCard extends StatefulWidget {
   final bool isOutbox;
   final Function? sendAgain;
   final String? folderType;
+  final Function? deleteFromOutbox;
 
   TricycleEmailCard(
       {this.isDetailPage = false,
@@ -65,6 +66,7 @@ class TricycleEmailCard extends StatefulWidget {
         this.isOutbox = false,
         this.sendAgain,
         this.folderType,
+        this.deleteFromOutbox,
         this.replyAllCallback});
 
   @override
@@ -114,6 +116,7 @@ class _TricycleEmailCard extends State<TricycleEmailCard> {
           EmailCardHeader(
               archiveCallback: widget.archiveCallback,
               emailItem: emailItem,
+              deleteFromOutbox: widget.deleteFromOutbox,
               isOutbox: widget.isOutbox,
               sendAgain: widget.sendAgain,
               isDetailPage: widget.isDetailPage,
@@ -510,6 +513,7 @@ class _TricycleEmailCard extends State<TricycleEmailCard> {
     var notificationData = {"data": "Data"};
     var androidDetails = AndroidNotificationDetails(
         'id', 'channel ', 'description',
+        color: HexColor(AppColors.appColorBlack),
         priority: Priority.high, importance: Importance.high);
     var iOSDetails = IOSNotificationDetails();
     var platformDetails =
@@ -518,6 +522,7 @@ class _TricycleEmailCard extends State<TricycleEmailCard> {
         0,
         emailItem!.attachments![index].filename,
         "Download complete",
+
         platformDetails,
         payload: jsonEncode(notificationData));
   }
@@ -532,14 +537,16 @@ class _TricycleEmailCard extends State<TricycleEmailCard> {
     // for(Directory path in dir){
     //   print("PATHHHH-----${path.path}");
     // }
-    File file = File("$dir/Tricycle"+Platform.pathSeparator+filename);
+    var name = filename.split(".")[0];
+    var ext = filename.split(".")[1];
+    File file = File("$dir/OhoWorks"+Platform.pathSeparator+name+"_"+DateTime.now().millisecondsSinceEpoch.toString()+"."+ext);
     if(await Permission.storage.request().isGranted){
       print("*************GRANTED**********************");
       if(!file.existsSync()){
         print("*************DON'T EXIST*****************");
         file.createSync(recursive: true);
       }
-      await file.writeAsBytes(bytes);
+      await file.writeAsBytes(bytes,mode: FileMode.write);
     }
     return file.path;
   }

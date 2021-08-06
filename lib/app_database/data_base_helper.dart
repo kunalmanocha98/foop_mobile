@@ -141,6 +141,7 @@ class DatabaseHelper {
   static final email_text = 'email_text';
   static final original_message_uid = 'original_message_uid';
   static final files = 'files';
+  static final folder = 'folder';
 
   DatabaseHelper._privateConstructor();
 
@@ -193,7 +194,8 @@ $bcc_addresses TEXT,
 $email_subject TEXT,
 $email_text TEXT,
 $original_message_uid TEXT,
-$files TEXT
+$files TEXT,      
+$folder TEXT
 )
 ''');
   }

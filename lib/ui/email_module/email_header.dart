@@ -28,11 +28,13 @@ class EmailCardHeader extends StatefulWidget {
   final bool isOutbox;
   final Function? sendAgain;
   final String? folderType;
+  final Function? deleteFromOutbox;
 
   EmailCardHeader({this.imageUrl,
     this.isOutbox = false,
     this.sendAgain,
     this.folderType,
+    this.deleteFromOutbox,
     this.emailItem, this.markCallback,this.moveCallback,this.printCallback,this.isDetailPage = false,this.archiveCallback});
 
   @override
@@ -130,7 +132,7 @@ class EmailCardHeaderState extends State<EmailCardHeader> {
                             "dd MMM yyyy",
                             DateTime.fromMillisecondsSinceEpoch(
                                 emailItem!.date!))
-                            : "To: ${emailItem!.to![0]}",
+                            : "To: ${emailItem!.to!=null ?emailItem!.to![0]:""}",
                         style: styleElements!
                             .captionThemeScalable(context)
                             .copyWith(
@@ -231,6 +233,10 @@ class EmailCardHeaderState extends State<EmailCardHeader> {
             widget.sendAgain!();
             break;
           }
+          case 'delete_from_outbox':{
+            widget.deleteFromOutbox!();
+            break;
+          }
         }
       },
       icon: Icon(
@@ -253,6 +259,20 @@ class EmailCardHeaderState extends State<EmailCardHeader> {
             ),
             Text(
               'Send Again',
+            )
+          ]),
+        ),
+      );
+      popupmenuList.add(
+        PopupMenuItem(
+          value: 'delete_from_outbox',
+          child: Row(children: [
+            Icon(Icons.delete_outline_rounded),
+            SizedBox(
+              width: 8,
+            ),
+            Text(
+              'Delete',
             )
           ]),
         ),

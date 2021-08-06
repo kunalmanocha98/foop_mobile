@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:GlobalUploadFilePkg/Enums/contexttype.dart';
@@ -9,12 +10,15 @@ import 'package:oho_works_app/app_database/data_base_helper.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/appProgressButton.dart';
 import 'package:oho_works_app/components/app_buttons.dart';
+import 'package:oho_works_app/enums/folder_type_enums.dart';
 
 import 'package:oho_works_app/home/locator.dart';
 import 'package:oho_works_app/mixins/someCommonMixins.dart';
 import 'package:oho_works_app/models/email_module/compose_email.dart';
 import 'package:oho_works_app/models/email_module/create_email.dart';
+import 'package:oho_works_app/models/email_module/create_folder.dart';
 import 'package:oho_works_app/models/email_module/email_list_modules.dart';
+import 'package:oho_works_app/models/email_module/email_user_create.dart';
 import 'package:oho_works_app/models/imageuploadrequestandresponse.dart';
 import 'package:oho_works_app/ui/email_module/email_attachment.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
@@ -47,6 +51,7 @@ class EmailCreatePage extends StatefulWidget {
   final List<FromValues>? bccValues;
   final String? draftId;
   final Function(String)? draftSaveCallback;
+  final String folderType;
 
 
 
@@ -64,6 +69,7 @@ class EmailCreatePage extends StatefulWidget {
         this.draftId,
         this.bccValues,
         this.draftSaveCallback,
+        required this.folderType,
         this.toValues});
 
   @override
@@ -120,7 +126,7 @@ class _EmailCreatePage extends State<EmailCreatePage> {
       }
       request = MailComposeRequest(
           emailSubject: widget.subject!,
-          to: to!.join(",")
+          to: to!=null ?to.join(","):null
       );
     }else if(widget.isDraft){
       value = widget.replyContent;
@@ -283,13 +289,13 @@ class _EmailCreatePage extends State<EmailCreatePage> {
   }
 
   Widget getChips() {
-    var tos =  request!=null ?request!.to!.split(","):null;
+    var tos =  request!=null ?request!.to!=null ?request!.to!.split(","):[]:[];
     return Expanded(
       child: request != null
           ? Wrap(
         direction: Axis.horizontal,
         children: [
-          if (tos!.length > 0)
+          if (tos.length > 0)
             Chip(
               label: Text(tos[0]),
               shape: StadiumBorder(),
@@ -373,7 +379,7 @@ class _EmailCreatePage extends State<EmailCreatePage> {
   }
 
   sendData() async {
-    if (request != null) {
+    if (request != null && request!.to !=null && request!.cc !=null && request!.bcc !=null && request!.emailSubject !=null) {
       progressButtonKey.currentState!.show();
       var html = await keyEditor!.currentState!.getHtml();
       if (html!.isNotEmpty) {
@@ -386,6 +392,7 @@ class _EmailCreatePage extends State<EmailCreatePage> {
         payload.ccAddresses = request!.cc ?? "";
         payload.bccAddresses = request!.bcc ?? "";
         payload.emailSubject = request!.emailSubject;
+        payload.folder = widget.folderType;
         payload.emailText = html;
         if (widget.isReply) {
           payload.originalMessageUid = widget.replyUid;
@@ -437,6 +444,8 @@ class _EmailCreatePage extends State<EmailCreatePage> {
         Workmanager().registerOneOffTask("1", "simpleTask");
         if(widget.isDraft && widget.draftSaveCallback !=null) {
           widget.draftSaveCallback!(draftId!);
+        }else{
+          deleteEmail(draftId!);
         }
         Navigator.pop(context);
         // }
@@ -444,6 +453,20 @@ class _EmailCreatePage extends State<EmailCreatePage> {
     } else {
       openModalSheet();
     }
+  }
+  void deleteEmail(String uid) async {
+    MoveFolderRequest payload = MoveFolderRequest();
+    payload.folder = FOLDER_TYPE_ENUM.DRAFT.type;
+    payload.username = prefs.getString(Strings.mailUsername)!;
+    payload.uidsList = [uid];
+    Calls()
+        .call(jsonEncode(payload), context, Config.EMAIL_DELETE,
+        isMailToken: true)
+        .then((value) {
+      var res = CreateEmailUserResponse.fromJson(value);
+      if (res.statusCode == Strings.success_code) {
+      }
+    });
   }
 
   void stopTimer(){
@@ -483,25 +506,26 @@ class _EmailCreatePage extends State<EmailCreatePage> {
     map['uid'] = draftId ?? "";
     // if(request.toAddresses!=null && request.toAddresses.isNotEmpty){
     //   for(int i=0;i<request.toAddresses.length;i++){
-    if (request != null) map['to_addresses'] = request!.to!;
+    if (request != null && request!.to!=null) map['to_addresses'] = request!.to!;
     // }
     // }
     // if(request.ccAddresses!=null && request.ccAddresses.isNotEmpty){
     //   for(int i=0;i<request.ccAddresses.length;i++){
-    if (request != null) map['cc_addresses'] = request!.cc!;
+    if (request != null && request!.cc != null) map['cc_addresses'] = request!.cc!;
     // }
     // }
     // if(request.bccAddresses!=null && request.bccAddresses.isNotEmpty){
     //   for(int i=0;i<request.bccAddresses.length;i++){
-    if (request != null) map['bcc_addresses'] = request!.bcc!;
+    if (request != null && request!.bcc!=null) map['bcc_addresses'] = request!.bcc!;
     // }
     // }
-    if (request != null) map['email_subject'] = request!.emailSubject!;
+    if (request != null && request!.emailSubject!=null) map['email_subject'] = request!.emailSubject!;
     // var markdown =
     // deltaToMarkdown(jsonEncode(_controller.document.toDelta().toJson()));
     // var html = markdownToHtml(markdown);
     var html = await keyEditor!.currentState!.getHtml();
     map['email_text'] = html!;
+    map['folder'] = widget.folderType;
     Calls()
         .callMultipartRequest(Config.EMAIL_DRAFT,
         emailAttachmentKey.currentState!.fileList, map,
@@ -787,7 +811,7 @@ class _ComposeEmailDetailSheet extends State<ComposeEmailDetailSheet>
                                       subject = value;
                                     },
                                     decoration: InputDecoration(
-                                        hintText: "Email id",
+                                        hintText: "Subject",
                                         contentPadding: EdgeInsets.only(
                                             left: 12, top: 16, bottom: 8),
                                         border: UnderlineInputBorder(

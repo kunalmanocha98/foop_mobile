@@ -187,6 +187,7 @@ class _EmailDetailPage extends State<EmailDetailPage>{
             replyContent: data!.html,
             date: data!.date,
             toValues: data!.toValues,
+            folderType: widget.folderType!,
             isReplyAll: true,
           );
         }));
@@ -202,6 +203,7 @@ class _EmailDetailPage extends State<EmailDetailPage>{
             subject:data!.subject,
             senderDetails:data!.fromValues!,
             replyContent: data!.html,
+            folderType: widget.folderType!,
             date: data!.date,
           );
         }));
@@ -217,6 +219,7 @@ class _EmailDetailPage extends State<EmailDetailPage>{
             subject: data!.subject,
             senderDetails: data!.fromValues!,
             replyContent: data!.html,
+            folderType: widget.folderType!,
             date: data!.date,
           );
         }));

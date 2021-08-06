@@ -265,6 +265,7 @@ class _EmailLoginPage extends State<EmailLoginPage> with CommonMixins {
         if (widget.onlyLogin) {
           Navigator.pop(context, true);
         } else {
+          Navigator.pop(context, true);
           Navigator.push(context,
               MaterialPageRoute(builder: (BuildContext context) {
                 return EmailHomePage();

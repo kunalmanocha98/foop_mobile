@@ -150,7 +150,7 @@ class _EmailUserList extends State<EmailUserList> {
   TextStyleElements? styleElements;
   SharedPreferences prefs = locator<SharedPreferences>();
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
-  String? searchVal;
+  String searchVal="";
 
   @override
   Widget build(BuildContext context) {
@@ -191,7 +191,7 @@ class _EmailUserList extends State<EmailUserList> {
     payload.ownerType = prefs.getString(Strings.ownerType)!;
     payload.pageSize = 10;
     payload.pageNumber = page;
-    payload.searchVal = searchVal!;
+    payload.searchVal = searchVal;
     payload.emailIdStatus = widget.type;
     var value = await Calls().call(
         jsonEncode(payload), context, Config.EMAIL_USER_LISTING,
