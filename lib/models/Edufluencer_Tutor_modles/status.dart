@@ -41,7 +41,7 @@ class EdufluencerStatus {
   EdufluencerStatus.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     myStudentCount = json['my_student_count'];
-    myEdufluencerTutorCount = json['my_edufluencer_tutor_count'];
+    myEdufluencerTutorCount = json['my_mentor_tutor_count'];
     isEdufluencer = json['is_edufluencer'];
   }
 
@@ -49,7 +49,7 @@ class EdufluencerStatus {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['my_student_count'] = this.myStudentCount;
-    data['my_edufluencer_tutor_count'] = this.myEdufluencerTutorCount;
+    data['my_mentor_tutor_count'] = this.myEdufluencerTutorCount;
     data['is_edufluencer'] = this.isEdufluencer;
     return data;
   }

@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/searchBox.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
-import 'package:oho_works_app/components/tricycleemptywidget.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
+import 'package:oho_works_app/components/appemptywidget.dart';
 import 'package:oho_works_app/models/RegisterUserAs.dart';
 import 'package:oho_works_app/models/add_new_skill.dart';
 import 'package:oho_works_app/models/add_new_skill_response.dart';
@@ -120,7 +120,7 @@ class _SelectDisicipline extends State<SelectDiscipline>
       } ,
       child: SafeArea(
         child: Scaffold(
-            appBar: TricycleAppBar().getCustomAppBar(
+            appBar: appAppBar().getCustomAppBar(
               context,
               appBarTitle: AppLocalizations.of(context)!.translate('discipline'),
               onBackButtonPress: () async {
@@ -197,11 +197,11 @@ class _SelectDisicipline extends State<SelectDiscipline>
                                                                 ? AppLocalizations.of(
                                                                 context)!
                                                                 .translate(
-                                                                'selected_academic_year')
+                                                                'selected_financial_year')
                                                                 : AppLocalizations.of(
                                                                 context)!
                                                                 .translate(
-                                                                'select_academic_year'),
+                                                                'select_financial_year'),
                                                             style: styleElements
                                                                 .subtitle2ThemeScalable(
                                                                 context),
@@ -296,7 +296,7 @@ class _SelectDisicipline extends State<SelectDiscipline>
                             return Center(
                                 child: Padding(
                                   padding: const EdgeInsets.all(20.0),
-                                  child: TricycleEmptyWidget(
+                                  child: appEmptyWidget(
                                     message: searchVal!=null && searchVal!.isNotEmpty?AppLocalizations.of(context)!
                                         .translate('add_new_discipline_click'):AppLocalizations.of(context)!
                                         .translate('no_data'),
@@ -318,7 +318,7 @@ class _SelectDisicipline extends State<SelectDiscipline>
                             child: Row(
                               children: [
                                 Spacer(),
-                                TricycleProgressButton(
+                                appProgressButton(
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(18.0),
                                       side: BorderSide(
@@ -358,7 +358,7 @@ class _SelectDisicipline extends State<SelectDiscipline>
                                     } else {
                                       ToastBuilder().showToast(
                                           AppLocalizations.of(context)!
-                                              .translate("select_academic"),
+                                              .translate("select_department"),
                                           context,
                                           HexColor(AppColors.information));
                                     }

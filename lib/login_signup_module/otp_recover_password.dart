@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:oho_works_app/api_calls/recover_password.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
 import 'package:oho_works_app/models/common_response.dart';
 import 'package:oho_works_app/models/register_user_payload.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
@@ -25,7 +25,7 @@ class OTPRecoverPasswords extends StatelessWidget {
   final String email;
   SharedPreferences? prefs;
   late TextStyleElements styleElements;
-  GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKey = GlobalKey();
 
   OTPRecoverPasswords({Key? key, required this.email}) : super(key: key);
 
@@ -131,7 +131,7 @@ class OTPRecoverPasswords extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               child: Container(
                 alignment: Alignment(0, 0.4),
-                child: TricycleProgressButton(
+                child: appProgressButton(
                   key: progressButtonKey,
                 child: Text(
                     AppLocalizations.of(context)!.translate("submit"),

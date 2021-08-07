@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
@@ -59,6 +59,10 @@ class _DomainPage extends State<DomainPage>
   final lastNameController = TextEditingController();
   final genderController = TextEditingController();
   final addController = TextEditingController();
+  final ohoUserName = TextEditingController();
+
+
+
  late BuildContext context;
   late TextStyleElements styleElements;
 
@@ -92,7 +96,23 @@ class _DomainPage extends State<DomainPage>
   Widget build(BuildContext context) {
     this.context = context;
     styleElements = TextStyleElements(context);
-
+    final ohoUserNameForm = Form(
+        child: TextFormField(
+          style: styleElements.subtitle1ThemeScalable(context).copyWith(
+              color: HexColor(AppColors.appColorBlack65)
+          ),
+          onSaved: (String? value) {},
+          controller: ohoUserName,
+          decoration: InputDecoration(
+              contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
+              hintText: "@username",
+              hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
+              border: UnderlineInputBorder(
+                borderSide: BorderSide(
+                  width: 0.0.h,
+                ),
+              )),
+        ));
 
     final donamin = Form(
         child: TextFormField(
@@ -120,8 +140,8 @@ class _DomainPage extends State<DomainPage>
       child: SafeArea(
           child: Scaffold(
             // resizeToAvoidBottomInset: false,
-              appBar: TricycleAppBar().getCustomAppBar(context,
-                  appBarTitle: AppLocalizations.of(context)!.translate('register_institute'),
+              appBar: appAppBar().getCustomAppBar(context,
+                  appBarTitle: AppLocalizations.of(context)!.translate('reg_bus'),
                   isIconVisible:false,
                   actions: [
 
@@ -180,8 +200,10 @@ class _DomainPage extends State<DomainPage>
                   SingleChildScrollView(
                     child: Visibility(
                         visible: !isGoogleOrFacebookDataReceived,
-                        child: TricycleCard(
+                        child: appCard(
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
                               Align(
                                   alignment: Alignment.centerLeft,
@@ -194,13 +216,43 @@ class _DomainPage extends State<DomainPage>
                                           .copyWith(fontWeight: FontWeight.bold),
                                     ),
                                   )),
+
+
+                              Container(
+                                margin: EdgeInsets.only(
+                                    left: 8.w, right: 8.w, bottom: 8.h),
+                                child: Text(
+                                  "Oho username",
+                                  style: styleElements
+                                      .bodyText2ThemeScalable(context)
+                                      .copyWith(color: HexColor(AppColors.appColorBlack85)),
+
+                                ),
+                              ),
+
                               Align(
                                   alignment: Alignment.center,
                                   child: Container(
                                     margin: EdgeInsets.only(
                                         left: 8.w, right: 8.w, bottom: 8.h),
+                                    child: ohoUserNameForm,
+                                  )),
+
+
+                              Align(
+                                  alignment: Alignment.center,
+                                  child: Container(
+                                    margin: EdgeInsets.only(
+                                        left: 8.w, right: 8.w, bottom: 8.h),
+                                    child: donamin,
+                                  )),
+                              Align(
+                                  alignment: Alignment.center,
+                                  child: Container(
+                                    margin: EdgeInsets.only(
+                                        left: 8.w, right: 8.w, bottom: 8.h,top: 16),
                                     child: Text(
-                                      AppLocalizations.of(context)!.translate("domain"),
+                                     "1.Enter the domain name for which you want to create your email ID.\n 2. Your email ID will look like johndoe@abc.com - In this example, abc.com is the domain name.\n 3. Ohoworks provides 2 email ID free of cost on your domain name.",
                                         style: styleElements
                                         .bodyText2ThemeScalable(context)
                                         .copyWith(color: HexColor(AppColors.appColorBlack85)),
@@ -209,13 +261,7 @@ class _DomainPage extends State<DomainPage>
                                   )),
                              
                             
-                              Align(
-                                  alignment: Alignment.center,
-                                  child: Container(
-                                    margin: EdgeInsets.only(
-                                        left: 8.w, right: 8.w, bottom: 8.h),
-                                    child: donamin,
-                                  )),
+
 
                             ],
                           ),
@@ -240,7 +286,7 @@ class _DomainPage extends State<DomainPage>
                                       child: Container(
                                         margin: const EdgeInsets.only(
                                             left: 16.0, right: 16.0),
-                                        child: TricycleElevatedButton(
+                                        child: appElevatedButton(
                                           shape: RoundedRectangleBorder(
                                               borderRadius:
                                               BorderRadius.circular(18.0),

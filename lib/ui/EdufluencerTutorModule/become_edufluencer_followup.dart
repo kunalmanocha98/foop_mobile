@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/home/locator.dart';
 import 'package:oho_works_app/mixins/someCommonMixins.dart';
 import 'package:oho_works_app/models/Edufluencer_Tutor_modles/suggestion_field_models.dart';
@@ -49,12 +49,12 @@ class BecomeEdufluencerFollowupPageState
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
     return Scaffold(
-      appBar: TricycleAppBar().getCustomAppBar(
+      appBar: appAppBar().getCustomAppBar(
         context,
         appBarTitle:
-        AppLocalizations.of(context)!.translate(widget.type == edufluencer_type.E?'become_edufluencer':"become_tutor"),
+        AppLocalizations.of(context)!.translate(widget.type == edufluencer_type.E?'become_mentor':"become_tutor"),
         actions: [
-          TricycleTextButton(
+          appTextButton(
             onPressed: () {
               create();
             },
@@ -101,7 +101,7 @@ class BecomeEdufluencerFollowupPageState
   }
 
   Widget customCard(String heading, {Widget? child}) {
-    return TricycleListCard(
+    return appListCard(
         padding: EdgeInsets.only(top: 16, bottom: 16, left: 24, right: 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

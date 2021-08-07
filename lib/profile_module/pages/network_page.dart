@@ -125,7 +125,7 @@ class NetworkPageState extends State<NetworkPage> with SingleTickerProviderState
             marginTop:const EdgeInsets.only(top:16.0 ),
             currentPosition: _currentPosition,
             itemCount: list!=null && list.isNotEmpty?list.length:0,
-            tabBuilder: (context, index) => TricycleTabButton(
+            tabBuilder: (context, index) => appTabButton(
               onPressed: () {
                 setState(() {
                   _currentPosition = index;
@@ -164,7 +164,7 @@ class NetworkPageState extends State<NetworkPage> with SingleTickerProviderState
             marginTop:const EdgeInsets.only(top:16.0 ),
             currentPosition: _currentPosition,
             itemCount: list!=null && list.isNotEmpty?list.length:0,
-            tabBuilder: (context, index) => TricycleTabButton(
+            tabBuilder: (context, index) => appTabButton(
               onPressed: () {
                 setState(() {
                   _currentPosition = index;

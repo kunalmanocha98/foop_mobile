@@ -64,7 +64,7 @@ String? instId;
             builder: (BuildContext context) => RateDialog(
                 type: "", title: AppLocalizations.of(context)!.translate('select_proficiency'), subtitle: ""));
       },
-      child: TricycleListCard(
+      child: appListCard(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[

@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/searchBox.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/components/white_button_large.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
@@ -188,7 +188,7 @@ class _SelectInstitute extends State<SelectInstitute>
 
     list = [];
     list.add(TabMaker(
-      tabName: AppLocalizations.of(context)!.translate('select_institute'),
+      tabName: AppLocalizations.of(context)!.translate('select_entity'),
       statelessWidget: Container(
         margin: const EdgeInsets.only(bottom: 65),
         child: NotificationListener<ScrollNotification>(
@@ -247,7 +247,7 @@ class _SelectInstitute extends State<SelectInstitute>
                                         child: Text(
                                           AppLocalizations.of(context)!
                                               .translate(
-                                                  "select_right_institute"),
+                                                  "select_right_entity"),
                                           textAlign: TextAlign.center,
                                           style: styleElements
                                               .captionThemeScalable(context)
@@ -282,7 +282,7 @@ class _SelectInstitute extends State<SelectInstitute>
                                           leading: SizedBox(
                                               width: 52,
                                               height: 52,
-                                              child: TricycleAvatar(
+                                              child: appAvatar(
                                                 key: UniqueKey(),
                                                 imageUrl: listInstitute![index]
                                                     .profileImage,
@@ -556,7 +556,7 @@ class _SelectInstitute extends State<SelectInstitute>
                                       leading: SizedBox(
                                         height: 52,
                                         width: 52,
-                                        child: TricycleAvatar(
+                                        child: appAvatar(
                                           size: 52,
                                           imageUrl: selectSchoolUrl ?? "",
                                           isFullUrl: true,
@@ -713,13 +713,13 @@ class _SelectInstitute extends State<SelectInstitute>
       ),
     ));
 
-    pageTitle = AppLocalizations.of(context)!.translate('select_institute');
+    pageTitle = AppLocalizations.of(context)!.translate('select_entity');
 
     return new WillPopScope(
         onWillPop: _onBackPressed,
         child: SafeArea(
             child: Scaffold(
-          appBar: TricycleAppBar().getCustomAppBar(context,
+          appBar: appAppBar().getCustomAppBar(context,
               appBarTitle: pageTitle, onBackButtonPress: () {
             _onBackPressed();
           }),
@@ -788,7 +788,7 @@ class _SelectInstitute extends State<SelectInstitute>
                                                                     AppLocalizations.of(
                                                                             context)!
                                                                         .translate(
-                                                                            "select_Institute"),
+                                                                            "select_entity"),
                                                                     sctx,
                                                                     HexColor(
                                                                         AppColors
@@ -943,7 +943,7 @@ class _SelectInstitute extends State<SelectInstitute>
                                                                 .only(
                                                                 left: 16.0,
                                                                 right: 16.0),
-                                                            child: TricycleElevatedButton(
+                                                            child: appElevatedButton(
                                                               shape: RoundedRectangleBorder(
                                                                   borderRadius:
                                                                   BorderRadius
@@ -964,7 +964,7 @@ class _SelectInstitute extends State<SelectInstitute>
                                                                     AppLocalizations.of(
                                                                             context)!
                                                                         .translate(
-                                                                            "select_Institute"),
+                                                                            "select_entity"),
                                                                     sctx,
                                                                     HexColor(
                                                                         AppColors
@@ -1286,7 +1286,7 @@ class _SelectInstitute extends State<SelectInstitute>
               margin: const EdgeInsets.only(left: 16, right: 16, bottom: 16,top: 20),
               child: WhiteLargeButton(
                 name: AppLocalizations.of(context)!
-                    .translate("register__institute"),
+                    .translate("register__entity"),
                 offsetX: 70.66,
                 offsetY: 12.93,
                 textColor: AppColors.appColorWhite,
@@ -1314,8 +1314,10 @@ class _SelectInstitute extends State<SelectInstitute>
               margin: const EdgeInsets.only(left: 16, right: 16, bottom: 60),
               child: WhiteLargeButton(
                 name: AppLocalizations.of(context)!
-                    .translate("join_tricycle_institute"),
-                offsetX: 70.66,
+
+                    .translate("join_app_workplace"),
+
+      offsetX: 70.66,
                 offsetY: 12.93,
                 callback: () {
                  var registerUserdata=RegisterUserAs();

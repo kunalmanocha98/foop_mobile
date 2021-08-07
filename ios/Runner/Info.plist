@@ -15,11 +15,11 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>Tricycle</string>
+	<string>Ohoworks</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>$(APP_VERSION)</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -64,11 +64,11 @@
 	<key>NSAppleMusicUsageDescription</key>
 	<string>Need music access for playing audio.</string>
 	<key>NSCalendarsUsageDescription</key>
-	<string>Tricycle uses your calendar.</string>
+	<string>Ohoworks uses your calendar.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Tricycle, uses  camera to get image for your profile.</string>
+	<string>Ohoworks, uses  camera to get image for your profile.</string>
 	<key>NSContactsUsageDescription</key>
-	<string> Tricycle ,need access to your contacts. This lets you invite contacts from your address book to connect on Tricycle </string>
+	<string> Ohoworks ,need access to your contacts. This lets you invite contacts from your address book to connect on Tricycle </string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>This app needs access to location when open and in the background.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
@@ -78,11 +78,11 @@
 	<key>NSMicrophoneUsageDescription</key>
 	<string>Need microphone access for uploading videos.</string>
 	<key>NSMotionUsageDescription</key>
-	<string>Tricycle use motion</string>
+	<string>Ohoworks use motion</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>To upload photos, please allow permission to access your photo library.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>Tricycle  use speech recognition.</string>
+	<string>Ohoworks  use speech recognition.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>

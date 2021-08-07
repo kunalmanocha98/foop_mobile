@@ -1,4 +1,4 @@
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/colors.dart';
 import 'package:oho_works_app/utils/hexColors.dart';
@@ -185,7 +185,7 @@ class DialogFinishGoal extends StatelessWidget {
                             margin: const EdgeInsets.only(
                                 left: 16.0, top: 16.0, bottom: 16.0),
                             height: 40,
-                            child: TricycleElevatedButton(
+                            child: appElevatedButton(
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(4.0),
                                   side: BorderSide(color: HexColor(AppColors.appMainColor))),
@@ -206,7 +206,7 @@ class DialogFinishGoal extends StatelessWidget {
                             margin: const EdgeInsets.only(
                                 left: 16.0, top: 16.0, bottom: 16.0, right: 16),
                             height: 40,
-                            child: TricycleElevatedButton(
+                            child: appElevatedButton(
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(4.0),
                                   side: BorderSide(color: HexColor(AppColors.appMainColor))),

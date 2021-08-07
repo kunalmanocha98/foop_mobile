@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/home/locator.dart';
 import 'package:oho_works_app/models/Edufluencer_Tutor_modles/edufluencer_list.dart';
 import 'package:oho_works_app/ui/EdufluencerTutorModule/become_edufluencer_tutor_page.dart';
@@ -48,7 +48,7 @@ class AllEdufluencerAndTutorsState extends State<AllEdufluencerAndTutors> {
                   bool innerBoxIsScrolled) {
                 return [
                   SliverToBoxAdapter(
-                    child: TricycleListCard(
+                    child: appListCard(
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -61,7 +61,7 @@ class AllEdufluencerAndTutorsState extends State<AllEdufluencerAndTutors> {
                             padding: const EdgeInsets.all(8.0),
                             child: Text(widget.type == edufluencer_type.E ?
                             AppLocalizations.of(context)!.translate(
-                                'edufluencer_note')
+                                'mentor_note')
                                 : AppLocalizations.of(context)!.translate(
                                 'tutor_note')
                               , style: styleElements.subtitle1ThemeScalable(
@@ -82,7 +82,7 @@ class AllEdufluencerAndTutorsState extends State<AllEdufluencerAndTutors> {
                             top: 8,
                             bottom: 8,
                           ),
-                          child: TricycleTextButton(
+                          child: appTextButton(
                             onPressed: () {
                               Navigator.push(
                                 context,
@@ -98,7 +98,7 @@ class AllEdufluencerAndTutorsState extends State<AllEdufluencerAndTutors> {
                             child: Text(
                               AppLocalizations.of(context)!.translate(
                                   widget.type == edufluencer_type.E
-                                      ? 'become_edufluencer'
+                                      ? 'become_mentor'
                                       : "become_tutor"),
                               style: styleElements
                                   .captionThemeScalable(context)

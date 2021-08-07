@@ -1,6 +1,6 @@
 import 'package:oho_works_app/components/appBarWithSearch.dart';
-import 'package:oho_works_app/components/tricycle_find_card.dart';
-import 'package:oho_works_app/components/tricycle_user_list_tile.dart';
+import 'package:oho_works_app/components/app_find_card.dart';
+import 'package:oho_works_app/components/app_user_list_tile.dart';
 import 'package:oho_works_app/home/locator.dart';
 import 'package:oho_works_app/ui/searchmodule/searchList.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
@@ -29,7 +29,7 @@ class FindPageState extends State<FindPage>{
     return SafeArea(
       child: Scaffold(
 
-        appBar: TricycleAppBar().getCustomAppBarWithSearch(
+        appBar: appAppBar().getCustomAppBarWithSearch(
             context,
             appBarTitle: AppLocalizations.of(context)!.translate('find'),
             onBackButtonPress: (){Navigator.pop(context);},
@@ -61,7 +61,7 @@ class FindPageState extends State<FindPage>{
                 :CustomScrollView(
           slivers: [
             SliverToBoxAdapter(
-              child: TricycleFindCard(
+              child: appFindCard(
                 title:"Who do you want to study together?",
                 subtitle:"Search for friends who can support you to learn together",
                 image:  Image.asset('assets/appimages/report_content_icon.png',height: 150,width: 150,),
@@ -80,7 +80,7 @@ class FindPageState extends State<FindPage>{
             SliverList(
               delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index){
-                    return TricycleUserListTile(
+                    return appUserListTile(
                       imageUrl: Config.BASE_URL + prefs!.getString(Strings.profileImage)!,
                       isFullImageUrl: true,
                       title: 'Kunal Manocha',
@@ -113,7 +113,7 @@ class FindPageState extends State<FindPage>{
             SliverList(
               delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index){
-                    return TricycleUserListTile(
+                    return appUserListTile(
                       imageUrl: Config.BASE_URL + prefs!.getString(Strings.profileImage)!,
                       isFullImageUrl: true,
                       title: 'Kunal Manocha',

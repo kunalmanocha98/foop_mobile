@@ -3,12 +3,12 @@ import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:flutter/material.dart';
 
 
-class TricycleEditor extends StatefulWidget {
+class appEditor extends StatefulWidget {
   @override
-  _TricycleEditorState createState() => _TricycleEditorState();
+  _appEditorState createState() => _appEditorState();
 }
 
-class _TricycleEditorState extends State<TricycleEditor> {
+class _appEditorState extends State<appEditor> {
 
   // @override
   // void initState() {
@@ -24,7 +24,7 @@ class _TricycleEditorState extends State<TricycleEditor> {
     // styleElements = TextStyleElements(context);
     return SafeArea(
       child: Scaffold(
-        appBar: TricycleAppBar().getCustomAppBar(context,
+        appBar: appAppBar().getCustomAppBar(context,
             appBarTitle: AppLocalizations.of(context)!.translate('post_create'),
             onBackButtonPress: () {
               Navigator.pop(context);

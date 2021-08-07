@@ -1,4 +1,4 @@
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
@@ -101,7 +101,7 @@ class DilogBlockUnfollow extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Container(
-                        child: TricycleElevatedButton(
+                        child: appElevatedButton(
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(25.0),
                               side: BorderSide(color: HexColor(AppColors.appMainColor))),
@@ -122,7 +122,7 @@ class DilogBlockUnfollow extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Container(
-                        child: TricycleElevatedButton(
+                        child: appElevatedButton(
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(25.0),
                               side: BorderSide(color: HexColor(AppColors.appMainColor))),

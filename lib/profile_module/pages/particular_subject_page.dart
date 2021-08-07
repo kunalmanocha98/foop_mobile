@@ -274,7 +274,7 @@ class _ParticularSubject extends State<ParticularSubject>
                                         children: <Widget>[
                                           InstituteCard(
                                             title: "",
-                                            subtitle: AppLocalizations.of(context)!.translate('academics'),
+                                            subtitle: AppLocalizations.of(context)!.translate('entity'),
                                             subtitle1: type,
                                             isShowMore: true,
                                             isIntroCard: true,
@@ -321,7 +321,7 @@ class _ParticularSubject extends State<ParticularSubject>
                                             isScrollable: true,
                                             tabs: List<Widget>.generate(
                                                 list.length, (int index) {
-                                                  return TricycleTabButton(
+                                                  return appTabButton(
                                                     isActive: index ==
                                                         _currentPosition,
                                                     tabName:  list[index].tabName,

@@ -45,14 +45,14 @@
     },
 
     {
-      "title":"Parents, teachers, and classmates invite through a specific link so they do not require approval from institute",
+      "title":"Parents, teachers, and classmates invite through a specific link so they do not require approval from company",
       "code": "copy_link",
       "imageUrl": "share",
       "tag": "text",
       "isTagVisivle": false
     },
     {
-      "title":"User invited through 'Links' will be able to join your institute after approval only. ",
+      "title":"User invited through 'Links' will be able to join your company after approval only. ",
       "code": "copy_link",
       "imageUrl": "share",
       "tag": "text",

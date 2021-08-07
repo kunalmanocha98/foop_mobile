@@ -104,7 +104,7 @@ class _ImagesSeeMore extends State<ImagesSeeMore> {
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
 
-    return TricycleListCard(
+    return appListCard(
       child: Column(
         children: [
           Row(

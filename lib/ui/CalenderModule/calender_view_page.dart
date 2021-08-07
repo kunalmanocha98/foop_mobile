@@ -1,6 +1,6 @@
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
@@ -85,10 +85,10 @@ class CalenderViewPageState extends State<CalenderViewPage>{
     );
 
     return new Scaffold(
-        appBar:TricycleAppBar().getCustomAppBar(context, appBarTitle: AppLocalizations.of(context)!.translate('select_date_heading'),
+        appBar:appAppBar().getCustomAppBar(context, appBarTitle: AppLocalizations.of(context)!.translate('select_date_heading'),
             onBackButtonPress: (){Navigator.pop(context);},
         actions: [
-          TricycleTextButton(
+          appTextButton(
             onPressed: () {
               Navigator.pop(context,currentDate);
             },
@@ -108,7 +108,7 @@ class CalenderViewPageState extends State<CalenderViewPage>{
             shape: CircleBorder(),
           ),
         ]),
-        body: TricycleListCard(
+        body: appListCard(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -134,7 +134,7 @@ class CalenderViewPageState extends State<CalenderViewPage>{
                             ),
                           ),
                         )),
-                    TricycleTextButton(
+                    appTextButton(
                       child: Text(AppLocalizations.of(context)!.translate('prev').toUpperCase(),style: TextStyle(color: HexColor(AppColors.appMainColor)),),
                       shape: StadiumBorder(),
                       onPressed: () {
@@ -144,7 +144,7 @@ class CalenderViewPageState extends State<CalenderViewPage>{
                         });
                       },
                     ),
-                    TricycleTextButton(
+                    appTextButton(
                       child: Text(AppLocalizations.of(context)!.translate('next').toUpperCase(),style: TextStyle(color: HexColor(AppColors.appMainColor)),),
                       shape: StadiumBorder(),
                       onPressed: () {

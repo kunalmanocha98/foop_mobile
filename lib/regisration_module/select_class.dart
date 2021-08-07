@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/searchBox.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/models/RegisterUserAs.dart';
 import 'package:oho_works_app/models/institution_classes.dart';
 import 'package:oho_works_app/models/register_user_as_response.dart';
@@ -77,7 +77,7 @@ class _SelectClasses extends State<SelectClass>
           title:
               new Text(AppLocalizations.of(context)!.translate('are_you_sure')),
           content:
-              new Text(AppLocalizations.of(context)!.translate('exit_tricycle')),
+              new Text(AppLocalizations.of(context)!.translate('exit_app')),
           actions: <Widget>[
             new GestureDetector(
               onTap: () => Navigator.of(context).pop(false),
@@ -188,7 +188,7 @@ late BuildContext sctx;
         child: Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: HexColor(AppColors.appColorBackground),
-      appBar: TricycleAppBar().getCustomAppBar(context, appBarTitle: pageTitle,
+      appBar: appAppBar().getCustomAppBar(context, appBarTitle: pageTitle,
           onBackButtonPress: () {
         _onBackPressed();
       }),
@@ -281,7 +281,7 @@ late BuildContext sctx;
                                                           alignment:
                                                           Alignment
                                                               .center,
-                                                          child: Text(AppLocalizations.of(context)!.translate('selected_academic_year'),
+                                                          child: Text(AppLocalizations.of(context)!.translate('selected_financial_year'),
                                                             style: styleElements
                                                                 .subtitle2ThemeScalable(
                                                                 context),
@@ -344,7 +344,7 @@ late BuildContext sctx;
                                       margin: const EdgeInsets.only(
                                           bottom: 4),
                                       decoration: BoxDecoration(
-                                          color: Color(0x33F66666),
+                                          color: HexColor(AppColors.appMainColor33),
                                           borderRadius: BorderRadius
                                               .only(
                                               topRight:
@@ -480,7 +480,7 @@ late BuildContext sctx;
                             child: Container(
                               margin: const EdgeInsets.only(
                                   left: 16.0, right: 16.0),
-                              child: TricycleElevatedButton(
+                              child: appElevatedButton(
                                 shape: RoundedRectangleBorder(
                                     borderRadius:
                                     BorderRadius.circular(18.0),

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/commonComponents.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
 import 'package:oho_works_app/models/coupons/buycoupon.dart';
 import 'package:oho_works_app/models/coupons/couponlisting.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
@@ -39,7 +39,7 @@ class _CouponDetailPage extends State<CouponDetailPage> {
   bool showQr;
   List<String> listPoints = [];
   late TextStyleElements styleElements;
-  GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKey = GlobalKey();
 
 
   _CouponDetailPage({required this.couponData, required this.showQr});
@@ -84,7 +84,7 @@ class _CouponDetailPage extends State<CouponDetailPage> {
 
     return SafeArea(
       child: Scaffold(
-        appBar: TricycleAppBar().getCustomAppBar(context, appBarTitle: 'Coupon Detail', onBackButtonPress: (){Navigator.pop(context);}),
+        appBar: appAppBar().getCustomAppBar(context, appBarTitle: 'Coupon Detail', onBackButtonPress: (){Navigator.pop(context);}),
         body: Center(
           child: Container(
             decoration: BoxDecoration(
@@ -175,7 +175,7 @@ class _CouponDetailPage extends State<CouponDetailPage> {
         children: [
           Visibility(
             visible: !showQr,
-            child: TricycleProgressButton(
+            child: appProgressButton(
               key: progressButtonKey,
               child: Text(
                 getButtonText(),

@@ -5,7 +5,7 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/models/drop_down_global.dart';
 import 'package:oho_works_app/models/others_name.dart';
 import 'package:oho_works_app/models/post/keywordsList.dart';
@@ -23,6 +23,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'domain.dart';
 import 'models/basicInstituteData.dart';
 
 class BasicInstituteDetails extends StatefulWidget {
@@ -77,8 +78,10 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
   @override
   void initState() {
     super.initState();
-    getInstituteType();
-    getRelationType();
+
+    WidgetsBinding.instance!.addPostFrameCallback((_) =>
+    {   getInstituteType(),
+        getRelationType()});
   }
 
   String quotesCharacterLength = "0";
@@ -146,7 +149,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
           disabledBorder: InputBorder.none,
           contentPadding: EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorBlack35)),
-          hintText: AppLocalizations.of(context)!.translate('write_about_inst')),
+          hintText: ""),
     );
     tsE = TextStyleElements(context);
 
@@ -163,8 +166,8 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
       scrollPadding: EdgeInsets.all(20.0.w),
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-          hintText: AppLocalizations.of(context)!.translate('name_of_institute'),
-          hintStyle: tsE.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)).copyWith(color: HexColor(AppColors.appColorBlack35)),
+          hintText: AppLocalizations.of(context)!.translate('name_of_entity'),
+          hintStyle: tsE.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)).copyWith(color: HexColor(AppColors.appColorBlack65)),
 
           border: UnderlineInputBorder(
             borderSide: BorderSide(
@@ -220,12 +223,12 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
                         .fromJson(res)
                         .rows!;
                   }else{
-                    return null;
+                    return [];
                   }
                 }else{
-                  return null;
+                  return [];
                 }
-              } as FutureOr<Iterable<String>> Function(String),
+              } ,
               itemBuilder: ( context,  itemData) {
                 itemData as String;
                 return ListTile(
@@ -275,7 +278,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
       hint: Padding(
         padding: const EdgeInsets.only(left: 0),
         child: Text(
-          selectInstType ?? AppLocalizations.of(context)!.translate("inst_type"),
+          selectInstType ?? AppLocalizations.of(context)!.translate("entity_type"),
           style: styleElements.bodyText2ThemeScalable(context),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
@@ -298,7 +301,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
         padding: const EdgeInsets.only(left: 0),
         child: Text(
           selectInstCategory ??
-              AppLocalizations.of(context)!.translate("inst_category"),
+              AppLocalizations.of(context)!.translate("entity_category"),
           style: styleElements.bodyText2ThemeScalable(context),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
@@ -314,15 +317,48 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
         FocusScope.of(context).requestFocus(new FocusNode());
       },
     );
+    final employees = DropdownButtonFormField<dynamic>(
+      value: null,
+      decoration: InputDecoration(
+          contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 2.0.w, 15.0.h)),
+      hint: Padding(
+        padding: const EdgeInsets.only(left: 0),
+        child: Text(
+          selectInstCategory ??
+             "Number of employees",
+          style: styleElements.bodyText2ThemeScalable(context),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
+      items: _getRelationtype(),
+      onChanged: (value) {
+        value as DropdownMenuItem;
+        setState(() {
+          selectInstCategory = (value) as String?;
 
+        });
+        FocusScope.of(context).requestFocus(new FocusNode());
+      },
+    );
     return new WillPopScope(
       onWillPop: _onBackPressed,
       child: SafeArea(
           child: Scaffold(
                resizeToAvoidBottomInset: false,
-              appBar: TricycleAppBar().getCustomAppBar(
+              appBar: appAppBar().getCustomAppBar(
                 context,
-                appBarTitle: 'Register institute',
+                actions: [ InkWell(
+                    onTap:(){
+                      submit(context);
+                    },
+
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(AppLocalizations.of(context)!.translate('next'), style:styleElements.subtitle2ThemeScalable(context).copyWith(color: HexColor(AppColors.appMainColor)),),
+                    )),
+                ],
+                appBarTitle:AppLocalizations.of(context)!.translate('reg_bus'),
                 onBackButtonPress: () {
                   Navigator.pop(context);
                 },
@@ -333,16 +369,52 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
                     SingleChildScrollView(
                       child: Visibility(
                           visible: !isGoogleOrFacebookDataReceived,
-                          child: TricycleCard(
+                          child: appCard(
                             child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget>[
                                 Align(
                                     alignment: Alignment.centerLeft,
                                     child: Container(
                                       margin: EdgeInsets.only(
-                                          left: 8.w, right: 8.w, bottom: 8.h),
+                                          left: 8.w, right: 8.w, bottom: 16.h),
                                       child: Text(AppLocalizations.of(context)!.translate('basic'),    style: tsE.headline6ThemeScalable(context).copyWith(fontWeight: FontWeight.bold),),
                                     )),
+
+
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: (){
+
+                                      },
+                                      child: Padding(
+                                        padding:EdgeInsets.only( left: 12, right: 12),
+                                        child: Container(
+                                            height: 80,
+                                            width: 80,
+                                            decoration: BoxDecoration(
+                                                color: HexColor(AppColors.appColorBackground),
+                                                image: DecorationImage(
+                                                    image: AssetImage('assets/appimages/grey_bg.png')
+                                                )
+                                            ),
+                                            child: Text('')
+                                            )
+                                        ),
+                                      ),
+
+                                    Expanded(
+                                      child: Container(
+                                        padding: EdgeInsets.only(right:16),
+                                        child: Text("Upload Photo"),
+                                      ),
+                                    ),
+                                  ],
+                                ),
                                 Align(
                                     alignment: Alignment.center,
                                     child: Container(
@@ -358,6 +430,8 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
                                           left: 8.w, right: 8.w, bottom: 8.h),
                                       child: relation),
                                 ),
+
+
                                 Align(
                                   alignment: Alignment.center,
                                   child: Container(
@@ -365,13 +439,23 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
                                           left: 8.w, right: 8.w, bottom: 8.h),
                                       child: institute),
                                 ),
+
+
                                 Align(
-                                    alignment: Alignment.center,
-                                    child: Container(
-                                      margin: EdgeInsets.only(
+                                  alignment: Alignment.center,
+                                  child: Container(
+                                      padding: EdgeInsets.only(
                                           left: 8.w, right: 8.w, bottom: 8.h),
-                                      child: otherNameIn,
-                                    )),
+                                      child: employees),
+                                ),
+
+
+
+                                Container(
+                                  margin: EdgeInsets.only(
+                                      left: 16.w, right: 8.w, bottom: 8.h),
+                                  child: Text("About your business"),
+                                ),
                                 Container(
                                     height: 150,
                                     margin: const EdgeInsets.only(
@@ -396,56 +480,12 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
                                     ),
                                   ),
                                 ),
-                                Row(
-                                  children: [
 
-                                    Checkbox(value: isSelect1, onChanged: (val){
-
-                                      setState(() {
-                                        isSelect1=val;
-                                      });
-                                    }),
-
-                                    Expanded(
-                                      child:  Align(
-                                          alignment: Alignment.center,
-                                          child: Container(
-                                            margin: EdgeInsets.only(
-                                                left: 8.w, right: 8.w, bottom: 8.h),
-                                            child: Text(AppLocalizations.of(context)!
-                                                .translate("inst1")),
-                                          )),
-                                    ),
-                                  ],
-                                ),
-
-                                Row(
-                                  children: [
-
-                                    Checkbox(value: isSelect2, onChanged: (val){
-
-                                      setState(() {
-                                        isSelect2=val;
-                                      });
-                                    }),
-
-                                    Expanded(
-                                      child: Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Container(
-                                            margin: EdgeInsets.only(
-                                                left: 8.w, right: 8.w, bottom: 8.h),
-                                            child: Text(AppLocalizations.of(context)!
-                                                .translate("inst2")),
-                                          )),
-                                    ),
-                                  ],
-                                ),
                               ],
                             ),
                           )),
                     ),
-                    Align(
+                   /* Align(
                         alignment: FractionalOffset.bottomCenter,
                         child: GestureDetector(
                           child: Container(
@@ -467,7 +507,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
                                           const EdgeInsets.only(
                                               left: 16.0,
                                               right: 16.0),
-                                          child: TricycleElevatedButton(
+                                          child: appElevatedButton(
                                             shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                 BorderRadius
@@ -504,7 +544,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
                                           const EdgeInsets.only(
                                               left: 16.0,
                                               right: 16.0),
-                                          child: TricycleElevatedButton(
+                                          child: appElevatedButton(
                                             shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                 BorderRadius
@@ -537,7 +577,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
                                   ],
                                 )),
                           ),
-                        ))
+                        ))*/
                   ],
                 
               ))),
@@ -551,7 +591,24 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
   }
 
   void submit(BuildContext ctx) async {
-    if(isSelect2! && isSelect1!){
+
+
+    prefs = await SharedPreferences.getInstance();
+    BasicData basicData = new BasicData();
+    basicData.name=instituteNameC.text.toString();
+    basicData.description=descriptionController.text.toString();
+    basicData.inst_cat_code="";
+    basicData.entity_type_code="type";
+    basicData.listOfNames=_listOfHashTags;
+    prefs.setString("instName", instituteNameC.text.toString());
+    print(jsonEncode(basicData));
+
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => DomainPage(2),
+        ));
+    /*if(isSelect2! && isSelect1!){
       if (instituteNameC.text.trim().isNotEmpty) {
         if (selectInstType !=null) {
           if (selectInstCategory != null) {
@@ -575,7 +632,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
                   basicData.name=instituteNameC.text.toString();
                   basicData.description=descriptionController.text.toString();
                   basicData.inst_cat_code=cat;
-                  basicData.inst_type_code=type;
+                  basicData.entity_type_code=type;
                   basicData.listOfNames=_listOfHashTags;
                   prefs.setString("instName", instituteNameC.text.toString());
                   print(jsonEncode(basicData));
@@ -605,7 +662,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
       ToastBuilder().showToast(
           AppLocalizations.of(context)!.translate("tick_check_box"),
           context,
-          HexColor(AppColors.information));
+          HexColor(AppColors.information));*/
   }
 
 
@@ -613,7 +670,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
   void getInstituteType() async {
     final body = jsonEncode({
       "search_val": "",
-      "dictonary_type_id": "inst_type",
+      "dictonary_type_id": "entity_type",
       "page_number": 1,
       "page_size": 115
     });

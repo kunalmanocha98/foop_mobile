@@ -51,11 +51,11 @@ class _TestMentionsPage extends State<TestMentionsPage>{
   Widget build(BuildContext context) {
     // var arr = <Map<String, dynamic>>[];
     return Scaffold(
-      appBar: TricycleAppBar().getCustomAppBar(context, appBarTitle: 'Mentions Test', onBackButtonPress: (){Navigator.pop(context);}),
+      appBar: appAppBar().getCustomAppBar(context, appBarTitle: 'Mentions Test', onBackButtonPress: (){Navigator.pop(context);}),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          TricycleElevatedButton(
+          appElevatedButton(
             child: Text('Get Text'),
             onPressed: () {
               print(key.currentState.controller.markupText);

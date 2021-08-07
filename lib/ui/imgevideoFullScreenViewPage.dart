@@ -1,7 +1,7 @@
 import 'package:oho_works_app/components/postcardactionbuttons.dart';
 import 'package:oho_works_app/components/postcardheader.dart';
 import 'package:oho_works_app/components/postcardmedia.dart';
-import 'package:oho_works_app/components/tricycle_chat_footer.dart';
+import 'package:oho_works_app/components/app_chat_footer.dart';
 import 'package:oho_works_app/models/post/postlist.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
@@ -112,7 +112,7 @@ class _ImageVideoFullPage extends State<ImageVideoFullPage> {
   bool? isLocalFile;
   int? totalItems;
   Function? talkcallback;
-  GlobalKey<TricycleChatFooterState> chatFooterKey = GlobalKey();
+  GlobalKey<appChatFooterState> chatFooterKey = GlobalKey();
 
   _ImageVideoFullPage(
       {this.mediaList,
@@ -231,7 +231,7 @@ class _ImageVideoFullPage extends State<ImageVideoFullPage> {
               ),
               Visibility(
                 visible: isLocalFile != null && isLocalFile!,
-                child: TricycleChatFooter(
+                child: appChatFooter(
                   chatFooterKey,
                   data: null,
                   userName: null,

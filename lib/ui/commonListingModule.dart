@@ -4,7 +4,7 @@ import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/searchBox.dart';
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
 import 'package:oho_works_app/models/CommonListingModels/commonListingrequest.dart';
@@ -78,7 +78,7 @@ class _CommonListingModule extends State<CommonListingModule> {
     // setSharedPrefrences();
     return SafeArea(
       child: Scaffold(
-        appBar: TricycleAppBar().getCustomAppBar(context, appBarTitle:   AppLocalizations.of(context)!.translate("listing"), onBackButtonPress: (){Navigator.pop(context);}),
+        appBar: appAppBar().getCustomAppBar(context, appBarTitle:   AppLocalizations.of(context)!.translate("listing"), onBackButtonPress: (){Navigator.pop(context);}),
         body: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return [
@@ -143,7 +143,7 @@ class _CommonListingModule extends State<CommonListingModule> {
           onTap: () {},
           child: ListTile(
             contentPadding: EdgeInsets.all(8.0),
-            leading:TricycleAvatar(
+            leading:appAvatar(
               size: 48,
               resolution_type: RESOLUTION_TYPE.R64,
               service_type: SERVICE_TYPE.PERSON,

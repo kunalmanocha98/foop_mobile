@@ -1,4 +1,4 @@
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
@@ -37,7 +37,7 @@ class ApprovalWarningDialog extends StatelessWidget{
             Row(
               children: [
                 Spacer(),
-                TricycleTextButton(onPressed: (){
+                appTextButton(onPressed: (){
                   Navigator.pop(context);
                   onButtonCallback!();
                 }, child: Text(AppLocalizations.of(context)!.translate('ok'),style: styleElements.buttonThemeScalable(context).copyWith(

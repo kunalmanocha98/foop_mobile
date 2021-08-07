@@ -1,10 +1,10 @@
 /*
 import 'package:oho_works_app/audio_confrence_module/participants.dart';
-import 'package:oho_works_app/components/tricycle_bottom_selector.dart';
+import 'package:oho_works_app/components/app_bottom_selector.dart';
 import 'package:oho_works_app/home/locator.dart';
 import 'package:oho_works_app/messenger_module/entities/user_status.dart';
 import 'package:oho_works_app/services/deeplinking_service.dart';
-import 'package:oho_works_app/tri_cycle_database/data_base_helper.dart';
+import 'package:oho_works_app/app_database/data_base_helper.dart';
 import 'package:oho_works_app/ui/BottomSheets/CreateNewSheet.dart';
 import 'package:oho_works_app/ui/RoomModule/roomsPage.dart';
 import 'package:oho_works_app/ui/campus_talk/campus_talk_list.dart';
@@ -35,7 +35,7 @@ class _DashBoardPageNew extends State<DashboardPageNew> {
   TextStyleElements styleElements;
   GlobalKey<PostListState> postListKey = GlobalKey();
   GlobalKey<AppMenuPageState> appMenuKey = GlobalKey();
-  GlobalKey<TricycleBottomSelectorState> bottomSelectorKey = GlobalKey();
+  GlobalKey<appBottomSelectorState> bottomSelectorKey = GlobalKey();
   final DynamicLinkService  dynamicLinkService =locator<DynamicLinkService>();
   final dbHelper = DatabaseHelper.instance;
   IO.Socket socket;
@@ -213,7 +213,7 @@ class _DashBoardPageNew extends State<DashboardPageNew> {
           resizeToAvoidBottomInset: false,
           body: _widgetOptions().elementAt(_selectedIndex),
           bottomNavigationBar:
-            TricycleBottomSelector(
+            appBottomSelector(
               onItemTapped: _onItemTapped,
               currentIndex: _selectedIndex,
               key: bottomSelectorKey,

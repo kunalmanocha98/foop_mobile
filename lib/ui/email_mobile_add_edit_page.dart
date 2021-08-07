@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
 import 'package:oho_works_app/models/language_list.dart';
 import 'package:oho_works_app/models/settignsView.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
@@ -37,7 +37,7 @@ class _AddEditEmailPhonesPage extends State<AddEditEmailPhonesPage> {
   bool isLoading = false;
   bool isEmail;
   late SharedPreferences prefs;
-  GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKey = GlobalKey();
 
   @override
   initState() {
@@ -54,7 +54,7 @@ class _AddEditEmailPhonesPage extends State<AddEditEmailPhonesPage> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: TricycleAppBar().getCustomAppBar(
+        appBar: appAppBar().getCustomAppBar(
           context,
           appBarTitle: isEmail
               ? AppLocalizations.of(context)!.translate("email_addresses_title")

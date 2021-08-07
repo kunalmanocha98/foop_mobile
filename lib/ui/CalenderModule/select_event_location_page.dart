@@ -1,6 +1,6 @@
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/mixins/someCommonMixins.dart';
 import 'package:oho_works_app/models/CalenderModule/event_create_models.dart';
 import 'package:oho_works_app/ui/RegisterInstitutions/institute_location_page.dart';
@@ -94,9 +94,9 @@ class SelectEventLocationPageState extends State<SelectEventLocationPage> {
     );
     return SafeArea(
         child: Scaffold(
-          appBar: TricycleAppBar().getCustomAppBar(
+          appBar: appAppBar().getCustomAppBar(
               context,
-              actions: [ TricycleTextButton(
+              actions: [ appTextButton(
                 onPressed: () {
                   updateLanguage();
                 },
@@ -125,11 +125,11 @@ class SelectEventLocationPageState extends State<SelectEventLocationPage> {
               child: ListView(
                 shrinkWrap: true,
                 children: [
-                  TricycleListCard(
+                  appListCard(
                     padding: EdgeInsets.all(16),
                       child: getEventDetailCard('Offline', locationWidget)
                   ),
-                  TricycleListCard(
+                  appListCard(
                     padding: EdgeInsets.all(16),
                     child: getEventDetailCard('Online details', onlineDetailsWidget),
                   )

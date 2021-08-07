@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycle_user_list_tile.dart';
+import 'package:oho_works_app/components/app_user_list_tile.dart';
 import 'package:oho_works_app/models/post/votesListModels.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
@@ -40,7 +40,7 @@ class PollsUserListState extends State<PollsUserList> {
   @override
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
-    return TricycleListCard(
+    return appListCard(
       child: Paginator.listView(
           pageLoadFuture: fetchList,
           pageItemsGetter: listItemsGetter,
@@ -75,7 +75,7 @@ class PollsUserListState extends State<PollsUserList> {
 
   Widget listItemBuilder(itemData, int index) {
     VotesListItem item = itemData;
-    return TricycleUserListTile(
+    return appUserListTile(
         imageUrl: item.profileImage,
         title: item.name,
         subtitle1: item.subtitle,

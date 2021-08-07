@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:GlobalUploadFilePkg/Enums/subcontexttype.dart';
 import 'package:oho_works_app/ui/edit_education.dart';
-import 'package:oho_works_app/ui/select_institute_single.dart';
+import 'package:oho_works_app/ui/select_entity_single.dart';
 
 import 'package:flutter/painting.dart';
 import 'package:flutter/services.dart';

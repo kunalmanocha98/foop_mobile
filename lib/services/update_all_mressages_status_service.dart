@@ -5,7 +5,7 @@ import 'package:oho_works_app/home/locator.dart';
 import 'package:oho_works_app/messenger_module/entities/message_database.dart';
 import 'package:oho_works_app/messenger_module/entities/messages_response.dart';
 import 'package:oho_works_app/services/navigation_service.dart';
-import 'package:oho_works_app/tri_cycle_database/data_base_helper.dart';
+import 'package:oho_works_app/app_database/data_base_helper.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class UpdateAllMessagesService {

@@ -29,7 +29,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'PostCardFooter.dart';
 
 // ignore: must_be_immutable
-class TricyclePostCard extends StatefulWidget {
+class appPostCard extends StatefulWidget {
   PostListItem? cardData;
   Function? sharecallBack;
   Function? download;
@@ -62,7 +62,7 @@ class TricyclePostCard extends StatefulWidget {
 bool isLearningPage;
 final String? searchHighlightWord;
 
-  TricyclePostCard(
+  appPostCard(
       {Key? key,
         required this.cardData,
         this.sharecallBack,
@@ -118,7 +118,7 @@ final String? searchHighlightWord;
       onAnswerClickCallback: onAnswerClickCallback);
 }
 
-class PostCardState extends State<TricyclePostCard> {
+class PostCardState extends State<appPostCard> {
   late TextStyleElements styleElements;
   PostListItem? cardData;
   Function? sharecallBack;
@@ -141,7 +141,7 @@ class PostCardState extends State<TricyclePostCard> {
   Function? onSubmitAnswer;
 
 
-  // GlobalKey<TricycleDownloadButtonState> downloadButtonKey = GlobalKey();
+  // GlobalKey<appDownloadButtonState> downloadButtonKey = GlobalKey();
 
 
   PostCardState(
@@ -196,7 +196,7 @@ class PostCardState extends State<TricyclePostCard> {
   Widget build(BuildContext context) {
     print("post_card_____________________");
     styleElements = TextStyleElements(context);
-    return TricycleCard(
+    return appCard(
         color: cardData!.postContent!.specifications!.color != null
             ? HexColor(cardData!.postContent!.specifications!.color!)
             : null,

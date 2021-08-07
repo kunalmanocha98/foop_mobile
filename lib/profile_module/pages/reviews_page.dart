@@ -87,7 +87,7 @@ class _ReviewsPage extends State<ReviewsPage>  with AutomaticKeepAliveClientMixi
               )
             ];
           },
-          body: TricycleListCard(
+          body: appListCard(
             child: Paginator.listView(
                 key: paginatorKey,
                 padding: EdgeInsets.only(top: 16),

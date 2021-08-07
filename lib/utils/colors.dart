@@ -5,6 +5,7 @@ class AppColors {
   static const String appMainColor85 = "#D9FF2A4B";
   static const String appMainColor65 = "#A6FF2A4B";
   static const String appMainColor35 = "#59FF2A4B";
+  static const String appMainColor33 = "#33FF2A4B";
   static const String appMainColor10 = "#1AFF2A4B";
   static const String appTextPrimaryColor = "#D9000000";
   static const String appTextSecondaryColor = "#A6000000";
@@ -48,6 +49,7 @@ class AppColors {
   static const String primaryTextColor65 = "#A6000000";
   static const String primaryTextColor35 = "#59000000";
   static const String primaryTextColor10 = "#1A000000";
+  static const String cardBkg="#DDD8D8";
 
   static const String information = "#cce5ff";
   static const String success = "#d4edda";

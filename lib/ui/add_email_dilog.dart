@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:oho_works_app/api_calls/calls.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/conversationPage/base_response.dart';
 import 'package:oho_works_app/mixins/editProfileMixin.dart';
 import 'package:oho_works_app/models/country_code_response.dart';
@@ -262,7 +262,7 @@ class _AddEmzailDilog extends State<AddEmailDilog> {
             child: Row(
               children: [
                 Spacer(),
-                TricycleTextButton(
+                appTextButton(
                   onPressed: () {
                     Navigator.pop(context);
                     callBackCancel!();
@@ -277,7 +277,7 @@ class _AddEmzailDilog extends State<AddEmailDilog> {
                 ),
                 Row(
                   children: [
-                    TricycleTextButton(
+                    appTextButton(
                       onPressed: () {
                         if (isEmail!
                             ? emailController.text.trim().isNotEmpty &&

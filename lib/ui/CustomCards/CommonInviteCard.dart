@@ -30,7 +30,7 @@ class CommonInviteCard extends StatelessWidget {
                   InvitationPage(),
             ));
       },
-      child: TricycleListCard(
+      child: appListCard(
           color: HexColor(AppColors.appMainColor),
           child: Padding(
             padding: const EdgeInsets.all(16.0),

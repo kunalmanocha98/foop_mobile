@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycle_user_list_tile.dart';
+import 'package:oho_works_app/components/app_user_list_tile.dart';
 import 'package:oho_works_app/models/global_search/globalsearchmodels.dart';
 import 'package:oho_works_app/profile_module/pages/profile_page.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
@@ -43,7 +43,7 @@ class SearchTypeListState extends State<SearchTypeListPage> {
   @override
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
-    return TricycleListCard(
+    return appListCard(
       child: Paginator.listView(
         key: paginatorKey,
         pageLoadFuture: fetchlist,
@@ -108,7 +108,7 @@ class SearchTypeListState extends State<SearchTypeListPage> {
                       type: null,
                     )));
       },
-      child: TricycleUserListTile(
+      child: appUserListTile(
         imageUrl: itemData.avatar,
         title: itemData.title,
         subtitle1: itemData.subtitle1,

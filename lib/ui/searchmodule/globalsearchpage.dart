@@ -6,7 +6,7 @@ import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/commonComponents.dart';
 import 'package:oho_works_app/components/customtabview.dart';
 import 'package:oho_works_app/components/searchtypeCardComponent.dart';
-import 'package:oho_works_app/components/tricycleemptywidget.dart';
+import 'package:oho_works_app/components/appemptywidget.dart';
 import 'package:oho_works_app/enums/paginatorEnums.dart';
 import 'package:oho_works_app/home/locator.dart';
 import 'package:oho_works_app/models/custom_tab_maker.dart';
@@ -136,7 +136,7 @@ class _GlobalSearchPage extends State<GlobalSearchPage>
     return
       SafeArea(
         child: Scaffold(
-          appBar: (widget.withAppBar!=null && widget.withAppBar!)?TricycleAppBar().getCustomAppBar(context, appBarTitle:AppLocalizations.of(context)!.translate('global_search_title') , onBackButtonPress: (){Navigator.pop(context);}):null,
+          appBar: (widget.withAppBar!=null && widget.withAppBar!)?appAppBar().getCustomAppBar(context, appBarTitle:AppLocalizations.of(context)!.translate('global_search_title') , onBackButtonPress: (){Navigator.pop(context);}):null,
           body: DefaultTabController(
             length: list.length,
             child: NestedScrollView(
@@ -282,7 +282,7 @@ class _GlobalSearchPage extends State<GlobalSearchPage>
                               labelPadding: EdgeInsets.symmetric(horizontal: 2.0),
                               isScrollable: false,
                               tabs: List<Widget>.generate(list.length, (int index) {
-                                return TricycleTabButton(
+                                return appTabButton(
                                   tabName: list[index].tabName,
                                   isActive: index == _currentPosition,
                                   onPressed: () {
@@ -333,7 +333,7 @@ class _GlobalSearchPage extends State<GlobalSearchPage>
                         });
                       },
                     );
-                  },): TricycleEmptyWidget(
+                  },): appEmptyWidget(
                   message: AppLocalizations.of(context)!
                       .translate('no_data'),
                 )

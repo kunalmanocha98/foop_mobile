@@ -7,13 +7,13 @@ import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/customgridDelegate.dart';
 import 'package:oho_works_app/components/postcardactionbuttons.dart';
 import 'package:oho_works_app/components/searchBox.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
-import 'package:oho_works_app/components/tricycle_speaker_component.dart';
-import 'package:oho_works_app/components/tricycle_talk_footer_button.dart';
-import 'package:oho_works_app/components/tricycle_time_elapsed_widget.dart';
-import 'package:oho_works_app/components/tricycle_user_list_tile.dart';
-import 'package:oho_works_app/components/tricycleavatar.dart';
-import 'package:oho_works_app/components/tricycleemptywidget.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
+import 'package:oho_works_app/components/app_speaker_component.dart';
+import 'package:oho_works_app/components/app_talk_footer_button.dart';
+import 'package:oho_works_app/components/app_time_elapsed_widget.dart';
+import 'package:oho_works_app/components/app_user_list_tile.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
+import 'package:oho_works_app/components/appemptywidget.dart';
 import 'package:oho_works_app/enums/create_deeplink.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/role_type_enum.dart';
@@ -32,7 +32,7 @@ import 'package:oho_works_app/models/new_conversation_event.dart';
 import 'package:oho_works_app/services/agora_service.dart';
 import 'package:oho_works_app/services/audio_socket_service.dart';
 import 'package:oho_works_app/services/get_deeplink_url_service.dart';
-import 'package:oho_works_app/tri_cycle_database/data_base_helper.dart';
+import 'package:oho_works_app/app_database/data_base_helper.dart';
 import 'package:oho_works_app/ui/campus_talk/participant_notifier.dart';
 import 'package:oho_works_app/ui/campus_talk/talk_event_profile_page.dart';
 import 'package:oho_works_app/ui/campus_talk/test_pojo.dart';
@@ -171,7 +171,7 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
   GlobalKey<_SearchParticipantsState> searchPageKey = GlobalKey();
   GlobalKey<_RequestsListSheetState> requestPageKey = GlobalKey();
   GlobalKey<AcceptRejectRequestWidgetState> requestWidgetKey = GlobalKey();
-  GlobalKey<TricycleClockTimerWidgetState> timerWidgetKey = GlobalKey();
+  GlobalKey<appClockTimerWidgetState> timerWidgetKey = GlobalKey();
   GlobalKey<AudioPageLoaderPageState> loaderPageKey = GlobalKey();
 
   AgoraService? engine = locator<AgoraService>();
@@ -397,7 +397,7 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
                 .copyWith(color: HexColor(AppColors.appColorBlack65)),
           ),
           Spacer(),
-          TricycleClockTimerWidget(
+          appClockTimerWidget(
               key: timerWidgetKey, startTime: getStartTime()),
           SizedBox(
             width: 8,
@@ -459,7 +459,7 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
                                                       .appColorBlack65)),
                                         ),
                                         Spacer(),
-                                         TricycleClockTimerWidget(
+                                         appClockTimerWidget(
                                             key: timerWidgetKey,
                                             startTime: getStartTime()),
                                         SizedBox(
@@ -549,7 +549,7 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
                                               },
                                               child:( _participantNotifier!
                                                   .getStageParticipants()![
-                                              index]!=null)? TricycleSpeakerComponent(
+                                              index]!=null)? appSpeakerComponent(
                                                 videoClickCallBack:
                                                     (bool _isLocalVideo,
                                                         int id) {
@@ -637,7 +637,7 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
                                         ),
                                       )
                                     : SliverToBoxAdapter(
-                                        child: TricycleEmptyWidget(
+                                        child: appEmptyWidget(
                                             assetImage:
                                                 'assets/appimages/avatar-default.png',
                                             message: "No Speakers yet!!")),
@@ -709,7 +709,7 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
                                                         0);
                                                   }
                                                 },
-                                                child: TricycleSpeakerComponent(
+                                                child: appSpeakerComponent(
                                                   size: 64,
                                                   isVideoOn: 0,
                                                   participantId:
@@ -741,7 +741,7 @@ class TalkAudiencePageState extends State<TalkAudiencePage> {
                                             },
                                           ),
                                         )
-                                      : TricycleEmptyWidgetForAudio(),
+                                      : appEmptyWidgetForAudio(),
                                 )
                               ],
                             ),
@@ -1753,7 +1753,7 @@ class _SearchParticipantsState extends State<_SearchParticipantsSheet> {
               itemCount: participantList.length,
               shrinkWrap: true,
               itemBuilder: (BuildContext context, int index) {
-                return TricycleUserListTile(
+                return appUserListTile(
                   imageUrl:  participantList[index].profileImage,
                   title: participantList[index].name,
                   subtitle1: participantList[index].role,
@@ -1819,7 +1819,7 @@ class _RequestsListSheetState extends State<_RequestsListSheet> {
                     itemBuilder: (BuildContext context, int index) {
                       return ListTile(
                           contentPadding: EdgeInsets.all(8),
-                          leading: TricycleAvatar(
+                          leading: appAvatar(
                             imageUrl: participantList[index].profileImage,
                             service_type: SERVICE_TYPE.PERSON,
                             size: 56,
@@ -1834,7 +1834,7 @@ class _RequestsListSheetState extends State<_RequestsListSheet> {
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              TricycleTextButton(
+                              appTextButton(
                                   onPressed: () {
                                     widget.onUserUpdateCallback!(
                                         UpdateHandRaiseRequest(
@@ -1868,7 +1868,7 @@ class _RequestsListSheetState extends State<_RequestsListSheet> {
                                             color: HexColor(
                                                 AppColors.appMainColor)),
                                   )),
-                              TricycleTextButton(
+                              appTextButton(
                                   onPressed: () {
                                     widget.onUserUpdateCallback!(
                                         UpdateHandRaiseRequest(

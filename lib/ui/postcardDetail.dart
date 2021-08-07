@@ -4,8 +4,8 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/postcard.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
-import 'package:oho_works_app/components/tricycle_chat_footer.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
+import 'package:oho_works_app/components/app_chat_footer.dart';
 import 'package:oho_works_app/enums/create_deeplink.dart';
 import 'package:oho_works_app/enums/paginatorEnums.dart';
 import 'package:oho_works_app/enums/share_item_type.dart';
@@ -54,7 +54,7 @@ class _PostCardDetail extends State<PostCardDetailPage> {
 
   SharedPreferences? prefs = locator<SharedPreferences>();
   late TextStyleElements styleElements;
-  GlobalKey<TricycleChatFooterState> chatFooterKey = GlobalKey();
+  GlobalKey<appChatFooterState> chatFooterKey = GlobalKey();
   PAGINATOR_ENUMS? pageEnum_answer;
   PAGINATOR_ENUMS? pageEnum_comment;
   PAGINATOR_ENUMS? pageEnum_assignment;
@@ -102,7 +102,7 @@ class _PostCardDetail extends State<PostCardDetailPage> {
         "build++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
     return SafeArea(
       child: Scaffold(
-        // appBar: TricycleAppBar().getCustomAppBar(context,
+        // appBar: appAppBar().getCustomAppBar(context,
         //     appBarTitle: 'PostCardDetail', onBackButtonPress: () {
         //       Navigator.pop(context);
         //     }),
@@ -191,7 +191,7 @@ class _PostCardDetail extends State<PostCardDetailPage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                TricycleChatFooter(
+                appChatFooter(
                   chatFooterKey,
                   isShowAddIcon: false,
                   hintText: AppLocalizations.of(context)!
@@ -217,7 +217,7 @@ class _PostCardDetail extends State<PostCardDetailPage> {
               SizedBox(
                 height: 8,
               ),
-              TricycleProgressButton(
+              appProgressButton(
                 child: Text(
                   AppLocalizations.of(context)!.translate('go_back'),
                   style: styleElements
@@ -701,7 +701,7 @@ class _PostCardDetail extends State<PostCardDetailPage> {
         Widget card;
         if (snapshot.hasData) {
           card = postData != null
-              ? TricyclePostCard(
+              ? appPostCard(
             cardData: postData,
             isFilterPage: false,
             download: () {

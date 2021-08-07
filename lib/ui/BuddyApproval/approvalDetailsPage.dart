@@ -1,7 +1,7 @@
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/models/buddyApprovalModels/buddyListModels.dart';
-import 'package:oho_works_app/ui/BuddyApproval/tricycleRequestCard.dart';
-import 'package:oho_works_app/ui/BuddyApproval/tricyclequestionairecard.dart';
+import 'package:oho_works_app/ui/BuddyApproval/appRequestCard.dart';
+import 'package:oho_works_app/ui/BuddyApproval/appquestionairecard.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +27,7 @@ class ApprovalDetailsPageState extends State<ApprovalDetailsPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: TricycleAppBar().getCustomAppBar(
+        appBar: appAppBar().getCustomAppBar(
           context,
           appBarTitle: AppLocalizations.of(context)!.translate('buddy_approval'),
           onBackButtonPress: (){
@@ -37,14 +37,14 @@ class ApprovalDetailsPageState extends State<ApprovalDetailsPage> {
         body: Container(
           child: SingleChildScrollView(
             child: Column(children: [
-              TricycleRequestCard(
+              appRequestCard(
                 imageUrl: data!.profileImage,
                 onButtonClickCallback: null,
                 buttonTitle: '',
                 isContentVisible: false,
                 isDetailPage: true,
               ),
-              TricycleQuestionnaireCard(
+              appQuestionnaireCard(
                 data: data,
                 callback: (bool ?value){
                   Map<String,int?> map = {

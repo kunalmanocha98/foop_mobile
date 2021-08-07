@@ -4,7 +4,7 @@ import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/components/searchBox.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/models/RegisterUserAs.dart';
 import 'package:oho_works_app/models/classes_exp.dart';
 import 'package:oho_works_app/models/register_user_as_response.dart';
@@ -170,7 +170,7 @@ class _SelectClasses extends State<ExpertiseSelectClass>
         child: Scaffold(
           resizeToAvoidBottomInset: false,
           backgroundColor: HexColor(AppColors.appColorBackground),
-          appBar: TricycleAppBar().getCustomAppBar(context, appBarTitle: pageTitle,
+          appBar: appAppBar().getCustomAppBar(context, appBarTitle: pageTitle,
               onBackButtonPress: () {
                 _onBackPressed();
               }),
@@ -265,7 +265,7 @@ class _SelectClasses extends State<ExpertiseSelectClass>
                                                                         alignment:
                                                                         Alignment
                                                                             .center,
-                                                                        child: Text(AppLocalizations.of(context)!.translate('selected_academic_year'),
+                                                                        child: Text(AppLocalizations.of(context)!.translate('selected_financial_year'),
                                                                           style: styleElements
                                                                               .subtitle2ThemeScalable(
                                                                               context),
@@ -312,7 +312,7 @@ class _SelectClasses extends State<ExpertiseSelectClass>
                                 ),
                                 Container(
                                   margin: const EdgeInsets.only(bottom: 65),
-                                  child: TricycleListCard(
+                                  child: appListCard(
                                     child: ListView.builder(
                                         padding: EdgeInsets.only(
                                             left: 8, right: 8, bottom: 8, top: 8),
@@ -493,7 +493,7 @@ class _SelectClasses extends State<ExpertiseSelectClass>
                                               child: Container(
                                                 margin: const EdgeInsets.only(
                                                     left: 16.0, right: 16.0),
-                                                child: TricycleElevatedButton(
+                                                child: appElevatedButton(
                                                   shape: RoundedRectangleBorder(
                                                       borderRadius:
                                                       BorderRadius.circular(18.0),

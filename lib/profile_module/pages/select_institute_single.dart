@@ -4,8 +4,8 @@ import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/button_filled.dart';
 import 'package:oho_works_app/components/commonComponents.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
-import 'package:oho_works_app/components/tricycleemptywidget.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
+import 'package:oho_works_app/components/appemptywidget.dart';
 import 'package:oho_works_app/models/SubjectList.dart';
 import 'package:oho_works_app/models/institute_list.dart';
 import 'package:oho_works_app/models/institution_classes.dart';
@@ -152,7 +152,7 @@ class _SelectInstitute extends State<SelectInstituteSingle>
 
     list = [];
     list.add(TabMaker(
-      tabName: AppLocalizations.of(context)!.translate('select_institute'),
+      tabName: AppLocalizations.of(context)!.translate('select_entity'),
       statelessWidget: Container(
         margin: const EdgeInsets.only(bottom: 65),
         child: NotificationListener<ScrollNotification>(
@@ -187,7 +187,7 @@ class _SelectInstitute extends State<SelectInstituteSingle>
                 Center(
                   child: Visibility(
                     visible: empty,
-                    child:   TricycleEmptyWidget(
+                    child:   appEmptyWidget(
                       message: AppLocalizations.of(context)!
                           .translate('no_data'),
                     ),
@@ -220,7 +220,7 @@ class _SelectInstitute extends State<SelectInstituteSingle>
                                             child: Text(
                                               AppLocalizations.of(context)!
                                                   .translate(
-                                                  "select_right_institute"),
+                                                  "select_right_entity"),
                                               textAlign: TextAlign.center,
                                               style: styleElements
                                                   .captionThemeScalable(context),
@@ -371,7 +371,7 @@ class _SelectInstitute extends State<SelectInstituteSingle>
         onWillPop: _onBackPressed,
         child: SafeArea(
             child: Scaffold(
-              appBar: TricycleAppBar().getCustomAppBar(context,
+              appBar: appAppBar().getCustomAppBar(context,
                   appBarTitle: pageTitle, onBackButtonPress: () {
                     _onBackPressed();
                   }),
@@ -623,7 +623,7 @@ class _SelectInstitute extends State<SelectInstituteSingle>
                                                         const EdgeInsets.only(
                                                             left: 16.0,
                                                             right: 16.0),
-                                                        child: TricycleElevatedButton(
+                                                        child: appElevatedButton(
                                                           shape: RoundedRectangleBorder(
                                                               borderRadius:
                                                               BorderRadius
@@ -697,7 +697,7 @@ class _SelectInstitute extends State<SelectInstituteSingle>
                                                                     AppLocalizations.of(
                                                                         context)!
                                                                         .translate(
-                                                                        "select_Institute"),
+                                                                        "select_entity"),
                                                                     context,HexColor(AppColors.information));}
                                                             }
                                                           },

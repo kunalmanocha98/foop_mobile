@@ -3,8 +3,8 @@ import 'dart:convert';
 
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/enums/paginatorEnums.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
@@ -146,7 +146,7 @@ this.ctx=context;
 
                             Padding(
                              padding: const EdgeInsets.only(right:16.0),
-                             child: TricycleProgressButton(
+                             child: appProgressButton(
 
                                shape: RoundedRectangleBorder(
                                    borderRadius:
@@ -408,7 +408,7 @@ this.ctx=context;
                               onTap: () {
 
                               },
-                              child: TricycleAvatar(
+                              child: appAvatar(
                                 size: 52,
                                 imageUrl: Utility().getUrlForImage(
                                     ConnectionsList[index].connectionProfileThumbnailUrl,

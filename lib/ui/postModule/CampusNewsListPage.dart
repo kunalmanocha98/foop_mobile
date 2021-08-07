@@ -183,7 +183,7 @@ class CampusNewsListPageState extends State<CampusNewsListPage>{
     );
   }
   // _buildAppBar(){
-  //   return  TricycleAppBar().getCustomAppBar(context,
+  //   return  appAppBar().getCustomAppBar(context,
   //       titleWidget: Flexible(
   //         child: Row(
   //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -398,7 +398,7 @@ class CampusNewsListPageState extends State<CampusNewsListPage>{
                 }
               }));
         },
-        child: TricyclePostCard(
+        child: appPostCard(
             key: UniqueKey(),
             isFilterPage: true,
             // color: isInView?HexColor(AppColors.appColorBlue)[200]:HexColor(AppColors.appColorWhite),
@@ -613,7 +613,7 @@ class _ShareBottomSheet extends State<BottomSheetContent> {
               //           },
               //         ),
               //         title: Text(
-              //           "Share through Tricycle messenger",
+              //           "Share through app messenger",
               //           style: styleElements.bodyText2ThemeScalable(context),
               //         ),
               //       )),

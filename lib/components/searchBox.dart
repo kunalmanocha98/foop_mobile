@@ -18,12 +18,13 @@ class SearchBox extends StatefulWidget {
   bool isDemoBox;
   Function? onBoxClick;
   TextEditingController? controller;
-
+  IconData? icon;
   SearchBox(
       {Key? key,
       required this.onvalueChanged,
       this.progressIndicator,
       this.hintText,
+        this.icon,
       this.isFilterVisible,
         this.onBoxClick,
         this.isDemoBox= false,
@@ -82,7 +83,7 @@ class SearchBoxState extends State<SearchBox> {
                   children: <Widget>[
                     widget.isDemoBox?Padding(
                         padding: EdgeInsets.only(left:16.0,right: 16.0),
-                        child: Icon(Icons.search, color: HexColor(AppColors.appColorGrey500))):Container(),
+                        child: Icon(widget.icon!=null?widget.icon :Icons.search, color: HexColor(AppColors.appColorGrey500))):Container(),
                     widget.isDemoBox?
                     Expanded(
                       child: Text("Search",

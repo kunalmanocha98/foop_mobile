@@ -4,8 +4,8 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/searchBox.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
-import 'package:oho_works_app/components/tricycleemptywidget.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
+import 'package:oho_works_app/components/appemptywidget.dart';
 import 'package:oho_works_app/models/RegisterUserAs.dart';
 import 'package:oho_works_app/models/SubjectList.dart';
 import 'package:oho_works_app/models/add_new_skill.dart';
@@ -37,7 +37,7 @@ class SelectSubject extends StatefulWidget {
 
 class _SelectSubject extends State<SelectSubject>
     with SingleTickerProviderStateMixin {
-  GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKey = GlobalKey();
   RegisterUserAs registerUserAs;
   SharedPreferences prefs;
   var pageTitle = "";
@@ -133,7 +133,7 @@ class _SelectSubject extends State<SelectSubject>
           child: Scaffold(
             resizeToAvoidBottomInset: false,
             backgroundColor: HexColor(AppColors.appColorBackground),
-            appBar: TricycleAppBar().getCustomAppBar(context,
+            appBar: appAppBar().getCustomAppBar(context,
                 appBarTitle: pageTitle, onBackButtonPress: () {
                   _onBackPressed();
                 }),
@@ -204,8 +204,7 @@ class _SelectSubject extends State<SelectSubject>
                                                             .only(
                                                             bottom: 4),
                                                         decoration: BoxDecoration(
-                                                            color: Color(
-                                                                0x33F66666),
+                                                            color: HexColor(AppColors.appMainColor33),
                                                             borderRadius: BorderRadius.only(
                                                                 topRight: Radius
                                                                     .circular(
@@ -313,7 +312,7 @@ class _SelectSubject extends State<SelectSubject>
                                             );
                                           })
                                           : Center(
-                                          child: TricycleEmptyWidget(
+                                          child: appEmptyWidget(
                                             message:
                                             "No data Found, Click next to add this subject",
                                           )),
@@ -328,7 +327,7 @@ class _SelectSubject extends State<SelectSubject>
                                               child: Container(
                                                 margin: const EdgeInsets.only(
                                                     left: 16.0, right: 16.0),
-                                                child: TricycleProgressButton(
+                                                child: appProgressButton(
                                                   key: progressButtonKey,
                                                   shape: RoundedRectangleBorder(
                                                       borderRadius:

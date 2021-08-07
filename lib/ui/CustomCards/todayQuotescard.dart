@@ -52,7 +52,7 @@ class TodaysQouteCard extends StatelessWidget {
     this.context = context;
     styleElements = TextStyleElements(context);
     listSubItems = data.data;
-    return TricycleListCard(
+    return appListCard(
       child: ListView.builder(
           shrinkWrap: true,
           padding: const EdgeInsets.all(0.0),

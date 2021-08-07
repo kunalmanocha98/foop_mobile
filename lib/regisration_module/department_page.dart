@@ -5,7 +5,7 @@ import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/searchBox.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
 import 'package:oho_works_app/models/RegisterUserAs.dart';
 import 'package:oho_works_app/models/add_new_skill.dart';
 import 'package:oho_works_app/models/add_new_skill_response.dart';
@@ -42,7 +42,7 @@ class SelectDepartment extends StatefulWidget {
 
 class _SelectDepartment extends State<SelectDepartment>
     with AutomaticKeepAliveClientMixin<SelectDepartment> {
-  GlobalKey<TricycleProgressButtonState> progressButtonKeyNext = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKeyNext = GlobalKey();
   SharedPreferences prefs;
   RegisterUserAs registerUserAs;
   int personType;
@@ -118,7 +118,7 @@ class _SelectDepartment extends State<SelectDepartment>
       child: Scaffold(
           resizeToAvoidBottomInset: false,
           backgroundColor: HexColor(AppColors.appColorBackground),
-          appBar: TricycleAppBar().getCustomAppBar(context,
+          appBar: appAppBar().getCustomAppBar(context,
               appBarTitle: pageTitle, onBackButtonPress: () {
                 _onBackPressed();
               }),
@@ -201,7 +201,7 @@ class _SelectDepartment extends State<SelectDepartment>
                                                                   AppLocalizations.of(
                                                                       context)
                                                                       .translate(
-                                                                      'selected_academic_year'),
+                                                                      'selected_financial_year'),
                                                                   style: styleElements
                                                                       .subtitle2ThemeScalable(
                                                                       context),
@@ -234,7 +234,7 @@ class _SelectDepartment extends State<SelectDepartment>
                                 child: Container(
                                   width: double.infinity,
                                   decoration: BoxDecoration(
-                                      color: Color(0x33F66666),
+                                      color: HexColor(AppColors.appMainColor33),
                                       borderRadius: BorderRadius.only(
                                           topRight: Radius.circular(4.0),
                                           topLeft: Radius.circular(4.0))),
@@ -283,7 +283,7 @@ class _SelectDepartment extends State<SelectDepartment>
                     alignment: Alignment.bottomRight,
                     child: Padding(
                       padding: const EdgeInsets.only(right: 16.0),
-                      child: TricycleProgressButton(
+                      child: appProgressButton(
                         key: progressButtonKeyNext,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(18.0),

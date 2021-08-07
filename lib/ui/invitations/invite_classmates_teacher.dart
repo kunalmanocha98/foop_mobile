@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/mixins/editProfileMixin.dart';
 import 'package:oho_works_app/models/deeplink_response.dart';
 import 'package:oho_works_app/models/invite_users_payload.dart';
@@ -59,7 +59,7 @@ class _InviteTeachersClassMates extends State<InviteTeachersClassMates> {
     styleElements = TextStyleElements(context);
 
     return Scaffold(
-      appBar: TricycleAppBar().getCustomAppBar(context,
+      appBar: appAppBar().getCustomAppBar(context,
           appBarTitle: AppLocalizations.of(context)!.translate("invite_teacher"),
           onBackButtonPress: () {
         Navigator.pop(context);
@@ -89,7 +89,7 @@ class _InviteTeachersClassMates extends State<InviteTeachersClassMates> {
                           Container(
                               child: Text(
                             AppLocalizations.of(context)!
-                                .translate("invite_calssmates_friends"),
+                                .translate("invite_coworkerss"),
                             style:
                                 styleElements.headline6ThemeScalable(context),
                           )),
@@ -161,7 +161,7 @@ class _InviteTeachersClassMates extends State<InviteTeachersClassMates> {
                     alignment: Alignment.centerRight,
                     child: Container(
                       margin: const EdgeInsets.only(left: 16.0, right: 16.0),
-                      child: TricycleElevatedButton(
+                      child: appElevatedButton(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(18.0),
                             side: BorderSide(color: HexColor(AppColors.appMainColor))),

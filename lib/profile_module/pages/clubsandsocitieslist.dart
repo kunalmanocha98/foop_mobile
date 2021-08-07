@@ -1,7 +1,7 @@
 
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/searchBox.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/models/base_res.dart';
 import 'package:oho_works_app/profile_module/common_cards/overlaped_circular_images.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
@@ -49,9 +49,9 @@ class _ClubsAndSocieties extends State<ClubsAndSocieties> {
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: TricycleAppBar().getCustomAppBar(context,
+          appBar: appAppBar().getCustomAppBar(context,
               appBarTitle: AppLocalizations.of(context)!
-                  .translate("clubs_socities"), onBackButtonPress: () {
+                  .translate("clubs_societies"), onBackButtonPress: () {
                 Navigator.pop(context);
               }),
           body: Scaffold(
@@ -205,7 +205,7 @@ class _ClubsAndSocieties extends State<ClubsAndSocieties> {
                                           width: 60,
                                           height: 30,
                                           margin: const EdgeInsets.all(16),
-                                          child: TricycleElevatedButton(
+                                          child: appElevatedButton(
                                             child: Text(
                                                 AppLocalizations.of(context)!
                                                     .translate('join')),

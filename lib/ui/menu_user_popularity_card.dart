@@ -60,7 +60,7 @@ class MenuUserBalanceCardState extends State<MenuUserBalanceCard>{
                     Text(Utility().getCompatNumber(double.parse(currentBalance!)),style: styleElements.subtitle1ThemeScalable(context),),
                   ],
                 ),
-                Text(AppLocalizations.of(context)!.translate('tricycle_coins'))
+                Text(AppLocalizations.of(context)!.translate('app_coins'))
               ],
             ),
           ),

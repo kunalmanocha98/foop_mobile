@@ -241,7 +241,7 @@ class PollsListPageState extends State<PollsListPage> with SingleTickerProviderS
       return new Future(() => false);} ,
       child: SafeArea(
         child: Scaffold(
-          appBar: TricycleAppBar().getCustomAppBar(
+          appBar: appAppBar().getCustomAppBar(
               context,
               actions: [ InkWell(
                   onTap: () {
@@ -267,7 +267,7 @@ class PollsListPageState extends State<PollsListPage> with SingleTickerProviderS
               marginTop:const EdgeInsets.all(16.0 ),
               currentPosition: _currentPosition,
               itemCount: list!=null && list.isNotEmpty?list.length:0,
-              tabBuilder: (context, index) => TricycleTabButton(
+              tabBuilder: (context, index) => appTabButton(
                 onPressed: () {
                   setState(() {
                     _currentPosition = index;

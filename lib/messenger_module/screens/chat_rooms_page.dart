@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/searchBox.dart';
-import 'package:oho_works_app/components/tricycle_rooms_card.dart';
+import 'package:oho_works_app/components/app_rooms_card.dart';
 import 'package:oho_works_app/enums/member%20enums.dart';
 import 'package:oho_works_app/messenger_module/entities/connect_list_response_entity.dart';
 import 'package:oho_works_app/models/Rooms/memberAdd.dart';
@@ -192,7 +192,7 @@ class _ChatRoomsPage extends State<ChatRoomsPage> {
                   HexColor(AppColors.success));
             }
           },
-          child: TricycleRoomCalenderCard(
+          child: appRoomCalenderCard(
             roomData: value,
 
             actionButton: ownerId != null

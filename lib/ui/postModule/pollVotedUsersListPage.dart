@@ -61,7 +61,7 @@ class PollsVotedUserListPageState extends State<PollsVotedUserListPage> with Sin
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: TricycleAppBar().getCustomAppBar(
+        appBar: appAppBar().getCustomAppBar(
             context,
             appBarTitle: 'Votes',
             onBackButtonPress: (){
@@ -73,7 +73,7 @@ class PollsVotedUserListPageState extends State<PollsVotedUserListPage> with Sin
             marginTop:const EdgeInsets.all(16.0 ),
             currentPosition: _currentPosition,
             itemCount: list!=null && list.isNotEmpty?list.length:0,
-            tabBuilder: (context, index) => TricycleTabButton(
+            tabBuilder: (context, index) => appTabButton(
               onPressed: () {
                 setState(() {
                   _currentPosition = index;

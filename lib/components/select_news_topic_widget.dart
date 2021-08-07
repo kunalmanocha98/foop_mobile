@@ -1,5 +1,5 @@
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
 import 'package:oho_works_app/models/base_res.dart';
@@ -32,7 +32,7 @@ class SelectNewsTopicWidgetState extends State<SelectNewsTopicWidget> {
   Widget build(BuildContext context) {
     var styleElements = TextStyleElements(context);
     return widget.isCard
-        ? TricycleCard(
+        ? appCard(
       margin: EdgeInsets.only(left: 8, right: 8, top: 0, bottom: 0),
       onTap: () {
         if (widget.type != 'subject') {
@@ -68,7 +68,7 @@ class SelectNewsTopicWidgetState extends State<SelectNewsTopicWidget> {
       },
       child: ListTile(
           contentPadding: EdgeInsets.all(0),
-          leading: TricycleAvatar(
+          leading: appAvatar(
             key: UniqueKey(),
             size: 36,
             isFullUrl: _selectedList.length > 0,
@@ -122,7 +122,7 @@ class SelectNewsTopicWidgetState extends State<SelectNewsTopicWidget> {
           child: ListTile(
               contentPadding: EdgeInsets.all(0),
               leading: (widget.type != 'subject')
-                  ? TricycleAvatar(
+                  ? appAvatar(
                 key: UniqueKey(),
                 size: 36,
                 isFullUrl:

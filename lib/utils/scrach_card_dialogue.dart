@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:oho_works_app/api_calls/calls.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
 import 'package:oho_works_app/regisration_module/welcomePage.dart';
 import 'package:oho_works_app/ui/RegisterInstitutions/models/scratch_card_response.dart';
 import 'package:oho_works_app/utils/hexColors.dart';
@@ -40,7 +40,7 @@ class _ScratchCardDialogue  extends State<ScratchCardDialogue> {
   Function? callBack;
   SharedPreferences? prefs;
   late TextStyleElements styleElements;
-  GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKey = GlobalKey();
   Size displaySize(BuildContext context) {
     debugPrint('Size = ' + MediaQuery.of(context).size.toString());
     return MediaQuery.of(context).size;
@@ -206,7 +206,7 @@ class _ScratchCardDialogue  extends State<ScratchCardDialogue> {
                       left: 16, right: 16, top: 8, bottom: 20),
                   child: SizedBox(
                       width: double.infinity,
-                      child: TricycleProgressButton(
+                      child: appProgressButton(
                         key: progressButtonKey,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.0),
@@ -253,7 +253,7 @@ class _ScratchCardDialogue  extends State<ScratchCardDialogue> {
             callBack!();
           }else {
             progressButtonKey.currentState!.hide();
-            prefs!.setString("create_institute", "created");
+            prefs!.setString("create_entity", "created");
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
                   builder: (context) =>
@@ -280,7 +280,7 @@ class _ScratchCardDialogue  extends State<ScratchCardDialogue> {
             callBack!();
           }else {
             progressButtonKey.currentState!.hide();
-            prefs!.setString("create_institute", "created");
+            prefs!.setString("create_entity", "created");
             Navigator.of(context).pushAndRemoveUntil(
                 MaterialPageRoute(
                   builder: (context) =>

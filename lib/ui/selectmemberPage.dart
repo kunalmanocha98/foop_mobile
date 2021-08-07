@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
-import 'package:oho_works_app/components/tricycle_user_list_tile.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
+import 'package:oho_works_app/components/app_user_list_tile.dart';
 import 'package:oho_works_app/enums/member%20enums.dart';
 import 'package:oho_works_app/models/Rooms/memberAdd.dart';
 import 'package:oho_works_app/models/Rooms/memberlistResponse.dart';
@@ -81,10 +81,10 @@ class _SelectMembersPage extends State<SelectMembersPage> {
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: TricycleAppBar().getCustomAppBarWithSearch(context,
+          appBar: appAppBar().getCustomAppBarWithSearch(context,
               onSearchValueChanged: onsearchValueChanged,
               hintText: AppLocalizations.of(context)!
-                  .translate("search_tricycle_user"),
+                  .translate("search_app_user"),
               appBarTitle: AppLocalizations.of(context)!
                   .translate("select_members"), onBackButtonPress: () {
                 Navigator.pop(context);
@@ -132,7 +132,7 @@ class _SelectMembersPage extends State<SelectMembersPage> {
                         alignment: Alignment.centerRight,
                         child: Container(
                           margin: const EdgeInsets.only(left: 16.0, right: 16.0),
-                          child: TricycleElevatedButton(
+                          child: appElevatedButton(
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(18.0),
                                 side: BorderSide(
@@ -213,7 +213,7 @@ class _SelectMembersPage extends State<SelectMembersPage> {
       child: Card(
         child: InkWell(
           onTap: () {},
-          child: TricycleUserListTile(
+          child: appUserListTile(
               imageUrl: value.profileImage,
               title: (value.firstName != null && value.lastName != null)
                     ? value.firstName + " " + value.lastName
@@ -238,7 +238,7 @@ class _SelectMembersPage extends State<SelectMembersPage> {
                   icon: Icon(Icons.close),
                 ),
               )
-                  : TricycleElevatedButton(
+                  : appElevatedButton(
                 onPressed: () {
                   // if (value.isFollowing) {
                   MembersItem item = MembersItem();

@@ -1,4 +1,4 @@
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
@@ -24,7 +24,7 @@ class InvalidProfileImageDilog extends StatelessWidget{
             child: Row(
               children: [
                 Spacer(),
-                TricycleTextButton(
+                appTextButton(
                   onPressed: (){
                     Navigator.pop(context);
 

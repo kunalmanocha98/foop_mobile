@@ -4,8 +4,8 @@ import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/components/searchBox.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
-import 'package:oho_works_app/components/tricycleemptywidget.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
+import 'package:oho_works_app/components/appemptywidget.dart';
 import 'package:oho_works_app/models/add_new_skill.dart';
 import 'package:oho_works_app/models/add_new_skill_response.dart';
 import 'package:oho_works_app/models/expertise_list.dart';
@@ -57,8 +57,8 @@ class _EditLanguage extends State<EditLanguage> {
   late TextStyleElements styleElements;
   Map<LanguageItem, bool?> language = new Map();
   int? selectedLangId = -1;
- GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
- GlobalKey<TricycleProgressButtonState> progressButtonKeyNext = GlobalKey();
+ GlobalKey<appProgressButtonState> progressButtonKey = GlobalKey();
+ GlobalKey<appProgressButtonState> progressButtonKeyNext = GlobalKey();
   @override
   void initState() {
     super.initState();
@@ -121,7 +121,7 @@ class _EditLanguage extends State<EditLanguage> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: HexColor(AppColors.appColorBackground),
-        appBar: TricycleAppBar().getCustomAppBar(
+        appBar: appAppBar().getCustomAppBar(
           context,
           appBarTitle: type == "Languages" ? ' Add Language' : 'Add Skill',
           onBackButtonPress: () {
@@ -148,7 +148,7 @@ class _EditLanguage extends State<EditLanguage> {
                 isLoading?  PreloadingView(
                     url: "assets/appimages/settings.png"):  Expanded(
                   child: language.isNotEmpty
-                      ? TricycleListCard(
+                      ? appListCard(
                         child: ListView(
                             children: language.keys
                                 .map((LanguageItem key) => Container(
@@ -178,7 +178,7 @@ class _EditLanguage extends State<EditLanguage> {
                                 .toList(),
                           ),
                       )
-                      : TricycleEmptyWidget(message: 'No data Found !! Click Next to add $type'),
+                      : appEmptyWidget(message: 'No data Found !! Click Next to add $type'),
                 )
               ],
             ),
@@ -194,7 +194,7 @@ class _EditLanguage extends State<EditLanguage> {
                         children: <Widget>[
                           Padding(
                             padding: const EdgeInsets.only(left:16.0),
-                            child: TricycleProgressButton(
+                            child: appProgressButton(
                               key: progressButtonKey,
                               shape: RoundedRectangleBorder(
                                   borderRadius:
@@ -252,7 +252,7 @@ class _EditLanguage extends State<EditLanguage> {
                           )
                           ,  Padding(
                             padding: const EdgeInsets.only(right:16.0),
-                            child: TricycleProgressButton(
+                            child: appProgressButton(
                               key: progressButtonKeyNext,
                               shape: RoundedRectangleBorder(
                                   borderRadius:
@@ -356,7 +356,7 @@ class _EditLanguage extends State<EditLanguage> {
 
                             Padding(
                               padding: const EdgeInsets.only(right:16.0),
-                              child: TricycleProgressButton(
+                              child: appProgressButton(
                                 key: progressButtonKeyNext,
                                 shape: RoundedRectangleBorder(
                                     borderRadius:

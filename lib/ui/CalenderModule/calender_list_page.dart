@@ -79,12 +79,12 @@ class CalenderPageState extends State<CalenderPage> with SingleTickerProviderSta
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
     return SafeArea(child: Scaffold(
-      appBar: TricycleAppBar().getCustomAppBar(context,
+      appBar: appAppBar().getCustomAppBar(context,
         appBarTitle: AppLocalizations.of(context)!.translate('calender'),
         onBackButtonPress: (){Navigator.pop(context);},
         actions: [
           IconButton(icon: Icon(Icons.calendar_today_rounded,color: HexColor(AppColors.appColorBlack65),), onPressed: (){
-            Navigator.push(context, TricycleRouteSlideRight(page: CalenderViewPage(selectedDate: selectedDate,))).then((value){
+            Navigator.push(context, appRouteSlideRight(page: CalenderViewPage(selectedDate: selectedDate,))).then((value){
               if(value!=null){
                     setState(() {
                       selectedDate =value;
@@ -92,17 +92,7 @@ class CalenderPageState extends State<CalenderPage> with SingleTickerProviderSta
                     });
                   }
             });
-            // Navigator.push(
-            //     context,
-            //     MaterialPageRoute(
-            //       builder: (context) => CalenderViewPage(selectedDate: selectedDate,),
-            //     )).then((value) {
-            //   if(value!=null){
-            //     setState(() {
-            //       selectedDate =value;
-            //     });
-            //   }
-            // });
+
           }),
           IconButton(icon: Icon(Icons.add),color: HexColor(AppColors.appColorBlack65), onPressed: (){
 
@@ -126,7 +116,7 @@ class CalenderPageState extends State<CalenderPage> with SingleTickerProviderSta
               marginTop:const EdgeInsets.all(16.0 ),
               currentPosition: _currentPosition,
               itemCount: list!=null && list.isNotEmpty?list.length:0,
-              tabBuilder: (context, index) => TricycleTabButton(
+              tabBuilder: (context, index) => appTabButton(
                 onPressed: () {
                   setState(() {
                     _currentPosition = index;

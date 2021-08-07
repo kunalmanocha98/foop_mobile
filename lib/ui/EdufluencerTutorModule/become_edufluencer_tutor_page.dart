@@ -2,8 +2,9 @@ import 'dart:convert';
 
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
+
 import 'package:oho_works_app/mixins/someCommonMixins.dart';
 import 'package:oho_works_app/models/edufluencer_tutor_create_models.dart';
 import 'package:oho_works_app/models/expertise_list.dart';
@@ -41,7 +42,7 @@ class BecomeEdufluencerTutorFormState extends State<BecomeEdufluencerTutorForm>
     with CommonMixins {
   late TextStyleElements styleElements;
   GlobalKey<FormState> formKey = GlobalKey();
-  GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKey = GlobalKey();
   TextEditingController typeAheadMediumofConversation = TextEditingController();
   String? title;
   String? jobDes;
@@ -58,16 +59,16 @@ class BecomeEdufluencerTutorFormState extends State<BecomeEdufluencerTutorForm>
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
     return Scaffold(
-      appBar: TricycleAppBar().getCustomAppBar(
+      appBar: appAppBar().getCustomAppBar(
         context,
         appBarTitle:
         AppLocalizations.of(context)!.translate(
           widget.type == edufluencer_type.E
-            ?'become_edufluencer'
+            ?'become_mentor'
               :"become_tutor"
         ),
         actions: [
-          TricycleProgressButton(
+          appProgressButton(
             key: progressButtonKey,
             shape: StadiumBorder(),
             color: HexColor(AppColors.appColorBackground),
@@ -132,7 +133,7 @@ class BecomeEdufluencerTutorFormState extends State<BecomeEdufluencerTutorForm>
   }
 
   Widget customCard(String heading, {Widget? child}) {
-    return TricycleListCard(
+    return appListCard(
         padding: EdgeInsets.only(top: 16, bottom: 16, left: 24, right: 24),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -320,7 +321,7 @@ class BecomeEdufluencerTutorFormState extends State<BecomeEdufluencerTutorForm>
             ),
             Text(
               AppLocalizations.of(context)!
-                  .translate('write_something_about_edufluencer'),
+                  .translate('write_something_about_mentor'),
               style: styleElements.subtitle1ThemeScalable(context),
             ),
             SizedBox(

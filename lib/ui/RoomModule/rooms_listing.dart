@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/searchBox.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
-import 'package:oho_works_app/components/tricycle_event_card.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
+import 'package:oho_works_app/components/app_event_card.dart';
 import 'package:oho_works_app/enums/create_deeplink.dart';
 import 'package:oho_works_app/enums/member%20enums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
@@ -192,7 +192,7 @@ class AllRoomsListingState extends State<AllRoomsListing> {
                     refresh();
           });
         },
-        child: TricycleEventCard(
+        child: appEventCard(
           key: UniqueKey(),
           byTitle: RoomButtons(context: context).getByTitle(value.header!.title,value.header!.subtitle1),
           byImage: value.header!.avatar,
@@ -430,7 +430,7 @@ class PublicRoomsListingState extends State<PublicRoomsListing> {
           });
         },
         child:
-        TricycleEventCard(
+        appEventCard(
           key: UniqueKey(),
           byTitle: RoomButtons(context: context).getByTitle(value.header!.title,value.header!.subtitle1),
           byImage: value.header!.avatar,
@@ -668,7 +668,7 @@ class PrivateRoomsListingState extends State<PrivateRoomsListing> {
           });
         },
         child:
-        TricycleEventCard(
+        appEventCard(
           key: UniqueKey(),
           byTitle: RoomButtons(context: context).getByTitle(value.header.title,value.header.subtitle1),
           byImage: value.header.avatar,
@@ -919,7 +919,7 @@ class SocialRoomsListingState extends State<SocialRoomsListing> {
               refresh();
             });
           },
-          child:TricycleEventCard(
+          child:appEventCard(
             key: UniqueKey(),
             byTitle: RoomButtons(context: context).getByTitle(value.header!.title,value.header!.subtitle1),
             byImage: value.header!.avatar,
@@ -1203,7 +1203,7 @@ class CampusRoomsListingState extends State<CampusRoomsListing> {
               refresh();
             });
           },
-          child:TricycleEventCard(
+          child:appEventCard(
             key: UniqueKey(),
             byTitle: RoomButtons(context: context).getByTitle(value.header!.title,value.header!.subtitle1),
             byImage: value.header!.avatar,
@@ -1356,7 +1356,7 @@ RoomButtons{
   }
 
    Widget get exitButton {
-    return TricycleTextButton(
+    return appTextButton(
       onPressed: onPressed,
       padding: EdgeInsets.all(0),
       child: Text(AppLocalizations.of(context!)!.translate('exit'), style: styleElements.captionThemeScalable(context!).copyWith(fontWeight: FontWeight.bold,color:HexColor(AppColors.appMainColor),)),
@@ -1374,7 +1374,7 @@ RoomButtons{
 
   Widget get joinButton {
 
-    return TricycleTextButton(
+    return appTextButton(
       onPressed: onPressed,
       color: HexColor(AppColors.appMainColor),
       child: Text(AppLocalizations.of(context!)!.translate('join'),
@@ -1397,7 +1397,7 @@ RoomButtons{
   }
 
   Widget get editButton {
-    return TricycleTextButton(
+    return appTextButton(
       onPressed: onPressed,
       padding: EdgeInsets.all(0),
       shape: StadiumBorder(),

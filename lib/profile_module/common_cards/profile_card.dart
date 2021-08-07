@@ -3,9 +3,9 @@ import 'dart:developer';
 
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycle_user_list_tile.dart';
-import 'package:oho_works_app/components/tricycleavatar.dart';
-import 'package:oho_works_app/components/tricycleemptywidget.dart';
+import 'package:oho_works_app/components/app_user_list_tile.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
+import 'package:oho_works_app/components/appemptywidget.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
 import 'package:oho_works_app/home/locator.dart';
@@ -49,7 +49,7 @@ class Profiledetailcard extends StatelessWidget {
     styleElements = TextStyleElements(context);
 
     listSubItems = data.subRow;
-    return TricycleListCard(
+    return appListCard(
         child: Column(
           children: <Widget>[
             Visibility(
@@ -142,7 +142,7 @@ class Profiledetailcard extends StatelessWidget {
                                             type: null,
                                           )));
                           },
-                          child: TricycleUserListTile(
+                          child: appUserListTile(
                             imageUrl: Config.BASE_URL +
                                 listSubItems![index].subRow![0].urlOne!,
                             isFullImageUrl: true,
@@ -229,7 +229,7 @@ class Profiledetailcard extends StatelessWidget {
                           },
                           child: ListTile(
                               leading:
-                              TricycleAvatar(
+                              appAvatar(
                                 imageUrl: Config.BASE_URL +
                                     listSubItems![index].urlOne!,
                                 service_type: SERVICE_TYPE.INSTITUTION,
@@ -335,7 +335,7 @@ class Profiledetailcard extends StatelessWidget {
 
                           ));
                   }),
-            ) : TricycleEmptyWidget(message: "No data Found!!",),
+            ) : appEmptyWidget(message: "No data Found!!",),
 
           ],
         ));

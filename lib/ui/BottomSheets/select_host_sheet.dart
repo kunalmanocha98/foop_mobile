@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
 import 'package:oho_works_app/home/locator.dart';
@@ -88,7 +88,7 @@ class _SelectHostSheet extends State<SelectHostSheet> {
           widget.onClickCallback!(item);
         },
         child: ListTile(
-          leading: TricycleAvatar(
+          leading: appAvatar(
             size: 48,
             resolution_type: RESOLUTION_TYPE.R64,
             service_type: item.eventOwnerType == 'person'

@@ -59,7 +59,7 @@ class ParentCard extends StatelessWidget {
     this.context = context;
     styleElements = TextStyleElements(context);
     listSubItems = data.subRow;
-    return TricycleListCard(
+    return appListCard(
         child: Column(
       children: <Widget>[
         Visibility(

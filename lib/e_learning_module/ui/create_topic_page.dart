@@ -2,7 +2,7 @@
 
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
 import 'package:oho_works_app/e_learning_module/model/learner_list_response.dart';
 import 'package:oho_works_app/e_learning_module/ui/topic_type_page.dart';
 import 'package:oho_works_app/home/locator.dart';
@@ -33,8 +33,8 @@ class CreateTopicPage extends StatefulWidget {
 class _CreateTopicPage extends State<CreateTopicPage> {
   late BuildContext context;
   late TextStyleElements styleElements;
-  GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
-  GlobalKey<TricycleProgressButtonState> progressButtonKeyNext = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKey = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKeyNext = GlobalKey();
   TopicListItem? topicType;
   List<LearnerListItem>? learnerItem;
   @override
@@ -72,7 +72,7 @@ class _CreateTopicPage extends State<CreateTopicPage> {
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: TricycleAppBar().getCustomAppBar(
+          appBar: appAppBar().getCustomAppBar(
             context,
             appBarTitle:
             AppLocalizations.of(context)!.translate('topic_detail'),
@@ -142,7 +142,7 @@ class _CreateTopicPage extends State<CreateTopicPage> {
                           padding: const EdgeInsets.only(left :16.0,bottom: 8.0),
                           child: Text(
                               widget.createLessonData!=null&&   widget.createLessonData!.lessonTopic!.title!=null?widget.createLessonData!.lessonTopic!.title!:
-                            AppLocalizations.of(context)!.translate('Topic_name'),
+                            AppLocalizations.of(context)!.translate('topic_name'),
                             style: styleElements
                                 .headline6ThemeScalable(context)
                                 .copyWith(fontWeight: FontWeight.bold),
@@ -151,7 +151,7 @@ class _CreateTopicPage extends State<CreateTopicPage> {
                         Visibility(
                           child: GestureDetector(
                             behavior: HitTestBehavior.translucent,
-                            child: TricycleCard(
+                            child: appCard(
 
                               child: ListTile(
                                   tileColor: HexColor(AppColors.listBg),
@@ -159,7 +159,7 @@ class _CreateTopicPage extends State<CreateTopicPage> {
                                     alignment: Alignment.centerLeft,
                                     child: Text(
                                       AppLocalizations.of(context)!
-                                          .translate("Topic_type"),
+                                          .translate("topic_type"),
                                       style: styleElements
                                           .subtitle1ThemeScalable(context),
                                       textAlign: TextAlign.left,
@@ -169,7 +169,7 @@ class _CreateTopicPage extends State<CreateTopicPage> {
                                     alignment: Alignment.centerLeft,
                                     child: Text((topicType!=null)? topicType!.topicName!:
                                       AppLocalizations.of(context)!
-                                          .translate("Select_topic_type"),
+                                          .translate("select_topic_type"),
                                       style: styleElements
                                           .bodyText2ThemeScalable(context),
                                       textAlign: TextAlign.left,
@@ -213,7 +213,7 @@ class _CreateTopicPage extends State<CreateTopicPage> {
                           opacity:topicType!=null ?1.0:0.25,
                           child: GestureDetector(
                             behavior: HitTestBehavior.translucent,
-                            child: TricycleCard(
+                            child: appCard(
 
                               child: ListTile(
                                   tileColor: HexColor(AppColors.listBg),
@@ -222,9 +222,9 @@ class _CreateTopicPage extends State<CreateTopicPage> {
                                     child: Text(
                                       topicType!=null && topicType!.topicCode=="academic"?
                                       AppLocalizations.of(context)!
-                                          .translate("Learners_academic_group"):
+                                          .translate("learners_department_group"):
                                       AppLocalizations.of(context)!
-                                          .translate("Learners_academic_group_age"),
+                                          .translate("learners_department_group_age"),
                                       style: styleElements
                                           .subtitle1ThemeScalable(context),
                                       textAlign: TextAlign.left,
@@ -235,9 +235,9 @@ class _CreateTopicPage extends State<CreateTopicPage> {
                                     child: Text(
                                       topicType!=null && topicType!.topicCode=="academic"?
                                       AppLocalizations.of(context)!
-                                          .translate("l_academic_group"):
+                                          .translate("l_department_group"):
                                       AppLocalizations.of(context)!
-                                          .translate("l_academic_group_age"),
+                                          .translate("l_department_group_age"),
                                       style: styleElements
                                           .bodyText2ThemeScalable(context),
                                       textAlign: TextAlign.left,

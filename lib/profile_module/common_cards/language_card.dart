@@ -119,7 +119,7 @@ class LanguageCard extends StatelessWidget {
     type = data.title == "Language" ? "Language" : "Skill";
     styleElements = TextStyleElements(context);
     this.context = context;
-    return TricycleListCard(
+    return appListCard(
         child: Column(
       children: <Widget>[
         Row(

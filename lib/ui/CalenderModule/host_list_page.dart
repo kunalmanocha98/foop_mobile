@@ -4,9 +4,9 @@ import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/enums/member%20enums.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
@@ -51,7 +51,7 @@ class HostListPageState extends State<HostListPage> {
   List<InviteeListItem> inviteeItemList = [];
   EventCreateRequest? payload;
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
-  GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKey = GlobalKey();
   AudioSocketService? audioSocketService = locator<AudioSocketService>();
 
   HostListPageState({this.payload,this.selectedList});
@@ -68,7 +68,7 @@ class HostListPageState extends State<HostListPage> {
     styleElements = TextStyleElements(context);
     return SafeArea(
         child: Scaffold(
-          appBar: TricycleAppBar().getCustomAppBarWithSearch(context,
+          appBar: appAppBar().getCustomAppBarWithSearch(context,
             onSearchValueChanged: (value) {
             searchVal = value;
             refresh();
@@ -77,7 +77,7 @@ class HostListPageState extends State<HostListPage> {
               Navigator.pop(context);
             },
             actions: [
-              TricycleProgressButton(
+              appProgressButton(
                 key: progressButtonKey,
                 onPressed: widget.isReceiverList?createEvent:() {
                   var body = {"type":"list",
@@ -106,7 +106,7 @@ class HostListPageState extends State<HostListPage> {
             ]
 
           ),
-          body: TricycleListCard(
+          body: appListCard(
             child: widget.isReceiverList?
             Paginator<InviteeListResponse>.listView(
                 key: paginatorKey,
@@ -187,7 +187,7 @@ class HostListPageState extends State<HostListPage> {
         onTap: () {},
         child: ListTile(
           contentPadding: EdgeInsets.all(0),
-          leading: TricycleAvatar(
+          leading: appAvatar(
             size: 48,
             resolution_type: RESOLUTION_TYPE.R64,
             service_type: value.recipientTypeCode =='room'?SERVICE_TYPE.ROOM:value.recipientTypeCode =='institution'?SERVICE_TYPE.INSTITUTION:SERVICE_TYPE.PERSON,
@@ -216,7 +216,7 @@ class HostListPageState extends State<HostListPage> {
               icon: Icon(Icons.close),
             ),
           )
-              : TricycleElevatedButton(
+              : appElevatedButton(
             onPressed: () {
               // if (value.isFollowing) {
 
@@ -296,7 +296,7 @@ class HostListPageState extends State<HostListPage> {
         onTap: () {},
         child: ListTile(
           contentPadding: EdgeInsets.all(0),
-            leading: TricycleAvatar(
+            leading: appAvatar(
               size: 48,
               resolution_type: RESOLUTION_TYPE.R64,
               service_type: SERVICE_TYPE.PERSON,
@@ -328,7 +328,7 @@ class HostListPageState extends State<HostListPage> {
                 icon: Icon(Icons.close),
               ),
             )
-                : TricycleElevatedButton(
+                : appElevatedButton(
               onPressed: () {
                 // if (value.isFollowing) {
                 MembersItem item = MembersItem();

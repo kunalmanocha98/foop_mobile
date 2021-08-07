@@ -15,7 +15,7 @@ class EarnCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextStyleElements styleElements = TextStyleElements(context);
-    return TricycleCard(
+    return appCard(
         onTap: (){
           if(isClickable!)
           Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>RegisInstruction()));
@@ -61,7 +61,7 @@ class EarnCard extends StatelessWidget {
               ),
               Padding(
                 padding:  EdgeInsets.only(top:8.0),
-                child: Text(AppLocalizations.of(context)!.translate('get_institute_registered'),
+                child: Text(AppLocalizations.of(context)!.translate('get_entity_registered'),
                   style:  styleElements.subtitle1ThemeScalable(context),),
               ),
              

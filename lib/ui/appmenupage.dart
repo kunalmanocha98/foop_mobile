@@ -5,8 +5,8 @@ import 'package:oho_works_app/api_calls/logout_api.dart';
 import 'package:oho_works_app/components/appbar_with_profile%20_image.dart';
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/components/customgridDelegate.dart';
-import 'package:oho_works_app/components/tricycle_user_list_tile.dart';
-import 'package:oho_works_app/components/tricyclemenuitem.dart';
+import 'package:oho_works_app/components/app_user_list_tile.dart';
+import 'package:oho_works_app/components/appmenuitem.dart';
 import 'package:oho_works_app/enums/post_enums.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
@@ -24,7 +24,7 @@ import 'package:oho_works_app/profile_module/pages/network_page.dart';
 import 'package:oho_works_app/profile_module/pages/profile_page.dart';
 import 'package:oho_works_app/services/push_notification_service.dart';
 import 'package:oho_works_app/services/share_data_service.dart';
-import 'package:oho_works_app/tri_cycle_database/data_base_helper.dart';
+import 'package:oho_works_app/app_database/data_base_helper.dart';
 import 'package:oho_works_app/ui/EdufluencerTutorModule/become_edufluencer_tutor_page.dart';
 import 'package:oho_works_app/ui/EdufluencerTutorModule/edufluencer_tutor_list.dart';
 import 'package:oho_works_app/ui/RoomModule/roomsPage.dart';
@@ -135,7 +135,7 @@ class AppMenuPageState extends State<AppMenuPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBarWithOnlyTitle(
-          title: 'Tricycle',
+          title: 'app',
           actions: [
 
 
@@ -222,7 +222,7 @@ class AppMenuPageState extends State<AppMenuPage> {
                 (BuildContext context, bool innerBoxIsScrolled) {
               return [
                 SliverToBoxAdapter(
-                  child: TricycleCard(
+                  child: appCard(
                     padding: EdgeInsets.all(2),
                     // margin: const EdgeInsets.only(
                     //     left: 12.0, right: 12.0, top: 8.0, bottom: 4.0),
@@ -317,7 +317,7 @@ class AppMenuPageState extends State<AppMenuPage> {
                 //   ),
                 // ),
                 SliverToBoxAdapter(
-                  child: TricycleCard(
+                  child: appCard(
                     margin: EdgeInsets.only(
                         left: 8, right: 8.0, top: 4.0, bottom: 6.0),
                     padding: EdgeInsets.all(0),
@@ -334,7 +334,7 @@ class AppMenuPageState extends State<AppMenuPage> {
                               : institutionList.length
                               : 0,
                           itemBuilder: (BuildContext context, int index) {
-                            return TricycleUserListTile(
+                            return appUserListTile(
                               onPressed: (){
                                 print(
                                     institutionList[index].toJson().toString());
@@ -365,7 +365,7 @@ class AppMenuPageState extends State<AppMenuPage> {
                             //   onTap: () {
                             //
                             //   },
-                            //   leading: TricycleAvatar(
+                            //   leading: appAvatar(
                             //     size: 48,
                             //     isFullUrl: true,
                             //     imageUrl: Config.BASE_URL +
@@ -467,7 +467,7 @@ class AppMenuPageState extends State<AppMenuPage> {
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
                         itemBuilder: (BuildContext context, int indx) {
-                          return TricycleMenuItem(
+                          return appMenuItem(
                             onMenuItemClick: menuitemClick,
                             item: menuList![index].data![indx],
                           );

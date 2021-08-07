@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
 import 'package:oho_works_app/models/dynmaicres.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
@@ -27,7 +27,7 @@ class _ChangePassword extends  State<ChangePassword> {
   late TextStyleElements styleElements;
   bool _validate = false;
   bool _validate2 = false;
-  GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKey = GlobalKey();
   @override
   Widget build(BuildContext context) {
     this.context = context;
@@ -93,7 +93,7 @@ class _ChangePassword extends  State<ChangePassword> {
       child: Scaffold(
           resizeToAvoidBottomInset: false,
           backgroundColor: HexColor(AppColors.appColorBackground),
-          appBar: TricycleAppBar().getCustomAppBar(context,
+          appBar: appAppBar().getCustomAppBar(context,
               appBarTitle: ''
               // AppLocalizations.of(context).translate("change_password")
               ,
@@ -140,7 +140,7 @@ class _ChangePassword extends  State<ChangePassword> {
                   child: Container(
                     alignment: Alignment.center,
                     margin: EdgeInsets.only(top: 36, bottom: 36),
-                    child: TricycleProgressButton(
+                    child: appProgressButton(
                       key: progressButtonKey,
                       progressColor: HexColor(AppColors.appColorWhite),
                       progressSize: 20,

@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
 import 'package:oho_works_app/utils/colors.dart';
@@ -44,7 +44,7 @@ class DpEnlargePageState extends State<DpEnlargePage>{
               ),
             ),
             Center(
-              child: TricycleAvatar(
+              child: appAvatar(
                 key: UniqueKey(),
                 imageUrl: widget.imageUrl,
                 resolution_type: RESOLUTION_TYPE.R256,

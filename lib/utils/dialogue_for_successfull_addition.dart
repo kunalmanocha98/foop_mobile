@@ -1,4 +1,6 @@
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
+import 'package:oho_works_app/components/button_filled.dart';
+import 'package:oho_works_app/components/button_outline.dart';
 import 'package:oho_works_app/profile_module/pages/profile_page.dart';
 import 'package:oho_works_app/ui/dashboardhomepage.dart';
 import 'package:oho_works_app/utils/colors.dart';
@@ -61,10 +63,10 @@ class CustomDialogue extends StatelessWidget {
               Align(
                   alignment: Alignment.topCenter,
                   child: Container(
-                    margin: const EdgeInsets.only(bottom: 20, top: 50),
+                    margin: const EdgeInsets.only(bottom: 20, top: 30),
                     child: Text(
                       AppLocalizations.of(context)!.translate("congratulations"),
-                      style: styleElements.headline5ThemeScalable(context),
+                      style: styleElements.headline6ThemeScalable(context),
                     ),
                   )),
               Align(
@@ -75,8 +77,8 @@ class CustomDialogue extends StatelessWidget {
                       child: Image(
                         image: AssetImage('assets/appimages/handshake.png'),
                         fit: BoxFit.contain,
-                        width: 78,
-                        height: 78,
+                        width: 120,
+                        height: 120,
                       )),
                 ),
               ),
@@ -116,57 +118,48 @@ class CustomDialogue extends StatelessWidget {
               ),
 
 
-              Container(
-                  margin: const EdgeInsets.only(left: 16, right: 16),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: TricycleElevatedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          side: BorderSide(color: HexColor(AppColors.appColorGreen))),
-                      onPressed: () {
-                        prefs.setString("create_institute", "successFullyCreated");
-                        prefs.setBool("isProfileCreated",true);
-                        Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(
-                                builder: (context) => UserProfileCards(
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Container(
+
+                  child: LargeButton(
+                    name: AppLocalizations.of(context)!.translate("continueWithProfileSettings"),
+                    offsetX: 95.0,
+                    offsetY: 14.33,
+                    callback: (){
+                      prefs.setString("create_entity", "successFullyCreated");
+                      prefs.setBool("isProfileCreated",true);
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                              builder: (context) => UserProfileCards(
                                   userType: "person",
-                                    userId: null,
-                                    isFromRegisration:true,
-                                    type: type, currentPosition: 1)),
-                            (Route<dynamic> route) => false);
-                      },
-                      color: HexColor(AppColors.appColorGreen),
-                      child: Text(
-                          AppLocalizations.of(context)!
-                              .translate("continueWithProfileSettings"),
-                        style: styleElements.subtitle2ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite)),),
-                    ),
-                  )),
-              Container(
-                margin: const EdgeInsets.only(
-                    left: 16, right: 16, top: 8, bottom: 20),
-                child: SizedBox(
-                    width: double.infinity,
-                    child: TricycleElevatedButton(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                          side: BorderSide(color: HexColor(AppColors.appMainColor))),
-                      onPressed: () {
-                        prefs.setString("create_institute", "successFullyCreated");
-                        prefs.setBool("isProfileCreated",true);
-                        Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(
-                                builder: (context) => DashboardPage()),
-                            (Route<dynamic> route) => false);
-                      },
-                      color: HexColor(AppColors.appMainColor),
-                      child: Text(
-                          AppLocalizations.of(context)!
-                              .translate("take_me_to_home"),
-                        style: styleElements.subtitle2ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorWhite)),),
-                    )),
-              )
+                                  userId: null,
+                                  isFromRegisration:true,
+                                  type: type, currentPosition: 1)),
+                              (Route<dynamic> route) => false);
+
+                    },),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left:16.0,right: 16,top:16,bottom: 26),
+                child: Container(
+
+                  child: Component51(
+                    name: AppLocalizations.of(context)!.translate("take_me_to_home"),
+                    callback: (){
+                      prefs.setString("create_entity", "successFullyCreated");
+                      prefs.setBool("isProfileCreated",true);
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                              builder: (context) => DashboardPage()),
+                              (Route<dynamic> route) => false);
+                    },
+                  ),
+                ),
+              ),
+
+
             ],
           ),
         ));

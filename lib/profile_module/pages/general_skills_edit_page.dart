@@ -25,7 +25,7 @@ class _GeneralSkillsEditPage extends State<GeneralSkillsEditPage> {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: HexColor(AppColors.appColorBackground),
-        appBar: TricycleAppBar().getCustomAppBar(context,
+        appBar: appAppBar().getCustomAppBar(context,
             appBarTitle:  'General Skills',
             actions: <Widget>[
               Padding(

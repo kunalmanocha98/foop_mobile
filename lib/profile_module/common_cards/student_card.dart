@@ -1,5 +1,5 @@
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/models/base_res.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
@@ -59,7 +59,7 @@ class StudentCard extends StatelessWidget {
     styleElements = TextStyleElements(context);
     return GestureDetector(
       onTap: () {},
-      child: TricycleListCard(
+      child: appListCard(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -84,7 +84,7 @@ class StudentCard extends StatelessWidget {
                 subtitle: Text(data.textTwo ?? ""),
                 trailing: Visibility(
                   child: Container(
-                    child: TricycleElevatedButton(
+                    child: appElevatedButton(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(4.0),
                           side: BorderSide(

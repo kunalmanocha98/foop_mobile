@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
 import 'package:oho_works_app/mixins/editProfileMixin.dart';
@@ -98,7 +98,7 @@ class _ConfirmDetails extends State<ConfirmDetails>
     'ABNEGATIVE': ' AB-'
   };
 
-  GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKey = GlobalKey();
 
   @override
   void initState() {
@@ -305,7 +305,7 @@ class _ConfirmDetails extends State<ConfirmDetails>
                   children: <Widget>[
                     Container(
                       margin: const EdgeInsets.all(8),
-                      child: TricycleCard(
+                      child: appCard(
                         margin: EdgeInsets.all(4),
                         padding: EdgeInsets.all(4),
                         child: Column(
@@ -314,7 +314,7 @@ class _ConfirmDetails extends State<ConfirmDetails>
                             Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: ListTile(
-                                leading: TricycleAvatar(
+                                leading: appAvatar(
                                   resolution_type: RESOLUTION_TYPE.R64,
                                   service_type: SERVICE_TYPE.INSTITUTION,
                                   imageUrl: fromPage == "registration"
@@ -412,7 +412,7 @@ class _ConfirmDetails extends State<ConfirmDetails>
                             ),
                             Padding(
                               padding: const EdgeInsets.all(16.0),
-                              child: Text(AppLocalizations.of(context)!.translate('institute_confirm_des'),
+                              child: Text(AppLocalizations.of(context)!.translate('entity_confirm_des'),
                                 style: styleElements
                                     .bodyText2ThemeScalable(context)
                                     .copyWith(fontWeight: FontWeight.bold),
@@ -449,7 +449,7 @@ class _ConfirmDetails extends State<ConfirmDetails>
                                 child: Container(
                                   margin: const EdgeInsets.only(
                                       left: 16.0, right: 16.0),
-                                  child: TricycleProgressButton(
+                                  child: appProgressButton(
                                     key: progressButtonKey,
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
@@ -534,7 +534,7 @@ class _ConfirmDetails extends State<ConfirmDetails>
         child: Scaffold(
             resizeToAvoidBottomInset: true,
             backgroundColor: HexColor(AppColors.appColorBackground),
-            appBar: TricycleAppBar().getCustomAppBar(
+            appBar: appAppBar().getCustomAppBar(
               context,
               appBarTitle: 'Verify Profile Details',
               isIconVisible: true,

@@ -1,7 +1,7 @@
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/components/postcardactionbuttons.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
 import 'package:oho_works_app/models/Edufluencer_Tutor_modles/edufluencer_list.dart';
@@ -50,11 +50,11 @@ final String? bookingStatus;
   @override
   Widget build(BuildContext context) {
     var styleElements = TextStyleElements(context);
-    return TricycleListCard(
+    return appListCard(
       child: Column(
         children: [
           SizedBox(height: 16,),
-          TricycleAvatar(
+          appAvatar(
             imageUrl: imageUrl,
             size: 120,
             resolution_type: RESOLUTION_TYPE.R64,
@@ -117,7 +117,7 @@ final String? bookingStatus;
               ),
               Visibility(
                 visible: isfollowing!=null? !isfollowing! :true,
-                child: TricycleTextButton(
+                child: appTextButton(
                   onPressed: followButtonCallback,
                   padding: EdgeInsets.all(0),
                   child: Text(
@@ -131,7 +131,7 @@ final String? bookingStatus;
               SizedBox(width: 8,),
               Visibility(
                 visible: bookingStatus!=null,
-                child: TricycleTextButton(
+                child: appTextButton(
                   onPressed: messageButtonCallback,
                   padding: EdgeInsets.all(0),
                   child: Text(

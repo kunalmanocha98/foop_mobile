@@ -8,7 +8,7 @@ import 'package:oho_works_app/models/register_user_as_response.dart';
 import 'package:oho_works_app/profile_module/common_cards/testcard.dart';
 import 'package:oho_works_app/regisration_module/select_institute_screen.dart';
 import 'package:oho_works_app/regisration_module/select_role.dart';
-import 'package:oho_works_app/tri_cycle_database/data_base_helper.dart';
+import 'package:oho_works_app/app_database/data_base_helper.dart';
 import 'package:oho_works_app/ui/dialog_page.dart';
 import 'package:oho_works_app/ui/person_type_list.dart';
 import 'package:oho_works_app/ui/student_serach_page.dart';
@@ -94,7 +94,7 @@ class _WelComeScreen extends State<WelComeScreen> {
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: TricycleAppBar().getCustomAppBar(
+          appBar: appAppBar().getCustomAppBar(
             context,
             actions: [
               Visibility(
@@ -156,7 +156,7 @@ class _WelComeScreen extends State<WelComeScreen> {
                         opacity: 1.0,
                         child: GestureDetector(
                           behavior: HitTestBehavior.translucent,
-                          child: TricycleCard(
+                          child: appCard(
                             child: ListTile(
                                 tileColor: HexColor(AppColors.listBg),
                                 title: Align(
@@ -173,7 +173,7 @@ class _WelComeScreen extends State<WelComeScreen> {
                                   alignment: Alignment.centerLeft,
                                   child: Text(
                                     AppLocalizations.of(context)!
-                                        .translate("select_institute_role"),
+                                        .translate("select_entity_role"),
                                     style: styleElements
                                         .bodyText2ThemeScalable(context),
                                     textAlign: TextAlign.left,
@@ -201,7 +201,7 @@ class _WelComeScreen extends State<WelComeScreen> {
                                 !isInstituteSelectedAlready!),
                         child: GestureDetector(
                           behavior: HitTestBehavior.translucent,
-                          child: TricycleCard(
+                          child: appCard(
                             child: ListTile(
                                 tileColor: HexColor(AppColors.listBg),
                                 title: Align(
@@ -218,7 +218,7 @@ class _WelComeScreen extends State<WelComeScreen> {
                                   alignment: Alignment.centerLeft,
                                   child: Text(
                                     AppLocalizations.of(context)!
-                                        .translate("select_institute_text"),
+                                        .translate("select_entity_text"),
                                     style: styleElements
                                         .bodyText2ThemeScalable(context),
                                     textAlign: TextAlign.left,
@@ -264,7 +264,7 @@ class _WelComeScreen extends State<WelComeScreen> {
                           visible: !showLimited,
                           child: GestureDetector(
                             behavior: HitTestBehavior.translucent,
-                            child: TricycleCard(
+                            child: appCard(
                               child: ListTile(
                                   tileColor: HexColor(AppColors.listBg),
                                   title: Align(
@@ -281,7 +281,7 @@ class _WelComeScreen extends State<WelComeScreen> {
                                     alignment: Alignment.centerLeft,
                                     child: Text(
                                       AppLocalizations.of(context).translate(
-                                          "select_institute_program"),
+                                          "select_entity_program"),
                                       style: styleElements
                                           .bodyText2ThemeScalable(context),
                                       textAlign: TextAlign.left,
@@ -332,7 +332,7 @@ class _WelComeScreen extends State<WelComeScreen> {
                         visible: isDepartment && type != "Other Staff",
                         child: GestureDetector(
                           behavior: HitTestBehavior.translucent,
-                          child: TricycleCard(
+                          child: appCard(
                             child: ListTile(
                                 tileColor: HexColor(AppColors.listBg),
                                 title: Align(
@@ -349,7 +349,7 @@ class _WelComeScreen extends State<WelComeScreen> {
                                   alignment: Alignment.centerLeft,
                                   child: Text(
                                     AppLocalizations.of(context).translate(
-                                        "select_institute_discipline"),
+                                        "select_entity_discipline"),
                                     style: styleElements
                                         .bodyText2ThemeScalable(context),
                                     textAlign: TextAlign.left,
@@ -392,7 +392,7 @@ class _WelComeScreen extends State<WelComeScreen> {
                           visible: type != "Other Staff",
                           child: GestureDetector(
                             behavior: HitTestBehavior.translucent,
-                            child: TricycleCard(
+                            child: appCard(
                               child: ListTile(
                                   tileColor: HexColor(AppColors.listBg),
                                   title: Align(
@@ -409,7 +409,7 @@ class _WelComeScreen extends State<WelComeScreen> {
                                     alignment: Alignment.centerLeft,
                                     child: Text(
                                       AppLocalizations.of(context).translate(
-                                          "select_institute_class_sec"),
+                                          "select_entity_class_sec"),
                                       style: styleElements
                                           .bodyText2ThemeScalable(context),
                                       textAlign: TextAlign.left,
@@ -456,7 +456,7 @@ class _WelComeScreen extends State<WelComeScreen> {
                           visible: isSubjectVisible && type != "Other Staff",
                           child: GestureDetector(
                             behavior: HitTestBehavior.translucent,
-                            child: TricycleCard(
+                            child: appCard(
                               child: ListTile(
                                   tileColor: HexColor(AppColors.listBg),
                                   title: Align(
@@ -473,7 +473,7 @@ class _WelComeScreen extends State<WelComeScreen> {
                                     alignment: Alignment.centerLeft,
                                     child: Text(
                                       AppLocalizations.of(context)
-                                          .translate("select_institute_sub"),
+                                          .translate("select_entity_sub"),
                                       style: styleElements
                                           .bodyText2ThemeScalable(context),
                                       textAlign: TextAlign.left,

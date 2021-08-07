@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/models/RegisterUserAs.dart';
 import 'package:oho_works_app/models/register_user_as_response.dart';
 import 'package:oho_works_app/profile_module/common_cards/testcard.dart';
 import 'package:oho_works_app/regisration_module/subjects_page_new.dart';
-import 'package:oho_works_app/tri_cycle_database/data_base_helper.dart';
+import 'package:oho_works_app/app_database/data_base_helper.dart';
 import 'package:oho_works_app/ui/dialog_page.dart';
 import 'package:oho_works_app/ui/person_type_list.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
@@ -123,7 +123,7 @@ class _AcademicInformationPage extends State<AcademicInformationPage> {
                           Container(
                             margin: const EdgeInsets.only(
                                 right: 16.0),
-                            child: TricycleElevatedButton(
+                            child: appElevatedButton(
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30.0),
                                   side:
@@ -152,7 +152,7 @@ class _AcademicInformationPage extends State<AcademicInformationPage> {
                                 visible: !showLimited,
                                 child: GestureDetector(
                                   behavior: HitTestBehavior.translucent,
-                                  child: TricycleCard(
+                                  child: appCard(
                                     child: ListTile(
                                         tileColor: HexColor(AppColors.listBg),
                                         title: Align(
@@ -169,7 +169,7 @@ class _AcademicInformationPage extends State<AcademicInformationPage> {
                                           alignment: Alignment.centerLeft,
                                           child: Text(
                                             AppLocalizations.of(context)!.translate(
-                                                "select_institute_program"),
+                                                "select_entity_program"),
                                             style: styleElements
                                                 .bodyText2ThemeScalable(context),
                                             textAlign: TextAlign.left,
@@ -223,7 +223,7 @@ print(jsonEncode(widget.registerUserAs));
                               visible: isDepartment! && type != "Other Staff",
                               child: GestureDetector(
                                 behavior: HitTestBehavior.translucent,
-                                child: TricycleCard(
+                                child: appCard(
                                   child: ListTile(
                                       tileColor: HexColor(AppColors.listBg),
                                       title: Align(
@@ -240,7 +240,7 @@ print(jsonEncode(widget.registerUserAs));
                                         alignment: Alignment.centerLeft,
                                         child: Text(
                                           AppLocalizations.of(context)!.translate(
-                                              "select_institute_discipline"),
+                                              "select_entity_discipline"),
                                           style: styleElements
                                               .bodyText2ThemeScalable(context),
                                           textAlign: TextAlign.left,
@@ -287,7 +287,7 @@ print(jsonEncode(widget.registerUserAs));
                                 visible: type != "Other Staff",
                                 child: GestureDetector(
                                   behavior: HitTestBehavior.translucent,
-                                  child: TricycleCard(
+                                  child: appCard(
                                     child: ListTile(
                                         tileColor: HexColor(AppColors.listBg),
                                         title: Align(
@@ -304,7 +304,7 @@ print(jsonEncode(widget.registerUserAs));
                                           alignment: Alignment.centerLeft,
                                           child: Text(
                                             AppLocalizations.of(context)!.translate(
-                                                "select_institute_class_sec"),
+                                                "select_entity_class_sec"),
                                             style: styleElements
                                                 .bodyText2ThemeScalable(context),
                                             textAlign: TextAlign.left,
@@ -351,7 +351,7 @@ print(jsonEncode(widget.registerUserAs));
                                 visible: isSubjectVisible && type != "Other Staff",
                                 child: GestureDetector(
                                   behavior: HitTestBehavior.translucent,
-                                  child: TricycleCard(
+                                  child: appCard(
                                     child: ListTile(
                                         tileColor: HexColor(AppColors.listBg),
                                         title: Align(
@@ -368,7 +368,7 @@ print(jsonEncode(widget.registerUserAs));
                                           alignment: Alignment.centerLeft,
                                           child: Text(
                                             AppLocalizations.of(context)!
-                                                .translate("select_institute_sub"),
+                                                .translate("select_entity_sub"),
                                             style: styleElements
                                                 .bodyText2ThemeScalable(context),
                                             textAlign: TextAlign.left,

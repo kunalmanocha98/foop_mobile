@@ -1,8 +1,8 @@
 import 'package:oho_works_app/components/postcardactionbuttons.dart';
 import 'package:oho_works_app/components/postcardheader.dart';
 import 'package:oho_works_app/components/postcardmedia.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
-import 'package:oho_works_app/components/tricycle_user_images_list.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
+import 'package:oho_works_app/components/app_user_images_list.dart';
 import 'package:oho_works_app/e_learning_module/ui/lessons_page.dart';
 import 'package:oho_works_app/home/locator.dart';
 import 'package:oho_works_app/models/post/postcreate.dart';
@@ -254,7 +254,7 @@ class ChapterDetailPageState extends State<ChapterDetailPage> {
               ),
               Padding(
                 padding: EdgeInsets.only(top:8),
-                child: TricycleUserImageList(
+                child: appUserImageList(
                   listOfImages: List<String?>.generate(8,(int index){
                     return prefs!.getString(Strings.profileImage);
                   }),
@@ -282,7 +282,7 @@ class ChapterDetailPageState extends State<ChapterDetailPage> {
               Row(
                 children: [
                   SizedBox(width: 24,),
-                  TricycleTextButton(
+                  appTextButton(
                       onPressed: (){
                         Navigator.push(context, MaterialPageRoute(
                             builder: (BuildContext context) {
@@ -304,7 +304,7 @@ class ChapterDetailPageState extends State<ChapterDetailPage> {
                       ),)
                   ),
                   Spacer(),
-                  TricycleTextButton(
+                  appTextButton(
                       onPressed: (){
                         Navigator.push(context,
                             MaterialPageRoute(builder: (BuildContext context) {

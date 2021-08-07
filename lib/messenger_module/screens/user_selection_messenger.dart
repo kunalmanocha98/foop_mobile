@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/searchBox.dart';
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/messenger_module/entities/connect_list_response_entity.dart';
 import 'package:oho_works_app/messenger_module/entities/connection_list_entity.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
@@ -173,7 +173,7 @@ class _UserSelectionPageMessenger extends State<UserSelectionPageMessenger>
                 child: GestureDetector(
                     behavior: HitTestBehavior.translucent,
                     onTap: () {},
-                    child: TricycleAvatar(
+                    child: appAvatar(
                       size: 52,
                       imageUrl: item.connectionProfileThumbnailUrl ?? "",
                     )),

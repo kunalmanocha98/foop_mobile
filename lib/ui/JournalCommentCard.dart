@@ -66,7 +66,7 @@ class JournalCard extends StatelessWidget {
     this.context = context;
     listSubItems = data.subRow;
     styleElements = TextStyleElements(context);
-    return TricycleListCard(
+    return appListCard(
         child: Column(
           children: <Widget>[
             Row(

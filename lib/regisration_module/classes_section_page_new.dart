@@ -1,7 +1,7 @@
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/searchBox.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
-import 'package:oho_works_app/components/tricycleemptywidget.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
+import 'package:oho_works_app/components/appemptywidget.dart';
 import 'package:oho_works_app/models/RegisterUserAs.dart';
 import 'package:oho_works_app/models/classes_sections.dart';
 import 'package:oho_works_app/models/custom_tab_maker.dart';
@@ -113,7 +113,7 @@ class _SelectDisicipline extends State<selectClassesAndSections>
       },
       child: SafeArea(
         child: Scaffold(
-            appBar: TricycleAppBar().getCustomAppBar(
+            appBar: appAppBar().getCustomAppBar(
               context,
               appBarTitle: AppLocalizations.of(context)!.translate('classes'),
               onBackButtonPress: () async {
@@ -190,11 +190,11 @@ class _SelectDisicipline extends State<selectClassesAndSections>
                                                         ? AppLocalizations.of(
                                                                 context)!
                                                             .translate(
-                                                                'selected_academic_year')
+                                                                'selected_financial_year')
                                                         : AppLocalizations.of(
                                                                 context)!
                                                             .translate(
-                                                                'select_academic_year'),
+                                                                'select_financial_year'),
                                                     style: styleElements
                                                         .subtitle2ThemeScalable(
                                                             context),
@@ -341,7 +341,7 @@ class _SelectDisicipline extends State<selectClassesAndSections>
                               return Center(
                                   child: Padding(
                                 padding: const EdgeInsets.all(20.0),
-                                child: TricycleEmptyWidget(
+                                child: appEmptyWidget(
                                   message: AppLocalizations.of(context)!
                                       .translate('no_data'),
                                 ),
@@ -361,7 +361,7 @@ class _SelectDisicipline extends State<selectClassesAndSections>
                             child: Row(
                               children: [
                                 Spacer(),
-                                TricycleProgressButton(
+                                appProgressButton(
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(18.0),
                                       side: BorderSide(
@@ -384,7 +384,7 @@ class _SelectDisicipline extends State<selectClassesAndSections>
                                     } else {
                                       ToastBuilder().showToast(
                                           AppLocalizations.of(context)!
-                                              .translate("select_academic"),
+                                              .translate("select_department"),
                                           context,
                                           HexColor(AppColors.information));
                                     }

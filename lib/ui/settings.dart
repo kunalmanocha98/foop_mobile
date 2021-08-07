@@ -42,7 +42,7 @@ class _SettingsPage extends State<SettingsPage> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: TricycleAppBar().getCustomAppBar(context,
+        appBar: appAppBar().getCustomAppBar(context,
             appBarTitle: AppLocalizations.of(context)!.translate("settings"),
             onBackButtonPress: () {
           Navigator.pop(context);
@@ -162,7 +162,7 @@ class _SettingsPage extends State<SettingsPage> {
                         child: ListTile(
                           title: Text(
                               AppLocalizations.of(context)!
-                                  .translate("institute_admins"),
+                                  .translate("entity_admins"),
                               style: styleElements.subtitle1ThemeScalable(context)),
                         ),
                       ),
@@ -271,7 +271,7 @@ class _AccountSettings extends State<AccountSettings> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: TricycleAppBar().getCustomAppBar(context,
+      appBar: appAppBar().getCustomAppBar(context,
           appBarTitle: AppLocalizations.of(context)!
               .translate("account_settings"), onBackButtonPress: () {
         Navigator.pop(context);
@@ -304,7 +304,7 @@ class _AccountSettings extends State<AccountSettings> {
                           ),
                           subtitle: Text(
                             AppLocalizations.of(context)!
-                                .translate("tricycle_lang_des"),
+                                .translate("app_lang_des"),
                             style: styleElements.captionThemeScalable(context),
                           ),
                         ),
@@ -614,7 +614,7 @@ class _PrivacySettings extends State<PrivacySettings> {
     styleElements = TextStyleElements(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: TricycleAppBar().getCustomAppBar(context,
+      appBar: appAppBar().getCustomAppBar(context,
           appBarTitle: AppLocalizations.of(context)!
               .translate("privacy_settings"), onBackButtonPress: () {
         Navigator.pop(context);

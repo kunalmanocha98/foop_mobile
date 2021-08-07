@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:oho_works_app/api_calls/calls.dart';
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
 import 'package:oho_works_app/models/Rooms/privacy_list.dart';
@@ -100,7 +100,7 @@ class _SelectionWidget extends StatelessWidget{
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            TricycleAvatar(
+            appAvatar(
               imageUrl: Config.BASE_URL+url!,
               // imageUrl: "https://test.tricycle.group/logo.png",
               isFullUrl: true,

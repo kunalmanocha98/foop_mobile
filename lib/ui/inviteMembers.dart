@@ -1,5 +1,5 @@
 import 'package:oho_works_app/components/appBarWithSearch.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
@@ -21,7 +21,7 @@ class _InviteMembersPage extends State<InviteMembersPage> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar:TricycleAppBar().getCustomAppBar(context,
+        appBar:appAppBar().getCustomAppBar(context,
             appBarTitle:  AppLocalizations.of(context)!.translate("invite_members"),
             onBackButtonPress: (){
           Navigator.pop(context);
@@ -62,7 +62,7 @@ class _InviteMembersPage extends State<InviteMembersPage> {
                       alignment: Alignment.centerRight,
                       child: Container(
                         margin: const EdgeInsets.only(left: 16.0, right: 16.0),
-                        child: TricycleElevatedButton(
+                        child: appElevatedButton(
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(18.0),
                               side: BorderSide(

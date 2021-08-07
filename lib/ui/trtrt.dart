@@ -48,7 +48,7 @@ class _OtpViewState extends State<OtpView> with SingleTickerProviderStateMixin {
 
   // Returns "Appbar"
   // get _getAppbar {
-  //   return TricycleAppBar().getCustomAppBar(context, appBarTitle: '', onBackButtonPress: (){Navigator.pop(context);});
+  //   return appAppBar().getCustomAppBar(context, appBarTitle: '', onBackButtonPress: (){Navigator.pop(context);});
   // }
 
   // Return "Verification Code" label
@@ -310,7 +310,7 @@ class _OtpViewState extends State<OtpView> with SingleTickerProviderStateMixin {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar:TricycleAppBar().getCustomAppBar(
+        appBar:appAppBar().getCustomAppBar(
             context,
             appBarTitle: '',
             onBackButtonPress: (){

@@ -1,4 +1,4 @@
-import 'package:oho_works_app/components/tricycle_talk_footer_button.dart';
+import 'package:oho_works_app/components/app_talk_footer_button.dart';
 import 'package:oho_works_app/models/CalenderModule/event_listings.dart';
 import 'package:agora_rtc_engine/rtc_engine.dart';
 

@@ -99,7 +99,7 @@ class _MyAppState extends State<MyApp> {
                   return Center(
                     child: Column(
                       children: <Widget>[
-                        TricycleElevatedButton(
+                        appElevatedButton(
                             child: const Text('Key'),
                             onPressed: () {
                               FirebaseCrashlytics.instance
@@ -111,7 +111,7 @@ class _MyAppState extends State<MyApp> {
                                 duration: Duration(seconds: 5),
                               ));
                             }),
-                        TricycleElevatedButton(
+                        appElevatedButton(
                             child: const Text('Log'),
                             onPressed: () {
                               FirebaseCrashlytics.instance
@@ -123,7 +123,7 @@ class _MyAppState extends State<MyApp> {
                                 duration: Duration(seconds: 5),
                               ));
                             }),
-                        TricycleElevatedButton(
+                        appElevatedButton(
                             child: const Text('Crash'),
                             onPressed: () async {
                               Scaffold.of(context).showSnackBar(SnackBar(
@@ -139,7 +139,7 @@ class _MyAppState extends State<MyApp> {
                               // confirmation that errors are being correctly reported.
                               FirebaseCrashlytics.instance.crash();
                             }),
-                        TricycleElevatedButton(
+                        appElevatedButton(
                             child: const Text('Throw Error'),
                             onPressed: () {
                               Scaffold.of(context).showSnackBar(SnackBar(
@@ -152,7 +152,7 @@ class _MyAppState extends State<MyApp> {
                               // Crashlytics.
                               throw StateError('Uncaught error thrown by app');
                             }),
-                        TricycleElevatedButton(
+                        appElevatedButton(
                             child: const Text('Async out of bounds'),
                             onPressed: () {
                               Scaffold.of(context).showSnackBar(SnackBar(
@@ -173,7 +173,7 @@ class _MyAppState extends State<MyApp> {
                                     });
                               }, FirebaseCrashlytics.instance.recordError);
                             }),
-                        TricycleElevatedButton(
+                        appElevatedButton(
                             child: const Text('Record Error'),
                             onPressed: () async {
                               try {

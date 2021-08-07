@@ -6,8 +6,14 @@ import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/api_calls/logout_api.dart';
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/components/customgridDelegate.dart';
-import 'package:oho_works_app/components/tricycle_bottom_selector.dart';
-import 'package:oho_works_app/components/tricyclemenuitem.dart';
+import 'package:oho_works_app/components/app_bottom_selector.dart';
+import 'package:oho_works_app/components/appmenuitem.dart';
+import 'package:oho_works_app/crm_module/CompanyAndCustomerPage.dart';
+import 'package:oho_works_app/crm_module/SuppliersPage.dart';
+import 'package:oho_works_app/crm_module/create_customer_contact.dart';
+import 'package:oho_works_app/crm_module/crm_page.dart';
+import 'package:oho_works_app/crm_module/product/product_inventry_services_page.dart';
+import 'package:oho_works_app/crm_module/purchase_order.dart';
 import 'package:oho_works_app/enums/post_enums.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
@@ -27,7 +33,7 @@ import 'package:oho_works_app/services/audio_socket_service.dart';
 import 'package:oho_works_app/services/deeplinking_service.dart';
 import 'package:oho_works_app/services/share_data_service.dart';
 import 'package:oho_works_app/services/socket_service.dart';
-import 'package:oho_works_app/tri_cycle_database/data_base_helper.dart';
+import 'package:oho_works_app/app_database/data_base_helper.dart';
 import 'package:oho_works_app/ui/BottomSheets/CreateNewSheet.dart';
 import 'package:oho_works_app/ui/EdufluencerTutorModule/become_edufluencer_tutor_page.dart';
 import 'package:oho_works_app/ui/EdufluencerTutorModule/edufluencer_tutor_list.dart';
@@ -96,7 +102,7 @@ class _DashBoardPage extends State<DashboardPage> {
   SharedPreferences? prefs;
   late TextStyleElements styleElements;
   GlobalKey<AppMenuPageState> appMenuKey = GlobalKey();
-  GlobalKey<TricycleBottomSelectorState> bottomSelectorKey = GlobalKey();
+  GlobalKey<appBottomSelectorState> bottomSelectorKey = GlobalKey();
   final DynamicLinkService? dynamicLinkService = locator<DynamicLinkService>();
   var followers = 0;
   var following = 0;
@@ -359,15 +365,162 @@ BuildContext? dgsContext;
               ));
           break;
         }
-     /* case 'calender':
+      case 'lead_order':
         {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => CalenderPage(),
+                builder: (context) => CrmPage(
+                    id: prefs!.getInt(Strings.userId),
+                    type: "person",
+                    hideTabs:true,
+                    isSwipeDisabled:true,
+                    hideAppBar: true,
+                    currentTab: 0,
+                    pageTitle: "",
+                    imageUrl: "",
+                    callback: () {
+
+                    }),
               ));
           break;
-        }*/
+        }
+
+      case 'products':
+        {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    SelectItemsPage(
+                        id: prefs!.getInt(Strings.userId),
+                        type: "person",
+                        title: "Product Management",
+                        hideTabs: true,
+                        isSwipeDisabled: true,
+                        hideAppBar: true,
+                        from: "home",
+                        currentTab: 0,
+                        pageTitle: "",
+                        imageUrl: "",
+                        callback: () {
+
+                        }),
+              ));
+
+          break;
+        }
+
+
+      case 'suppliers':
+        {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    SupplierPage(
+                        id: prefs!.getInt(Strings.userId),
+                        type: "person",
+                        hideTabs: true,
+                        isSwipeDisabled: true,
+                        hideAppBar: true,
+                        from: "home",
+                        currentTab: 1,
+                        pageTitle: "",
+                        imageUrl: "",
+                        callback: () {
+
+                        }),
+              ));
+
+          break;
+        }
+      case 'customers':
+        {
+
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CompanyAndCustomerPage(
+                    id: prefs!.getInt(Strings.userId),
+                    type: "person",
+                    hideTabs:true,
+                    isSwipeDisabled:true,
+                    hideAppBar: true,
+                    from:"home",
+                    currentTab: 1,
+                    pageTitle: "",
+                    imageUrl: "",
+                    callback: () {
+
+                    }),
+              ));
+          break;
+        }
+      case 'payments':
+        {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CrmPage(
+                    id: prefs!.getInt(Strings.userId),
+                    type: "person",
+                    hideTabs:true,
+                    isSwipeDisabled:true,
+                    hideAppBar: true,
+                    currentTab: 3,
+                    pageTitle: "",
+                    imageUrl: "",
+                    callback: () {
+
+                    }),
+              ));
+          break;
+        }
+      case 'invoices':
+        {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CrmPage(
+                    id: prefs!.getInt(Strings.userId),
+                    type: "person",
+                    hideTabs:true,
+                    isSwipeDisabled:true,
+                    hideAppBar: true,
+                    currentTab: 2,
+                    pageTitle: "",
+                    imageUrl: "",
+                    callback: () {
+
+                    }),
+              ));
+          break;
+        }
+
+
+      case 'purchase_order':
+        {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => PurchaseOrderPage(
+                    id: prefs!.getInt(Strings.userId),
+                    type: "person",
+                    hideTabs:true,
+                    isSwipeDisabled:true,
+                    hideAppBar: true,
+                    currentTab: 0,
+                    pageTitle: "",
+                    imageUrl: "",
+                    callback: () {
+
+                    }),
+              ));
+          break;
+        }
+
+
       case 'events':
         {
           Navigator.push(
@@ -749,7 +902,7 @@ BuildContext? dgsContext;
 
 
 
-            bottomNavigationBar: TricycleBottomSelector(
+            bottomNavigationBar: appBottomSelector(
               onItemTapped: _onItemTapped,
               currentIndex: _selectedIndex,
               chatCount: chatCount,
@@ -946,7 +1099,7 @@ BuildContext? dgsContext;
 
                     menuList![index].title=="position_2"?
 
-                    TricycleCard(
+                    appCard(
                       padding: EdgeInsets.all(2),
                       // margin: const EdgeInsets.only(
                       //     left: 12.0, right: 12.0, top: 8.0, bottom: 4.0),
@@ -1047,7 +1200,7 @@ BuildContext? dgsContext;
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
                           itemBuilder: (BuildContext context, int indx) {
-                            return TricycleMenuItem(
+                            return appMenuItem(
                               onMenuItemClick: menuitemClick,
                               item: menuList![index].data![indx],
                             );

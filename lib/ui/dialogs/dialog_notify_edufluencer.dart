@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/ui/EdufluencerTutorModule/become_edufluencer_tutor_page.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
@@ -37,7 +37,7 @@ class NotifyEdufluencerDialog extends StatelessWidget {
             Row(
               children: [
                 Spacer(),
-                TricycleTextButton(
+                appTextButton(
                   shape: RoundedRectangleBorder(),
                     onPressed: (){
                       Navigator.pop(context);

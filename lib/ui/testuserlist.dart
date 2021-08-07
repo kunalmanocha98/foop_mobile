@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
 import 'package:oho_works_app/models/testuserlistresponse.dart';
@@ -34,7 +34,7 @@ class _TestUserList extends State<TestUserList> {
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: TricycleAppBar().getCustomAppBar(context,
+        appBar: appAppBar().getCustomAppBar(context,
             appBarTitle:AppLocalizations.of(context)!.translate('users_list'),
             onBackButtonPress: (){
           Navigator.pop(context);
@@ -80,7 +80,7 @@ class _TestUserList extends State<TestUserList> {
       },
       child: ListTile(
 
-        leading: TricycleAvatar(
+        leading: appAvatar(
           size: 48,
           resolution_type: RESOLUTION_TYPE.R64,
           service_type: SERVICE_TYPE.PERSON,
@@ -130,7 +130,7 @@ class _TestUserList extends State<TestUserList> {
           padding: const EdgeInsets.all(16.0),
           child: Text(userListResponse.message!),
         ),
-        TricycleTextButton(
+        appTextButton(
           onPressed: retryListener,
           child: Text(AppLocalizations.of(context)!.translate('retry')),
         )

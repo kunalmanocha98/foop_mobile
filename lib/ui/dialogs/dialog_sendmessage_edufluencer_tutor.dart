@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:oho_works_app/api_calls/calls.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/home/locator.dart';
 import 'package:oho_works_app/messenger_module/entities/connect_list_response_entity.dart';
 import 'package:oho_works_app/messenger_module/entities/create_conversation_response.dart';
@@ -90,7 +90,7 @@ class _EdufluencerTutorDialog extends State<EdufluencerTutorDialog> {
             Row(
               children: [
                 Spacer(),
-                TricycleTextButton(
+                appTextButton(
                   onPressed: () {
                     if (messageController.text.isNotEmpty)
                       createConversation(messageController.text);

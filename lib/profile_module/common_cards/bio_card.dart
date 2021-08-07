@@ -63,7 +63,7 @@ String? type;
           }
 
       },
-      child: TricycleListCard(
+      child: appListCard(
           child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [

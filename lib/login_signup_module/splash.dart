@@ -52,32 +52,32 @@ class _SplashScreenState extends State<SplashScreen> {
     if (prefs.getString("token") != null) {
       if (prefs.getBool("isProfileCreated") != null &&
           prefs.getBool("isProfileCreated")!) {
-        if (prefs.getString("create_institute") == "ConfirmDetails") {
+        if (prefs.getString("create_entity") == "ConfirmDetails") {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                   builder: (ctx) => ConfirmDetails(
                       instId: prefs.getInt("createdSchoolId"),
                       fromPage: "registration")),
                   (Route<dynamic> route) => false);
-        } else if (prefs.getString("create_institute") == "Address") {
+        } else if (prefs.getString("create_entity") == "Address") {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                   builder: (ctx) => InstituteLocationAddressPage(
                       prefs.getInt("createdSchoolId"))),
                   (Route<dynamic> route) => false);
-        } else if (prefs.getString("create_institute") == "Contact") {
+        } else if (prefs.getString("create_entity") == "Contact") {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                   builder: (ctx) => ContactsDetailsPageInstitute(
                       prefs.getInt("createdSchoolId"))),
                   (Route<dynamic> route) => false);
-        } else if (prefs.getString("create_institute") == "Domain") {
+        } else if (prefs.getString("create_entity") == "Domain") {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                   builder: (ctx) =>
                       DomainPage(prefs.getInt("createdSchoolId"))),
                   (Route<dynamic> route) => false);
-        } else if (prefs.getString("create_institute") == "created") {
+        } else if (prefs.getString("create_entity") == "created") {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: (ctx) => WelComeScreen()),
                   (Route<dynamic> route) => false);
@@ -92,32 +92,32 @@ class _SplashScreenState extends State<SplashScreen> {
                   (Route<dynamic> route) => false);
         }
       } else {
-        if (prefs.getString("create_institute") == "ConfirmDetails") {
+        if (prefs.getString("create_entity") == "ConfirmDetails") {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                   builder: (ctx) => ConfirmDetails(
                       instId: prefs.getInt("createdSchoolId"),
                       fromPage: "registration")),
                   (Route<dynamic> route) => false);
-        } else if (prefs.getString("create_institute") == "Address") {
+        } else if (prefs.getString("create_entity") == "Address") {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                   builder: (ctx) => InstituteLocationAddressPage(
                       prefs.getInt("createdSchoolId"))),
                   (Route<dynamic> route) => false);
-        } else if (prefs.getString("create_institute") == "Contact") {
+        } else if (prefs.getString("create_entity") == "Contact") {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                   builder: (ctx) => ContactsDetailsPageInstitute(
                       prefs.getInt("createdSchoolId"))),
                   (Route<dynamic> route) => false);
-        } else if (prefs.getString("create_institute") == "Domain") {
+        } else if (prefs.getString("create_entity") == "Domain") {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                   builder: (ctx) =>
                       DomainPage(prefs.getInt("createdSchoolId"))),
                   (Route<dynamic> route) => false);
-        } else if (prefs.getString("create_institute") == "created") {
+        } else if (prefs.getString("create_entity") == "created") {
           print(
               ":++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
           Navigator.of(context).pushAndRemoveUntil(
@@ -262,7 +262,7 @@ class _SplashScreenState extends State<SplashScreen> {
     styleElements = TextStyleElements(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: HexColor(AppColors.appMainColor),
+      backgroundColor: HexColor(AppColors.appColorWhite),
       body: Stack(
         children: [
           Align(
@@ -284,7 +284,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     AppLocalizations.of(context)!
                         .translate('handcrafted_in_india'),
                     style: styleElements.captionThemeScalable(context).copyWith(
-                      color: HexColor(AppColors.appColorWhite),
+                      color: HexColor(AppColors.appColorBlack85),
                     ),
                   )
                 ],
@@ -328,7 +328,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       AppLocalizations.of(context)!.translate("logo_slogan"),
                       style: styleElements
                           .bodyText1ThemeScalable(context)
-                          .copyWith(color: HexColor(AppColors.appColorWhite)),
+                          .copyWith(color: HexColor(AppColors.appColorBlack85)),
                     ),
                   ),
                 ],

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:oho_works_app/api_calls/calls.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/models/dynmaicres.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
@@ -74,7 +74,7 @@ class GenericFollowUnfollowButtonState
     child: inProgress
         ? CircularProgressIndicator()
         : Container(
-      child: TricycleTextButton(
+      child: appTextButton(
         padding: EdgeInsets.all(0),
         shape: StadiumBorder(
             side: BorderSide(color: HexColor(AppColors.appMainColor))),
@@ -137,7 +137,7 @@ class GenericFollowUnfollowButtonState
     ),
   );
 
-  Widget _simpleTricycleTextButton(BuildContext context) => Visibility(
+  Widget _simpleappTextButton(BuildContext context) => Visibility(
     visible: widget.actionByObjectId != widget.actionOnObjectId,
     child: inProgress
         ? SizedBox(
@@ -215,7 +215,7 @@ class GenericFollowUnfollowButtonState
         Visibility(
           visible:
           widget.isRoundedButton != null ? !widget.isRoundedButton! : false,
-          child: _simpleTricycleTextButton(context),
+          child: _simpleappTextButton(context),
         ),
       ],
     );

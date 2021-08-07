@@ -1,6 +1,6 @@
 
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
 import 'package:oho_works_app/models/base_res.dart';
@@ -108,7 +108,7 @@ class SuggestionCard extends StatelessWidget {
                     ),
                   ],
                 ),
-                TricycleListCard(
+                appListCard(
                   padding:EdgeInsets.only(top: 8,bottom: 4,left: 0,right: 0),
                   margin: EdgeInsets.only(left: 0,right: 0,top: 4,bottom: 4),
                   child: Container(
@@ -143,7 +143,7 @@ class SuggestionCard extends StatelessWidget {
                                                   type: null,
                                                 )));
                                       },
-                                      child: TricycleAvatar(
+                                      child: appAvatar(
                                         size: 96,
                                         key: UniqueKey(),
                                         withBorder: true,

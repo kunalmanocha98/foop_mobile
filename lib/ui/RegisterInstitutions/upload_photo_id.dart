@@ -198,7 +198,7 @@ class _UploadUserIdState extends State<UploadUserId> {
           child: Scaffold(
               resizeToAvoidBottomInset: false,
               backgroundColor: HexColor(AppColors.appColorBackground),
-              appBar: TricycleAppBar().getCustomAppBar(context,
+              appBar: appAppBar().getCustomAppBar(context,
                   appBarTitle: AppLocalizations.of(context)!.translate('upload_photo_id_header'),
                   actions: [
                     Padding(

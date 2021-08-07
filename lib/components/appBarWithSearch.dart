@@ -78,7 +78,7 @@ import 'package:flutter/material.dart';
 //
 // }
 
-class TricycleAppBar {
+class appAppBar {
   getCustomAppBarWithProfileImage(BuildContext context,
       {required String appBarTitle,
         required Function onBackButtonPress,

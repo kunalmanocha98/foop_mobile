@@ -10,7 +10,7 @@ import 'package:oho_works_app/models/invitationlink_response.dart';
 import 'package:oho_works_app/models/menu/menulistmodels.dart';
 import 'package:oho_works_app/models/personal_profile.dart';
 import 'package:oho_works_app/profile_module/common_cards/testcard.dart';
-import 'package:oho_works_app/tri_cycle_database/data_base_helper.dart';
+import 'package:oho_works_app/app_database/data_base_helper.dart';
 import 'package:oho_works_app/ui/invitations/parent_invite_page.dart';
 import 'package:oho_works_app/ui/invitations/user_contacts.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
@@ -69,7 +69,7 @@ class _InvitationPage extends State<InvitationPage> {
     styleElements = TextStyleElements(context);
     return SafeArea(
       child: Scaffold(
-        appBar: TricycleAppBar().getCustomAppBar(context, appBarTitle: 'Invite',
+        appBar: appAppBar().getCustomAppBar(context, appBarTitle: 'Invite',
             onBackButtonPress: () {
           Navigator.pop(context);
         }),
@@ -166,7 +166,7 @@ class _InvitationPage extends State<InvitationPage> {
                       )
                   ),
                 ):
-                TricycleCard(
+                appCard(
                   padding: EdgeInsets.all(0),
                   margin: menuList![index].code == "copylink"
                       ? const EdgeInsets.only(

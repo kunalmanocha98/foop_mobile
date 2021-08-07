@@ -5,7 +5,7 @@ import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/components/paginator.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
 import 'package:oho_works_app/e_learning_module/model/create_chapter_response.dart';
 import 'package:oho_works_app/home/locator.dart';
 import 'package:oho_works_app/models/post/postcreate.dart';
@@ -52,8 +52,8 @@ class _CreateLessonsPage extends State<CreateLessonsPage> {
   String? searchVal;
   SharedPreferences? prefs;
   late TextStyleElements styleElements;
-  GlobalKey<TricycleProgressButtonState> progressButtonKey = GlobalKey();
-  GlobalKey<TricycleProgressButtonState> progressButtonKeyNext = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKey = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKeyNext = GlobalKey();
   GlobalKey<PaginatorState> paginatorKey = GlobalKey();
 
   @override
@@ -80,7 +80,7 @@ class _CreateLessonsPage extends State<CreateLessonsPage> {
     return SafeArea(
       child: Scaffold(
           resizeToAvoidBottomInset: false,
-          appBar: TricycleAppBar().getCustomAppBar(
+          appBar: appAppBar().getCustomAppBar(
             context,
             appBarTitle: AppLocalizations.of(context)!.translate('lessons'),
             actions: [
@@ -206,7 +206,7 @@ class _CreateLessonsPage extends State<CreateLessonsPage> {
                         Visibility(
                           child: GestureDetector(
                             behavior: HitTestBehavior.translucent,
-                            child: TricycleCard(
+                            child: appCard(
 
                               child: ListTile(
                                 tileColor: HexColor(AppColors.listBg),
@@ -230,7 +230,7 @@ class _CreateLessonsPage extends State<CreateLessonsPage> {
                         Visibility(
                           child: GestureDetector(
                             behavior: HitTestBehavior.translucent,
-                            child: TricycleCard(
+                            child: appCard(
 
                               child: ListTile(
                                 tileColor: HexColor(AppColors.listBg),
@@ -254,7 +254,7 @@ class _CreateLessonsPage extends State<CreateLessonsPage> {
                         Visibility(
                           child: GestureDetector(
                             behavior: HitTestBehavior.translucent,
-                            child: TricycleCard(
+                            child: appCard(
 
                               child: ListTile(
                                 tileColor: HexColor(AppColors.listBg),
@@ -278,7 +278,7 @@ class _CreateLessonsPage extends State<CreateLessonsPage> {
                         Visibility(
                           child: GestureDetector(
                             behavior: HitTestBehavior.translucent,
-                            child: TricycleCard(
+                            child: appCard(
 
                               child: ListTile(
                                 tileColor: HexColor(AppColors.listBg),
@@ -315,7 +315,7 @@ class _CreateLessonsPage extends State<CreateLessonsPage> {
     return Visibility(
       child: GestureDetector(
         behavior: HitTestBehavior.translucent,
-        child: TricycleCard(
+        child: appCard(
           child: ListTile(
             tileColor: HexColor(AppColors.listBg),
             title: Align(

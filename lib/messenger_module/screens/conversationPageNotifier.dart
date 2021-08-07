@@ -4,7 +4,7 @@ import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/messenger_module/entities/conversation_list_payload.dart';
 import 'package:oho_works_app/messenger_module/entities/conversation_list_reponse.dart';
 import 'package:oho_works_app/messenger_module/entities/messages_response.dart';
-import 'package:oho_works_app/tri_cycle_database/data_base_helper.dart';
+import 'package:oho_works_app/app_database/data_base_helper.dart';
 import 'package:oho_works_app/utils/config.dart';
 import 'package:oho_works_app/utils/strings.dart';
 import 'package:flutter/material.dart';

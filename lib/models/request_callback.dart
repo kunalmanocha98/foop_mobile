@@ -47,7 +47,7 @@ class RequestCallBack {
     enquiryReference = json['enquiry_reference'];
     numberOfStudent = json['number_of_student'];
     numberOfTeacher = json['number_of_teacher'];
-    institutionType = json['institution_type'];
+    institutionType = json['entity_type'];
     relationShipType = json['relation_ship_type'];
     description = json['description'];
   }
@@ -68,7 +68,7 @@ class RequestCallBack {
     data['enquiry_reference'] = this.enquiryReference;
     data['number_of_student'] = this.numberOfStudent;
     data['number_of_teacher'] = this.numberOfTeacher;
-    data['institution_type'] = this.institutionType;
+    data['entity_type'] = this.institutionType;
     data['relation_ship_type'] = this.relationShipType;
     data['description'] = this.description;
     return data;

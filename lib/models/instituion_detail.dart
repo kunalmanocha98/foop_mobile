@@ -82,7 +82,7 @@ class InstituteonData {
   InstituteonData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     adminUserId = json['admin_user_id'];
-    institutionType = json['institution_type'];
+    institutionType = json['entity_type'];
     code = json['code'];
     description = json['description'];
     name = json['name'];
@@ -137,7 +137,7 @@ class InstituteonData {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
     data['admin_user_id'] = this.adminUserId;
-    data['institution_type'] = this.institutionType;
+    data['entity_type'] = this.institutionType;
     data['code'] = this.code;
     data['description'] = this.description;
     data['name'] = this.name;

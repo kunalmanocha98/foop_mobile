@@ -58,7 +58,7 @@ class _CreateGoal extends State<CreateGoal> {
       SafeArea(child:  Scaffold(
           resizeToAvoidBottomInset: false,
           backgroundColor: HexColor(AppColors.appColorBackground),
-          appBar: TricycleAppBar().getCustomAppBarWithSearch(
+          appBar: appAppBar().getCustomAppBarWithSearch(
               context,
               appBarTitle: 'Create Goal',
               onBackButtonPress: (){_onBackPressed();},
@@ -472,7 +472,7 @@ class _CreateGoal extends State<CreateGoal> {
             title: new Text(
                 AppLocalizations.of(context)!.translate('are_you_sure')),
             content: new Text(
-                AppLocalizations.of(context)!.translate('exit_tricycle')),
+                AppLocalizations.of(context)!.translate('exit_app')),
             actions: <Widget>[
               new GestureDetector(
                 onTap: () => Navigator.of(context).pop(false),

@@ -61,7 +61,7 @@ class ClassesAndBranches extends StatelessWidget {
     list = data.subRow;
     styleElements = TextStyleElements(context);
     this.context = context;
-    return TricycleListCard(
+    return appListCard(
         child: Column(
           children: <Widget>[
             Row(

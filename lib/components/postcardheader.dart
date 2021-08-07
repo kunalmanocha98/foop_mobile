@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:GlobalUploadFilePkg/Enums/contexttype.dart';
 import 'package:oho_works_app/api_calls/calls.dart';
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/enums/post_enums.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
@@ -252,7 +252,7 @@ class PostCardHeaderState extends State<PostCardHeader> {
           ),
           Padding(
             padding: EdgeInsets.only(left: 8.0),
-            child: TricycleAvatar(
+            child: appAvatar(
               key: UniqueKey(),
               resolution_type: RESOLUTION_TYPE.R64,
               service_type: SERVICE_TYPE.PERSON,
@@ -360,7 +360,7 @@ class PostCardHeaderState extends State<PostCardHeader> {
               callback: (isCallSuccess) {},
             ),
           ),
-          // TricycleTextButton(onPressed: (){},
+          // appTextButton(onPressed: (){},
           //     shape: RoundedRectangleBorder(side: BorderSide(color: HexColor(AppColors.appColorWhite))),
           //     child: Text('Action',style: styleElements.captionThemeScalable(context).copyWith(color:HexColor(AppColors.appMainColor)),)),
           Visibility(

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycle_user_list_tile.dart';
+import 'package:oho_works_app/components/app_user_list_tile.dart';
 import 'package:oho_works_app/models/raters_data.dart';
 import 'package:oho_works_app/profile_module/pages/profile_page.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
@@ -72,7 +72,7 @@ class _RatersListPage extends State<RatersListPage>
     super.build(context);
     styleElements = TextStyleElements(context);
 
-    return TricycleListCard(
+    return appListCard(
             child: Paginator.listView(
                 key: paginatorKey,
                 padding: EdgeInsets.only(top: 16),
@@ -129,7 +129,7 @@ class _RatersListPage extends State<RatersListPage>
                   type: null,
                 )));
       },
-      child: TricycleUserListTile(
+      child: appUserListTile(
         imageUrl: item.profileImage,
         title:  item.name ?? "",
         trailingWidget:    Visibility(

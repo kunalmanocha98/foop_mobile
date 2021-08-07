@@ -1,7 +1,7 @@
 import 'dart:ui';
 
-import 'package:oho_works_app/components/tricycle_buttons.dart';
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/models/base_res.dart';
 import 'package:oho_works_app/profile_module/pages/create_goal.dart';
 import 'package:oho_works_app/profile_module/pages/profile_page.dart';
@@ -169,7 +169,7 @@ class GoalsAndObjectiveCard extends StatelessWidget {
                               margin: const EdgeInsets.only(left: 8, right: 8),
                               width: 100.0,
                               height: 10.0,
-                              child: TricycleElevatedButton(
+                              child: appElevatedButton(
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(18.0),
                                     side: BorderSide(color: HexColor(AppColors.appColorLightGreen))),
@@ -207,7 +207,7 @@ class GoalsAndObjectiveCard extends StatelessWidget {
                                     textAlign: TextAlign.left,
                                   ),
                                 ),
-                                TricycleAvatar(
+                                appAvatar(
                                   imageUrl: data.urlOne,
                                   isFullUrl: true,
                                   size: 30,

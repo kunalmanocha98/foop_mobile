@@ -5,9 +5,9 @@ import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/components/paginator.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
-import 'package:oho_works_app/components/tricycle_user_list_tile.dart';
-import 'package:oho_works_app/components/tricycleavatar.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
+import 'package:oho_works_app/components/app_user_list_tile.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
 import 'package:oho_works_app/home/locator.dart';
@@ -81,9 +81,9 @@ class InstituteAdminListPageState extends State<InstituteAdminListPage> {
     styleElements = TextStyleElements(context);
     return SafeArea(
       child: Scaffold(
-        appBar: TricycleAppBar().getCustomAppBarWithSearch(context,
+        appBar: appAppBar().getCustomAppBarWithSearch(context,
             appBarTitle:
-            AppLocalizations.of(context)!.translate('institute_admins'),
+            AppLocalizations.of(context)!.translate('entity_admins'),
             onBackButtonPress: () {
               Navigator.pop(context);
             },
@@ -113,18 +113,18 @@ class InstituteAdminListPageState extends State<InstituteAdminListPage> {
               SliverToBoxAdapter(
                 child: Visibility(
                   visible: filteredList!.length>1,
-                  child: TricycleListCard(
+                  child: appListCard(
                       child: Column(
                           mainAxisSize: MainAxisSize.min,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Padding(
                               padding: EdgeInsets.only(top: 4.0, left: 8,bottom: 8),
-                              child: Text(AppLocalizations.of(context)!.translate('select_institute')),
+                              child: Text(AppLocalizations.of(context)!.translate('select_entity')),
                             ),
                             ListTile(
                               contentPadding: EdgeInsets.all(0),
-                              leading: TricycleAvatar(
+                              leading: appAvatar(
                                 key: UniqueKey(),
                                 imageUrl: Config.BASE_URL +
                                     selectedInstituteId.profileImage!,
@@ -137,7 +137,7 @@ class InstituteAdminListPageState extends State<InstituteAdminListPage> {
                                 selectedInstituteId.name!,
                                 style: styleElements.subtitle1ThemeScalable(context),
                               ),
-                              trailing: TricycleTextButton(
+                              trailing: appTextButton(
                                 onPressed: () {
                                   showBottomSheet();
                                 },
@@ -159,7 +159,7 @@ class InstituteAdminListPageState extends State<InstituteAdminListPage> {
               )
             ];
           },
-          body: TricycleListCard(
+          body: appListCard(
             child: Paginator<AdminListResponse>.listView(
               key: paginatorKey,
               pageLoadFuture: fetchData,
@@ -196,11 +196,11 @@ class InstituteAdminListPageState extends State<InstituteAdminListPage> {
 
   Widget listItemBuilder(itemData, int index) {
     AdminListItem item = itemData;
-    return TricycleUserListTile(
+    return appUserListTile(
       imageUrl: item.profileImage,
       title: item.personName,
       subtitle1: item.institutionName,
-      trailingWidget: TricycleTextButton(
+      trailingWidget: appTextButton(
         onPressed: () {
           removeAdmin(item, index);
         },
@@ -255,7 +255,7 @@ class _BottomSheetInstitute extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 12.0, left: 8, bottom: 12),
           child: Text(
-            AppLocalizations.of(context)!.translate('select_institute'),
+            AppLocalizations.of(context)!.translate('select_entity'),
             style: styleElements.headline6ThemeScalable(context),
           ),
         ),
@@ -271,7 +271,7 @@ class _BottomSheetInstitute extends StatelessWidget {
                       onClickCallback(filteredList!.elementAt(index));
                       Navigator.pop(context);
                     },
-                    child: TricycleUserListTile(
+                    child: appUserListTile(
                         imageUrl: Config.BASE_URL +
                             filteredList!.elementAt(index).profileImage!,
                         isPerson: false,
@@ -319,7 +319,7 @@ class AdminAddRemoveDialog extends StatelessWidget {
             Row(
               children: [
                 Spacer(),
-                TricycleTextButton(
+                appTextButton(
                   onPressed:(){
                     Navigator.pop(context);
                     cancelCallback!();
@@ -332,7 +332,7 @@ class AdminAddRemoveDialog extends StatelessWidget {
                   ),
                 ),
                 SizedBox(width: 8,),
-                TricycleTextButton(
+                appTextButton(
                   onPressed: (){
                     Navigator.pop(context);
                     okCallback!();

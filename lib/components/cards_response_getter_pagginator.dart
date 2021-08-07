@@ -1,4 +1,4 @@
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/models/base_res.dart';
 import 'package:oho_works_app/profile_module/pages/empty_widget.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
@@ -49,7 +49,7 @@ class CustomResponseGetter {
             ),
           ),
         ),
-        TricycleTextButton(
+        appTextButton(
           onPressed: retryListener,
           child: Text(AppLocalizations.of(context)!.translate('retry')),
         )

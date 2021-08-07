@@ -1,7 +1,7 @@
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
-import 'package:oho_works_app/components/tricycle_earn_card.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
+import 'package:oho_works_app/components/app_earn_card.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
@@ -16,7 +16,7 @@ class RegisInstruction extends StatelessWidget{
     var styleElements = TextStyleElements(context);
     return SafeArea(
       child: Scaffold(
-        appBar: TricycleAppBar().getCustomAppBar(context,
+        appBar: appAppBar().getCustomAppBar(context,
             appBarTitle: 'Register Institute',
             onBackButtonPress: (){Navigator.pop(context);}),
         body:
@@ -24,16 +24,16 @@ class RegisInstruction extends StatelessWidget{
           children: <Widget>[
             ListView(
               children: [
-                TricycleEarnCard(
+                appEarnCard(
                   title: AppLocalizations.of(context)!.translate('register'),
                   imageUrl: "",
                   coinsValue: "100",
                   moneyVal: "1000",
                   quote: '',
                   isClickable: false,
-                  type: "register_institute",
+                  type: "register__entity",
                 ),
-                TricycleCard(
+                appCard(
                   margin: EdgeInsets.only(top:2,left:10,right: 10,bottom: 45),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,7 +72,7 @@ class RegisInstruction extends StatelessWidget{
                                   const EdgeInsets.only(
                                       left: 16.0,
                                       right: 16.0),
-                                  child: TricycleElevatedButton(
+                                  child: appElevatedButton(
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                         BorderRadius
@@ -109,7 +109,7 @@ class RegisInstruction extends StatelessWidget{
                                   const EdgeInsets.only(
                                       left: 16.0,
                                       right: 16.0),
-                                  child: TricycleElevatedButton(
+                                  child: appElevatedButton(
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                         BorderRadius

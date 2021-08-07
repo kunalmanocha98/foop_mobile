@@ -91,7 +91,7 @@ class CallBackDialog extends StatelessWidget {
                         left: 16, right: 16, bottom: 30),
                     child: WhiteLargeButton(
                       name: AppLocalizations.of(context)!
-                          .translate("register__institute"),
+                          .translate("register__entity"),
                       offsetX: 70.66,
                       offsetY: 12.93,
                       textColor: AppColors.appColorWhite,

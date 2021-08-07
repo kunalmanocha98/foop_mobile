@@ -1,4 +1,4 @@
-import 'package:oho_works_app/components/tricycle_buttons.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/models/base_res.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
@@ -71,7 +71,7 @@ class SuggestionItemCard extends StatelessWidget {
                                 style: styleElements!.bodyText2ThemeScalable(context)))),
                     Align(
                         alignment: Alignment.bottomCenter,
-                        child: TricycleElevatedButton(
+                        child: appElevatedButton(
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(25.0.w),
                               side: BorderSide(color: HexColor(AppColors.appMainColor))),

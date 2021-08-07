@@ -75,7 +75,7 @@ class _PostHomeCard extends State<PostCard> {
                   }
               ));
             },
-            child: TricyclePostCard(
+            child: appPostCard(
                 key: UniqueKey(),
                 preferences: prefs,
                 cardData: postList[index],

@@ -21,6 +21,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../dialog_page.dart';
 import 'confirm_details_institute.dart';
 import 'country_page.dart';
 import 'models/countries.dart';
@@ -70,7 +71,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
    bool isLoading=false;
   String? selectState;
 
-  String? selectCountry = "Country";
+  String? selectCountry = "Select Country";
 
   String? selectStRange;
 
@@ -280,10 +281,10 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
       child: SafeArea(
           child: Scaffold(
               // resizeToAvoidBottomInset: false,
-              appBar: TricycleAppBar().getCustomAppBar(context,
+              appBar: appAppBar().getCustomAppBar(context,
                   appBarTitle: isEvent! ?
-                  AppLocalizations.of(context)!.translate('register_institute'):
-                  AppLocalizations.of(context)!.translate('select_location'),
+                  AppLocalizations.of(context)!.translate('register__entity'):
+                  AppLocalizations.of(context)!.translate('reg_bus'),
                   isIconVisible:isEvent,
                   actions: [
 
@@ -293,7 +294,15 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
                         behavior: HitTestBehavior.translucent,
                         onTap: (){
 
-                          submit(context);
+                          Navigator.of(context).pushAndRemoveUntil(
+                              MaterialPageRoute(
+                                  builder: (context) => DilaogPage(
+                                      type: "admin",
+                                      isVerified: true,
+                                      title: AppLocalizations.of(context)!.translate('you_are_added_as') + "Employee ",
+                                      subtitle: ("of Google"))),
+                                  (Route<dynamic> route) => false);
+                        //  submit(context);
 
                         },
                         child: Row(
@@ -329,7 +338,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
                   SingleChildScrollView(
                     child: Visibility(
                         visible: !isGoogleOrFacebookDataReceived,
-                        child: TricycleCard(
+                        child: appCard(
                           child: Column(
                             children: <Widget>[
                               Align(
@@ -371,7 +380,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
                                   )),
                               Visibility(
                                 visible: selectCountry != null &&
-                                    selectCountry != "Country",
+                                    selectCountry != "Select Country",
                                 child: Align(
                                     alignment: Alignment.center,
                                     child: Container(
@@ -491,7 +500,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
                     if (value != null) {
                       var data = BaseResponse.fromJson(value);
                       if (data.statusCode == Strings.success_code) {
-                        prefs.setString("create_institute", "ConfirmDetails");
+                        prefs.setString("create_entity", "ConfirmDetails");
                         Navigator.push(
                             context,
                             MaterialPageRoute(

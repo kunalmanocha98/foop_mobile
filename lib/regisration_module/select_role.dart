@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:oho_works_app/api_calls/calls.dart';
-import 'package:oho_works_app/components/tricycle_buttons.dart';
-import 'package:oho_works_app/components/tricycle_earn_card.dart';
+import 'package:oho_works_app/components/app_buttons.dart';
+import 'package:oho_works_app/components/app_earn_card.dart';
 import 'package:oho_works_app/components/white_button_large.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
@@ -198,7 +198,7 @@ class _SelectRole extends State<SelectRole>
                               Container(
                                 margin: const EdgeInsets.only(
                                     right: 16.0),
-                                child: TricycleElevatedButton(
+                                child: appElevatedButton(
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(30.0),
                                       side:
@@ -507,7 +507,7 @@ class _SelectRole extends State<SelectRole>
                                         child: Container(
                                           margin: const EdgeInsets.only(
                                               left: 16.0, right: 16.0),
-                                          child: TricycleElevatedButton(
+                                          child: appElevatedButton(
                                             shape: RoundedRectangleBorder(
                                                 borderRadius:
                                                     BorderRadius.circular(18.0),
@@ -583,7 +583,7 @@ class _SelectRole extends State<SelectRole>
                   } else
                     ToastBuilder().showSnackBar(
                         AppLocalizations.of(context)!
-                            .translate("academic_years"),
+                            .translate("financial_years"),
                         sctx,
                         HexColor(AppColors.information));
                 },
@@ -808,14 +808,14 @@ class NoInstitutePage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    TricycleEarnCard(
+                    appEarnCard(
                       title: AppLocalizations.of(context)!.translate('register'),
                       imageUrl: "",
                       coinsValue: "100",
                       moneyVal: "1000",
                       quote: '',
                       isClickable: true,
-                      type: "register_institute",
+                      type: "register__entity",
                     ),
                     Container(
                       margin: const EdgeInsets.all(16),

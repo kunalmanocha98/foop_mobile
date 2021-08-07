@@ -219,7 +219,7 @@ class _CallBackPage extends State<CallBackPage>
       scrollPadding: EdgeInsets.all(20.0.w),
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-          hintText: AppLocalizations.of(context)!.translate('name_of_institute'),
+          hintText: AppLocalizations.of(context)!.translate('name_of_entity'),
           hintStyle: tsE.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)).copyWith(color: HexColor(AppColors.appColorBlack35)),
           prefixIcon: Padding(
               padding: EdgeInsets.all(0.0.h),
@@ -393,7 +393,7 @@ class _CallBackPage extends State<CallBackPage>
         padding: const EdgeInsets.only(left: 0),
         child: Text(
           selectInstType ??
-              AppLocalizations.of(context)!.translate("inst_type"),
+              AppLocalizations.of(context)!.translate("entity_type"),
           style: styleElements.bodyText2ThemeScalable(context),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
@@ -417,7 +417,7 @@ class _CallBackPage extends State<CallBackPage>
         padding: const EdgeInsets.only(left: 0),
         child: Text(
           selectRelation ??
-              AppLocalizations.of(context)!.translate("Relationship"),
+              AppLocalizations.of(context)!.translate("relationship"),
           style: styleElements.bodyText2ThemeScalable(context),
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
@@ -472,7 +472,7 @@ class _CallBackPage extends State<CallBackPage>
       child: SafeArea(
           child: Scaffold(
               // resizeToAvoidBottomInset: false,
-              appBar: TricycleAppBar().getCustomAppBar(
+              appBar: appAppBar().getCustomAppBar(
                 context,
                 appBarTitle: '',
                 onBackButtonPress: () {
@@ -751,7 +751,7 @@ class _CallBackPage extends State<CallBackPage>
   void getInstituteType() async {
     final body = jsonEncode({
       "search_val": "",
-      "dictonary_type_id": "inst_type",
+      "dictonary_type_id": "entity_type",
       "page_number": 1,
       "page_size": 115
     });

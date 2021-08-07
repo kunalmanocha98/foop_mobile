@@ -195,7 +195,7 @@ class _InstitutePhotoPageState extends State<InstitutePhotoPage> {
           child: Scaffold(
               resizeToAvoidBottomInset: false,
               backgroundColor: HexColor(AppColors.appColorBackground),
-              appBar: TricycleAppBar().getCustomAppBar(context,
+              appBar: appAppBar().getCustomAppBar(context,
                   appBarTitle: AppLocalizations.of(context)!.translate('upload_logo'),
                   actions: [
 
@@ -253,7 +253,7 @@ class _InstitutePhotoPageState extends State<InstitutePhotoPage> {
                                     left: 16.0, right: 16.0, top: 5),
                                 child: Text(
                                   AppLocalizations.of(context)!
-                                      .translate("institute_image_upload_content"),
+                                      .translate("entity_image_upload_content"),
                                   style: styleElements
                                       .subtitle1ThemeScalable(context),
                                   textAlign: TextAlign.center,
@@ -321,7 +321,7 @@ class _InstitutePhotoPageState extends State<InstitutePhotoPage> {
           prefs.setString(Strings.registeredInstituteName, basicData.name??"");
           prefs.setString(Strings.registeredInstituteImage, imageUrl??"");
           prefs.setInt("createdSchoolId", resposne.rows!.institutionId!);
-          prefs.setString("create_institute", "Domain");
+          prefs.setString("create_entity", "Domain");
 
           Navigator.push(
               context,

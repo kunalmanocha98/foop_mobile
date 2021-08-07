@@ -1,5 +1,5 @@
 import 'package:oho_works_app/components/customgridDelegate.dart';
-import 'package:oho_works_app/components/tricycle_rooms_card.dart';
+import 'package:oho_works_app/components/app_rooms_card.dart';
 import 'package:oho_works_app/models/Rooms/roomlistmodels.dart';
 import 'package:oho_works_app/models/base_res.dart';
 import 'package:oho_works_app/ui/RoomModule/room_detail_page.dart';
@@ -115,7 +115,7 @@ class CommunityRoomCard extends StatelessWidget {
                                       roomData,prefs!.getInt(Strings.userId),prefs!.getString(Strings.ownerType),prefs!.getString(Strings.ownerType)=="institution"?"institution":"person",prefs!.getInt(Strings.instituteId),roomData.id,null
                                   )));
                       },
-                      child: TricycleRoomCalenderCard(
+                      child: appRoomCalenderCard(
                         isSmallCard: true,
                         roomData: roomData,
                       ),

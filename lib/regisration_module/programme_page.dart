@@ -5,7 +5,7 @@ import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/searchBox.dart';
-import 'package:oho_works_app/components/tricycleProgressButton.dart';
+import 'package:oho_works_app/components/appProgressButton.dart';
 import 'package:oho_works_app/models/RegisterUserAs.dart';
 import 'package:oho_works_app/models/add_new_skill.dart';
 import 'package:oho_works_app/models/add_new_skill_response.dart';
@@ -43,7 +43,7 @@ class SelectProgram extends StatefulWidget {
 
 class _SelectProgram extends State<SelectProgram>
     with AutomaticKeepAliveClientMixin<SelectProgram> {
-  GlobalKey<TricycleProgressButtonState> progressButtonKeyNext = GlobalKey();
+  GlobalKey<appProgressButtonState> progressButtonKeyNext = GlobalKey();
   SharedPreferences prefs;
   RegisterUserAs registerUserAs;
   int personType;
@@ -121,7 +121,7 @@ class _SelectProgram extends State<SelectProgram>
       child: Scaffold(
           resizeToAvoidBottomInset: false,
           backgroundColor: HexColor(AppColors.appColorBackground),
-          appBar: TricycleAppBar().getCustomAppBar(context,
+          appBar: appAppBar().getCustomAppBar(context,
               appBarTitle: pageTitle, onBackButtonPress: () {
                 _onBackPressed();
               }),
@@ -205,11 +205,11 @@ class _SelectProgram extends State<SelectProgram>
                                                                       ? AppLocalizations.of(
                                                                       context)
                                                                       .translate(
-                                                                      'selected_academic_year')
+                                                                      'selected_financial_year')
                                                                       : AppLocalizations.of(
                                                                       context)
                                                                       .translate(
-                                                                      'select_academic_year'),
+                                                                      'select_financial_year'),
                                                                   style: styleElements
                                                                       .subtitle2ThemeScalable(
                                                                       context),
@@ -243,7 +243,7 @@ class _SelectProgram extends State<SelectProgram>
                                   child: Container(
                                     width: double.infinity,
                                     decoration: BoxDecoration(
-                                        color: Color(0x33F66666),
+                                        color: HexColor(AppColors.appMainColor33),
                                         borderRadius: BorderRadius.only(
                                             topRight: Radius.circular(4.0),
                                             topLeft: Radius.circular(4.0))),
@@ -303,7 +303,7 @@ class _SelectProgram extends State<SelectProgram>
                         child: Row(
                           children: [
                             Spacer(),
-                            TricycleProgressButton(
+                            appProgressButton(
                               key: progressButtonKeyNext,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(18.0),
@@ -330,7 +330,7 @@ class _SelectProgram extends State<SelectProgram>
                                 } else {
                                   ToastBuilder().showSnackBar(
                                       AppLocalizations.of(context)
-                                          .translate("select_academic"),
+                                          .translate("select_department"),
                                       sctx,
                                       HexColor(AppColors.information));
                                 }

@@ -57,7 +57,7 @@ class ProfileProgressCardState extends State<ProfileProgressCard>{
           }
         }
       },
-      child: (progress!=null && progress==100)?Container():TricycleListCard(
+      child: (progress!=null && progress==100)?Container():appListCard(
         padding: EdgeInsets.all(0),
           color: HexColor(AppColors.appColorRed50),
           child: Stack(

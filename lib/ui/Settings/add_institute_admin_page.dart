@@ -5,7 +5,7 @@ import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/components/paginator.dart';
-import 'package:oho_works_app/components/tricycle_user_list_tile.dart';
+import 'package:oho_works_app/components/app_user_list_tile.dart';
 import 'package:oho_works_app/home/locator.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
@@ -44,10 +44,10 @@ class AddInstituteAdminPageState extends State<AddInstituteAdminPage> {
     this.sctx = context;
     return SafeArea(
       child: Scaffold(
-        appBar: TricycleAppBar().getCustomAppBarWithSearch(context,
+        appBar: appAppBar().getCustomAppBarWithSearch(context,
             controller: searchController,
             appBarTitle:
-            AppLocalizations.of(context)!.translate('add_institute_admin'),
+            AppLocalizations.of(context)!.translate('add_entity_admin'),
             onBackButtonPress: () {
               Navigator.pop(context);
             },
@@ -62,7 +62,7 @@ class AddInstituteAdminPageState extends State<AddInstituteAdminPage> {
               });
             }),
         body: isSearching
-            ? TricycleListCard(
+            ? appListCard(
           child: Paginator<StaffListResponse>.listView(
             key: paginatorKey,
             pageLoadFuture: fetchList,
@@ -98,7 +98,7 @@ class AddInstituteAdminPageState extends State<AddInstituteAdminPage> {
       onTap: () {
         assignRole(member);
       },
-      child: TricycleUserListTile(
+      child: appUserListTile(
         imageUrl: member.profileImage,
         title: member.personName,
         subtitle1: member.institutionName,
