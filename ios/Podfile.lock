@@ -1,13 +1,16 @@
 PODS:
-  - agora_rtc_engine (4.0.5):
-    - AgoraRtcEngine_iOS (= 3.4.5)
+  - agora_rtc_engine (4.0.6):
+    - AgoraRtcEngine_iOS (= 3.4.6)
     - Flutter
-  - AgoraRtcEngine_iOS (3.4.5)
+  - AgoraRtcEngine_iOS (3.4.6)
   - Alamofire (4.9.1)
   - background_fetch (1.0.1):
     - Flutter
   - camera (0.0.1):
     - Flutter
+  - connectivity (0.0.1):
+    - Flutter
+    - Reachability
   - device_info (0.0.1):
     - Flutter
   - DKImagePickerController/Core (4.3.2):
@@ -74,7 +77,7 @@ PODS:
     - FirebaseCoreDiagnostics (~> 8.0)
     - GoogleUtilities/Environment (~> 7.4)
     - GoogleUtilities/Logger (~> 7.4)
-  - FirebaseCoreDiagnostics (8.4.0):
+  - FirebaseCoreDiagnostics (8.5.0):
     - GoogleDataTransport (~> 9.0)
     - GoogleUtilities/Environment (~> 7.4)
     - GoogleUtilities/Logger (~> 7.4)
@@ -87,7 +90,7 @@ PODS:
     - PromisesObjC (~> 1.2)
   - FirebaseDynamicLinks (8.3.0):
     - FirebaseCore (~> 8.0)
-  - FirebaseInstallations (8.4.0):
+  - FirebaseInstallations (8.5.0):
     - FirebaseCore (~> 8.0)
     - GoogleUtilities/Environment (~> 7.4)
     - GoogleUtilities/UserDefaults (~> 7.4)
@@ -137,6 +140,7 @@ PODS:
     - GoogleMLKit/FaceDetection
     - GoogleMLKit/ImageLabeling
     - GoogleMLKit/ImageLabelingCustom
+    - GoogleMLKit/LinkFirebase
     - GoogleMLKit/PoseDetection
     - GoogleMLKit/PoseDetectionAccurate
     - GoogleMLKit/TextRecognition
@@ -164,6 +168,9 @@ PODS:
   - GoogleMLKit/ImageLabelingCustom (2.2.0):
     - GoogleMLKit/MLKitCore
     - MLKitImageLabelingCustom (~> 1.3.0)
+  - GoogleMLKit/LinkFirebase (2.2.0):
+    - GoogleMLKit/MLKitCore
+    - MLKitLinkFirebase (~> 1.3.0)
   - GoogleMLKit/MLKitCore (2.2.0):
     - MLKitCommon (~> 3.0.0)
   - GoogleMLKit/PoseDetection (2.2.0):
@@ -175,18 +182,18 @@ PODS:
   - GoogleMLKit/TextRecognition (2.2.0):
     - GoogleMLKit/MLKitCore
     - MLKitTextRecognition (~> 1.3.0)
-  - GoogleToolboxForMac/DebugUtils (2.3.1):
-    - GoogleToolboxForMac/Defines (= 2.3.1)
-  - GoogleToolboxForMac/Defines (2.3.1)
-  - GoogleToolboxForMac/Logger (2.3.1):
-    - GoogleToolboxForMac/Defines (= 2.3.1)
-  - "GoogleToolboxForMac/NSData+zlib (2.3.1)":
-    - GoogleToolboxForMac/Defines (= 2.3.1)
-  - "GoogleToolboxForMac/NSDictionary+URLArguments (2.3.1)":
-    - GoogleToolboxForMac/DebugUtils (= 2.3.1)
-    - GoogleToolboxForMac/Defines (= 2.3.1)
-    - "GoogleToolboxForMac/NSString+URLArguments (= 2.3.1)"
-  - "GoogleToolboxForMac/NSString+URLArguments (2.3.1)"
+  - GoogleToolboxForMac/DebugUtils (2.3.2):
+    - GoogleToolboxForMac/Defines (= 2.3.2)
+  - GoogleToolboxForMac/Defines (2.3.2)
+  - GoogleToolboxForMac/Logger (2.3.2):
+    - GoogleToolboxForMac/Defines (= 2.3.2)
+  - "GoogleToolboxForMac/NSData+zlib (2.3.2)":
+    - GoogleToolboxForMac/Defines (= 2.3.2)
+  - "GoogleToolboxForMac/NSDictionary+URLArguments (2.3.2)":
+    - GoogleToolboxForMac/DebugUtils (= 2.3.2)
+    - GoogleToolboxForMac/Defines (= 2.3.2)
+    - "GoogleToolboxForMac/NSString+URLArguments (= 2.3.2)"
+  - "GoogleToolboxForMac/NSString+URLArguments (2.3.2)"
   - GoogleUtilities/AppDelegateSwizzler (7.5.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
@@ -247,6 +254,11 @@ PODS:
     - MLKitImageLabelingCommon (~> 1.3)
     - MLKitVision (~> 1.3)
     - MLKitVisionKit (~> 2.2)
+  - MLKitLinkFirebase (1.3.0):
+    - FirebaseCore (~> 8.0)
+    - FirebaseInstallations (~> 8.0)
+    - GTMSessionFetcher/Core (~> 1.1)
+    - MLKitCommon (~> 3.0)
   - MLKitMDD (1.3.0):
     - MLKitCommon (~> 3.0)
   - MLKitObjectDetectionCommon (1.3.0):
@@ -296,8 +308,11 @@ PODS:
     - Flutter
   - "permission_handler (5.1.0+2)":
     - Flutter
+  - printing (1.0.0):
+    - Flutter
   - PromisesObjC (1.2.12)
   - Protobuf (3.17.0)
+  - Reachability (3.2)
   - SDWebImage (5.11.1):
     - SDWebImage/Core (= 5.11.1)
   - SDWebImage/Core (5.11.1)
@@ -320,11 +335,14 @@ PODS:
     - Flutter
   - webview_flutter (0.0.1):
     - Flutter
+  - workmanager (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
   - agora_rtc_engine (from `.symlinks/plugins/agora_rtc_engine/ios`)
   - background_fetch (from `.symlinks/plugins/background_fetch/ios`)
   - camera (from `.symlinks/plugins/camera/ios`)
+  - connectivity (from `.symlinks/plugins/connectivity/ios`)
   - device_info (from `.symlinks/plugins/device_info/ios`)
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
@@ -348,6 +366,7 @@ DEPENDENCIES:
   - package_info (from `.symlinks/plugins/package_info/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
+  - printing (from `.symlinks/plugins/printing/ios`)
   - share_plus (from `.symlinks/plugins/share_plus/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
@@ -355,6 +374,7 @@ DEPENDENCIES:
   - video_player (from `.symlinks/plugins/video_player/ios`)
   - wakelock (from `.symlinks/plugins/wakelock/ios`)
   - webview_flutter (from `.symlinks/plugins/webview_flutter/ios`)
+  - workmanager (from `.symlinks/plugins/workmanager/ios`)
 
 SPEC REPOS:
   trunk:
@@ -387,6 +407,7 @@ SPEC REPOS:
     - MLKitImageLabeling
     - MLKitImageLabelingCommon
     - MLKitImageLabelingCustom
+    - MLKitLinkFirebase
     - MLKitMDD
     - MLKitObjectDetectionCommon
     - MLKitPoseDetection
@@ -400,6 +421,7 @@ SPEC REPOS:
     - OrderedSet
     - PromisesObjC
     - Protobuf
+    - Reachability
     - SDWebImage
     - SSZipArchive
     - SwiftyGif
@@ -413,6 +435,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/background_fetch/ios"
   camera:
     :path: ".symlinks/plugins/camera/ios"
+  connectivity:
+    :path: ".symlinks/plugins/connectivity/ios"
   device_info:
     :path: ".symlinks/plugins/device_info/ios"
   file_picker:
@@ -459,6 +483,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider/ios"
   permission_handler:
     :path: ".symlinks/plugins/permission_handler/ios"
+  printing:
+    :path: ".symlinks/plugins/printing/ios"
   share_plus:
     :path: ".symlinks/plugins/share_plus/ios"
   shared_preferences:
@@ -473,13 +499,16 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/wakelock/ios"
   webview_flutter:
     :path: ".symlinks/plugins/webview_flutter/ios"
+  workmanager:
+    :path: ".symlinks/plugins/workmanager/ios"
 
 SPEC CHECKSUMS:
-  agora_rtc_engine: af345fb5c11619bc98c782cd67db32b808ccc641
-  AgoraRtcEngine_iOS: af270dad94a9ef8f8ba82f5f3c7c4145b3dda6ec
+  agora_rtc_engine: d3178bd63d453a2d0111bd45475f17ce1fcc754d
+  AgoraRtcEngine_iOS: 8aa4a8e46bd81963607857b1d46703b93e4de156
   Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
   background_fetch: 2edffc19a5a465c47f073efa35db57f7910738fa
   camera: 3164201dc344383e62282964016528c4f5a9ad50
+  connectivity: c4130b2985d4ef6fd26f9702e886bd5260681467
   device_info: d7d233b645a32c40dfdc212de5cf646ca482f175
   DKImagePickerController: b5eb7f7a388e4643264105d648d01f727110fc3d
   DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
@@ -490,10 +519,10 @@ SPEC CHECKSUMS:
   firebase_dynamic_links: 63d25b8afb1257210012a703b2029b425f0b62c7
   firebase_messaging: 55c5b8184efd330b9d1f1765b55c4ae57e015c5e
   FirebaseCore: a6dba751680d7033b9d3831e1cfc95ead0605118
-  FirebaseCoreDiagnostics: cad03be1904b975f845e632f2720c3337da27faf
+  FirebaseCoreDiagnostics: 7bf55d386f9fc690d971b70a582142321a390eb8
   FirebaseCrashlytics: 3d83f2e8a47f476f47c82ff4536b169df6781271
   FirebaseDynamicLinks: 5ab1f7988e31b5b267a2e034659e43cef4fff613
-  FirebaseInstallations: 1585729afc787877763208c2088ed84221161f77
+  FirebaseInstallations: f2bc590b291d25fb40a9a05b8281c02a881b5117
   FirebaseMessaging: 42252b79b860482021483748669ec32e22196462
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
   flutter_contact: de1260a343986ae87ef21dcda46f4ae584eceb8c
@@ -506,11 +535,11 @@ SPEC CHECKSUMS:
   fluttertoast: 6122fa75143e992b1d3470f61000f591a798cc58
   FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   google_maps_flutter: df4e7de95264aa0a2f11aac0fc7e313acb8ffc7e
-  google_ml_kit: 3e25499de151048da453504d2b676cfd1c6c6bd0
+  google_ml_kit: f968359a5e5f2fbcc2a56b79e1c5e16a8fa80697
   GoogleDataTransport: 85fd18ff3019bb85d3f2c551d04c481dedf71fc9
   GoogleMaps: 086ae1dab659eaa7339bdb30fc88e2f44e7c597c
   GoogleMLKit: 85ffdc9641d05311c76dbba5bbf93059087be12f
-  GoogleToolboxForMac: 471e0c05d39506e50e6398f46fa9a12ae0efeff9
+  GoogleToolboxForMac: 8bef7c7c5cf7291c687cf5354f39f9db6399ad34
   GoogleUtilities: eea970f4a389963963bffe8d8fabe43540678b9c
   GoogleUtilitiesComponents: a69c0b3b369ba443e988141e75ef49d9010b1c80
   GoogleWebRTC: b39a78c4f5cc6b0323415b9233db03a2faa7b0f0
@@ -526,6 +555,7 @@ SPEC CHECKSUMS:
   MLKitImageLabeling: fc44a4f90b1cf16bcb62c043d477c052ba7539ca
   MLKitImageLabelingCommon: fbe695a04fb236555e6b7e69e7def153a04324c1
   MLKitImageLabelingCustom: 83e609e6b7dd8a16dc8790ef325bab1372d1d91d
+  MLKitLinkFirebase: ae5bd6996d0a1a3d3e0bb4c634b594101c07d094
   MLKitMDD: 37b4fbb5fd45809e646fca676945d6a8479ae66e
   MLKitObjectDetectionCommon: 6abf300c61cd781ee3abc8abea8a3f8baca886dc
   MLKitPoseDetection: bbc263ae4e961e83c9350abe919cff183797e687
@@ -541,8 +571,10 @@ SPEC CHECKSUMS:
   package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
   permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0
+  printing: eafa00acb682c0ca029d4d98d0798f55a1e27102
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   Protobuf: 7327d4444215b5f18e560a97f879ff5503c4581c
+  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   share_plus: 056a1e8ac890df3e33cb503afffaf1e9b4fbae68
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
@@ -555,7 +587,8 @@ SPEC CHECKSUMS:
   video_player: 9cc823b1d9da7e8427ee591e8438bfbcde500e6e
   wakelock: d0fc7c864128eac40eba1617cb5264d9c940b46f
   webview_flutter: 3603125dfd3bcbc9d8d418c3f80aeecf331c068b
+  workmanager: 0afdcf5628bbde6924c21af7836fed07b42e30e6
 
 PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.10.2
