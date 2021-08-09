@@ -103,6 +103,7 @@ dependencies:
   grouped_list: ^4.1.0
   #gbk2utf8: ^1.0.1
   rich_editor: ^0.0.4
+
   flutter_webrtc: ^0.6.5
   eventify: ^1.0.0
   printing: ^5.4.3
