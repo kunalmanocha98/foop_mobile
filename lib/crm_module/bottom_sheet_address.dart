@@ -125,11 +125,7 @@ class BottomSheetAddress extends StatelessWidget {
                 onTap: (){     Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => MapPage(
-                          LatLng(28.7041, 77.1025),
-                          28.7041,
-                          77.1025),
-                    ));},
+                      builder: (context) => MapPage()));},
                 child: Container(
                   height: 48,
                   margin:  EdgeInsets.only(left: 16, right: 16, top: 2,bottom: 12),

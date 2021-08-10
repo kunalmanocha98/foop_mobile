@@ -83,6 +83,7 @@ class AppColors {
   static const String pollBackground ="#D7D3D3";
   static const String appChatBackgroundColor ="#EAE8E8";
   static const String dividerColor ="#F3f2f2";
+  static const String greyBg ="#E0E0E0";
 
 
   static const List<Color> colorsList = [

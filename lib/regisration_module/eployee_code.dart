@@ -27,12 +27,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore: must_be_immutable
 class EmployeeCode extends StatefulWidget {
-  int? instId;
+  RegisterUserAs? registerUserAs;
   @override
   _EmployeeCode createState() =>
-      new _EmployeeCode(instId);
+      new _EmployeeCode();
 
-  EmployeeCode(this.instId);
+  EmployeeCode(this.registerUserAs);
 }
 
 class _EmployeeCode extends State<EmployeeCode>
@@ -66,7 +66,7 @@ class _EmployeeCode extends State<EmployeeCode>
   final addController = TextEditingController();
   final ohoUserName = TextEditingController();
 
-  RegisterUserAs? registerUserAs=RegisterUserAs();
+
 
   late BuildContext context;
   late TextStyleElements styleElements;
@@ -147,7 +147,7 @@ class _EmployeeCode extends State<EmployeeCode>
             // resizeToAvoidBottomInset: false,
               appBar: appAppBar().getCustomAppBar(context,
                   appBarTitle: "Enter admission code",
-                  isIconVisible:false,
+                  isIconVisible:true,
                   actions: [
 
                     Padding(
@@ -242,7 +242,21 @@ register();
 
 
 
+                              Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: Container(
+                                      margin: EdgeInsets.only(
+                                          left: 8.w, right: 8.w, bottom: 8.h,top: 16),
+                                      child: Text(
+                                        "Instructions\n\n 1. An admission code is provided by your employer that. Please contact administrator’s name to get an invitation.\n 2. Admission code is unique, you should not share the admission code with anyone else.",style: styleElements
+                                          .bodyText2ThemeScalable(context)
+                                          .copyWith(color: HexColor(AppColors.appColorBlack85)),
 
+                                      ),
+                                    ),
+                                  )),
 
 
 
@@ -251,21 +265,7 @@ register();
                         )),
                   ),
 
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Container(
-                          margin: EdgeInsets.only(
-                              left: 8.w, right: 8.w, bottom: 8.h,top: 16),
-                          child: Text(
-                            "Instructions\n\n 1. An admission code is provided by your employer that. Please contact administrator’s name to get an invitation.\n 2. Admission code is unique, you should not share the admission code with anyone else.",style: styleElements
-                              .bodyText2ThemeScalable(context)
-                              .copyWith(color: HexColor(AppColors.appColorBlack85)),
 
-                          ),
-                        ),
-                      )),
                   Align(
                       alignment: FractionalOffset.bottomCenter,
                       child: GestureDetector(
@@ -316,6 +316,7 @@ register();
 
   // ignore: missing_return
   Future<bool> _onBackPressed() {
+    Navigator.pop(context);
     return new Future(() => false);
   }
 
@@ -356,37 +357,46 @@ register();
     });
   }
 
-  _EmployeeCode(this.instId);
+  _EmployeeCode();
 
   void register() async {
 
-    final body = jsonEncode(registerUserAs);
 
-    Calls().call(body, context, Config.REGISTER_USER_AS).then((value) async {
-      if (value != null) {
+    if(ohoUserName.text!=null && ohoUserName.text.isNotEmpty) {
+      RegisterUserAs registerUserAs = widget.registerUserAs!;
+      registerUserAs.invitation_code = ohoUserName.text.toString();
+      registerUserAs.personId = prefs.getInt(Strings.userId);
 
-        var data = RegisterUserAsResponse.fromJson(value);
-        print(data.toString());
-        if (data.statusCode == "S10001") {
-          prefs.setBool("isProfileCreated", true);
+      final body = jsonEncode(registerUserAs);
 
-          Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(
-                  builder: (context) => DilaogPage(
-                      type: "admin",
-                      isVerified: true,
-                      title: AppLocalizations.of(context)!.translate('you_are_added_as') + "Employee ",
-                      subtitle: ("of Google"))),
-                  (Route<dynamic> route) => false);
+      Calls().call(body, context, Config.REGISTER_USER_AS).then((value) async {
+        if (value != null) {
+          var data = RegisterUserAsResponse.fromJson(value);
+          print(data.toString());
+          if (data.statusCode == "S10001") {
+            prefs.setBool("isProfileCreated", true);
 
-
-
-        } else
-          ToastBuilder().showToast(data.message!, context,HexColor(AppColors.information));
-      }
-    }).catchError((onError) async {
-      ToastBuilder().showToast(onError.toString(), context,HexColor(AppColors.information));
-
-    });
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                    builder: (context) => DilaogPage(
+                        type: "admin",
+                        isVerified: true,
+                        title: AppLocalizations.of(context)!
+                                .translate('you_are_added_as') +
+                            "Employee  of",
+                        subtitle: (data.rows!.institutionName!))),
+                (Route<dynamic> route) => false);
+          } else
+            ToastBuilder().showToast(
+                data.message!, context, HexColor(AppColors.information));
+        }
+      }).catchError((onError) async {
+        ToastBuilder().showToast(
+            onError.toString(), context, HexColor(AppColors.information));
+      });
+    }
+    else
+      ToastBuilder().showToast(
+         AppLocalizations.of(context)!.translate("code_req"), context, HexColor(AppColors.information));
   }
 }

@@ -110,9 +110,9 @@ class Persondata {
     profileImage = json['profile_image'];
     coverImage = json['cover_image'];
     institutionId = json['business_id'];
-    if (json['institutions'] != null) {
+    if (json['businesses'] != null) {
       institutions = [];//Institutions>();
-      json['institutions'].forEach((v) {
+      json['businesses'].forEach((v) {
         institutions!.add(new Institutions.fromJson(v));
       });
     }
@@ -155,7 +155,7 @@ class Persondata {
     data['cover_image'] = this.coverImage;
     data['business_id'] = this.institutionId;
     if (this.institutions != null) {
-      data['institutions'] = this.institutions!.map((v) => v.toJson()).toList();
+      data['businesses'] = this.institutions!.map((v) => v.toJson()).toList();
     }
     if (this.permissions != null) {
       data['permissions'] = this.permissions!.map((v) => v.toJson()).toList();

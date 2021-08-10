@@ -1,5 +1,6 @@
 
 import 'package:oho_works_app/components/appbar_with_profile%20_image.dart';
+import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/components/customtabview.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
@@ -63,7 +64,6 @@ class _CommunityPage extends State<CommunityPage>
 
   Future<void> getMenuList() async {
     type= _currentPosition ==0 ? "room": "network" ;
-  print(type!+"----------------------------------------------------------------------");
    menuList.clear();
     menuList =  getList(type);
     setState(() {
@@ -248,19 +248,15 @@ class _CommunityPage extends State<CommunityPage>
               roomsKey.currentState!.setCurrentPage(1);
               break;
             }
-          case 'public':
+
+          case 'social':
             {
               roomsKey.currentState!.setCurrentPage(2);
               break;
             }
-          case 'social':
+          case 'Company':
             {
               roomsKey.currentState!.setCurrentPage(3);
-              break;
-            }
-          case 'campus':
-            {
-              roomsKey.currentState!.setCurrentPage(4);
               break;
             }
 
@@ -283,30 +279,14 @@ class _CommunityPage extends State<CommunityPage>
 
               break;
             }
-          case 'teacher':
+          case 'coworker':
             {
               networkKey.currentState!.setCurrentPage(3);
 
               break;
             }
-          case 'parent':
-            {
-              networkKey.currentState!.setCurrentPage(4);
 
-              break;
-            }
-          case 'student':
-            {
-              networkKey.currentState!.setCurrentPage(5);
 
-              break;
-            }
-          case 'alumni':
-            {
-              networkKey.currentState!.setCurrentPage(6);
-
-              break;
-            }
         }
       },
     );
@@ -334,87 +314,121 @@ class _CommunityPage extends State<CommunityPage>
     list.add(PopupMenuItem(
         enabled: true,
         value: type == "room" ? "all" : "networkAll",
-        child: Center(
-          child: Text(
-            type == "room" ? "All" : "All",
-            style: styleElements
-                .subtitle1ThemeScalable(context)
-                .copyWith(fontWeight: FontWeight.bold),
-          ),
-        )));
+        child:
+        getUiElement(
+
+            "All",
+            type == "room"? 'all type of rooms':"all of your network members",
+            'assets/appimages/general-post.png')
+        )
+
+
+        );
     list.add(PopupMenuItem(
         enabled: true,
         value: type == "room" ? "private" : "following",
-        child: Center(
-          child: Text(
+        child:
+        getUiElement(
+
             type == "room" ? "Private" : "Following",
-            style: styleElements
-                .subtitle1ThemeScalable(context)
-                .copyWith(fontWeight: FontWeight.bold),
-          ),
-        )));
+            type == "room"? 'all private room ':"all member whom you following",
+            'assets/appimages/general-post.png')
+    )
+
+
+      );
+    if(type!="room")
     list.add(PopupMenuItem(
         enabled: true,
         value: type == "room" ? "public" : "follower",
-        child: Center(
-          child: Text(
+        child:
+
+        getUiElement(
+
             type == "room" ? "Public" : "Follower",
-            style: styleElements
-                .subtitle1ThemeScalable(context)
-                .copyWith(fontWeight: FontWeight.bold),
-          ),
-        )));
+            type == "room"? 'all type of rooms':"Members who are following you",
+            'assets/appimages/general-post.png')
+    )
+
+      );
+    if(type=="room")
     list.add(PopupMenuItem(
         enabled: true,
         value: type == "room" ? "social" : "teacher",
-        child: Center(
-          child: Text(
+        child:
+
+        getUiElement(
+
             type == "room" ? "Social" : "Teacher",
-            style: styleElements
-                .subtitle1ThemeScalable(context)
-                .copyWith(fontWeight: FontWeight.bold),
-          ),
-        )));
+            type == "room"? 'all type of rooms':"all of your network members",
+            'assets/appimages/general-post.png')
+    )
+        );
+    if(type=="room")
     list.add(PopupMenuItem(
         enabled: true,
-        value: type == "room" ? "campus" : "parent",
-        child: Center(
-          child: Text(
-            type == "room" ? "Campus" : "Parent",
-            style: styleElements
-                .subtitle1ThemeScalable(context)
-                .copyWith(fontWeight: FontWeight.bold),
-          ),
-        )));
+        value: type == "room" ? "Company" : "parent",
+        child:
+        getUiElement(
 
-    if (type != "room")
-      {
-        list.add(PopupMenuItem(
-            enabled: true,
-            value: "student",
-            child: Center(
-              child: Text(
-                "Student",
-                style: styleElements
-                    .subtitle1ThemeScalable(context)
-                    .copyWith(fontWeight: FontWeight.bold),
-              ),
-            )));
+            type == "room" ? "Company" : "Parent",
+            type == "room"? 'all room of your company':"all of your network members",
+            'assets/appimages/general-post.png')
+    )
 
 
-        list.add(PopupMenuItem(
+       );
+    if(type!="room")
+      list.add(PopupMenuItem(
           enabled: true,
-          value: "alumni",
-          child: Center(
-            child: Text(
-              "Alumni",
-              style: styleElements
-                  .subtitle1ThemeScalable(context)
-                  .copyWith(fontWeight: FontWeight.bold),
-            ),
-          )));}
+          value:  "coworker",
+          child:
+          getUiElement(
+
+              "Co-worker",
+              type == "room"? 'all type of rooms':"all of your network members",
+              'assets/appimages/general-post.png')
+
+         ));
+
 
     setState(() {});
     return list;
+  }
+
+
+  Widget getUiElement(String title, String subtitle, String assetimage) {
+    return appListCard(
+      padding: EdgeInsets.all(8),
+      margin: EdgeInsets.only(top: 2, bottom: 2, left: 4, right: 4),
+      child: Row(
+        children: [
+          Image.asset(
+            assetimage,
+            width: 16,
+            height: 16,
+          ),
+          Flexible(
+            child: Padding(
+              padding: EdgeInsets.only(left: 8.0),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      title,
+                      style: styleElements.subtitle1ThemeScalable(context),
+                    ),
+                    Text(
+                      subtitle,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ]),
+            ),
+          )
+        ],
+      ),
+    );
   }
 }

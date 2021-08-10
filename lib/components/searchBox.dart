@@ -17,6 +17,7 @@ class SearchBox extends StatefulWidget {
   Function? onFilterClick;
   bool isDemoBox;
   Function? onBoxClick;
+  Widget? clearText;
   TextEditingController? controller;
   IconData? icon;
   SearchBox(
@@ -25,6 +26,7 @@ class SearchBox extends StatefulWidget {
       this.progressIndicator,
       this.hintText,
         this.icon,
+        this.clearText,
       this.isFilterVisible,
         this.onBoxClick,
         this.isDemoBox= false,
@@ -121,6 +123,10 @@ class SearchBoxState extends State<SearchBox> {
                         ),
                       ),
                     ),
+
+                    Visibility(visible:widget.clearText!=null ,
+
+                    child: widget.clearText??Container()),
                     Visibility(
                         visible: progressIndicator ??= false,
                         child: Container(
@@ -134,6 +140,7 @@ class SearchBoxState extends State<SearchBox> {
                             ),
                           ),
                         ))
+
                   ],
                 )
                 ),
@@ -141,6 +148,8 @@ class SearchBoxState extends State<SearchBox> {
             ),
           ),
         ),
+
+
         Visibility(
           visible: isFilterVisible??= false,
           child: Container(

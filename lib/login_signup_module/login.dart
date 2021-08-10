@@ -419,8 +419,7 @@ class StateLoginPage extends State<LoginPage> {
               DataSaveUtils().saveUserData(prefs, persondata);
               if(data.rows!.firstName !=null && data.rows!.firstName!.isNotEmpty) {
                 if (data.rows!.institutions != null &&
-                    data.rows!.institutions!.isNotEmpty &&
-                    isProfileCreated(data.rows!.institutions!)) {
+                    data.rows!.institutions!.isNotEmpty ) {
                   prefs!.setBool("isProfileCreated", true);
                   prefs!.setBool("isProfileUpdated", true);
                   Navigator.of(context).pushAndRemoveUntil(

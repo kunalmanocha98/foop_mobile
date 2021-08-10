@@ -58,6 +58,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'domain.dart';
 import 'models/basicInstituteData.dart';
+import 'models/basic_response.dart';
 
 class BasicInstituteDetails extends StatefulWidget {
   @override
@@ -72,10 +73,11 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
   String? imageUrl="";
   var range = <String>[];
   var rangeStudent = <String>[];
-
+  late BasicData basicData;
   var instituteTypelist = <String?>[];
   var instCategory = <String?>[];
   var employeeRangeList = <String?>[];
+  var employeeRange=["1-10","10-50","50-500","500-10000"];
   bool isTermAndConditionAccepted = false;
   String email = "";
   bool isGoogleOrFacebookDataReceived = false;
@@ -100,7 +102,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
   String? selectInstCategory;
   String? selectInstType;
   String? selectStRange;
-  String? employeeRange;
+  String? employeeRanget;
   int? selectedEpoch;
   var mapIntType = HashMap<String?, String?>();
   var mapCategory = HashMap<String?, String?>();
@@ -132,7 +134,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
 
     List<DropdownMenuItem> instituteType = [];
     List<DropdownMenuItem> relationType = [];
-
+    List<DropdownMenuItem> empList = [];
 
     _getInstituteType() {
       for (int i = 0; i < instituteTypelist.length; i++) {
@@ -148,7 +150,18 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
     }
 
 
-
+    _getEmployeeRange() {
+      for (int i = 0; i < employeeRange.length; i++) {
+        empList.add(DropdownMenuItem(
+          child: Text(
+            employeeRange[i],
+            style: styleElements.bodyText2ThemeScalable(context),
+          ),
+          value: employeeRange[i],
+        ));
+      }
+      return empList;
+    }
 
     _getRelationtype() {
       for (int i = 0; i < instCategory.length; i++) {
@@ -337,7 +350,27 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
         FocusScope.of(context).requestFocus(new FocusNode());
       },
     );
-
+    final employeeRanges = DropdownButtonFormField<dynamic>(
+      value: null,
+      decoration: InputDecoration(
+          contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 2.0.w, 15.0.h)),
+      hint: Padding(
+        padding: const EdgeInsets.only(left: 0),
+        child: Text(
+          employeeRanget ?? AppLocalizations.of(context)!.translate("entity_type_employees"),
+          style: styleElements.bodyText2ThemeScalable(context),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+        ),
+      ),
+      items: _getEmployeeRange(),
+      onChanged: (value) {
+        setState(() {
+          employeeRanget = value;
+        });
+        FocusScope.of(context).requestFocus(new FocusNode());
+      },
+    );
 
     final category = DropdownButtonFormField<dynamic>(
       value: null,
@@ -483,7 +516,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
                                   child: Container(
                                       padding: EdgeInsets.only(
                                           left: 8.w, right: 8.w, bottom: 8.h),
-                                      child: Container()),
+                                      child: employeeRanges),
                                 ),
 
 
@@ -591,12 +624,11 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
   }
   // ignore: missing_return
   Future<bool> _onBackPressed() {
-    Navigator.of(context).pop(true);
+Navigator.pop(context);
     return new Future(() => false);
   }
 
   void submit(BuildContext ctx) async {
-
 
     prefs = await SharedPreferences.getInstance();
     BasicData basicData = new BasicData();
@@ -614,48 +646,90 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
           {
             {
               {
-                var cat;
-                var type;
-                mapCategory.forEach((key, value) {
-                  if(key==selectInstCategory)
-                    cat=value;
 
-                });
-                mapIntType.forEach((key, value) {
-                  if(key==selectInstType)
-                    type=value;
+                if(employeeRanget!=null )
+                  {
 
-                });
-                prefs = await SharedPreferences.getInstance();
-                BasicData basicData = new BasicData();
-                basicData.name=instituteNameC.text.toString();
-                basicData.description=descriptionController.text.toString();
-                basicData.inst_cat_code=cat;
-                basicData.entity_type_code=type;
-                basicData.listOfNames=_listOfHashTags;
-                prefs.setString("instName", instituteNameC.text.toString());
-                print(jsonEncode(basicData));
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => DomainPage(2),
-                    ));
+                    var cat;
+                    var type;
+                    mapCategory.forEach((key, value) {
+                      if(key==selectInstCategory)
+                        cat=value;
+
+                    });
+                    mapIntType.forEach((key, value) {
+                      if(key==selectInstType)
+                        type=value;
+
+                    });
+                    prefs = await SharedPreferences.getInstance();
+                    BasicData basicData = new BasicData();
+                    basicData.name=instituteNameC.text.toString();
+                    basicData.description=descriptionController.text.toString();
+                    basicData.inst_cat_code=cat;
+                    basicData.entity_type_code=type;
+                    basicData.employeeRange=employeeRanget;
+                    basicData.listOfNames=_listOfHashTags;
+                    prefs.setString("instName", instituteNameC.text.toString());
+                    print(jsonEncode(basicData));
+
+                    if (imageUrl != null) {
+                      basicData.profile_image = imageUrl;
+                    }
+                    final body = jsonEncode(basicData);
+                    Calls()
+                        .call(body, context, Config.BASIC_INSTITUTE_REGISTER)
+                        .then((value) async {
+                      if (value != null) {
+
+                        var resposne = BasicDataResponse.fromJson(value);
+                        if (resposne.statusCode == Strings.success_code) {
+                          prefs.setString(Strings.registeredInstituteName, basicData.name??"");
+                          prefs.setString(Strings.registeredInstituteImage, imageUrl??"");
+                          prefs.setInt("createdSchoolId", resposne.rows!.institutionId!);
+                          prefs.setString("create_entity", "Domain");
+
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DomainPage(resposne.rows!.institutionId!),
+                              ));
+                        }
+                      }
+                    }).catchError((onError) async {
+
+                      print(onError.toString());
+
+                    });
+
+
+                  }
+                else
+                  ToastBuilder().showToast(
+                      AppLocalizations.of(context)!.translate("employee_number"),
+                      context,
+                      HexColor(AppColors.information));
+
+
               }
             }
           }
         }
         else {
           ToastBuilder().showToast(
-              "Please select institute category",
+              AppLocalizations.of(context)!.translate("company_category"),
               context,
               HexColor(AppColors.information));
         }
       } else
         ToastBuilder().showToast(
-            "Please select institute type",
+            AppLocalizations.of(context)!.translate("company_type"),
             context,
             HexColor(AppColors.information));
     }
+    else
+      ToastBuilder().showToast(
+    AppLocalizations.of(context)!.translate("company_req"), context, HexColor(AppColors.information));
   }
 
 

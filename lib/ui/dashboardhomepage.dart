@@ -1050,7 +1050,7 @@ BuildContext? dgsContext;
                                 child: Image(
                                   height: 300,
                                   image: AssetImage(
-                                      'assets/appimages/student_home.png'),
+                                      'assets/appimages/home_ohi.png'),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -1129,7 +1129,7 @@ BuildContext? dgsContext;
                                 showQr: true,
                                 instId:
                                 prefs!=null? prefs!.getInt(Strings.instituteId).toString():"",
-                                title: prefs!=null?prefs!.getString(Strings.userName):"",
+                                title: prefs!=null?prefs!.getString(Strings.userName)??"--":"",
                                 isUserVerified:
                                 rows != null ? rows!.isVerified : false,
                                 ownerTye: prefs != null

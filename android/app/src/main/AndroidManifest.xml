@@ -3,13 +3,13 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:label="oho_works_app"
-        android:icon="@mipmap/ic_launcher">
+        android:label="OhoWorks"
+        android:icon="@mipmap/launcher_icon">
 
 
        <meta-data
            android:name="com.google.android.geo.API_KEY"
-           android:value="AIzaSyDWv75mZjT0FoUZE-NxxYqOJ4c4xLZLUhY"/>
+           android:value="AIzaSyAle_QlZpymzB-DmbtpqHNrnZYyFQeNjwQ"/>
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/app_buttons.dart';
+import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/mixins/editProfileMixin.dart';
 import 'package:oho_works_app/models/deeplink_response.dart';
 import 'package:oho_works_app/models/invite_users_payload.dart';
@@ -93,14 +94,7 @@ class _InviteTeachersClassMates extends State<InviteTeachersClassMates> {
                             style:
                                 styleElements.headline6ThemeScalable(context),
                           )),
-                          Container(
-                              child: Text(
-                            AppLocalizations.of(context)!
-                                .translate("earn_coins"),
-                            style: styleElements
-                                .headline6ThemeScalable(context)
-                                .copyWith(fontWeight: FontWeight.bold),
-                          ))
+
                         ],
                       ),
                     ),
@@ -111,13 +105,14 @@ class _InviteTeachersClassMates extends State<InviteTeachersClassMates> {
                 itemCount: list.length,
                 padding: EdgeInsets.only(bottom: 60),
                 itemBuilder: (BuildContext context, int index) {
-                  return Card(
-                    child: ListTile(
-                      title: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                  return  ListTile(
+                    title: Card(
+                      color: HexColor(AppColors.greyBg),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left:2.0,right: 2.0),
                         child: AddNewField(
                           list[index],
-                            "Email or Phone number *",
+                          "Email or Phone number *",
                           callBck: (String data) {
                             setState(() {
                               if (data.isNotEmpty)
@@ -128,24 +123,30 @@ class _InviteTeachersClassMates extends State<InviteTeachersClassMates> {
                           },
                         ),
                       ),
-                      trailing: GestureDetector(
-                        behavior: HitTestBehavior.translucent,
-                        onTap: () {
-                          if (index == list.length - 1) {
-                            if (list[index] == "") {
-                              if (list.length > 1) {
-                                list.removeAt(index);
-                              }
-                            } else {
-                              list.add("");
+                    ),
+                    trailing: GestureDetector(
+                      behavior: HitTestBehavior.translucent,
+                      onTap: () {
+                        if (index == list.length - 1) {
+                          if (list[index] == "") {
+                            if (list.length > 1) {
+                              list.removeAt(index);
                             }
-                            setState(() {});
+                          } else {
+                            list.add("");
                           }
-                        },
-                        child: list[index] == ""
-                            ? Icon(Icons.remove_circle_outline)
-                            : Icon(Icons.add_circle_outline),
-                      ),
+                          setState(() {});
+                        }
+                      },
+                      child: list[index] == ""
+                          ? Padding(
+                            padding: const EdgeInsets.only(top:8.0),
+                            child: Icon(Icons.remove_circle_outline),
+                          )
+                          : Padding(
+                            padding: const EdgeInsets.only(top:8.0),
+                            child: Icon(Icons.add_circle_outline),
+                          ),
                     ),
                   );
                 },
@@ -290,9 +291,17 @@ class _AddNewField extends State<AddNewField> {
         onChanged: (v) {
           callBck!(v);
         },
+
         decoration: InputDecoration(
+          border: InputBorder.none,
+          focusedBorder: InputBorder.none,
+          enabledBorder: InputBorder.none,
+          errorBorder: InputBorder.none,
+          disabledBorder: InputBorder.none,
             hintText: AppLocalizations.of(context)!.translate('email_phone'),
-          hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35))
+          hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
+          contentPadding:
+          EdgeInsets.only(left: 15, bottom: 0, top: 0, right: 15),
         ),
         validator: (data) {
           if (data!.trim().isEmpty) return hint;

@@ -176,9 +176,7 @@ class ContactInfoCard extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => MapPage(
-                                        LatLng(data.lat!, data.lon!),
-                                        data.lat,
-                                        data.lon),
+                                        ),
                                   ));
                             }
                           },

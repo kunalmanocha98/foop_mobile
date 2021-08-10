@@ -24,6 +24,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../dialog_page.dart';
+import 'basic_institute_detail.dart';
 import 'confirm_details_institute.dart';
 import 'country_page.dart';
 import 'models/countries.dart';
@@ -271,9 +272,9 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
       ),
       items: _getRelationtype(),
       onChanged: (value) {
-        value as DropdownMenuItem;
+
         setState(() {
-          selectState = (value) as String?;
+          selectState = value;
         });
       },
     );
@@ -296,15 +297,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
                         behavior: HitTestBehavior.translucent,
                         onTap: (){
 
-                          Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(
-                                  builder: (context) => DilaogPage(
-                                      type: "admin",
-                                      isVerified: true,
-                                      title: AppLocalizations.of(context)!.translate('you_are_added_as') + "Employee ",
-                                      subtitle: ("of Google"))),
-                                  (Route<dynamic> route) => false);
-                        //  submit(context);
+                          submit(context);
 
                         },
                         child: Row(
@@ -369,9 +362,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => MapPage(
-                                            LatLng(28.7041, 77.1025),
-                                            28.7041,
-                                            77.1025),
+                                          ),
                                       ));
                                 },
                                 child: Container(
@@ -519,13 +510,16 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
                     if (value != null) {
                       var data = BaseResponse.fromJson(value);
                       if (data.statusCode == Strings.success_code) {
-                        prefs.setString("create_entity", "ConfirmDetails");
-                        Navigator.push(
+                        prefs.setString("create_entity", "created");
+
+                        Navigator.of(context)
+                            .pushNamedAndRemoveUntil('/selectBusiness', (Route<dynamic> route) => false);
+                      /*  Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (BuildContext context) =>
                                     ConfirmDetails(instId: instId,
-                                        fromPage: "registration")));
+                                        fromPage: "registration")));*/
                       }
                     }
                   }).catchError((onError) {

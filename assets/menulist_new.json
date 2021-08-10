@@ -14,9 +14,22 @@
       "title": "position_2"
 
     },
+
+
+
     {
       "title": "Team",
       "data": [
+
+
+        {
+          "title": "Invite friends",
+          "code": "invite",
+          "imageUrl": "assets/appimages/create-invitation.png",
+          "tag": "",
+          "description": "Invite & earn oho coins & cash",
+          "isTagVisivle": false
+        },
         {
           "title": "My Team",
           "code": "notice",
@@ -374,6 +387,15 @@
       "title": "Support and Helpdesk",
       "data": [
 
+
+        {
+          "title": "Settings",
+          "code": "settings",
+          "imageUrl": "assets/appimages/create-settings.png",
+          "tag": "",
+          "description": "Account, privacy & Password",
+          "isTagVisivle": false
+        },
         {
           "title": "Issue & Tickets",
           "code": "settings",
@@ -381,8 +403,15 @@
           "tag": "",
           "description": "Service Description",
           "isTagVisivle": false
+        },
+        {
+          "title": "Logout",
+          "code": "logout",
+          "imageUrl": "assets/appimages/create-logout.png",
+          "tag": "",
+          "description": "You will never want to Logout",
+          "isTagVisivle": false
         }
-
       ]
     }
   ]

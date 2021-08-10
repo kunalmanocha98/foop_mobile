@@ -8,7 +8,8 @@ class RegisterUserAs {
   String? dateOfBirth;
   List<int?>? personPrograms;
   List<int>? personDepartments;
-  Null personCode;
+  String ?personCode;
+  String ?invitation_code;
   List<String>? inactiveInstitutionIds;
   String? academicYear;
   bool? isDepartment;
@@ -18,6 +19,7 @@ bool? isDefaultInstitution;
       {this.institutionId,
       this.personId,
       this.isDepartment,
+        this.invitation_code,
       this.personTypeList,
       this.personClasses,
       this.personSubjects,
@@ -35,6 +37,7 @@ bool? isDefaultInstitution;
     institutionId = json['business_id'];
     personId = json['person_id'];
     childId = json['child_id'];
+    invitation_code=json['invitation_code'];
     isDefaultInstitution=json['is_default_institution'];
     isDepartment = json['isDepartment'];
     dateOfBirth = json['date_of_birth'];
@@ -60,6 +63,7 @@ bool? isDefaultInstitution;
     data['person_id'] = this.personId;
     data['is_default_institution']=this.isDefaultInstitution;
     data['child_id'] = this.childId;
+    data['invitation_code']=this.invitation_code;
     data['isDepartment'] = this.isDepartment;
     data['date_of_birth'] = this.dateOfBirth;
     data['person_type_list'] = this.personTypeList;

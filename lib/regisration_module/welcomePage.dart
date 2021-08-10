@@ -527,6 +527,7 @@ class _WelComeScreen extends State<WelComeScreen> {
   void registerNow() {
     showModalBottomSheet<void>(
       context: context,
+      isDismissible: false,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
             topLeft: Radius.circular(15.0),

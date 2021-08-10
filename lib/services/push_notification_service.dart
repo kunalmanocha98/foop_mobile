@@ -62,7 +62,7 @@ class PushNotificationService {
       BuildContext? context}) async {
     this.context = context;
     requestPermissions();
-    var androidSettings = AndroidInitializationSettings('logo');
+    var androidSettings = AndroidInitializationSettings('lo');
     var iOSSettings = IOSInitializationSettings(
       requestSoundPermission: false,
       requestBadgePermission: false,

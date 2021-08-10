@@ -88,15 +88,8 @@ class MyHomePage extends State<Home> {
             name: AppLocalizations.of(context)!.translate("sign_in"),
             callback: (){
               print("Tapped Sign In");
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MapPage(
-                        LatLng(28.7041, 77.1025),
-                        28.7041,
-                        77.1025),
-                  ));
-            //  Navigator.pushNamed(context, '/login');
+
+             Navigator.pushNamed(context, '/login');
             },
           ),
         )
