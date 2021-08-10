@@ -450,6 +450,10 @@ class Config {
   static String EMAIL_DELETE = BASE_URL_MAIL + '/api/v1/email/delete';
 
 
+  static String BUSINESS_ACCOUNTING_REGISTER= BASE_URL_MAIL + '/api/v1/business/accounting/register';
+  static String BUSINESS_ACCOUNTING_EDIT= BASE_URL_MAIL + '/api/v1/business/accounting/edit';
+
+
 
 
 

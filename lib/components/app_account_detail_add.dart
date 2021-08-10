@@ -1,17 +1,25 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/customcard.dart';
+import 'package:oho_works_app/mixins/someCommonMixins.dart';
+import 'package:oho_works_app/models/business_accounting_register.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
+import 'package:oho_works_app/utils/config.dart';
 import 'package:oho_works_app/utils/hexColors.dart';
+import 'package:oho_works_app/utils/toast_builder.dart';
 import 'appBarWithSearch.dart';
+import 'app_buttons.dart';
 
 class AddAccountDetails extends StatefulWidget{
   @override
   _AddAccountDetails createState() => _AddAccountDetails();
 }
-class _AddAccountDetails extends State<AddAccountDetails>{
+class _AddAccountDetails extends State<AddAccountDetails> with CommonMixins{
 
   String startDate = 'Start Date';
   String endDate = 'End Date';
@@ -77,110 +85,87 @@ class _AddAccountDetails extends State<AddAccountDetails>{
           )),
     );
 
-    final gst = TextField(
-      obscureText: false,
-      controller: gstController,
-      textCapitalization: TextCapitalization.words,
-      onChanged: (text) {
-        if (text.length == 1 && text != text.toUpperCase()) {
-          gstController.text = text.toUpperCase();
-          gstController.selection = TextSelection.fromPosition(
-              TextPosition(offset: gstController.text.length));
-        }
-      },
-      style: styleElements!
-          .subtitle1ThemeScalable(context).copyWith(
-          color: HexColor(AppColors.appColorBlack65)
+    final gst = Container(
+      padding: EdgeInsets.only(bottom: 8),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        color: HexColor(AppColors.appColorBackground),
       ),
-      scrollPadding: const EdgeInsets.all(20.0),
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(8.0, 15.0, 20.0, 8.0),
-          hintText: AppLocalizations.of(context)!.translate("gst"),
-          hintStyle: styleElements!.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
-          border: UnderlineInputBorder(
-            borderSide: BorderSide(
-              width: 0.0,
-            ),
-          )),
-    );
-    final pan = TextField(
-      obscureText: false,
-      controller: panController,
-      textCapitalization: TextCapitalization.words,
-      onChanged: (text) {
-        if (text.length == 1 && text != text.toUpperCase()) {
-          panController.text = text.toUpperCase();
-          panController.selection = TextSelection.fromPosition(
-              TextPosition(offset: panController.text.length));
-        }
-      },
-      style: styleElements!
-          .subtitle1ThemeScalable(context).copyWith(
-          color: HexColor(AppColors.appColorBlack65)
+      child: TextFormField(
+        validator: validateTextField,
+        controller: gstController,
+        onSaved: (value) {},
+        decoration: InputDecoration(
+            hintText: "Gst number",
+            contentPadding:
+            EdgeInsets.only(left: 12, top: 16, bottom: 8),
+            border: UnderlineInputBorder(
+                borderRadius: BorderRadius.circular(12)),
+            floatingLabelBehavior: FloatingLabelBehavior.auto,
+            labelText: "Enter gst number"),
       ),
-      scrollPadding: const EdgeInsets.all(20.0),
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(8.0, 15.0, 20.0, 8.0),
-          hintText: AppLocalizations.of(context)!.translate("pan"),
-          hintStyle: styleElements!.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
-          border: UnderlineInputBorder(
-            borderSide: BorderSide(
-              width: 0.0,
-            ),
-          )),
     );
-    final cin = TextField(
-      obscureText: false,
-      controller: cinController,
-      textCapitalization: TextCapitalization.words,
-      onChanged: (text) {
-        if (text.length == 1 && text != text.toUpperCase()) {
-          cinController.text = text.toUpperCase();
-          cinController.selection = TextSelection.fromPosition(
-              TextPosition(offset: cinController.text.length));
-        }
-      },
-      style: styleElements!
-          .subtitle1ThemeScalable(context).copyWith(
-          color: HexColor(AppColors.appColorBlack65)
+    final pan =Container(
+      padding: EdgeInsets.only(bottom: 8),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        color: HexColor(AppColors.appColorBackground),
       ),
-      scrollPadding: const EdgeInsets.all(20.0),
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(8.0, 15.0, 20.0, 8.0),
-          hintText: AppLocalizations.of(context)!.translate("cin"),
-          hintStyle: styleElements!.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
-          border: UnderlineInputBorder(
-            borderSide: BorderSide(
-              width: 0.0,
-            ),
-          )),
-    );
-    final tan = TextField(
-      obscureText: false,
-      controller: tanController,
-      textCapitalization: TextCapitalization.words,
-      onChanged: (text) {
-        if (text.length == 1 && text != text.toUpperCase()) {
-          tanController.text = text.toUpperCase();
-          tanController.selection = TextSelection.fromPosition(
-              TextPosition(offset: tanController.text.length));
-        }
-      },
-      style: styleElements!
-          .subtitle1ThemeScalable(context).copyWith(
-          color: HexColor(AppColors.appColorBlack65)
+      child: TextFormField(
+        validator: validateTextField,
+        controller: panController,
+        onSaved: (value) {},
+        decoration: InputDecoration(
+            hintText: "Pan number",
+            contentPadding:
+            EdgeInsets.only(left: 12, top: 16, bottom: 8),
+            border: UnderlineInputBorder(
+                borderRadius: BorderRadius.circular(12)),
+            floatingLabelBehavior: FloatingLabelBehavior.auto,
+            labelText: "Enter pan number"),
       ),
-      scrollPadding: const EdgeInsets.all(20.0),
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(8.0, 15.0, 20.0, 8.0),
-          hintText: AppLocalizations.of(context)!.translate("tan"),
-          hintStyle: styleElements!.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
-          border: UnderlineInputBorder(
-            borderSide: BorderSide(
-              width: 0.0,
-            ),
-          )),
     );
+    final cin = Container(
+      padding: EdgeInsets.only(bottom: 8),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        color: HexColor(AppColors.appColorBackground),
+      ),
+      child: TextFormField(
+        validator: validateTextField,
+        controller: cinController,
+        onSaved: (value) {},
+        decoration: InputDecoration(
+            hintText: "Cin number",
+            contentPadding:
+            EdgeInsets.only(left: 12, top: 16, bottom: 8),
+            border: UnderlineInputBorder(
+                borderRadius: BorderRadius.circular(12)),
+            floatingLabelBehavior: FloatingLabelBehavior.auto,
+            labelText: "Enter cin number"),
+      ),
+    );
+    final tan = Container(
+      padding: EdgeInsets.only(bottom: 8),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(12),
+        color: HexColor(AppColors.appColorBackground),
+      ),
+      child: TextFormField(
+        validator: validateTextField,
+        controller: tanController,
+        onSaved: (value) {},
+        decoration: InputDecoration(
+            hintText: "Tan number",
+            contentPadding:
+            EdgeInsets.only(left: 12, top: 16, bottom: 8),
+            border: UnderlineInputBorder(
+                borderRadius: BorderRadius.circular(12)),
+            floatingLabelBehavior: FloatingLabelBehavior.auto,
+            labelText: "Enter tan number"),
+      ),
+    );
+
     return SafeArea(
       child:  Scaffold(
         appBar:  appAppBar().getCustomAppBar(context,
@@ -191,6 +176,21 @@ class _AddAccountDetails extends State<AddAccountDetails>{
             mainAxisSize: MainAxisSize.min,
             children: [
               dateStart, dateEnd, gst, pan,cin,tan
+            ],
+          ),
+        ),
+        bottomNavigationBar: Container(
+          child: Row(
+            children: [
+              Spacer(),
+              appTextButton(
+                onPressed: (){
+                  if(isCheck()) {
+                    setAccountingDetails();
+                  }
+                },
+                child:Text( AppLocalizations.of(context)!.translate('save_exit')),
+              )
             ],
           ),
         ),
@@ -216,14 +216,65 @@ class _AddAccountDetails extends State<AddAccountDetails>{
           setState(() {
             if (dateType == "startDate") {
               selectedEpoch = picked!.millisecondsSinceEpoch;
-              startDate = DateFormat('MM-yyyy').format(picked);
+              startDate = DateFormat('yyyy').format(picked);
             } else {
               selectedEpoch2 = picked!.millisecondsSinceEpoch;
-              endDate = DateFormat('MM-yyyy').format(picked);
+              endDate = DateFormat('yyyy').format(picked);
             }
           });
         });
       }
+  }
+
+  void setAccountingDetails() async{
+    BusinessAccountRegisterRequest payload = BusinessAccountRegisterRequest();
+    payload.taxStartMonth = startDate;
+    payload.taxEndMonth = endDate;
+    payload.cin = cinController.text;
+    payload.pan = panController.text;
+    payload.gst = gstController.text;
+    payload.tan = tanController.text;
+    Calls().call(jsonEncode(payload), context, Config.BUSINESS_ACCOUNTING_REGISTER).then((value){
+      Navigator.pop(context,true);
+    });
+  }
+
+  bool isCheck() {
+    if(selectedEpoch!=null){
+      if(selectedEpoch2!=null) {
+        if (gstController.text.isNotEmpty) {
+          if (panController.text.isNotEmpty) {
+            if (cinController.text.isNotEmpty) {
+              if (tanController.text.isNotEmpty) {
+                return true;
+              } else {
+                ToastBuilder().showToast('Please enter tan number', context,
+                    HexColor(AppColors.information));
+                return false;
+              }
+            } else {
+              ToastBuilder().showToast('Please enter cin number', context,
+                  HexColor(AppColors.information));
+              return false;
+            }
+          } else {
+            ToastBuilder().showToast('Please enter pan number', context,
+                HexColor(AppColors.information));
+            return false;
+          }
+        } else {
+          ToastBuilder().showToast('Please enter gst number', context,
+              HexColor(AppColors.information));
+          return false;
+        }
+      }else{
+        ToastBuilder().showToast('Please select first month of tax year', context, HexColor(AppColors.information));
+        return false;
+      }
+    }else{
+      ToastBuilder().showToast('Please select first month of financial year', context, HexColor(AppColors.information));
+      return false;
+    }
   }
 
 

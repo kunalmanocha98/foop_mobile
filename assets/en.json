@@ -1,5 +1,6 @@
 {
 	"about": "About",
+	"add_about": "Add about details",
 	"accept_term_condition": "Please accept term of services!",
 	"account_settings": "Account settings",
 	"achieved": "Achieved",
@@ -1120,8 +1121,7 @@
 	"rename": "Rename",
 	"are_you_sure_remove_domain": "Are you sure you want to remove this domain?",
 	"email_recover_password": "Please enter the email ID. An OTP will be sent to your recovery email Id.",
-	"account_details": "Account details"
-	"pay_bill": "Pay Bill",
+	"account_details": "Account details",
 	"entity_type_employees": "Number of employees",
 	"code_req": "Please Enter the code first!!",
 	"company_type":  "Please select Company type",

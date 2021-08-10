@@ -10,7 +10,8 @@ import 'package:oho_works_app/utils/hexColors.dart';
 
 class AccountDetailCard extends StatelessWidget{
   final CommonCardData data;
-  AccountDetailCard(this.data);
+  final Function? callback;
+  AccountDetailCard(this.data,this.callback);
   @override
   Widget build(BuildContext context) {
     TextStyleElements styleElements = TextStyleElements(context);
@@ -39,7 +40,11 @@ class AccountDetailCard extends StatelessWidget{
                   onPressed: (){
                     Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
                       return AddAccountDetails();
-                    }));
+                    })).then((value) {
+                      if(value!=null && value){
+                        callback!();
+                      }
+                    });
                   },
                   child: Text(AppLocalizations.of(context)!.translate('edit')),
                 )
@@ -208,7 +213,7 @@ class AccountDetailCard extends StatelessWidget{
                                   margin: const EdgeInsets.only(
                                       left: 16, top: 8, right: 16),
                                   child: Text(
-                                    capitalize(data.textEight??"---") ,
+                                    capitalize(data.textTen??"---") ,
                                     style: styleElements.bodyText1ThemeScalable(context).copyWith(fontWeight: FontWeight.w600),
                                     textAlign: TextAlign.left,
                                   ),
@@ -229,7 +234,7 @@ class AccountDetailCard extends StatelessWidget{
                                       margin: const EdgeInsets.only(
                                           left: 20, top: 20, right: 20),
                                       child: Text(
-                                        data.textSeven ??= "",
+                                        data.textEleven ??= "",
                                         style: styleElements.subtitle2ThemeScalable(context),
                                         textAlign: TextAlign.right,
                                       ),
@@ -240,7 +245,7 @@ class AccountDetailCard extends StatelessWidget{
                                       margin: const EdgeInsets.only(
                                           left: 20, top: 8, right: 20),
                                       child: Text(
-                                        data.textEight ??= "",
+                                        data.textTwelve ??= "",
                                         style: styleElements.bodyText1ThemeScalable(context).copyWith(fontWeight: FontWeight.w600),
                                         textAlign: TextAlign.left,
                                       ),
@@ -250,17 +255,17 @@ class AccountDetailCard extends StatelessWidget{
                       )
                     ],
                   ),
-
-                  Container(
-                    margin: EdgeInsets.only(left: 16, right: 16, top: 20.0,bottom: 16),
-                    child: Text(
-                      data.textNine ??= "",
-                      style: styleElements.subtitle2ThemeScalable(context),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 3,
-                      textAlign: TextAlign.left,
-                    ),
-                  ),
+                  //
+                  // Container(
+                  //   margin: EdgeInsets.only(left: 16, right: 16, top: 20.0,bottom: 16),
+                  //   child: Text(
+                  //     data.textNine ??= "",
+                  //     style: styleElements.subtitle2ThemeScalable(context),
+                  //     overflow: TextOverflow.ellipsis,
+                  //     maxLines: 3,
+                  //     textAlign: TextAlign.left,
+                  //   ),
+                  // ),
                 ],
 
               )

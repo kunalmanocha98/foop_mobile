@@ -4,6 +4,7 @@ import 'package:oho_works_app/models/personal_profile.dart';
 import 'package:oho_works_app/profile_module/common_cards/about_profile_card.dart';
 import 'package:oho_works_app/profile_module/common_cards/account_detail_card.dart';
 import 'package:oho_works_app/profile_module/common_cards/art_and_photography.dart';
+import 'package:oho_works_app/profile_module/common_cards/bio_card.dart';
 import 'package:oho_works_app/profile_module/common_cards/card_courses_detail.dart';
 import 'package:oho_works_app/profile_module/common_cards/club_and_socities.dart';
 import 'package:oho_works_app/profile_module/common_cards/club_detail_card.dart';
@@ -65,14 +66,9 @@ class GetAllCards {
     switch (commonCardData.cardName) {
       case "Biocard":
         {
-          return Container();
-          // return BioCard(
-          //     data: commonCardData,
-          //     callback: callBck,
-          //     persondata: rows,
-          //     userId: id,
-          //     ownerId: ownerId,
-          //     type: type);
+          // return AboutBio();
+          return AboutProfileCard(
+              data: commonCardData,);
         }
       case "horizontalScrollCard":
         {
@@ -415,12 +411,15 @@ class GetAllCards {
 
       case "aboutCard":
         {
-          return AccountDetailCard(commonCardData);
-          // return AboutProfileCard(
-          //   data: commonCardData,
-          // );
+          return AboutProfileCard(data: commonCardData);
         }
-        break;
+
+      case "AccountingInfoCard":{
+        return AccountDetailCard(
+          commonCardData,
+          callBck
+        );
+      }
 
       case "historyCard":
         {
@@ -535,14 +534,8 @@ class GetAllCards {
     switch (commonCardData.cardNames) {
       case "Biocard":
         {
-          return Container();
-          // return BioCard(
-          //     data: commonCardData,
-          //     callback: callBck,
-          //     persondata: rows,
-          //     userId: id,
-          //     ownerId: ownerId,
-          //     type: type);
+          return AboutProfileCard(
+            data: commonCardData,);
         }
         break;
       case "HorizontalScrollCard":
@@ -849,43 +842,39 @@ class GetAllCards {
               ownerId:ownerId,
               id: id);
         }
-        break;
       case "ContactInfoCard":
         {
           return ContactInfoCard(data: commonCardData);
         }
-        break;
 
       case "aboutCard":
         {
-          return AccountDetailCard(
-           commonCardData,
-          );
+          return AboutProfileCard(data: commonCardData);
         }
-        break;
-
+      case "AccountingInfoCard":{
+        return AccountDetailCard(
+          commonCardData,
+          callBck
+        );
+      }
       case "historyCard":
         {
           return HistoryCard(data: commonCardData);
         }
-        break;
       case "FounderCard":
         {
           return FounderCard(data: commonCardData);
         }
-        break;
       case "StaffAndStudentsCard":
         {
           return StaffAndStudentsCard(data: commonCardData);
         }
-        break;
       case "RatingCard":
         {
           return RatingCard(
             data: commonCardData,
           );
         }
-        break;
       case "JournalCard":
         {
           return JournalCard(
