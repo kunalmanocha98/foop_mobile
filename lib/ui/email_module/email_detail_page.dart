@@ -63,7 +63,7 @@ class _EmailDetailPage extends State<EmailDetailPage>{
           // ]
         ),
         body: data!=null?SingleChildScrollView(
-          child: TricycleEmailCard(
+          child: appEmailCard(
             isDetailPage: true,
             emailItem: data,
             folderType: folderType,

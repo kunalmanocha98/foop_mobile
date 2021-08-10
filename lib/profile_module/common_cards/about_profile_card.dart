@@ -55,12 +55,12 @@ class AboutProfileCard extends StatelessWidget {
             Container(
               margin: const EdgeInsets.only(left: 5, right: 5,bottom: 20),
               child:
-                  Column(
+              Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
                       Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Expanded(
                           child: Column(
@@ -127,6 +127,7 @@ class AboutProfileCard extends StatelessWidget {
                     ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Expanded(
                             child: Column(
@@ -189,6 +190,75 @@ class AboutProfileCard extends StatelessWidget {
                             )),
                           )
                         ],
+                      ),
+                      Visibility(
+                        visible:  (data.textSeven!=null ||data.textEight!=null),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Container(
+                                        margin: const EdgeInsets.only(left: 16, top: 20),
+                                        child: Text(
+                                          data.textSeven ??= "",
+                                          style: styleElements!.subtitle2ThemeScalable(context),
+                                          textAlign: TextAlign.left,
+                                        ),
+                                      )),
+                                  Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Container(
+                                        margin: const EdgeInsets.only(
+                                            left: 16, top: 8, right: 16),
+                                        child: Text(
+                                          capitalize(data.textEight??"---") ,
+                                          style: styleElements!.bodyText1ThemeScalable(context).copyWith(fontWeight: FontWeight.w600),
+                                          textAlign: TextAlign.left,
+                                        ),
+                                      )),
+                                ],
+                              ),
+                            ),
+                            Expanded(
+                              child:
+                              Container(
+                                  margin: const EdgeInsets.only(left: 30),
+                                  child:  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Align(
+                                          alignment: Alignment.topLeft,
+                                          child: Container(
+                                            margin: const EdgeInsets.only(
+                                                left: 20, top: 20, right: 20),
+                                            child: Text(
+                                              data.textSeven ??= "",
+                                              style: styleElements!.subtitle2ThemeScalable(context),
+                                              textAlign: TextAlign.right,
+                                            ),
+                                          )),
+                                      Align(
+                                          alignment: Alignment.topLeft,
+                                          child: Container(
+                                            margin: const EdgeInsets.only(
+                                                left: 20, top: 8, right: 20),
+                                            child: Text(
+                                              data.textEight ??= "",
+                                              style: styleElements!.bodyText1ThemeScalable(context).copyWith(fontWeight: FontWeight.w600),
+                                              textAlign: TextAlign.left,
+                                            ),
+                                          )),
+                                    ],
+                                  )),
+                            )
+                          ],
+                        ),
                       ),
 
                       Container(

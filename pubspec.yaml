@@ -111,7 +111,6 @@ dependencies:
   workmanager: ^0.4.1
   connectivity: ^3.0.6
 
-
   GlobalUploadFilePkg:
     path: packages/GlobalUploadFilePkg
   nexge_video_conference:

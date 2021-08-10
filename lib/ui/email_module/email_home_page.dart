@@ -138,7 +138,7 @@ class _EmailHomePage extends State<EmailHomePage> {
             // body: ListView.builder(
             //   itemCount: 10,
             //   itemBuilder: (BuildContext context, int index) {
-            //     return TricycleEmailCard(
+            //     return appEmailCard(
             //       emailItem: EmailListItem.fromJson(jsonDecode(jsonEncode({
             //         "uid": "39",
             //         "subject": "SMTP e-mail test",
@@ -239,7 +239,7 @@ class _EmailHomePage extends State<EmailHomePage> {
 
   Widget listItemGetter(itemData, int index) {
     EmailListItem item = itemData;
-    return TricycleEmailCard(
+    return appEmailCard(
         isDetailPage: false,
         emailItem: item,
         folderType: folderType,

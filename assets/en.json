@@ -1115,5 +1115,6 @@
 	"email_exist": "This email already exists!",
 	"rename": "Rename",
 	"are_you_sure_remove_domain": "Are you sure you want to remove this domain?",
-	"email_recover_password": "Please enter the email ID. An OTP will be sent to your recovery email Id."
+	"email_recover_password": "Please enter the email ID. An OTP will be sent to your recovery email Id.",
+	"account_details": "Account details"
 }

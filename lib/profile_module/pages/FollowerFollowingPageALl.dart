@@ -150,7 +150,7 @@ class _FollowingSuggestionPage extends State<AllTabsNetwork> {
             if (index < followingList.length) {
               return GestureDetector(
                 behavior: HitTestBehavior.translucent,
-                onTap: () {
+                appAppBar: () {
                   Navigator.push(
                       context,
                       MaterialPageRoute(

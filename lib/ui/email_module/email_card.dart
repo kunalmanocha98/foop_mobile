@@ -35,7 +35,7 @@ import '../language_update.dart';
 import 'email_attachment.dart';
 import 'email_header.dart';
 
-class TricycleEmailCard extends StatefulWidget {
+class appEmailCard extends StatefulWidget {
   final bool isDetailPage;
   final EmailListItem? emailItem;
   final Function? onClick;
@@ -52,7 +52,7 @@ class TricycleEmailCard extends StatefulWidget {
   final String? folderType;
   final Function? deleteFromOutbox;
 
-  TricycleEmailCard(
+  appEmailCard(
       {this.isDetailPage = false,
         this.emailItem,
         this.onClick,
@@ -70,11 +70,11 @@ class TricycleEmailCard extends StatefulWidget {
         this.replyAllCallback});
 
   @override
-  _TricycleEmailCard createState() =>
-      _TricycleEmailCard(isDetailPage: isDetailPage, emailItem: emailItem);
+  _appEmailCard createState() =>
+      _appEmailCard(isDetailPage: isDetailPage, emailItem: emailItem);
 }
 
-class _TricycleEmailCard extends State<TricycleEmailCard> {
+class _appEmailCard extends State<appEmailCard> {
   SharedPreferences prefs = locator<SharedPreferences>();
   TextStyleElements? styleElements;
   bool isDetailPage;
@@ -86,7 +86,7 @@ class _TricycleEmailCard extends State<TricycleEmailCard> {
 
   String? outPutLan;
 
-  _TricycleEmailCard({this.isDetailPage = false, this.emailItem});
+  _appEmailCard({this.isDetailPage = false, this.emailItem});
 
   @override
   void initState() {

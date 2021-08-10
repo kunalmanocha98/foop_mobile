@@ -53,7 +53,7 @@ class _OutBoxPage extends State<OutBoxPage> {
             : ListView.builder(
           itemCount: emails!.length,
           itemBuilder: (BuildContext context, int index) {
-            return TricycleEmailCard(
+            return appEmailCard(
               showFooter: false,
               isDetailPage: false,
               isOutbox: true,
