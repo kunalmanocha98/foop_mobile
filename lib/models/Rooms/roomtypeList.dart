@@ -8,7 +8,7 @@ class RoomTypeListRequest {
       {this.institutionId, this.searchVal, this.pageSize, this.pageNumber});
 
   RoomTypeListRequest.fromJson(Map<String, dynamic> json) {
-    institutionId = json['institution_id'];
+    institutionId = json['business_id'];
     searchVal = json['searchVal'];
     pageSize = json['page_size'];
     pageNumber = json['page_number'];
@@ -16,7 +16,7 @@ class RoomTypeListRequest {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['institution_id'] = this.institutionId;
+    data['business_id'] = this.institutionId;
     data['searchVal'] = this.searchVal;
     data['page_size'] = this.pageSize;
     data['page_number'] = this.pageNumber;

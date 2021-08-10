@@ -2,19 +2,13 @@
   "rows": [
 
     {
-      "title":"Invite Classmates/Teachers",
+      "title":"Invite Co-workers",
       "code": "inviteTeachers",
-      "imageUrl":"" ,
+      "imageUrl": "assets/appimages/handshake.png",
       "tag": "",
       "isTagVisivle": false
     },
-    {
-      "title":"Invite Parent",
-      "code": "inviteParent",
-      "imageUrl": "",
-      "tag": "",
-      "isTagVisivle": false
-    },
+
     {
       "title":"Invite friends via Whatsapp",
       "code": "Whatsapp",
@@ -45,14 +39,21 @@
     },
 
     {
-      "title":"Parents, teachers, and classmates invite through a specific link so they do not require approval from company",
+      "title":"1. Users invited through “Code” do not need approval  ",
       "code": "copy_link",
       "imageUrl": "share",
       "tag": "text",
       "isTagVisivle": false
     },
     {
-      "title":"User invited through 'Links' will be able to join your company after approval only. ",
+      "title":"2. Users having a similar business domain email, do not need an approval.",
+      "code": "copy_link",
+      "imageUrl": "share",
+      "tag": "text",
+      "isTagVisivle": false
+    },
+    {
+      "title":"3. Users invited through ‘Links’ will be able to join your business network only after approval by admin.",
       "code": "copy_link",
       "imageUrl": "share",
       "tag": "text",

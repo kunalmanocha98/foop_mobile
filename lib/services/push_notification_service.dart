@@ -62,7 +62,7 @@ class PushNotificationService {
       BuildContext? context}) async {
     this.context = context;
     requestPermissions();
-    var androidSettings = AndroidInitializationSettings('logo');
+    var androidSettings = AndroidInitializationSettings('lo');
     var iOSSettings = IOSInitializationSettings(
       requestSoundPermission: false,
       requestBadgePermission: false,
@@ -210,7 +210,7 @@ class PushNotificationService {
             handleEvent(type, id!, context);
             break;
           case "buddy":
-            handleBuddyDeepLink(context,id!,body['institution_id'],body['person_id'],body['profile_image']);
+            handleBuddyDeepLink(context,id!,body['business_id'],body['person_id'],body['profile_image']);
             break;
           case "messenger":
             handleMessages(type, id, context);

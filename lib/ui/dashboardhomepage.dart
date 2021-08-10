@@ -376,6 +376,7 @@ BuildContext? dgsContext;
         }
       case 'lead_order':
         {
+
           Navigator.push(
               context,
               MaterialPageRoute(
@@ -392,6 +393,22 @@ BuildContext? dgsContext;
 
                     }),
               ));
+        /*  Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CrmPage(
+                    id: prefs!.getInt(Strings.userId),
+                    type: "person",
+                    hideTabs:true,
+                    isSwipeDisabled:true,
+                    hideAppBar: true,
+                    currentTab: 0,
+                    pageTitle: "",
+                    imageUrl: "",
+                    callback: () {
+
+                    }),
+              ));*/
           break;
         }
 
@@ -1042,7 +1059,7 @@ BuildContext? dgsContext;
                                 child: Image(
                                   height: 300,
                                   image: AssetImage(
-                                      'assets/appimages/student_home.png'),
+                                      'assets/appimages/home_ohi.png'),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -1121,7 +1138,7 @@ BuildContext? dgsContext;
                                 showQr: true,
                                 instId:
                                 prefs!=null? prefs!.getInt(Strings.instituteId).toString():"",
-                                title: prefs!=null?prefs!.getString(Strings.userName):"",
+                                title: prefs!=null?prefs!.getString(Strings.userName)??"--":"",
                                 isUserVerified:
                                 rows != null ? rows!.isVerified : false,
                                 ownerTye: prefs != null

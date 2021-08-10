@@ -94,6 +94,7 @@ dependencies:
   translator: ^0.1.7
   sliding_up_panel: ^2.0.0+1
   delta_markdown: ^0.2.0
+  geolocator: ^7.4.0
 
   #  flutter_downloader: ^1.5.2
   #ext_storage: ^1.0.3
@@ -110,6 +111,11 @@ dependencies:
   pdf: ^3.4.2
   workmanager: ^0.4.1
   connectivity: ^3.0.6
+  place_picker: ^0.9.18
+  geocoding: ^2.0.0
+
+
+
 
   GlobalUploadFilePkg:
     path: packages/GlobalUploadFilePkg
@@ -203,6 +209,7 @@ flutter:
     - assets/appimages/assignment.png
     - assets/sample.epub
     - assets/appimages/email.png
+    - assets/appimages/home_ohi.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
@@ -252,5 +259,5 @@ flutter:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path: "assets/appimages/logo.png"
-  image_path_android: "assets/appimages/logo.png"
+  image_path: "assets/appimages/lo.png"
+  image_path_android: "assets/appimages/lo.png"

@@ -861,69 +861,7 @@ class _PrivacySettings extends State<PrivacySettings> {
               ? PreloadingView(url: "assets/appimages/settings.png")
               : Column(
                   children: [
-                    Card(
-                      elevation: 0,
-                      margin: EdgeInsets.only(left: 4, right: 4, bottom: 1),
-                      child: InkWell(
-                        onTap: () {
-                          if (settingsView != null &&
-                              settingsView!.rows != null) {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => PrivacySettingsPage(
-                                        DictionaryType
-                                            .rating_visible_to.name,
-                                        settingsView!.rows!
-                                            .id))).then((value) => refresh());
-                          }
-                        },
-                        child: ListTile(
-                          title: Text(
-                            settingsView != null
-                                ? setTitle(settingsView!.rows!.ratingVisibleTo!)
-                                : "",
-                            style:
-                                styleElements.subtitle1ThemeScalable(context),
-                          ),
-                          subtitle: Text(
-                            AppLocalizations.of(context)!
-                                .translate("who_can_see_rating"),
-                            style: styleElements.captionThemeScalable(context),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Card(
-                      elevation: 0,
-                      margin: EdgeInsets.only(left: 4, right: 4, bottom: 1),
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => PrivacySettingsPage(
-                                          DictionaryType
-                                              .rating_by.name,
-                                          settingsView!.rows!.id)))
-                              .then((value) => refresh());
-                        },
-                        child: ListTile(
-                          title: Text(
-                            settingsView != null
-                                ? setTitle(settingsView!.rows!.ratingBy!)
-                                : "",
-                            style:
-                                styleElements.subtitle1ThemeScalable(context),
-                          ),
-                          subtitle: Text(
-                            AppLocalizations.of(context)!
-                                .translate("who_can_rate"),
-                            style: styleElements.captionThemeScalable(context),
-                          ),
-                        ),
-                      ),
-                    ),
+
                     Card(
                       elevation: 0,
                       margin: EdgeInsets.only(left: 4, right: 4, bottom: 1),

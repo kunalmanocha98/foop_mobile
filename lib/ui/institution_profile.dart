@@ -547,7 +547,7 @@ class _InstituteState extends State<InstitutionProfile>
 
   void getUserData(BuildContext context) async {
     final body = jsonEncode({
-      "institution_id": instituteId.toString(),
+      "business_id": instituteId.toString(),
       "person_id": prefs.getInt("userId"),
       "detail_type": "institution"
     });
@@ -1027,7 +1027,7 @@ class _InstituteState extends State<InstitutionProfile>
   void getMediums(BuildContext context, String type) async {
     final body = jsonEncode({
       "person_id": personId,
-      "institution_id": instituteId.toString(),
+      "business_id": instituteId.toString(),
       "page_number": 1,
       "page_size": 100
     });
@@ -1114,7 +1114,7 @@ class _InstituteState extends State<InstitutionProfile>
   void getCourses(BuildContext context, String type) async {
     final body = jsonEncode({
       "person_id": personId,
-      "institution_id": instituteId.toString(),
+      "business_id": instituteId.toString(),
       "page_number": 1,
       "page_size": 100
     });
@@ -1201,7 +1201,7 @@ class _InstituteState extends State<InstitutionProfile>
   void getClubs(BuildContext context, String type) async {
     final body = jsonEncode({
       "person_id": personId,
-      "institution_id": instituteId.toString(),
+      "business_id": instituteId.toString(),
       "page_number": 1,
       "page_size": 100
     });
@@ -1344,7 +1344,7 @@ class _InstituteState extends State<InstitutionProfile>
   void getSports(BuildContext context, String type) async {
     final body = jsonEncode({
       "person_id": personId,
-      "institution_id": instituteId.toString(),
+      "business_id": instituteId.toString(),
       "page_number": 1,
       "page_size": 100
     });

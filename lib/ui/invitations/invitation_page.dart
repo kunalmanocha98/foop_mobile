@@ -98,13 +98,7 @@ class _InvitationPage extends State<InvitationPage> {
                           AppLocalizations.of(context)!.translate("invite_friend"),
                           style: styleElements.headline6ThemeScalable(context),
                         )),
-                        Container(
-                            child: Text(
-                          AppLocalizations.of(context)!.translate("earn_coins"),
-                          style: styleElements
-                              .headline6ThemeScalable(context)
-                              .copyWith(fontWeight: FontWeight.bold),
-                        ))
+
                       ],
                     ),
                   ),

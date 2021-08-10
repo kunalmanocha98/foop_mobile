@@ -4,12 +4,13 @@ class BasicData {
   String? inst_cat_code;
   String? entity_type_code;
   String? profile_image;
+  String ? employeeRange;
   List<String>? listOfNames;
   BasicData.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     description = json['description'];
     inst_cat_code = json['category'];
-
+    employeeRange = json['no_of_employees'];
     listOfNames = json['other_names'].cast<String>();
     entity_type_code = json['type'];
     profile_image = json['profile_image'];
@@ -20,6 +21,7 @@ class BasicData {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['name'] = this.name;
+    data['no_of_employees'] = this.employeeRange;
     data['other_names'] = this.listOfNames;
     data['description'] = this.description;
     data['category'] = this.inst_cat_code;

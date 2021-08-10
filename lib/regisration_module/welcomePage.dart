@@ -3,12 +3,15 @@ import 'dart:convert';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
+import 'package:oho_works_app/components/white_button_large.dart';
 import 'package:oho_works_app/models/RegisterUserAs.dart';
 import 'package:oho_works_app/models/register_user_as_response.dart';
 import 'package:oho_works_app/profile_module/common_cards/testcard.dart';
+import 'package:oho_works_app/regisration_module/select_business_page.dart';
 import 'package:oho_works_app/regisration_module/select_institute_screen.dart';
 import 'package:oho_works_app/regisration_module/select_role.dart';
 import 'package:oho_works_app/app_database/data_base_helper.dart';
+import 'package:oho_works_app/ui/RegisterInstitutions/basic_institute_detail.dart';
 import 'package:oho_works_app/ui/dialog_page.dart';
 import 'package:oho_works_app/ui/person_type_list.dart';
 import 'package:oho_works_app/ui/student_serach_page.dart';
@@ -21,6 +24,8 @@ import 'package:oho_works_app/utils/toast_builder.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'eployee_code.dart';
 
 // ignore: must_be_immutable
 class WelComeScreen extends StatefulWidget {
@@ -63,7 +68,7 @@ class _WelComeScreen extends State<WelComeScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) => showRoles());
+    WidgetsBinding.instance!.addPostFrameCallback((_) => registerNow());
     setPrefs();
   }
 
@@ -147,7 +152,7 @@ class _WelComeScreen extends State<WelComeScreen> {
             },
           ),
           body: Container(
-              child: Container(
+              /*child: Container(
                   margin: const EdgeInsets.only(
                       left: 16, right: 16, top: 50, bottom: 20),
                   child: ListView(
@@ -189,7 +194,7 @@ class _WelComeScreen extends State<WelComeScreen> {
                                 )),
                           ),
                           onTap: () async {
-                            showRoles();
+                            registerNow();
                           },
                         ),
                       ),
@@ -258,7 +263,7 @@ class _WelComeScreen extends State<WelComeScreen> {
                         ),
                       ),
 
-                      /*  Opacity(
+                      *//*  Opacity(
                         opacity: isRoleSelected ? 1.0 : 0.25,
                         child: Visibility(
                           visible: !showLimited,
@@ -513,65 +518,23 @@ class _WelComeScreen extends State<WelComeScreen> {
                             },
                           ),
                         ),
-                      ),*/
+                      ),*//*
                     ],
-                  )))),
+                  ))*/)),
     );
   }
 
-  void showRoles() {
+  void registerNow() {
     showModalBottomSheet<void>(
       context: context,
-      isScrollControlled: true,
+      isDismissible: false,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(15.0), topRight: Radius.circular(15.0)),
+            topLeft: Radius.circular(15.0),
+            topRight: Radius.circular(15.0)),
       ),
       builder: (context) {
-        return SizedBox(
-          height: MediaQuery.of(context).size.height * 0.75,
-          child: Card(
-            child: SelectRole(
-                type: "",
-                id: 0,
-                studentType: "",
-                callBack: ( institutionRolesList,  academicYears)
-                {
-                  if (institutionRolesList != null &&
-                      institutionRolesList.isNotEmpty) {
-                    if (institutionRolesList[0] == 3)
-                      type = AppLocalizations.of(context)!.translate("student");
-                    if (institutionRolesList[0] == 2)
-                      type = AppLocalizations.of(context)!.translate("teacher");
-                    if (institutionRolesList[0] == 4)
-                      type = AppLocalizations.of(context)!.translate("parent");
-                    if (institutionRolesList[0] == 5) {
-                      type = AppLocalizations.of(context)!.translate("alumni");
-                      isStepsCompleted = true;
-                      showLimited = true;
-
-                      registerUser!.academicYear = academicYears;
-                    }
-                    if (institutionRolesList[0] == 10) {
-                      isStepsCompleted = true;
-                      showLimited = true;
-                      type = AppLocalizations.of(context)!
-                          .translate("other_staff");
-                    }
-                    registerUser!.personTypeList = institutionRolesList;
-                  }
-                  setState(() {
-                    showLimited = true;
-                    isRoleSelected = true;
-                    isStepsCompleted = true;
-
-                    handleEdit();
-                  });
-                },
-                instituteId: instituteId,
-                from: "welcome"),
-          ),
-        );
+        return noInstituteFound( context);
       },
     );
   }
@@ -667,4 +630,137 @@ class _WelComeScreen extends State<WelComeScreen> {
   }
 
   _WelComeScreen(this.isInstituteSelectedAlready);
+
+
+  Widget noInstituteFound(BuildContext ctx) {
+    return Container(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //Center Row contents horizontally,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              //Center Row contents vertically,
+
+              children: [
+                Align(
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left:60.0),
+                      child: Container(
+                        child: Text(
+                          AppLocalizations.of(context)!.translate(""),
+                          style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    )),
+                Align(
+                    alignment: Alignment.bottomLeft,
+                    child: GestureDetector(
+                      behavior: HitTestBehavior.translucent,
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Container(
+                        child: Row(
+                          children: [
+                            Text(
+                                AppLocalizations.of(context)!
+                                    .translate("register_or_join_business"),
+                                style: styleElements
+                                    .headline6ThemeScalable(context)
+                                    .copyWith(
+                                    color:
+                                    HexColor((AppColors.appColorBlack85))))
+                          ],
+                        ),
+                      ),
+                    )),
+                Align(
+                    alignment: Alignment.center,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left:60.0),
+                      child: Container(
+                        child: Text(
+                          AppLocalizations.of(context)!.translate(""),
+                          style: styleElements.subtitle1ThemeScalable(context).copyWith(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                    )),
+                Container()
+              ],
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.all(16),
+            child: Text(
+              AppLocalizations.of(context)!.translate("register_desc"),
+              textAlign: TextAlign.center,
+              style: styleElements
+                  .captionThemeScalable(context)
+                  .copyWith(color: HexColor(AppColors.appColorBlack65)),
+            ),
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Container(
+              margin: const EdgeInsets.only(left: 16, right: 16, bottom: 16,top: 20),
+              child: WhiteLargeButton(
+                name: AppLocalizations.of(context)!
+                    .translate("register_ur_comp"),
+                offsetX: 70.66,
+                offsetY: 12.93,
+                textColor: AppColors.appColorWhite,
+                color: AppColors.appMainColor,
+                callback: () async{
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (BuildContext
+                          context) =>
+                              BasicInstituteDetails()));
+
+                },
+              ),
+            ),
+          ),
+          Container(
+            margin: const EdgeInsets.only(bottom: 16),
+            child: Text(AppLocalizations.of(context)!.translate('or'),
+                textAlign: TextAlign.center,
+                style: styleElements.captionThemeScalable(context)),
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Container(
+              margin: const EdgeInsets.only(left: 16, right: 16, bottom: 60),
+              child: WhiteLargeButton(
+                name: AppLocalizations.of(context)!
+                    .translate("join_company"),
+                offsetX: 70.66,
+                offsetY: 12.93,
+                callback: () {
+                   Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SelectBusiness(
+                            type: "",
+                            id: 0,
+                            registerUserAs: RegisterUserAs(),
+                            isInstituteSelectedAlready:
+                            false,
+                            studentType: "",
+                            from: "welcome"),
+                      ));
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

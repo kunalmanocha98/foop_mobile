@@ -9,7 +9,7 @@ class InstituteContactDetail {
       {this.institutionId, this.email, this.phone, this.mobile, this.website});
 
   InstituteContactDetail.fromJson(Map<String, dynamic> json) {
-    institutionId = json['institution_id'];
+    institutionId = json['business_id'];
     email = json['email'];
     phone = json['phone'];
     mobile = json['mobile'];
@@ -18,7 +18,7 @@ class InstituteContactDetail {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['institution_id'] = this.institutionId;
+    data['business_id'] = this.institutionId;
     data['email'] = this.email;
     data['phone'] = this.phone;
     data['mobile'] = this.mobile;

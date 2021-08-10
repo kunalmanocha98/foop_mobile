@@ -2,12 +2,14 @@ import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
 
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/conversationPage/base_response.dart';
 import 'package:oho_works_app/models/CalenderModule/event_create_models.dart';
 import 'package:oho_works_app/models/language_list.dart';
+import 'package:oho_works_app/profile_module/pages/directions.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
@@ -22,6 +24,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../dialog_page.dart';
+import 'basic_institute_detail.dart';
 import 'confirm_details_institute.dart';
 import 'country_page.dart';
 import 'models/countries.dart';
@@ -269,9 +272,9 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
       ),
       items: _getRelationtype(),
       onChanged: (value) {
-        value as DropdownMenuItem;
+
         setState(() {
-          selectState = (value) as String?;
+          selectState = value;
         });
       },
     );
@@ -294,15 +297,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
                         behavior: HitTestBehavior.translucent,
                         onTap: (){
 
-                          Navigator.of(context).pushAndRemoveUntil(
-                              MaterialPageRoute(
-                                  builder: (context) => DilaogPage(
-                                      type: "admin",
-                                      isVerified: true,
-                                      title: AppLocalizations.of(context)!.translate('you_are_added_as') + "Employee ",
-                                      subtitle: ("of Google"))),
-                                  (Route<dynamic> route) => false);
-                        //  submit(context);
+                          submit(context);
 
                         },
                         child: Row(
@@ -360,17 +355,32 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
                                         left: 8.w, right: 8.w, bottom: 8.h),
                                     child: selectMap,
                                   )),*/
-                              Container(
-                                  height: 150,
-                                  margin: const EdgeInsets.only(
-                                      left: 8.0, right: 8.0),
-                                  decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: HexColor(AppColors.appColorGrey500),
-                                      ),
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(8))),
-                                  child: address),
+                              InkWell(
+                                onTap: (){
+
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => MapPage(
+                                          ),
+                                      ));
+                                },
+                                child: Container(
+                                    height: 150,
+                                    width: double.infinity,
+                                    margin: const EdgeInsets.only(
+                                        left: 8.0, right: 8.0),
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: HexColor(AppColors.appColorGrey500),
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.all(Radius.circular(8))),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Text("Address"),
+                                    )),
+                              ),
                               Align(
                                   alignment: Alignment.center,
                                   child: Container(
@@ -500,13 +510,16 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
                     if (value != null) {
                       var data = BaseResponse.fromJson(value);
                       if (data.statusCode == Strings.success_code) {
-                        prefs.setString("create_entity", "ConfirmDetails");
-                        Navigator.push(
+                        prefs.setString("create_entity", "created");
+
+                        Navigator.of(context)
+                            .pushNamedAndRemoveUntil('/selectBusiness', (Route<dynamic> route) => false);
+                      /*  Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (BuildContext context) =>
                                     ConfirmDetails(instId: instId,
-                                        fromPage: "registration")));
+                                        fromPage: "registration")));*/
                       }
                     }
                   }).catchError((onError) {

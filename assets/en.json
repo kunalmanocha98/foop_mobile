@@ -122,6 +122,7 @@
 	"choose_currency": "Choose your currency",
 	"circle": "Circle",
 	"city_req": "City name required",
+	"company_req": "Company  name required",
 	"city_town": "City/Town/Street*",
 	"class": "office",
 	"class_added_already": "You have already added this office, please add other office",
@@ -223,6 +224,7 @@
 	"email_id_child": "Email id of your child",
 	"email_mobile_required": "Email & mobile number required",
 	"email_phone": "Enter email or phone number",
+	"email_only": "Enter email ",
 	"email_required": "Please enter a valid email",
 	"employment_type": "Employment type",
 	"end_date": "End date should be greater than start date",
@@ -253,6 +255,7 @@
 	"enter_subject_share": "Enter subject to share",
 	"enter_subjects_coach": "Enter the subjects that you tutor/coach",
 	"enter_tags": "Enter tags",
+	"enter_molbile": "Enter Mobile Number",
 	"enter_text": "Enter message here.....",
 	"enter_token": "Enter token",
 	"entity": "Company",
@@ -350,6 +353,7 @@
 	"img_upload": "Image Upload",
 	"in_ur_entity": "In your company",
 	"industry": "Industry",
+	"inputemail": "Email",
 	"input_email": "Email*",
 	"input_pass": "Password*",
 	"input_phone": "Input the phone number to launch",
@@ -1117,4 +1121,11 @@
 	"are_you_sure_remove_domain": "Are you sure you want to remove this domain?",
 	"email_recover_password": "Please enter the email ID. An OTP will be sent to your recovery email Id.",
 	"account_details": "Account details"
+	"pay_bill": "Pay Bill",
+	"entity_type_employees": "Number of employees",
+	"code_req": "Please Enter the code first!!",
+	"company_type":  "Please select Company type",
+	"company_category":  "Please select institute category",
+	"employee_number":  "Please select employees number",
+	"find_com": "Please select the right business where you are working. Businesses with similar names are highly possible, verify throughly. You can create your business if not in the list by clicking +. You should be an authorised person to register your business."
 }

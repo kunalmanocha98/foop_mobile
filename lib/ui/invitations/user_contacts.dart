@@ -66,7 +66,7 @@ else
     styleElements = TextStyleElements(context);
     return SafeArea(
       child: Scaffold(
-        appBar: appAppBar().getCustomAppBar(context, appBarTitle: 'Select contact',
+        appBar: appAppBar().getCustomAppBar(context, appBarTitle: 'Select Co-workers',
             onBackButtonPress: ()  {
               Navigator.of(context).pop({'result': "imageUrl"});
             }),

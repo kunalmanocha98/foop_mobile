@@ -214,7 +214,7 @@ class CreateCompanyPageState extends State<CreateCompanyPage> {
                         title:  Padding(
                           padding: const EdgeInsets.only(top:8.0),
                           child: Text(
-                            ownerName ?? prefs!.getString(Strings.userName)!,
+                            ownerName ?? prefs!.getString(Strings.userName)!??"",
                             style: styleElements.subtitle1ThemeScalable(context),
                           ),
                         )

@@ -6,9 +6,12 @@ import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/components/app_buttons.dart';
+import 'package:oho_works_app/models/RegisterUserAs.dart';
+import 'package:oho_works_app/models/register_user_as_response.dart';
 import 'package:oho_works_app/ui/RegisterInstitutions/basic_institute_detail.dart';
 import 'package:oho_works_app/ui/RegisterInstitutions/contact_detail_institute_page.dart';
 import 'package:oho_works_app/ui/RegisterInstitutions/models/basic_response.dart';
+import 'package:oho_works_app/ui/dialog_page.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
@@ -18,17 +21,18 @@ import 'package:oho_works_app/utils/strings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:oho_works_app/utils/toast_builder.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
 // ignore: must_be_immutable
 class EmployeeCode extends StatefulWidget {
-  int? instId;
+  RegisterUserAs? registerUserAs;
   @override
   _EmployeeCode createState() =>
-      new _EmployeeCode(instId);
+      new _EmployeeCode();
 
-  EmployeeCode(this.instId);
+  EmployeeCode(this.registerUserAs);
 }
 
 class _EmployeeCode extends State<EmployeeCode>
@@ -143,7 +147,7 @@ class _EmployeeCode extends State<EmployeeCode>
             // resizeToAvoidBottomInset: false,
               appBar: appAppBar().getCustomAppBar(context,
                   appBarTitle: "Enter admission code",
-                  isIconVisible:false,
+                  isIconVisible:true,
                   actions: [
 
                     Padding(
@@ -153,23 +157,20 @@ class _EmployeeCode extends State<EmployeeCode>
                         onTap: (){
 
 
-                          if(domainController.text.trim()!=null  && domainController.text.trim()!="")
-                          {submit();}
-                          else
-                          {
-                            prefs.setString("create_institute", "Contact");
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (BuildContext
-                                    context) =>
-                                        BasicInstituteDetails()));
-                          }
-
+                          register();
                         },
                         child: Row(
                           children: [
-                            Text(AppLocalizations.of(context)!.translate('next'), style:styleElements.subtitle2ThemeScalable(context).copyWith(color: HexColor(AppColors.appMainColor)),),
+                            InkWell(
+                                onTap:(){
+
+
+register();
+
+                                },
+
+
+                                child: Text(AppLocalizations.of(context)!.translate('next'), style:styleElements.subtitle2ThemeScalable(context).copyWith(color: HexColor(AppColors.appMainColor)),)),
                             Visibility(
                               visible: isLoading,
                               child: Padding(
@@ -241,7 +242,21 @@ class _EmployeeCode extends State<EmployeeCode>
 
 
 
+                              Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: Container(
+                                      margin: EdgeInsets.only(
+                                          left: 8.w, right: 8.w, bottom: 8.h,top: 16),
+                                      child: Text(
+                                        "Instructions\n\n 1. An admission code is provided by your employer that. Please contact administrator’s name to get an invitation.\n 2. Admission code is unique, you should not share the admission code with anyone else.",style: styleElements
+                                          .bodyText2ThemeScalable(context)
+                                          .copyWith(color: HexColor(AppColors.appColorBlack85)),
 
+                                      ),
+                                    ),
+                                  )),
 
 
 
@@ -250,21 +265,7 @@ class _EmployeeCode extends State<EmployeeCode>
                         )),
                   ),
 
-                  Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Container(
-                          margin: EdgeInsets.only(
-                              left: 8.w, right: 8.w, bottom: 8.h,top: 16),
-                          child: Text(
-                            "Instructions\n\n 1. An admission code is provided by your employer that. Please contact administrator’s name to get an invitation.\n 2. Admission code is unique, you should not share the admission code with anyone else.",style: styleElements
-                              .bodyText2ThemeScalable(context)
-                              .copyWith(color: HexColor(AppColors.appColorBlack85)),
 
-                          ),
-                        ),
-                      )),
                   Align(
                       alignment: FractionalOffset.bottomCenter,
                       child: GestureDetector(
@@ -315,6 +316,7 @@ class _EmployeeCode extends State<EmployeeCode>
 
   // ignore: missing_return
   Future<bool> _onBackPressed() {
+    Navigator.pop(context);
     return new Future(() => false);
   }
 
@@ -324,7 +326,7 @@ class _EmployeeCode extends State<EmployeeCode>
       isLoading=true;
     });
     final body = jsonEncode({
-      "institution_id": instId,
+      "business_id": instId,
       "domain_name": domainController.text
     });
     Calls()
@@ -355,5 +357,46 @@ class _EmployeeCode extends State<EmployeeCode>
     });
   }
 
-  _EmployeeCode(this.instId);
+  _EmployeeCode();
+
+  void register() async {
+
+
+    if(ohoUserName.text!=null && ohoUserName.text.isNotEmpty) {
+      RegisterUserAs registerUserAs = widget.registerUserAs!;
+      registerUserAs.invitation_code = ohoUserName.text.toString();
+      registerUserAs.personId = prefs.getInt(Strings.userId);
+
+      final body = jsonEncode(registerUserAs);
+
+      Calls().call(body, context, Config.REGISTER_USER_AS).then((value) async {
+        if (value != null) {
+          var data = RegisterUserAsResponse.fromJson(value);
+          print(data.toString());
+          if (data.statusCode == "S10001") {
+            prefs.setBool("isProfileCreated", true);
+
+            Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute(
+                    builder: (context) => DilaogPage(
+                        type: "admin",
+                        isVerified: true,
+                        title: AppLocalizations.of(context)!
+                                .translate('you_are_added_as') +
+                            "Employee  of",
+                        subtitle: (data.rows!.institutionName!))),
+                (Route<dynamic> route) => false);
+          } else
+            ToastBuilder().showToast(
+                data.message!, context, HexColor(AppColors.information));
+        }
+      }).catchError((onError) async {
+        ToastBuilder().showToast(
+            onError.toString(), context, HexColor(AppColors.information));
+      });
+    }
+    else
+      ToastBuilder().showToast(
+         AppLocalizations.of(context)!.translate("code_req"), context, HexColor(AppColors.information));
+  }
 }

@@ -10,6 +10,7 @@ import 'package:oho_works_app/profile_module/pages/profile_page.dart';
 import 'package:oho_works_app/regisration_module/classes_section_provider.dart';
 import 'package:oho_works_app/regisration_module/department_notifier.dart';
 import 'package:oho_works_app/regisration_module/programnotifier.dart';
+import 'package:oho_works_app/regisration_module/select_business_page.dart';
 import 'package:oho_works_app/regisration_module/select_language.dart';
 import 'package:oho_works_app/regisration_module/subjectProvider.dart';
 import 'package:oho_works_app/regisration_module/welcomePage.dart';
@@ -17,6 +18,7 @@ import 'package:oho_works_app/services/deeplinking_service.dart';
 import 'package:oho_works_app/services/navigation_service.dart';
 import 'package:oho_works_app/app_database/data_base_helper.dart';
 import 'package:oho_works_app/ui/BuddyApproval/approvalDetailsPage.dart';
+import 'package:oho_works_app/ui/RegisterInstitutions/basic_institute_detail.dart';
 import 'package:oho_works_app/ui/RoomModule/room_detail_page.dart';
 import 'package:oho_works_app/ui/camera_module/photo_preview_screen.dart';
 import 'package:oho_works_app/ui/campus_talk/campus_talk_list.dart';
@@ -50,6 +52,7 @@ import 'messenger_module/screens/chat_list_page.dart';
 import 'messenger_module/screens/conversationPageNotifier.dart';
 import 'messenger_module/screens/data_notifier.dart';
 import 'messenger_module/screens/ios_change_provider.dart';
+import 'models/RegisterUserAs.dart';
 
 GetIt getIt = GetIt.instance;
 
@@ -176,6 +179,7 @@ const HomeRoute = '/';
 const PostDetailPage = '/postDetailPage';
 const buddyApproval = '/BuddyApproval';
 const roomDetail ='/room_detail';
+const selectBusiness ='/selectBusiness';
 const eventDetail = '/event_detail';
 const LoginSignUP = '/loginSignUpPage';
 const LoginRoute = '/login';
@@ -561,6 +565,20 @@ class MyApp extends State<MainApp> {
           break;
         case roomDetail:
           screen = RoomDetailPage(null,null,null,null,null,deepLinkingPayload!.postId,deepLinkingPayload.userType);
+          break;
+
+
+
+
+        case selectBusiness:
+
+          screen=SelectBusiness(  type: "",
+              id: 0,
+              registerUserAs: RegisterUserAs(),
+              isInstituteSelectedAlready:
+              false,
+              studentType: "",
+              from: "welcome");
           break;
         case eventDetail:
           screen = CampusTalkListPage( eventId: deepLinkingPayload!.postId,);

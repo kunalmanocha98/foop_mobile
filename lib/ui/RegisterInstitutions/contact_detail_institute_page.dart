@@ -128,7 +128,7 @@ bool isLoading=false;
         ],
         decoration: InputDecoration(
             contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-            hintText: AppLocalizations.of(context)!.translate('email'),
+            hintText: AppLocalizations.of(context)!.translate('inputemail'),
             hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
           border: InputBorder.none,
           focusedBorder: InputBorder.none,
@@ -201,13 +201,8 @@ bool isLoading=false;
                       child: GestureDetector(
                         behavior: HitTestBehavior.translucent,
                         onTap: (){
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (BuildContext
-                                  context) =>
-                                      InstituteLocationAddressPage(instId)));
-                         // submit(context);
+
+                          submit(context);
 
                         },
                         child: Row(
@@ -274,7 +269,7 @@ bool isLoading=false;
                                 ),
 
                                 Container(
-                                  child: Text("+91"),
+                                  child: Text(""),
                                 ),
                                 Expanded(
 
@@ -308,7 +303,7 @@ bool isLoading=false;
                                 ),
 
                                 Container(
-                                  child: Text("+91"),
+                                  child: Text(""),
                                 ),
                                 Expanded(
 
@@ -436,9 +431,7 @@ bool isLoading=false;
   }
 
   void submit(BuildContext ctx) async {
-    setState(() {
-      isLoading=true;
-    });
+
     InstituteContactDetail instituteContactDetail =
     InstituteContactDetail();
     instituteContactDetail.institutionId = instId;

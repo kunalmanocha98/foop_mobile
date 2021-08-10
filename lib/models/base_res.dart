@@ -116,7 +116,7 @@ class CommonCardData {
     type = json['type'];
     localityInstitute = json['locality_val'];
     isFollow2 = json['is_following'];
-    institutionId = json['institution_id'];
+    institutionId = json['business_id'];
     coverImage = json['cover_image'];
     name = json['name'];
 
@@ -199,7 +199,7 @@ class CommonCardData {
     data['locality_val'] = this.localityInstitute;
     data['locality'] = this.locality;
     data['is_following'] = this.isFollow2;
-    data['institution_id'] = this.institutionId;
+    data['business_id'] = this.institutionId;
     data['cover_image'] = this.coverImage;
     data['class_taecher_name'] = this.classTeacherName;
     data['is_current'] = this.isCurrent;
@@ -588,7 +588,7 @@ class SubRow {
     avgRating = json['average_rating'];
     id = json['id'] != null ? json['id'] : "";
     standardExpertiseCategoryTypeId = json['standardExpertiseCategoryTypes_id'];
-    institutionId = json['institution_id'];
+    institutionId = json['business_id'];
     standardExpertiseCategoryTypes = json['standardExpertiseCategoryTypes'];
     gradientOne = json['gradientOne'];
     gradientTwo = json['gradientTwo'];
@@ -651,7 +651,7 @@ class SubRow {
     data['child_id'] = this.childId;
     data['is_following'] = this.isFollow2;
     data['locality'] = this.locality;
-    data['institution_id'] = institutionId;
+    data['business_id'] = institutionId;
     data['standardExpertiseCategoryTypes'] =
         this.standardExpertiseCategoryTypes;
     data['language'] = this.language;
@@ -793,7 +793,7 @@ class SubRowInternal {
     avgRating = json['average_rating'];
     id = json['id'] != null ? json['id'] : "";
     standardExpertiseCategoryTypeId = json['standardExpertiseCategoryTypes_id'];
-    institutionId = json['institution_id'];
+    institutionId = json['business_id'];
     standardExpertiseCategoryTypes = json['standardExpertiseCategoryTypes'];
     gradientOne = json['gradientOne'];
     gradientTwo = json['gradientTwo'];
@@ -851,7 +851,7 @@ class SubRowInternal {
     data['child_id'] = this.childId;
     data['is_following'] = this.isFollow2;
     data['locality'] = this.locality;
-    data['institution_id'] = institutionId;
+    data['business_id'] = institutionId;
     data['standardExpertiseCategoryTypes'] =
         this.standardExpertiseCategoryTypes;
     data['language'] = this.language;

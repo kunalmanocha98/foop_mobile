@@ -1001,7 +1001,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
     });
     prefs = await SharedPreferences.getInstance();
     final body = jsonEncode({
-      "institution_id": instituteId,
+      "business_id": instituteId,
       "person_id": userId,
       "detail_type": userType == "institution" ? "institution" : "user",
       "owner_id": ownerId
@@ -1383,7 +1383,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
     final body = jsonEncode({
       "person_id": null,
       "type": "institution",
-      "institution_id": userId,
+      "business_id": userId,
       "page_number": 1,
       "given_by_id": ownerId,
       "page_size": 100
@@ -1759,7 +1759,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
   void getDepartments(BuildContext context, String type) async {
     final body = jsonEncode({
       "person_id": personId,
-      "institution_id": instituteId,
+      "business_id": instituteId,
       "page_number": 1,
       "given_by_id": ownerId,
       "page_size": 100
@@ -1833,7 +1833,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
   void getCourses(BuildContext context, String? type) async {
     final body = jsonEncode({
       "person_id": personId,
-      "institution_id": instituteId,
+      "business_id": instituteId,
       "page_number": 1,
       "given_by_id": ownerId,
       "page_size": 100
@@ -1907,7 +1907,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
   void getMediums(BuildContext context, String? type) async {
     final body = jsonEncode({
       "person_id": personId,
-      "institution_id":
+      "business_id":
       userType == "institution" ? userId.toString() : instituteId,
       "page_number": 1,
       "given_by_id": ownerId,
@@ -1982,7 +1982,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
   void getClubs(BuildContext context, String? type) async {
     final body = jsonEncode({
       "person_id": personId,
-      "institution_id":
+      "business_id":
       userType == "institution" ? userId.toString() : instituteId,
       "page_number": 1,
       "given_by_id": ownerId,
@@ -2060,7 +2060,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
   void getSports(BuildContext context, String? type) async {
     final body = jsonEncode({
       "person_id": personId,
-      "institution_id":
+      "business_id":
       userType == "institution" ? userId.toString() : instituteId,
       "page_number": 1,
       "given_by_id": ownerId,

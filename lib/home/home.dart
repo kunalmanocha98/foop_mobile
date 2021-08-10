@@ -1,4 +1,6 @@
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:oho_works_app/models/deeplinking_payload.dart';
+import 'package:oho_works_app/profile_module/pages/directions.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:flutter/material.dart';
@@ -76,6 +78,7 @@ class MyHomePage extends State<Home> {
               offsetX: 95.0,
               offsetY: 14.33,
           callback: (){
+
             Navigator.pushNamed(context, '/signup');
           },),
         ),
@@ -85,7 +88,8 @@ class MyHomePage extends State<Home> {
             name: AppLocalizations.of(context)!.translate("sign_in"),
             callback: (){
               print("Tapped Sign In");
-              Navigator.pushNamed(context, '/login');
+
+             Navigator.pushNamed(context, '/login');
             },
           ),
         )

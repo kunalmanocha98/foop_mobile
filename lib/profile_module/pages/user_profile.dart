@@ -658,7 +658,7 @@ class _UserProfile extends State<UserProfile>
 
   void getUserData(BuildContext context) async {
     final body = jsonEncode({
-      "institution_id": instituteId,
+      "business_id": instituteId,
       "person_id": personId,
       "detail_type": "user"
     });
@@ -989,7 +989,7 @@ class _AboutPage extends State<AboutPage> {
   void getUserData(BuildContext context) async {
 
     final body = jsonEncode({
-      "institution_id": prefs.getString("instituteId"),
+      "business_id": prefs.getString("instituteId"),
       "person_id": prefs.getInt("userId").toString(),
       "detail_type": "user"
     });

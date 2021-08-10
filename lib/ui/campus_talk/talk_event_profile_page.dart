@@ -430,7 +430,7 @@ class _TalkParticipantListPage extends State<TalkParticipantProfilePage> {
 //     followersCountApi(context);
 //   }
 //   final body = jsonEncode({
-//     "institution_id": prefs.getInt(Strings.instituteId),
+//     "business_id": prefs.getInt(Strings.instituteId),
 //     "person_id": userId,
 //     "detail_type": userType == "institution" ? "institution" : "user",
 //     "owner_id": prefs.getInt(Strings.userId)

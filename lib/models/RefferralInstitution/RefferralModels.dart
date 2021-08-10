@@ -17,7 +17,7 @@ class ReferralRequest {
         this.referralDate});
 
   ReferralRequest.fromJson(Map<String, dynamic> json) {
-    institutionId = json['institution_id'];
+    institutionId = json['business_id'];
     referredByPersonId = json['referred_by_person_id'];
     referredByPersonMobileNumber = json['referred_by_person_mobile_number'];
     referredByUpiId = json['referred_by_upi_id'];
@@ -28,7 +28,7 @@ class ReferralRequest {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['institution_id'] = this.institutionId;
+    data['business_id'] = this.institutionId;
     data['referred_by_person_id'] = this.referredByPersonId;
     data['referred_by_person_mobile_number'] =
         this.referredByPersonMobileNumber;

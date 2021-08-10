@@ -32,7 +32,7 @@ import 'package:oho_works_app/ui/dialogs/dialog_audio_post.dart';
 import 'package:oho_works_app/ui/dialogs/search_keyword_dialog.dart';
 import 'package:oho_works_app/ui/language_update.dart';
 import 'package:oho_works_app/ui/postModule/CampusNewsListPage.dart';
-import 'package:oho_works_app/ui/postModule/assignments_page.dart';
+
 import 'package:oho_works_app/ui/postModule/pollsListPage.dart';
 import 'package:oho_works_app/ui/postModule/selectedPostListPage.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
@@ -707,10 +707,7 @@ class NewNewsAndArticleDetailPageState
         }
       case 'assignment':
         {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (BuildContext context) {
-            return AssignmentPage();
-          }));
+
           // Navigator.of(context).push(MaterialPageRoute(
           //     builder: (context) => SelectedFeedListPage(
           //       isFromProfile: false,

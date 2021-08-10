@@ -24,7 +24,7 @@ import 'package:oho_works_app/services/push_notification_service.dart';
 import 'package:oho_works_app/services/share_data_service.dart';
 import 'package:oho_works_app/app_database/data_base_helper.dart';
 import 'package:oho_works_app/ui/postModule/CampusNewsListPage.dart';
-import 'package:oho_works_app/ui/postModule/assignments_page.dart';
+
 import 'package:oho_works_app/ui/postModule/pollsListPage.dart';
 import 'package:oho_works_app/ui/postModule/postListPage.dart';
 import 'package:oho_works_app/ui/postModule/selectedPostListPage.dart';
@@ -534,11 +534,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver{
           case 'assignment':
             {
 
-              Navigator.push(context, MaterialPageRoute(
-                  builder: (BuildContext context) {
-                    return AssignmentPage();
-                  }
-              ));
+
               // Navigator.of(context).push(MaterialPageRoute(
               //     builder: (context) => SelectedFeedListPage(
               //       isFromProfile: false,

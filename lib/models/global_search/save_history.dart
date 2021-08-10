@@ -25,7 +25,7 @@ class SaveHistoryRequest {
     entityType = json['entity_type'];
     searchPage = json['search_page'];
     personId = json['person_id'];
-    institutionId = json['institution_id'];
+    institutionId = json['business_id'];
     searchType = json['search_type'];
     pageNumber = json['page_number'];
     pageSize = json['page_size'];
@@ -41,7 +41,7 @@ class SaveHistoryRequest {
     data['entity_type'] = this.entityType;
     data['search_page'] = this.searchPage;
     data['person_id'] = this.personId;
-    data['institution_id'] = this.institutionId;
+    data['business_id'] = this.institutionId;
     data['search_type'] = this.searchType;
     data['page_number'] = this.pageNumber;
     data['page_size'] = this.pageSize;

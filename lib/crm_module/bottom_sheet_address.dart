@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:oho_works_app/components/commonComponents.dart';
 import 'package:oho_works_app/components/searchBox.dart';
 import 'package:oho_works_app/enums/personType.dart';
 import 'package:oho_works_app/mixins/editProfileMixin.dart';
+import 'package:oho_works_app/profile_module/pages/directions.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
@@ -117,10 +120,48 @@ class BottomSheetAddress extends StatelessWidget {
                 ),
               ),
 
-              SearchBox(
-                onvalueChanged: (s){},
-                icon:Icons.location_on_outlined,
-                hintText: AppLocalizations.of(context)!.translate("company_address") ,
+              GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: (){     Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MapPage()));},
+                child: Container(
+                  height: 48,
+                  margin:  EdgeInsets.only(left: 16, right: 16, top: 2,bottom: 12),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        HexColor(AppColors.appColorWhite),
+                        HexColor(AppColors.appColorWhite),
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                    boxShadow: [CommonComponents().getShadowforBox_01_3()],
+                  ),
+                  child: Center(
+                    child: Container(
+                        child: Row(
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Icon(Icons.location_on_outlined, color: HexColor(AppColors.appColorGrey500)),
+                            ),
+                            Expanded(
+                              child: Text("Search",
+                                style: styleElements.bodyText2ThemeScalable(context).copyWith(
+                                    color: HexColor(AppColors.appColorBlack35)
+                                ),
+                              ),
+                            )
+
+                          ],
+                        )
+                    ),
+                  ),
+                ),
               ),
 
               Padding(

@@ -17,7 +17,7 @@ class InstituteLocationDetail {
         this.postalCode});
 
   InstituteLocationDetail.fromJson(Map<String, dynamic> json) {
-    institutionId = json['institution_id'];
+    institutionId = json['business_id'];
     address = json['address'];
     country = json['country'];
     state = json['state'];
@@ -28,7 +28,7 @@ class InstituteLocationDetail {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['institution_id'] = this.institutionId;
+    data['business_id'] = this.institutionId;
     data['address'] = this.address;
     data['country'] = this.country;
     data['state'] = this.state;

@@ -94,7 +94,7 @@ class _SelectSubject extends State<AddSelectSubject>
     final body = jsonEncode({
       "search_val": searchValue,
       "person_id": prefs.getInt("userId").toString(),
-      "institution_id": instituteId,
+      "business_id": instituteId,
       "page_number": 1,
       "page_size": 250
     });

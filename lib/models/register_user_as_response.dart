@@ -33,7 +33,7 @@ class RegisterUserData {
 
   RegisterUserData.fromJson(Map<String, dynamic> json) {
     studentName = json['student_name'];
-    institutionName = json['institution_name'];
+    institutionName = json['business_name'];
     isVerified= json['is_verified'];
 
   }
@@ -41,7 +41,7 @@ class RegisterUserData {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['student_name'] = this.studentName;
-    data['institution_name'] = this.institutionName;
+    data['business_name'] = this.institutionName;
     data['is_verified'] = this.isVerified;
     return data;
   }

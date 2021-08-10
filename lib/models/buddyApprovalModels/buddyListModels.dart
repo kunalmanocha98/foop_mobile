@@ -13,7 +13,7 @@ class RequestListRequest {
         this.approvedByPersonId});
 
   RequestListRequest.fromJson(Map<String, dynamic> json) {
-    institutionId = json['institution_id'];
+    institutionId = json['business_id'];
     pageNumber = json['page_number'];
     pageSize = json['page_size'];
     searchVal = json['search_val'];
@@ -22,7 +22,7 @@ class RequestListRequest {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['institution_id'] = this.institutionId;
+    data['business_id'] = this.institutionId;
     data['page_number'] = this.pageNumber;
     data['page_size'] = this.pageSize;
     data['search_val'] = this.searchVal;
@@ -101,7 +101,7 @@ class RequestListItem {
     assignmentStatus = json['assignment_status'];
     personType = json['person_type'];
     className = json['class_name'];
-    institutionId = json['institution_id'];
+    institutionId = json['business_id'];
   }
 
   Map<String, dynamic> toJson() {
@@ -116,7 +116,7 @@ class RequestListItem {
     data['assignment_status'] = this.assignmentStatus;
     data['person_type'] = this.personType;
     data['class_name'] = this.className;
-    data['institution_id']=this.institutionId;
+    data['business_id']=this.institutionId;
     return data;
   }
 }

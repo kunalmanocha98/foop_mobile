@@ -9,6 +9,7 @@ import 'package:oho_works_app/api_calls/sign_up_api.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/button_filled.dart';
 import 'package:oho_works_app/conversationPage/custom_web_view.dart';
+import 'package:oho_works_app/home/locator.dart';
 import 'package:oho_works_app/mixins/editProfileMixin.dart';
 import 'package:oho_works_app/models/common_response.dart';
 import 'package:oho_works_app/models/country_code_response.dart';
@@ -16,6 +17,7 @@ import 'package:oho_works_app/models/device_info.dart';
 import 'package:oho_works_app/models/register_user_payload.dart';
 import 'package:oho_works_app/models/signup_success.dart';
 import 'package:oho_works_app/regisration_module/select_language.dart';
+import 'package:oho_works_app/services/push_notification_service.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
@@ -46,6 +48,7 @@ class StateSignUp extends State<SignUpPage> with SingleTickerProviderStateMixin 
   String? googleSignInId;
   String? userName;
   String? imageUrl;
+  final PushNotificationService? pushNotificationService = locator<PushNotificationService>();
   bool? isTermAndConditionAccepted= false;
   String? email = "";
   bool isGoogleOrFacebookDataReceived = false;
@@ -87,6 +90,20 @@ class StateSignUp extends State<SignUpPage> with SingleTickerProviderStateMixin 
     FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
     _firebaseMessaging.getToken().then((token) {
       prefs!.setString("fcmId", token!);
+
+
+      pushNotificationService!.initialise(
+          callback: () {
+
+          },
+          callbackMessenger: (String? type) {
+
+
+          },
+          context: context);
+
+      print(prefs!.getString("fcmId")!+"--------------------------------fcm");
+
       getDeviceDetails(prefs);
     });
   }
@@ -255,9 +272,13 @@ class StateSignUp extends State<SignUpPage> with SingleTickerProviderStateMixin 
           FilteringTextInputFormatter.deny(RegExp("[A-Z]")),
         ],
         decoration: InputDecoration(
-            contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
+            contentPadding: EdgeInsets.fromLTRB(8.0.w, 8.0.h, 8.0.w, 8.0.h),
             hintText: AppLocalizations.of(context)!.translate('email'),
             hintStyle: tsE.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
+            floatingLabelBehavior:
+            FloatingLabelBehavior.auto,
+            labelText:
+           AppLocalizations.of(context)!.translate("email_only"),
             prefixIcon: Padding(
                 padding: EdgeInsets.all(0.0.h),
                 child: Icon(Icons.email, color: HexColor(AppColors.appColorGrey500),size: 20.w,)),
@@ -287,8 +308,12 @@ class StateSignUp extends State<SignUpPage> with SingleTickerProviderStateMixin 
           onSaved: (String? value) {},
           controller: passwordTextController,
           decoration: InputDecoration(
-              contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
+              contentPadding: EdgeInsets.fromLTRB(8.0.w, 8.0.h, 8.0.w, 8.0.h),
               hintText: AppLocalizations.of(context)!.translate('password'),
+              floatingLabelBehavior:
+              FloatingLabelBehavior.auto,
+              labelText:
+              AppLocalizations.of(context)!.translate("enter_password"),
               errorText:!_validate?AppLocalizations.of(context)!.translate("min_character"):null,
               hintStyle: tsE.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
               prefixIcon: Padding(
@@ -313,7 +338,12 @@ class StateSignUp extends State<SignUpPage> with SingleTickerProviderStateMixin 
       keyboardType: TextInputType.number,
       scrollPadding: EdgeInsets.all(20.0.w),
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
+
+        floatingLabelBehavior:
+        FloatingLabelBehavior.auto,
+        labelText:
+        AppLocalizations.of(context)!.translate("enter_molbile"),
+        contentPadding: EdgeInsets.fromLTRB(8.0.w, 8.0.h, 8.0.w, 8.0.h),
         hintText: AppLocalizations.of(context)!.translate('mobile_number'),
         hintStyle: tsE.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
 
@@ -599,7 +629,9 @@ class StateSignUp extends State<SignUpPage> with SingleTickerProviderStateMixin 
 
   void getCounrtyCode() async {
 
-    final body = jsonEncode({
+
+
+ final body = jsonEncode({
       "country": "IN",
     });
     Calls().calWithoutToken(body, context, Config.COUNTRY_CODES).then((value) async {

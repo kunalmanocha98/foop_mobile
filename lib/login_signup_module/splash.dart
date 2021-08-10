@@ -59,25 +59,29 @@ class _SplashScreenState extends State<SplashScreen> {
                       instId: prefs.getInt("createdSchoolId"),
                       fromPage: "registration")),
                   (Route<dynamic> route) => false);
-        } else if (prefs.getString("create_entity") == "Address") {
+        }
+        else if (prefs.getString("create_entity") == "Address") {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                   builder: (ctx) => InstituteLocationAddressPage(
                       prefs.getInt("createdSchoolId"))),
                   (Route<dynamic> route) => false);
-        } else if (prefs.getString("create_entity") == "Contact") {
+        }
+        else if (prefs.getString("create_entity") == "Contact") {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                   builder: (ctx) => ContactsDetailsPageInstitute(
                       prefs.getInt("createdSchoolId"))),
                   (Route<dynamic> route) => false);
-        } else if (prefs.getString("create_entity") == "Domain") {
+        }
+        else if (prefs.getString("create_entity") == "Domain") {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                   builder: (ctx) =>
                       DomainPage(prefs.getInt("createdSchoolId"))),
                   (Route<dynamic> route) => false);
-        } else if (prefs.getString("create_entity") == "created") {
+        }
+        else if (prefs.getString("create_entity") == "created") {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: (ctx) => WelComeScreen()),
                   (Route<dynamic> route) => false);

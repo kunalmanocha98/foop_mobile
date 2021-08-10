@@ -97,11 +97,12 @@ class Calls {
       print('Token' + " " + prefs.getString("token")!);
       print(url);
     } else {
+
+      print(url);
       headers = {
         "Content-Type": 'application/json',
       };
-      print('Token' +
-          "Nooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo");
+
     }
 
     return _netUtil
@@ -116,6 +117,15 @@ class Calls {
     var token = prefs.getString("token");
     return _netUtil
         .multipartRequest( url, files,fields ,token! ,emailToken!)
+        .then((dynamic res) {
+      return _decoder.convert(res.toString());
+    });
+  }
+  Future<dynamic> getRequest(BuildContext context, String url) async {
+
+    print(url);
+    return _netUtil
+        .get(url)
         .then((dynamic res) {
       return _decoder.convert(res.toString());
     });

@@ -8,7 +8,7 @@ class StaffListRequest {
       {this.institutionId, this.searchVal, this.pageNumber, this.pageSize});
 
   StaffListRequest.fromJson(Map<String, dynamic> json) {
-    institutionId = json['institution_id'];
+    institutionId = json['business_id'];
     searchVal = json['search_val'];
     pageNumber = json['page_number'];
     pageSize = json['page_size'];
@@ -16,7 +16,7 @@ class StaffListRequest {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['institution_id'] = this.institutionId;
+    data['business_id'] = this.institutionId;
     data['search_val'] = this.searchVal;
     data['page_number'] = this.pageNumber;
     data['page_size'] = this.pageSize;
@@ -74,7 +74,7 @@ class StaffListMember {
 
   StaffListMember.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    institutionId = json['institution_id'];
+    institutionId = json['business_id'];
     institutionName = json['institution_name'];
     personName = json['person_name'];
     personId = json['person_id'];
@@ -84,7 +84,7 @@ class StaffListMember {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
-    data['institution_id'] = this.institutionId;
+    data['business_id'] = this.institutionId;
     data['institution_name'] = this.institutionName;
     data['person_name'] = this.personName;
     data['person_id'] = this.personId;
@@ -127,7 +127,7 @@ class Rows {
   Rows({this.institutionId, this.personId, this.roleId, this.id});
 
   Rows.fromJson(Map<String, dynamic> json) {
-    institutionId = json['institution_id'];
+    institutionId = json['business_id'];
     personId = json['person_id'];
     roleId = json['role_id'];
     id = json['id'];
@@ -135,7 +135,7 @@ class Rows {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['institution_id'] = this.institutionId;
+    data['business_id'] = this.institutionId;
     data['person_id'] = this.personId;
     data['role_id'] = this.roleId;
     data['id'] = this.id;

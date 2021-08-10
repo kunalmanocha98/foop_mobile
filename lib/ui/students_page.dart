@@ -611,7 +611,7 @@ class _StudentsPage extends State<StudentsPage>
       "page_size": 20,
       "requested_by_type": "institution",
       "list_type": null,
-      "institution_id": registerUserAs.institutionId,
+      "business_id": registerUserAs.institutionId,
       "searchVal": searchValue,
       "person_type": ["S"],
       "person_id": prefs.getInt("userId").toString(),

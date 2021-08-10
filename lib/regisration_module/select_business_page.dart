@@ -78,7 +78,7 @@ class _SelectBusiness extends State<SelectBusiness>
   String pageTitle = "";
   String? imageUrl;
   int instPageNumber = 1;
-  String SearchVal = "";
+  String? SearchVal ;
   final _debouncer = Debouncer(100);
   CupertinoDatePicker? cupertinoDatePicker;
   var color1 = HexColor(AppColors.appMainColor);
@@ -146,7 +146,7 @@ class _SelectBusiness extends State<SelectBusiness>
     super.initState();
     _scrollController = ScrollController();
     _tabController = TabController(vsync: this, length: 2);
-    if (from != "created institute") getListOfInstitutes(" ");
+    if (from != "created institute") getListOfInstitutes(null);
     getPersonProfile();
     WidgetsBinding.instance!.addPostFrameCallback((_) => setSharedPreferences());
   }
@@ -201,7 +201,7 @@ class _SelectBusiness extends State<SelectBusiness>
                       scrollInfo.metrics.maxScrollExtent) {
                 setState(() {
                   isLoading = true;
-                  if (!_enabledInstitute && SearchVal.length == 0) {
+                  if (!_enabledInstitute && ( SearchVal!.length == 0)) {
                     var load = InstituteItem();
                     load.isLoading = true;
                     load.name = "";
@@ -210,7 +210,7 @@ class _SelectBusiness extends State<SelectBusiness>
                     listInstitute!.add(load);
                   }
                 });
-                if (!isSearching) getListOfInstitutes(" ");
+                if (!isSearching) getListOfInstitutes(null);
               }
               return true;
             } ,
@@ -220,10 +220,9 @@ class _SelectBusiness extends State<SelectBusiness>
                   visible: _enabledInstitute,
                   child: PreloadingView(url: "assets/appimages/dice.png"),
                 ),
+
                 Visibility(
-                    visible: ifNoInstituteFound, child: NoInstitutePage()),
-                Visibility(
-                    visible: !ifNoInstituteFound,
+
                     child: ListView.builder(
                         controller: _scrollController,
                         padding: EdgeInsets.only(
@@ -233,33 +232,7 @@ class _SelectBusiness extends State<SelectBusiness>
                           return GestureDetector(
                             child: Column(
                               children: <Widget>[
-                                Visibility(
-                                    visible: index == 0,
-                                    child: Container(
-                                      width: double.infinity,
-                                      margin: const EdgeInsets.only(bottom: 4),
-                                      decoration: BoxDecoration(
-                                          color: HexColor(
-                                              AppColors.appMainColor10),
-                                          borderRadius: BorderRadius.only(
-                                              topRight: Radius.circular(4.0),
-                                              topLeft: Radius.circular(4.0))),
-                                      child: Container(
-                                        margin: const EdgeInsets.all(16),
-                                        child: Text(
-                                          AppLocalizations.of(context)!
-                                              .translate(
-                                              "right_business"),
-                                          textAlign: TextAlign.start,
-                                          style: styleElements
-                                              .captionThemeScalable(context)
-                                              .copyWith(
-                                              color: HexColor(AppColors
-                                                  .appColorBlack85)),
 
-                                        ),
-                                      ),
-                                    )),
                                 Visibility(
                                     visible: listInstitute![index].isLoading,
                                     child: Container(
@@ -354,39 +327,6 @@ class _SelectBusiness extends State<SelectBusiness>
                                             ),
                                           )
 
-                                          /*Row(
-                                    children: [
-                                      Align(
-                                        alignment: Alignment.centerLeft,
-                                        child: Text(
-
-                                          listInstitute[index]
-                                                      .institutionAddress !=
-                                                  null
-                                              ? listInstitute[index]
-                                                      .institutionAddress
-                                                      .streetAddress ??
-                                                  ""
-                                              : "",
-                                          style: styleElements
-                                              .bodyText2ThemeScalable(context),
-                                          textAlign: TextAlign.left,
-
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                      Visibility(
-                                        visible:listInstitute[index].isRegistered ,
-                                        child: Flexible(
-                                          child: Text(
-                                           AppLocalizations.of(context).translate("registered"),
-                                            style: styleElements.captionThemeScalable(context).copyWith(color: HexColor(AppColors.appColorGreen),fontSize: 10,fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                      )
-                                    ],
-                                  )*/
                                           ,
                                           trailing: Column(
                                             children: [
@@ -399,8 +339,7 @@ class _SelectBusiness extends State<SelectBusiness>
                                                   if (this.mounted) {
                                                     setState(() {
                                                       if (val == true) {
-                                                        if (listInstitute![index]
-                                                            .isValidated!) {
+
                                                           for (int i = 0;
                                                           i <
                                                               listInstitute!
@@ -416,8 +355,7 @@ class _SelectBusiness extends State<SelectBusiness>
                                                               listInstitute![i]
                                                                   .isSelected =
                                                               true;
-                                                              getRoles(null,
-                                                                  instituteId);
+
                                                               selectSchoolUrl = Config
                                                                   .BASE_URL +
                                                                   (listInstitute![i].profileImage !=
@@ -448,37 +386,7 @@ class _SelectBusiness extends State<SelectBusiness>
                                                                   .isSelected =
                                                               false;
                                                           }
-                                                        } else {
-                                                          prefs!.setString(
-                                                              Strings
-                                                                  .registeredInstituteName,
-                                                              listInstitute![
-                                                              index]
-                                                                  .name ??
-                                                                  "");
-                                                          prefs!.setString(
-                                                              Strings
-                                                                  .registeredInstituteImage,
-                                                              listInstitute![
-                                                              index]
-                                                                  .profileImage ??
-                                                                  "");
-                                                          prefs!.setInt(
-                                                              "createdSchoolId",
-                                                              listInstitute![
-                                                              index]
-                                                                  .id!);
-                                                          showDialog(
-                                                              barrierDismissible:
-                                                              false,
-                                                              context: context,
-                                                              builder: (BuildContext
-                                                              context) =>
-                                                                  NonValidatedDialog(
-                                                                      listInstitute![
-                                                                      index]
-                                                                          .id));
-                                                        }
+
                                                       } else {
                                                         instituteId = null;
                                                         isInstituteSelected =
@@ -733,7 +641,12 @@ class _SelectBusiness extends State<SelectBusiness>
                       ),
                       onPressed: () {
 
-
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (BuildContext
+                                context) =>
+                                    BasicInstituteDetails()));
 
 
                       },
@@ -901,7 +814,7 @@ class _SelectBusiness extends State<SelectBusiness>
                                                           listInstitute =
                                                           [];
                                                           getListOfInstitutes(
-                                                              " ");
+                                                             null);
                                                         }
                                                       }
                                                     });
@@ -913,6 +826,38 @@ class _SelectBusiness extends State<SelectBusiness>
                                                 isFilterVisible: false,
                                                 onFilterClick: () {},
                                               ))),
+
+                                      SliverToBoxAdapter(
+                                        child:      Visibility(
+                                           child: Padding(
+                                             padding: const EdgeInsets.all(16.0),
+                                             child: Container(
+                                                width: double.infinity,
+                                                margin: const EdgeInsets.only(bottom: 4),
+                                                decoration: BoxDecoration(
+                                                    color: HexColor(
+                                                        AppColors.appMainColor10),
+                                                    borderRadius: BorderRadius.only(
+                                                        topRight: Radius.circular(4.0),
+                                                        topLeft: Radius.circular(4.0))),
+                                                child: Container(
+                                                  margin: const EdgeInsets.all(16),
+                                                  child: Text(
+                                                    AppLocalizations.of(context)!
+                                                        .translate(
+                                                        "find_com"),
+                                                    textAlign: TextAlign.start,
+                                                    style: styleElements
+                                                        .captionThemeScalable(context)
+                                                        .copyWith(
+                                                        color: HexColor(AppColors
+                                                            .appColorBlack85)),
+
+                                                  ),
+                                                ),
+                                              ),
+                                           )),
+                                      )
                                     ];
                                   },
                                   body: Visibility(
@@ -976,13 +921,17 @@ class _SelectBusiness extends State<SelectBusiness>
                                                                       color: Colors
                                                                           .redAccent)),
                                                               onPressed: () async {
-                                                                Navigator.push(context, MaterialPageRoute(builder: (BuildContext context)=>EmployeeCode(2)));
 
-                                                                /* if (_currentPosition ==
+                                                                 if (_currentPosition ==
                                                                     0) {
                                                                   if (isInstituteSelected) {
                                                                     widget.registerUserAs!.institutionId = instituteId;
-                                                                    getAdditionDetails();
+                                                                    Navigator.push(
+                                                                        context,
+                                                                        MaterialPageRoute(
+                                                                            builder: (BuildContext
+                                                                            context) =>
+                                                                                EmployeeCode(widget.registerUserAs)));
 
                                                                   } else {
                                                                     ToastBuilder().showSnackBar(
@@ -1014,7 +963,7 @@ class _SelectBusiness extends State<SelectBusiness>
                                                                             AppColors
                                                                                 .information));
                                                                   }
-                                                                }*/
+                                                                }
                                                               },
                                                               color: HexColor(AppColors.appColorWhite),
                                                               child: Text(
@@ -1106,7 +1055,7 @@ class _SelectBusiness extends State<SelectBusiness>
   void getRoles(String? searchValue, int? instituteId) async {
     _enabled = true;
     final body = jsonEncode({
-      "institution_id": instituteId,
+      "business_id": instituteId,
       "searchVal": searchValue,
     });
     Calls().call(body, context, Config.PERSON_LIST).then((value) async {
@@ -1136,7 +1085,9 @@ class _SelectBusiness extends State<SelectBusiness>
         duration: Duration(milliseconds: 1000), curve: Curves.easeIn);
   }
 
-  void getListOfInstitutes(String searchValue) async {
+  void getListOfInstitutes(String ?searchValue) async {
+
+
     final body = jsonEncode({
       "searchVal": searchValue,
       "page_number": instPageNumber,
@@ -1172,60 +1123,6 @@ class _SelectBusiness extends State<SelectBusiness>
             setState(() {
               ifNoInstituteFound = false;
             });
-          } else {
-            if (isSearching) {
-              //if searching and no data found show no institute layout
-              if (searchValue != "" && searchValue != null) {
-                ifNoInstituteFound = true;
-                showModalBottomSheet<void>(
-                  context: context,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(15.0),
-                        topRight: Radius.circular(15.0)),
-                  ),
-                  builder: (context) {
-                    return noInstituteFound( context);
-                  },
-                );
-                /* showDialog(
-                    barrierDismissible: false,
-                    context: context,
-                    builder: (BuildContext context) => CallBackDialog(
-
-                    ));*/
-              }
-            } else {
-              if (listInstitute != null && listInstitute!.length > 0)
-                listInstitute!.removeAt(listInstitute!.length - 1);
-              if (listInstitute!.length == 0) {
-                ifNoInstituteFound = true;
-                showModalBottomSheet<void>(
-                  context: context,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(15.0),
-                        topRight: Radius.circular(15.0)),
-                  ),
-                  builder: (context) {
-                    return SizedBox(
-                      child: Card(
-                        child: noInstituteFound(context),
-                      ),
-                    );
-                  },
-                );
-                /*      showDialog(
-                      barrierDismissible: false,
-                      context: context,
-                      builder: (BuildContext context) => CallBackDialog(
-
-                      ));*/
-              } else
-                ifNoInstituteFound = false;
-            }
-
-            setState(() {});
           }
         } else {
           if (listInstitute!.length > 0)
@@ -1389,7 +1286,7 @@ class _SelectBusiness extends State<SelectBusiness>
 
   void verifyCode(BuildContext ctx, String value) async {
     final body =
-    jsonEncode({"invitation_code": value, "institution_id": instituteId});
+    jsonEncode({"invitation_code": value, "business_id": instituteId});
     Calls().call(body, context, Config.CODE_VERIFICATION).then((value) async {
       if (value != null) {
         var data = CodeVerification.fromJson(value);

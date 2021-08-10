@@ -30,7 +30,7 @@ class AddLanguageSkills {
   AddLanguageSkills.fromJson(Map<String, dynamic> json) {
     personId = json['person_id'];
     id = json['id'];
-    institutionId = json['institution_id'];
+    institutionId = json['business_id'];
     standardExpertiseCategory = json['standard_expertise_category'];
     standardExpertiseCategoryTypes = json['standard_expertise_category_types'];
     isSelected = json['is_selected'];
@@ -48,7 +48,7 @@ class AddLanguageSkills {
     data['person_id'] = this.personId;
     data['given_by_id']=this.givenById;
     data['personType']=this.personType;
-    data['institution_id'] = this.institutionId;
+    data['business_id'] = this.institutionId;
     data['standard_expertise_category'] = this.standardExpertiseCategory;
     data['standard_expertise_category_types'] =
         this.standardExpertiseCategoryTypes;

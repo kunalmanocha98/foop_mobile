@@ -185,7 +185,7 @@ class InstituteAdminListPageState extends State<InstituteAdminListPage> {
 
   Future<AdminListResponse> fetchData(int page) async {
     var body = jsonEncode({
-      "institution_id": selectedInstituteId.id,
+      "business_id": selectedInstituteId.id,
       "search_val": searchVal,
       "page_number": page,
       "page_size": 10

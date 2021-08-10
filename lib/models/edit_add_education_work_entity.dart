@@ -40,7 +40,7 @@ class EditEducationWork {
 
   EditEducationWork.fromJson(Map<String, dynamic> json) {
     industryType = json['industry_type'];
-    institutionId = json['institution_id'];
+    institutionId = json['business_id'];
     institutionName=json['institution_name'];
     employmentType = json['employment_type'];
     location = json['location'];
@@ -61,7 +61,7 @@ class EditEducationWork {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['institution_id'] = this.institutionId;
+    data['business_id'] = this.institutionId;
     data['industry_type']=this.industryType;
     data['institution_name']=this.institutionName;
     data['class_id'] = this.classId;

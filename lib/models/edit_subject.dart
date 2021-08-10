@@ -28,7 +28,7 @@ class EditSubject {
   EditSubject.fromJson(Map<String, dynamic> json) {
     id = json['person_id'];
     personId = json['id'];
-    institutionId = json['institution_id'];
+    institutionId = json['business_id'];
     givenById=json['given_by_id'];
     personType = json['person_type'];
     institutionCourse = json['institution_course'];
@@ -44,7 +44,7 @@ class EditSubject {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['person_id'] = this.personId;
     data['id'] = this.id;
-    data['institution_id'] = this.institutionId;
+    data['business_id'] = this.institutionId;
     data['given_by_id'] = this.givenById;
     data['person_type'] = this.personType;
     data['institution_course'] = this.institutionCourse;

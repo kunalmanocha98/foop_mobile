@@ -3,10 +3,10 @@ class BaseUrls{
 /// isTest to false for Production server Pointer
   static bool get isTest =>  true;
 
-  static const String testUrl ="https://test.tricycle.group";
+  static const String testUrl ="https://test.oho.works";
   static const String productionUrl ="https://www.tricycle.life";
 
-  static const String testUrl_without_http = "test.tricycle.group";
+  static const String testUrl_without_http = "test.oho.works";
   static const String productionUrl_without_http = "www.tricycle.life";
 
   static const String testUrl_messenger = "https://messenger.tricycle.group";
