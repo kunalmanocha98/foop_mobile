@@ -130,7 +130,7 @@ class _AddAboutBio extends State<AddAboutBio> with CommonMixins{
               "$startDate",
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.left,
-              style: styleElements!.bodyText2ThemeScalable(context),
+              style: styleElements.bodyText2ThemeScalable(context),
             ),
           )),
     );
