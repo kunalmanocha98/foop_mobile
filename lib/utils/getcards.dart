@@ -2,6 +2,7 @@ import 'package:oho_works_app/components/app_earn_card.dart';
 import 'package:oho_works_app/models/base_res.dart';
 import 'package:oho_works_app/models/personal_profile.dart';
 import 'package:oho_works_app/profile_module/common_cards/about_profile_card.dart';
+import 'package:oho_works_app/profile_module/common_cards/account_detail_card.dart';
 import 'package:oho_works_app/profile_module/common_cards/art_and_photography.dart';
 import 'package:oho_works_app/profile_module/common_cards/card_courses_detail.dart';
 import 'package:oho_works_app/profile_module/common_cards/club_and_socities.dart';
@@ -414,9 +415,10 @@ class GetAllCards {
 
       case "aboutCard":
         {
-          return AboutProfileCard(
-            data: commonCardData,
-          );
+          return AccountDetailCard(commonCardData);
+          // return AboutProfileCard(
+          //   data: commonCardData,
+          // );
         }
         break;
 
@@ -856,8 +858,8 @@ class GetAllCards {
 
       case "aboutCard":
         {
-          return AboutProfileCard(
-            data: commonCardData,
+          return AccountDetailCard(
+           commonCardData,
           );
         }
         break;
