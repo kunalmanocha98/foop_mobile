@@ -454,11 +454,14 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
                                           onTap: () async {
                                             imagePicker("gallery");
                                           },
-                                          child:  Container(
+                                          child:  Stack(
+                                           children:[
+
+                                            Container(
                                             width: 68,
                                             height: 68,
                                             decoration: BoxDecoration(
-                                              color: HexColor(AppColors.appColorBlack10),
+                                                color: HexColor(AppColors.appColorBlack10),
                                                 borderRadius: BorderRadius.circular(8),
                                                 image: DecorationImage(
                                                     fit: BoxFit.cover,
@@ -472,6 +475,19 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
 
                                                 )
                                             ),
+
+                                          ),
+                                             Visibility(
+                                               visible: imageUrl==null ||imageUrl!.isEmpty,
+                                               child: Container(
+                                                 width: 68,
+                                                 height: 68,
+                                                 child: Center(
+                                                   child: Icon(Icons.camera_alt_outlined),
+                                                 ),
+                                               ),
+                                             )
+                                             ]
                                           )
                                         ),
                                         ),

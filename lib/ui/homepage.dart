@@ -88,6 +88,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver{
 
 
   void setSharedPreferences() async {
+    _askPermissions();
     Utility().refreshList(context);
     pushNotificationService!.initialise(
         callback: () {
@@ -105,7 +106,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver{
         },
         context: context);
     Utility().refreshList(context);
-    _askPermissions();
+
     getListContacts();
 
     prefs = await SharedPreferences.getInstance();
@@ -617,6 +618,8 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver{
     if (list.isNotEmpty && !isNotUploading) {
       uploadContacts(list as List<UserContact>);
     }
+
+    print(list.length.toString()+"--------------------ContactLength");
   }
 
   void uploadContacts(List<UserContact> list) async {
@@ -682,11 +685,14 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver{
 
 
   Future<void> _askPermissions() async {
+    print("step-------------------------------------A");
     PermissionStatus? permissionStatus;
     if (permissionStatus != PermissionStatus.granted) {
       try {
         permissionStatus = await _getContactPermission();
         if (permissionStatus != PermissionStatus.granted) {
+          print("step-------------------------------------b");
+
         } else {
           getContacts();
         }
@@ -700,6 +706,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver{
   Future<PermissionStatus> _getContactPermission() async {
     final status = await Permission.contacts.status;
     if (!status.isGranted) {
+      print("step-------------------------------------00");
       final result = await Permission.contacts.request();
       return result;
     } else {
@@ -709,6 +716,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver{
 
 
   void getAlreadySavedContact(UserContact row) async {
+    print("step-------------------------------------2");
     UserContact? data =
     await dbHelper.getContactUsingMobileNumber(row.mobileNumber);
 
@@ -726,6 +734,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver{
   void _insert(UserContact row) async {
     // row to insert
     row.isSelected = 0;
+    if(row.name!=null && row.name!.isNotEmpty)
     await dbHelper.insertContacts(row);
   }
 
@@ -741,7 +750,7 @@ class HomePageState extends State<HomePage> with WidgetsBindingObserver{
 
   Future<void> getContacts() async {
     // var i = 0;
-
+print("step-------------------------------------1");
     await Contacts.streamContacts(bufferSize: 200).forEach((contact) {
       var mob = "";
 

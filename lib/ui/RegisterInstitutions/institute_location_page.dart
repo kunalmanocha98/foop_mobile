@@ -53,7 +53,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
   bool? isEvent;
   var range = <String>[];
   var rangeStudent = <String>[];
-
+  TextEditingController controller2 = TextEditingController();
   var instituteTypelist = <String>[];
   var relationship = <String?>[];
   var mapCountry = HashMap<String, String>();
@@ -104,7 +104,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
 
   }
   String quotesCharacterLength = "0";
-
+  String addresses="address";
   @override
   Widget build(BuildContext context) {
     this.context = context;
@@ -348,24 +348,8 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
                                               fontWeight: FontWeight.bold),
                                     ),
                                   )),
-                              /*  Align(
-                                  alignment: Alignment.center,
-                                  child: Container(
-                                    margin: EdgeInsets.only(
-                                        left: 8.w, right: 8.w, bottom: 8.h),
-                                    child: selectMap,
-                                  )),*/
-                              InkWell(
-                                onTap: (){
-
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => MapPage(
-                                          ),
-                                      ));
-                                },
-                                child: Container(
+                              Stack(
+                                children: [Container(
                                     height: 150,
                                     width: double.infinity,
                                     margin: const EdgeInsets.only(
@@ -375,11 +359,54 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
                                           color: HexColor(AppColors.appColorGrey500),
                                         ),
                                         borderRadius:
-                                            BorderRadius.all(Radius.circular(8))),
+                                        BorderRadius.all(Radius.circular(8))),
                                     child: Padding(
                                       padding: const EdgeInsets.all(16.0),
-                                      child: Text("Address"),
+                                      child: TextField(
+                                        controller: controller2,
+                                        onChanged: (value) {
+                                        },
+                                        maxLines: 3,
+                                        style: styleElements
+                                            .subtitle2ThemeScalable(context)
+                                        ,
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+hintText: addresses,
+                                          hintStyle:  styleElements
+                                              .subtitle2ThemeScalable(context)
+                                          ,
+
+                                        ),
+                                      ),
                                     )),
+                                  Container(
+                                    height: 160,
+                                    width: double.infinity,
+                                    child: Align(
+                                      alignment: Alignment.bottomRight,
+                                      child: FloatingActionButton(
+                                          backgroundColor: HexColor(AppColors.appMainColor),
+                                          child: Icon(Icons.location_on_outlined),
+
+                                          onPressed: () async {
+                                            var result=await   Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) => MapPage(
+                                                  ),
+                                                ));
+
+                                            if (result != null) {
+                                              if (result["address"] != null)
+                                                controller2.text = result["address"];
+
+                                              setState(() {});
+                                            }
+                                          }),
+                                    ),
+                                  ),
+                                ],
                               ),
                               Align(
                                   alignment: Alignment.center,

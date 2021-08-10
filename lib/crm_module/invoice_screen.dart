@@ -175,7 +175,7 @@ class InvoiceOrderPageState extends State<InvoiceOrderPage> {
                         isScrollControlled: true,
                         builder: (context) {
                           return BottomSheetAddress(
-                            prefs: prefs,
+
                             onClickCallback: (value) {
 
                             },
@@ -489,7 +489,7 @@ class InvoiceOrderPageState extends State<InvoiceOrderPage> {
                                         isScrollControlled: true,
                                         builder: (context) {
                                           return BottomSheetAddress(
-                                            prefs: prefs,
+
                                             onClickCallback: (value) {
 
                                             },
@@ -607,7 +607,7 @@ class InvoiceOrderPageState extends State<InvoiceOrderPage> {
                                         isScrollControlled: true,
                                         builder: (context) {
                                           return BottomSheetAddress(
-                                            prefs: prefs,
+
                                             onClickCallback: (value) {
 
                                             },

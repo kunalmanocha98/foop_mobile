@@ -165,7 +165,7 @@ class ConfirmedOrderPageState extends State<ConfirmedOrderPage> {
                         isScrollControlled: true,
                         builder: (context) {
                           return BottomSheetAddress(
-                            prefs: prefs,
+
                             onClickCallback: (value) {
 
                             },
@@ -375,7 +375,7 @@ class ConfirmedOrderPageState extends State<ConfirmedOrderPage> {
                             isScrollControlled: true,
                             builder: (context) {
                               return BottomSheetAddress(
-                                prefs: prefs,
+
                                 onClickCallback: (value) {
 
                                 },
@@ -409,7 +409,7 @@ class ConfirmedOrderPageState extends State<ConfirmedOrderPage> {
                             isScrollControlled: true,
                             builder: (context) {
                               return BottomSheetAddress(
-                                prefs: prefs,
+
                                 onClickCallback: (value) {
 
                                 },

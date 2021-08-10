@@ -149,7 +149,7 @@ class CreateCompanyPageState extends State<CreateCompanyPage> {
                       isScrollControlled: true,
                       builder: (context) {
                         return BottomSheetAddress(
-                          prefs: prefs,
+
                           onClickCallback: (value) {
 
                           },
