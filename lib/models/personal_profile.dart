@@ -53,6 +53,10 @@ class Persondata {
   bool? isVerified;
   List<Institutions>? institutions;
   List<Permissions>? permissions;
+  String? designation;
+  String? department;
+  String? reportManager;
+  int? dateOfJoining;
   Persondata(
       {this.id,
         this.slug,
@@ -80,6 +84,7 @@ class Persondata {
         this.profileImage,
         this.coverImage,
         this.institutionId,
+        this.reportManager,this.dateOfJoining,this.designation,this.department,
         this.institutions});
 
   Persondata.fromJson(Map<String, dynamic> json) {
@@ -103,6 +108,10 @@ class Persondata {
     dateOfAnniversary = json['date_of_anniversary'];
     gender = json['gender'];
     mobile = json['mobile'];
+    designation = json['designation'];
+    department = json['department'];
+    reportManager = json['report_manager'];
+    dateOfJoining = json['date_of_joining'];
     userLocation = json['user_location'] != null
         ? new UserLocation.fromJson(json['user_location'])
         : null;
@@ -154,6 +163,10 @@ class Persondata {
     data['profile_image'] = this.profileImage;
     data['cover_image'] = this.coverImage;
     data['business_id'] = this.institutionId;
+    data['designation'] = this.designation;
+    data['department'] = this.department;
+    data['report_manager'] = this.reportManager;
+    data['date_of_joining'] = this.dateOfJoining;
     if (this.institutions != null) {
       data['businesses'] = this.institutions!.map((v) => v.toJson()).toList();
     }
