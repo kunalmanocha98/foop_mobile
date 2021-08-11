@@ -326,7 +326,7 @@ class _InstitutePhotoPageState extends State<InstitutePhotoPage> {
           Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => DomainPage(resposne.rows!.institutionId),
+                builder: (context) => DomainPage(instId:resposne.rows!.institutionId),
               ));
         }
       }

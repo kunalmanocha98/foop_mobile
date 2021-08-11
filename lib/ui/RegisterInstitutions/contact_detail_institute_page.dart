@@ -25,8 +25,9 @@ import 'models/instituteContacts.dart';
 // ignore: must_be_immutable
 class ContactsDetailsPageInstitute extends StatefulWidget {
   int? instId;
-
-  ContactsDetailsPageInstitute(this.instId);
+  bool isEdit;
+  Function ? callBack;
+  ContactsDetailsPageInstitute({this.instId, this.isEdit = false,this.callBack});
 
   @override
   _ContactsDetailsPageInstitute createState() =>
@@ -193,7 +194,7 @@ bool isLoading=false;
               // resizeToAvoidBottomInset: false,
               appBar: appAppBar().getCustomAppBar(context,
                   appBarTitle: AppLocalizations.of(context)!.translate('register_institute'),
-                  isIconVisible:false,
+                  isIconVisible:widget.isEdit,
                   actions: [
 
                     Padding(
@@ -426,6 +427,8 @@ bool isLoading=false;
 
   // ignore: missing_return
   Future<bool> _onBackPressed() {
+    if(widget.isEdit)
+      Navigator.pop(context);
 
     return new Future(() => false);
   }
@@ -460,7 +463,13 @@ bool isLoading=false;
               MaterialPageRoute(
                   builder: (BuildContext
                   context) =>
-                      InstituteLocationAddressPage(instId)));
+                      InstituteLocationAddressPage(instId:instId,isEdit:widget.isEdit,callBack: (){
+
+                        Navigator.pop(context);
+                        if(widget.callBack!=null)
+                          widget.callBack!();
+
+                      })));
         }
 
 

@@ -35,9 +35,10 @@ import 'models/states.dart';
 class InstituteLocationAddressPage extends StatefulWidget {
   int? instId;
   bool isEvent;
+  Function ? callBack;
   EventLocation? offlineLocation;
-
-  InstituteLocationAddressPage(this.instId,{this.isEvent=false,this.offlineLocation});
+bool isEdit;
+  InstituteLocationAddressPage({this.instId,this.isEvent=false,this.offlineLocation,this.isEdit=false,this.callBack});
 
   @override
   _InstituteLocationAddressPage createState() =>
@@ -85,7 +86,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
   EventLocation? offlineLocation;
 
 
-  _InstituteLocationAddressPage(this.instId, {this.isEvent,this.offlineLocation});
+  _InstituteLocationAddressPage(this.instId, {this.isEvent=false,this.offlineLocation});
 
   @override
   void initState() {
@@ -288,7 +289,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
                   appBarTitle: isEvent! ?
                   AppLocalizations.of(context)!.translate('register__entity'):
                   AppLocalizations.of(context)!.translate('reg_bus'),
-                  isIconVisible:isEvent,
+                  isIconVisible:isEvent!||widget.isEdit,
                   actions: [
 
                     Padding(
@@ -537,10 +538,22 @@ hintText: addresses,
                     if (value != null) {
                       var data = BaseResponse.fromJson(value);
                       if (data.statusCode == Strings.success_code) {
+                        if(!widget.isEdit) {
                         prefs.setString("create_entity", "created");
 
-                        Navigator.of(context)
-                            .pushNamedAndRemoveUntil('/selectBusiness', (Route<dynamic> route) => false);
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            '/selectBusiness', (Route<dynamic> route) => false);
+                      }
+                        else
+                          {
+
+
+                              Navigator.pop(context);
+                              if(widget.callBack!=null)
+                                widget.callBack!();
+
+
+                          }
                       /*  Navigator.push(
                             context,
                             MaterialPageRoute(

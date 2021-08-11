@@ -45,7 +45,7 @@ class UserNameWithImageCard extends StatelessWidget {
   bool showQr;
   bool? showProgress;
   int? progress;
-
+Function? editCallBack;
   UserNameWithImageCard(
       {Key? key,
         this.personData,
@@ -53,6 +53,7 @@ class UserNameWithImageCard extends StatelessWidget {
         required this.subtitle,
         required this.isFollow,
         required this.imageUrl,
+        this.editCallBack,
         required this.callbackPicker,
         this.onClickProfile,
         this.thirdPersonId,
@@ -258,13 +259,14 @@ class UserNameWithImageCard extends StatelessWidget {
             child: userType == "person"
                 ? appElevatedButton(
                 onPressed: () async {
-                  if (userType == "person") {
+                editCallBack!();
+                 /* if (userType == "person") {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
                                 BasicInfo(personData, callbackPicker)));
-                  }
+                  }*/
 
 
                 },

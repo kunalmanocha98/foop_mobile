@@ -67,21 +67,21 @@ class _SplashScreenState extends State<SplashScreen> {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                   builder: (ctx) => InstituteLocationAddressPage(
-                      prefs.getInt("createdSchoolId"))),
+                      instId:  prefs.getInt("createdSchoolId"))),
                   (Route<dynamic> route) => false);
         }
         else if (prefs.getString("create_entity") == "Contact") {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                   builder: (ctx) => ContactsDetailsPageInstitute(
-                      prefs.getInt("createdSchoolId"))),
+                      instId: prefs.getInt("createdSchoolId"))),
                   (Route<dynamic> route) => false);
         }
         else if (prefs.getString("create_entity") == "Domain") {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                   builder: (ctx) =>
-                      DomainPage(prefs.getInt("createdSchoolId"))),
+                      DomainPage(instId: prefs.getInt("createdSchoolId"))),
                   (Route<dynamic> route) => false);
         }
         else if (prefs.getString("create_entity") == "created") {
@@ -110,19 +110,19 @@ class _SplashScreenState extends State<SplashScreen> {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                   builder: (ctx) => InstituteLocationAddressPage(
-                      prefs.getInt("createdSchoolId"))),
+                      instId:  prefs.getInt("createdSchoolId"))),
                   (Route<dynamic> route) => false);
         } else if (prefs.getString("create_entity") == "Contact") {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                   builder: (ctx) => ContactsDetailsPageInstitute(
-                      prefs.getInt("createdSchoolId"))),
+                      instId: prefs.getInt("createdSchoolId"))),
                   (Route<dynamic> route) => false);
         } else if (prefs.getString("create_entity") == "Domain") {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                   builder: (ctx) =>
-                      DomainPage(prefs.getInt("createdSchoolId"))),
+                      DomainPage(instId: prefs.getInt("createdSchoolId"))),
                   (Route<dynamic> route) => false);
         } else if (prefs.getString("create_entity") == "created") {
           print(

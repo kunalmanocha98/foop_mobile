@@ -28,7 +28,7 @@ class Config {
   static String COURSE_LIST = BASE_URL + '/api/v1/standard/course/list';
   static String PERSONAL_PROFILE = BASE_URL + '/api/v1/user/profile/';
   static String INSTITUTE_DETAILS = BASE_URL +
-      '/api/v1/business/detail';
+      '/api/v1/business/details';
   static String INSTITUTE_CLASSES =
       BASE_URL + '/api/v1/business/class/list';
   static String PERSON_LIST =

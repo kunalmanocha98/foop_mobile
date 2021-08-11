@@ -12,6 +12,7 @@ import 'package:oho_works_app/camera_module/camera_page.dart';
 import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
+import 'package:oho_works_app/models/business_response_detail.dart';
 import 'package:oho_works_app/models/imageuploadrequestandresponse.dart';
 import 'package:oho_works_app/models/post/keywordsList.dart';
 import 'package:oho_works_app/models/post/postcreate.dart';
@@ -61,6 +62,11 @@ import 'models/basicInstituteData.dart';
 import 'models/basic_response.dart';
 
 class BasicInstituteDetails extends StatefulWidget {
+
+ final BusinessData? data;
+ final bool isEdit;
+
+  const BasicInstituteDetails({Key? key, this.data,this.isEdit=false}) : super(key: key);
   @override
   _BasicInstituteDetails createState() => new _BasicInstituteDetails();
 }
@@ -104,6 +110,8 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
   String? selectStRange;
   String? employeeRanget;
   int? selectedEpoch;
+  var cat;
+  var type;
   var mapIntType = HashMap<String?, String?>();
   var mapCategory = HashMap<String?, String?>();
   late SharedPreferences prefs;
@@ -119,7 +127,12 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
     {
       setPrefs(),
       getInstituteType(),
-        getRelationType()});
+        getRelationType(),
+    getEditData()
+
+
+
+    });
   }
 
   String quotesCharacterLength = "0";
@@ -666,8 +679,7 @@ Navigator.pop(context);
                 if(employeeRanget!=null )
                   {
 
-                    var cat;
-                    var type;
+
                     mapCategory.forEach((key, value) {
                       if(key==selectInstCategory)
                         cat=value;
@@ -703,12 +715,19 @@ Navigator.pop(context);
                           prefs.setString(Strings.registeredInstituteName, basicData.name??"");
                           prefs.setString(Strings.registeredInstituteImage, imageUrl??"");
                           prefs.setInt("createdSchoolId", resposne.rows!.institutionId!);
+                          if(!widget.isEdit)
                           prefs.setString("create_entity", "Domain");
 
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => DomainPage(resposne.rows!.institutionId!),
+                                builder: (context) => DomainPage(
+                                    callBack:(){
+                                      Navigator.pop(context);
+                                    },
+
+
+                                    instId:resposne.rows!.institutionId!,isEdit:widget.isEdit),
                               ));
                         }
                       }
@@ -750,6 +769,30 @@ Navigator.pop(context);
 
 
 
+
+  void getEditData()
+  {
+    if(widget.data!=null)
+      {
+        if(widget.data!.profileImage!=null)
+        imageUrl=widget.data!.profileImage;
+        if(widget.data!.name!=null)
+          instituteNameC.text=widget.data!.name!;
+
+        if(widget.data!.businessType!=null) {
+          type=widget.data!.businessType!;
+        selectInstType = widget.data!.businessType!;
+      }
+
+      if(widget.data!.businessCategory!=null) {
+        cat=widget.data!.businessCategory!;
+        selectInstCategory = widget.data!.businessCategory!;
+      }
+
+      if(widget.data!.description!=null)
+          descriptionController.text=widget.data!.description!;
+      }
+  }
   void getInstituteType() async {
     final body = jsonEncode({"type":"BUSCAT"});
     Calls().call(body, context, Config.DICTIONARYLIST).then((value) async {

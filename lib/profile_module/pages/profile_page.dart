@@ -17,6 +17,7 @@ import 'package:oho_works_app/enums/ownerType.dart';
 import 'package:oho_works_app/enums/share_item_type.dart';
 import 'package:oho_works_app/home/locator.dart';
 import 'package:oho_works_app/models/base_res.dart';
+import 'package:oho_works_app/models/business_response_detail.dart';
 import 'package:oho_works_app/models/custom_tab_maker.dart';
 import 'package:oho_works_app/models/dynmaicres.dart';
 import 'package:oho_works_app/models/followers_following_count.dart';
@@ -29,6 +30,7 @@ import 'package:oho_works_app/profile_module/common_cards/user_pipulaity_card.da
 import 'package:oho_works_app/profile_module/pages/media%20_page.dart';
 import 'package:oho_works_app/services/get_deeplink_url_service.dart';
 import 'package:oho_works_app/ui/LearningModule/lessons_list_page.dart';
+import 'package:oho_works_app/ui/RegisterInstitutions/basic_institute_detail.dart';
 import 'package:oho_works_app/ui/dashboardhomepage.dart';
 import 'package:oho_works_app/ui/dialogs/invalid%20_profile_image_dialog.dart';
 import 'package:oho_works_app/ui/postModule/selectedPostListPage.dart';
@@ -109,6 +111,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
   String? coverPath;
   SharedPreferences? prefs;
   var followers = 0;
+  BusinessData ?businessData;
   var following = 0;
   var roomsCount = 0;
   var postCount = 0;
@@ -209,7 +212,8 @@ class UserProfileCardsState extends State<UserProfileCards> {
                 getDetailedClasses(context);
               }),
           tabName: AppLocalizations.of(context)!.translate('class')));
-    } else if (type == "subject")
+    }
+    else if (type == "subject")
       data!.add(CustomTabMaker(
           statelessWidget: EducationPage(
               type: type,
@@ -328,6 +332,14 @@ class UserProfileCardsState extends State<UserProfileCards> {
             isUserExist: isUserExist,
           ),
           tabName: type));
+    else if (type == "departments")
+      data!.add(CustomTabMaker(
+          statelessWidget: ImagesSeeMore(
+            type: userType,
+            instituteId: userId.toString(),
+            isUserExist: isUserExist,
+          ),
+          tabName: type));
     else
       data!.add(CustomTabMaker(
           statelessWidget: MediaPage(
@@ -343,6 +355,8 @@ class UserProfileCardsState extends State<UserProfileCards> {
 
   void setSharedPreferences() async {
     prefs = await SharedPreferences.getInstance();
+
+    getBusinessDetails(context,prefs!.getInt(Strings.instituteId).toString());
     if (userType == "person") {
       setState(() {
         if (prefs!.getString("coverImage") != null)
@@ -685,6 +699,14 @@ class UserProfileCardsState extends State<UserProfileCards> {
                                         subtitle: subTitle,
                                         isUserVerified: isUserVerified,
                                         isFollow: isFollow,
+                                        editCallBack:(){
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (BuildContext
+                                                  context) =>
+                                                      BasicInstituteDetails(data:businessData!,isEdit:true)));
+                                        },
                                         isPersonProfile: true,
                                         onClickProfile: userType == "person"
                                             ? _profilePicker
@@ -724,6 +746,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                                       textFour: "rooms",
                                       ownerId: ownerId,
                                       ownerType: ownerType,
+
                                       callback: callback != null
                                           ? callback
                                           : () {
@@ -994,6 +1017,32 @@ class UserProfileCardsState extends State<UserProfileCards> {
       });
     }
   }
+
+  void getBusinessDetails(BuildContext context,String id) async {
+    final body = jsonEncode({"business_id": id});
+
+    Calls().call(body, context, Config.INSTITUTE_DETAILS).then((value) async {
+      if (value != null) {
+
+        if (this.mounted) {
+          setState(() async {
+            var data = BusinessDetailResponse.fromJson(value);
+            if (data != null && data.statusCode == 'S10001') {
+             setState(() {
+               businessData=data.rows;
+             });
+
+            }
+          });
+        }
+      }
+    }).catchError((onError) async {
+
+      print(onError.toString());
+
+    });
+  }
+
 
   void getUserData(BuildContext context) async {
     setState(() {

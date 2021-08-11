@@ -346,7 +346,7 @@ register();
               MaterialPageRoute(
                   builder: (BuildContext
                   context) =>
-                      ContactsDetailsPageInstitute(instId)));
+                      ContactsDetailsPageInstitute(instId:instId)));
         }
       }
     }).catchError((onError) async {

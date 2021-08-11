@@ -23,11 +23,13 @@ import 'models/basic_response.dart';
 // ignore: must_be_immutable
 class DomainPage extends StatefulWidget {
   int? instId;
+  bool isEdit;
+  Function ? callBack;
   @override
   _DomainPage createState() =>
       new _DomainPage(instId);
 
-  DomainPage(this.instId);
+  DomainPage({this.instId, this.isEdit = false,this.callBack});
 }
 
 class _DomainPage extends State<DomainPage>
@@ -142,7 +144,7 @@ class _DomainPage extends State<DomainPage>
             // resizeToAvoidBottomInset: false,
               appBar: appAppBar().getCustomAppBar(context,
                   appBarTitle: AppLocalizations.of(context)!.translate('reg_bus'),
-                  isIconVisible:false,
+                  isIconVisible:widget.isEdit,
                   actions: [
 
                     Padding(
@@ -156,13 +158,20 @@ class _DomainPage extends State<DomainPage>
                           {submit();}
                           else
                           {
+
                             prefs.setString("create_institute", "Contact");
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (BuildContext
                                     context) =>
-                                        ContactsDetailsPageInstitute(instId)));
+                                        ContactsDetailsPageInstitute(instId:instId,isEdit:widget!.isEdit,callBack: (){
+
+                                          Navigator.pop(context);
+                                          if(widget.callBack!=null)
+                                            widget.callBack!();
+
+                                        },)));
                           }
 
                         },
@@ -317,6 +326,8 @@ class _DomainPage extends State<DomainPage>
 
   // ignore: missing_return
   Future<bool> _onBackPressed() {
+    if(widget.isEdit)
+      Navigator.pop(context);
     return new Future(() => false);
   }
 
@@ -346,7 +357,13 @@ setState(() {
               MaterialPageRoute(
                   builder: (BuildContext
                   context) =>
-                      ContactsDetailsPageInstitute(instId)));
+                      ContactsDetailsPageInstitute(instId:instId,isEdit: widget.isEdit,callBack: (){
+
+                        Navigator.pop(context);
+                        if(widget.callBack!=null)
+                          widget.callBack!;
+
+                      })));
         }
       }
     }).catchError((onError) async {
