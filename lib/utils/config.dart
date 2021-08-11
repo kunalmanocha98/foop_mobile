@@ -448,10 +448,8 @@ class Config {
   static String EMAIL_FORGOT_PASSWORD_OTP = BASE_URL_MAIL + '/api/v1/email/forgot-password-otp';
   static String EMAIL_MOVE_FOLDER = BASE_URL_MAIL + '/api/v1/email/move';
   static String EMAIL_DELETE = BASE_URL_MAIL + '/api/v1/email/delete';
-
-
-  static String BUSINESS_ACCOUNTING_REGISTER= BASE_URL_MAIL + '/api/v1/business/accounting/register';
-  static String BUSINESS_ACCOUNTING_EDIT= BASE_URL_MAIL + '/api/v1/business/accounting/edit';
+  static String BUSINESS_ACCOUNTING_REGISTER= BASE_URL + '/api/v1/business/accounting/register';
+  static String BUSINESS_ACCOUNTING_EDIT= BASE_URL + '/api/v1/business/accounting/edit';
 
 
 
