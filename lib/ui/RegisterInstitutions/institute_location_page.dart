@@ -8,8 +8,12 @@ import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/conversationPage/base_response.dart';
 import 'package:oho_works_app/models/CalenderModule/event_create_models.dart';
+import 'package:oho_works_app/models/RegisterUserAs.dart';
+import 'package:oho_works_app/models/base_res.dart';
 import 'package:oho_works_app/models/business_response_detail.dart';
 import 'package:oho_works_app/models/language_list.dart';
+import 'package:oho_works_app/models/location_reponse_data.dart';
+import 'package:oho_works_app/models/register_user_as_response.dart';
 import 'package:oho_works_app/profile_module/pages/directions.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
@@ -39,9 +43,9 @@ class InstituteLocationAddressPage extends StatefulWidget {
   Function ? callBack;
   EventLocation? offlineLocation;
 bool isEdit;
-
+  final Function? refreshCallback;
   BusinessData? data;
-  InstituteLocationAddressPage({this.instId,this.isEvent=false,this.offlineLocation,this.isEdit=false,this.callBack,this.data});
+  InstituteLocationAddressPage({this.instId,this.isEvent=false,this.offlineLocation,this.isEdit=false,this.callBack,this.data,this.refreshCallback});
 
   @override
   _InstituteLocationAddressPage createState() =>
@@ -103,6 +107,10 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
     getInstituteType();
     setSharedPreferences();
     getEditData();
+    WidgetsBinding.instance!.addPostFrameCallback((_) =>
+
+
+        getDataLocation());
   }
 
 
@@ -188,39 +196,15 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
             ),
           )),
     ));
-    final address = TextFormField(
-      controller: addController,
-      textCapitalization: TextCapitalization.words,
-      keyboardType: TextInputType.multiline,
-      maxLines: null,
-      onChanged: (text) {
-        setState(() {
-          quotesCharacterLength = text.length.toString();
-        });
-      },
-      inputFormatters: [
-        new LengthLimitingTextInputFormatter(200),
-      ],
-      style: styleElements
-          .subtitle1ThemeScalable(context).copyWith(
-          color: HexColor(AppColors.appColorBlack65)),
-      scrollPadding:
-          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-      decoration: InputDecoration(
-          border: InputBorder.none,
-          focusedBorder: InputBorder.none,
-          enabledBorder: InputBorder.none,
-          errorBorder: InputBorder.none,
-          disabledBorder: InputBorder.none,
-          contentPadding: EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
-          hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
-          hintText: AppLocalizations.of(context)!.translate('address')),
-    );
+
     styleElements = TextStyleElements(context);
 
 
     final country = GestureDetector(
       onTap: () async {
+
+
+
         var result = await Navigator.push(
             context,
             MaterialPageRoute(
@@ -229,7 +213,9 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
         if (result != null) {
           LanguageItem languageItem = result["result"] as LanguageItem;
           selectCountry = languageItem.languageName;
-          setState(() {});
+          setState(() {
+            selectState=null;
+          });
           getRelationType(languageItem.languageCode);
         }
       },
@@ -259,28 +245,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
       ),
     )
 
-        /*DropdownButtonFormField(
-      value: null,
-      isExpanded: true,
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 2.0.w, 15.0.h)),
-      hint: Padding(
-        padding: const EdgeInsets.only(left: 0),
-        child: Text(
-          selectCountry ?? "Country",
-          style: styleElements.bodyText2ThemeScalable(context),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-      ),
-      items: _getInstituteType(),
-      onChanged: (value) {
-        setState(() {
-          selectCountry = value ?? selectCountry;
-          getCountryCode(selectCountry);
-        });
-      },
-    )*/
+
         ;
 
     final state = DropdownButtonFormField<dynamic>(
@@ -509,6 +474,8 @@ hintText: addresses,
       });
       Calls().calWithoutToken(body, context, Config.STATES).then((value) async {
         if (value != null) {
+          relationship.clear();
+          mapState.clear();
           var data = States.fromJson(value);
           for (var item in data.rows!) {
             relationship.add(item.name);
@@ -523,10 +490,42 @@ hintText: addresses,
     }
   }
 
+
+  getDataLocation() async {
+    var body = jsonEncode({"business_id": instId});
+
+    if(widget.isEdit)
+    {
+      Calls().call(body, context, Config.LOCATION_DETAILS).then((value) {
+        var res = LocationDetailsResponse.fromJson(value);
+        if (res.statusCode == Strings.success_code) {
+          if (res.rows != null && res.rows!.isNotEmpty) {
+            if (res.rows![0].country != null) {
+              getRelationType(res.rows![0].country);
+            }
+
+            if (res.rows![0].streetAddress != null)
+              controller2.text = res.rows![0].streetAddress!;
+
+            if (res.rows![0].postalCode != null)
+              pinController.text = res.rows![0].postalCode!;
+
+            if (res.rows![0].city != null)
+              cityMapController.text = res.rows![0].city!;
+
+            setState(() {});
+          }
+        }
+      });
+    }
+  }
+
   void submit(BuildContext ctx) async {
     setState(() {
       isLoading=true;
     });
+    if (selectCountry!=null && selectCountry!.isNotEmpty)
+
     if (selectCountry!=null && selectCountry!.isNotEmpty)
     {
         if (selectState!=null && selectState!.isNotEmpty)
@@ -545,7 +544,7 @@ hintText: addresses,
                 if(!isEvent!) {
                   InstituteLocationDetail instituteContactDetail = InstituteLocationDetail();
                   instituteContactDetail.institutionId = instId;
-                  instituteContactDetail.address = addController.text;
+                  instituteContactDetail.address = controller2.text;
                   instituteContactDetail.country = country;
                   instituteContactDetail.state = state;
                   instituteContactDetail.postalCode = pinController.text;
@@ -556,7 +555,7 @@ hintText: addresses,
 
                   Calls()
                       .call(jsonEncode(instituteContactDetail), context,
-                     widget.isEdit?Config.INSTITUTE_ADDRESS: Config.INSTITUTE_ADDRESS)
+                     widget.isEdit?Config.EDIT_LOCATION: Config.INSTITUTE_ADDRESS)
                       .then((value) async {
                     setState(() {
                       isLoading = false;
@@ -564,11 +563,15 @@ hintText: addresses,
                     if (value != null) {
                       var data = BaseResponse.fromJson(value);
                       if (data.statusCode == Strings.success_code) {
+
+                        if(widget.refreshCallback!=null)
+                          widget.refreshCallback!();
                         if(!widget.isEdit) {
                         prefs.setString("create_entity", "created");
 
-                        Navigator.of(context).pushNamedAndRemoveUntil(
-                            '/selectBusiness', (Route<dynamic> route) => false);
+register();
+
+
                       }
                         else
                           {
@@ -653,6 +656,42 @@ hintText: addresses,
           HexColor(AppColors.information));
     }
 
+
+  }
+
+  void register() async {
+
+    RegisterUserAs registerUserAs =RegisterUserAs();
+
+    registerUserAs.personId = prefs!.getInt(Strings.userId);
+    registerUserAs.institutionId = instId;
+    final body = jsonEncode(registerUserAs);
+
+    Calls().call(body, context, Config.REGISTER_USER_AS).then((value) async {
+      if (value != null) {
+        var data = RegisterUserAsResponse.fromJson(value);
+        print(data.toString());
+        if (data.statusCode == "S10001") {
+          prefs!.setBool("isProfileCreated", true);
+
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                  builder: (context) => DilaogPage(
+                      type: "admin",
+                      isVerified: true,
+                      title: AppLocalizations.of(context)!
+                          .translate('you_are_added_as') +
+                          "Employee  of",
+                      subtitle: (data.rows!.institutionName!))),
+                  (Route<dynamic> route) => false);
+        } else
+          ToastBuilder().showToast(
+              data.message!, context, HexColor(AppColors.information));
+      }
+    }).catchError((onError) async {
+      ToastBuilder().showToast(
+          onError.toString(), context, HexColor(AppColors.information));
+    });
 
   }
 }

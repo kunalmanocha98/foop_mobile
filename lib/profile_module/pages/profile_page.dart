@@ -139,6 +139,8 @@ class UserProfileCardsState extends State<UserProfileCards> {
   bool isLoading = false;
   bool isEmpty = false;
 
+bool isAdmin=false;
+
   @override
   void initState() {
     isPersonalProfile = userType == "person" ? true : false;
@@ -681,6 +683,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                                         isFromProfile: true,
                                         instId: instituteId,
                                         title: userName,
+                                        isAdmin:isAdmin,
                                         clicked: () {
                                           setState(() {
                                             if (isFollow)
@@ -707,9 +710,13 @@ class UserProfileCardsState extends State<UserProfileCards> {
                                               MaterialPageRoute(
                                                   builder: (BuildContext
                                                   context) =>
-                                                      BasicInstituteDetails(data:businessData![0],isEdit:true,callBack:(){
+                                                      BasicInstituteDetails(data:businessData![0],isEdit:true,
 
-                                                        getBusinessDetails(context, businessData![0]!.id.toString());
+
+
+                                                          refreshCallback:(){
+
+                                                            setSharedPreferences();
                                                       })));
                                         },
                                         isPersonProfile: true,
@@ -1034,13 +1041,22 @@ class UserProfileCardsState extends State<UserProfileCards> {
         if (this.mounted) {
           setState(() async {
             var data = BusinessDataResponse.fromJson(value);
-
-
             log('res---------------------------------here$value');
             if (data != null && data.statusCode == 'S10001') {
              setState(() {
                businessData=data.rows;
-             });
+               var list= prefs!.getStringList(Strings.adminInstituteIds);
+
+               if(list!=null && list.isNotEmpty && businessData!=null && businessData!.isNotEmpty) {
+                  for (var id in list) {
+                    if (int.parse(id) == businessData![0].id) {
+                      setState(() {
+                        isAdmin = true;
+                      });
+                    }
+                  }
+                }
+              });
 
             }
           });

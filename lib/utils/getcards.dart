@@ -10,7 +10,8 @@ import 'package:oho_works_app/profile_module/common_cards/club_and_socities.dart
 import 'package:oho_works_app/profile_module/common_cards/club_detail_card.dart';
 import 'package:oho_works_app/profile_module/common_cards/contact_info_card.dart';
 import 'package:oho_works_app/profile_module/common_cards/cources_card.dart';
-import 'package:oho_works_app/profile_module/common_cards/department_card.dart';
+import 'package:oho_works_app/profile_module/common_cards/departmentCard.dart';
+
 import 'package:oho_works_app/profile_module/common_cards/education_card.dart';
 import 'package:oho_works_app/profile_module/common_cards/education_card_without_title.dart';
 import 'package:oho_works_app/profile_module/common_cards/founder_card.dart';
@@ -181,7 +182,7 @@ class GetAllCards {
             return DepartmentCard(
               data: commonCardData,
               callbackPicker: callBck,
-              instituteId: institutionId,
+
               id: id,
               personType: type,
             );
@@ -423,7 +424,7 @@ class GetAllCards {
 
       case "historyCard":
         {
-          return HistoryCard(data: commonCardData);
+          return DepartmentCard(data: commonCardData);
         }
         break;
       case "FounderCard":

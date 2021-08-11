@@ -46,9 +46,11 @@ class UserNameWithImageCard extends StatelessWidget {
   bool? showProgress;
   int? progress;
 Function? editCallBack;
+bool? isAdmin;
   UserNameWithImageCard(
       {Key? key,
         this.personData,
+        this.isAdmin,
         required this.title,
         required this.subtitle,
         required this.isFollow,
@@ -256,22 +258,24 @@ Function? editCallBack;
           visible: !showQr,
           child: Container(
             margin: EdgeInsets.only(right: 16.h),
-            child: userType == "person"
+            child: userType == "person" ||isAdmin!
                 ? appElevatedButton(
                 onPressed: () async {
-                editCallBack!();
-                 /* if (userType == "person") {
+
+                  if(isAdmin!)
+           editCallBack!();
+                  if (userType == "person") {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
                             builder: (context) =>
                                 BasicInfo(personData, callbackPicker)));
-                  }*/
+                  }
 
 
                 },
                 color:  HexColor(AppColors.appMainColor),
-                child: isPersonProfile!
+                child: isPersonProfile!||isAdmin!
                     ? Text(
                   AppLocalizations.of(context)!.translate('edit'),
                   style: styleElements

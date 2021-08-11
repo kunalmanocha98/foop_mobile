@@ -29,7 +29,8 @@ class ContactsDetailsPageInstitute extends StatefulWidget {
   bool isEdit;
   Function ? callBack;
   BusinessData? data;
-  ContactsDetailsPageInstitute({this.instId, this.isEdit = false,this.callBack,this.   data});
+  final Function? refreshCallback;
+  ContactsDetailsPageInstitute({this.instId, this.isEdit = false,this.callBack,this.   data,this.refreshCallback});
 
   @override
   _ContactsDetailsPageInstitute createState() =>
@@ -520,6 +521,9 @@ bool isLoading=false;
         if(data.statusCode==Strings.success_code)
         {
           prefs.setString("create_institute", "Address");
+
+          if(widget.refreshCallback!=null)
+            widget.refreshCallback!();
           Navigator.push(
               context,
               MaterialPageRoute(
@@ -527,8 +531,9 @@ bool isLoading=false;
                   context) =>
                       InstituteLocationAddressPage(
                           data: widget.data,
+                          refreshCallback: widget.refreshCallback,
                           instId:instId,isEdit:widget.isEdit,callBack: (){
-
+                        print("------------------------------------------------exit app2");
                         Navigator.pop(context);
                         if(widget.callBack!=null)
                           widget.callBack!();

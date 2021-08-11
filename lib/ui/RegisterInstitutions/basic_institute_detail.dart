@@ -65,8 +65,8 @@ class BasicInstituteDetails extends StatefulWidget {
 
  final BusinessData? data;
  final bool isEdit;
-final Function? callBack;
-  const BasicInstituteDetails({Key? key, this.data,this.isEdit=false,this.callBack}) : super(key: key);
+final Function? refreshCallback;
+  const BasicInstituteDetails({Key? key, this.data,this.isEdit=false,this.refreshCallback}) : super(key: key);
   @override
   _BasicInstituteDetails createState() => new _BasicInstituteDetails();
 }
@@ -717,8 +717,8 @@ Navigator.pop(context);
                         if (resposne.statusCode == Strings.success_code) {
 
 
-                          if(widget.callBack!=null)
-                            widget.callBack!();
+                          if(widget.refreshCallback!=null)
+                            widget.refreshCallback!();
                           if(!widget.isEdit){
                             prefs.setString(Strings.registeredInstituteName, basicData.name??"");
                             prefs.setString(Strings.registeredInstituteImage, imageUrl??"");
@@ -732,6 +732,7 @@ Navigator.pop(context);
                                   builder: (context) => DomainPage(
                                       callBack:(){
                                         Navigator.pop(context);
+
                                       },
 
 
@@ -740,14 +741,19 @@ Navigator.pop(context);
                           }
                           else
                             {
+
+
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => DomainPage(
+
+                                      refreshCallback: widget.refreshCallback,
                                         callBack:(){
+
+
                                           Navigator.pop(context);
-                                          if(widget.callBack!=null)
-                                            widget.callBack!();
+
                                         },
 
 data:widget.data,

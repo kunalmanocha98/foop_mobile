@@ -27,11 +27,12 @@ class DomainPage extends StatefulWidget {
   bool isEdit;
   Function ? callBack;
    BusinessData? data;
+  final Function? refreshCallback;
   @override
   _DomainPage createState() =>
       new _DomainPage(instId);
 
-  DomainPage({this.instId, this.isEdit = false,this.callBack,this.data});
+  DomainPage({this.instId, this.isEdit = false,this.callBack,this.data,this.refreshCallback});
 }
 
 class _DomainPage extends State<DomainPage>
@@ -185,7 +186,7 @@ int? id;
                                     builder: (BuildContext
                                     context) =>
                                         ContactsDetailsPageInstitute(
-
+                                          refreshCallback: widget.refreshCallback,
                                           data:widget.data,
                                           instId:instId,isEdit:widget!.isEdit,callBack: (){
 
@@ -373,7 +374,8 @@ setState(() {
         });
         var resposne = BasicDataResponse.fromJson(value);
         if (resposne.statusCode == Strings.success_code) {
-
+          if(widget.refreshCallback!=null)
+            widget.refreshCallback!();
           prefs.setString("create_institute", "Contact");
           Navigator.push(
               context,
@@ -382,15 +384,16 @@ setState(() {
                   context) =>
                       ContactsDetailsPageInstitute(
                           data:widget.data,
-
+                          refreshCallback: widget.refreshCallback,
                           instId:instId,isEdit: widget.isEdit,callBack: (){
 
 
                         Navigator.pop(context);
-                        if(widget.callBack!=null)
-                          widget.callBack!;
+                        if(widget.callBack!=null) {
 
-                      })));
+                              widget.callBack!();
+                            }
+                          })));
         }
       }
     }).catchError((onError) async {
