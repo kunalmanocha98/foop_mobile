@@ -16,6 +16,17 @@ class ImagePickerAndCropperUtil {
   ImagePickerAndCropperUtil() {
     _imagePicker = ImagePicker();
   }
+  Future<File?> pickAttachments(BuildContext context) async{
+    try{
+      var file = await FilePicker.platform.pickFiles(type: FileType.any,allowMultiple: false);
+      if (file != null) return File(file.paths[0]!);
+      return null;
+    }
+    catch(onError){
+      print(onError);
+      return null;
+    }
+  }
 
   Future<File?> pickImage(BuildContext context) async {
     try {

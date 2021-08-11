@@ -10,6 +10,10 @@ class ProfileEditPayload {
   String? bio;
   String? quote;
   String? userName;
+  String? designation;
+  String? department;
+  String? reportingManager;
+  int? dateOfJoining;
 
   ProfileEditPayload(
       {this.firstName,
@@ -22,6 +26,10 @@ class ProfileEditPayload {
       this.bloodGroup,
       this.slug,
       this.bio,
+        this.designation,
+        this.department,
+        this.reportingManager,
+        this.dateOfJoining,
       this.quote});
 
   ProfileEditPayload.fromJson(Map<String, dynamic> json) {
@@ -36,6 +44,10 @@ class ProfileEditPayload {
     slug = json['slug'];
     bio = json['bio'];
     quote = json['quote'];
+    designation = json['designation'];
+    department = json['department'];
+    reportingManager = json['report_manager'];
+    dateOfJoining = json['date_of_joining'];
   }
 
   Map<String, dynamic> toJson() {
@@ -51,6 +63,10 @@ class ProfileEditPayload {
     data['slug'] = this.slug;
     data['bio'] = this.bio;
     data['quote'] = this.quote;
+    data['designation'] = this.designation;
+    data['department'] = this.department;
+    data['report_manager'] = this.reportingManager;
+    data['date_of_joining'] = this.dateOfJoining;
     return data;
   }
 }

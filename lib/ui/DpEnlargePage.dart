@@ -15,7 +15,8 @@ class DpEnlargePage extends StatefulWidget{
   final bool? isFullUrl;
   final bool isFromAsset;
   final String? name;
-  DpEnlargePage({this.imageUrl,this.service_type,this.isFullUrl,this.isFromAsset = false,this.name});
+  final Color? color;
+  DpEnlargePage({this.imageUrl,this.service_type,this.color,this.isFullUrl,this.isFromAsset = false,this.name});
   @override
   DpEnlargePageState createState()=> DpEnlargePageState();
 }
@@ -57,6 +58,7 @@ class DpEnlargePageState extends State<DpEnlargePage>{
                 isClickable: false,
                 isFromAsset: widget.isFromAsset,
                 name: widget.name,
+                color: widget.color,
               ),
             ),
             IconButton(icon: Icon(Icons.keyboard_backspace_rounded,color: HexColor(AppColors.appColorWhite),), onPressed: (){

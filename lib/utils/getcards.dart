@@ -1,18 +1,16 @@
-
 import 'package:oho_works_app/components/app_earn_card.dart';
 import 'package:oho_works_app/models/base_res.dart';
 import 'package:oho_works_app/models/personal_profile.dart';
 import 'package:oho_works_app/profile_module/common_cards/about_profile_card.dart';
+import 'package:oho_works_app/profile_module/common_cards/account_detail_card.dart';
 import 'package:oho_works_app/profile_module/common_cards/art_and_photography.dart';
 import 'package:oho_works_app/profile_module/common_cards/bio_card.dart';
 import 'package:oho_works_app/profile_module/common_cards/card_courses_detail.dart';
-import 'package:oho_works_app/profile_module/common_cards/classes_branshes_card.dart';
 import 'package:oho_works_app/profile_module/common_cards/club_and_socities.dart';
 import 'package:oho_works_app/profile_module/common_cards/club_detail_card.dart';
 import 'package:oho_works_app/profile_module/common_cards/contact_info_card.dart';
 import 'package:oho_works_app/profile_module/common_cards/cources_card.dart';
 import 'package:oho_works_app/profile_module/common_cards/department_card.dart';
-import 'package:oho_works_app/profile_module/common_cards/detailed_classes_branches_card.dart';
 import 'package:oho_works_app/profile_module/common_cards/education_card.dart';
 import 'package:oho_works_app/profile_module/common_cards/education_card_without_title.dart';
 import 'package:oho_works_app/profile_module/common_cards/founder_card.dart';
@@ -27,18 +25,13 @@ import 'package:oho_works_app/profile_module/common_cards/literature_composition
 import 'package:oho_works_app/profile_module/common_cards/medium_card_detail.dart';
 import 'package:oho_works_app/profile_module/common_cards/medium_education_card.dart';
 import 'package:oho_works_app/profile_module/common_cards/parent_card.dart';
-import 'package:oho_works_app/profile_module/common_cards/profile_card.dart';
 import 'package:oho_works_app/profile_module/common_cards/rating_review_card.dart';
 import 'package:oho_works_app/profile_module/common_cards/science_technology_card.dart';
 import 'package:oho_works_app/profile_module/common_cards/select_profile_card.dart';
 import 'package:oho_works_app/profile_module/common_cards/skill_card.dart';
-import 'package:oho_works_app/profile_module/common_cards/sportsDetailcard.dart';
-import 'package:oho_works_app/profile_module/common_cards/sports_card.dart';
 import 'package:oho_works_app/profile_module/common_cards/staff_and_students_card.dart';
 import 'package:oho_works_app/profile_module/common_cards/staggered_images_card.dart';
 import 'package:oho_works_app/profile_module/common_cards/student_card.dart';
-import 'package:oho_works_app/profile_module/common_cards/subject_detail_page_item.dart';
-import 'package:oho_works_app/profile_module/common_cards/subjects_card.dart';
 import 'package:oho_works_app/profile_module/common_cards/verified_card.dart';
 import 'package:oho_works_app/ui/CustomCards/CommonInviteCard.dart';
 import 'package:oho_works_app/ui/CustomCards/calendercard.dart';
@@ -73,16 +66,10 @@ class GetAllCards {
     switch (commonCardData.cardName) {
       case "Biocard":
         {
-
-          return BioCard(
-              data: commonCardData,
-              callback: callBck,
-              persondata: rows,
-              userId: id,
-              ownerId: ownerId,
-              type: type);
+          // return AboutBio();
+          return AboutProfileCard(
+              data: commonCardData,);
         }
-        break;
       case "horizontalScrollCard":
         {
           return HorizontalScrollCard(data: commonCardData);
@@ -91,22 +78,14 @@ class GetAllCards {
         {
           return GoalsCardOnly(data: commonCardData);
         }
-        break;
-      /* case "GoalsAndObjectiveCardDetailPage":
-        {
-          return GoalsAndObjectiveCardDetailPage(data: commonCardData);
-        }
-        break;*/
       case "StudentCard":
         {
           return StudentCard(data: commonCardData);
         }
-        break;
       case "SelectProfileCard":
         {
           return SelectProfileCard();
         }
-        break;
        case "RatingAndReviewCard":
         {
           return RatingAndReviewCard(data: commonCardData,
@@ -140,14 +119,15 @@ class GetAllCards {
 
       case "Profiledetailcard":
         {
-          return Profiledetailcard(
-            data: commonCardData,
-            callback: callBck,
-            persondata: rows,
-            ownerId: ownerId,
-            PersonType:type,
-            ownerType: ownerType,
-          );
+          return Container();
+          // return Profiledetailcard(
+          //   data: commonCardData,
+          //   callback: callBck,
+          //   persondata: rows,
+          //   ownerId: ownerId,
+          //   PersonType:type,
+          //   ownerType: ownerType,
+          // );
         }
         break;
       case "Verifiedcard":
@@ -290,24 +270,25 @@ class GetAllCards {
         break;*/
       case "ClassesAndBranches":
         {
-          if (isProfile)
-            return ClassesAndBranches(
-              data: commonCardData,
-              callbackPicker: callBck,
-              id: id,
-              type: type,
-              institutionId: institutionId,
-            );
-          else
-            return ClassesAndBranchesDetailed(
-                data: commonCardData,
-                callbackPicker: callBck,
-                id: id,
-                type: type,
-                userName: userName,
-                institutionId: institutionId);
+          return Container();
+        //   if (isProfile)
+        //     return ClassesAndBranches(
+        //       data: commonCardData,
+        //       callbackPicker: callBck,
+        //       id: id,
+        //       type: type,
+        //       institutionId: institutionId,
+        //     );
+        //   else
+        //     return ClassesAndBranchesDetailed(
+        //         data: commonCardData,
+        //         callbackPicker: callBck,
+        //         id: id,
+        //         type: type,
+        //         userName: userName,
+        //         institutionId: institutionId);
         }
-        break;
+        // break;
       case "ScienceAndTechnology":
         {
           return ScienceAndTechnology(data: commonCardData);
@@ -326,24 +307,24 @@ class GetAllCards {
         break;
       case "SubjectsCard":
         {
-          if (isProfile)
-            return SubjectsCard(
-              data: commonCardData,
-              callbackPicker: callBck,
-              instId: institutionId,
-              id: id,
-              personType: type,
-            );
-          else
-            return SubjectsDetailPageCard(
-                data: commonCardData,
-                callbackPicker: callBck,
-                instId: institutionId,
-                userName: userName,
-                type: type,
-                id: id, onSeeMoreClicked: () {  },);
+          return Container();
+          // if (isProfile)
+          //   return SubjectsCard(
+          //     data: commonCardData,
+          //     callbackPicker: callBck,
+          //     instId: institutionId,
+          //     id: id,
+          //     personType: type,
+          //   );
+          // else
+          //   return SubjectsDetailPageCard(
+          //       data: commonCardData,
+          //       callbackPicker: callBck,
+          //       instId: institutionId,
+          //       userName: userName,
+          //       type: type,
+          //       id: id, onSeeMoreClicked: () {  },);
         }
-        break;
       case "ClubAndSocietyCard":
         {
           if (isProfile)
@@ -363,31 +344,31 @@ class GetAllCards {
                 personType: type,
                 id: id);
         }
-        break;
-
+        // break;
       case "ArtAndPhotography":
         {
           return ArtAndPhotography(data: commonCardData);
         }
-        break;
+        // break;
       case "SportAndFitnessCard":
         {
-          if (isProfile)
-            return SportsCard(
-              data: commonCardData,
-              isProfile: isProfile,
-              callbackPicker: callBck,
-              instituteId: institutionId,
-              id: id,
-              personType: type,
-            );
-          else
-            return SportsCardDetail(
-              data: commonCardData,
-              isProfile: isProfile,
-              callbackPicker: callBck,
-              instituteId: institutionId,
-            );
+          return Container();
+          // if (isProfile)
+          //   return SportsCard(
+          //     data: commonCardData,
+          //     isProfile: isProfile,
+          //     callbackPicker: callBck,
+          //     instituteId: institutionId,
+          //     id: id,
+          //     personType: type,
+          //   );
+          // else
+          //   return SportsCardDetail(
+          //     data: commonCardData,
+          //     isProfile: isProfile,
+          //     callbackPicker: callBck,
+          //     instituteId: institutionId,
+          //   );
         }
         break;
       case "Campus&FacilityCard":
@@ -430,11 +411,15 @@ class GetAllCards {
 
       case "aboutCard":
         {
-          return AboutProfileCard(
-            data: commonCardData,
-          );
+          return AboutProfileCard(data: commonCardData);
         }
-        break;
+
+      case "AccountingInfoCard":{
+        return AccountDetailCard(
+          commonCardData,
+          callBck
+        );
+      }
 
       case "historyCard":
         {
@@ -549,13 +534,8 @@ class GetAllCards {
     switch (commonCardData.cardNames) {
       case "Biocard":
         {
-          return BioCard(
-              data: commonCardData,
-              callback: callBck,
-              persondata: rows,
-              userId: id,
-              ownerId: ownerId,
-              type: type);
+          return AboutProfileCard(
+            data: commonCardData,);
         }
         break;
       case "HorizontalScrollCard":
@@ -607,13 +587,14 @@ class GetAllCards {
 
       case "Profiledetailcard":
         {
-          return Profiledetailcard(
-            data: commonCardData,
-            callback: callBck,
-            persondata: rows,
-            ownerId: ownerId,
-            ownerType: ownerType,
-          );
+          return Container();
+          // return Profiledetailcard(
+          //   data: commonCardData,
+          //   callback: callBck,
+          //   persondata: rows,
+          //   ownerId: ownerId,
+          //   ownerType: ownerType,
+          // );
         }
         break;
 
@@ -726,24 +707,26 @@ class GetAllCards {
         break;*/
       case "ClassesAndBranches":
         {
-          if (isProfile)
-            return ClassesAndBranches(
-              data: commonCardData,
-              callbackPicker: callBck,
-              id: id,
-              type: type,
-              institutionId: institutionId,
-            );
-          else
-            return ClassesAndBranchesDetailed(
-                data: commonCardData,
-                callbackPicker: callBck,
-                id: id,
-                type: type,
-                userName: userName,
-                institutionId: institutionId);
+          return Container();
         }
-        break;
+        //   if (isProfile)
+        //     return ClassesAndBranches(
+        //       data: commonCardData,
+        //       callbackPicker: callBck,
+        //       id: id,
+        //       type: type,
+        //       institutionId: institutionId,
+        //     );
+        //   else
+        //     return ClassesAndBranchesDetailed(
+        //         data: commonCardData,
+        //         callbackPicker: callBck,
+        //         id: id,
+        //         type: type,
+        //         userName: userName,
+        //         institutionId: institutionId);
+        // }
+        // break;
       case "ScienceAndTechnology":
         {
           return ScienceAndTechnology(data: commonCardData);
@@ -762,24 +745,25 @@ class GetAllCards {
         break;
       case "SubjectsCard":
         {
-          if (isProfile)
-            return SubjectsCard(
-              data: commonCardData,
-              callbackPicker: callBck,
-              instId: institutionId,
-              id: id,
-              personType: type,
-            );
-          else
-            return SubjectsDetailPageCard(
-              data: commonCardData,
-              callbackPicker: callBck,
-              instId: institutionId,
-              userName: userName,
-              type: type,
-              id: id, onSeeMoreClicked: () {  },);
+          return Container();
+          // if (isProfile)
+          //   return SubjectsCard(
+          //     data: commonCardData,
+          //     callbackPicker: callBck,
+          //     instId: institutionId,
+          //     id: id,
+          //     personType: type,
+          //   );
+          // else
+          //   return SubjectsDetailPageCard(
+          //     data: commonCardData,
+          //     callbackPicker: callBck,
+          //     instId: institutionId,
+          //     userName: userName,
+          //     type: type,
+          //     id: id, onSeeMoreClicked: () {  },);
         }
-        break;
+        // break;
       case "ClubAndSocietyCard":
         {
           if (isProfile)
@@ -808,22 +792,23 @@ class GetAllCards {
         break;
       case "SportAndFitnessCard":
         {
-          if (isProfile)
-            return SportsCard(
-              data: commonCardData,
-              isProfile: isProfile,
-              callbackPicker: callBck,
-              instituteId: institutionId,
-              id: id,
-              personType: type,
-            );
-          else
-            return SportsCardDetail(
-              data: commonCardData,
-              isProfile: isProfile,
-              callbackPicker: callBck,
-              instituteId: institutionId,
-            );
+          return Container();
+          // if (isProfile)
+          //   return SportsCard(
+          //     data: commonCardData,
+          //     isProfile: isProfile,
+          //     callbackPicker: callBck,
+          //     instituteId: institutionId,
+          //     id: id,
+          //     personType: type,
+          //   );
+          // else
+          //   return SportsCardDetail(
+          //     data: commonCardData,
+          //     isProfile: isProfile,
+          //     callbackPicker: callBck,
+          //     instituteId: institutionId,
+          //   );
         }
         break;
       case "Campus&FacilityCard":
@@ -857,43 +842,39 @@ class GetAllCards {
               ownerId:ownerId,
               id: id);
         }
-        break;
       case "ContactInfoCard":
         {
           return ContactInfoCard(data: commonCardData);
         }
-        break;
 
       case "aboutCard":
         {
-          return AboutProfileCard(
-            data: commonCardData,
-          );
+          return AboutProfileCard(data: commonCardData);
         }
-        break;
-
+      case "AccountingInfoCard":{
+        return AccountDetailCard(
+          commonCardData,
+          callBck
+        );
+      }
       case "historyCard":
         {
           return HistoryCard(data: commonCardData);
         }
-        break;
       case "FounderCard":
         {
           return FounderCard(data: commonCardData);
         }
-        break;
       case "StaffAndStudentsCard":
         {
           return StaffAndStudentsCard(data: commonCardData);
         }
-        break;
       case "RatingCard":
         {
           return RatingCard(
             data: commonCardData,
           );
         }
-        break;
       case "JournalCard":
         {
           return JournalCard(

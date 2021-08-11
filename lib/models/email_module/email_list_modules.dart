@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class EmailListResponse {
   String? statusCode;
   String? message;
@@ -41,6 +43,7 @@ class EmailListItem {
   List<FromValues>? toValues;
   List<FromValues>? ccValues;
   List<FromValues>? replyToValues;
+  List<Attachments>? attachments;
   int? date;
   String? dateStr;
   String? text;
@@ -48,6 +51,7 @@ class EmailListItem {
   List<String>? flags;
   int? sizeRfc822;
   int? size;
+  Color? color;
 
   EmailListItem(
       {this.uid,
@@ -66,6 +70,8 @@ class EmailListItem {
         this.html,
         this.flags,
         this.sizeRfc822,
+        this.attachments,
+        this.color,
         this.size});
 
   EmailListItem.fromJson(Map<String, dynamic> json) {
@@ -94,6 +100,12 @@ class EmailListItem {
       replyToValues = [];//FromValues>();
       json['reply_to_values'].forEach((v) {
         replyToValues!.add(new FromValues.fromJson(v));
+      });
+    }
+    if (json['attachments'] != null) {
+      attachments =  [];
+      json['attachments'].forEach((v) {
+        attachments!.add(new Attachments.fromJson(v));
       });
     }
     date = json['date'];
@@ -127,6 +139,9 @@ class EmailListItem {
       data['reply_to_values'] =
           this.replyToValues!.map((v) => v.toJson()).toList();
     }
+    if (this.attachments != null) {
+      data['attachments'] = this.attachments!.map((v) => v.toJson()).toList();
+    }
     data['date'] = this.date;
     data['date_str'] = this.dateStr;
     data['text'] = this.text;
@@ -157,6 +172,69 @@ class FromValues {
     data['email'] = this.email;
     data['name'] = this.name;
     data['full'] = this.full;
+    return data;
+  }
+}
+class Attachments {
+  String? filename;
+  String? payload;
+  String? contentId;
+  String? contentType;
+  String? contentDisposition;
+  int? size;
+
+  Attachments(
+      {this.filename,
+        this.payload,
+        this.contentId,
+        this.contentType,
+        this.contentDisposition,
+        this.size});
+
+  Attachments.fromJson(Map<String, dynamic> json) {
+    filename = json['filename'];
+    payload = json['payload'];
+    contentId = json['content_id'];
+    contentType = json['content_type'];
+    contentDisposition = json['content_disposition'];
+    size = json['size'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['filename'] = this.filename;
+    data['payload'] = this.payload;
+    data['content_id'] = this.contentId;
+    data['content_type'] = this.contentType;
+    data['content_disposition'] = this.contentDisposition;
+    data['size'] = this.size;
+    return data;
+  }
+}
+
+class EmailDetailResponse {
+  String? statusCode;
+  String? message;
+  EmailListItem? rows;
+  int? total;
+
+  EmailDetailResponse({this.statusCode, this.message, this.rows, this.total});
+
+  EmailDetailResponse.fromJson(Map<String, dynamic> json) {
+    statusCode = json['statusCode'];
+    message = json['message'];
+    rows = json['rows'] != null ? new EmailListItem.fromJson(json['rows']) : null;
+    total = json['total'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['statusCode'] = this.statusCode;
+    data['message'] = this.message;
+    if (this.rows != null) {
+      data['rows'] = this.rows!.toJson();
+    }
+    data['total'] = this.total;
     return data;
   }
 }

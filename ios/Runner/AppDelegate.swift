@@ -1,6 +1,6 @@
 import UIKit
 import Flutter
-import Firebase
+// import Firebase
 import GoogleMaps
 
 @UIApplicationMain
@@ -16,6 +16,6 @@ import GoogleMaps
 
   }
    override init() {
-   FirebaseApp.configure()
+//    FirebaseApp.configure()
    }
 }

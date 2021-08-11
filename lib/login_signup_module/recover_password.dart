@@ -57,7 +57,8 @@ class _RecoverPasswords extends State<RecoverPasswords> {
                   builder: (context) => Verification(
                     email: emailController.text.toString(),
                     isRecoverPassword: true,
-                    mobileNo: "",
+                    mobileNo: "", isEmailRecovery: false,
+
                   ),
                 ));
           } else {

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:oho_works_app/home/home.dart';
 import 'package:oho_works_app/messenger_module/screens/chat_history_page.dart';
 import 'package:oho_works_app/models/buddyApprovalModels/buddyListModels.dart';
@@ -37,7 +38,9 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_framework/responsive_framework.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:workmanager/workmanager.dart' hide NetworkType;
 
+import 'home/callbackdispatcher.dart';
 import 'home/locator.dart';
 import 'login_signup_module/login.dart';
 import 'login_signup_module/new_password.dart';
@@ -66,6 +69,21 @@ Future<void> main() async {
 
   // await FlutterDownloader.initialize(debug: true);
 
+  var androidSettings = AndroidInitializationSettings('launch_background');
+  var iOSSettings = IOSInitializationSettings(
+    requestSoundPermission: false,
+    requestBadgePermission: false,
+    requestAlertPermission: false,
+  );
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+  FlutterLocalNotificationsPlugin();
+  var initSetttings = InitializationSettings(android: androidSettings, iOS: iOSSettings);
+  flutterLocalNotificationsPlugin.initialize(initSetttings);
+
+  Workmanager().initialize(
+      callbackDispatcher,
+      isInDebugMode: false
+  );
   runApp(MultiProvider(
     providers: [
 
@@ -486,7 +504,7 @@ class MyApp extends State<MainApp> {
           screen = Verification(
             email: "",
             mobileNo: "",
-            isRecoverPassword: false,
+            isRecoverPassword: false, isEmailRecovery: false,
           );
           break;
         case WelcomeScreen:

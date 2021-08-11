@@ -5,6 +5,7 @@ import 'package:oho_works_app/utils/colors.dart';
 import 'package:oho_works_app/utils/hexColors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:oho_works_app/utils/utility_class.dart';
 
 // ignore: must_be_immutable
 class AboutProfileCard extends StatelessWidget {
@@ -55,12 +56,12 @@ class AboutProfileCard extends StatelessWidget {
             Container(
               margin: const EdgeInsets.only(left: 5, right: 5,bottom: 20),
               child:
-                  Column(
+              Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
                       Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         Expanded(
                           child: Column(
@@ -70,8 +71,7 @@ class AboutProfileCard extends StatelessWidget {
                                   alignment: Alignment.topLeft,
                                   child: Container(
                                     margin: const EdgeInsets.only(left: 16, top: 20),
-                                    child: Text(
-                                      data.textOne ??= "",
+                                    child: Text(data.textOne ??= "",
                                       style: styleElements!.subtitle2ThemeScalable(context),
                                       textAlign: TextAlign.left,
                                     ),
@@ -127,6 +127,7 @@ class AboutProfileCard extends StatelessWidget {
                     ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Expanded(
                             child: Column(
@@ -180,7 +181,7 @@ class AboutProfileCard extends StatelessWidget {
                                       margin: const EdgeInsets.only(
                                           left: 20, top: 8, right: 20),
                                       child: Text(
-                                        data.textEight ??= "",
+                                        Utility().getDateFormat("dd MMM yyyy", DateTime.fromMillisecondsSinceEpoch(int.parse(data.textEight!))),
                                         style: styleElements!.bodyText1ThemeScalable(context).copyWith(fontWeight: FontWeight.w600),
                                         textAlign: TextAlign.left,
                                       ),
@@ -190,6 +191,75 @@ class AboutProfileCard extends StatelessWidget {
                           )
                         ],
                       ),
+                      // Visibility(
+                      //   visible:  (data.textNine!=null ||data.textTen!=null),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //     crossAxisAlignment: CrossAxisAlignment.start,
+                      //     children: <Widget>[
+                      //       Expanded(
+                      //         child: Column(
+                      //           crossAxisAlignment: CrossAxisAlignment.start,
+                      //           children: <Widget>[
+                      //             Align(
+                      //                 alignment: Alignment.topLeft,
+                      //                 child: Container(
+                      //                   margin: const EdgeInsets.only(left: 16, top: 20),
+                      //                   child: Text(
+                      //                     data.textNine ??= "",
+                      //                     style: styleElements!.subtitle2ThemeScalable(context),
+                      //                     textAlign: TextAlign.left,
+                      //                   ),
+                      //                 )),
+                      //             Align(
+                      //                 alignment: Alignment.topLeft,
+                      //                 child: Container(
+                      //                   margin: const EdgeInsets.only(
+                      //                       left: 16, top: 8, right: 16),
+                      //                   child: Text(
+                      //                     capitalize(data.textNine??"---") ,
+                      //                     style: styleElements!.bodyText1ThemeScalable(context).copyWith(fontWeight: FontWeight.w600),
+                      //                     textAlign: TextAlign.left,
+                      //                   ),
+                      //                 )),
+                      //           ],
+                      //         ),
+                      //       ),
+                      //       Expanded(
+                      //         child:
+                      //         Container(
+                      //             margin: const EdgeInsets.only(left: 30),
+                      //             child:  Column(
+                      //               crossAxisAlignment: CrossAxisAlignment.start,
+                      //               children: <Widget>[
+                      //                 Align(
+                      //                     alignment: Alignment.topLeft,
+                      //                     child: Container(
+                      //                       margin: const EdgeInsets.only(
+                      //                           left: 20, top: 20, right: 20),
+                      //                       child: Text(
+                      //                         data.textEleven ??= "",
+                      //                         style: styleElements!.subtitle2ThemeScalable(context),
+                      //                         textAlign: TextAlign.right,
+                      //                       ),
+                      //                     )),
+                      //                 Align(
+                      //                     alignment: Alignment.topLeft,
+                      //                     child: Container(
+                      //                       margin: const EdgeInsets.only(
+                      //                           left: 20, top: 8, right: 20),
+                      //                       child: Text(
+                      //                         data.textTwelve ??= "",
+                      //                         style: styleElements!.bodyText1ThemeScalable(context).copyWith(fontWeight: FontWeight.w600),
+                      //                         textAlign: TextAlign.left,
+                      //                       ),
+                      //                     )),
+                      //               ],
+                      //             )),
+                      //       )
+                      //     ],
+                      //   ),
+                      // ),
 
                       Container(
                         margin: EdgeInsets.only(left: 16.h, right: 16.h, top: 20.0.h,bottom: 16.h),
@@ -212,5 +282,11 @@ class AboutProfileCard extends StatelessWidget {
         ));
   }
 
-  String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
+  String capitalize(String s) {
+    if(s.isNotEmpty) {
+      return s[0].toUpperCase() + s.substring(1);
+    }else{
+      return "";
+    }
+  }
 }

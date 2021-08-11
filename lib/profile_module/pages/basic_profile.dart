@@ -48,6 +48,9 @@ class _BasicInfo extends State<BasicInfo>
   final firstNameController = TextEditingController();
   final lastNameController = TextEditingController();
   final genderController = TextEditingController();
+  final departmentController = TextEditingController();
+  final designationController = TextEditingController();
+  final reportingManagerController = TextEditingController();
   // final quotesController = TextEditingController();
   final secondCon = TextEditingController();
   String bioCharacterLength = "0";
@@ -56,9 +59,11 @@ class _BasicInfo extends State<BasicInfo>
  late BuildContext context;
   String selectedDoA = 'Date of Anniversary';
   String selectedDate = 'Date of Birth';
+  String selecteddoj = 'Date of joining';
   String selectedGender = "Gender*";
   String selectedBGroup = "Blood Group";
   int? selectedEpoch;
+  int? selectedEpochdoj;
   var items = ['Male', 'Female', 'Transgender'];
   var itemsBG = ['A+', 'A-', 'B+', ' B-', ' O+', 'O-', 'AB+', ' AB-'];
   Map<String, String> mpGroup = {
@@ -155,6 +160,36 @@ class _BasicInfo extends State<BasicInfo>
     //       contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
     //       hintStyle: styleElements.subtitle2ThemeScalable(context),
     //     ));
+    final doj = GestureDetector(
+      onTap: () {
+        _selectDate(context, "doj");
+
+      },
+      child: Container(
+          padding: EdgeInsets.all(16),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+            border: Border(
+              bottom: BorderSide(
+                //
+                color: HexColor(AppColors.appColorGrey500),
+                width: 1.0,
+              ),
+            ), // set border width
+          ),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              selecteddoj != "Date of joining"
+                  ? DateFormat('dd-MM-yyyy')
+                  .format(DateTime.parse(selecteddoj))
+                  : selecteddoj,
+              textAlign: TextAlign.left,
+              style: styleElements.subtitle2ThemeScalable(context),
+            ),
+          )),
+    );
+
     final dob = GestureDetector(
       onTap: () {
         _selectDate(context, "dob");
@@ -184,6 +219,7 @@ class _BasicInfo extends State<BasicInfo>
             ),
           )),
     );
+
     final doa = GestureDetector(
       onTap: () {
         _selectDate(context, "doa");
@@ -363,6 +399,66 @@ class _BasicInfo extends State<BasicInfo>
           hintText: AppLocalizations.of(context)!.translate('user_name'),
           hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorBlack35)),
         ));
+    final department = TextField(
+        controller: departmentController,
+        style: styleElements.subtitle1ThemeScalable(context).copyWith(
+            color: HexColor(AppColors.appColorBlack65)
+        ),
+
+        keyboardType: TextInputType.name,
+        textCapitalization: TextCapitalization.words,
+        onChanged: (text) {
+          if (text.length == 1 && text != text.toUpperCase()) {
+            departmentController.text = text.toUpperCase();
+            departmentController.selection = TextSelection.fromPosition(
+                TextPosition(offset: departmentController.text.length));
+          }
+        },
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.fromLTRB(8.0, 15.0, 20.0, 4.0),
+          hintText: AppLocalizations.of(context)!.translate('department'),
+          hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorBlack35)),
+        ));
+    final designation = TextField(
+        controller: designationController,
+        style: styleElements.subtitle1ThemeScalable(context).copyWith(
+            color: HexColor(AppColors.appColorBlack65)
+        ),
+
+        keyboardType: TextInputType.name,
+        textCapitalization: TextCapitalization.words,
+        onChanged: (text) {
+          if (text.length == 1 && text != text.toUpperCase()) {
+            designationController.text = text.toUpperCase();
+            designationController.selection = TextSelection.fromPosition(
+                TextPosition(offset: designationController.text.length));
+          }
+        },
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.fromLTRB(8.0, 15.0, 20.0, 4.0),
+          hintText: AppLocalizations.of(context)!.translate('designation'),
+          hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorBlack35)),
+        ));
+    final reportingManager = TextField(
+        controller: reportingManagerController,
+        style: styleElements.subtitle1ThemeScalable(context).copyWith(
+            color: HexColor(AppColors.appColorBlack65)
+        ),
+
+        keyboardType: TextInputType.name,
+        textCapitalization: TextCapitalization.words,
+        onChanged: (text) {
+          if (text.length == 1 && text != text.toUpperCase()) {
+            reportingManagerController.text = text.toUpperCase();
+            reportingManagerController.selection = TextSelection.fromPosition(
+                TextPosition(offset: reportingManagerController.text.length));
+          }
+        },
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.fromLTRB(8.0, 15.0, 20.0, 4.0),
+          hintText: AppLocalizations.of(context)!.translate('reporting_manager'),
+          hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorBlack35)),
+        ));
     final bGroup = Stack(
       children: <Widget>[
         Column(
@@ -481,6 +577,34 @@ class _BasicInfo extends State<BasicInfo>
                               margin:
                               const EdgeInsets.only(left: 16, right: 16),
                               child: userName,
+                            )),
+                        Align(
+                            alignment: Alignment.center,
+                            child: Container(
+                              margin:
+                              const EdgeInsets.only(left: 16, right: 16),
+                              child: department,
+                            )),
+                        Align(
+                            alignment: Alignment.center,
+                            child: Container(
+                              margin:
+                              const EdgeInsets.only(left: 16, right: 16),
+                              child: designation,
+                            )),
+                        Align(
+                            alignment: Alignment.center,
+                            child: Container(
+                              margin:
+                              const EdgeInsets.only(left: 16, right: 16),
+                              child: reportingManager,
+                            )),
+                        Align(
+                            alignment: Alignment.center,
+                            child: Container(
+                              margin:
+                              const EdgeInsets.only(left: 16, right: 16),
+                              child: doj,
                             )),
                         Container(
                           margin: const EdgeInsets.only(left: 8, right: 8),
@@ -777,7 +901,14 @@ class _BasicInfo extends State<BasicInfo>
         emailController.text = personData!.email ?? "";
       if (personData!.userName != null)
         userNameController.text = personData!.userName ?? "";
-
+      if (personData!.department != null)
+        departmentController.text = personData!.department ?? "";
+      if (personData!.designation != null)
+        designationController.text = personData!.designation ?? "";
+      if (personData!.reportManager != null)
+        reportingManagerController.text = personData!.reportManager ?? "";
+      if (personData!.dateOfJoining != null)
+        selecteddoj = personData!.dateOfJoining!=null?DateFormat('yyyy-MM-dd').format(DateTime.fromMillisecondsSinceEpoch(personData!.dateOfJoining!)):"Date of joining";
       if (personData!.dateOfBirth != null)
         selectedDate = personData!.dateOfBirth ?? "";
       if (personData!.dateOfAnniversary != null)
@@ -847,6 +978,11 @@ class _BasicInfo extends State<BasicInfo>
     payload.bio =
         (bioController.text != null) ? bioController.text : personData!.fullBio;
     payload.slug = personData!.slug;
+
+    payload.department = departmentController.text;
+    payload.designation = designationController.text;
+    payload.reportingManager = reportingManagerController.text;
+    payload.dateOfJoining = selectedEpochdoj;
     // payload.quote = (quotesController.text != null)
     //     ? quotesController.text
     //     : personData.message;
@@ -938,7 +1074,10 @@ class _BasicInfo extends State<BasicInfo>
         if (type == "dob") {
           selectedEpoch = picked.millisecondsSinceEpoch;
           selectedDate = DateFormat('yyyy-MM-dd').format(picked);
-        } else {
+        } if(type == "doj"){
+          selectedEpochdoj = picked.millisecondsSinceEpoch;
+          selecteddoj = DateFormat('yyyy-MM-dd').format(picked);
+        }else {
           selectedEpoch = picked.millisecondsSinceEpoch;
           selectedDoA = DateFormat('yyyy-MM-dd').format(picked);
         }

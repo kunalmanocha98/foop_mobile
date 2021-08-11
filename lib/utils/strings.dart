@@ -95,4 +95,6 @@ class Strings {
   static const String adminInstituteIds ='adminInstituteIds';
   static const String translation_code ='translation_code';
   static const String isTranslationLanguageSet ='isTranslationLanguageSet';
+  static const String mailToken = "mail_token";
+  static const String mailUsername = "mail_username";
 }

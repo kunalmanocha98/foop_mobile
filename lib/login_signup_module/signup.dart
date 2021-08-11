@@ -720,7 +720,8 @@ class StateSignUp extends State<SignUpPage> with SingleTickerProviderStateMixin 
                             email: emailController.text.toString(),
                             mobileNo:
                             mobileController.text.trim().toString(),
-                            isRecoverPassword: false,
+                            isRecoverPassword: false, isEmailRecovery: false,
+
                           ),
                         ));
                   }

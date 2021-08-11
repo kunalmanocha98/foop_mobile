@@ -6,6 +6,8 @@ class Config {
   static String BASE_URL_WITHOUT_HTTP = BaseUrls.BASE_URL_WITHOUT_HTTP;
   static String BASE_URL_MESSENGER = BaseUrls.BASE_URL_MESSENGER;
   static String BASE_URL_AUDIO = BaseUrls.BASE_URL_AUDIO;
+  static String BASE_URL_MAIL = BaseUrls.BASE_URL_MAIL;
+
 
   static String LOGIN_API = BASE_URL + '/api/v1/rl/login/';
   static String LOGOUT_API = BASE_URL + '/api/v1/rl/logout/';
@@ -418,6 +420,38 @@ class Config {
 
   static String SET_REMINDER_CALENDAR = BASE_URL + '/api/v1/calendar/event/set/reminder';
   static String NEXGE_TOKEN = BaseUrls.NEXGE_BASE_URL + '/api/v1/auth/login';
+
+
+
+  static String EMAIL_INBOX = BASE_URL_MAIL + '/api/v1/email/list';
+  static String EMAIL_LOGIN = BASE_URL_MAIL + '/api/v1/email/login';
+  static String EMAIL_DETAIL = BASE_URL_MAIL + '/api/v1/email/get';
+  static String EMAIL_COMPOSE = BASE_URL_MAIL + '/api/v1/email/send';
+  static String EMAIL_DRAFT = BASE_URL_MAIL + '/api/v1/email/save/draft';
+  static String EMAIL_REPLY = BASE_URL_MAIL + '/api/v1/email/reply';
+  static String EMAIL_FORWARD = BASE_URL_MAIL + '/api/v1/email/forward';
+  static String EMAIL_FLAG_SET = BASE_URL_MAIL + '/api/v1/email/flag/set';
+  static String EMAIL_FLAG_REMOVE = BASE_URL_MAIL + '/api/v1/email/flag/remove';
+  static String EMAIL_DOMAIN_CREATE = BASE_URL_MAIL + '/api/v1/email/domain/create';
+  static String EMAIL_DOMAIN_LIST = BASE_URL_MAIL + '/api/v1/email/domain/list';
+  static String EMAIL_USER_CREATE = BASE_URL_MAIL + '/api/v1/email/user/create';
+  static String EMAIL_USER_EXIST = BASE_URL_MAIL + '/api/v1/email/user/exists';
+  static String EMAIL_GLOBAL_USER_LIST = BASE_URL_MAIL + '/api/v1/email/user/global/list';
+  static String EMAIL_USER_LISTING = BASE_URL_MAIL + '/api/v1/email/user/list';
+  static String EMAIL_USER_DELETE = BASE_URL_MAIL + '/api/v1/email/user/delete';
+  static String EMAIL_PASSWORD_UPDATE = BASE_URL_MAIL + '/api/v1/email/update/password';
+  static String EMAIL_FOLDER_LIST =BASE_URL_MAIL + '/api/v1/email/folder/list';
+  static String EMAIL_FOLDER_CREATE =BASE_URL_MAIL + '/api/v1/email/folder/create';
+  static String EMAIL_FOLDER_DELETE =BASE_URL_MAIL + '/api/v1/email/folder/delete';
+  static String EMAIL_FOLDER_RENAME =BASE_URL_MAIL + '/api/v1/email/folder/rename';
+  static String EMAIL_FORGOT_PASSWORD =BASE_URL_MAIL + '/api/v1/email/forgot-password';
+  static String EMAIL_FORGOT_PASSWORD_OTP = BASE_URL_MAIL + '/api/v1/email/forgot-password-otp';
+  static String EMAIL_MOVE_FOLDER = BASE_URL_MAIL + '/api/v1/email/move';
+  static String EMAIL_DELETE = BASE_URL_MAIL + '/api/v1/email/delete';
+
+
+  static String BUSINESS_ACCOUNTING_REGISTER= BASE_URL_MAIL + '/api/v1/business/accounting/register';
+  static String BUSINESS_ACCOUNTING_EDIT= BASE_URL_MAIL + '/api/v1/business/accounting/edit';
 
 
 

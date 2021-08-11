@@ -1,4 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="ohoworks.oho_works_app">
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET"/>
@@ -8,12 +9,23 @@
     <uses-permission android:name="android.permission.WRITE_CONTACTS" />
     <application
         android:label="OhoWorks"
+        android:allowBackup="true"
+        android:fullBackupOnly="false"
+        tools:replace="android:label"
+        android:requestLegacyExternalStorage="true"
+
         android:icon="@mipmap/launcher_icon">
 
 
        <meta-data
            android:name="com.google.android.geo.API_KEY"
            android:value="AIzaSyAle_QlZpymzB-DmbtpqHNrnZYyFQeNjwQ"/>
+       <meta-data
+           android:name="com.google.firebase.messaging.default_notification_icon"
+           android:resource="@mipmap/ic_launcher" />
+       <meta-data
+           android:name="com.google.firebase.messaging.default_notification_channel_id"
+           android:value="ohoWorks" />
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"

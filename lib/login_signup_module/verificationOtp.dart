@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/api_calls/recover_password.dart';
 import 'package:oho_works_app/api_calls/sign_up_api.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
@@ -8,10 +9,12 @@ import 'package:oho_works_app/components/app_buttons.dart';
 import 'package:oho_works_app/login_signup_module/update_profile_page.dart';
 import 'package:oho_works_app/models/common_response.dart';
 import 'package:oho_works_app/models/device_info.dart';
+import 'package:oho_works_app/models/email_module/email_user_create.dart';
 import 'package:oho_works_app/models/register_user_payload.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
+import 'package:oho_works_app/utils/config.dart';
 import 'package:oho_works_app/utils/hexColors.dart';
 import 'package:oho_works_app/utils/strings.dart';
 import 'package:oho_works_app/utils/toast_builder.dart';
@@ -26,11 +29,13 @@ class Verification extends StatefulWidget {
   final String email;
   final String mobileNo;
   bool isRecoverPassword = false;
+  final bool isEmailRecovery;
 
   Verification(
       {Key? key,
         required this.email,
         required this.mobileNo,
+        required this.isEmailRecovery,
         required this.isRecoverPassword})
       : super(key: key);
 
@@ -75,9 +80,99 @@ class _Verification extends State<Verification> {
       RegisterUserPayload loginPayLoad = RegisterUserPayload();
       loginPayLoad.email = email;
       loginPayLoad.token = int.parse(code.trim());
+      if(widget.isEmailRecovery){
+        Calls().call(jsonEncode(loginPayLoad), context, Config.EMAIL_FORGOT_PASSWORD_OTP).then((value) {
+          var data = CommonBasicResponse.fromJson(value);
+          if (data.statusCode == Strings.success_code){
+            Navigator.pop(context,true);
+          }
+        }).catchError((onError){
+          setState(() {
+            isCalling = false;
+          });
+          ToastBuilder().showSnackBar(
+              AppLocalizations.of(context)!.translate("try_again"),
+              sctx,
+              HexColor(AppColors.information));
+        });
+      }else {
+        RecoverPasswordApis()
+            .recoverPasswordOtp(context, jsonEncode(loginPayLoad.toJson()))
+            .then((value) async {
+          setState(() {
+            isCalling = false;
+          });
+          if (value != null) {
+            var data = CommonBasicResponse.fromJson(value);
 
+            if (data.statusCode == Strings.success_code &&
+                data.message == Strings.success) {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        NewPassword(
+                          email: email,
+                        ),
+                  ));
+            } else {
+              if (data.message != null)
+                ToastBuilder().showSnackBar(
+                    data.message!, sctx, HexColor(AppColors.information));
+              else
+                ToastBuilder().showSnackBar(
+                    AppLocalizations.of(context)!.translate("try_again"),
+                    sctx,
+                    HexColor(AppColors.information));
+            }
+          }
+        }).catchError((onError) async {
+          setState(() {
+            isCalling = false;
+          });
+          ToastBuilder().showSnackBar(
+              AppLocalizations.of(context)!.translate("try_again"),
+              sctx,
+              HexColor(AppColors.information));
+        });
+      }
+    } else
+      ToastBuilder().showSnackBar(
+          AppLocalizations.of(context)!.translate("enter_otp"),
+          sctx,
+          HexColor(AppColors.information));
+  }
+
+  void resendOtp() async {
+    setState(() {
+      isCalling = true;
+    });
+    RegisterUserPayload loginPayLoad = RegisterUserPayload();
+    loginPayLoad.email = email;
+    loginPayLoad.reason = "USERREGISTRATION";
+    if(widget.isEmailRecovery) {
+      var data = jsonEncode({"email_id": email});
+      Calls().call(data, context, Config.EMAIL_FORGOT_PASSWORD).then((value) {
+        var res = CreateEmailUserResponse.fromJson(value);
+        if (res.statusCode == Strings.success_code) {
+          setState(() {
+            isCalling = false;
+          });
+          ToastBuilder().showSnackBar(
+              "Otp sent again", sctx, HexColor(AppColors.information));
+        }
+      }).catchError((onError){
+        setState(() {
+          isCalling = false;
+        });
+        ToastBuilder().showSnackBar(
+            AppLocalizations.of(context)!.translate("try_again"),
+            sctx,
+            HexColor(AppColors.information));
+      });;
+    }else {
       RecoverPasswordApis()
-          .recoverPasswordOtp(context, jsonEncode(loginPayLoad.toJson()))
+          .resendOtp(context, jsonEncode(loginPayLoad.toJson()))
           .then((value) async {
         setState(() {
           isCalling = false;
@@ -87,13 +182,12 @@ class _Verification extends State<Verification> {
 
           if (data.statusCode == Strings.success_code &&
               data.message == Strings.success) {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => NewPassword(
-                    email: email,
-                  ),
-                ));
+            print(
+                data.statusCode! +
+                    "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+            print(data.message! + "*****************************************");
+            ToastBuilder().showSnackBar(
+                data.message!, sctx, HexColor(AppColors.information));
           } else {
             if (data.message != null)
               ToastBuilder().showSnackBar(
@@ -114,57 +208,7 @@ class _Verification extends State<Verification> {
             sctx,
             HexColor(AppColors.information));
       });
-    } else
-      ToastBuilder().showSnackBar(
-          AppLocalizations.of(context)!.translate("enter_otp"),
-          sctx,
-          HexColor(AppColors.information));
-  }
-
-  void resendOtp() async {
-    setState(() {
-      isCalling = true;
-    });
-    RegisterUserPayload loginPayLoad = RegisterUserPayload();
-    loginPayLoad.email = email;
-    loginPayLoad.reason = "USERREGISTRATION";
-
-    RecoverPasswordApis()
-        .resendOtp(context, jsonEncode(loginPayLoad.toJson()))
-        .then((value) async {
-      setState(() {
-        isCalling = false;
-      });
-      if (value != null) {
-        var data = CommonBasicResponse.fromJson(value);
-
-        if (data.statusCode == Strings.success_code &&
-            data.message == Strings.success) {
-          print(
-              data.statusCode! + "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
-          print(data.message! + "*****************************************");
-          ToastBuilder().showSnackBar(
-              data.message!, sctx, HexColor(AppColors.information));
-        } else {
-          if (data.message != null)
-            ToastBuilder().showSnackBar(
-                data.message!, sctx, HexColor(AppColors.information));
-          else
-            ToastBuilder().showSnackBar(
-                AppLocalizations.of(context)!.translate("try_again"),
-                sctx,
-                HexColor(AppColors.information));
-        }
-      }
-    }).catchError((onError) async {
-      setState(() {
-        isCalling = false;
-      });
-      ToastBuilder().showSnackBar(
-          AppLocalizations.of(context)!.translate("try_again"),
-          sctx,
-          HexColor(AppColors.information));
-    });
+    }
   }
 
   void activate(String? _code) async {

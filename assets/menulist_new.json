@@ -71,7 +71,7 @@
       "data": [
         {
           "title": "Email",
-          "code": "notice",
+          "code": "email",
           "imageUrl": "assets/appimages/create-notice.png",
           "tag": "",
           "description": "Announcement & circulars in one place",
