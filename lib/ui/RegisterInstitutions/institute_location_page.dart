@@ -8,6 +8,7 @@ import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/conversationPage/base_response.dart';
 import 'package:oho_works_app/models/CalenderModule/event_create_models.dart';
+import 'package:oho_works_app/models/business_response_detail.dart';
 import 'package:oho_works_app/models/language_list.dart';
 import 'package:oho_works_app/profile_module/pages/directions.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
@@ -38,7 +39,9 @@ class InstituteLocationAddressPage extends StatefulWidget {
   Function ? callBack;
   EventLocation? offlineLocation;
 bool isEdit;
-  InstituteLocationAddressPage({this.instId,this.isEvent=false,this.offlineLocation,this.isEdit=false,this.callBack});
+
+  BusinessData? data;
+  InstituteLocationAddressPage({this.instId,this.isEvent=false,this.offlineLocation,this.isEdit=false,this.callBack,this.data});
 
   @override
   _InstituteLocationAddressPage createState() =>
@@ -74,7 +77,8 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
 
    bool isLoading=false;
   String? selectState;
-
+  var country;
+  var state;
   String? selectCountry = "Select Country";
 
   String? selectStRange;
@@ -98,6 +102,29 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
     super.initState();
     getInstituteType();
     setSharedPreferences();
+    getEditData();
+  }
+
+
+ void  getEditData()
+  {
+    if(widget.data!=null)
+      {
+        if(widget.data!.businessAddressCountry!=null)
+          {
+            selectCountry=widget.data!.businessAddressCountry!;
+            country=widget.data!.businessAddressCountry!;
+          }
+
+        if(widget.data!.businessAddressRegion!=null)
+        {selectState=widget.data!.businessAddressRegion!;
+          state=widget.data!.businessAddressRegion!;
+        }
+
+
+
+      }
+
   }
   void setSharedPreferences() async {
     prefs = await SharedPreferences.getInstance();
@@ -507,8 +534,7 @@ hintText: addresses,
           if (pinController.text.trim().isNotEmpty) {
             if (cityMapController.text.trim().isNotEmpty) {
               {
-                var country;
-                var state;
+
                 mapCountry.forEach((key, value) {
                   if (key == selectCountry) country = value;
                 });
@@ -530,7 +556,7 @@ hintText: addresses,
 
                   Calls()
                       .call(jsonEncode(instituteContactDetail), context,
-                      Config.INSTITUTE_ADDRESS)
+                     widget.isEdit?Config.INSTITUTE_ADDRESS: Config.INSTITUTE_ADDRESS)
                       .then((value) async {
                     setState(() {
                       isLoading = false;

@@ -6,6 +6,7 @@ import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/components/app_buttons.dart';
+import 'package:oho_works_app/models/business_response_detail.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
@@ -25,11 +26,12 @@ class DomainPage extends StatefulWidget {
   int? instId;
   bool isEdit;
   Function ? callBack;
+   BusinessData? data;
   @override
   _DomainPage createState() =>
       new _DomainPage(instId);
 
-  DomainPage({this.instId, this.isEdit = false,this.callBack});
+  DomainPage({this.instId, this.isEdit = false,this.callBack,this.data});
 }
 
 class _DomainPage extends State<DomainPage>
@@ -74,7 +76,7 @@ class _DomainPage extends State<DomainPage>
   String? selectCountry;
 
   String? selectStRange;
-
+int? id;
   String? selectTecRange;
   int? selectedEpoch;
 
@@ -91,7 +93,24 @@ class _DomainPage extends State<DomainPage>
   void setSharedPreferences() async {
     prefs = await SharedPreferences.getInstance();
 
+    getEditData();
+
   }
+
+  void getEditData() async {
+
+    if(widget.data!=null && widget.data!.businessDomains!=null && widget.data!.businessDomains!.isNotEmpty)
+      {
+        domainController.text=widget.data!.businessDomains![0].domainName!;
+        id=widget.data!.businessDomains![0].id;
+      }
+
+
+
+
+
+  }
+
   String quotesCharacterLength = "0";
   bool isLoading=false;
   @override
@@ -165,7 +184,10 @@ class _DomainPage extends State<DomainPage>
                                 MaterialPageRoute(
                                     builder: (BuildContext
                                     context) =>
-                                        ContactsDetailsPageInstitute(instId:instId,isEdit:widget!.isEdit,callBack: (){
+                                        ContactsDetailsPageInstitute(
+
+                                          data:widget.data,
+                                          instId:instId,isEdit:widget!.isEdit,callBack: (){
 
                                           Navigator.pop(context);
                                           if(widget.callBack!=null)
@@ -338,10 +360,11 @@ setState(() {
 });
     final body = jsonEncode({
       "business_id": instId,
+      "id": id,
       "domain_name": domainController.text
     });
     Calls()
-        .call(body, context, Config.ADD_DOMAIN_INSTITUTE)
+        .call(body, context, widget.isEdit?Config.EDIT_DOMAIN:Config.ADD_DOMAIN_INSTITUTE)
         .then((value) async {
 
       if (value != null) {
@@ -357,7 +380,11 @@ setState(() {
               MaterialPageRoute(
                   builder: (BuildContext
                   context) =>
-                      ContactsDetailsPageInstitute(instId:instId,isEdit: widget.isEdit,callBack: (){
+                      ContactsDetailsPageInstitute(
+                          data:widget.data,
+
+                          instId:instId,isEdit: widget.isEdit,callBack: (){
+
 
                         Navigator.pop(context);
                         if(widget.callBack!=null)

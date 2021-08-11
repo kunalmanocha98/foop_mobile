@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:GlobalUploadFilePkg/Enums/contexttype.dart';
@@ -111,7 +112,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
   String? coverPath;
   SharedPreferences? prefs;
   var followers = 0;
-  BusinessData ?businessData;
+  List<BusinessData> ?businessData;
   var following = 0;
   var roomsCount = 0;
   var postCount = 0;
@@ -155,8 +156,8 @@ class UserProfileCardsState extends State<UserProfileCards> {
           isFromProfile: true,
           postOwnerTypeId: userId != null ? userId : ownerId,
           postOwnerType: userId != null
-              ? userType == "institution"
-              ? "institution"
+              ? userType == "business"
+              ? "business"
               : "person"
               : ownerType,
         ),
@@ -700,12 +701,16 @@ class UserProfileCardsState extends State<UserProfileCards> {
                                         isUserVerified: isUserVerified,
                                         isFollow: isFollow,
                                         editCallBack:(){
+                                          if(businessData!=null && businessData!.length>0)
                                           Navigator.push(
                                               context,
                                               MaterialPageRoute(
                                                   builder: (BuildContext
                                                   context) =>
-                                                      BasicInstituteDetails(data:businessData!,isEdit:true)));
+                                                      BasicInstituteDetails(data:businessData![0],isEdit:true,callBack:(){
+
+                                                        getBusinessDetails(context, businessData![0]!.id.toString());
+                                                      })));
                                         },
                                         isPersonProfile: true,
                                         onClickProfile: userType == "person"
@@ -881,7 +886,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
         SHAREITEMTYPE.PROFILE.type,
         ownerId.toString(),
         userId,
-        userType == "institution"
+        userType == "business"
             ? DEEPLINKTYPE.INSTITUTION.type
             : DEEPLINKTYPE.PERSON.type,
         context);
@@ -1024,9 +1029,14 @@ class UserProfileCardsState extends State<UserProfileCards> {
     Calls().call(body, context, Config.INSTITUTE_DETAILS).then((value) async {
       if (value != null) {
 
+
+
         if (this.mounted) {
           setState(() async {
-            var data = BusinessDetailResponse.fromJson(value);
+            var data = BusinessDataResponse.fromJson(value);
+
+
+            log('res---------------------------------here$value');
             if (data != null && data.statusCode == 'S10001') {
              setState(() {
                businessData=data.rows;
@@ -1052,7 +1062,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
     final body = jsonEncode({
       "business_id": instituteId,
       "person_id": userId,
-      "detail_type": userType == "institution" ? "institution" : "user",
+      "detail_type": userType == "business" ? "business" : "user",
       "owner_id": ownerId
     });
     setState(() {
@@ -1074,7 +1084,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
                     if (item != null) {
                       if (item != null && item.cardName == "profileNameCard") {
                         isFollow = item.isFollow2 ?? false;
-                        if (userType == "institution") {
+                        if (userType == "business") {
                           if (item.image != null)
                             profileImage =
                                 Config.BASE_URL + item.image!;
@@ -1192,8 +1202,8 @@ class UserProfileCardsState extends State<UserProfileCards> {
 
     final body = jsonEncode({
       "person_id": userId,
-      "type": userType == "institution" ? "institution" : "person",
-      "all_institutions_id": userType == "institution" ? userId : instituteId,
+      "type": userType == "business" ? "business" : "person",
+      "all_institutions_id": userType == "business" ? userId : instituteId,
       "page_number": 1,
       "given_by_id": ownerId,
       "page_size": 100
@@ -1286,8 +1296,8 @@ class UserProfileCardsState extends State<UserProfileCards> {
     });
     final body = jsonEncode({
       "person_id": userId,
-      "type": userType == "institution" ? "institution" : "person",
-      "all_institutions_id": userType == "institution" ? userId : instituteId,
+      "type": userType == "business" ? "business" : "person",
+      "all_institutions_id": userType == "business" ? userId : instituteId,
       "page_number": 1,
       "given_by_id": ownerId,
       "page_size": 100
@@ -1431,7 +1441,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
     });
     final body = jsonEncode({
       "person_id": null,
-      "type": "institution",
+      "type": "business",
       "business_id": userId,
       "page_number": 1,
       "given_by_id": ownerId,
@@ -1540,8 +1550,8 @@ class UserProfileCardsState extends State<UserProfileCards> {
     });
     final body = jsonEncode({
       "person_id": userId,
-      "type": userType == "institution" ? "institution" : "person",
-      "all_institutions_id": userType == "institution" ? userId : instituteId,
+      "type": userType == "business" ? "business" : "person",
+      "all_institutions_id": userType == "business" ? userId : instituteId,
       "page_number": 1,
       "given_by_id": ownerId,
       "page_size": 100
@@ -1631,9 +1641,9 @@ class UserProfileCardsState extends State<UserProfileCards> {
     });
     final body = jsonEncode({
       "person_id": userId,
-      "type": userType == "institution" ? "institution" : "person",
+      "type": userType == "business" ? "business" : "person",
       "all_institutions_id":
-      userType == "institution" ? userId.toString() : instituteId,
+      userType == "business" ? userId.toString() : instituteId,
       "page_number": 1,
       "given_by_id": ownerId,
       "page_size": 100
@@ -1716,7 +1726,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
 
               userType: userType,
               instituteId:
-              userType == "institution" ? userId.toString() : instituteId,
+              userType == "business" ? userId.toString() : instituteId,
               listCardsAbout: [],
               callBck: () {
                 getEducations(context);
@@ -1957,7 +1967,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
     final body = jsonEncode({
       "person_id": personId,
       "business_id":
-      userType == "institution" ? userId.toString() : instituteId,
+      userType != "business" ? userId.toString() : instituteId,
       "page_number": 1,
       "given_by_id": ownerId,
       "page_size": 100
@@ -2032,7 +2042,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
     final body = jsonEncode({
       "person_id": personId,
       "business_id":
-      userType == "institution" ? userId.toString() : instituteId,
+      userType != "business" ? userId.toString() : instituteId,
       "page_number": 1,
       "given_by_id": ownerId,
       "page_size": 100
@@ -2110,7 +2120,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
     final body = jsonEncode({
       "person_id": personId,
       "business_id":
-      userType == "institution" ? userId.toString() : instituteId,
+      userType != "business" ? userId.toString() : instituteId,
       "page_number": 1,
       "given_by_id": ownerId,
       "page_size": 100
@@ -2189,7 +2199,7 @@ class UserProfileCardsState extends State<UserProfileCards> {
 
   void followersCountApi(BuildContext context) async {
     final body = jsonEncode({
-      "object_type": userType == "institution" ? "institution" : "person",
+      "object_type": userType == "business" ? "business" : "person",
       "object_id": userId,
     });
 

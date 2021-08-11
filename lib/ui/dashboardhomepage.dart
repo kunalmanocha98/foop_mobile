@@ -214,8 +214,23 @@ BuildContext? dgsContext;
 
   void menuitemClick(String? code) {
     switch (code) {
+
       case 'parentalcontrol':
         {
+          break;
+        }
+      case 'business':
+        {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => UserProfileCards(
+                    userType: 'business',
+                    userId: prefs!.getInt(Strings.instituteId),
+                    callback: () {},
+                    currentPosition: 1,
+                    type: null,
+                  )));
           break;
         }
       case 'email':

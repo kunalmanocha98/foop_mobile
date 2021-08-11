@@ -65,8 +65,8 @@ class BasicInstituteDetails extends StatefulWidget {
 
  final BusinessData? data;
  final bool isEdit;
-
-  const BasicInstituteDetails({Key? key, this.data,this.isEdit=false}) : super(key: key);
+final Function? callBack;
+  const BasicInstituteDetails({Key? key, this.data,this.isEdit=false,this.callBack}) : super(key: key);
   @override
   _BasicInstituteDetails createState() => new _BasicInstituteDetails();
 }
@@ -697,6 +697,9 @@ Navigator.pop(context);
                     basicData.inst_cat_code=cat;
                     basicData.entity_type_code=type;
                     basicData.employeeRange=employeeRanget;
+
+                    if(widget.isEdit)
+                      basicData.businessId=widget.data!.id;
                     basicData.listOfNames=_listOfHashTags;
                     prefs.setString("instName", instituteNameC.text.toString());
                     print(jsonEncode(basicData));
@@ -706,29 +709,52 @@ Navigator.pop(context);
                     }
                     final body = jsonEncode(basicData);
                     Calls()
-                        .call(body, context, Config.BASIC_INSTITUTE_REGISTER)
+                        .call(body, context,widget.isEdit?Config.BASIC_BUSINESS_EDIT: Config.BASIC_INSTITUTE_REGISTER)
                         .then((value) async {
                       if (value != null) {
 
                         var resposne = BasicDataResponse.fromJson(value);
                         if (resposne.statusCode == Strings.success_code) {
-                          prefs.setString(Strings.registeredInstituteName, basicData.name??"");
-                          prefs.setString(Strings.registeredInstituteImage, imageUrl??"");
-                          prefs.setInt("createdSchoolId", resposne.rows!.institutionId!);
-                          if(!widget.isEdit)
-                          prefs.setString("create_entity", "Domain");
-
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => DomainPage(
-                                    callBack:(){
-                                      Navigator.pop(context);
-                                    },
 
 
-                                    instId:resposne.rows!.institutionId!,isEdit:widget.isEdit),
-                              ));
+                          if(widget.callBack!=null)
+                            widget.callBack!();
+                          if(!widget.isEdit){
+                            prefs.setString(Strings.registeredInstituteName, basicData.name??"");
+                            prefs.setString(Strings.registeredInstituteImage, imageUrl??"");
+                            prefs.setInt("createdSchoolId", resposne.rows!.institutionId!);
+
+                            prefs.setString("create_entity", "Domain");
+
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DomainPage(
+                                      callBack:(){
+                                        Navigator.pop(context);
+                                      },
+
+
+                                      instId:resposne.rows!.institutionId!,isEdit:widget.isEdit),
+                                ));
+                          }
+                          else
+                            {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => DomainPage(
+                                        callBack:(){
+                                          Navigator.pop(context);
+                                          if(widget.callBack!=null)
+                                            widget.callBack!();
+                                        },
+
+data:widget.data,
+                                        instId:widget.data!.id,isEdit:widget.isEdit),
+                                  ));
+                            }
+
                         }
                       }
                     }).catchError((onError) async {
@@ -774,8 +800,9 @@ Navigator.pop(context);
   {
     if(widget.data!=null)
       {
-        if(widget.data!.profileImage!=null)
-        imageUrl=widget.data!.profileImage;
+        if(widget.data!.profile_image!=null)
+          imageUrl=widget.data!.profile_image!;
+
         if(widget.data!.name!=null)
           instituteNameC.text=widget.data!.name!;
 
@@ -788,6 +815,11 @@ Navigator.pop(context);
         cat=widget.data!.businessCategory!;
         selectInstCategory = widget.data!.businessCategory!;
       }
+
+        if(widget.data!.noOfEmployees!=null) {
+
+          employeeRanget = widget.data!.noOfEmployees!;
+        }
 
       if(widget.data!.description!=null)
           descriptionController.text=widget.data!.description!;

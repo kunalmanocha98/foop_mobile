@@ -6,6 +6,7 @@ import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/conversationPage/base_response.dart';
 import 'package:oho_works_app/mixins/editProfileMixin.dart';
+import 'package:oho_works_app/models/business_response_detail.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
@@ -27,7 +28,8 @@ class ContactsDetailsPageInstitute extends StatefulWidget {
   int? instId;
   bool isEdit;
   Function ? callBack;
-  ContactsDetailsPageInstitute({this.instId, this.isEdit = false,this.callBack});
+  BusinessData? data;
+  ContactsDetailsPageInstitute({this.instId, this.isEdit = false,this.callBack,this.   data});
 
   @override
   _ContactsDetailsPageInstitute createState() =>
@@ -82,6 +84,66 @@ class _ContactsDetailsPageInstitute extends State<ContactsDetailsPageInstitute>
   void initState() {
     super.initState();
     setSharedPreferences();
+    getEditData();
+
+  }
+
+  void getEditData() async {
+
+    if(widget.data!=null && widget.data!.businessContacts!=null && widget.data!.businessContacts!.isNotEmpty)
+    {
+
+      for(var v in widget.data!.businessContacts!
+      )
+        {
+
+          switch(v.contactType)
+          {
+
+            case "Website":
+              {
+                websiteCon.text=v.contactInfo.toString();
+                break;
+              }
+
+            case "Phone":
+              {
+                phoneCon.text=v.contactInfo.toString();
+                break;
+              }
+            case "Email":
+              {
+
+                emailController.text=v.contactInfo.toString();
+                break;
+              }
+            case "Mobile":
+              {
+                mobileController.text=v.contactInfo.toString();
+                break;
+              }
+
+
+
+
+          }
+
+
+
+
+
+
+
+        }
+
+
+
+    }
+
+
+
+
+
   }
   void setSharedPreferences() async {
     prefs = await SharedPreferences.getInstance();
@@ -446,7 +508,7 @@ bool isLoading=false;
 
     Calls()
         .call(jsonEncode(instituteContactDetail), context,
-        Config.INSTITUTE_CONTACT)
+       widget.isEdit?Config.EDIT_CONTACTS: Config.INSTITUTE_CONTACT)
         .then((value) async {
 
       if (value != null) {
@@ -463,7 +525,9 @@ bool isLoading=false;
               MaterialPageRoute(
                   builder: (BuildContext
                   context) =>
-                      InstituteLocationAddressPage(instId:instId,isEdit:widget.isEdit,callBack: (){
+                      InstituteLocationAddressPage(
+                          data: widget.data,
+                          instId:instId,isEdit:widget.isEdit,callBack: (){
 
                         Navigator.pop(context);
                         if(widget.callBack!=null)

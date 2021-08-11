@@ -181,7 +181,7 @@ class AboutProfileCard extends StatelessWidget {
                                       margin: const EdgeInsets.only(
                                           left: 20, top: 8, right: 20),
                                       child: Text(
-                                        Utility().getDateFormat("dd MMM yyyy", DateTime.fromMillisecondsSinceEpoch(int.parse(data.textEight!))),
+                                        Utility().getDateFormat("dd MMM yyyy", DateTime.fromMillisecondsSinceEpoch(int.parse(data.textEight!=null && data.textEight!="null"?data.textEight!:"0"))),
                                         style: styleElements!.bodyText1ThemeScalable(context).copyWith(fontWeight: FontWeight.w600),
                                         textAlign: TextAlign.left,
                                       ),
