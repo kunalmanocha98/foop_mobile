@@ -205,7 +205,7 @@ class Config {
       BASE_URL + '/api/v1/post/recipient/update';
 
   static String POST_RECEIVER_LIST =
-      BASE_URL + '/api/v3/utility/recipienttype/list';
+      BASE_URL + '/api/v1/utility/recipienttype/list';
   static String CAMPUS_FACILITIES_SEE_MORE =
       BASE_URL +
           '/api/v1/utility/see_more/campus_and_facility_see_more_api';
@@ -454,7 +454,7 @@ class Config {
   static String EDIT_LOCATION=BASE_URL+'/api/v1/business/location/edit';
   static String LOCATION_DETAILS=BASE_URL+'/api/v1/business/location/detail';
 
-  static String DEPARTMENT_CREATE =BASE_URL+ "/api/v1/institution/department/create";
+  static String DEPARTMENT_CREATE =BASE_URL+ "/api/v1/business/department/create";
 
 
 

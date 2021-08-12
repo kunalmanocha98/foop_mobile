@@ -295,6 +295,38 @@ class ContactInfoCard extends StatelessWidget {
               ),
               Container(
                 margin:
+                const EdgeInsets.only(left: 10, right: 10, top: 8.0),
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Container(
+                      margin: const EdgeInsets.only(
+                          left: 8, right: 8, top: 8.0),
+                      width: 36,
+                      height: 36,
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: HexColor(AppColors.appColorBackground)),
+                      child: IconButton(
+                        onPressed: () {
+                          if (data.textSix != null && data.textSix != "")
+                            _service!.sendEmail(data.textSix ?? "");
+                          else
+                            ToastBuilder().showToast(
+                                AppLocalizations.of(context)!
+                                    .translate("no_email_found"),
+                                context,
+                                HexColor(AppColors.information));
+                        },
+                        icon: Icon(
+                          Icons.whatshot_rounded,
+                          color: HexColor(AppColors.appColorGrey500),
+                          size: 22,
+                        ),
+                      )),
+                ),
+              ),
+              Container(
+                margin:
                     const EdgeInsets.only(left: 10, right: 10, top: 8.0),
                 child: Align(
                   alignment: Alignment.topLeft,

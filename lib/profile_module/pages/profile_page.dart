@@ -31,6 +31,7 @@ import 'package:oho_works_app/profile_module/common_cards/user_pipulaity_card.da
 import 'package:oho_works_app/profile_module/pages/media%20_page.dart';
 import 'package:oho_works_app/services/get_deeplink_url_service.dart';
 import 'package:oho_works_app/ui/LearningModule/lessons_list_page.dart';
+import 'package:oho_works_app/ui/Profile/department_list.dart';
 import 'package:oho_works_app/ui/RegisterInstitutions/basic_institute_detail.dart';
 import 'package:oho_works_app/ui/dashboardhomepage.dart';
 import 'package:oho_works_app/ui/dialogs/invalid%20_profile_image_dialog.dart';
@@ -337,10 +338,8 @@ bool isAdmin=false;
           tabName: type));
     else if (type == "departments")
       data!.add(CustomTabMaker(
-          statelessWidget: ImagesSeeMore(
-            type: userType,
+          statelessWidget: DepartmentListPage(
             instituteId: userId.toString(),
-            isUserExist: isUserExist,
           ),
           tabName: type));
     else

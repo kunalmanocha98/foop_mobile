@@ -1,13 +1,13 @@
 class DepartmentCreateRequest {
-  int? institutionId;
+  int? businessId;
   List<AddedDepartments>? addedDepartments;
   List<AddedDepartments>? deletedDepartments;
 
   DepartmentCreateRequest(
-      {this.institutionId, this.addedDepartments, this.deletedDepartments});
+      {this.businessId, this.addedDepartments, this.deletedDepartments});
 
   DepartmentCreateRequest.fromJson(Map<String, dynamic> json) {
-    institutionId = json['institution_id'];
+    businessId = json['business_id'];
     if (json['added_departments'] != null) {
       addedDepartments = [];
       json['added_departments'].forEach((v) {
@@ -24,7 +24,7 @@ class DepartmentCreateRequest {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['institution_id'] = this.institutionId;
+    data['business_id'] = this.businessId;
     if (this.addedDepartments != null) {
       data['added_departments'] =
           this.addedDepartments!.map((v) => v.toJson()).toList();

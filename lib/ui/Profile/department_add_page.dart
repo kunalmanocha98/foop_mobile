@@ -17,6 +17,8 @@ import 'package:oho_works_app/utils/strings.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DepartmentAddPage extends StatefulWidget {
+  final Null Function()? callbackPicker;
+  DepartmentAddPage({this.callbackPicker});
   @override
   _DepartmentAddPage createState() => _DepartmentAddPage();
 }
@@ -101,21 +103,20 @@ class _DepartmentAddPage extends State<DepartmentAddPage> with CommonMixins{
             },
           actions: [
             Container(
-              margin: EdgeInsets.only(top: 14, bottom: 14, left: 4),
-              child: appElevatedButton(
+              child: appTextButton(
                   onPressed: () async {
                    if(formKey.currentState!.validate()){
                      formKey.currentState!.save();
                      addDept();
                    }
                   },
-                  color: HexColor(AppColors.appMainColor),
+                  shape: StadiumBorder(),
                   child: Text(
                     AppLocalizations.of(context)!.translate('add'),
                     style: styleElements!
                         .subtitle2ThemeScalable(context)
                         .copyWith(
-                        color: HexColor(AppColors.appColorWhite)),
+                        color: HexColor(AppColors.appMainColor)),
                   )),
             )
           ]
@@ -148,14 +149,15 @@ class _DepartmentAddPage extends State<DepartmentAddPage> with CommonMixins{
 
   void addDept() async{
     DepartmentCreateRequest payload  = DepartmentCreateRequest();
-    payload.institutionId = prefs.getInt(Strings.instituteId);
+    payload.businessId = prefs.getInt(Strings.instituteId);
     payload.addedDepartments = [AddedDepartments(
       departmentName: departmentNameController.text,
       departmentCode: departmentCodeController.text,
       departmentDescription: departmentDescriptiponController.text
     )];
     Calls().call(jsonEncode(payload), context, Config.DEPARTMENT_CREATE).then((value) {
-
+      widget.callbackPicker!();
+      Navigator.pop(context);
     });
   }
 }

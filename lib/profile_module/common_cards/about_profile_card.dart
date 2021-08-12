@@ -42,8 +42,7 @@ class AboutProfileCard extends StatelessWidget {
                       alignment: Alignment.topLeft,
                       child: Container(
                         padding: const EdgeInsets.only(left: 16, right: 16,top:12,bottom:12),
-                        child: Text(
-                          data.title ?? "",
+                        child: Text(data.title!=null?data.title!:"-",
                           style: styleElements!.headline6ThemeScalable(context).copyWith(fontWeight: FontWeight.bold,color: HexColor(AppColors.appColorBlack85)),
                           textAlign: TextAlign.left,
                         ),
@@ -71,7 +70,7 @@ class AboutProfileCard extends StatelessWidget {
                                   alignment: Alignment.topLeft,
                                   child: Container(
                                     margin: const EdgeInsets.only(left: 16, top: 20),
-                                    child: Text(data.textOne ??= "",
+                                    child: Text(data.textOne!=null?data.textOne!:"-",
                                       style: styleElements!.subtitle2ThemeScalable(context),
                                       textAlign: TextAlign.left,
                                     ),
@@ -82,7 +81,7 @@ class AboutProfileCard extends StatelessWidget {
                                     margin: const EdgeInsets.only(
                                         left: 16, top: 8, right: 16),
                                     child: Text(
-                                      capitalize(data.textTwo??"---") ,
+                                      capitalize(data.textTwo!=null?data.textTwo!:"-") ,
                                       style: styleElements!.bodyText1ThemeScalable(context).copyWith(fontWeight: FontWeight.w600),
                                       textAlign: TextAlign.left,
                                     ),
@@ -104,7 +103,7 @@ class AboutProfileCard extends StatelessWidget {
                                     margin: const EdgeInsets.only(
                                         left: 20, top: 20, right: 20),
                                     child: Text(
-                                      data.textThree ??= "",
+                                      data.textThree!=null?data.textThree!:"-",
                                       style: styleElements!.subtitle2ThemeScalable(context),
                                       textAlign: TextAlign.left,
                                     ),
@@ -114,8 +113,7 @@ class AboutProfileCard extends StatelessWidget {
                                   child: Container(
                                     margin: const EdgeInsets.only(
                                         left: 20, top: 8, right: 20),
-                                    child: Text(
-                                      data.textFour ??= "",
+                                    child: Text((data.textFour!=null?data.textFour:"-")!,
                                       style: styleElements!.bodyText1ThemeScalable(context).copyWith(fontWeight: FontWeight.w600),
                                       textAlign: TextAlign.left,
                                     ),
@@ -138,7 +136,7 @@ class AboutProfileCard extends StatelessWidget {
                                     child: Container(
                                       margin: const EdgeInsets.only(left: 16, top: 20),
                                       child: Text(
-                                        data.textFive ??= "",
+                                        data.textFive!=null?data.textFive!:"-",
                                         style: styleElements!.subtitle2ThemeScalable(context),
                                         textAlign: TextAlign.left,
                                       ),
@@ -149,7 +147,7 @@ class AboutProfileCard extends StatelessWidget {
                                       margin: const EdgeInsets.only(
                                           left: 16, top: 8, right: 16),
                                       child: Text(
-                                        capitalize(data.textSix??"---") ,
+                                        capitalize((data.textSix!=null?data.textSix:"-")!) ,
                                         style: styleElements!.bodyText1ThemeScalable(context).copyWith(fontWeight: FontWeight.w600),
                                         textAlign: TextAlign.left,
                                       ),
@@ -170,7 +168,7 @@ class AboutProfileCard extends StatelessWidget {
                                       margin: const EdgeInsets.only(
                                           left: 20, top: 20, right: 20),
                                       child: Text(
-                                        data.textSeven ??= "",
+                                        (data.textSeven!=null?data.textSeven:"-")!,
                                         style: styleElements!.subtitle2ThemeScalable(context),
                                         textAlign: TextAlign.right,
                                       ),
@@ -264,7 +262,7 @@ class AboutProfileCard extends StatelessWidget {
                       Container(
                         margin: EdgeInsets.only(left: 16.h, right: 16.h, top: 20.0.h,bottom: 16.h),
                         child: Text(
-                          data.textNine ??= "",
+                          data.textNine!=null?data.textNine!:"-",
                           style: styleElements!.subtitle2ThemeScalable(context),
                           overflow: TextOverflow.ellipsis,
                           maxLines: 3,

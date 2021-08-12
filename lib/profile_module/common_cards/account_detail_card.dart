@@ -36,18 +36,18 @@ class AccountDetailCard extends StatelessWidget{
                   flex: 3,
                 ),
                 Spacer(),
-                appTextButton(
-                  onPressed: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
-                      return AddAccountDetails();
-                    })).then((value) {
-                      if(value!=null && value){
-                        callback!();
-                      }
-                    });
-                  },
-                  child: Text(AppLocalizations.of(context)!.translate('edit')),
-                )
+                // appTextButton(
+                //   onPressed: (){
+                //     Navigator.push(context, MaterialPageRoute(builder: (BuildContext context){
+                //       return AddAccountDetails();
+                //     })).then((value) {
+                //       if(value!=null && value){
+                //         callback!();
+                //       }
+                //     });
+                //   },
+                //   child: Text(AppLocalizations.of(context)!.translate('edit')),
+                // )
               ],
             ),
             Container(

@@ -1345,49 +1345,49 @@ BuildContext? dgsContext;
                           ),
                         ],
                       ),
-                    ):menuList![index].title=="position_3"?
-
-
-                    appCard(
-                      margin: EdgeInsets.only(
-                          left: 8, right: 8.0, top: 4.0, bottom: 6.0),
-                      padding: EdgeInsets.only(top:12,bottom: 12),
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemCount:institutionList.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return ListTile(
-                            onTap: (){
-                              print(
-                                  institutionList[index].toJson().toString());
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => UserProfileCards(
-                                        userType: 'business',
-                                        userId: institutionList[index].id,
-                                        callback: () {},
-                                        currentPosition: 1,
-                                        type: null,
-                                      )));
-                            },
-                            leading: appAvatar(
-                              imageUrl:  Config.BASE_URL +
-                                  (institutionList[index] != null &&
-                                      institutionList[index]
-                                          .profileImage !=
-                                          null
-                                      ? institutionList[index].profileImage!
-                                      : ""),
-                              service_type: SERVICE_TYPE.INSTITUTION,
-                              resolution_type: RESOLUTION_TYPE.R64,
-                            ),
-                            title:  Text(institutionList[index].name!,style: styleElements.subtitle1ThemeScalable(context),),
-                          );
-                        },
-                      ),
-                    )
-                        :
+                    ):
+                        // menuList![index].title=="position_3"?
+                    //
+                    //
+                    // appCard(
+                    //   margin: EdgeInsets.only(
+                    //       left: 8, right: 8.0, top: 4.0, bottom: 6.0),
+                    //   padding: EdgeInsets.only(top:12,bottom: 12),
+                    //   child: ListView.builder(
+                    //     shrinkWrap: true,
+                    //     itemCount:institutionList.length,
+                    //     itemBuilder: (BuildContext context, int index) {
+                    //       return ListTile(
+                    //         onTap: (){
+                    //           print(
+                    //               institutionList[index].toJson().toString());
+                    //           Navigator.push(
+                    //               context,
+                    //               MaterialPageRoute(
+                    //                   builder: (context) => UserProfileCards(
+                    //                     userType: 'business',
+                    //                     userId: institutionList[index].id,
+                    //                     callback: () {},
+                    //                     currentPosition: 1,
+                    //                     type: null,
+                    //                   )));
+                    //         },
+                    //         leading: appAvatar(
+                    //           imageUrl:  Config.BASE_URL +
+                    //               (institutionList[index] != null &&
+                    //                   institutionList[index]
+                    //                       .profileImage !=
+                    //                       null
+                    //                   ? institutionList[index].profileImage!
+                    //                   : ""),
+                    //           service_type: SERVICE_TYPE.INSTITUTION,
+                    //           resolution_type: RESOLUTION_TYPE.R64,
+                    //         ),
+                    //         title:  Text(institutionList[index].name!,style: styleElements.subtitle1ThemeScalable(context),),
+                    //       );
+                    //     },
+                    //   ),
+                    // )
                     Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,

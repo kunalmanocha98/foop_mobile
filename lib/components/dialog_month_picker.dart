@@ -19,6 +19,9 @@ class _MonthPickerDialog extends State<MonthPickerDialog>{
   TextStyleElements styleElements = TextStyleElements(context);
 
     return Dialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(12)
+      ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children:[
@@ -105,6 +108,7 @@ class _MonthPickerDialog extends State<MonthPickerDialog>{
               onPressed: (){
                 Navigator.pop(context);
               },
+              shape: StadiumBorder(),
               child: Text(AppLocalizations.of(context)!.translate('cancel')),
             ),
             SizedBox(width: 8,),
@@ -113,6 +117,7 @@ class _MonthPickerDialog extends State<MonthPickerDialog>{
                 widget.monthPicked(selectedMonth!);
                 Navigator.pop(context);
               },
+              shape: StadiumBorder(),
               child: Text(AppLocalizations.of(context)!.translate('ok')),
             )
           ],)

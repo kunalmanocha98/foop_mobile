@@ -18,7 +18,7 @@ class DepartmentCard extends StatelessWidget {
   final CommonCardData data;
   BuildContext? context;
   TextStyleElements? styleElements;
-  List<String>? listSubItems = ["Finance","Software Development","Yoga","Event management","Crisis Management"];
+  // List<String>? listSubItems = ["Finance","Software Development","Yoga","Event management","Crisis Management"];
   Null Function()? callbackPicker;
   String? type;
   int? id;
@@ -82,7 +82,6 @@ class DepartmentCard extends StatelessWidget {
                   flex: 3,
                 ),
                 Visibility(
-
                   child: Flexible(
                     child:Padding(
                       padding: const EdgeInsets.all(16.0),
@@ -93,7 +92,9 @@ class DepartmentCard extends StatelessWidget {
                             onTap: () async {
                               Navigator.push(context, MaterialPageRoute(
                                 builder: (BuildContext context){
-                                  return DepartmentAddPage();
+                                  return DepartmentAddPage(
+                                    callbackPicker: callbackPicker,
+                                  );
                                 }
                               ));
                             },
@@ -111,7 +112,7 @@ class DepartmentCard extends StatelessWidget {
             ),
             Container(
                 margin: const EdgeInsets.only(left: 12, right: 12),
-                child: listSubItems!=null &&listSubItems!.isNotEmpty
+                child: data.subRow!=null &&data.subRow!.isNotEmpty
                     ? Align(
                     alignment: Alignment.centerLeft,
                     child:  Container(
@@ -122,7 +123,7 @@ class DepartmentCard extends StatelessWidget {
                           runSpacing: 4.0, // gap between lines
                           // children: <Widget>[...generate_tags(programs[3].isSelected?programs :sectionsWithMore, degreeType, id,className,classCode)],
 
-                          children: <Widget>[...generate_tags(listSubItems!)],
+                          children: <Widget>[...generate_tags(data.subRow!)],
 
                         )
 
@@ -203,13 +204,13 @@ class DepartmentCard extends StatelessWidget {
         ));
   }
 
-  generate_tags(List<String> list,) {
+  generate_tags(List<SubRow> list,) {
     return list
         .map((list) => get_chip(list))
         .toList();
   }
 
-  get_chip(String item) {
+  get_chip(SubRow item) {
     return     Container(
       margin: const EdgeInsets.only(
           left: 4, right: 4),
@@ -218,7 +219,7 @@ class DepartmentCard extends StatelessWidget {
             padding: const EdgeInsets.only(
                 left: 4, right: 4),
             child: Text(
-              item,
+              item.department!,
               overflow: TextOverflow.ellipsis,
               style: styleElements!
                   .subtitle2ThemeScalable(
