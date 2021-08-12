@@ -424,7 +424,7 @@ class GetAllCards {
 
       case "historyCard":
         {
-          return DepartmentCard(data: commonCardData);
+          return HistoryCard(data: commonCardData);
         }
         break;
       case "FounderCard":
