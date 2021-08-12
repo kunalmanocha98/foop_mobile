@@ -1,0 +1,23 @@
+include: package:pedantic/analysis_options.yaml
+
+linter:
+  rules:
+    prefer_single_quotes: false
+    prefer_double_quotes: false
+    unnecessary_new: false
+    unnecessary_this: false
+    curly_braces_in_flow_control_structures: false
+    prefer_collection_literals: false
+    omit_local_variable_types: false
+    prefer_adjacent_string_concatenation: false
+    unawaited_futures: false
+    always_require_non_null_named_parameters: false
+    always_declare_return_types: false
+    unnecessary_null_in_if_null_operators: false
+    annotate_overrides: false
+    prefer_final_fields: false
+    camel_case_extensions: false
+    prefer_is_not_empty: false
+    prefer_if_null_operators: false
+    prefer_is_empty: false
+    sort_child_properties_last: false
