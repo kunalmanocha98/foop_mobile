@@ -709,7 +709,21 @@ $isFailed INTEGER
 //===================================================================
   Future<List<UserContact>> getContactsAll() async {
   Database? db = await (instance.database );
-    List<Map> maps = await db!.query(tableContacts);
+    List<Map> maps = await
+    db!.query(tableContacts);
+    List<UserContact> data = [];
+    if (maps.length > 0) {
+      for (int i = 0; i < maps.length; i++) {
+        data.add(UserContact.fromJson(maps[i] as Map<String, dynamic>));
+      }
+    }
+    return data;
+  }
+
+  Future<List<UserContact>> getContactsAllWithName() async {
+    Database? db = await (instance.database );
+    List<Map> maps = (await db!
+        .query(tableContacts, where: '$name != ?', whereArgs: [""]));
     List<UserContact> data = [];
     if (maps.length > 0) {
       for (int i = 0; i < maps.length; i++) {

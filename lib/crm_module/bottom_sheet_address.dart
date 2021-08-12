@@ -13,12 +13,20 @@ import 'package:oho_works_app/utils/strings.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class BottomSheetAddress extends StatelessWidget {
-  final Function(String value)? onClickCallback;
-  final SharedPreferences? prefs;
-  final isRoomsVisible;
+class BottomSheetAddress extends StatefulWidget {
+  final Function(String? value)? onClickCallback;
+  BottomSheetAddress({this.onClickCallback});
+  @override
+  BottomSheetAddressState createState()=> BottomSheetAddressState();
+}
+
+
+class BottomSheetAddressState extends State<BottomSheetAddress>{
+
+  TextEditingController controller = TextEditingController();
+ String addresses ="address" ;
   List<dynamic>? countryCodeList = [];
-  BottomSheetAddress({this.onClickCallback,this.prefs,this.isRoomsVisible=true});
+
   @override
   Widget build(BuildContext context) {
 
@@ -122,10 +130,19 @@ class BottomSheetAddress extends StatelessWidget {
 
               GestureDetector(
                 behavior: HitTestBehavior.translucent,
-                onTap: (){     Navigator.push(
+                onTap: () async {    var result=await Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => MapPage()));},
+                      builder: (context) => MapPage()));
+                if (result != null) {
+                  if (result["address"] != null)
+
+                  controller.text=result["address"];
+
+                }
+
+
+                },
                 child: Container(
                   height: 48,
                   margin:  EdgeInsets.only(left: 16, right: 16, top: 2,bottom: 12),
@@ -192,13 +209,11 @@ crossAxisAlignment: CrossAxisAlignment.start,
                                 child: codes,
                               ),*/
                             Expanded(
-                              child: TextFormField(
-                                validator: EditProfileMixins().validateEmail,
-                                initialValue: "",
+                              child: TextField(
+                                controller: controller,
+                          
                                 maxLines: 5,
-                                onSaved: (value) {
 
-                                },
 
                                 decoration: InputDecoration(
                                     hintText: "Address",

@@ -6,6 +6,7 @@ import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/conversationPage/base_response.dart';
 import 'package:oho_works_app/mixins/editProfileMixin.dart';
+import 'package:oho_works_app/models/business_response_detail.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
@@ -25,8 +26,11 @@ import 'models/instituteContacts.dart';
 // ignore: must_be_immutable
 class ContactsDetailsPageInstitute extends StatefulWidget {
   int? instId;
-
-  ContactsDetailsPageInstitute(this.instId);
+  bool isEdit;
+  Function ? callBack;
+  BusinessData? data;
+  final Function? refreshCallback;
+  ContactsDetailsPageInstitute({this.instId, this.isEdit = false,this.callBack,this.   data,this.refreshCallback});
 
   @override
   _ContactsDetailsPageInstitute createState() =>
@@ -81,6 +85,66 @@ class _ContactsDetailsPageInstitute extends State<ContactsDetailsPageInstitute>
   void initState() {
     super.initState();
     setSharedPreferences();
+    getEditData();
+
+  }
+
+  void getEditData() async {
+
+    if(widget.data!=null && widget.data!.businessContacts!=null && widget.data!.businessContacts!.isNotEmpty)
+    {
+
+      for(var v in widget.data!.businessContacts!
+      )
+        {
+
+          switch(v.contactType)
+          {
+
+            case "Website":
+              {
+                websiteCon.text=v.contactInfo.toString();
+                break;
+              }
+
+            case "Phone":
+              {
+                phoneCon.text=v.contactInfo.toString();
+                break;
+              }
+            case "Email":
+              {
+
+                emailController.text=v.contactInfo.toString();
+                break;
+              }
+            case "Mobile":
+              {
+                mobileController.text=v.contactInfo.toString();
+                break;
+              }
+
+
+
+
+          }
+
+
+
+
+
+
+
+        }
+
+
+
+    }
+
+
+
+
+
   }
   void setSharedPreferences() async {
     prefs = await SharedPreferences.getInstance();
@@ -193,7 +257,7 @@ bool isLoading=false;
               // resizeToAvoidBottomInset: false,
               appBar: appAppBar().getCustomAppBar(context,
                   appBarTitle: AppLocalizations.of(context)!.translate('register_institute'),
-                  isIconVisible:false,
+                  isIconVisible:widget.isEdit,
                   actions: [
 
                     Padding(
@@ -426,6 +490,8 @@ bool isLoading=false;
 
   // ignore: missing_return
   Future<bool> _onBackPressed() {
+    if(widget.isEdit)
+      Navigator.pop(context);
 
     return new Future(() => false);
   }
@@ -443,7 +509,7 @@ bool isLoading=false;
 
     Calls()
         .call(jsonEncode(instituteContactDetail), context,
-        Config.INSTITUTE_CONTACT)
+       widget.isEdit?Config.EDIT_CONTACTS: Config.INSTITUTE_CONTACT)
         .then((value) async {
 
       if (value != null) {
@@ -455,12 +521,24 @@ bool isLoading=false;
         if(data.statusCode==Strings.success_code)
         {
           prefs.setString("create_institute", "Address");
+
+          if(widget.refreshCallback!=null)
+            widget.refreshCallback!();
           Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (BuildContext
                   context) =>
-                      InstituteLocationAddressPage(instId)));
+                      InstituteLocationAddressPage(
+                          data: widget.data,
+                          refreshCallback: widget.refreshCallback,
+                          instId:instId,isEdit:widget.isEdit,callBack: (){
+                        print("------------------------------------------------exit app2");
+                        Navigator.pop(context);
+                        if(widget.callBack!=null)
+                          widget.callBack!();
+
+                      })));
         }
 
 

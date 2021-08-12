@@ -148,7 +148,7 @@ class OrderDetailPageState extends State<OrderDetailPage> {
                       isScrollControlled: true,
                       builder: (context) {
                         return BottomSheetAddress(
-                          prefs: prefs,
+
                           onClickCallback: (value) {
 
                           },
@@ -255,7 +255,7 @@ class OrderDetailPageState extends State<OrderDetailPage> {
                           isScrollControlled: true,
                           builder: (context) {
                             return BottomSheetAddress(
-                              prefs: prefs,
+
                               onClickCallback: (value) {
 
                               },
@@ -288,7 +288,7 @@ class OrderDetailPageState extends State<OrderDetailPage> {
                           isScrollControlled: true,
                           builder: (context) {
                             return BottomSheetAddress(
-                              prefs: prefs,
+
                               onClickCallback: (value) {
 
                               },

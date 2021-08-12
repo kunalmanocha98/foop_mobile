@@ -26,6 +26,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:package_info/package_info.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -47,6 +48,8 @@ class _SplashScreenState extends State<SplashScreen> {
   late TextStyleElements styleElements;
 
   Future<void> navigationPage(BuildContext context) async {
+
+
     prefs = await SharedPreferences.getInstance();
     prefs.remove(Strings.current_event);
     if (prefs.getString("token") != null) {
@@ -64,21 +67,21 @@ class _SplashScreenState extends State<SplashScreen> {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                   builder: (ctx) => InstituteLocationAddressPage(
-                      prefs.getInt("createdSchoolId"))),
+                      instId:  prefs.getInt("createdSchoolId"))),
                   (Route<dynamic> route) => false);
         }
         else if (prefs.getString("create_entity") == "Contact") {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                   builder: (ctx) => ContactsDetailsPageInstitute(
-                      prefs.getInt("createdSchoolId"))),
+                      instId: prefs.getInt("createdSchoolId"))),
                   (Route<dynamic> route) => false);
         }
         else if (prefs.getString("create_entity") == "Domain") {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                   builder: (ctx) =>
-                      DomainPage(prefs.getInt("createdSchoolId"))),
+                      DomainPage(instId: prefs.getInt("createdSchoolId"))),
                   (Route<dynamic> route) => false);
         }
         else if (prefs.getString("create_entity") == "created") {
@@ -107,19 +110,19 @@ class _SplashScreenState extends State<SplashScreen> {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                   builder: (ctx) => InstituteLocationAddressPage(
-                      prefs.getInt("createdSchoolId"))),
+                      instId:  prefs.getInt("createdSchoolId"))),
                   (Route<dynamic> route) => false);
         } else if (prefs.getString("create_entity") == "Contact") {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                   builder: (ctx) => ContactsDetailsPageInstitute(
-                      prefs.getInt("createdSchoolId"))),
+                      instId: prefs.getInt("createdSchoolId"))),
                   (Route<dynamic> route) => false);
         } else if (prefs.getString("create_entity") == "Domain") {
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(
                   builder: (ctx) =>
-                      DomainPage(prefs.getInt("createdSchoolId"))),
+                      DomainPage(instId: prefs.getInt("createdSchoolId"))),
                   (Route<dynamic> route) => false);
         } else if (prefs.getString("create_entity") == "created") {
           print(
@@ -154,6 +157,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void setSharedPreferences() async {
+    var status = await Permission.contacts.status;
     prefs = await SharedPreferences.getInstance();
     Future.delayed(Duration(seconds: 3), () {
       checkUpdate();

@@ -44,9 +44,9 @@ class MapPageState extends State<MapPage> {
     double? lat=0;
     double? long=0;
    LatLng SOURCE_LOCATION=LatLng(0, 0);
-  String firstLocation="";
+
   bool isSuggestionsVisible=false;
-  String secondVlaue="";
+bool isItemCLicked=false;
   CameraPosition? initialLocation;
     GoogleMapController ?_controller ;
   Map<MarkerId, Marker> _markers = <MarkerId, Marker>{};
@@ -57,8 +57,9 @@ class MapPageState extends State<MapPage> {
   late BitmapDescriptor sourceIcon;
 bool isSearching=false;
     GoogleMap? map;
-
-
+    GlobalKey<SearchBoxState> searchPageKey = GlobalKey();
+    TextEditingController controller = TextEditingController();
+    TextEditingController controller2 = TextEditingController();
   final GeolocatorPlatform _geolocatorPlatform = GeolocatorPlatform.instance;
 
 
@@ -78,7 +79,6 @@ bool isSearching=false;
 
     final position = await _geolocatorPlatform.getCurrentPosition();
    setState(() {
-
      print(position.latitude.toString()+"-------------------------------------------------++++++");
      lat=position.latitude;
      long=position.longitude;
@@ -166,20 +166,17 @@ var apiKey="AIzaSyAle_QlZpymzB-DmbtpqHNrnZYyFQeNjwQ";
         String address
         ) async {
       var apiKey="AIzaSyAle_QlZpymzB-DmbtpqHNrnZYyFQeNjwQ";
-      final request = "https://maps.googleapis.com/maps/api/geocode/json?address=$address&key=$apiKey";
+      final request = "https://maps.googleapis.com/maps/api/geocode/json?place_id=$address&key=$apiKey";
       Calls().getRequest(context, request).then((value) async {
         if (value != null) {
           var data = LatLongAddress.fromJson(value);
           print(value);
 
           setState(() {
-            firstLocation=data.results![0].formattedAddress!;
-secondVlaue="";
-            lat=data.results![0].geometry!.location!.lat;
-            long=data.results![0].geometry!.location!.lng;
-            SOURCE_LOCATION=LatLng(lat!, long!);
+            controller.text=data.results![0].formattedAddress!;
 
-            _moveTo(lat!,long!);
+
+            _moveTo(data.results![0].geometry!.location!.lat!,data.results![0].geometry!.location!.lng!);
 
           });
         }
@@ -189,15 +186,39 @@ secondVlaue="";
 
     }
 
+
+    void getAddressFromLatLon(
+        double lat,double lon
+        ) async {
+      var apiKey="AIzaSyAle_QlZpymzB-DmbtpqHNrnZYyFQeNjwQ";
+      final request = "https://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lon&key=$apiKey";
+      Calls().getRequest(context, request).then((value) async {
+        if (value != null) {
+          var data = LatLongAddress.fromJson(value);
+          print(value);
+
+          setState(() {
+            controller.text=data.results![0].formattedAddress!;
+
+
+
+          });
+        }
+      }).catchError((onError) {
+
+      });
+
+    }
+
+
     _moveTo(double latitude, double longitude) async {
 
-    print(latitude.toString()+"--------------------66t78ehionrivrrvrvrvrvrvrvrv");
 
       await _controller!.animateCamera(
         CameraUpdate.newCameraPosition(
           CameraPosition(
             target: LatLng(latitude, longitude),
-            zoom: 16,
+            zoom: 17.0,
           ),
         ),
       );
@@ -235,12 +256,7 @@ secondVlaue="";
           }
 
           _debouncer.run(() async {
-            List<Placemark> placemarks = await placemarkFromCoordinates(newPosition.target.latitude, newPosition.target.longitude);
-            setState(() {
-              firstLocation=   placemarks[0].street.toString()+" ,"+ placemarks[0].administrativeArea.toString()+", "+ placemarks[0].subAdministrativeArea.toString();
-              secondVlaue=   placemarks[0].subLocality.toString()+" ,"+placemarks[0].country.toString()+"\n"+placemarks[0].postalCode.toString();
-
-            });
+            getAddressFromLatLon(newPosition.target.latitude, newPosition.target.longitude);
           });
 
 
@@ -310,10 +326,20 @@ map
                 child: Column(
                   children: [
                     SearchBox(
-                      clearText: Container(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Icon(Icons.cancel_outlined,color: HexColor(AppColors.appMainColor),size: 30,),
+                      key:searchPageKey,
+                      clearText: InkWell(
+                        onTap: (){
+                          FocusScopeNode currentFocus = FocusScope.of(context);
+                          searchPageKey.currentState!.controller.clear();
+                          if (!currentFocus.hasPrimaryFocus) {
+                            currentFocus.unfocus();
+                          }
+                        },
+                        child: Container(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Icon(Icons.cancel_outlined,color: HexColor(AppColors.appMainColor),size: 30,),
+                          ),
                         ),
                       ),
                       onvalueChanged: onsearchValueChanged,
@@ -335,16 +361,20 @@ map
                                   return InkWell(
                                     onTap: (){
                                       setState(() {
-                                        //firstLocation=predictions![index].structuredFormatting!.mainText!;
-                                        //secondVlaue=predictions![index].structuredFormatting!.secondaryText!;
+
+                                        FocusScopeNode currentFocus = FocusScope.of(context);
+                                        searchPageKey.currentState!.controller.clear();
+                                        if (!currentFocus.hasPrimaryFocus) {
+                                          currentFocus.unfocus();
+                                        }
                                         isSuggestionsVisible=false;
-                                        getLatLon(predictions![index].description!);
+                                        getLatLon(predictions![index].placeId!);
                                       });
 
                                     },
                                     child: ListTile(
                                       title: Text(predictions![index].structuredFormatting!.mainText!),
-                                      subtitle: Text(predictions![index].structuredFormatting!.secondaryText!),
+                                      subtitle: Text(predictions![index].structuredFormatting!.secondaryText??""),
                                     ),
                                   );
                                 }
@@ -371,20 +401,52 @@ map
                       child: Stack(
                         children: [
                           ListTile(
-                            title:Text(firstLocation, style: styleElements
-                                .headline6ThemeScalable(context)
-                                .copyWith(
-                                fontWeight: FontWeight.bold,
-                                color: HexColor(AppColors.appColorBlack85)),),
-                            subtitle: Text(secondVlaue,style: styleElements
-                                .subtitle2ThemeScalable(context)
+                            title:TextField(
+    controller: controller,
+    onChanged: (value) {
+      },
+maxLines: 3,
+    style: styleElements
+        .headline6ThemeScalable(context)
+        .copyWith(
+        fontWeight: FontWeight.bold,
+        color: HexColor(AppColors.appColorBlack85)),
+    decoration: InputDecoration(
+    border: InputBorder.none,
+    hintStyle:  styleElements
+        .headline6ThemeScalable(context)
+        .copyWith(
+    fontWeight: FontWeight.bold,
+    color: HexColor(AppColors.appColorBlack85)),
+
+    ),
+    )
+                            ,
+                            subtitle: TextField(
+                              controller: controller2,
+                              onChanged: (value) {
+                              },
+maxLines: 3,
+                              style: styleElements
+                                  .subtitle2ThemeScalable(context)
+                                 ,
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+
+                                hintStyle:  styleElements
+                                    .subtitle2ThemeScalable(context)
+                                  ,
+
+                              ),
                             ),),
                           Align(
                             alignment: Alignment.bottomRight,
                             child: TextButton(
                                 child: Text(AppLocalizations.of(context)!.translate("next")),
                                 onPressed: () {
-                                  print('Pressed');
+                                  Navigator.of(context).pop({
+                                    'address': controller.text.toString()
+                                  });
                                 }
                             ),
                           )

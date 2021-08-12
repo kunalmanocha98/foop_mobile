@@ -12,6 +12,7 @@ import 'package:oho_works_app/camera_module/camera_page.dart';
 import 'package:oho_works_app/components/appAvatar.dart';
 import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
+import 'package:oho_works_app/models/business_response_detail.dart';
 import 'package:oho_works_app/models/imageuploadrequestandresponse.dart';
 import 'package:oho_works_app/models/post/keywordsList.dart';
 import 'package:oho_works_app/models/post/postcreate.dart';
@@ -61,6 +62,11 @@ import 'models/basicInstituteData.dart';
 import 'models/basic_response.dart';
 
 class BasicInstituteDetails extends StatefulWidget {
+
+ final BusinessData? data;
+ final bool isEdit;
+final Function? refreshCallback;
+  const BasicInstituteDetails({Key? key, this.data,this.isEdit=false,this.refreshCallback}) : super(key: key);
   @override
   _BasicInstituteDetails createState() => new _BasicInstituteDetails();
 }
@@ -104,6 +110,8 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
   String? selectStRange;
   String? employeeRanget;
   int? selectedEpoch;
+  var cat;
+  var type;
   var mapIntType = HashMap<String?, String?>();
   var mapCategory = HashMap<String?, String?>();
   late SharedPreferences prefs;
@@ -119,7 +127,12 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
     {
       setPrefs(),
       getInstituteType(),
-        getRelationType()});
+        getRelationType(),
+    getEditData()
+
+
+
+    });
   }
 
   String quotesCharacterLength = "0";
@@ -454,11 +467,14 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
                                           onTap: () async {
                                             imagePicker("gallery");
                                           },
-                                          child:  Container(
+                                          child:  Stack(
+                                           children:[
+
+                                            Container(
                                             width: 68,
                                             height: 68,
                                             decoration: BoxDecoration(
-                                              color: HexColor(AppColors.appColorBlack10),
+                                                color: HexColor(AppColors.appColorBlack10),
                                                 borderRadius: BorderRadius.circular(8),
                                                 image: DecorationImage(
                                                     fit: BoxFit.cover,
@@ -472,6 +488,19 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
 
                                                 )
                                             ),
+
+                                          ),
+                                             Visibility(
+                                               visible: imageUrl==null ||imageUrl!.isEmpty,
+                                               child: Container(
+                                                 width: 68,
+                                                 height: 68,
+                                                 child: Center(
+                                                   child: Icon(Icons.camera_alt_outlined),
+                                                 ),
+                                               ),
+                                             )
+                                             ]
                                           )
                                         ),
                                         ),
@@ -650,8 +679,7 @@ Navigator.pop(context);
                 if(employeeRanget!=null )
                   {
 
-                    var cat;
-                    var type;
+
                     mapCategory.forEach((key, value) {
                       if(key==selectInstCategory)
                         cat=value;
@@ -669,6 +697,9 @@ Navigator.pop(context);
                     basicData.inst_cat_code=cat;
                     basicData.entity_type_code=type;
                     basicData.employeeRange=employeeRanget;
+
+                    if(widget.isEdit)
+                      basicData.businessId=widget.data!.id;
                     basicData.listOfNames=_listOfHashTags;
                     prefs.setString("instName", instituteNameC.text.toString());
                     print(jsonEncode(basicData));
@@ -678,22 +709,58 @@ Navigator.pop(context);
                     }
                     final body = jsonEncode(basicData);
                     Calls()
-                        .call(body, context, Config.BASIC_INSTITUTE_REGISTER)
+                        .call(body, context,widget.isEdit?Config.BASIC_BUSINESS_EDIT: Config.BASIC_INSTITUTE_REGISTER)
                         .then((value) async {
                       if (value != null) {
 
                         var resposne = BasicDataResponse.fromJson(value);
                         if (resposne.statusCode == Strings.success_code) {
-                          prefs.setString(Strings.registeredInstituteName, basicData.name??"");
-                          prefs.setString(Strings.registeredInstituteImage, imageUrl??"");
-                          prefs.setInt("createdSchoolId", resposne.rows!.institutionId!);
-                          prefs.setString("create_entity", "Domain");
 
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => DomainPage(resposne.rows!.institutionId!),
-                              ));
+
+                          if(widget.refreshCallback!=null)
+                            widget.refreshCallback!();
+                          if(!widget.isEdit){
+                            prefs.setString(Strings.registeredInstituteName, basicData.name??"");
+                            prefs.setString(Strings.registeredInstituteImage, imageUrl??"");
+                            prefs.setInt("createdSchoolId", resposne.rows!.institutionId!);
+
+                            prefs.setString("create_entity", "Domain");
+
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => DomainPage(
+                                      callBack:(){
+                                        Navigator.pop(context);
+
+                                      },
+
+
+                                      instId:resposne.rows!.institutionId!,isEdit:widget.isEdit),
+                                ));
+                          }
+                          else
+                            {
+
+
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => DomainPage(
+
+                                      refreshCallback: widget.refreshCallback,
+                                        callBack:(){
+
+
+                                          Navigator.pop(context);
+
+                                        },
+
+data:widget.data,
+                                        instId:widget.data!.id,isEdit:widget.isEdit),
+                                  ));
+                            }
+
                         }
                       }
                     }).catchError((onError) async {
@@ -734,6 +801,36 @@ Navigator.pop(context);
 
 
 
+
+  void getEditData()
+  {
+    if(widget.data!=null)
+      {
+        if(widget.data!.profile_image!=null)
+          imageUrl=widget.data!.profile_image!;
+
+        if(widget.data!.name!=null)
+          instituteNameC.text=widget.data!.name!;
+
+        if(widget.data!.businessType!=null) {
+          type=widget.data!.businessType!;
+        selectInstType = widget.data!.businessType!;
+      }
+
+      if(widget.data!.businessCategory!=null) {
+        cat=widget.data!.businessCategory!;
+        selectInstCategory = widget.data!.businessCategory!;
+      }
+
+        if(widget.data!.noOfEmployees!=null) {
+
+          employeeRanget = widget.data!.noOfEmployees!;
+        }
+
+      if(widget.data!.description!=null)
+          descriptionController.text=widget.data!.description!;
+      }
+  }
   void getInstituteType() async {
     final body = jsonEncode({"type":"BUSCAT"});
     Calls().call(body, context, Config.DICTIONARYLIST).then((value) async {

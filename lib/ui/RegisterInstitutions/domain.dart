@@ -6,6 +6,7 @@ import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/components/app_buttons.dart';
+import 'package:oho_works_app/models/business_response_detail.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
@@ -23,11 +24,15 @@ import 'models/basic_response.dart';
 // ignore: must_be_immutable
 class DomainPage extends StatefulWidget {
   int? instId;
+  bool isEdit;
+  Function ? callBack;
+   BusinessData? data;
+  final Function? refreshCallback;
   @override
   _DomainPage createState() =>
       new _DomainPage(instId);
 
-  DomainPage(this.instId);
+  DomainPage({this.instId, this.isEdit = false,this.callBack,this.data,this.refreshCallback});
 }
 
 class _DomainPage extends State<DomainPage>
@@ -72,7 +77,7 @@ class _DomainPage extends State<DomainPage>
   String? selectCountry;
 
   String? selectStRange;
-
+int? id;
   String? selectTecRange;
   int? selectedEpoch;
 
@@ -89,7 +94,24 @@ class _DomainPage extends State<DomainPage>
   void setSharedPreferences() async {
     prefs = await SharedPreferences.getInstance();
 
+    getEditData();
+
   }
+
+  void getEditData() async {
+
+    if(widget.data!=null && widget.data!.businessDomains!=null && widget.data!.businessDomains!.isNotEmpty)
+      {
+        domainController.text=widget.data!.businessDomains![0].domainName!;
+        id=widget.data!.businessDomains![0].id;
+      }
+
+
+
+
+
+  }
+
   String quotesCharacterLength = "0";
   bool isLoading=false;
   @override
@@ -142,7 +164,7 @@ class _DomainPage extends State<DomainPage>
             // resizeToAvoidBottomInset: false,
               appBar: appAppBar().getCustomAppBar(context,
                   appBarTitle: AppLocalizations.of(context)!.translate('reg_bus'),
-                  isIconVisible:false,
+                  isIconVisible:widget.isEdit,
                   actions: [
 
                     Padding(
@@ -156,13 +178,23 @@ class _DomainPage extends State<DomainPage>
                           {submit();}
                           else
                           {
+
                             prefs.setString("create_institute", "Contact");
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
                                     builder: (BuildContext
                                     context) =>
-                                        ContactsDetailsPageInstitute(instId)));
+                                        ContactsDetailsPageInstitute(
+                                          refreshCallback: widget.refreshCallback,
+                                          data:widget.data,
+                                          instId:instId,isEdit:widget!.isEdit,callBack: (){
+
+                                          Navigator.pop(context);
+                                          if(widget.callBack!=null)
+                                            widget.callBack!();
+
+                                        },)));
                           }
 
                         },
@@ -317,6 +349,8 @@ class _DomainPage extends State<DomainPage>
 
   // ignore: missing_return
   Future<bool> _onBackPressed() {
+    if(widget.isEdit)
+      Navigator.pop(context);
     return new Future(() => false);
   }
 
@@ -327,10 +361,11 @@ setState(() {
 });
     final body = jsonEncode({
       "business_id": instId,
+      "id": id,
       "domain_name": domainController.text
     });
     Calls()
-        .call(body, context, Config.ADD_DOMAIN_INSTITUTE)
+        .call(body, context, widget.isEdit?Config.EDIT_DOMAIN:Config.ADD_DOMAIN_INSTITUTE)
         .then((value) async {
 
       if (value != null) {
@@ -339,14 +374,26 @@ setState(() {
         });
         var resposne = BasicDataResponse.fromJson(value);
         if (resposne.statusCode == Strings.success_code) {
-
+          if(widget.refreshCallback!=null)
+            widget.refreshCallback!();
           prefs.setString("create_institute", "Contact");
           Navigator.push(
               context,
               MaterialPageRoute(
                   builder: (BuildContext
                   context) =>
-                      ContactsDetailsPageInstitute(instId)));
+                      ContactsDetailsPageInstitute(
+                          data:widget.data,
+                          refreshCallback: widget.refreshCallback,
+                          instId:instId,isEdit: widget.isEdit,callBack: (){
+
+
+                        Navigator.pop(context);
+                        if(widget.callBack!=null) {
+
+                              widget.callBack!();
+                            }
+                          })));
         }
       }
     }).catchError((onError) async {

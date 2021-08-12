@@ -8,7 +8,12 @@ import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/conversationPage/base_response.dart';
 import 'package:oho_works_app/models/CalenderModule/event_create_models.dart';
+import 'package:oho_works_app/models/RegisterUserAs.dart';
+import 'package:oho_works_app/models/base_res.dart';
+import 'package:oho_works_app/models/business_response_detail.dart';
 import 'package:oho_works_app/models/language_list.dart';
+import 'package:oho_works_app/models/location_reponse_data.dart';
+import 'package:oho_works_app/models/register_user_as_response.dart';
 import 'package:oho_works_app/profile_module/pages/directions.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
@@ -35,9 +40,12 @@ import 'models/states.dart';
 class InstituteLocationAddressPage extends StatefulWidget {
   int? instId;
   bool isEvent;
+  Function ? callBack;
   EventLocation? offlineLocation;
-
-  InstituteLocationAddressPage(this.instId,{this.isEvent=false,this.offlineLocation});
+bool isEdit;
+  final Function? refreshCallback;
+  BusinessData? data;
+  InstituteLocationAddressPage({this.instId,this.isEvent=false,this.offlineLocation,this.isEdit=false,this.callBack,this.data,this.refreshCallback});
 
   @override
   _InstituteLocationAddressPage createState() =>
@@ -53,7 +61,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
   bool? isEvent;
   var range = <String>[];
   var rangeStudent = <String>[];
-
+  TextEditingController controller2 = TextEditingController();
   var instituteTypelist = <String>[];
   var relationship = <String?>[];
   var mapCountry = HashMap<String, String>();
@@ -73,7 +81,8 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
 
    bool isLoading=false;
   String? selectState;
-
+  var country;
+  var state;
   String? selectCountry = "Select Country";
 
   String? selectStRange;
@@ -85,7 +94,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
   EventLocation? offlineLocation;
 
 
-  _InstituteLocationAddressPage(this.instId, {this.isEvent,this.offlineLocation});
+  _InstituteLocationAddressPage(this.instId, {this.isEvent=false,this.offlineLocation});
 
   @override
   void initState() {
@@ -97,6 +106,33 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
     super.initState();
     getInstituteType();
     setSharedPreferences();
+    getEditData();
+    WidgetsBinding.instance!.addPostFrameCallback((_) =>
+
+
+        getDataLocation());
+  }
+
+
+ void  getEditData()
+  {
+    if(widget.data!=null)
+      {
+        if(widget.data!.businessAddressCountry!=null)
+          {
+            selectCountry=widget.data!.businessAddressCountry!;
+            country=widget.data!.businessAddressCountry!;
+          }
+
+        if(widget.data!.businessAddressRegion!=null)
+        {selectState=widget.data!.businessAddressRegion!;
+          state=widget.data!.businessAddressRegion!;
+        }
+
+
+
+      }
+
   }
   void setSharedPreferences() async {
     prefs = await SharedPreferences.getInstance();
@@ -104,7 +140,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
 
   }
   String quotesCharacterLength = "0";
-
+  String addresses="address";
   @override
   Widget build(BuildContext context) {
     this.context = context;
@@ -160,39 +196,15 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
             ),
           )),
     ));
-    final address = TextFormField(
-      controller: addController,
-      textCapitalization: TextCapitalization.words,
-      keyboardType: TextInputType.multiline,
-      maxLines: null,
-      onChanged: (text) {
-        setState(() {
-          quotesCharacterLength = text.length.toString();
-        });
-      },
-      inputFormatters: [
-        new LengthLimitingTextInputFormatter(200),
-      ],
-      style: styleElements
-          .subtitle1ThemeScalable(context).copyWith(
-          color: HexColor(AppColors.appColorBlack65)),
-      scrollPadding:
-          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-      decoration: InputDecoration(
-          border: InputBorder.none,
-          focusedBorder: InputBorder.none,
-          enabledBorder: InputBorder.none,
-          errorBorder: InputBorder.none,
-          disabledBorder: InputBorder.none,
-          contentPadding: EdgeInsets.fromLTRB(8.0, 0.0, 8.0, 0.0),
-          hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
-          hintText: AppLocalizations.of(context)!.translate('address')),
-    );
+
     styleElements = TextStyleElements(context);
 
 
     final country = GestureDetector(
       onTap: () async {
+
+
+
         var result = await Navigator.push(
             context,
             MaterialPageRoute(
@@ -201,7 +213,9 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
         if (result != null) {
           LanguageItem languageItem = result["result"] as LanguageItem;
           selectCountry = languageItem.languageName;
-          setState(() {});
+          setState(() {
+            selectState=null;
+          });
           getRelationType(languageItem.languageCode);
         }
       },
@@ -231,28 +245,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
       ),
     )
 
-        /*DropdownButtonFormField(
-      value: null,
-      isExpanded: true,
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 2.0.w, 15.0.h)),
-      hint: Padding(
-        padding: const EdgeInsets.only(left: 0),
-        child: Text(
-          selectCountry ?? "Country",
-          style: styleElements.bodyText2ThemeScalable(context),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-      ),
-      items: _getInstituteType(),
-      onChanged: (value) {
-        setState(() {
-          selectCountry = value ?? selectCountry;
-          getCountryCode(selectCountry);
-        });
-      },
-    )*/
+
         ;
 
     final state = DropdownButtonFormField<dynamic>(
@@ -288,7 +281,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
                   appBarTitle: isEvent! ?
                   AppLocalizations.of(context)!.translate('register__entity'):
                   AppLocalizations.of(context)!.translate('reg_bus'),
-                  isIconVisible:isEvent,
+                  isIconVisible:isEvent!||widget.isEdit,
                   actions: [
 
                     Padding(
@@ -348,24 +341,8 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
                                               fontWeight: FontWeight.bold),
                                     ),
                                   )),
-                              /*  Align(
-                                  alignment: Alignment.center,
-                                  child: Container(
-                                    margin: EdgeInsets.only(
-                                        left: 8.w, right: 8.w, bottom: 8.h),
-                                    child: selectMap,
-                                  )),*/
-                              InkWell(
-                                onTap: (){
-
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => MapPage(
-                                          ),
-                                      ));
-                                },
-                                child: Container(
+                              Stack(
+                                children: [Container(
                                     height: 150,
                                     width: double.infinity,
                                     margin: const EdgeInsets.only(
@@ -375,11 +352,54 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
                                           color: HexColor(AppColors.appColorGrey500),
                                         ),
                                         borderRadius:
-                                            BorderRadius.all(Radius.circular(8))),
+                                        BorderRadius.all(Radius.circular(8))),
                                     child: Padding(
                                       padding: const EdgeInsets.all(16.0),
-                                      child: Text("Address"),
+                                      child: TextField(
+                                        controller: controller2,
+                                        onChanged: (value) {
+                                        },
+                                        maxLines: 3,
+                                        style: styleElements
+                                            .subtitle2ThemeScalable(context)
+                                        ,
+                                        decoration: InputDecoration(
+                                          border: InputBorder.none,
+hintText: addresses,
+                                          hintStyle:  styleElements
+                                              .subtitle2ThemeScalable(context)
+                                          ,
+
+                                        ),
+                                      ),
                                     )),
+                                  Container(
+                                    height: 160,
+                                    width: double.infinity,
+                                    child: Align(
+                                      alignment: Alignment.bottomRight,
+                                      child: FloatingActionButton(
+                                          backgroundColor: HexColor(AppColors.appMainColor),
+                                          child: Icon(Icons.location_on_outlined),
+
+                                          onPressed: () async {
+                                            var result=await   Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) => MapPage(
+                                                  ),
+                                                ));
+
+                                            if (result != null) {
+                                              if (result["address"] != null)
+                                                controller2.text = result["address"];
+
+                                              setState(() {});
+                                            }
+                                          }),
+                                    ),
+                                  ),
+                                ],
                               ),
                               Align(
                                   alignment: Alignment.center,
@@ -454,6 +474,8 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
       });
       Calls().calWithoutToken(body, context, Config.STATES).then((value) async {
         if (value != null) {
+          relationship.clear();
+          mapState.clear();
           var data = States.fromJson(value);
           for (var item in data.rows!) {
             relationship.add(item.name);
@@ -468,10 +490,42 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
     }
   }
 
+
+  getDataLocation() async {
+    var body = jsonEncode({"business_id": instId});
+
+    if(widget.isEdit)
+    {
+      Calls().call(body, context, Config.LOCATION_DETAILS).then((value) {
+        var res = LocationDetailsResponse.fromJson(value);
+        if (res.statusCode == Strings.success_code) {
+          if (res.rows != null && res.rows!.isNotEmpty) {
+            if (res.rows![0].country != null) {
+              getRelationType(res.rows![0].country);
+            }
+
+            if (res.rows![0].streetAddress != null)
+              controller2.text = res.rows![0].streetAddress!;
+
+            if (res.rows![0].postalCode != null)
+              pinController.text = res.rows![0].postalCode!;
+
+            if (res.rows![0].city != null)
+              cityMapController.text = res.rows![0].city!;
+
+            setState(() {});
+          }
+        }
+      });
+    }
+  }
+
   void submit(BuildContext ctx) async {
     setState(() {
       isLoading=true;
     });
+    if (selectCountry!=null && selectCountry!.isNotEmpty)
+
     if (selectCountry!=null && selectCountry!.isNotEmpty)
     {
         if (selectState!=null && selectState!.isNotEmpty)
@@ -479,8 +533,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
           if (pinController.text.trim().isNotEmpty) {
             if (cityMapController.text.trim().isNotEmpty) {
               {
-                var country;
-                var state;
+
                 mapCountry.forEach((key, value) {
                   if (key == selectCountry) country = value;
                 });
@@ -491,7 +544,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
                 if(!isEvent!) {
                   InstituteLocationDetail instituteContactDetail = InstituteLocationDetail();
                   instituteContactDetail.institutionId = instId;
-                  instituteContactDetail.address = addController.text;
+                  instituteContactDetail.address = controller2.text;
                   instituteContactDetail.country = country;
                   instituteContactDetail.state = state;
                   instituteContactDetail.postalCode = pinController.text;
@@ -502,7 +555,7 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
 
                   Calls()
                       .call(jsonEncode(instituteContactDetail), context,
-                      Config.INSTITUTE_ADDRESS)
+                     widget.isEdit?Config.EDIT_LOCATION: Config.INSTITUTE_ADDRESS)
                       .then((value) async {
                     setState(() {
                       isLoading = false;
@@ -510,10 +563,26 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
                     if (value != null) {
                       var data = BaseResponse.fromJson(value);
                       if (data.statusCode == Strings.success_code) {
+
+                        if(widget.refreshCallback!=null)
+                          widget.refreshCallback!();
+                        if(!widget.isEdit) {
                         prefs.setString("create_entity", "created");
 
-                        Navigator.of(context)
-                            .pushNamedAndRemoveUntil('/selectBusiness', (Route<dynamic> route) => false);
+register();
+
+
+                      }
+                        else
+                          {
+
+
+                              Navigator.pop(context);
+                              if(widget.callBack!=null)
+                                widget.callBack!();
+
+
+                          }
                       /*  Navigator.push(
                             context,
                             MaterialPageRoute(
@@ -587,6 +656,42 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
           HexColor(AppColors.information));
     }
 
+
+  }
+
+  void register() async {
+
+    RegisterUserAs registerUserAs =RegisterUserAs();
+
+    registerUserAs.personId = prefs!.getInt(Strings.userId);
+    registerUserAs.institutionId = instId;
+    final body = jsonEncode(registerUserAs);
+
+    Calls().call(body, context, Config.REGISTER_USER_AS).then((value) async {
+      if (value != null) {
+        var data = RegisterUserAsResponse.fromJson(value);
+        print(data.toString());
+        if (data.statusCode == "S10001") {
+          prefs!.setBool("isProfileCreated", true);
+
+          Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(
+                  builder: (context) => DilaogPage(
+                      type: "admin",
+                      isVerified: true,
+                      title: AppLocalizations.of(context)!
+                          .translate('you_are_added_as') +
+                          "Employee  of",
+                      subtitle: (data.rows!.institutionName!))),
+                  (Route<dynamic> route) => false);
+        } else
+          ToastBuilder().showToast(
+              data.message!, context, HexColor(AppColors.information));
+      }
+    }).catchError((onError) async {
+      ToastBuilder().showToast(
+          onError.toString(), context, HexColor(AppColors.information));
+    });
 
   }
 }

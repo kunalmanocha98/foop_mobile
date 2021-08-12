@@ -22,7 +22,14 @@
     {
       "title": "Team",
       "data": [
-
+        {
+          "title": "Test business",
+          "code": "business",
+          "imageUrl": "assets/appimages/create-invitation.png",
+          "tag": "",
+          "description": "Test institute",
+          "isTagVisivle": false
+        },
 
         {
           "title": "Invite friends",

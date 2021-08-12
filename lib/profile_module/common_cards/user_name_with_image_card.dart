@@ -45,14 +45,17 @@ class UserNameWithImageCard extends StatelessWidget {
   bool showQr;
   bool? showProgress;
   int? progress;
-
+Function? editCallBack;
+bool? isAdmin;
   UserNameWithImageCard(
       {Key? key,
         this.personData,
+        this.isAdmin,
         required this.title,
         required this.subtitle,
         required this.isFollow,
         required this.imageUrl,
+        this.editCallBack,
         required this.callbackPicker,
         this.onClickProfile,
         this.thirdPersonId,
@@ -255,9 +258,12 @@ class UserNameWithImageCard extends StatelessWidget {
           visible: !showQr,
           child: Container(
             margin: EdgeInsets.only(right: 16.h),
-            child: userType == "person"
+            child: userType == "person" ||isAdmin!
                 ? appElevatedButton(
                 onPressed: () async {
+
+                  if(isAdmin!)
+           editCallBack!();
                   if (userType == "person") {
                     Navigator.push(
                         context,
@@ -269,7 +275,7 @@ class UserNameWithImageCard extends StatelessWidget {
 
                 },
                 color:  HexColor(AppColors.appMainColor),
-                child: isPersonProfile!
+                child: isPersonProfile!||isAdmin!
                     ? Text(
                   AppLocalizations.of(context)!.translate('edit'),
                   style: styleElements

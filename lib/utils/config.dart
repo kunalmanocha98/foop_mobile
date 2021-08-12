@@ -30,7 +30,7 @@ class Config {
   static String COURSE_LIST = BASE_URL + '/api/v1/standard/course/list';
   static String PERSONAL_PROFILE = BASE_URL + '/api/v1/user/profile/';
   static String INSTITUTE_DETAILS = BASE_URL +
-      '/api/v1/business/detail';
+      '/api/v1/business/details';
   static String INSTITUTE_CLASSES =
       BASE_URL + '/api/v1/business/class/list';
   static String PERSON_LIST =
@@ -448,8 +448,16 @@ class Config {
   static String EMAIL_FORGOT_PASSWORD_OTP = BASE_URL_MAIL + '/api/v1/email/forgot-password-otp';
   static String EMAIL_MOVE_FOLDER = BASE_URL_MAIL + '/api/v1/email/move';
   static String EMAIL_DELETE = BASE_URL_MAIL + '/api/v1/email/delete';
-  static String BUSINESS_ACCOUNTING_REGISTER= BASE_URL + '/api/v1/business/accounting/register';
-  static String BUSINESS_ACCOUNTING_EDIT= BASE_URL + '/api/v1/business/accounting/edit';
+
+
+  static String BUSINESS_ACCOUNTING_REGISTER= BASE_URL_MAIL + '/api/v1/business/accounting/register';
+  static String BUSINESS_ACCOUNTING_EDIT= BASE_URL_MAIL + '/api/v1/business/accounting/edit';
+  static String BASIC_BUSINESS_EDIT=BASE_URL+'/api/v1/business/basic/edit';
+  static String EDIT_DOMAIN=BASE_URL+'/api/v1/business/domain/update';
+  static String EDIT_CONTACTS=BASE_URL+'/api/v1/business/contact/register/';
+
+   static String EDIT_LOCATION=BASE_URL+'/api/v1/business/location/edit';
+  static String LOCATION_DETAILS=BASE_URL+'/api/v1/business/location/detail';
 
 
 

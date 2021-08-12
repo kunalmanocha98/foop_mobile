@@ -2,6 +2,7 @@ import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/models/base_res.dart';
 import 'package:oho_works_app/models/personal_profile.dart';
 import 'package:oho_works_app/profile_module/pages/basic_profile.dart';
+import 'package:oho_works_app/profile_module/pages/profile_page.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/colors.dart';
 import 'package:oho_works_app/utils/hexColors.dart';
@@ -54,12 +55,22 @@ String? type;
       onTap: () async {
         if(type=="person")
           {
-            var result = await Navigator.push(context,
+
+
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => UserProfileCards(type: "departments",
+                      userType: type,
+                      userId: userId,
+                      currentPosition: 2),
+                ));
+            /*var result = await Navigator.push(context,
                 MaterialPageRoute(builder: (context) => BasicInfo(persondata,callback)));
 
             if (result != null && result['result'] == "success") {
               callback!();
-            }
+            }*/
           }
 
       },

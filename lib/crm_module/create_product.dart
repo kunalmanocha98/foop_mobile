@@ -150,7 +150,7 @@ class CreateProductPageState extends State<CreateProductPage> {
                       isScrollControlled: true,
                       builder: (context) {
                         return BottomSheetAddress(
-                          prefs: prefs,
+
                           onClickCallback: (value) {
 
                           },

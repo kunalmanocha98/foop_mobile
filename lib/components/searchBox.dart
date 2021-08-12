@@ -124,7 +124,7 @@ class SearchBoxState extends State<SearchBox> {
                       ),
                     ),
 
-                    Visibility(visible:widget.clearText!=null ,
+                    Visibility(visible:widget.clearText!=null&& controller.text.length>=1 ,
 
                     child: widget.clearText??Container()),
                     Visibility(

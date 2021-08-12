@@ -154,7 +154,7 @@ class CreateContactPageState extends State<CreateContactPage> {
                       isScrollControlled: true,
                       builder: (context) {
                         return BottomSheetAddress(
-                          prefs: prefs,
+
                           onClickCallback: (value) {
 
                           },

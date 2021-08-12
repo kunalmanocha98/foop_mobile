@@ -59,7 +59,7 @@ class SelectEventLocationPageState extends State<SelectEventLocationPage> {
     final locationWidget = ListTile(
       onTap: (){
         Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-          return InstituteLocationAddressPage(0,isEvent: true,offlineLocation: offlineLocation,);
+          return InstituteLocationAddressPage(instId:0,isEvent: true,offlineLocation: offlineLocation,);
           // return InstituteLocationAddressPage(prefs.getInt(Strings.instituteId));
         })).then((value){
           if(value!=null){
