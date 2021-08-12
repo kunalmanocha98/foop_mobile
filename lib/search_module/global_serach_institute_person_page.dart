@@ -77,7 +77,7 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
   List<SearchTypeItem> personList = [];
   List<PostListItem> postList = [];
   List<EventListItem> eventList = [];
-  List<SearchTypeItem> institutionList = [];
+  List<SearchTypeItem> businessList = [];
   List<RoomListItem> roomsList = [];
   GlobalSearchResponseModel? globalSearchResponseModel;
   int pageCount = 1;
@@ -97,7 +97,7 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
   @override
   Widget build(BuildContext context) {
     styleElements = TextStyleElements(context);
-    return type == "person" || type == "institution"
+    return type == "person" || type == "business"
         ? appListCard(
         child: Paginator.listView(
           key: paginatorKey,
@@ -105,7 +105,7 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
           pageItemsGetter: getterItem,
           listItemBuilder: type == "all"
               ? Container() as Widget Function(dynamic, int)
-              : type == "person" || type == "institution"
+              : type == "person" || type == "business"
               ? listItemGetter
               : type == "post"
               ? listItemBuilderPost
@@ -142,7 +142,7 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
       getterItem,
       listItemBuilder: type == "all"
           ? Container() as Widget Function(dynamic, int)
-          : type == "person" || type == "institution"
+          : type == "person" || type == "business"
           ? listItemGetter
           : type == "post"
           ? listItemBuilderPost
@@ -168,7 +168,7 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
 
       listItemBuilder: type == "all"
           ? Container() as Widget Function(dynamic, int)
-          : type == "person" || type == "institution"
+          : type == "person" || type == "business"
           ? listItemGetter
           : type == "post"
           ? listItemBuilderPost
@@ -186,7 +186,7 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
   List<EventListItem>? getterItem(dynamic response) {
         type == "all"
         ?  listItemsAll as List<EventListItem>
-        : type == "person" || type == "institution"
+        : type == "person" || type == "business"
         ? listItemsGetter
         : type == "post"
         ? listItemsGetterPost
@@ -225,8 +225,8 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
       personList.addAll(pageData.rows!.person!);
       return pageData.rows!.person;
     } else {
-      institutionList.addAll(pageData.rows!.institution!);
-      return pageData.rows!.institution;
+      businessList.addAll(pageData.rows!.business!);
+      return pageData.rows!.business;
     }
   }
 
@@ -263,7 +263,7 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
                           ? (item.id == prefs!.getInt("userId")
                           ? "person"
                           : "thirdPerson")
-                          : "institution",
+                          : "business",
                       userId:
                       item.id == prefs!.getInt("userId") ? null : item.id,
                       callback: () {},
@@ -291,7 +291,7 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
             if (type == 'person') {
               personList[index].isFollowing = true;
             } else {
-              institutionList[index].isFollowing = true;
+              businessList[index].isFollowing = true;
             }
             if (this.mounted) setState(() {});
           },
@@ -581,14 +581,14 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
                 widget.seeMoreCallBack!(1);
               },
             ),
-          if (item.institution!.isNotEmpty)
+          if (item.business!.isNotEmpty)
             SearchTypeCard(
               prefs: prefs,
-              typeList: item.institution!.length > 4
-                  ? item.institution!.sublist(0, 3)
-                  : item.institution,
-              type: "institution",
-              title: "Institution",
+              typeList: item.business!.length > 4
+                  ? item.business!.sublist(0, 3)
+                  : item.business,
+              type: "business",
+              title: "business",
               seeMoreCallback: (type) {
                 widget.seeMoreCallBack!(2);
               },
@@ -976,7 +976,7 @@ class GlobalSeachState extends State<GlobalSearchPersonInstitutePage> {
   }
 
   void setSearchVal(String searchVal) {
-    print("heree----------------------------------------------------");
+
     this.searchVal = searchVal;
     refresh();
   }

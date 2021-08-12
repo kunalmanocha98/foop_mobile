@@ -121,7 +121,7 @@
 	"child_detail": "Child's detail",
 	"child_mobile": "Phone number of your child",
 	"choose_currency": "Choose your currency",
-	"circle": "Circle",
+	"circle": "My Team",
 	"city_req": "City name required",
 	"company_req": "Company  name required",
 	"city_town": "City/Town/Street*",
@@ -834,7 +834,24 @@
 	"teacher_inst": "1. In case you did not receive a code from your company, you may continue with setup by clicking on “Do not have a code?” \n \n  2. However, your profile will be activated only after it is approved by the company. \n \n 3. You may send a WhatsApp reminder to your company at the end of the setup.",
 	"teacher_intro_desc": "Staff can interact with Teams' directly",
 	"teacher_intro_subtitle": "Teams are the source of enormous knowledge",
-	"teacher_intro_title": "Connect with Teams",
+	"intro_1_title": "One APP, everything business",
+	"intro_1_subtitle": "All APPs that you need for your business, in one APP.",
+	"intro_1_des": "Handle the basic but crucial business functions, communication, collaboration, productivity, orders, pricing, logistics from anywhere with just one app",
+
+
+	"intro_2_title": "Get more done, faster, from anywhere",
+	"intro_2_subtitle": "Enhance team potential with tools & flexibility.",
+	"intro_2_des": "Enable communication & collaboration for teams to work from anywhere. Focus on the work, allow for the true potential to shine through",
+
+	"intro_3_title": "Get more done, faster, from anywhere",
+	"intro_3_subtitle": "Stay in touch, easily manage business from anywhere",
+	"intro_3_des": "Enable communication & collaboration for teams to work from anywhere. Focus on the work, allow for the true potential to shine through",
+
+
+
+
+
+
 	"teacher_no_email": "Your Email ID is not registered with the company. So please enter your code provided by your company.",
 	"teacher_range": "Staff count",
 	"teacher_sub_info": "Select the subjects that you are working. You can update past details after setting up.",

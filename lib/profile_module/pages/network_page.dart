@@ -89,10 +89,8 @@ class NetworkPageState extends State<NetworkPage> with SingleTickerProviderState
     list.add(CustomTabMaker(statelessWidget: AllTabsNetwork(pageTitle,type,id,ownerId,ownerType,callback), tabName: AppLocalizations.of(context)!.translate('all')));
     list.add(CustomTabMaker(statelessWidget: FollowingSuggestionsPage(pageTitle,type,id,ownerId,ownerType,callback), tabName: AppLocalizations.of(context)!.translate('following')));
     list.add(CustomTabMaker(statelessWidget: FollowersSuggestionsPage(pageTitle,type,id,ownerId,ownerType,callback), tabName: AppLocalizations.of(context)!.translate('followers')));
-    list.add(new CustomTabMaker(statelessWidget: new CommonListingPageNetwork("T"), tabName: AppLocalizations.of(context)!.translate('teachers')));
-    list.add(new CustomTabMaker(statelessWidget: new CommonListingPageNetwork("P"), tabName: AppLocalizations.of(context)!.translate('parents')));
-    list.add(new CustomTabMaker(statelessWidget: new CommonListingPageNetwork("S"), tabName: AppLocalizations.of(context)!.translate('student')));
-    list.add(new CustomTabMaker(statelessWidget:new  CommonListingPageNetwork("L"), tabName: AppLocalizations.of(context)!.translate('alumni')));
+    list.add(new CustomTabMaker(statelessWidget: new CommonListingPageNetwork(""), tabName: ""));
+
     setState(() {
       _tabController = TabController(vsync: this, length: list.length);
       _tabController.addListener(onPositionChange);

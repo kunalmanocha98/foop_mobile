@@ -4,7 +4,6 @@ import 'package:oho_works_app/models/personal_profile.dart';
 import 'package:oho_works_app/profile_module/common_cards/about_profile_card.dart';
 import 'package:oho_works_app/profile_module/common_cards/account_detail_card.dart';
 import 'package:oho_works_app/profile_module/common_cards/art_and_photography.dart';
-import 'package:oho_works_app/profile_module/common_cards/bio_card.dart';
 import 'package:oho_works_app/profile_module/common_cards/card_courses_detail.dart';
 import 'package:oho_works_app/profile_module/common_cards/club_and_socities.dart';
 import 'package:oho_works_app/profile_module/common_cards/club_detail_card.dart';

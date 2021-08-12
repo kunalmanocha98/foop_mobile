@@ -155,6 +155,9 @@ flutter:
     - assets/invite.json
     - assets/menulist.json
     - assets/reportabuselist.json
+    - assets/appimages/splash2.png
+    - assets/appimages/splash3.png
+    - assets/appimages/splash1.png
     - assets/menulist_new.json
     - assets/appimages/
     - assets/appimages/otp.jpg

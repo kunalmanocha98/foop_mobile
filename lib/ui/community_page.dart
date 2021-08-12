@@ -337,7 +337,7 @@ class _CommunityPage extends State<CommunityPage>
 
 
       );
-    if(type!="room")
+
     list.add(PopupMenuItem(
         enabled: true,
         value: type == "room" ? "public" : "follower",

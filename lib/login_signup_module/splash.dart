@@ -173,6 +173,7 @@ class _SplashScreenState extends State<SplashScreen> {
         log(response.rows!.toJson().toString());
         checkVersion(packageInfo, response.rows);
       } else {
+
         navigationPage(context);
       }
     }).catchError((onError) {
