@@ -80,8 +80,8 @@ class AppMenuPageState extends State<AppMenuPage> {
   bool cb1 = false, cb2 = false;
   List<MenuListItemNew>? menuList = [];
   int? selectedRadio;
-  SharedPreferences? prefs = locator<SharedPreferences>();
   List<Institutions> institutionList = [];
+  SharedPreferences? prefs = locator<SharedPreferences>();
   int i = 0;
   bool seeMore = false;
   PackageInfo? packageInfo;

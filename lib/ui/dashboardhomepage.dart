@@ -4,6 +4,8 @@ import 'dart:ui';
 
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/api_calls/logout_api.dart';
+import 'package:oho_works_app/components/appAvatar.dart';
+import 'package:oho_works_app/components/app_user_list_tile.dart';
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/components/customgridDelegate.dart';
 import 'package:oho_works_app/components/app_bottom_selector.dart';
@@ -944,6 +946,38 @@ BuildContext? dgsContext;
     );
   }
   Widget _panel(ScrollController sc) {
+    List<Institutions> institutionList = [];
+    SharedPreferences? prefs = locator<SharedPreferences>();
+    int i = 0;
+    Map<String, dynamic> map =
+    json.decode(prefs.getString("basicData") ?? "");
+    rows = Persondata.fromJson(map);
+    if (rows != null) {
+      if (i == 0) {
+        i = 1;
+        institutionList.clear();
+        if (rows != null) {
+          for (int i = 0; i < rows!.institutions!.length; i++) {
+            if (institutionList.any((element) {
+              return element.name == rows!.institutions![i].name;
+            })) {
+              Institutions institutions = institutionList.firstWhere((element) {
+                return element.name == rows!.institutions![i].name;
+              });
+              var index = institutionList.indexOf(institutions);
+              if (institutionList[index].role != rows!.institutions![i].role) {
+                institutionList[index].role = institutionList[index].role! +
+                    ', ' +
+                    rows!.institutions![i].role!;
+              }
+            } else {
+              institutionList.add(rows!.institutions![i]);
+            }
+          }
+        }
+      }
+    }
+
 
     return MediaQuery.removePadding(
         context: context,
@@ -1137,17 +1171,17 @@ BuildContext? dgsContext;
                                 clicked: null,
                                 showQr: true,
                                 instId:
-                                prefs!=null? prefs!.getInt(Strings.instituteId).toString():"",
-                                title: prefs!=null?prefs!.getString(Strings.userName)??"--":"",
+                                prefs!=null? prefs.getInt(Strings.instituteId).toString():"",
+                                title: prefs!=null?prefs.getString(Strings.userName)??"--":"",
                                 isUserVerified:
                                 rows != null ? rows!.isVerified : false,
                                 ownerTye: prefs != null
-                                    ? prefs!.getString("ownerType")
+                                    ? prefs.getString("ownerType")
                                     : "",
                                 userType: 'person',
                                 userId:
-                                prefs != null ? prefs!.getInt("userId") : null,
-                                thirdPersonId: prefs!=null?prefs!.getInt(Strings.userId):0,
+                                prefs != null ? prefs.getInt("userId") : null,
+                                thirdPersonId: prefs!=null?prefs.getInt(Strings.userId):0,
                                 subtitle: rows != null ? rows!.userName ?? "" : "",
                                 isFollow: false,
                                 isPersonProfile: true,
@@ -1166,7 +1200,7 @@ BuildContext? dgsContext;
                                           )));
                                 },
                                 imageUrl: Utility().getUrlForImage(
-                                    prefs!=null?  prefs!.getString(Strings.profileImage):"",
+                                    prefs!=null?  prefs.getString(Strings.profileImage):"",
                                     RESOLUTION_TYPE.R64,
                                     SERVICE_TYPE.PERSON),
                                 imagePath: null,
@@ -1207,7 +1241,49 @@ BuildContext? dgsContext;
                           )
                         ],
                       ),
-                    ):
+                    ):menuList![index].title=="position_3"?
+
+
+                    appCard(
+                      margin: EdgeInsets.only(
+                          left: 8, right: 8.0, top: 4.0, bottom: 6.0),
+                      padding: EdgeInsets.only(top:12,bottom: 12),
+                      child: ListView.builder(
+                        shrinkWrap: true,
+                        itemCount:institutionList.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ListTile(
+                            onTap: (){
+                              print(
+                                  institutionList[index].toJson().toString());
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => UserProfileCards(
+                                        userType: 'institution',
+                                        userId: institutionList[index].id,
+                                        callback: () {},
+                                        currentPosition: 1,
+                                        type: null,
+                                      )));
+                            },
+                            leading: appAvatar(
+                              imageUrl:  Config.BASE_URL +
+                                  (institutionList[index] != null &&
+                                      institutionList[index]
+                                          .profileImage !=
+                                          null
+                                      ? institutionList[index].profileImage!
+                                      : ""),
+                              service_type: SERVICE_TYPE.INSTITUTION,
+                              resolution_type: RESOLUTION_TYPE.R64,
+                            ),
+                            title:  Text(institutionList[index].name!,style: styleElements.subtitle1ThemeScalable(context),),
+                          );
+                        },
+                      ),
+                    )
+                        :
                     Column(
                       mainAxisSize: MainAxisSize.min,
                       crossAxisAlignment: CrossAxisAlignment.start,

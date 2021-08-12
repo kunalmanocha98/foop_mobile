@@ -969,6 +969,7 @@ class _BasicInfo extends State<BasicInfo>
       if (personData!.reportManager != null)
         reportingManagerController.text = personData!.reportManager ?? "";
       if (personData!.dateOfJoining != null)
+        selectedEpochdoj= personData!.dateOfJoining;
         selecteddoj = personData!.dateOfJoining!=null?DateFormat('yyyy-MM-dd').format(DateTime.fromMillisecondsSinceEpoch(personData!.dateOfJoining!)):"Date of joining";
       if (personData!.dateOfBirth != null)
         selectedDate = personData!.dateOfBirth ?? "";
