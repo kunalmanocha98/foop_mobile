@@ -4,6 +4,7 @@ import 'dart:ui';
 
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/api_calls/logout_api.dart';
+import 'package:oho_works_app/components/app_user_list_tile.dart';
 import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/components/customgridDelegate.dart';
 import 'package:oho_works_app/components/app_bottom_selector.dart';
@@ -111,7 +112,7 @@ class _DashBoardPage extends State<DashboardPage> {
   int? notificationCount;
   AudioSocketService? audioSocketService = locator<AudioSocketService>();
   SocketService? socketService = locator<SocketService>();
-
+  int i = 0;
   int chatCount = 0;
   int nCount = 0;
   int? progress;
@@ -119,11 +120,11 @@ class _DashBoardPage extends State<DashboardPage> {
   GlobalKey<CampusTalkPageState> talkPage = GlobalKey();
   GlobalKey<HomePageState> homePageState = GlobalKey();
   GlobalKey<PostListState> postListKey = GlobalKey();
-
+  List<Institutions> institutionList = [];
   final SharedDataService? sharedDataService = locator<SharedDataService>();
 BuildContext? dgsContext;
   bool isLoading=false;
-
+  bool seeMore = false;
 
   // static const double minExtent = 0.05;
   // static const double maxExtent = 0.8;
@@ -132,6 +133,47 @@ BuildContext? dgsContext;
   double initialExtent =0.42;
   BuildContext? draggableSheetContext;
   PanelController drageScrollController=new PanelController();
+
+
+  getPersonProfile(BuildContext context) async {
+    fetchMenuListData();
+    prefs ??= await SharedPreferences.getInstance();
+    if (prefs!.getString("basicData") != null) {
+      Map<String, dynamic> map =
+      json.decode(prefs!.getString("basicData") ?? "");
+      rows = Persondata.fromJson(map);
+      followersCountApi(context);
+
+      if (rows != null) {
+        if (i == 0) {
+          i = 1;
+          institutionList.clear();
+          if (rows != null) {
+            for (int i = 0; i < rows!.institutions!.length; i++) {
+              if (institutionList.any((element) {
+                return element.name == rows!.institutions![i].name;
+              })) {
+                Institutions institutions = institutionList.firstWhere((element) {
+                  return element.name == rows!.institutions![i].name;
+                });
+                var index = institutionList.indexOf(institutions);
+                if (institutionList[index].role != rows!.institutions![i].role) {
+                  institutionList[index].role = institutionList[index].role! +
+                      ', ' +
+                      rows!.institutions![i].role!;
+                }
+              } else {
+                institutionList.add(rows!.institutions![i]);
+              }
+            }
+          }
+        }
+        setState(() {
+
+        });
+      }
+    }
+  }
   @override
   void initState() {
     super.initState();
@@ -790,16 +832,7 @@ BuildContext? dgsContext;
 
 
 
-  getPersonProfile(BuildContext context) async {
-    fetchMenuListData();
-    prefs ??= await SharedPreferences.getInstance();
-    if (prefs!.getString("basicData") != null) {
-      Map<String, dynamic> map =
-      json.decode(prefs!.getString("basicData") ?? "");
-      rows = Persondata.fromJson(map);
-      followersCountApi(context);
-    }
-  }
+
 
   void followersCountApi(BuildContext context) async {
     final body = jsonEncode({
@@ -1219,7 +1252,64 @@ BuildContext? dgsContext;
                             //     followersCountApi(context);
                             //   },
                             // ),
-                          )
+                          ),
+                          Divider(
+                            height: 0.5,
+                          ),
+                          appCard(
+                            margin: EdgeInsets.only(
+                                left: 8, right: 8.0, top: 4.0, bottom: 6.0),
+                            padding: EdgeInsets.all(0),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: seeMore
+                                      ? institutionList.length
+                                      : institutionList.length > 0
+                                      ? institutionList.length > 1
+                                      ? 1
+                                      : institutionList.length
+                                      : 0,
+                                  itemBuilder: (BuildContext context, int index) {
+                                    return appUserListTile(
+                                      onPressed: (){
+                                        print(
+                                            institutionList[index].toJson().toString());
+
+
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => UserProfileCards(
+                                                  userType: 'business',
+                                                  userId: institutionList[index].id,
+                                                  callback: () {},
+                                                  currentPosition: 1,
+                                                  type: null,
+                                                )));
+
+                                      },
+                                      imageUrl:  Config.BASE_URL +
+                                          (institutionList[index] != null &&
+                                              institutionList[index]
+                                                  .profileImage !=
+                                                  null
+                                              ? institutionList[index].profileImage!
+                                              : ""),
+                                      service_type: SERVICE_TYPE.INSTITUTION,
+                                      title:  institutionList[index].name,
+                                      subtitle1:  institutionList[index].role,
+
+                                    );
+
+                                  },
+                                ),
+
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     ):
