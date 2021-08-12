@@ -82,12 +82,12 @@ class GlobalSearchResponse {
 
 class GlobalSearchResponseModel {
   List<SearchTypeItem>? person;
-  List<SearchTypeItem>? institution;
+  List<SearchTypeItem>? business;
   List<RoomListItem>? rooms;
   List<EventListItem>? events;
   List<PostListItem>? post;
 
-  GlobalSearchResponseModel({this.person, this.institution});
+  GlobalSearchResponseModel({this.person, this.business});
 
   GlobalSearchResponseModel.fromJson(Map<String, dynamic> json) {
     if (json['room'] != null) {
@@ -115,10 +115,10 @@ class GlobalSearchResponseModel {
         person!.add(new SearchTypeItem.fromJson(v));
       });
     }
-    if (json['institution'] != null) {
-      institution = [];//SearchTypeItem>();
-      json['institution'].forEach((v) {
-        institution!.add(new SearchTypeItem.fromJson(v));
+    if (json['business'] != null) {
+      business = [];//SearchTypeItem>();
+      json['business'].forEach((v) {
+        business!.add(new SearchTypeItem.fromJson(v));
       });
     }
   }
@@ -141,8 +141,8 @@ class GlobalSearchResponseModel {
     if (this.person != null) {
       data['person'] = this.person!.map((v) => v.toJson()).toList();
     }
-    if (this.institution != null) {
-      data['institution'] = this.institution!.map((v) => v.toJson()).toList();
+    if (this.business != null) {
+      data['business'] = this.business!.map((v) => v.toJson()).toList();
     }
     return data;
   }

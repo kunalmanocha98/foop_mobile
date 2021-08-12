@@ -79,8 +79,8 @@ class SearchTypeListState extends State<SearchTypeListPage> {
       personList.addAll(pageData!.rows!.person!);
       return pageData.rows!.person;
     } else {
-      institutionList.addAll(pageData!.rows!.institution!);
-      return pageData.rows!.institution;
+      institutionList.addAll(pageData!.rows!.business!);
+      return pageData.rows!.business;
     }
   }
 
@@ -100,7 +100,7 @@ class SearchTypeListState extends State<SearchTypeListPage> {
                           ? (item.id == prefs!.getInt("userId")
                               ? "person"
                               : "thirdPerson")
-                          : "institution",
+                          : "business",
                       userId:
                           item.id == prefs!.getInt("userId") ? null : item.id,
                       callback: () {},

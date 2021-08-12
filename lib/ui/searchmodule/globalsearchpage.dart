@@ -103,9 +103,9 @@ class _GlobalSearchPage extends State<GlobalSearchPage>
       statelessWidget: SearchTypeListPage(
         key: UniqueKey(),
         searchVal: searchVal,
-        type: 'institution',
+        type: 'business',
       ),
-      tabName: AppLocalizations.of(context)!.translate('institution'),
+      tabName: AppLocalizations.of(context)!.translate('business'),
     ));
     _tabController = TabController(vsync: this, length: list.length);
     _tabController!.addListener(onPositionChange);
@@ -371,12 +371,12 @@ class _GlobalSearchPage extends State<GlobalSearchPage>
                 list: response.rows!.person
             ));
           }
-        if(response.rows!=null && response.rows!.institution!=null && response.rows!.institution!.isNotEmpty)
+        if(response.rows!=null && response.rows!.business!=null && response.rows!.business!.isNotEmpty)
         {
           masterList.add(SearchTypeMasterModel(
-              type: 'institution',
+              type: 'business',
               title: 'Institutions',
-              list: response.rows!.institution
+              list: response.rows!.business
           ));
         }
 

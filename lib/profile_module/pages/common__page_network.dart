@@ -88,37 +88,7 @@ class _CommonListingPageNetwork extends State<CommonListingPageNetwork>
               hintText: AppLocalizations.of(context)!.translate('search'),
             ),
           ),
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: const EdgeInsets.only(left:16.0,right:16.0),
-              child: Container(
-                color: HexColor(AppColors.appColorWhite),
-                child: Card(
-                    child: Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          color: HexColor(AppColors.appMainColor10),
-                          borderRadius: BorderRadius.only(
-                              topRight: Radius.circular(4.0),
-                              topLeft: Radius.circular(4.0))),
-                      child: Container(
-                        margin: const EdgeInsets.all(16),
-                        child: Text(
-                         type=="S"? AppLocalizations.of(context)!
-                              .translate("verified_student"):type=="P"?AppLocalizations.of(context)!
-                             .translate("verified_parent"):type=="T"?AppLocalizations.of(context)!
-                             .translate("verified_teachers"):AppLocalizations.of(context)!
-                             .translate("verified_Alumni"),
-                          textAlign: TextAlign.center,
-                          style: styleElements
-                              .bodyText2ThemeScalable(context)
-                              .copyWith(color: HexColor(AppColors.appColorBlack85)),
-                        ),
-                      ),
-                    )),
-              ),
-            )
-          )
+
 
         ];
       },
@@ -152,7 +122,7 @@ class _CommonListingPageNetwork extends State<CommonListingPageNetwork>
       "person_type": [type],
       "page_number": page,
       "page_size": 20,
-      "requested_by_type": "institution",
+      "requested_by_type": "business",
       "list_type": null,
       "person_id": prefs.getInt(Strings.userId),
       "business_id": null
@@ -185,45 +155,48 @@ class _CommonListingPageNetwork extends State<CommonListingPageNetwork>
                       type: null,
                     )));
       },
-      child:  appUserListTile(
-        onPressed: (){
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => UserProfileCards(
-                    userType: item.id == ownerId
-                        ? "person"
-                        : "thirdPerson",
-                    userId: item.id != ownerId ? item.id : null,
-                    callback: () {
-                      callback();
-                    },
-                    currentPosition: 1,
-                    type: null,
-                  )));
-        },
-        imageUrl: item.avatar,
-        title: item.title,
-        subtitle1: '$desig , $schoolName',
-        trailingWidget: Visibility(
-          visible: item.id != prefs.getInt(Strings.userId),
-          child: GenericFollowUnfollowButton(
-            actionByObjectType: prefs.getString("ownerType"),
-            actionByObjectId: prefs.getInt("userId"),
-            actionOnObjectType: "person",
-            actionOnObjectId: item.id,
-            engageFlag: item.isFollowing ?? false
-                ? AppLocalizations.of(context)!
-                .translate('following')
-                : AppLocalizations.of(context)!
-                .translate('follow'),
-            actionFlag: item.isFollowing ?? false ? "U" : "F",
-            actionDetails: [],
-            personName: item.title ?? "",
-            callback: (isCallSuccess) {
+      child:  Padding(
+        padding: const EdgeInsets.only(left:8.0,right:8.0),
+        child: appUserListTile(
+          onPressed: (){
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => UserProfileCards(
+                      userType: item.id == ownerId
+                          ? "person"
+                          : "thirdPerson",
+                      userId: item.id != ownerId ? item.id : null,
+                      callback: () {
+                        callback();
+                      },
+                      currentPosition: 1,
+                      type: null,
+                    )));
+          },
+          imageUrl: item.avatar,
+          title: item.title,
+          subtitle1: '$desig  $schoolName',
+          trailingWidget: Visibility(
+            visible: item.id != prefs.getInt(Strings.userId),
+            child: GenericFollowUnfollowButton(
+              actionByObjectType: prefs.getString("ownerType"),
+              actionByObjectId: prefs.getInt("userId"),
+              actionOnObjectType: "person",
+              actionOnObjectId: item.id,
+              engageFlag: item.isFollowing ?? false
+                  ? AppLocalizations.of(context)!
+                  .translate('following')
+                  : AppLocalizations.of(context)!
+                  .translate('follow'),
+              actionFlag: item.isFollowing ?? false ? "U" : "F",
+              actionDetails: [],
+              personName: item.title ?? "",
+              callback: (isCallSuccess) {
 
-              setSharedPreferences();
-            },
+                setSharedPreferences();
+              },
+            ),
           ),
         ),
       )

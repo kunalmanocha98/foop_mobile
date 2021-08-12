@@ -61,29 +61,29 @@ class _OnBoardingState extends State<OnBoarding> {
       IntroWidget(
         screenWidth: screenWidth,
         screenheight: screenheight,
-        image: 'assets/appimages/Teacher-pana.png',
-        type: AppLocalizations.of(context)!.translate("teacher_intro_title"),
+        image: 'assets/appimages/splash1.png',
+        type: AppLocalizations.of(context)!.translate("intro_1_title"),
         subText:
-            AppLocalizations.of(context)!.translate("teacher_intro_subtitle"),
-        desc: AppLocalizations.of(context)!.translate("teacher_intro_desc"),
+            AppLocalizations.of(context)!.translate("intro_1_subtitle"),
+        desc: AppLocalizations.of(context)!.translate("intro_1_des"),
       ),
       IntroWidget(
         screenWidth: screenWidth,
         screenheight: screenheight,
-        image: 'assets/appimages/students1-pana.png',
-        type: AppLocalizations.of(context)!.translate("student_intro_title"),
+        image: 'assets/appimages/splash2.png',
+        type: AppLocalizations.of(context)!.translate("intro_2_title"),
         subText:
-            AppLocalizations.of(context)!.translate("student_intro_subtitle"),
-        desc: AppLocalizations.of(context)!.translate("student_intro_desc"),
+            AppLocalizations.of(context)!.translate("intro_2_subtitle"),
+        desc: AppLocalizations.of(context)!.translate("intro_2_des"),
       ),
       IntroWidget(
         screenWidth: screenWidth,
         screenheight: screenheight,
-        image: 'assets/appimages/Teacher-pana.png',
-        type: AppLocalizations.of(context)!.translate("parent_intro_title"),
+        image: 'assets/appimages/splash3.png',
+        type: AppLocalizations.of(context)!.translate("intro_3_title"),
         subText:
-            AppLocalizations.of(context)!.translate("parent_intro_subtitle"),
-        desc: AppLocalizations.of(context)!.translate("parent_intro_desc"),
+            AppLocalizations.of(context)!.translate("intro_3_subtitle"),
+        desc: AppLocalizations.of(context)!.translate("intro_3_des"),
       )
     ];
 

@@ -14,7 +14,7 @@ extension GLOBAL_SEARCH_ENUM_EXT on GLOBAL_SEARCH_ENUM {
         }
       case GLOBAL_SEARCH_ENUM.INSTITUTION:
         {
-          return 'institution';
+          return 'business';
         }
       case GLOBAL_SEARCH_ENUM.POST:
         {

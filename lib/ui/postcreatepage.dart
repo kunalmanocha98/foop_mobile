@@ -114,7 +114,7 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
   List<String> mentions = [];
   List<String> keywords = [];
   int wordCount = 0;
-  int wordLimit = 200;
+  int wordLimit = 1000;
   BuildContext? ctx;
   List<PostCreatePayload?> lessonsList = [];
   List<PostCreatePayload?> draftedLessonsList = [];
@@ -2349,12 +2349,12 @@ late bool isChapterCreatedAlready;
           if (ChaptersResponse.fromJson(res).rows!.length > 0) {
             return ChaptersResponse.fromJson(res).rows!;
           } else {
-            return null;
+            return [];
           }
         } else {
-          return null;
+          return [];
         }
-      } as FutureOr<Iterable<ChapterItem>> Function(String),
+      } ,
       itemBuilder: (BuildContext context, ChapterItem itemData) {
         return ListTile(
           title: Text(

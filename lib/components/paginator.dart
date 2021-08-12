@@ -498,12 +498,18 @@ class PaginatorState<T> extends State<Paginator> {
         setState(() {
           _listStatus = _ListStatus.ERROR;
         });
-      } else if (_nTotalItems == 0) {
+      }
+      else if (_nTotalItems == 0) {
         setState(() {
           _listStatus = _ListStatus.EMPTY;
         });
-      } else {
+      }
+      else {
         _currentPage=_currentPage!+1;
+        if(_listItems==null )
+          _listItems=[];
+
+        if(pageData!=null)
         _listItems!.addAll(_pageItemsGetter!(pageData)!);
         setState(() {
           _listStatus = _ListStatus.SUCCESS;
