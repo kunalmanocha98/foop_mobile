@@ -663,7 +663,7 @@ register();
 
     RegisterUserAs registerUserAs =RegisterUserAs();
 
-    registerUserAs.personId = prefs!.getInt(Strings.userId);
+    registerUserAs.personId = prefs.getInt(Strings.userId);
     registerUserAs.institutionId = instId;
     final body = jsonEncode(registerUserAs);
 
@@ -672,7 +672,7 @@ register();
         var data = RegisterUserAsResponse.fromJson(value);
         print(data.toString());
         if (data.statusCode == "S10001") {
-          prefs!.setBool("isProfileCreated", true);
+          prefs.setBool("isProfileCreated", true);
 
           Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(

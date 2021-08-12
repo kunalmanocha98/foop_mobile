@@ -182,7 +182,6 @@ class GetAllCards {
             return DepartmentCard(
               data: commonCardData,
               callbackPicker: callBck,
-
               id: id,
               personType: type,
             );

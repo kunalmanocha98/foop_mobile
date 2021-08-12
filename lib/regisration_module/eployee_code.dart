@@ -360,9 +360,7 @@ register();
   _EmployeeCode();
 
   void register() async {
-
-
-    if(ohoUserName.text!=null && ohoUserName.text.isNotEmpty) {
+    // if(ohoUserName.text!=null && ohoUserName.text.isNotEmpty) {
       RegisterUserAs registerUserAs = widget.registerUserAs!;
       registerUserAs.invitation_code = ohoUserName.text.toString();
       registerUserAs.personId = prefs.getInt(Strings.userId);
@@ -395,8 +393,8 @@ register();
             onError.toString(), context, HexColor(AppColors.information));
       });
     }
-    else
-      ToastBuilder().showToast(
-         AppLocalizations.of(context)!.translate("code_req"), context, HexColor(AppColors.information));
-  }
+    // else
+    //   ToastBuilder().showToast(
+    //      AppLocalizations.of(context)!.translate("code_req"), context, HexColor(AppColors.information));
+  // }
 }

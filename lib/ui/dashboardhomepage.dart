@@ -1275,7 +1275,7 @@ BuildContext? dgsContext;
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => UserProfileCards(
-                                        userType: 'institution',
+                                        userType: 'business',
                                         userId: institutionList[index].id,
                                         callback: () {},
                                         currentPosition: 1,

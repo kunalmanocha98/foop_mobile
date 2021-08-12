@@ -276,8 +276,6 @@ class Config {
       '/api/v1/utility/banner/create_referral';
   static String INSTITUTION_STAFFLIST = BASE_URL +
       '/api/v1/utility/institution_staff_list';
-
-
   static String PROGRAM_LIST = BASE_URL +
       '/api/v1/business/program/list';
   static String DEPARTMENT_LIST = BASE_URL +
@@ -458,6 +456,8 @@ class Config {
 
    static String EDIT_LOCATION=BASE_URL+'/api/v1/business/location/edit';
   static String LOCATION_DETAILS=BASE_URL+'/api/v1/business/location/detail';
+
+  static String DEPARTMENT_CREATE =BASE_URL+ "/api/v1/institution/department/create";
 
 
 

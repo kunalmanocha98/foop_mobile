@@ -1,8 +1,11 @@
 import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/customcard.dart';
+import 'package:oho_works_app/e_learning_module/ui/academic_details_selection_pages.dart';
 import 'package:oho_works_app/models/base_res.dart';
+import 'package:oho_works_app/profile_module/pages/departmentEditaddPage.dart';
 import 'package:oho_works_app/profile_module/pages/edit_language-page.dart';
 import 'package:oho_works_app/profile_module/pages/profile_page.dart';
+import 'package:oho_works_app/ui/Profile/department_add_page.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
@@ -20,8 +23,6 @@ class DepartmentCard extends StatelessWidget {
   String? type;
   int? id;
   String? personType;
-
-
 
   Size displaySize(BuildContext context) {
     debugPrint('Size = ' + MediaQuery.of(context).size.toString());
@@ -90,7 +91,11 @@ class DepartmentCard extends StatelessWidget {
                           child:  GestureDetector(
                             behavior: HitTestBehavior.translucent,
                             onTap: () async {
-
+                              Navigator.push(context, MaterialPageRoute(
+                                builder: (BuildContext context){
+                                  return DepartmentAddPage();
+                                }
+                              ));
                             },
                             child: Icon(
                               Icons.add,
@@ -172,7 +177,7 @@ class DepartmentCard extends StatelessWidget {
                             userId: id,
                             userType: personType,
                             type:
-                            "departments",
+                            "department",
                             currentPosition: 2,
                           ),
                         ));

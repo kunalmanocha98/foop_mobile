@@ -188,7 +188,7 @@ int? id;
                                         ContactsDetailsPageInstitute(
                                           refreshCallback: widget.refreshCallback,
                                           data:widget.data,
-                                          instId:instId,isEdit:widget!.isEdit,callBack: (){
+                                          instId:instId,isEdit:widget.isEdit,callBack: (){
 
                                           Navigator.pop(context);
                                           if(widget.callBack!=null)
