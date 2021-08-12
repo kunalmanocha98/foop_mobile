@@ -458,6 +458,8 @@ class Config {
 
    static String EDIT_LOCATION=BASE_URL+'/api/v1/business/location/edit';
   static String LOCATION_DETAILS=BASE_URL+'/api/v1/business/location/detail';
+  static String BUSINESS_ACCOUNTING_REGISTER= BASE_URL + '/api/v1/business/accounting/register';
+  static String BUSINESS_ACCOUNTING_EDIT= BASE_URL + '/api/v1/business/accounting/edit';
 
 
 

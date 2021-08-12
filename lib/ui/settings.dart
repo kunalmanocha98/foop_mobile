@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
+import 'package:oho_works_app/components/app_account_detail_add.dart';
 import 'package:oho_works_app/components/app_user_list_tile.dart';
 import 'package:oho_works_app/enums/DictionaryType.dart';
 import 'package:oho_works_app/home/locator.dart';
@@ -187,6 +188,29 @@ class _SettingsPage extends State<SettingsPage> {
                                 .translate("blocked_user"),
                             style:
                                 styleElements.subtitle1ThemeScalable(context)),
+                      ),
+                    ),
+                  ),
+                ),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => AddAccountDetails(),
+                        ));
+                  },
+                  child: Card(
+                    elevation: 0,
+                    margin: EdgeInsets.only(left: 4, right: 4, bottom: 1),
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 8, bottom: 8, left: 8),
+                      child: ListTile(
+                        title: Text(
+                            AppLocalizations.of(context)!
+                                .translate("account_details"),
+                            style:
+                            styleElements.subtitle1ThemeScalable(context)),
                       ),
                     ),
                   ),

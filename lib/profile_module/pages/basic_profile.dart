@@ -1,9 +1,11 @@
 import 'dart:convert';
 
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/appBarWithSearch.dart';
 import 'package:oho_works_app/components/appProgressButton.dart';
 import 'package:oho_works_app/mixins/editProfileMixin.dart';
+import 'package:oho_works_app/models/CommonListingModels/commonListingrequest.dart';
 import 'package:oho_works_app/models/dynmaicres.dart';
 import 'package:oho_works_app/models/personal_profile.dart';
 import 'package:oho_works_app/models/profileEditRequest.dart';
@@ -160,6 +162,65 @@ class _BasicInfo extends State<BasicInfo>
     //       contentPadding: EdgeInsets.fromLTRB(20.0, 15.0, 20.0, 15.0),
     //       hintStyle: styleElements.subtitle2ThemeScalable(context),
     //     ));
+
+    final reportingmanagerTypeAhead = TypeAheadField(
+      direction: AxisDirection.up,
+      hideOnLoading: true,
+      textFieldConfiguration: TextFieldConfiguration(
+        autofocus: false,
+        style: styleElements.subtitle1ThemeScalable(context).copyWith(
+          color: HexColor(AppColors.appColorBlack65)),
+        controller: reportingManagerController,
+        textCapitalization: TextCapitalization.words,
+        // onChanged: (text) {
+        //   if (text.length == 1 && text != text.toUpperCase()) {
+        //     reportingManagerController.text = text.toUpperCase();
+        //     reportingManagerController.selection = TextSelection.fromPosition(
+        //         TextPosition(offset: reportingManagerController.text.length));
+        //   }
+        // },
+        // style: styleElements
+        //     .subtitle1ThemeScalable(context).copyWith(
+        //     color: HexColor(AppColors.appColorBlack65)
+        // ),
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.only(left: 8, top: 16, bottom: 8),
+          hintText: "Reporting manager",
+          hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color: HexColor(AppColors.appColorBlack35)),
+          border: UnderlineInputBorder(borderRadius: BorderRadius.circular(0)),
+        ),
+      ),
+      suggestionsCallback: (pattern) async {
+        final body = jsonEncode({
+          "page_number": 1,
+          "page_size": 5,
+          "requested_by_type": "institution",
+          "list_type": null,
+          "business_id": prefs!.getInt(Strings.instituteId).toString(),
+          "search_val": pattern,
+          "person_type": ["S"],
+          "person_id": prefs!.getInt("userId").toString(),
+        });
+        var res;
+        res = await Calls().call(body, context, Config.USER_LIST);
+        return CommonListResponse.fromJson(res).rows!;
+      },
+      itemBuilder: (context, suggestion) {
+        CommonListResponseItem? item = suggestion as CommonListResponseItem?;
+        return ListTile(
+          title: Text(item!.title!),
+        );
+      },
+      onSuggestionSelected: (suggestion) {
+        setState(() {
+          CommonListResponseItem? item = suggestion as CommonListResponseItem?;
+          reportingManagerController.text = item!.title!;
+        });
+      },
+    );
+
+
+
     final doj = GestureDetector(
       onTap: () {
         _selectDate(context, "doj");
@@ -597,7 +658,7 @@ class _BasicInfo extends State<BasicInfo>
                             child: Container(
                               margin:
                               const EdgeInsets.only(left: 16, right: 16),
-                              child: reportingManager,
+                              child: reportingmanagerTypeAhead,
                             )),
                         Align(
                             alignment: Alignment.center,
