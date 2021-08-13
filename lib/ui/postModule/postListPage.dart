@@ -385,7 +385,10 @@ class PostListState extends State<PostListPage> {
             case ConnectionState.active:
               return CustomPaginator(context).loadingWidgetMaker();
             case ConnectionState.done:
+              if(snapshot.data!=null)
               postList.addAll(snapshot.data!.rows!);
+
+
               page++;
               Future.microtask(() {
                 setState(() {

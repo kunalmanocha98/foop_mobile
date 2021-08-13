@@ -214,6 +214,10 @@ flutter:
     - assets/sample.epub
     - assets/appimages/email.png
     - assets/appimages/home_ohi.png
+    - assets/appimages/invite.png
+    - assets/appimages/search.png
+    - assets/appimages/learningbanner.png
+    - assets/appimages/home_banner.png
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

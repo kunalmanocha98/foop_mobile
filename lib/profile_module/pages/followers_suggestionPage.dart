@@ -5,6 +5,7 @@ import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
 import 'package:oho_works_app/components/app_chat_footer.dart';
 import 'package:oho_works_app/components/app_user_list_tile.dart';
+import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/enums/paginatorEnums.dart';
 import 'package:oho_works_app/models/FollowersData.dart';
 import 'package:oho_works_app/models/post/postlist.dart';
@@ -101,41 +102,44 @@ class _FollowersSuggestionPage extends State<FollowersSuggestionsPage> {
         //     appBarTitle: 'PostCardDetail', onBackButtonPress: () {
         //       Navigator.pop(context);
         //     }),
-          body: Column(children: [
-            Expanded(
-              child: RefreshIndicator(
-                onRefresh: refreshList,
-                child: CustomScrollView(
-                  slivers: [
-                    SliverToBoxAdapter(
-                      child: SizedBox(
-                        height: 16,
-                      ),
-                    ),
-                    getfollowerSliver(),
-                    (type == "person" && suggestionList.length > 0)
-                        ? SliverToBoxAdapter(
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                            left: 20.0, top: 8, bottom: 8),
-                        child: Text(
-                          AppLocalizations.of(context)!
-                              .translate('suggestions'),
-                          style: styleElements
-                              .headline6ThemeScalable(context)
-                              .copyWith(fontWeight: FontWeight.w600),
+          body: appCard(
+            padding: EdgeInsets.all(0),
+            child: Column(children: [
+              Expanded(
+                child: RefreshIndicator(
+                  onRefresh: refreshList,
+                  child: CustomScrollView(
+                    slivers: [
+                      SliverToBoxAdapter(
+                        child: SizedBox(
+                          height: 16,
                         ),
                       ),
-                    )
-                        : SliverToBoxAdapter(),
-                    (type == "person" && suggestionList.length > 0)
-                        ? getsuggestionSliver()
-                        : SliverToBoxAdapter(),
-                  ],
+                      getfollowerSliver(),
+                      (type == "person" && suggestionList.length > 0)
+                          ? SliverToBoxAdapter(
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              left: 20.0, top: 8, bottom: 8),
+                          child: Text(
+                            AppLocalizations.of(context)!
+                                .translate('suggestions'),
+                            style: styleElements
+                                .headline6ThemeScalable(context)
+                                .copyWith(fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      )
+                          : SliverToBoxAdapter(),
+                      (type == "person" && suggestionList.length > 0)
+                          ? getsuggestionSliver()
+                          : SliverToBoxAdapter(),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ])),
+            ]),
+          )),
     );
   }
 

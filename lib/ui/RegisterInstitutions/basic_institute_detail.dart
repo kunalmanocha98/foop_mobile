@@ -16,6 +16,8 @@ import 'package:oho_works_app/models/business_response_detail.dart';
 import 'package:oho_works_app/models/imageuploadrequestandresponse.dart';
 import 'package:oho_works_app/models/post/keywordsList.dart';
 import 'package:oho_works_app/models/post/postcreate.dart';
+import 'package:oho_works_app/ui/RegisterInstitutions/selectCompanyType.dart';
+import 'package:oho_works_app/ui/RegisterInstitutions/select_company_category.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
 import 'package:oho_works_app/utils/app_localization.dart';
 import 'package:oho_works_app/utils/colors.dart';
@@ -161,8 +163,94 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
       }
       return instituteType;
     }
+    final categ = GestureDetector(
+      onTap: () async {
 
 
+
+        var result = await Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (BuildContext context) => SelectCompanyCategory()));
+
+        if (result != null) {
+          DictionaryListItem languageItem = result["result"] as DictionaryListItem;
+          selectInstCategory = languageItem.description;
+          cat=languageItem.code;
+          setState(() {
+
+          });
+        }
+      },
+      child: Container(
+        color: HexColor(AppColors.appColorWhite),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0, left: 22),
+              child: Text(
+                selectInstCategory??AppLocalizations.of(context)!.translate("entity_category"),
+                style: styleElements
+                    .bodyText2ThemeScalable(context)
+                    .copyWith(color: HexColor(AppColors.appColorBlack65)),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Divider(
+                color: HexColor(AppColors.appColorGrey500),
+                thickness: 1,
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+    final typeC = GestureDetector(
+      onTap: () async {
+
+
+
+        var result = await Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (BuildContext context) => SelectCompanyType()));
+
+        if (result != null) {
+          DictionaryListItem languageItem = result["result"] as DictionaryListItem;
+          selectInstType = languageItem.description;
+          type=languageItem.code;
+          setState(() {
+
+          });
+        }
+      },
+      child: Container(
+        color: HexColor(AppColors.appColorWhite),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0, left: 22),
+              child: Text(
+                selectInstType??AppLocalizations.of(context)!.translate("entity_type"),
+                style: styleElements
+                    .bodyText2ThemeScalable(context)
+                    .copyWith(color: HexColor(AppColors.appColorBlack65)),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Divider(
+                color: HexColor(AppColors.appColorGrey500),
+                thickness: 1,
+              ),
+            )
+          ],
+        ),
+      ),
+    );
     _getEmployeeRange() {
       for (int i = 0; i < employeeRange.length; i++) {
         empList.add(DropdownMenuItem(
@@ -232,137 +320,24 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
       ),
 
       scrollPadding: EdgeInsets.all(20.0.w),
+
       decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-          hintText: AppLocalizations.of(context)!.translate('name_of_entity'),
-          hintStyle: tsE.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)).copyWith(color: HexColor(AppColors.appColorBlack65)),
+        hintText: AppLocalizations.of(context)!.translate('name_of_entity'),
+        contentPadding: EdgeInsets.only(
+            left: 12, top: 16, bottom: 8),
+        border: UnderlineInputBorder(
+            borderRadius:
+            BorderRadius.circular(12)),
+        floatingLabelBehavior:
+        FloatingLabelBehavior.auto,
+        labelText:
+        AppLocalizations.of(context)!.translate('name_of_entity'),),
 
-          border: UnderlineInputBorder(
-            borderSide: BorderSide(
-              width: 0.0.h,
-            ),
-          )),
+
     );
 
 
-    final otherNameIn = Padding(
-        padding: EdgeInsets.only(bottom: 4),
-        child: Column(
-          children: [
-            Visibility(
-                visible: _listOfHashTags.length>0,
-                child: Container(
-                  height: 50,
-                  padding: EdgeInsets.only(top: 8,bottom: 8,left:8 ,right: 8),
-                  alignment: Alignment.centerLeft,
-                  child: ListView.builder(
-                    shrinkWrap: true,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: _listOfHashTags.length,
-                    padding: EdgeInsets.only(left: 8,right: 8),
-                    itemBuilder: (BuildContext context, int index) {
-                      return Flexible(
-                        child: Chip(
-                          label: Text(_listOfHashTags[index]),
-                          padding: EdgeInsets.all(8),
-                          onDeleted: (){
-                            setState(() {
-                              _listOfHashTags.removeAt(index);
-                            });
-                          },
-                        ),
-                      );
-                    },),
-                )
-            ),
-            TypeAheadField(
-              suggestionsCallback: (String pattern) async{
-                if(pattern.isNotEmpty) {
-                  KeywordListRequest payload = KeywordListRequest();
-                  payload.searchVal = pattern;
-                  payload.pageSize = 20;
-                  payload.pageNumber = 1;
-                  var res = await Calls().call(
-                      jsonEncode(payload), context, Config.OTHERS_NAME_SCHOOL);
-                  if(OthersName
-                      .fromJson(res)
-                      .rows!.length>0) {
-                    return OthersName
-                        .fromJson(res)
-                        .rows!;
-                  }else{
-                    return [];
-                  }
-                }else{
-                  return [];
-                }
-              } ,
-              itemBuilder: ( context,  itemData) {
-                itemData as String;
-                return ListTile(
-                  title: Text(AppLocalizations.of(context)!.translate('hash')+itemData, style: styleElements.subtitle1ThemeScalable(context),),
-                );
-              },
-              onSuggestionSelected: ( suggestion) {
-                suggestion as String;
-                typeAheadControllerHashTag.text ="";
-                setState(() {
-                  _listOfHashTags.add(suggestion);
-                });
-                // widget.hashTagCallback(suggestion.display);
-              },
-              direction: AxisDirection.up,
-              textFieldConfiguration: TextFieldConfiguration(
-                autofocus: true,
-                onSubmitted: (value){
-                  typeAheadControllerHashTag.text ="";
-                  setState(() {
-                    _listOfHashTags.add(value);
-                  });
-                  // widget.hashTagCallback(value);
-                },
-                style: styleElements.subtitle1ThemeScalable(context).copyWith(
-                    color: HexColor(AppColors.appColorBlack65)
-                ),
-                controller: typeAheadControllerHashTag,
-                decoration: InputDecoration(
-                  prefixIcon: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text("",style: styleElements.headline6ThemeScalable(context),),
-                  ),
-                  contentPadding: EdgeInsets.only(top:16,left: 16,right: 16),
-                  hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
-                  hintText: AppLocalizations.of(context)!.translate('other_name'),
-                ),
-              ),
-            ),
-          ],
-        )
-    );
-    final institute = DropdownButtonFormField<dynamic>(
-      value: null,
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 2.0.w, 15.0.h)),
-      hint: Padding(
-        padding: const EdgeInsets.only(left: 0),
-        child: Text(
-          selectInstType ?? AppLocalizations.of(context)!.translate("entity_type"),
-          style: styleElements.bodyText2ThemeScalable(context),
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
-      ),
-      items: _getInstituteType(),
-      onChanged: (value) {
 
-        setState(() {
-
-
-          selectInstType = value;
-        });
-        FocusScope.of(context).requestFocus(new FocusNode());
-      },
-    );
     final employeeRanges = DropdownButtonFormField<dynamic>(
       value: null,
       decoration: InputDecoration(
@@ -527,7 +502,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
                                   child: Container(
                                       padding: EdgeInsets.only(
                                           left: 8.w, right: 8.w, bottom: 8.h),
-                                      child: category),
+                                      child: categ),
                                 ),
 
 
@@ -536,7 +511,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
                                   child: Container(
                                       padding: EdgeInsets.only(
                                           left: 8.w, right: 8.w, bottom: 8.h),
-                                      child: institute),
+                                      child: typeC),
                                 ),
 
 
@@ -595,7 +570,9 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
     var pr = ToastBuilder().setProgressDialogWithPercent(context,'Uploading Image...');
 
     if(type=="gallery"){
-      pickedFile = await ImagePickerAndCropperUtil().pickImage(context);
+     var pick = await ImagePickerAndCropperUtil().pickImage(context);
+      pickedFile =
+      await ImagePickerAndCropperUtil().cropFile(context, pick!);
       print("#####PATH###  "+pickedFile!.path);
     }else{
       final cameras = await availableCameras();
@@ -680,16 +657,7 @@ Navigator.pop(context);
                   {
 
 
-                    mapCategory.forEach((key, value) {
-                      if(key==selectInstCategory)
-                        cat=value;
 
-                    });
-                    mapIntType.forEach((key, value) {
-                      if(key==selectInstType)
-                        type=value;
-
-                    });
                     prefs = await SharedPreferences.getInstance();
                     BasicData basicData = new BasicData();
                     basicData.name=instituteNameC.text.toString();
@@ -723,7 +691,7 @@ Navigator.pop(context);
                             prefs.setString(Strings.registeredInstituteName, basicData.name??"");
                             prefs.setString(Strings.registeredInstituteImage, imageUrl??"");
                             prefs.setInt("createdSchoolId", resposne.rows!.institutionId!);
-
+                            prefs.setString("businessOhoName",resposne.rows!.ohoId!);
                             prefs.setString("create_entity", "Domain");
 
                             Navigator.push(
@@ -735,7 +703,7 @@ Navigator.pop(context);
 
                                       },
 
-
+ohoid:resposne.rows!.ohoId!,
                                       instId:resposne.rows!.institutionId!,isEdit:widget.isEdit),
                                 ));
                           }

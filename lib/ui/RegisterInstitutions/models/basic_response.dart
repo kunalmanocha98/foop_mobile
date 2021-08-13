@@ -28,18 +28,21 @@ class BasicDataResponse {
 class Rows {
   int? institutionId;
   String? message;
+  String ?ohoId;
 
-  Rows({this.institutionId, this.message});
+  Rows({this.institutionId, this.message,this.ohoId});
 
   Rows.fromJson(Map<String, dynamic> json) {
     institutionId = json['business_id'];
     message = json['message'];
+    ohoId=json['slug'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['business_id'] = this.institutionId;
     data['message'] = this.message;
+    data['slug']=this.ohoId;
     return data;
   }
 }

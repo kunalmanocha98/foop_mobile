@@ -236,7 +236,7 @@ class Config {
   static String GLOBAL_SEARCH_HISTORY = BASE_URL +
       '/api/v1/global/search/history';
   static String GETBELLNOTIFICATIONS = BASE_URL +
-      '/tricyclenotifications/getbellnotification';
+      '/notifications/getbellnotification';
   static String ANSWER_CREATE = BASE_URL + '/api/v1/post/answer/create';
   static String ANSWER_UPDATE = BASE_URL + '/api/v1/post/answer/update';
 
@@ -251,9 +251,9 @@ class Config {
       '/api/v1/invitation/create';
   static String INVITE_USERS = BASE_URL + '/api/v1/invitation/create';
   static String NOTIFICATION_COUNT = BASE_URL +
-      '/tricyclenotifications/getbellnotificationcount';
+      '/notifications/getbellnotificationcount';
   static String UPDATE_COUNT = BASE_URL +
-      '/tricyclenotifications/updatebellnotificationcount';
+      '/notifications/updatebellnotificationcount';
   static String MENTIONS_LIST = BASE_URL +
       '/api/v1/utility/mention/list';
 

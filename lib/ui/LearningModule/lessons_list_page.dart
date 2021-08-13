@@ -202,19 +202,19 @@ BuildContext? ctx;
                         ),
                         SliverToBoxAdapter(
                           child: appFindCard(
-                            title: "Fast learning through microlearning",
-                            subtitle: "Learn anything in just 2 minutes",
+                            title: AppLocalizations.of(context)!.translate("learn_title"),
+                            subtitle: AppLocalizations.of(context)!.translate("learn_subtitle"),
                             titleColor: HexColor(AppColors.appColorBlack85),
                             subtitleColor: HexColor(AppColors.appColorBlack35),
                             image: Container(
                               child: Image.asset(
-                                'assets/appimages/lessonbanner.png',
+                                'assets/appimages/learningbanner.png',
                               fit: BoxFit.cover,
                               height: 180,
                               width: 200,),
                             ),
 
-                            color: HexColor(AppColors.lesson_banner_bkg),
+                            color: HexColor(AppColors.appColorWhite),
                           ),
                         )
                       ];

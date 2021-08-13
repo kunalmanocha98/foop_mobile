@@ -20,6 +20,7 @@ import 'package:oho_works_app/enums/resolutionenums.dart';
 import 'package:oho_works_app/enums/serviceTypeEnums.dart';
 import 'package:oho_works_app/home/home.dart';
 import 'package:oho_works_app/home/locator.dart';
+import 'package:oho_works_app/messenger_module/screens/chat_list_page.dart';
 import 'package:oho_works_app/models/common_response.dart';
 import 'package:oho_works_app/models/device_info.dart';
 import 'package:oho_works_app/models/followers_following_count.dart';
@@ -276,6 +277,17 @@ BuildContext? dgsContext;
                   )));
           break;
         }
+
+      case 'myteam':
+        {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => CommunityPage(
+
+                  )));
+          break;
+        }
       case 'email':
         {
           if(prefs!.containsKey(Strings.mailUsername)){
@@ -318,6 +330,37 @@ BuildContext? dgsContext;
               context, MaterialPageRoute(builder: (context) => RoomsPage()));
           break;
         }
+      case 'chat':
+        {
+          Navigator.of(context)
+              .push(MaterialPageRoute(
+              builder: (context) =>  ChatListsPage(
+                conversationId: " ",
+
+              )));
+          break;
+        }
+      case 'talks':
+        {
+          Navigator.of(context)
+              .push(MaterialPageRoute(
+              builder: (context) =>   CampusTalkListPage(
+                key: talkPage,
+              ),));
+          break;
+        }
+
+      case 'learning':
+        {
+          Navigator.of(context)
+              .push(MaterialPageRoute(
+            builder: (context) =>   LessonsListPage(
+
+            ),));
+          break;
+        }
+
+
       case 'reward':
         {
           Navigator.push(
@@ -422,16 +465,7 @@ BuildContext? dgsContext;
               ));
           break;
         }
-      case 'learning':
-        {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => LessonsListPage(),
-                // LearningListPage(),
-              ));
-          break;
-        }
+
       case 'lead_order':
         {
 
@@ -1118,7 +1152,7 @@ BuildContext? dgsContext;
                       width:
                       MediaQuery.of(context)
                           .size.width ,
-                      height: 308,
+                      height: 250,
                       child: Column(
                         children: [
 
@@ -1136,11 +1170,11 @@ BuildContext? dgsContext;
                             children: [
                               Container(
                                 width: double.infinity,
-                                height: 300,
+                                height: 240,
                                 child: Image(
-                                  height: 300,
+                                  height: 240,
                                   image: AssetImage(
-                                      'assets/appimages/home_ohi.png'),
+                                      'assets/appimages/home_banner.png'),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -1183,16 +1217,7 @@ BuildContext? dgsContext;
                                                   AppColors
                                                       .appColorWhite),
                                             )),
-                                        Text(
-                                            AppLocalizations.of(context)!.translate("learnConnect"),
-                                            style: styleElements
-                                                .subtitle2ThemeScalable(
-                                                context)
-                                                .copyWith(
-                                              color: HexColor(
-                                                  AppColors
-                                                      .appColorWhite),
-                                            )),
+
                                       ],
                                     ),
                                   ),

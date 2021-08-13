@@ -395,15 +395,14 @@ class _GlobalSearchNew extends State<GlobalSearchNew>
               slivers: [
                 SliverToBoxAdapter(
                   child: appFindCard(
-                    title: "Who do you want to study together?",
-                    subtitle:
-                    "Search for friends who can support you to learn together",
+                    title: AppLocalizations.of(context)!.translate("search_title"),
+                    subtitle: AppLocalizations.of(context)!.translate("search_sub"),
                     image: Image.asset(
-                      'assets/appimages/report_content_icon.png',
-                      height: 150,
-                      width: 150,
+                      'assets/appimages/search.png',
+                      height: 200,
+                      width: 200,
                     ),
-                    color: HexColor("#F8FEF2"),
+                    color: HexColor(AppColors.appColorWhite),
                   ),
                 ),
                 SliverToBoxAdapter(

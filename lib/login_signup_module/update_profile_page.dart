@@ -47,6 +47,7 @@ class _UpdateProfilePage extends State<UpdateProfilePage>
   String? googleSignInId;
   String? userName;
   String? imageUrl;
+  bool isUpdated=false;
   bool isTermAndConditionAccepted = false;
   String email = "";
   bool isGoogleOrFacebookDataReceived = false;
@@ -145,7 +146,10 @@ class _UpdateProfilePage extends State<UpdateProfilePage>
       }
     }
   }
+  Future<bool> _onBackPressed() {
 
+    return new Future(() => false);
+  }
   @override
   Widget build(BuildContext context) {
     this.context = context;
@@ -166,7 +170,7 @@ class _UpdateProfilePage extends State<UpdateProfilePage>
                 bottom: BorderSide(
                   //
                   color: HexColor(AppColors.appColorGrey500),
-                  width: 1.0.w,
+                  width: 0.5.w,
                 ),
               ), // set border width
             ),
@@ -208,12 +212,10 @@ class _UpdateProfilePage extends State<UpdateProfilePage>
               TextPosition(offset: firstNameController.text.length));
         }
       },
+
+
       decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
           hintText: AppLocalizations.of(context)!.translate('first_name'),
-          hintStyle: styleElements
-              .bodyText2ThemeScalable(context)
-              .copyWith(fontSize: 14.sp,color: HexColor(AppColors.appColorBlack35)),
           prefixIcon: Padding(
               padding: EdgeInsets.all(0.0.h),
               child: Icon(
@@ -221,11 +223,16 @@ class _UpdateProfilePage extends State<UpdateProfilePage>
                 color: HexColor(AppColors.appColorGrey500),
                 size: 20.h,
               )),
+          contentPadding: EdgeInsets.only(
+              left: 12, top: 16, bottom: 8),
           border: UnderlineInputBorder(
-            borderSide: BorderSide(
-              width: 0.h,
-            ),
-          )),
+              borderRadius:
+              BorderRadius.circular(12)),
+          floatingLabelBehavior:
+          FloatingLabelBehavior.auto,
+          labelText:
+          AppLocalizations.of(context)!.translate('first_name'),),
+
     );
     final lastName = TextField(
         style: styleElements
@@ -248,233 +255,173 @@ class _UpdateProfilePage extends State<UpdateProfilePage>
                 TextPosition(offset: lastNameController.text.length));
           }
         },
-        decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-          hintText: AppLocalizations.of(context)!.translate('last_name'),
-          hintStyle: styleElements.bodyText2ThemeScalable(context)
-              .copyWith(fontSize: 14.sp,
-          color: HexColor(AppColors.appColorBlack35)),
-        ));
 
-    return SafeArea(
-        child: Scaffold(
-            resizeToAvoidBottomInset: true,
-            body: new Builder(builder: (BuildContext context) {
-              this.stx = context;
-              return SingleChildScrollView(
-                child: Stack(
-                  children: [
-                    Container(
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          children: <Widget>[
-                            Container(
-                              margin: EdgeInsets.only(bottom: 12.h, top: 50),
-                              alignment: Alignment.center,
-                              child: Text(
-                                AppLocalizations.of(context)!
-                                    .translate("update_profile"),
-                                style: styleElements
-                                    .headline5ThemeScalable(context)
-                                    .copyWith(fontSize: 24.sp),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: Container(
-                                margin: EdgeInsets.all(4.h),
+        decoration: InputDecoration(
+          hintText: AppLocalizations.of(context)!.translate('last_name'),
+
+          contentPadding: EdgeInsets.only(
+              left: 12, top: 16, bottom: 8),
+          border: UnderlineInputBorder(
+              borderRadius:
+              BorderRadius.circular(12)),
+          floatingLabelBehavior:
+          FloatingLabelBehavior.auto,
+          labelText:
+          AppLocalizations.of(context)!.translate('last_name'),),
+
+      );
+
+             return WillPopScope(
+      onWillPop: () async => _onBackPressed(),
+      child: SafeArea(
+          child: Scaffold(
+              resizeToAvoidBottomInset: true,
+              body: new Builder(builder: (BuildContext context) {
+                this.stx = context;
+                return SingleChildScrollView(
+                  child: Stack(
+                    children: [
+                      Container(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Column(
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.only(bottom: 12.h, top: 50),
                                 alignment: Alignment.center,
                                 child: Text(
                                   AppLocalizations.of(context)!
-                                      .translate("update_profile_text"),
+                                      .translate("update_profile"),
                                   style: styleElements
-                                      .bodyText2ThemeScalable(context),
+                                      .headline5ThemeScalable(context)
+                                      .copyWith(fontSize: 24.sp),
                                 ),
                               ),
-                            ),
-                            GestureDetector(
-                              onTap: () async {
-                                var result = await Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => PhotoPreviewScreen(
-                                          registerUserAs: null, from: null),
-                                    ));
-
-                                if (result != null) {
-                                  if (result["imageUrl"] != null)
-                                    imageUrl = result["imageUrl"];
-                                  if (result["selectPath"] != null)
-                                    selectedImage = result["selectPath"];
-                                  setState(() {});
-                                }
-                              },
-                              child: Container(
-                                alignment: Alignment(0, 0.1),
+                              Padding(
+                                padding: const EdgeInsets.all(16.0),
                                 child: Container(
-                                    margin: EdgeInsets.only(top: 25.h),
-                                    child: Container(
-                                      width: 96.w,
-                                      height: 96.w,
-                                      child: Stack(
-                                        children: [
-                                          Container(
-                                            width: 96.w,
-                                            height: 96.w,
-                                            decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: HexColor(
-                                                  AppColors.appColorWhite),
-                                              image: DecorationImage(
-                                                  image: CachedNetworkImageProvider(
-                                                      Utility().getUrlForImage(
-                                                          imageUrl,
-                                                          RESOLUTION_TYPE
-                                                              .R128,
-                                                          SERVICE_TYPE
-                                                              .PERSON)),
-                                                  fit: BoxFit.fill),
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.only(
-                                                bottom: 10.0, right: 4.0),
-                                            child: Align(
-                                                alignment:
-                                                Alignment.bottomRight,
-                                                child: Icon(
-                                                  Icons.edit_outlined,
-                                                  size: 20,
-                                                )),
-                                          )
-                                        ],
-                                      ),
-                                    )),
-                              ),
-                            ),
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: firstName,
-                                    )),
-                                Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: lastName,
-                                    ))
-                              ],
-                            ),
-                            Align(
-                              alignment: Alignment.center,
-                              child: Container(
-                                  padding:
-                                  EdgeInsets.only(left: 8.h, right: 8.0.h),
-                                  child: dob),
-                            ),
-                            Align(
-                              alignment: Alignment.centerLeft,
-                              child: Container(
-                                  padding: EdgeInsets.only(
-                                      left: 16.h,
-                                      right: 8.0.h,
-                                      top: 16.0,
-                                      bottom: 8.0),
+                                  margin: EdgeInsets.all(4.h),
+                                  alignment: Alignment.center,
                                   child: Text(
                                     AppLocalizations.of(context)!
-                                        .translate("select_gender"),
+                                        .translate("update_profile_text"),
                                     style: styleElements
-                                        .bodyText2ThemeScalable(context)
-                                        .copyWith(fontSize: 14.sp),
-                                  )),
-                            ),
-                            Align(
-                              alignment: Alignment.center,
-                              child: Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    InkWell(
-                                      focusColor:
-                                      HexColor(AppColors.appColorBlack35),
-                                      onTap: () {
-                                        setState(() {
-                                          selectedGender = 1;
-                                        });
-                                      },
-                                      child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 16.0, right: 16.0),
-                                        child: Column(
+                                        .bodyText2ThemeScalable(context),
+                                  ),
+                                ),
+                              ),
+                              GestureDetector(
+                                onTap: () async {
+                                  var result = await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => PhotoPreviewScreen(
+                                            registerUserAs: null, from: null),
+                                      ));
+
+                                  if (result != null) {
+                                    if (result["imageUrl"] != null)
+                                      imageUrl = result["imageUrl"];
+                                    if (result["selectPath"] != null)
+                                      selectedImage = result["selectPath"];
+                                    setState(() {});
+                                  }
+                                },
+                                child: Container(
+                                  alignment: Alignment(0, 0.1),
+                                  child: Container(
+                                      margin: EdgeInsets.only(top: 25.h),
+                                      child: Container(
+                                        width: 96.w,
+                                        height: 96.w,
+                                        child: Stack(
                                           children: [
-                                            Image(
-                                              width: 30,
-                                              height: 30,
-                                              image: AssetImage(
-                                                  'assets/appimages/man.png'),
+                                            Container(
+                                              width: 96.w,
+                                              height: 96.w,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                color: HexColor(
+                                                    AppColors.appColorWhite),
+                                                image: DecorationImage(
+                                                    image: CachedNetworkImageProvider(
+                                                        Utility().getUrlForImage(
+                                                            imageUrl,
+                                                            RESOLUTION_TYPE
+                                                                .R128,
+                                                            SERVICE_TYPE
+                                                                .PERSON)),
+                                                    fit: BoxFit.fill),
+                                              ),
                                             ),
-                                            Opacity(
-                                                opacity:
-                                                selectedGender != null &&
-                                                    selectedGender == 1
-                                                    ? 1.0
-                                                    : 0.0,
-                                                child: Icon(
-                                                  Icons.check_circle_outline,
-                                                  color: HexColor(
-                                                      AppColors.appColorGreen),
-                                                  size: 15,
-                                                ))
+                                            Padding(
+                                              padding: const EdgeInsets.only(
+                                                  bottom: 10.0, right: 4.0),
+                                              child: Align(
+                                                  alignment:
+                                                  Alignment.bottomRight,
+                                                  child: Icon(
+                                                    Icons.edit_outlined,
+                                                    size: 20,
+                                                  )),
+                                            )
                                           ],
                                         ),
-                                      ),
-                                    ),
-                                    InkWell(
-                                      focusColor:
-                                      HexColor(AppColors.appColorBlack35),
-                                      onTap: () {
-                                        setState(() {
-                                          selectedGender = 2;
-                                        });
-                                      },
+                                      )),
+                                ),
+                              ),
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  Expanded(
                                       child: Padding(
-                                        padding: const EdgeInsets.only(
-                                            left: 16.0, right: 16.0),
-                                        child: Column(
-                                          children: [
-                                            Image(
-                                              width: 30,
-                                              height: 30,
-                                              image: AssetImage(
-                                                  'assets/appimages/woman.png'),
-                                            ),
-                                            Opacity(
-                                                opacity:
-                                                selectedGender != null &&
-                                                    selectedGender == 2
-                                                    ? 1.0
-                                                    : 0.0,
-                                                child: Icon(
-                                                  Icons.check_circle_outline,
-                                                  color: HexColor(
-                                                      AppColors.appColorGreen),
-                                                  size: 15,
-                                                ))
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    InkWell(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: firstName,
+                                      )),
+                                  Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: lastName,
+                                      ))
+                                ],
+                              ),
+                              Align(
+                                alignment: Alignment.center,
+                                child: Container(
+                                    padding:
+                                    EdgeInsets.only(left: 8.h, right: 8.0.h),
+                                    child: dob),
+                              ),
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Container(
+                                    padding: EdgeInsets.only(
+                                        left: 16.h,
+                                        right: 8.0.h,
+                                        top: 16.0,
+                                        bottom: 8.0),
+                                    child: Text(
+                                      AppLocalizations.of(context)!
+                                          .translate("select_gender"),
+                                      style: styleElements
+                                          .bodyText2ThemeScalable(context)
+                                          .copyWith(fontSize: 14.sp),
+                                    )),
+                              ),
+                              Align(
+                                alignment: Alignment.center,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      InkWell(
                                         focusColor:
                                         HexColor(AppColors.appColorBlack35),
                                         onTap: () {
                                           setState(() {
-                                            selectedGender = 3;
+                                            selectedGender = 1;
                                           });
                                         },
                                         child: Padding(
@@ -486,69 +433,156 @@ class _UpdateProfilePage extends State<UpdateProfilePage>
                                                 width: 30,
                                                 height: 30,
                                                 image: AssetImage(
-                                                    'assets/appimages/bigender.png'),
+                                                    'assets/appimages/man.png'),
                                               ),
                                               Opacity(
-                                                  opacity: selectedGender !=
-                                                      null &&
-                                                      selectedGender == 3
+                                                  opacity:
+                                                  selectedGender != null &&
+                                                      selectedGender == 1
                                                       ? 1.0
                                                       : 0.0,
                                                   child: Icon(
                                                     Icons.check_circle_outline,
-                                                    color: HexColor(AppColors
-                                                        .appColorGreen),
+                                                    color: HexColor(
+                                                        AppColors.appColorGreen),
                                                     size: 15,
                                                   ))
                                             ],
                                           ),
-                                        )),
-                                  ],
+                                        ),
+                                      ),
+                                      InkWell(
+                                        focusColor:
+                                        HexColor(AppColors.appColorBlack35),
+                                        onTap: () {
+                                          setState(() {
+                                            selectedGender = 2;
+                                          });
+                                        },
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(
+                                              left: 16.0, right: 16.0),
+                                          child: Column(
+                                            children: [
+                                              Image(
+                                                width: 30,
+                                                height: 30,
+                                                image: AssetImage(
+                                                    'assets/appimages/woman.png'),
+                                              ),
+                                              Opacity(
+                                                  opacity:
+                                                  selectedGender != null &&
+                                                      selectedGender == 2
+                                                      ? 1.0
+                                                      : 0.0,
+                                                  child: Icon(
+                                                    Icons.check_circle_outline,
+                                                    color: HexColor(
+                                                        AppColors.appColorGreen),
+                                                    size: 15,
+                                                  ))
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      InkWell(
+                                          focusColor:
+                                          HexColor(AppColors.appColorBlack35),
+                                          onTap: () {
+                                            setState(() {
+                                              selectedGender = 3;
+                                            });
+                                          },
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 16.0, right: 16.0),
+                                            child: Column(
+                                              children: [
+                                                Image(
+                                                  width: 30,
+                                                  height: 30,
+                                                  image: AssetImage(
+                                                      'assets/appimages/bigender.png'),
+                                                ),
+                                                Opacity(
+                                                    opacity: selectedGender !=
+                                                        null &&
+                                                        selectedGender == 3
+                                                        ? 1.0
+                                                        : 0.0,
+                                                    child: Icon(
+                                                      Icons.check_circle_outline,
+                                                      color: HexColor(AppColors
+                                                          .appColorGreen),
+                                                      size: 15,
+                                                    ))
+                                              ],
+                                            ),
+                                          )),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                            !isCalling
-                                ? Container(
-                                margin:
-                                EdgeInsets.only(bottom: 4.h, top: 4.h),
-                                alignment: Alignment(0.w, 0.3.w),
-                                child: Container(
-                                  margin: EdgeInsets.only(top: 20.h),
-                                  alignment: Alignment(0, 0.4),
-                                  child: LargeButton(
-                                    name: AppLocalizations.of(context)!
-                                        .translate("proceed"),
-                                    offsetX: 96.66.w,
-                                    offsetY: 12.93.w,
-                                    callback: () {
-                                      if (imageUrl != null) {
+                              !isCalling
+                                  ? Container(
+                                  margin:
+                                  EdgeInsets.only(bottom: 4.h, top: 4.h),
+                                  alignment: Alignment(0.w, 0.3.w),
+                                  child: Container(
+                                    margin: EdgeInsets.only(top: 20.h),
+                                    alignment: Alignment(0, 0.4),
+                                    child: LargeButton(
+                                      name: AppLocalizations.of(context)!
+                                          .translate("proceed"),
+                                      offsetX: 96.66.w,
+                                      offsetY: 12.93.w,
+                                      callback: () {
+                                        if (imageUrl != null) {
 
+if(!isUpdated) {
+                                                _profileUpdate();
+                                              } else
+  {
 
-                                        _profileUpdate();
-                                      } else
-                                        ToastBuilder().showToast(
-                                            AppLocalizations.of(context)!
-                                                .translate("upload_image_"),
-                                            context,
-                                            HexColor(
-                                                AppColors.information));
-                                    },
-                                  ),
-                                ))
-                                : Center(
-                              child: SizedBox(
-                                  height: 30,
-                                  width: 30,
-                                  child: CircularProgressIndicator()),
-                            ),
-                          ],
+    showModalBottomSheet<void>(
+      context: context,
+      isDismissible: false,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(15.0),
+            topRight: Radius.circular(15.0)),
+      ),
+      builder: (context) {
+        return noInstituteFound( context);
+      },
+    );
+  }
+                                        } else
+                                          ToastBuilder().showToast(
+                                              AppLocalizations.of(context)!
+                                                  .translate("upload_image_"),
+                                              context,
+                                              HexColor(
+                                                  AppColors.information));
+                                      },
+                                    ),
+                                  ))
+                                  : Center(
+                                child: SizedBox(
+                                    height: 30,
+                                    width: 30,
+                                    child: CircularProgressIndicator()),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              );
-            })));
+                    ],
+                  ),
+                );
+              }))),
+    );
   }
 
   // ignore: missing_return
@@ -576,8 +610,12 @@ class _UpdateProfilePage extends State<UpdateProfilePage>
               });
               if (resposne.statusCode == Strings.success_code) {
                 prefs!.setBool("isProfileUpdated", true);
+                setState(() {
+                  isUpdated=true;
+                });
                 showModalBottomSheet<void>(
                   context: context,
+                  isDismissible: false,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(15.0),

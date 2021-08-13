@@ -27,6 +27,8 @@ class appFindCard extends StatelessWidget {
       padding: EdgeInsets.only(left: 16, right: 16, top: 24, bottom: 24),
       color: color,
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+
         children: [
           Expanded(
             child: Column(

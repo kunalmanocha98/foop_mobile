@@ -86,7 +86,7 @@ class NetworkPageState extends State<NetworkPage> with SingleTickerProviderState
   }
   loadPages() {
 
-    list.add(CustomTabMaker(statelessWidget: AllTabsNetwork(pageTitle,type,id,ownerId,ownerType,callback), tabName: AppLocalizations.of(context)!.translate('all')));
+    list.add(new CustomTabMaker(statelessWidget: new CommonListingPageNetwork(""), tabName: ""));
     list.add(CustomTabMaker(statelessWidget: FollowingSuggestionsPage(pageTitle,type,id,ownerId,ownerType,callback), tabName: AppLocalizations.of(context)!.translate('following')));
     list.add(CustomTabMaker(statelessWidget: FollowersSuggestionsPage(pageTitle,type,id,ownerId,ownerType,callback), tabName: AppLocalizations.of(context)!.translate('followers')));
     list.add(new CustomTabMaker(statelessWidget: new CommonListingPageNetwork(""), tabName: ""));

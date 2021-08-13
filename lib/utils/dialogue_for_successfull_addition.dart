@@ -96,10 +96,13 @@ class CustomDialogue extends StatelessWidget {
                   alignment: Alignment.topCenter,
                   child: Container(
                     margin: const EdgeInsets.only(bottom: 20),
-                    child: Text(
-                      subtitle,
-                      style: styleElements.subtitle2ThemeScalable(context),
-                      textAlign: TextAlign.center,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left:16.0,right: 16.0),
+                      child: Text(
+                        subtitle,
+                        style: styleElements.subtitle2ThemeScalable(context),
+                        textAlign: TextAlign.center,
+                      ),
                     ),
                   )),
 

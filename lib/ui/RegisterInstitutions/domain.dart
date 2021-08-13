@@ -27,12 +27,13 @@ class DomainPage extends StatefulWidget {
   bool isEdit;
   Function ? callBack;
    BusinessData? data;
+   String?ohoid;
   final Function? refreshCallback;
   @override
   _DomainPage createState() =>
       new _DomainPage(instId);
 
-  DomainPage({this.instId, this.isEdit = false,this.callBack,this.data,this.refreshCallback});
+  DomainPage({this.instId, this.isEdit = false,this.callBack,this.data,this.refreshCallback,this.ohoid});
 }
 
 class _DomainPage extends State<DomainPage>
@@ -80,6 +81,7 @@ class _DomainPage extends State<DomainPage>
 int? id;
   String? selectTecRange;
   int? selectedEpoch;
+  String ohName="";
 
   late SharedPreferences prefs;
 
@@ -104,9 +106,11 @@ int? id;
       {
         domainController.text=widget.data!.businessDomains![0].domainName!;
         id=widget.data!.businessDomains![0].id;
+
+
       }
 
-
+    ohName=prefs.getString("businessOhoName")!;
 
 
 
@@ -249,25 +253,28 @@ int? id;
                                     ),
                                   )),
 
-
                               Container(
                                 margin: EdgeInsets.only(
-                                    left: 8.w, right: 8.w, bottom: 8.h),
-                                child: Text(
-                                  "Oho username",
-                                  style: styleElements
-                                      .bodyText2ThemeScalable(context)
-                                      .copyWith(color: HexColor(AppColors.appColorBlack85)),
-
-                                ),
+                                    left: 8.w, right: 8.w,top: 20),
+                                child: Text("Oho user name"),
                               ),
 
                               Align(
                                   alignment: Alignment.center,
-                                  child: Container(
+                                  child: Card(
+
+                                    color:HexColor(AppColors.appColorWhite65),
                                     margin: EdgeInsets.only(
                                         left: 8.w, right: 8.w, bottom: 8.h),
-                                    child: ohoUserNameForm,
+                                    child: Container(child: Align(
+                                        alignment: Alignment.centerLeft,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Padding(
+                                            padding: const EdgeInsets.only(left:8.0,right: 8.0),
+                                            child: Text(ohName),
+                                          ),
+                                        ))),
                                   )),
 
 

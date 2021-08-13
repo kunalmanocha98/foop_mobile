@@ -112,7 +112,7 @@ class _CommunityPage extends State<CommunityPage>
             callback: () {
               callback();
             }),
-        tabName: AppLocalizations.of(context)!.translate('network')));
+        tabName: AppLocalizations.of(context)!.translate('coworker')));
 
     setState(() {
       _tabController = TabController(vsync: this, length: list.length);

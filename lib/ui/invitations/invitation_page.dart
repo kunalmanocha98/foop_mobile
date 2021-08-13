@@ -90,7 +90,7 @@ class _InvitationPage extends State<InvitationPage> {
                           child: Container(
                             child: Image(
                                 image: AssetImage(
-                                    'assets/appimages/Teacher-pana.png')),
+                                    'assets/appimages/invite.png')),
                           ),
                         ),
                         Container(

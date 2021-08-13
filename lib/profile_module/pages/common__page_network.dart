@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:oho_works_app/api_calls/calls.dart';
 import 'package:oho_works_app/components/CustomPaginator.dart';
+import 'package:oho_works_app/components/customcard.dart';
 import 'package:oho_works_app/components/searchBox.dart';
 import 'package:oho_works_app/components/app_user_list_tile.dart';
 import 'package:oho_works_app/models/CommonListingModels/commonListingrequest.dart';
@@ -92,20 +93,23 @@ class _CommonListingPageNetwork extends State<CommonListingPageNetwork>
 
         ];
       },
-      body:RefreshIndicator(
-        onRefresh: refreshList,
-        child: Paginator.listView(
-            key: paginatorKey,
-            padding: EdgeInsets.only(top: 8),
-            scrollPhysics: BouncingScrollPhysics(),
-            pageLoadFuture: getFollowers,
-            pageItemsGetter: CustomPaginator(context).listItemsGetter,
-            listItemBuilder: listItemBuilder,
-            loadingWidgetBuilder: CustomPaginator(context).loadingWidgetMaker,
-            errorWidgetBuilder: CustomPaginator(context).errorWidgetMaker,
-            emptyListWidgetBuilder: CustomPaginator(context).emptyListWidgetMaker,
-            totalItemsGetter: CustomPaginator(context).totalPagesGetter,
-            pageErrorChecker: CustomPaginator(context).pageErrorChecker),
+      body:appCard(
+        padding: EdgeInsets.all(0),
+        child: RefreshIndicator(
+          onRefresh: refreshList,
+          child: Paginator.listView(
+              key: paginatorKey,
+              padding: EdgeInsets.only(top: 8),
+              scrollPhysics: BouncingScrollPhysics(),
+              pageLoadFuture: getFollowers,
+              pageItemsGetter: CustomPaginator(context).listItemsGetter,
+              listItemBuilder: listItemBuilder,
+              loadingWidgetBuilder: CustomPaginator(context).loadingWidgetMaker,
+              errorWidgetBuilder: CustomPaginator(context).errorWidgetMaker,
+              emptyListWidgetBuilder: CustomPaginator(context).emptyListWidgetMaker,
+              totalItemsGetter: CustomPaginator(context).totalPagesGetter,
+              pageErrorChecker: CustomPaginator(context).pageErrorChecker),
+        ),
       ),
     ));
   }
