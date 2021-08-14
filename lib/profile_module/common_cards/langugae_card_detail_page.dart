@@ -94,228 +94,258 @@ class LanguageCardDetailPage extends StatelessWidget {
               }
             },
             onTap: () {
-
-              if (list![position].isUserAuthorized == "Yes" &&
-                  (personType == "person" || personType == "thirdPerson")) {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) =>
-                        SelectLanguageProficiencyDialogue(
-                          personId: id,
-                          title2: AppLocalizations.of(context)!
-                              .translate("what_want_to_be"),
-                          title: personType == "person"
-                              ? AppLocalizations.of(context)!
-                              .translate("my_proficiency")
-                              : ("Endorse " +
-                              userName!.split(' ')[0] +
-                              "'s " +
-                              AppLocalizations.of(context)!
-                                  .translate("proficiency")),
-                          subtitle: personType == "person"
-                              ? AppLocalizations.of(context)!
-                              .translate("rate_experties")
-                              : AppLocalizations.of(context)!
-                              .translate("rate_expert"),
-                          categoryType: type,
-                          id1: list![position]
-                              .standardExpertiseCategoryTypeId
-                              .toString(),
-                          starRatingsId: list![position].starRatingId,
-                          id2: list![position]
-                              .standardExpertiseCategoryId
-                              .toString(),
-                          id3: list![position].standardExpertiseCategoryTypeId,
-                          starRatings: list![position].rattingStar!.toDouble(),
-                          instId: list![position].institutionId,
-                          itemId: int.parse(list![position].id!),
-
-                          callbackPicker: () {
-                            callbackPicker!();
-                          },
-                          type: null,
-                        ));
-              }
-              else
-              { {
-                ToastBuilder().showToast(
-                    AppLocalizations.of(
-                        context)!
-                        .translate(
-                        "not_authorized"),
-                    context,HexColor(AppColors.information));
-              }}
+              //
+              // if (list![position].isUserAuthorized == "Yes" &&
+              //     (personType == "person" || personType == "thirdPerson")) {
+              //   showDialog(
+              //       context: context,
+              //       builder: (BuildContext context) =>
+              //           SelectLanguageProficiencyDialogue(
+              //             personId: id,
+              //             title2: AppLocalizations.of(context)!
+              //                 .translate("what_want_to_be"),
+              //             title: personType == "person"
+              //                 ? AppLocalizations.of(context)!
+              //                 .translate("my_proficiency")
+              //                 : ("Endorse " +
+              //                 userName!.split(' ')[0] +
+              //                 "'s " +
+              //                 AppLocalizations.of(context)!
+              //                     .translate("proficiency")),
+              //             subtitle: personType == "person"
+              //                 ? AppLocalizations.of(context)!
+              //                 .translate("rate_experties")
+              //                 : AppLocalizations.of(context)!
+              //                 .translate("rate_expert"),
+              //             categoryType: type,
+              //             id1: list![position]
+              //                 .standardExpertiseCategoryTypeId
+              //                 .toString(),
+              //             starRatingsId: list![position].starRatingId,
+              //             id2: list![position]
+              //                 .standardExpertiseCategoryId
+              //                 .toString(),
+              //             id3: list![position].standardExpertiseCategoryTypeId,
+              //             starRatings: list![position].rattingStar!.toDouble(),
+              //             instId: list![position].institutionId,
+              //             itemId: int.parse(list![position].id!),
+              //
+              //             callbackPicker: () {
+              //               callbackPicker!();
+              //             },
+              //             type: null,
+              //           ));
+              // }
+              // else
+              // { {
+              //   ToastBuilder().showToast(
+              //       AppLocalizations.of(
+              //           context)!
+              //           .translate(
+              //           "not_authorized"),
+              //       context,HexColor(AppColors.information));
+              // }}
             },
             child: Container(
               child: Column(
                 children: [
-                  Container(
-                    padding: const EdgeInsets.only(
-                        left: 20, right: 20, top: 16, bottom: 16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Flexible(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Container(
-                                    child: Text(
-                                      Utility().toCamelCase(list![position]
-                                          .standardExpertiseCategoryTypes ??
-                                          ""),
-                                      style: styleElements!
-                                          .bodyText1ThemeScalable(context)
-                                          .copyWith(fontWeight: FontWeight.w600),
-                                      textAlign: TextAlign.left,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 20.h,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Container(
-                                        padding: EdgeInsets.only(top: 2.h),
-                                        child: Row(
-                                          children: <Widget>[
-                                            Container(
-                                              child: Text(
-                                                list![position].avgRating != null
-                                                    ? list![position]
-                                                    .avgRating!
-                                                    .toStringAsFixed(2)
-                                                    .toString()
-                                                    : "",
-                                                style: styleElements!
-                                                    .captionThemeScalable(context)
-                                                    .copyWith(
-                                                    color: HexColor(AppColors.appColorBlack35)),
-                                                textAlign: TextAlign.center,
-                                              ),
-                                            ),
-                                            Align(
-                                              alignment: Alignment.center,
-                                              child: RatingBar(
-                                                initialRating: list![position]
-                                                    .avgRating !=
-                                                    null
-                                                    ? double.parse(list![position]
-                                                    .avgRating!
-                                                    .toStringAsFixed(2))
-                                                    : 0,
-                                                minRating: list![position]
-                                                    .avgRating !=
-                                                    null
-                                                    ? double.parse(list![position]
-                                                    .avgRating!
-                                                    .toStringAsFixed(2))
-                                                    : 0,
-                                                maxRating: list![position]
-                                                    .avgRating !=
-                                                    null
-                                                    ? double.parse(list![position]
-                                                    .avgRating!
-                                                    .toStringAsFixed(2))
-                                                    : 0,
-                                                direction: Axis.horizontal,
-                                                ignoreGestures: true,
-                                                allowHalfRating: false,
-                                                itemCount: 5,
-                                                itemSize: 12.0,
-                                                itemPadding: EdgeInsets.symmetric(
-                                                    horizontal: 4.0),
-                                                ratingWidget: RatingWidget(
-                                                  empty: Icon(
-                                                    Icons.star_outline,
-                                                    color: HexColor(AppColors.appMainColor),
-                                                  ),
-                                                  half:  Icon(
-                                                    Icons.star_half_outlined,
-                                                    color: HexColor(AppColors.appMainColor),
-                                                  ),
-                                                  full:  Icon(
-                                                    Icons.star_outlined,
-                                                    color: HexColor(AppColors.appMainColor),
-                                                  ),
-                                                ),
-                                                onRatingUpdate: (rating) {
-                                                  print(rating);
-                                                },
-                                              ),
-                                            ),
-                                          ],
+                  ListTile(
+                    title: Text(Utility().toCamelCase(list![position]
+                                              .standardExpertiseCategoryTypes ??
+                                              ""),
+                                          style: styleElements!
+                                              .bodyText1ThemeScalable(context)
+                                              .copyWith(fontWeight: FontWeight.w600),
+                                          textAlign: TextAlign.left,
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  padding: EdgeInsets.only(top: 2.h),
-                                  child: Text(
-                                    list![position].abilites != null &&
-                                        list![position].abilites!.isNotEmpty
-                                        ? getExpertise(list![position].abilites!)
-                                        : "",
-                                    style: styleElements!
-                                        .subtitle2ThemeScalable(context)
-                                        .copyWith(color: HexColor(AppColors.appColorBlack65)),
-                                    textAlign: TextAlign.left,
-                                  ),
-                                ),
-                                Visibility(
-                                  visible: list![position].totalCount != null &&
-                                      list![position].totalCount != "",
-                                  child: Container(
-                                    padding: EdgeInsets.only(
-                                      top: 2.h,
-                                    ),
-                                    child: Row(
-                                      children: <Widget>[
-                                        Flexible(
-                                            child: OverlappedImages(
-                                                list![position].images)),
-                                        Expanded(
-                                          child: Padding(
-                                            padding:
-                                            const EdgeInsets.only(left: 4),
-                                            child: Text(
-                                              list![position].totalCount ?? "",
-                                              overflow: TextOverflow.ellipsis,
-                                              style: styleElements!
-                                                  .captionThemeScalable(context)
-                                                  .copyWith(
-                                                  color: HexColor(AppColors.appColorBlack35)),
-                                              textAlign: TextAlign.left,
-                                            ),
-                                          ),
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            )),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: Container(
-                            padding: EdgeInsets.only(
-                              right: 16.h,
-                            ),
-                            child: Icon(
-                              Icons.star_border_outlined,
-                              color: HexColor(AppColors.appMainColor),
-                              size: 24.h,
-                            ),
-                          ),
-                        )
-                      ],
+                    trailing: IconButton(
+                      icon: Icon(Icons.delete_outline),
+                      onPressed: () {  if (personType == "person") {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) => DeleteClass(
+                              id: list![position].id.toString(),
+                              categoryType:
+                              data.title == "Language" ? "language" : "skill",
+                              instId: list![position].allInstitutionsId.toString(),
+                              callbackPicker: () {
+                                callbackPicker!();
+                              },
+                              subtitle: null,
+                              title: null,
+                              type: null,
+                            ));
+                      } },
                     ),
-                  ),
+                  )
+                  // Container(
+                  //   padding: const EdgeInsets.only(
+                  //       left: 20, right: 20, top: 16, bottom: 16),
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //     children: [
+                  //       Flexible(
+                  //           child: Column(
+                  //             crossAxisAlignment: CrossAxisAlignment.start,
+                  //             children: <Widget>[
+                  //               Align(
+                  //                 alignment: Alignment.topLeft,
+                  //                 child: Container(
+                  //                   child: Text(
+                  //                     Utility().toCamelCase(list![position]
+                  //                         .standardExpertiseCategoryTypes ??
+                  //                         ""),
+                  //                     style: styleElements!
+                  //                         .bodyText1ThemeScalable(context)
+                  //                         .copyWith(fontWeight: FontWeight.w600),
+                  //                     textAlign: TextAlign.left,
+                  //                   ),
+                  //                 ),
+                  //               ),
+                  //               SizedBox(
+                  //                 height: 20.h,
+                  //                 child: Row(
+                  //                   mainAxisAlignment:
+                  //                   MainAxisAlignment.spaceBetween,
+                  //                   children: [
+                  //                     Container(
+                  //                       padding: EdgeInsets.only(top: 2.h),
+                  //                       child: Row(
+                  //                         children: <Widget>[
+                  //                           Container(
+                  //                             child: Text(
+                  //                               list![position].avgRating != null
+                  //                                   ? list![position]
+                  //                                   .avgRating!
+                  //                                   .toStringAsFixed(2)
+                  //                                   .toString()
+                  //                                   : "",
+                  //                               style: styleElements!
+                  //                                   .captionThemeScalable(context)
+                  //                                   .copyWith(
+                  //                                   color: HexColor(AppColors.appColorBlack35)),
+                  //                               textAlign: TextAlign.center,
+                  //                             ),
+                  //                           ),
+                  //                           Align(
+                  //                             alignment: Alignment.center,
+                  //                             child: RatingBar(
+                  //                               initialRating: list![position]
+                  //                                   .avgRating !=
+                  //                                   null
+                  //                                   ? double.parse(list![position]
+                  //                                   .avgRating!
+                  //                                   .toStringAsFixed(2))
+                  //                                   : 0,
+                  //                               minRating: list![position]
+                  //                                   .avgRating !=
+                  //                                   null
+                  //                                   ? double.parse(list![position]
+                  //                                   .avgRating!
+                  //                                   .toStringAsFixed(2))
+                  //                                   : 0,
+                  //                               maxRating: list![position]
+                  //                                   .avgRating !=
+                  //                                   null
+                  //                                   ? double.parse(list![position]
+                  //                                   .avgRating!
+                  //                                   .toStringAsFixed(2))
+                  //                                   : 0,
+                  //                               direction: Axis.horizontal,
+                  //                               ignoreGestures: true,
+                  //                               allowHalfRating: false,
+                  //                               itemCount: 5,
+                  //                               itemSize: 12.0,
+                  //                               itemPadding: EdgeInsets.symmetric(
+                  //                                   horizontal: 4.0),
+                  //                               ratingWidget: RatingWidget(
+                  //                                 empty: Icon(
+                  //                                   Icons.star_outline,
+                  //                                   color: HexColor(AppColors.appMainColor),
+                  //                                 ),
+                  //                                 half:  Icon(
+                  //                                   Icons.star_half_outlined,
+                  //                                   color: HexColor(AppColors.appMainColor),
+                  //                                 ),
+                  //                                 full:  Icon(
+                  //                                   Icons.star_outlined,
+                  //                                   color: HexColor(AppColors.appMainColor),
+                  //                                 ),
+                  //                               ),
+                  //                               onRatingUpdate: (rating) {
+                  //                                 print(rating);
+                  //                               },
+                  //                             ),
+                  //                           ),
+                  //                         ],
+                  //                       ),
+                  //                     ),
+                  //                   ],
+                  //                 ),
+                  //               ),
+                  //               Container(
+                  //                 padding: EdgeInsets.only(top: 2.h),
+                  //                 child: Text(
+                  //                   list![position].abilites != null &&
+                  //                       list![position].abilites!.isNotEmpty
+                  //                       ? getExpertise(list![position].abilites!)
+                  //                       : "",
+                  //                   style: styleElements!
+                  //                       .subtitle2ThemeScalable(context)
+                  //                       .copyWith(color: HexColor(AppColors.appColorBlack65)),
+                  //                   textAlign: TextAlign.left,
+                  //                 ),
+                  //               ),
+                  //               Visibility(
+                  //                 visible: list![position].totalCount != null &&
+                  //                     list![position].totalCount != "",
+                  //                 child: Container(
+                  //                   padding: EdgeInsets.only(
+                  //                     top: 2.h,
+                  //                   ),
+                  //                   child: Row(
+                  //                     children: <Widget>[
+                  //                       Flexible(
+                  //                           child: OverlappedImages(
+                  //                               list![position].images)),
+                  //                       Expanded(
+                  //                         child: Padding(
+                  //                           padding:
+                  //                           const EdgeInsets.only(left: 4),
+                  //                           child: Text(
+                  //                             list![position].totalCount ?? "",
+                  //                             overflow: TextOverflow.ellipsis,
+                  //                             style: styleElements!
+                  //                                 .captionThemeScalable(context)
+                  //                                 .copyWith(
+                  //                                 color: HexColor(AppColors.appColorBlack35)),
+                  //                             textAlign: TextAlign.left,
+                  //                           ),
+                  //                         ),
+                  //                       )
+                  //                     ],
+                  //                   ),
+                  //                 ),
+                  //               ),
+                  //             ],
+                  //           )),
+                  //       Align(
+                  //         alignment: Alignment.centerRight,
+                  //         child: Container(
+                  //           padding: EdgeInsets.only(
+                  //             right: 16.h,
+                  //           ),
+                  //           child: Icon(
+                  //             Icons.star_border_outlined,
+                  //             color: HexColor(AppColors.appMainColor),
+                  //             size: 24.h,
+                  //           ),
+                  //         ),
+                  //       )
+                  //     ],
+                  //   ),
+                  // ),
+                  ,
                   Divider(
                     height: 1,
                   )

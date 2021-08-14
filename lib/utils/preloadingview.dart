@@ -34,15 +34,16 @@ class PreloadingView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.all(16),
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
+      child:  Column(
+        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Expanded(
+          Flexible(
             child: Shimmer.fromColors(
               baseColor: HexColor(AppColors.appColorGrey300),
               highlightColor: HexColor(AppColors.appColorGrey100),
               enabled: enabled,
               child: ListView.builder(
+                shrinkWrap: true,
                 itemBuilder: (_, __) => Padding(
                   padding: const EdgeInsets.only(bottom: 8.0),
                   child:
@@ -62,7 +63,7 @@ class PreloadingView extends StatelessWidget {
                         width: double.infinity,
                         height: 8.0,
                         color: HexColor(AppColors.appColorWhite),
-                      ) ,
+                      ),
                       subtitle:  Container(
                         width: double.infinity,
                         height: 8.0,
@@ -73,10 +74,7 @@ class PreloadingView extends StatelessWidget {
                         height: 8.0,
                         color: HexColor(AppColors.appColorWhite),
                       )
-
-                  )
-
-              ,
+                  ),
                 ),
                 itemCount: 6,
               ),

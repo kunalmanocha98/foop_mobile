@@ -13,8 +13,39 @@ import 'package:oho_works_app/utils/hexColors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+
 // ignore: must_be_immutable
-class DepartmentCard extends StatelessWidget {
+class DepartmentCard extends StatelessWidget{
+  final CommonCardData data;
+  TextStyleElements? styleElements;
+  // List<String>? listSubItems = ["Finance","Software Development","Yoga","Event management","Crisis Management"];
+  Null Function()? callbackPicker;
+  String? type;
+  int? id;
+  String? personType;
+  String? instId;
+
+  DepartmentCard(
+      {Key? key,
+        required this.data,
+        this.styleElements,
+        this.callbackPicker,
+        this.personType,
+        this.id,
+        this.instId})
+      : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return _DeptCard(
+        data: data,
+        styleElements: styleElements,
+        callbackPicker: callbackPicker,personType: personType,id: id,instId: instId
+    );
+  }
+
+}
+// ignore: must_be_immutable
+class _DeptCard extends StatefulWidget {
   final CommonCardData data;
   BuildContext? context;
   TextStyleElements? styleElements;
@@ -23,6 +54,33 @@ class DepartmentCard extends StatelessWidget {
   String? type;
   int? id;
   String? personType;
+  String? instId;
+  _DeptCard(
+      {Key? key,
+        required this.data,
+        this.styleElements,
+        this.callbackPicker,
+        this.personType,
+        this.id,
+        this.instId})
+      : super(key: key);
+
+  @override
+  _DepartmentCard createState() => _DepartmentCard(
+    data: data,
+    styleElements: styleElements,
+    callbackPicker: callbackPicker,personType: personType,id: id,instId: instId
+  );
+}
+class _DepartmentCard extends State<_DeptCard>{
+  final CommonCardData data;
+  TextStyleElements? styleElements;
+  // List<String>? listSubItems = ["Finance","Software Development","Yoga","Event management","Crisis Management"];
+  Null Function()? callbackPicker;
+  String? type;
+  int? id;
+  String? personType;
+  bool isSeemore = false;
 
   Size displaySize(BuildContext context) {
     debugPrint('Size = ' + MediaQuery.of(context).size.toString());
@@ -41,22 +99,19 @@ class DepartmentCard extends StatelessWidget {
 
   String? instId;
 
-  DepartmentCard(
-      {Key? key,
+  _DepartmentCard({
         required this.data,
         this.styleElements,
         this.callbackPicker,
         this.personType,
         this.id,
-        this.instId})
-      : super(key: key);
+        this.instId});
 
   @override
   Widget build(BuildContext context) {
 
     type =  "Departments";
     styleElements = TextStyleElements(context);
-    this.context = context;
     return appListCard(
         child: Column(
           children: <Widget>[
@@ -116,7 +171,6 @@ class DepartmentCard extends StatelessWidget {
                     ? Align(
                     alignment: Alignment.centerLeft,
                     child:  Container(
-                        height: 100.0,
                         child:
                         Wrap(
                           spacing: 8.0, // gap between adjacent chips
@@ -171,20 +225,9 @@ class DepartmentCard extends StatelessWidget {
               alignment: Alignment.topRight,
               child: GestureDetector(
                   onTap: () async {
-                    var result = await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => UserProfileCards(
-                            userId: id,
-                            userType: personType,
-                            type:
-                            "department",
-                            currentPosition: 2,
-                          ),
-                        ));
-                    if (result != null && result['result'] == "update") {
-                      callbackPicker!();
-                    }
+                    setState(() {
+                      isSeemore = !isSeemore;
+                    });
                   },
                   child: Container(
                     margin: const EdgeInsets.only(right: 16, bottom: 16),
@@ -192,7 +235,7 @@ class DepartmentCard extends StatelessWidget {
                       /*visible: data.isShowMore ??= false,*/
                       child: Align(
                         alignment: Alignment.bottomRight,
-                        child: Text(AppLocalizations.of(context)!.translate('see_more'),
+                        child: Text(AppLocalizations.of(context)!.translate(isSeemore?'see_less':'see_more'),
                           style: styleElements!.subtitle2ThemeScalable(context),
                           textAlign: TextAlign.center,
                         ),
@@ -205,9 +248,19 @@ class DepartmentCard extends StatelessWidget {
   }
 
   generate_tags(List<SubRow> list,) {
-    return list
-        .map((list) => get_chip(list))
-        .toList();
+    if(list.length>3) {
+      if(isSeemore) {
+        return list
+            .map((list) => get_chip(list))
+            .toList();
+      }else{
+        return list.sublist(0,3).map((list) => get_chip(list))
+            .toList();
+      }
+    }else{
+      return list.map((list) => get_chip(list))
+          .toList();
+    }
   }
 
   get_chip(SubRow item) {
@@ -223,7 +276,7 @@ class DepartmentCard extends StatelessWidget {
               overflow: TextOverflow.ellipsis,
               style: styleElements!
                   .subtitle2ThemeScalable(
-                  context!),
+                  context),
               textAlign: TextAlign.center,
             ),
           )),
