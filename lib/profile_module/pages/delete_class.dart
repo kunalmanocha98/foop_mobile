@@ -111,10 +111,14 @@ bool isLoading=false;
           },
           child: SizedBox(
             height: 54,
-            child:isLoading?SizedBox(
-              height: 20,
-                width: 20,
-                child: CircularProgressIndicator()): Center(
+            child:isLoading?Container(
+              child: Center(
+                child: SizedBox(
+                  height: 20,
+                    width: 20,
+                    child: CircularProgressIndicator()),
+              ),
+            ): Center(
               child: Text("Delete This " + categoryType,
                 style: styleElements.subtitle1ThemeScalable(context),
               ),

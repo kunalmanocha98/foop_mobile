@@ -8,6 +8,8 @@ import 'package:oho_works_app/components/appProgressButton.dart';
 import 'package:oho_works_app/components/appemptywidget.dart';
 import 'package:oho_works_app/models/add_new_skill.dart';
 import 'package:oho_works_app/models/add_new_skill_response.dart';
+import 'package:oho_works_app/models/add_skills_language-payload.dart';
+import 'package:oho_works_app/models/basic_res.dart';
 import 'package:oho_works_app/models/expertise_list.dart';
 import 'package:oho_works_app/profile_module/pages/select_language_proficiency_dialog.dart';
 import 'package:oho_works_app/utils/TextStyles/TextStyleElements.dart';
@@ -145,8 +147,10 @@ class _EditLanguage extends State<EditLanguage> {
                   progressIndicator: false,
                 ),
 
-                isLoading?  PreloadingView(
-                    url: "assets/appimages/settings.png"):  Expanded(
+                isLoading?  Flexible(
+                  child: PreloadingView(
+                      url: "assets/appimages/settings.png"),
+                ):  Expanded(
                   child: language.isNotEmpty
                       ? appListCard(
                         child: ListView(
@@ -206,38 +210,41 @@ class _EditLanguage extends State<EditLanguage> {
                                 language.forEach((key, value) {
                                   if (value!) {
                                     isSelected = true;
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) =>
-                                            SelectLanguageProficiencyDialogue(
-                                              personId: prefs.getInt("userId"),
-                                              title2: AppLocalizations.of(
-                                                  context)!
-                                                  .translate("what_want_to_be"),
-                                              title: AppLocalizations.of(
-                                                  context)!
-                                                  .translate("my_proficiency"),
-                                              subtitle: AppLocalizations
-                                                  .of(context)!
-                                                  .translate("rate_experties"),
-                                              categoryType: type,
-                                              id1: key.id.toString(),
-                                              id3: key
-                                                  .standardExpertiseCategoryTypeId,
-                                              id2: key
-                                                  .standardExpertiseCategoryId
-                                                  .toString(),
-                                              instId: instId,
-                                              callbackPicker: () {
-                                                callbackPicker!();
-                                                Navigator.of(context).pop({'result': "success"});
-                                              }, type: null,));
+                                    addLang(key,(){
+                                    });
+                                    // showDialog(
+                                    //     context: context,
+                                    //     builder: (BuildContext context) =>
+                                    //         SelectLanguageProficiencyDialogue(
+                                    //           personId: prefs.getInt("userId"),
+                                    //           title2: AppLocalizations.of(
+                                    //               context)!
+                                    //               .translate("what_want_to_be"),
+                                    //           title: AppLocalizations.of(
+                                    //               context)!
+                                    //               .translate("my_proficiency"),
+                                    //           subtitle: AppLocalizations
+                                    //               .of(context)!
+                                    //               .translate("rate_experties"),
+                                    //           categoryType: type,
+                                    //           id1: key.id.toString(),
+                                    //           id3: key
+                                    //               .standardExpertiseCategoryTypeId,
+                                    //           id2: key
+                                    //               .standardExpertiseCategoryId
+                                    //               .toString(),
+                                    //           instId: instId,
+                                    //           callbackPicker: () {
+                                    //             callbackPicker!();
+                                    //             Navigator.of(context).pop({'result': "success"});
+                                    //           }, type: null,));
                                   }
                                 });
-                                if (!isSelected) {
+                                // if (!isSelected) {
                                   callbackPicker!();
                                   Navigator.of(context).pop({'result': "success"});
-                                } },
+                                // }
+                                },
                               color: HexColor(AppColors.appColorWhite),
                               child: Text(
                                 AppLocalizations.of(context)!
@@ -274,44 +281,44 @@ class _EditLanguage extends State<EditLanguage> {
                                     }
                                   });
                                   if (item != null) {
-                                    showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) =>
-                                            SelectLanguageProficiencyDialogue(
-                                              personId: prefs.getInt(
-                                                  "userId"),
-                                              title2: AppLocalizations
-                                                  .of(context)!
-                                                  .translate(
-                                                  "what_want_to_be"),
-                                              title: AppLocalizations
-                                                  .of(context)!
-                                                  .translate(
-                                                  "my_proficiency"),
-                                              subtitle: AppLocalizations.of(
-                                                  context)!
-                                                  .translate(
-                                                  "rate_experties"),
-                                              categoryType: type,
-                                              id1: item!.id.toString(),
-                                              id3: item!
-                                                  .standardExpertiseCategoryTypeId,
-                                              id2: item!
-                                                  .standardExpertiseCategoryId
-                                                  .toString(),
-                                              instId: instId,
-
-                                              callbackPicker: () {
-                                                handleCallBack();
-                                              }, type: null,));
+                                    addLang(item!, (){
+                                      handleCallBack();
+                                    });
+                                    // showDialog(
+                                    //     context: context,
+                                    //     builder: (BuildContext context) =>
+                                    //         SelectLanguageProficiencyDialogue(
+                                    //           personId: prefs.getInt(
+                                    //               "userId"),
+                                    //           title2: AppLocalizations
+                                    //               .of(context)!
+                                    //               .translate(
+                                    //               "what_want_to_be"),
+                                    //           title: AppLocalizations
+                                    //               .of(context)!
+                                    //               .translate(
+                                    //               "my_proficiency"),
+                                    //           subtitle: AppLocalizations.of(
+                                    //               context)!
+                                    //               .translate(
+                                    //               "rate_experties"),
+                                    //           categoryType: type,
+                                    //           id1: item!.id.toString(),
+                                    //           id3: item!
+                                    //               .standardExpertiseCategoryTypeId,
+                                    //           id2: item!
+                                    //               .standardExpertiseCategoryId
+                                    //               .toString(),
+                                    //           instId: instId,
+                                    //
+                                    //           callbackPicker: () {
+                                    //             handleCallBack();
+                                    //           }, type: null,));
                                   } else {
                                     handleCallBack();
                                   }
                                 }
-
-
-
-                               },
+                              },
                               color: HexColor(AppColors.appColorWhite),
                               child: Text(
                                 AppLocalizations.of(context)!
@@ -372,36 +379,39 @@ class _EditLanguage extends State<EditLanguage> {
                                     {
                                       language.forEach((key, value) {
                                         if (value!) {
-                                          showDialog(
-                                              context: context,
-                                              builder: (BuildContext context) =>
-                                                  SelectLanguageProficiencyDialogue(
-                                                    personId: prefs.getInt(
-                                                        "userId"),
-                                                    title2: AppLocalizations.of(
-                                                        context)!
-                                                        .translate(
-                                                        "what_want_to_be"),
-                                                    title: AppLocalizations.of(
-                                                        context)!
-                                                        .translate(
-                                                        "my_proficiency"),
-                                                    subtitle: AppLocalizations
-                                                        .of(context)!
-                                                        .translate(
-                                                        "rate_experties"),
-                                                    categoryType: type,
-                                                    id1: key.id.toString(),
-                                                    id3: key
-                                                        .standardExpertiseCategoryTypeId,
-                                                    id2: key
-                                                        .standardExpertiseCategoryId
-                                                        .toString(),
-                                                    instId: instId,
-                                                    callbackPicker: () {
-                                                      Navigator.of(context).pop(
-                                                          {'result': "success"});
-                                                    }, type: null,));
+                                          addLang(key, (){
+                                            Navigator.of(context).pop({'result': "success"});
+                                          });
+                                          // showDialog(
+                                          //     context: context,
+                                          //     builder: (BuildContext context) =>
+                                          //         SelectLanguageProficiencyDialogue(
+                                          //           personId: prefs.getInt(
+                                          //               "userId"),
+                                          //           title2: AppLocalizations.of(
+                                          //               context)!
+                                          //               .translate(
+                                          //               "what_want_to_be"),
+                                          //           title: AppLocalizations.of(
+                                          //               context)!
+                                          //               .translate(
+                                          //               "my_proficiency"),
+                                          //           subtitle: AppLocalizations
+                                          //               .of(context)!
+                                          //               .translate(
+                                          //               "rate_experties"),
+                                          //           categoryType: type,
+                                          //           id1: key.id.toString(),
+                                          //           id3: key
+                                          //               .standardExpertiseCategoryTypeId,
+                                          //           id2: key
+                                          //               .standardExpertiseCategoryId
+                                          //               .toString(),
+                                          //           instId: instId,
+                                          //           callbackPicker: () {
+                                          //             Navigator.of(context).pop(
+                                          //                 {'result': "success"});
+                                          //           }, type: null,));
                                         }
                                       });
                                     }
@@ -493,4 +503,55 @@ class _EditLanguage extends State<EditLanguage> {
 
   _EditLanguage(
       this.type, this.instId, this.fromBasicProfileFLow, this.callbackPicker);
+
+  void addLang(LanguageItem key, Function callbackPicker) async {
+      AddLanguageSkills addClassNew = new AddLanguageSkills();
+      addClassNew.institutionId = prefs.getInt(Strings.instituteId);
+      addClassNew.personId = prefs.getInt(Strings.userId);
+      addClassNew.isSelected = "Y";
+      addClassNew.selfRating = "0";
+      addClassNew.averageRating = "0";
+      addClassNew.numberOfRatings = "0";
+      addClassNew.id = key.id;
+      addClassNew.givenById = prefs.getInt(Strings.userId);
+      addClassNew.personType = prefs.getString(Strings.personType);
+      addClassNew.standardExpertiseCategoryTypes = int.parse(key.id.toString()); //id2;
+      addClassNew.standardExpertiseCategory = int.parse(key.standardExpertiseCategoryId.toString());
+      // var listAbilities = <String?>[];
+      // catList.forEach((key, value) {
+      //   if (value!) listAbilities.add(key);
+      // });
+      // addClassNew.abilities = listAbilities;
+      // var listGoals = <String?>[];
+      // goalsList.forEach((key, value) {
+      //   if (value!) listGoals.add(key);
+      // });
+      // addClassNew.goals = listGoals;
+      // setState(() {
+      //   isLoading=true;
+      // });
+      Calls()
+          .call(json.encode(addClassNew), context, Config.ADD_LANGUAGE_SKILLS)
+          .then((value) async {
+        // if (value != null) {
+          var data = BasicRes.fromJson(value);
+          if (data.statusCode == 'S10001') {
+            callbackPicker();
+            // if(isExiting){
+            //   Navigator.of(context).pop({'result': "success"});
+            // }else{
+            //   handleCallBack();
+            // }
+          }
+        //     if (starRatingsId != null)
+        //       apiUpdateRatings(context);
+        //     else
+        //       apiCreateRatings(context);
+        //     /*             Navigator.pop(context, null);*/
+        //   }
+        // }
+      }).catchError((onError) {
+        Navigator.pop(context, null);
+      });
+    }
 }
