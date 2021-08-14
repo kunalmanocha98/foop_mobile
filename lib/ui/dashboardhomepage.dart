@@ -962,13 +962,16 @@ BuildContext? dgsContext;
               parallaxEnabled: true,
               parallaxOffset: .5,
               body:
-              Stack(
-                  alignment: Alignment.bottomCenter,
-                  children: [
-                    _widgetOptions().elementAt(_selectedIndex)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 160.0),
+                child: Stack(
+                    alignment: Alignment.bottomCenter,
+                    children: [
+                      _widgetOptions().elementAt(_selectedIndex)
 
-                  ],
-                ),
+                    ],
+                  ),
+              ),
 
               panelBuilder: (sc) => _panel(sc),
               borderRadius: BorderRadius.only(

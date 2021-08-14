@@ -363,7 +363,7 @@ class Data {
     isRequestedByMember = json['is_requested_by_member'];
     roomOwnerType = json['room_owner_type'];
     roomOwnerTypeId = json['room_owner_type_id'];
-    roomInstitutionId = json['room_institution_id'];
+    roomInstitutionId = json['room_business_id'];
     roomName = json['room_name'];
     roomDescription = json['room_description'];
     isPrivate = json['is_private'];
@@ -415,7 +415,7 @@ class Data {
     data['is_requested_by_member']=this.isRequestedByMember;
     data['room_owner_type'] = this.roomOwnerType;
     data['room_owner_type_id'] = this.roomOwnerTypeId;
-    data['room_institution_id'] = this.roomInstitutionId;
+    data['room_business_id'] = this.roomInstitutionId;
     data['room_name'] = this.roomName;
     data['room_description'] = this.roomDescription;
     data['is_private'] = this.isPrivate;

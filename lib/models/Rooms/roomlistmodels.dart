@@ -30,7 +30,7 @@ class RoomListPayload {
       this.institutionId});
 
   RoomListPayload.fromJson(Map<String, dynamic> json) {
-    roomInstitutionId = json['room_institution_id'];
+    roomInstitutionId = json['room_business_id'];
     memberId = json['member_id'];
     isOwn = json['is_own'];
     requestedByType = json['requested_by_type'];
@@ -47,7 +47,7 @@ class RoomListPayload {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['room_institution_id'] = this.roomInstitutionId;
+    data['room_business_id'] = this.roomInstitutionId;
     data['member_id'] = this.memberId;
     data['is_own'] = this.isOwn;
     data['requested_by_id'] = this.requestedById;
@@ -154,7 +154,7 @@ class RoomListItem {
     isRequestedByMember = json['is_requested_by_member'];
     roomOwnerType = json['room_owner_type'];
     roomOwnerTypeId = json['room_owner_type_id'];
-    roomInstitutionId = json['room_institution_id'];
+    roomInstitutionId = json['room_business_id'];
     roomName = json['room_name'];
     roomDescription = json['room_description'];
     isPrivate = json['is_private'];
@@ -186,7 +186,7 @@ class RoomListItem {
     data['is_requested_by_member']=this.isRequestedByMember;
     data['room_owner_type'] = this.roomOwnerType;
     data['room_owner_type_id'] = this.roomOwnerTypeId;
-    data['room_institution_id'] = this.roomInstitutionId;
+    data['room_business_id'] = this.roomInstitutionId;
     data['room_name'] = this.roomName;
     data['room_description'] = this.roomDescription;
     data['is_private'] = this.isPrivate;

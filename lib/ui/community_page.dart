@@ -176,48 +176,45 @@ class _CommunityPage extends State<CommunityPage>
         //     onBackButtonPress: () {
         //       Navigator.pop(context);
         //     }),
-        body: Padding(
-          padding: const EdgeInsets.only(bottom:120.0),
-          child: DefaultTabController(
-            length: list.length,
-            child: CustomTabView(
-              marginTop: const EdgeInsets.only(top: 16.0),
-              currentPosition: _currentPosition,
-              itemCount: list != null && list.isNotEmpty ? list.length : 0,
-              tabBuilder: (context, index) => appTabButton(
-                onPressed: () {
+        body: DefaultTabController(
+          length: list.length,
+          child: CustomTabView(
+            marginTop: const EdgeInsets.only(top: 16.0),
+            currentPosition: _currentPosition,
+            itemCount: list != null && list.isNotEmpty ? list.length : 0,
+            tabBuilder: (context, index) => appTabButton(
+              onPressed: () {
+                setState(() {
+                  _currentPosition = index;
                   setState(() {
-                    _currentPosition = index;
-                    setState(() {
 
-                      _currentPosition == 0 ? type = "room" : "network";
-                      setState(() {
-                        getMenuList();
-                      });
+                    _currentPosition == 0 ? type = "room" : "network";
+                    setState(() {
+                      getMenuList();
                     });
                   });
-                },
-                tabName: list[index].tabName,
-                isActive: index == _currentPosition,
-              ),
-              pageBuilder: (context, index) =>
-                  Center(child: list[index].statelessWidget),
-              onPositionChange: (index) {
-                setState(() {
-
-                  if (!_tabController.indexIsChanging && this.mounted) {
-                    setState(() {
-                      _currentPosition = index!;
-
-                      setState(() {
-                        getMenuList();
-                      });
-                    });
-                  }
                 });
               },
-              onScroll: (position) => print('$position'),
+              tabName: list[index].tabName,
+              isActive: index == _currentPosition,
             ),
+            pageBuilder: (context, index) =>
+                Center(child: list[index].statelessWidget),
+            onPositionChange: (index) {
+              setState(() {
+
+                if (!_tabController.indexIsChanging && this.mounted) {
+                  setState(() {
+                    _currentPosition = index!;
+
+                    setState(() {
+                      getMenuList();
+                    });
+                  });
+                }
+              });
+            },
+            onScroll: (position) => print('$position'),
           ),
         ),
       ),

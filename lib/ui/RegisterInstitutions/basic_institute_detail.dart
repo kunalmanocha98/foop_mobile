@@ -484,7 +484,7 @@ class _BasicInstituteDetails extends State<BasicInstituteDetails>
                                     Expanded(
                                       child: Container(
                                         padding: EdgeInsets.only(right:16),
-                                        child: Text("Upload Photo"),
+                                        child: Text("Upload Logo"),
                                       ),
                                     ),
                                   ],

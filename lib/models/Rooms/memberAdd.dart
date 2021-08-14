@@ -12,7 +12,7 @@ class MemberAddPayload {
 
   MemberAddPayload.fromJson(Map<String, dynamic> json) {
     roomId = json['room_id'];
-    roomInstitutionId = json['room_institution_id'];
+    roomInstitutionId = json['room_business_id'];
     isAddAllMembers = json['is_add_all_members'];
     if (json['members'] != null) {
       members = [];//MembersItem>();
@@ -25,7 +25,7 @@ class MemberAddPayload {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['room_id'] = this.roomId;
-    data['room_institution_id'] = this.roomInstitutionId;
+    data['room_business_id'] = this.roomInstitutionId;
     data['is_add_all_members'] = this.isAddAllMembers;
     if (this.members != null) {
       data['members'] = this.members!.map((v) => v.toJson()).toList();
