@@ -9,10 +9,10 @@ class BaseUrls{
   static const String testUrl_without_http = "test.oho.works";
   static const String productionUrl_without_http = "www.tricycle.life";
 
-  static const String testUrl_messenger = "https://messenger.tricycle.group";
+  static const String testUrl_messenger = "https://test.chat.oho.works";
   static const String productionUrl_messenger = "https://messenger.tricycle.life";
 
-  static const String testUrl_audio = "https://audio.tricycle.group";
+  static const String testUrl_audio = "https://test.meet.oho.works";
   static const String productionUrl_audio = "https://audio.tricycle.life";
   static const String nexge = "https://conf-signalling.nexge.com";
 

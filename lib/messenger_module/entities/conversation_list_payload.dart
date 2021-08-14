@@ -21,7 +21,7 @@ class ConversationListPayload {
     conversationOwnerId = json['conversationOwnerId'];
     conversationWithName = json['conversationWithName'];
     personId = json['personId'];
-    institutionId = json['institutionId'];
+    institutionId = json['businessId'];
     pageNumber = json['pageNumber'];
     pageSize = json['pageSize'];
   }
@@ -32,7 +32,7 @@ class ConversationListPayload {
     data['conversationOwnerId'] = this.conversationOwnerId;
     data['conversationWithName'] = this.conversationWithName;
     data['personId'] = this.personId;
-    data['institutionId'] = this.institutionId;
+    data['businessId'] = this.institutionId;
     data['pageNumber'] = this.pageNumber;
     data['pageSize'] = this.pageSize;
     return data;

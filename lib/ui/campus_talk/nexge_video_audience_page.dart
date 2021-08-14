@@ -1533,7 +1533,7 @@ class TalkAudiencePageNexgeState extends State<TalkAudiencePageNexge> {
   /// socket.on method for chat conversation
   onChatConversationCreate(dynamic data) {
     var res = NewConversationEvent.fromJson(data);
-    if (conversationCallBack != null) conversationCallBack!(res.conversationId);
+    if (conversationCallBack != null && res.conversationId!=null ) conversationCallBack!(res.conversationId);
   }
 
   /// socket.on method for join_success
@@ -1552,7 +1552,8 @@ class TalkAudiencePageNexgeState extends State<TalkAudiencePageNexge> {
           ? TALKFOOTERENUM.speaker
           : TALKFOOTERENUM.audience);
       widget.successCallback!();
-      conversationCallBack!(res.rows!.conversationId);
+      if(res.rows!.conversationId!=null)
+        conversationCallBack!(res.rows!.conversationId);
       _connect();
       getSpeakers();
       getListeners();

@@ -251,7 +251,7 @@ class AppBarWithProfileNew extends StatelessWidget with PreferredSizeWidget {
                 Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Image(width: 30,height: 30,image: AssetImage('assets/appimages/logo.png'),),
+                    Image(width: 30,height: 30,image: AssetImage('assets/appimages/lo.png'),),
                     SizedBox(width: 4,),
                     Text(title!, style: styleElements.headline6ThemeScalable(context).copyWith(
                           fontWeight: FontWeight.w600, color: HexColor(AppColors.appColorBlack85),fontSize: 24),
@@ -484,7 +484,7 @@ class AppBarWithOnlyTitle extends StatelessWidget with PreferredSizeWidget
                     ),
                   ),
                 ),
-                Image(width: 30,height: 30,image: AssetImage('assets/appimages/logo.png'),),
+                Image(width: 30,height: 30,image: AssetImage('assets/appimages/lo.png'),),
                 SizedBox(width: 4,),
                 Text(title!, style: styleElements.headline6ThemeScalable(context).copyWith(
                     fontWeight: FontWeight.w600, color: HexColor(AppColors.appColorBlack85),fontSize: 24),
