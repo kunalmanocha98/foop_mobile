@@ -33,53 +33,50 @@ class PreloadingView extends StatelessWidget {
 
   Widget build(BuildContext context) {
     return Container(
+      height: 6,
       margin: const EdgeInsets.all(16),
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
+      child:  Column(
+        mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Expanded(
-            child: Shimmer.fromColors(
-              baseColor: HexColor(AppColors.appColorGrey300),
-              highlightColor: HexColor(AppColors.appColorGrey100),
-              enabled: enabled,
-              child: ListView.builder(
-                itemBuilder: (_, __) => Padding(
-                  padding: const EdgeInsets.only(bottom: 8.0),
-                  child:
-                  ListTile(
-                      leading: Container(
-                        width: 52.0,
-                        height: 52.0,
-                        margin: const EdgeInsets.only(right: 8),
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: AssetImage(url),
-                            fit: BoxFit.cover,
-                          ),
+          Shimmer.fromColors(
+            baseColor: HexColor(AppColors.appColorGrey300),
+            highlightColor: HexColor(AppColors.appColorGrey100),
+            enabled: enabled,
+            child: ListView.builder(
+              shrinkWrap: true,
+              itemBuilder: (_, __) => Padding(
+                padding: const EdgeInsets.only(bottom: 8.0),
+                child:
+                ListTile(
+                    leading: Container(
+                      width: 52.0,
+                      height: 52.0,
+                      margin: const EdgeInsets.only(right: 8),
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(url),
+                          fit: BoxFit.cover,
                         ),
                       ),
-                      title:   Container(
-                        width: double.infinity,
-                        height: 8.0,
-                        color: HexColor(AppColors.appColorWhite),
-                      ) ,
-                      subtitle:  Container(
-                        width: double.infinity,
-                        height: 8.0,
-                        color: HexColor(AppColors.appColorWhite),
-                      ),
-                      trailing:   Container(
-                        width: 40.0,
-                        height: 8.0,
-                        color: HexColor(AppColors.appColorWhite),
-                      )
-
-                  )
-
-              ,
+                    ),
+                    title:   Container(
+                      width: double.infinity,
+                      height: 8.0,
+                      color: HexColor(AppColors.appColorWhite),
+                    ),
+                    subtitle:  Container(
+                      width: double.infinity,
+                      height: 8.0,
+                      color: HexColor(AppColors.appColorWhite),
+                    ),
+                    trailing:   Container(
+                      width: 40.0,
+                      height: 8.0,
+                      color: HexColor(AppColors.appColorWhite),
+                    )
                 ),
-                itemCount: 6,
               ),
+              itemCount: 6,
             ),
           ),
         ],
