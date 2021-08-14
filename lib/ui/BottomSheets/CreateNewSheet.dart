@@ -611,7 +611,7 @@ class CreateNewBottomSheet extends StatelessWidget {
                         ),
                       ),
                     ),
-                    Container(
+                 /*   Container(
                       margin: EdgeInsets.only(top:18,bottom: 18),
                       width: MediaQuery.of(context).size.width/4,
                       child: GestureDetector(
@@ -647,7 +647,7 @@ class CreateNewBottomSheet extends StatelessWidget {
                           ),
                         ),
                       ),
-                    ),
+                    ),*/
                     if(isRoomsVisible)
                       Container(
                       margin: EdgeInsets.only(top:18,bottom: 18),

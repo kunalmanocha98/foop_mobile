@@ -147,15 +147,21 @@ int? id;
           ),
           onSaved: (String? value) {},
           controller: domainController,
+
+
           decoration: InputDecoration(
-              contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-              hintText: AppLocalizations.of(context)!.translate('default_email_domain'),
-              hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
-              border: UnderlineInputBorder(
-                borderSide: BorderSide(
-                  width: 0.0.h,
-                ),
-              )),
+            hintText: AppLocalizations.of(context)!.translate('default_email_domain'),
+
+            contentPadding: EdgeInsets.only(
+                left: 12, top: 16, bottom: 8),
+            border: UnderlineInputBorder(
+                borderRadius:
+                BorderRadius.circular(12)),
+            floatingLabelBehavior:
+            FloatingLabelBehavior.auto,
+            labelText:
+            AppLocalizations.of(context)!.translate('default_email_domain'),),
+
         ));
 
     styleElements = TextStyleElements(context);

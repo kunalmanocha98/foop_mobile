@@ -114,7 +114,7 @@ class _PostCreatePage extends State<PostCreatePage> with CommonMixins {
   List<String> mentions = [];
   List<String> keywords = [];
   int wordCount = 0;
-  int wordLimit = 1000;
+  int wordLimit = 200;
   BuildContext? ctx;
   List<PostCreatePayload?> lessonsList = [];
   List<PostCreatePayload?> draftedLessonsList = [];

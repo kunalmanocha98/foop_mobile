@@ -169,15 +169,21 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
       ),
       onSaved: (String? value) {},
       controller: pinController,
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-          hintText: AppLocalizations.of(context)!.translate('pin_zip'),
-          hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
-          border: UnderlineInputBorder(
-            borderSide: BorderSide(
-              width: 0.0.h,
-            ),
-          )),
+
+          decoration: InputDecoration(
+            hintText: AppLocalizations.of(context)!.translate('pin_zip'),
+
+            contentPadding: EdgeInsets.only(
+                left: 12, top: 16, bottom: 8),
+            border: UnderlineInputBorder(
+                borderRadius:
+                BorderRadius.circular(12)),
+            floatingLabelBehavior:
+            FloatingLabelBehavior.auto,
+            labelText:
+            AppLocalizations.of(context)!.translate('pin_zip'),),
+
+
     ));
     final cityTown = Form(
         child: TextFormField(
@@ -186,15 +192,21 @@ class _InstituteLocationAddressPage extends State<InstituteLocationAddressPage>
       ),
       onSaved: (String? value) {},
       controller: cityMapController,
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-          hintText: AppLocalizations.of(context)!.translate('city_town'),
-          hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
-          border: UnderlineInputBorder(
-            borderSide: BorderSide(
-              width: 0.0.h,
-            ),
-          )),
+
+
+          decoration: InputDecoration(
+            hintText: AppLocalizations.of(context)!.translate('city_town'),
+
+            contentPadding: EdgeInsets.only(
+                left: 12, top: 16, bottom: 8),
+            border: UnderlineInputBorder(
+                borderRadius:
+                BorderRadius.circular(12)),
+            floatingLabelBehavior:
+            FloatingLabelBehavior.auto,
+            labelText:
+            AppLocalizations.of(context)!.translate('city_town'),),
+
     ));
 
     styleElements = TextStyleElements(context);

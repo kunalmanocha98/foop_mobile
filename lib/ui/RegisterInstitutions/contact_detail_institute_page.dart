@@ -166,16 +166,19 @@ bool isLoading=false;
       controller: websiteCon,
 
 
-      decoration: InputDecoration(
-          border: InputBorder.none,
-          focusedBorder: InputBorder.none,
-          enabledBorder: InputBorder.none,
-          errorBorder: InputBorder.none,
-          disabledBorder: InputBorder.none,
-          contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-          hintText: AppLocalizations.of(context)!.translate('website'),
-          hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
-         ),
+          decoration: InputDecoration(
+            hintText: AppLocalizations.of(context)!.translate('website'),
+
+            contentPadding: EdgeInsets.only(
+                left: 12, top: 16, bottom: 8),
+            border: UnderlineInputBorder(
+                borderRadius:
+                BorderRadius.circular(12)),
+            floatingLabelBehavior:
+            FloatingLabelBehavior.auto,
+            labelText:
+            AppLocalizations.of(context)!.translate('website'),),
+
     ));
     final emailField = Form(
       child: TextFormField(
@@ -190,15 +193,21 @@ bool isLoading=false;
         inputFormatters: <TextInputFormatter>[
           FilteringTextInputFormatter.deny(RegExp("[A-Z]")),
         ],
+
         decoration: InputDecoration(
-            contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-            hintText: AppLocalizations.of(context)!.translate('inputemail'),
-            hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
-          border: InputBorder.none,
-          focusedBorder: InputBorder.none,
-          enabledBorder: InputBorder.none,
-          errorBorder: InputBorder.none,
-          disabledBorder: InputBorder.none,),
+          hintText: AppLocalizations.of(context)!.translate('inputemail'),
+
+          contentPadding: EdgeInsets.only(
+              left: 12, top: 16, bottom: 8),
+          border: UnderlineInputBorder(
+              borderRadius:
+              BorderRadius.circular(12)),
+          floatingLabelBehavior:
+          FloatingLabelBehavior.auto,
+          labelText:
+          AppLocalizations.of(context)!.translate('inputemail'),),
+
+
         validator: EditProfileMixins().validateEmail,
         onSaved: (String? value) {
           email = value;
@@ -217,15 +226,22 @@ bool isLoading=false;
       ],
       keyboardType: TextInputType.number,
       scrollPadding: EdgeInsets.all(20.0.w),
+
       decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-          hintText: AppLocalizations.of(context)!.translate('mobile_number'),
-          hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
-        border: InputBorder.none,
-        focusedBorder: InputBorder.none,
-        enabledBorder: InputBorder.none,
-        errorBorder: InputBorder.none,
-        disabledBorder: InputBorder.none,),
+        hintText: AppLocalizations.of(context)!.translate('mobile_number'),
+
+        contentPadding: EdgeInsets.only(
+            left: 12, top: 16, bottom: 8),
+        border: UnderlineInputBorder(
+            borderRadius:
+            BorderRadius.circular(12)),
+        floatingLabelBehavior:
+        FloatingLabelBehavior.auto,
+        labelText:
+        AppLocalizations.of(context)!.translate('mobile_number'),),
+
+
+
     );
     final phone = TextField(
       enableInteractiveSelection: false,
@@ -239,15 +255,22 @@ bool isLoading=false;
       ],
       keyboardType: TextInputType.number,
       scrollPadding: EdgeInsets.all(20.0.w),
+
+
       decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20.0.w, 15.0.h, 20.0.w, 15.0.h),
-          hintText: AppLocalizations.of(context)!.translate('phone'),
-          hintStyle: styleElements.bodyText2ThemeScalable(context).copyWith(color:HexColor(AppColors.appColorBlack35)),
-        border: InputBorder.none,
-        focusedBorder: InputBorder.none,
-        enabledBorder: InputBorder.none,
-        errorBorder: InputBorder.none,
-        disabledBorder: InputBorder.none,),
+        hintText: AppLocalizations.of(context)!.translate('phone'),
+
+        contentPadding: EdgeInsets.only(
+            left: 12, top: 16, bottom: 8),
+        border: UnderlineInputBorder(
+            borderRadius:
+            BorderRadius.circular(12)),
+        floatingLabelBehavior:
+        FloatingLabelBehavior.auto,
+        labelText:
+        AppLocalizations.of(context)!.translate('phone'),),
+
+
     );
 
     return new WillPopScope(
@@ -427,7 +450,7 @@ bool isLoading=false;
                                   padding: const EdgeInsets.only(left :15.0),
                                   child: Container(
                                     child: Icon(
-                                      Icons.border_top_sharp,
+                                      Icons.public_outlined,
                                       color: HexColor(AppColors.appColorGrey500),
                                     ),
                                   ),
